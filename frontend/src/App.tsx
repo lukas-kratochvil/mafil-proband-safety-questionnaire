@@ -1,7 +1,7 @@
+import { Header } from "./components/header/Header";
+
 export const App = () => {
   return (
-    <div>
-      Welcome to the MAFIL Proband Safety Questionnaire!
-    </div>
+    <Header />
   );
 };
