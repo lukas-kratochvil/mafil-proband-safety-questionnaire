@@ -19,9 +19,9 @@ export const LanguageItem = ({
       <Button size="small">
         <Avatar
           alt={label}
-          variant="square"
+          variant="rounded"
           sx={{
-            width: 25,
+            width: 30,
             height: 25,
             backgroundColor: "inherit"
           }}
