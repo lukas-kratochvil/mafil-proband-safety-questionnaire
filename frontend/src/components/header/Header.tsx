@@ -1,5 +1,12 @@
 import LanguageIcon from "@mui/icons-material/Language";
-import { AppBar, IconButton, Link, Menu, MenuItem, Stack, Toolbar, Tooltip } from "@mui/material";
+import AppBar from "@mui/material/AppBar";
+import IconButton from "@mui/material/IconButton";
+import Link from "@mui/material/Link";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Stack from "@mui/material/Stack";
+import Toolbar from "@mui/material/Toolbar";
+import Tooltip from "@mui/material/Tooltip";
 import { useState } from "react";
 
 export const Header = () => {
