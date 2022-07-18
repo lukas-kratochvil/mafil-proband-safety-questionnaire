@@ -1,6 +1,4 @@
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
+import { Avatar, Button, Tooltip } from "@mui/material";
 import { FlagComponent } from "country-flag-icons/react/3x2";
 
 export interface ILanguageItemProps {

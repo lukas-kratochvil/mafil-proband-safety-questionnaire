@@ -1,5 +1,4 @@
-import Box from "@mui/material/Box";
-import Tabs from "@mui/material/Tabs";
+import { Box, Tabs } from "@mui/material";
 import { useState } from "react";
 import { ILinkTabProps, LinkTab } from "./LinkTab";
 
