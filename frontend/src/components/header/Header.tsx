@@ -61,6 +61,7 @@ export const Header = () => {
                 overflow: 'visible',
                 filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                 mt: 1.5,
+                backgroundColor: 'pink',
                 '&:before': {
                   content: '""',
                   display: 'block',
@@ -69,14 +70,20 @@ export const Header = () => {
                   right: 15,
                   width: 10,
                   height: 10,
-                  bgcolor: 'background.paper',
+                  bgcolor: 'pink',
                   transform: 'translateY(-50%) rotate(45deg)',
                   zIndex: 0,
                 },
               },
             }}
-            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+            transformOrigin={{
+              horizontal: 'right',
+              vertical: 'top'
+            }}
+            anchorOrigin={{
+              horizontal: 'right',
+              vertical: 'bottom'
+            }}
           >
             { availableLanguages.map((language, index) => <LanguageItem key={index} {...language} />) }
           </Menu>
