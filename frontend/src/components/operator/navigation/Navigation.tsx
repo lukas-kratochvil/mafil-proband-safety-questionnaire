@@ -27,7 +27,6 @@ export const Navigation = () => {
 
   return (
     <Box
-      className="MuiTabs-scroller"
       sx={{
         width: '100%',
         backgroundColor: 'orange',
