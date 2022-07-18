@@ -45,7 +45,13 @@ export const Header = () => {
               aria-haspopup="true"
               aria-expanded={isOpen ? 'true' : undefined}
             >
-              <LanguageIcon style={{ color: 'white' }} />
+              <LanguageIcon
+                style={{
+                  color: 'white',
+                  width: 30,
+                  height: 30
+                }}
+              />
             </IconButton>
           </Tooltip>
           <Menu
@@ -66,7 +72,7 @@ export const Header = () => {
                   display: 'block',
                   position: 'absolute',
                   top: 0,
-                  right: 12,
+                  right: 15,
                   width: 10,
                   height: 10,
                   bgcolor: 'background.paper',

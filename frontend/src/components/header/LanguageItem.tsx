@@ -21,8 +21,8 @@ export const LanguageItem = ({
           alt={label}
           variant="square"
           sx={{
-            width: 30,
-            height: 30,
+            width: 25,
+            height: 25,
             backgroundColor: "inherit"
           }}
         >
