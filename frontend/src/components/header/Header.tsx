@@ -3,11 +3,12 @@ import AppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import { useState } from "react";
+import { LanguageItem } from "./LanguageItem";
+import availableLanguages from "./languages";
 
 export const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -77,10 +78,7 @@ export const Header = () => {
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
-            {/* TODO: <MenuItem onClick={handleTranslation}> CZ national flag… </MenuItem> */}
-            <MenuItem>CZ</MenuItem>
-            <MenuItem>SK</MenuItem>
-            <MenuItem>EN</MenuItem>
+            { availableLanguages.map((language, index) => <LanguageItem key={index} {...language} />) }
           </Menu>
         </Stack>
       </Toolbar>
