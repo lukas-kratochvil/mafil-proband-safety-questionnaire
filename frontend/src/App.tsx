@@ -1,16 +1,12 @@
-import { Header } from "./components/header/Header";
-import { MainContainer } from "./components/MainContainer";
+import { Route, Routes } from "react-router-dom";
 import { Navigation } from "./components/operator/navigation/Navigation";
 import { WelcomeCard } from "./components/proband/welcomeCard/WelcomeCard";
 
 export const App = () => {
   return (
-    <>
-      <Header />
-      <Navigation />
-      <MainContainer>
-        <WelcomeCard />
-      </MainContainer>
-    </>
+    <Routes>
+      {/* <Navigation /> */}
+      <Route path='/' element={<WelcomeCard />} />
+    </Routes>
   );
 };
