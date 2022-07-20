@@ -1,5 +1,6 @@
 import { AppBar, Link, Stack, Toolbar } from "@mui/material";
 import { LanguageMenu } from "./LanguageMenu";
+import { LoginOperator } from "./LoginOperator";
 
 export const Header = () => {
   return (
@@ -22,6 +23,7 @@ export const Header = () => {
               height={40}
             />
           </Link>
+          <LoginOperator />
           <LanguageMenu />
         </Stack>
       </Toolbar>
