@@ -1,20 +1,5 @@
-import { Card, Grid, Typography } from "@mui/material";
-
-interface ITypographyTextProps {
-  text: String;
-}
-
-const TypographyText = ({ text }: ITypographyTextProps) => {
-  return (
-    <Typography
-      align="center"
-      fontWeight='bold'
-      fontSize={20}
-    >
-      {text}
-    </Typography>
-  )
-};
+import { Card, Grid } from "@mui/material";
+import { TypographyText } from "./TypographyText";
 
 export const WelcomeCard = () => {
   return (
