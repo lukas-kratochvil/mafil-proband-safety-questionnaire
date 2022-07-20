@@ -10,7 +10,7 @@ export const WelcomeCard = () => {
       <MainContainer>
         <Card
           sx={{
-            marginBottom: 20,
+            marginBottom: '5%',
             padding: 4,
             border: 5,
             borderColor: 'green',
