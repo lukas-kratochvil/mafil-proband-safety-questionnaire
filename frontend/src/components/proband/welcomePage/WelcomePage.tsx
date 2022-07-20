@@ -3,7 +3,7 @@ import { Header } from "../../header/Header";
 import { MainContainer } from "../../MainContainer";
 import { TypographyText } from "./TypographyText";
 
-export const WelcomeCard = () => {
+export const WelcomePage = () => {
   return (
     <>
       <Header />
