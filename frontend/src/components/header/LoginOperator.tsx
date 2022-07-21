@@ -15,10 +15,15 @@ export const LoginOperator = () => {
         sx={{
           bgcolor: 'white',
           marginLeft: 1,
-          padding: 1,
+          paddingX: 2,
+          paddingY: 1,
+          maxWidth: 400,
+          textAlign: 'center',
+          overflow: "hidden",
+          textOverflow: "ellipsis"
         }}
       >
-        <Typography>
+        <Typography noWrap>
           Operator
         </Typography>
       </Card>
