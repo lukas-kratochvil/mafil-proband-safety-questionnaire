@@ -1,14 +1,21 @@
+import { Stack } from "@mui/material";
 import { Header } from "../../header/Header";
-import { MainContainer } from "../../MainContainer";
+import { FormEntryInfo } from "./FormEntryInfo";
 import { FormHeader } from "./FormHeader"
 
 export const FormTemplate = () => {
   return (
     <>
       <Header />
-      <MainContainer>
+      <Stack
+        sx={{
+          marginTop: 3,
+          marginX: '20%',
+        }}
+      >
         <FormHeader />
-      </MainContainer>
+        <FormEntryInfo />
+      </Stack>
     </>
   );
 }
