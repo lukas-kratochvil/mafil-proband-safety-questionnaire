@@ -5,7 +5,6 @@ export const FormEntryInfo = () => {
     <Card
       sx={{
         border: 2,
-        marginY: 3,
       }}
     >
       <Typography

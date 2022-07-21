@@ -8,6 +8,7 @@ export const FormTemplate = () => {
     <>
       <Header />
       <Stack
+        spacing={3}
         sx={{
           marginTop: 3,
           marginX: '20%',
