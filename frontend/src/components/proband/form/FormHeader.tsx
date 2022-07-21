@@ -1,4 +1,5 @@
-import { Card, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
+import { FormCard } from "./FormCard";
 
 interface IContentCellProps {
   title: String;
@@ -30,11 +31,7 @@ const ContentCell = ({ title, value }: IContentCellProps) => {
 
 export const FormHeader = () => {
   return (
-    <Card
-      sx={{
-        border: 2,
-      }}
-    >
+    <FormCard>
       <Grid container>
         <Grid
           item
@@ -66,6 +63,6 @@ export const FormHeader = () => {
           <ContentCell title='Datum měření' value={new Date().toDateString()} />
         </Grid>
       </Grid>
-    </Card>
+    </FormCard>
   );
 }

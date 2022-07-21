@@ -1,12 +1,9 @@
-import { Card, Divider, Grid, Typography } from "@mui/material";
+import { Divider, Grid, Typography } from "@mui/material";
+import { FormCard } from "./FormCard";
 
 export const FormEntryInfo = () => {
   return (
-    <Card
-      sx={{
-        border: 2,
-      }}
-    >
+    <FormCard>
       <Typography
         textAlign='center'
         fontWeight='bold'
@@ -31,6 +28,6 @@ export const FormEntryInfo = () => {
           Přečtěte si, prosím, následující otázky a zatrhněte správnou odpověď. Pravdivé zodpovězení našich dotazů je velmi důležité pro Vaši bezpečnost.
         </Typography>
       </Grid>
-    </Card>
+    </FormCard>
   );
 }
