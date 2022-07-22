@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { Header } from "../../header/Header";
 import { FormBeforeExamination } from "./FormBeforeExamination";
 import { FormEntryInfo } from "./FormEntryInfo";
@@ -13,7 +13,7 @@ export const FormTemplate = () => {
       <Stack
         spacing={3}
         sx={{
-          marginTop: 3,
+          marginY: 3,
           marginX: '20%',
         }}
       >
@@ -22,6 +22,15 @@ export const FormTemplate = () => {
         <FormEntryInfo />
         <FormBeforeExamination />
         <FormExaminationConsent />
+        <Stack
+          sx={{
+            paddingX: '40%',
+          }}
+        >
+          <Button variant="contained">
+            Souhlasím
+          </Button>
+        </Stack>
       </Stack>
     </>
   );
