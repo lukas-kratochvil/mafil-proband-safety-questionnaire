@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 
 interface ITypographyTextProps {
-  text: String;
+  text: string;
 }
 
 export const TypographyText = ({ text }: ITypographyTextProps) => {

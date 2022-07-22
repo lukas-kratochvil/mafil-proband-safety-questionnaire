@@ -2,8 +2,8 @@ import { Grid, Typography } from "@mui/material";
 import { FormCard } from "./FormCard";
 
 interface IContentCellProps {
-  title: String;
-  value: String;
+  title: string;
+  value: string;
 }
 
 const ContentCell = ({ title, value }: IContentCellProps) => {
