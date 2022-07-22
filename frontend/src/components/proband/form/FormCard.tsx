@@ -2,8 +2,8 @@ import { Card, Divider, Grid, Typography } from "@mui/material";
 import { PropsWithChildren } from "react";
 
 interface IFormCardProps {
-  title?: string | undefined;
-  mainGridPadding?: number | undefined;
+  title?: string;
+  mainGridPadding?: number;
 }
 
 export const FormCard = ({ children, title, mainGridPadding: gridPadding = 2 }: PropsWithChildren<IFormCardProps>) => {
