@@ -2,6 +2,7 @@ import { Stack } from "@mui/material";
 import { Header } from "../../header/Header";
 import { FormBeforeExamination } from "./FormBeforeExamination";
 import { FormEntryInfo } from "./FormEntryInfo";
+import { FormExaminationConsent } from "./FormExaminationConsent";
 import { FormHeader } from "./FormHeader"
 import { FormProbandInfo } from "./FormProbandInfo";
 
@@ -20,6 +21,7 @@ export const FormTemplate = () => {
         <FormProbandInfo />
         <FormEntryInfo />
         <FormBeforeExamination />
+        <FormExaminationConsent />
       </Stack>
     </>
   );

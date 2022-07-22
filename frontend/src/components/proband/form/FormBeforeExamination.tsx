@@ -12,8 +12,8 @@ const InlineBoldText = ({children}: PropsWithChildren) => {
 
 export const FormBeforeExamination = () => {
   return (
-    <FormCard title={'Před vyšetřením'}>
-      <Typography component="div">
+    <FormCard title={"Před vyšetřením"}>
+      <Typography minWidth="100%" component="div">
         Před vyšetřením si prosím&nbsp;
         <InlineBoldText>odložte všechny elektricky vodivé/ kovové předměty&nbsp;</InlineBoldText>
         (šperky, hodinky, gumičky, sponky, piercing) a součásti oděvu, které obsahují&nbsp;
