@@ -31,7 +31,7 @@ const ContentCell = ({ title, value }: IContentCellProps) => {
 
 export const FormHeader = () => {
   return (
-    <FormCard>
+    <FormCard mainGridPadding={0}>
       <Grid container>
         <Grid
           item
