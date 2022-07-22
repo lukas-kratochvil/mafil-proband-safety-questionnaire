@@ -20,7 +20,7 @@ const tabs: ILinkTabProps[] = [
 ];
 
 export const Navigation = () => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState<number>(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => setValue(newValue);;
 
