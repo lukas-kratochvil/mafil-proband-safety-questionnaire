@@ -2,6 +2,7 @@ import { Autocomplete, Divider, Grid, InputAdornment, Stack, TextField } from "@
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useState } from "react";
+import { genders, nativeLanguages, sideDominance, visualCorrection } from "./data";
 import { FormCard } from "./FormCard";
 
 interface IFormTextFieldProps {
@@ -72,11 +73,6 @@ const FormSelect = ({ label, options }: IFormSelectProps) => {
   );
 }
 */
-
-const genders: string[] = ["Muž", "Žena", "Jiné"];
-const nativeLanguages: string[] = ["Čeština", "Slovenština", "Angličtina", "Němčina", "Polština"];
-const visualCorrection: string[] = ["Žádná", "≥ 2D (na čtení)", "≥ -2D (do dálky)"];
-const sideDominance: string[] = ["Pravák", "Levák", "Přeučený levák", "Neurčeno"];
 
 export const FormProbandInfo = () => {
   const [birthdate, setBirthdate] = useState<Date | null>(null);

@@ -1,8 +1,38 @@
 import LanguageIcon from "@mui/icons-material/Language";
-import { IconButton, Menu, Tooltip } from "@mui/material";
+import { Avatar, Button, IconButton, Menu, Tooltip } from "@mui/material";
+import { FlagComponent } from "country-flag-icons/react/3x2";
 import { useState } from "react";
-import { LanguageItem } from "./LanguageItem";
-import availableLanguages from "./languages";
+import { languages } from "./data"
+
+interface ILanguageItemProps {
+  name: string;
+  label: string;
+  Flag: FlagComponent;
+}
+
+const LanguageItem = ({
+  name,
+  label,
+  Flag,
+}: ILanguageItemProps) => {
+  return (
+    <Tooltip title={name}>
+      <Button size="small">
+        <Avatar
+          alt={label}
+          variant="rounded"
+          sx={{
+            width: 30,
+            height: 25,
+            backgroundColor: "inherit"
+          }}
+        >
+          <Flag />
+        </Avatar>
+      </Button>
+    </Tooltip>
+  );
+};
 
 export const LanguageMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -67,7 +97,7 @@ export const LanguageMenu = () => {
           vertical: 'bottom'
         }}
       >
-        {availableLanguages.map((language, index) => <LanguageItem key={index} {...language} />)}
+        {languages.map((language, index) => <LanguageItem key={index} {...language} />)}
       </Menu>
     </>
   );
