@@ -97,6 +97,9 @@ export const LanguageMenu = () => {
           horizontal: 'right',
           vertical: 'bottom'
         }}
+        sx={{
+          position: "absolute"
+        }}
       >
         {languages.map((language, index) => <LanguageItem key={index} {...language} />)}
       </Menu>
