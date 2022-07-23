@@ -8,7 +8,13 @@ import { FormHeader } from "./FormHeader"
 import { FormProbandInfo } from "./FormProbandInfo";
 import { FormQuestions } from "./FormQuestions";
 
-export const FormTemplate = () => {
+interface IFormTemplateProps {
+  auth?: {
+    isEditing: boolean;
+  };
+}
+
+export const FormTemplate = ({ auth }: IFormTemplateProps) => {
   return (
     <>
       <Header />
@@ -21,20 +27,30 @@ export const FormTemplate = () => {
       >
         <FormHeader />
         <FormProbandInfo />
-        <FormEntryInfo />
-        <FormQuestions title="Část 1" questions={questions1} />
-        <FormQuestions title="Část 2" questions={questions2} />
-        <FormBeforeExamination />
-        <FormExaminationConsent />
-        <Stack
-          sx={{
-            paddingX: '40%',
-          }}
-        >
-          <Button variant="contained">
-            Souhlasím
-          </Button>
-        </Stack>
+        {auth === undefined && <FormEntryInfo />}
+        <FormQuestions
+          title="Část 1"
+          questions={questions1}
+        />
+        <FormQuestions
+          title="Část 2"
+          questions={questions2}
+        />
+        {auth === undefined && (
+          <>
+            <FormBeforeExamination />
+            <FormExaminationConsent />
+            <Stack
+              sx={{
+                paddingX: '40%',
+              }}
+            >
+              <Button variant="contained">
+                Souhlasím
+              </Button>
+            </Stack>
+          </>
+        )}
       </Stack>
     </>
   );
