@@ -67,6 +67,7 @@ export const LanguageMenu = () => {
         open={isOpen}
         onClose={handleClose}
         onClick={handleClose}
+        disableScrollLock
         PaperProps={{
           elevation: 0,
           sx: {
