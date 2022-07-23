@@ -2,7 +2,11 @@ import { AppBar, Link, Stack, Toolbar } from "@mui/material";
 import { LanguageMenu } from "./LanguageMenu";
 import { LoginOperator } from "./LoginOperator";
 
-export const Header = () => {
+interface IHeaderProps {
+  isAuthenticated: boolean;
+}
+
+export const Header = ({ isAuthenticated }: IHeaderProps) => {
   return (
     <AppBar position="static">
       <Toolbar>
@@ -23,7 +27,7 @@ export const Header = () => {
               height={40}
             />
           </Link>
-          <LoginOperator />
+          {isAuthenticated && <LoginOperator /> }
           <LanguageMenu />
         </Stack>
       </Toolbar>
