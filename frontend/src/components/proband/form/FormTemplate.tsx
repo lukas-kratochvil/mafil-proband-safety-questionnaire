@@ -1,4 +1,5 @@
-import { Button, Stack } from "@mui/material";
+import { Button, Grid, Stack } from "@mui/material";
+import { IAuth } from "../../../App";
 import { Header } from "../../header/Header";
 import { questions1, questions2 } from "./data";
 import { FormBeforeExamination } from "./FormBeforeExamination";
@@ -9,12 +10,18 @@ import { FormProbandInfo } from "./FormProbandInfo";
 import { FormQuestions } from "./FormQuestions";
 
 interface IFormTemplateProps {
-  auth?: {
-    isEditing: boolean;
-  };
+  auth?: IAuth;
 }
 
 export const FormTemplate = ({ auth }: IFormTemplateProps) => {
+  let buttonTitles: string[];
+
+  if (auth === undefined) {
+    buttonTitles = ["Souhlasím"];
+  } else {
+    buttonTitles = auth.isEditing ? ["Potvrdit změny", "Zrušit"] : ["Vytisknout PDF", "Zrušit", "Editovat"];
+  }
+
   return (
     <>
       <Header />
@@ -36,21 +43,20 @@ export const FormTemplate = ({ auth }: IFormTemplateProps) => {
           title="Část 2"
           questions={questions2}
         />
-        {auth === undefined && (
-          <>
-            <FormBeforeExamination />
-            <FormExaminationConsent />
-            <Stack
-              sx={{
-                paddingX: '40%',
-              }}
-            >
-              <Button variant="contained">
-                Souhlasím
-              </Button>
-            </Stack>
-          </>
-        )}
+        {auth === undefined && <FormBeforeExamination />}
+        {auth === undefined && <FormExaminationConsent />}
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          gap={3}
+        >
+          {buttonTitles.map((buttonTitle, index) =>
+            <Button variant="contained" key={index} >
+              {buttonTitle}
+            </Button>
+          )}
+        </Grid>
       </Stack>
     </>
   );
