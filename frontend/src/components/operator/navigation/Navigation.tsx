@@ -1,6 +1,24 @@
-import { Box, Tabs } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
-import { ILinkTabProps, LinkTab } from "./LinkTab";
+
+interface ILinkTabProps {
+  label: string;
+  href: string;
+}
+
+const LinkTab = (props: ILinkTabProps) => {
+  return (
+    <Tab
+      component="a"
+      onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => event.preventDefault()}
+      {...props}
+      sx={{
+        borderRight: 1,
+        borderColor: 'black'
+      }}
+    />
+  );
+}
 
 const tabs: ILinkTabProps[] = [
   {
@@ -38,7 +56,7 @@ export const Navigation = () => {
         onChange={handleChange}
         aria-label="top-menu navigation"
       >
-        { tabs.map((tab, index) => <LinkTab key={index} {...tab} />) }
+        {tabs.map((tab, index) => <LinkTab key={index} {...tab} />)}
       </Tabs>
     </Box>
   );
