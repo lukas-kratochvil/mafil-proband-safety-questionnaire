@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { FormTemplate } from "./components/form/FormTemplate";
+import { LoginPage } from "./components/operator/loginPage/LoginPage";
 
 export interface IAuth {
   username: string;
@@ -10,6 +11,7 @@ export const App = () => {
   return (
     <Routes>
       <Route path='/' element={<FormTemplate />} />
+      <Route path="/auth" element={<LoginPage />} />
       <Route path='/auth/form-recap' element={<FormTemplate auth={{ username: "Username", isEditing: false }}/>} />
       <Route path='/auth/form-edit' element={<FormTemplate auth={{ username: "Username", isEditing: true }} />} />
     </Routes>
