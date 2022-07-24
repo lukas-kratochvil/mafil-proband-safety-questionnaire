@@ -11,7 +11,7 @@ export const App = () => {
     <Routes>
       <Route path='/' element={<FormTemplate />} />
       <Route path='/auth/form-recap' element={<FormTemplate auth={{ username: "Username", isEditing: false }}/>} />
-      <Route path='/auth/form-edit' element={<FormTemplate />} />
+      <Route path='/auth/form-edit' element={<FormTemplate auth={{ username: "Username", isEditing: true }} />} />
     </Routes>
   );
 };

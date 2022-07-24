@@ -1,6 +1,7 @@
 import { Button, Grid, Stack } from "@mui/material";
 import { IAuth } from "../../App";
 import { Header } from "../header/Header";
+import { Navigation } from "../operator/navigation/Navigation";
 import { questions1, questions2 } from "./data";
 import { FormBeforeExamination } from "./FormBeforeExamination";
 import { FormEntryInfo } from "./FormEntryInfo";
@@ -25,6 +26,7 @@ export const FormTemplate = ({ auth }: IFormTemplateProps) => {
   return (
     <>
       <Header auth={auth} />
+      {auth !== undefined && <Navigation />}
       <Stack
         spacing={3}
         sx={{
