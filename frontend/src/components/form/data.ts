@@ -42,7 +42,7 @@ export const questions1: string[] = [
 ];
 
 export const questions2: string[] = [
-  "Máte/měl jste někdy zavedený jakýkoli stimulační implantát (např. kardiostimulátor, defibrilátor apod.?",
+  "Máte/měl jste někdy zavedený jakýkoli stimulační implantát (např. kardiostimulátor, defibrilátor apod.)?",
   "Máte insulinovou nebo infuzní pumpu?",
   "Máte/měl jste někdy zavedený kochleární implantát?",
   "Máte/měl jste zavedené jakékoli jiné elektronické zařízení?",
