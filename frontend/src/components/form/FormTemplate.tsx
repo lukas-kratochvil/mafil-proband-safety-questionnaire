@@ -14,13 +14,31 @@ interface IFormTemplateProps {
   auth?: IAuth;
 }
 
+interface IButtonProps {
+  title: string;
+  link: string;
+}
+
 export const FormTemplate = ({ auth }: IFormTemplateProps) => {
-  let buttonTitles: string[];
+  let buttons: IButtonProps[];
 
   if (auth === undefined) {
-    buttonTitles = ["Souhlasím"];
+    buttons = [
+      { title: "Souhlasím", link: "TODO" },
+    ];
   } else {
-    buttonTitles = auth.isEditing ? ["Potvrdit změny", "Zrušit"] : ["Vytisknout PDF", "Zrušit", "Editovat"];
+    if (auth.isEditing) {
+      buttons = [
+        { title: "Uložit změny", link: "/auth/form-recap" },
+        { title: "Zrušit", link: "/auth/form-recap" },
+      ];
+    } else {
+      buttons = [
+        { title: "Vytisknout PDF", link: "TODO" },
+        { title: "Zrušit", link: "/auth/waiting-room" },
+        { title: "Editovat", link: "/auth/form-edit" },
+      ];
+    }
   }
 
   return (
@@ -53,9 +71,13 @@ export const FormTemplate = ({ auth }: IFormTemplateProps) => {
           justifyContent="center"
           gap={3}
         >
-          {buttonTitles.map((buttonTitle, index) =>
-            <Button variant="contained" key={index} >
-              {buttonTitle}
+          {buttons.map((button, index) =>
+            <Button
+              variant="contained"
+              href={button.link}
+              key={index}
+            >
+              {button.title}
             </Button>
           )}
         </Grid>
