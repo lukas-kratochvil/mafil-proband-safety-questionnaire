@@ -66,10 +66,14 @@ export const FormTemplate = ({ auth }: IFormTemplateProps) => {
         <FormQuestions
           title="Část 1"
           questions={questions1}
+          auth={auth}
+          isEditing={isEditing}
         />
         <FormQuestions
           title="Část 2"
           questions={questions2}
+          auth={auth}
+          isEditing={isEditing}
         />
         {auth === undefined && <FormBeforeExamination />}
         {auth === undefined && <FormExaminationConsent />}
