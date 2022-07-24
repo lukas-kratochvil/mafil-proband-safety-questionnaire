@@ -4,17 +4,13 @@ import { FlagComponent } from "country-flag-icons/react/3x2";
 import { useState } from "react";
 import { languages } from "./data"
 
-interface ILanguageItemProps {
+export interface ILanguageItemProps {
   name: string;
   label: string;
   Flag: FlagComponent;
 }
 
-const LanguageItem = ({
-  name,
-  label,
-  Flag,
-}: ILanguageItemProps) => {
+const LanguageItem = ({ name, label, Flag }: ILanguageItemProps) => {
   return (
     <Tooltip title={name}>
       <Button size="small">

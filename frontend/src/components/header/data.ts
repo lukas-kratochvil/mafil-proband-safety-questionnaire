@@ -1,5 +1,5 @@
 import { CZ, GB, SK } from "country-flag-icons/react/3x2";
-import { ILanguageItemProps } from "./LanguageItem";
+import { ILanguageItemProps } from "./LanguageMenu";
 
 export const languages: ILanguageItemProps[] = [
   {
