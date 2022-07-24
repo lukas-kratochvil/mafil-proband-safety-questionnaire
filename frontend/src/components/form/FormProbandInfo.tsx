@@ -104,7 +104,7 @@ export const FormProbandInfo = () => {
             <FormTextField label="Email" />
           </Grid>
           <Grid item xs={2}>
-            <FormTextField label="Telefoní číslo" />
+            <FormTextField label="Telefonní číslo" />
           </Grid>
 
           <Grid item xs={4}>
