@@ -96,12 +96,12 @@ export const FormProbandInfo = () => {
             <FormTextField label="Jméno" />
           </Grid>
           <Grid item xs={2}>
-            <FormTextField label="Email" />
+            <FormTextField label="Příjmení" />
           </Grid>
 
           {/* 2. row */}
           <Grid item xs={2}>
-            <FormTextField label="Příjmení" />
+            <FormTextField label="Email" />
           </Grid>
           <Grid item xs={2}>
             <FormTextField label="Telefoní číslo" />
@@ -130,7 +130,7 @@ export const FormProbandInfo = () => {
             <FormTextField label="Výška" endAdornment={<InputAdornment position="end">cm</InputAdornment>} />
           </Grid>
           <Grid item xs={1}>
-            <FormAutocomplete label="Zraková korekce" options={visualCorrection} />
+            <FormTextField label="Váha" endAdornment={<InputAdornment position="end">kg</InputAdornment>} />
           </Grid>
 
           {/* 4. row */}
@@ -141,7 +141,7 @@ export const FormProbandInfo = () => {
             <FormAutocomplete label="Mateřský jazyk" options={nativeLanguages} />
           </Grid>
           <Grid item xs={1}>
-            <FormTextField label="Váha" endAdornment={<InputAdornment position="end">kg</InputAdornment>} />
+            <FormAutocomplete label="Zraková korekce" options={visualCorrection} />
           </Grid>
           <Grid item xs={1}>
             <FormAutocomplete label="Stranová dominance" options={sideDominance} />
