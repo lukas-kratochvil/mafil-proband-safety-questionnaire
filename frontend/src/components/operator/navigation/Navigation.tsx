@@ -1,7 +1,8 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
+import { tabs } from "./data";
 
-interface ILinkTabProps {
+export interface ILinkTabProps {
   label: string;
   href: string;
 }
@@ -19,23 +20,6 @@ const LinkTab = (props: ILinkTabProps) => {
     />
   );
 }
-
-const tabs: ILinkTabProps[] = [
-  {
-    // TODO: number must be updated
-    label: "Čekárna (2)",
-    href: "/waiting-room",
-  },
-  {
-    // TODO: number must be updated
-    label: "Formuláře ke kontrole (1)",
-    href: "/forms-to-check",
-  },
-  {
-    label: "Poslední visity",
-    href: "/recent-visits",
-  },
-];
 
 export const Navigation = () => {
   const [value, setValue] = useState<number>(0);
