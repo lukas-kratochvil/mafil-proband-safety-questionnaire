@@ -1,30 +1,44 @@
 import { Grid, Typography } from "@mui/material";
 import { FormCard } from "./FormCard";
 
-interface IContentCellProps {
-  title: string;
-  value: string;
+interface ITextProps {
+  text: string
 }
 
-const ContentCell = ({ title, value }: IContentCellProps) => {
+const Text = ({ text }: ITextProps) => {
   return (
-    <Grid padding={2}>
+    <Typography
+      style={{
+        display: "inline-block",
+      }}
+    >
+      {text}
+    </Typography>
+  );
+}
+
+interface IContentCellProps {
+  title: string;
+  element: JSX.Element;
+}
+
+const ContentCell = ({ title, element }: IContentCellProps) => {
+  return (
+    <Grid
+      container
+      padding={2}
+      alignItems="center"
+      gap={2}
+    >
       <Typography
         style={{
-          display: 'inline-block',
-          fontWeight: 'bold',
+          display: "inline-block",
+          fontWeight: "bold",
         }}
       >
         {title}:
       </Typography>
-      <Typography
-        style={{
-          display: 'inline-block',
-          marginLeft: 8,
-        }}
-      >
-        {value}
-      </Typography>
+      {element}
     </Grid>
   );
 }
@@ -38,14 +52,14 @@ export const FormHeader = () => {
         borderBottom={1}
         borderRight={1}
       >
-        <ContentCell title='Projekt' value='Jméno projektu' />
+        <ContentCell title="Projekt" element={<Text text="Jméno projektu" />} />
       </Grid>
       <Grid
         item
         xs={2}
         borderBottom={1}
       >
-        <ContentCell title='Fantom' value='N' />
+        <ContentCell title="Fantom" element={<Text text="N" />} />
       </Grid>
 
       <Grid
@@ -53,13 +67,13 @@ export const FormHeader = () => {
         xs={7}
         borderRight={1}
       >
-        <ContentCell title='Přístroj' value='Magnet 1' />
+        <ContentCell title="Přístroj" element={<Text text="Magnet 1" />} />
       </Grid>
       <Grid
         item
         xs={5}
       >
-        <ContentCell title='Datum měření' value={new Date().toDateString()} />
+        <ContentCell title="Datum měření" element={<Text text={new Date().toDateString()} />} />
       </Grid>
     </FormCard>
   );
