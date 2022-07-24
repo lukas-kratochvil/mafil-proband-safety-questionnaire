@@ -24,7 +24,7 @@ export const FormTemplate = ({ auth }: IFormTemplateProps) => {
 
   return (
     <>
-      <Header isAuthenticated={auth !== undefined} />
+      <Header auth={auth} />
       <Stack
         spacing={3}
         sx={{

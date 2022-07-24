@@ -1,12 +1,13 @@
 import { AppBar, Link, Stack, Toolbar } from "@mui/material";
+import { IAuth } from "../../App";
 import { LanguageMenu } from "./LanguageMenu";
 import { LoginOperator } from "./LoginOperator";
 
 interface IHeaderProps {
-  isAuthenticated: boolean;
+  auth?: IAuth;
 }
 
-export const Header = ({ isAuthenticated }: IHeaderProps) => {
+export const Header = ({ auth }: IHeaderProps) => {
   return (
     <AppBar position="static">
       <Toolbar>
@@ -27,7 +28,7 @@ export const Header = ({ isAuthenticated }: IHeaderProps) => {
               height={40}
             />
           </Link>
-          {isAuthenticated && <LoginOperator /> }
+          {auth !== undefined && <LoginOperator username={auth.username} /> }
           <LanguageMenu />
         </Stack>
       </Toolbar>

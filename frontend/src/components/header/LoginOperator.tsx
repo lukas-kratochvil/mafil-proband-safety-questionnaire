@@ -1,6 +1,10 @@
 import { Button, Card, Grid, Typography } from "@mui/material";
 
-export const LoginOperator = () => {
+interface ILoginOperatorProps {
+  username: string;
+}
+
+export const LoginOperator = ({ username }: ILoginOperatorProps) => {
   return (
     <Grid
       container
@@ -24,7 +28,7 @@ export const LoginOperator = () => {
         }}
       >
         <Typography noWrap>
-          Operator
+          {username}
         </Typography>
       </Card>
       <Button
