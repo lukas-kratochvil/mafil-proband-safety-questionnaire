@@ -1,6 +1,6 @@
 import { Button, Grid, Stack } from "@mui/material";
-import { IAuth } from "../../../App";
-import { Header } from "../../header/Header";
+import { IAuth } from "../../App";
+import { Header } from "../header/Header";
 import { questions1, questions2 } from "./data";
 import { FormBeforeExamination } from "./FormBeforeExamination";
 import { FormEntryInfo } from "./FormEntryInfo";

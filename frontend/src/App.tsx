@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { FormTemplate } from "./components/proband/form/FormTemplate";
+import { FormTemplate } from "./components/form/FormTemplate";
 
 export interface IAuth {
   username: string;
