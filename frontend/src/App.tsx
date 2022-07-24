@@ -4,16 +4,18 @@ import { LoginPage } from "./components/operator/loginPage/LoginPage";
 
 export interface IAuth {
   username: string;
-  isEditing: boolean;
 }
 
 export const App = () => {
+  const auth: IAuth = {
+    username: "Username",
+  };
+
   return (
     <Routes>
       <Route path='/' element={<FormTemplate />} />
       <Route path="/auth" element={<LoginPage />} />
-      <Route path='/auth/form-recap' element={<FormTemplate auth={{ username: "Username", isEditing: false }}/>} />
-      <Route path='/auth/form-edit' element={<FormTemplate auth={{ username: "Username", isEditing: true }} />} />
+      <Route path='/auth/form-recap' element={<FormTemplate auth={auth}/>} />
     </Routes>
   );
 };

@@ -1,4 +1,5 @@
 import { Button, Grid, Stack } from "@mui/material";
+import { useState } from "react";
 import { IAuth } from "../../App";
 import { Header } from "../header/Header";
 import { Navigation } from "../operator/navigation/Navigation";
@@ -16,27 +17,34 @@ interface IFormTemplateProps {
 
 interface IButtonProps {
   title: string;
-  link: string;
+  link?: string;
+  callback?: () => void;
 }
 
 export const FormTemplate = ({ auth }: IFormTemplateProps) => {
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
   let buttons: IButtonProps[];
 
   if (auth === undefined) {
     buttons = [
-      { title: "Souhlasím", link: "TODO" },
+      // TODO: edit callback
+      { title: "Souhlasím", callback: () => console.log("TODO") },
     ];
   } else {
-    if (auth.isEditing) {
+    if (isEditing) {
       buttons = [
-        { title: "Uložit změny", link: "/auth/form-recap" },
-        { title: "Zrušit", link: "/auth/form-recap" },
+        // TODO: edit callback
+        { title: "Uložit změny", callback: () => setIsEditing(false) },
+        // TODO: edit callback
+        { title: "Zrušit", callback: () => setIsEditing(false) },
       ];
     } else {
       buttons = [
-        { title: "Vytisknout PDF", link: "TODO" },
+        // TODO: disable when comments to Yes questions are not filled in
+        { title: "Vytisknout PDF", callback: () => console.log("TODO") },
         { title: "Zrušit", link: "/auth/waiting-room" },
-        { title: "Editovat", link: "/auth/form-edit" },
+        { title: "Editovat", callback: () => setIsEditing(true) },
       ];
     }
   }
@@ -75,6 +83,7 @@ export const FormTemplate = ({ auth }: IFormTemplateProps) => {
             <Button
               variant="contained"
               href={button.link}
+              onClick={button.callback}
               key={index}
             >
               {button.title}
