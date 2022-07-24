@@ -1,7 +1,18 @@
+export const projects: string[] = [
+  "Projekt 1",
+  "Projekt 2",
+  "Projekt 3",
+];
+
+export const magnets: string[] = [
+  "Magnet 1",
+  "Magnet 2",
+];
+
 export const genders: string[] = [
   "Muž",
   "Žena",
-  "Jiné"
+  "Jiné",
 ];
 
 export const nativeLanguages: string[] = [
@@ -9,20 +20,20 @@ export const nativeLanguages: string[] = [
   "Slovenština",
   "Angličtina",
   "Němčina",
-  "Polština"
+  "Polština",
 ];
 
 export const visualCorrection: string[] = [
   "Žádná",
   "≥ 2D (na čtení)",
-  "≥ -2D (do dálky)"
+  "≥ -2D (do dálky)",
 ];
 
 export const sideDominance: string[] = [
   "Pravák",
   "Levák",
   "Přeučený levák",
-  "Neurčeno"
+  "Neurčeno",
 ];
 
 export const questions1: string[] = [

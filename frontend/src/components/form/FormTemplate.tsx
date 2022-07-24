@@ -60,7 +60,7 @@ export const FormTemplate = ({ auth }: IFormTemplateProps) => {
           marginX: '20%',
         }}
       >
-        {auth !== undefined && <FormProjectInfo />}
+        {auth !== undefined && <FormProjectInfo isEditing={isEditing} />}
         <FormProbandInfo />
         {auth === undefined && <FormEntryInfo />}
         <FormQuestions

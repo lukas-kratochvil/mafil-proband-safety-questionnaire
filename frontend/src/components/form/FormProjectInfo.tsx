@@ -1,4 +1,8 @@
-import { Grid, Typography } from "@mui/material";
+import { Autocomplete, Checkbox, Grid, TextField, Typography } from "@mui/material";
+import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { useState } from "react";
+import { magnets, projects } from "./data";
 import { FormCard } from "./FormCard";
 
 interface ITextProps {
@@ -17,6 +21,22 @@ const Text = ({ text }: ITextProps) => {
   );
 }
 
+interface IFormAutocompleteProps {
+  options: string[];
+}
+
+const FormAutocomplete = ({ options }: IFormAutocompleteProps) => {
+  return (
+    <Autocomplete
+      options={options}
+      renderInput={(params) => <TextField {...params} size="small" />}
+      sx={{
+        width: "100%"
+      }}
+    />
+  );
+}
+
 interface IContentCellProps {
   title: string;
   element: JSX.Element;
@@ -27,6 +47,9 @@ const ContentCell = ({ title, element }: IContentCellProps) => {
     <Grid
       container
       padding={2}
+      height="100%"
+      direction="row"
+      flexWrap="nowrap"
       alignItems="center"
       gap={2}
     >
@@ -43,7 +66,15 @@ const ContentCell = ({ title, element }: IContentCellProps) => {
   );
 }
 
-export const FormProjectInfo = () => {
+interface IFormProjectInfoProps {
+  isEditing: boolean;
+}
+
+export const FormProjectInfo = ({ isEditing }: IFormProjectInfoProps) => {
+  const [examinationDate, setExaminationDate] = useState<Date | null>(new Date());
+
+  const handleExaminationDate = (newValue: Date | null) => setExaminationDate(newValue);
+
   return (
     <FormCard mainGridPadding={0}>
       <Grid
@@ -52,28 +83,63 @@ export const FormProjectInfo = () => {
         borderBottom={1}
         borderRight={1}
       >
-        <ContentCell title="Projekt" element={<Text text="Jméno projektu" />} />
+        <ContentCell
+          title="Projekt"
+          element={
+            isEditing
+              ? <FormAutocomplete options={projects} />
+              : <Text text="Jméno projektu" />
+          }
+        />
       </Grid>
       <Grid
         item
         xs={2}
         borderBottom={1}
       >
-        <ContentCell title="Fantom" element={<Text text="N" />} />
+        <ContentCell
+          title="Fantom"
+          element={
+            isEditing
+              ? <Checkbox />
+              : <Text text="N" />
+          }
+        />
       </Grid>
 
       <Grid
         item
-        xs={7}
+        xs={8}
         borderRight={1}
       >
-        <ContentCell title="Přístroj" element={<Text text="Magnet 1" />} />
+        <ContentCell
+          title="Přístroj"
+          element={
+            isEditing
+              ? <FormAutocomplete options={magnets} />
+              : <Text text="N" />
+          }
+        />
       </Grid>
       <Grid
         item
-        xs={5}
+        xs={4}
       >
-        <ContentCell title="Datum měření" element={<Text text={new Date().toDateString()} />} />
+        <ContentCell
+          title="Datum měření"
+          element={
+            isEditing
+              ? <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DesktopDatePicker
+                  inputFormat="dd/MM/yyyy"
+                  value={examinationDate}
+                  onChange={handleExaminationDate}
+                  renderInput={(params) => <TextField {...params} size="small" sx={{ maxWidth: "10rem" }} />}
+                />
+              </LocalizationProvider>
+              : <Text text={new Date().toDateString()} />
+          }
+        />
       </Grid>
     </FormCard>
   );
