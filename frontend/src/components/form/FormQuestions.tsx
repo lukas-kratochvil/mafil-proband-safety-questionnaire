@@ -32,7 +32,9 @@ export const FormQuestions = ({ title, questions, auth, isEditing }: IFormQuesti
               justifyContent="space-between"
               alignItems="center"
             >
-              <Typography>{question}</Typography>
+              <Typography width="80%">
+                {question}
+              </Typography>
               <FormControl>
                 <RadioGroup
                   row
