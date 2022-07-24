@@ -43,7 +43,7 @@ const ContentCell = ({ title, element }: IContentCellProps) => {
   );
 }
 
-export const FormHeader = () => {
+export const FormProjectInfo = () => {
   return (
     <FormCard mainGridPadding={0}>
       <Grid

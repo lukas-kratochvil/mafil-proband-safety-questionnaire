@@ -7,7 +7,7 @@ import { questions1, questions2 } from "./data";
 import { FormBeforeExamination } from "./FormBeforeExamination";
 import { FormEntryInfo } from "./FormEntryInfo";
 import { FormExaminationConsent } from "./FormExaminationConsent";
-import { FormHeader } from "./FormHeader"
+import { FormProjectInfo } from "./FormProjectInfo"
 import { FormProbandInfo } from "./FormProbandInfo";
 import { FormQuestions } from "./FormQuestions";
 
@@ -60,7 +60,7 @@ export const FormTemplate = ({ auth }: IFormTemplateProps) => {
           marginX: '20%',
         }}
       >
-        {auth !== undefined && <FormHeader />}
+        {auth !== undefined && <FormProjectInfo />}
         <FormProbandInfo />
         {auth === undefined && <FormEntryInfo />}
         <FormQuestions
