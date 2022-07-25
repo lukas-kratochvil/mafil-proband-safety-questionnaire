@@ -40,8 +40,8 @@ export const FormQuestions = ({ title, questions, auth, isAuthEditing }: IFormQu
                   row
                   name="question-radio-buttons-group"
                 >
-                  <FormControlLabel value="yes" control={<Radio required={true} />} label="Ano" />
-                  <FormControlLabel value="no" control={<Radio required={true} />} label="Ne" />
+                  <FormControlLabel value="yes" control={<Radio required={true} disabled={!isAuthEditing} />} label="Ano" />
+                  <FormControlLabel value="no" control={<Radio required={true} disabled={!isAuthEditing} />} label="Ne" />
                 </RadioGroup>
               </FormControl>
             </Grid>
