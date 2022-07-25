@@ -6,10 +6,10 @@ interface IFormQuestionsProps {
   title: string;
   questions: string[];
   auth?: IAuth;
-  isEditing: boolean;
+  isAuthEditing: boolean;
 }
 
-export const FormQuestions = ({ title, questions, auth, isEditing }: IFormQuestionsProps) => {
+export const FormQuestions = ({ title, questions, auth, isAuthEditing }: IFormQuestionsProps) => {
   return (
     <FormCard title={title}>
       <Stack
@@ -51,7 +51,7 @@ export const FormQuestions = ({ title, questions, auth, isEditing }: IFormQuesti
                 variant="standard"
                 size="small"
                 multiline
-                disabled={!isEditing}
+                disabled={!isAuthEditing}
                 key={index}
               />
             }

@@ -22,7 +22,7 @@ interface IButtonProps {
 }
 
 export const FormTemplate = ({ auth }: IFormTemplateProps) => {
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
 
   let buttons: IButtonProps[];
 
@@ -32,19 +32,19 @@ export const FormTemplate = ({ auth }: IFormTemplateProps) => {
       { title: "Souhlasím", callback: () => console.log("TODO") },
     ];
   } else {
-    if (isEditing) {
+    if (isAuthEditing) {
       buttons = [
         // TODO: edit callback
-        { title: "Uložit změny", callback: () => setIsEditing(false) },
+        { title: "Uložit změny", callback: () => setIsAuthEditing(false) },
         // TODO: edit callback
-        { title: "Zrušit", callback: () => setIsEditing(false) },
+        { title: "Zrušit", callback: () => setIsAuthEditing(false) },
       ];
     } else {
       buttons = [
         // TODO: disable when comments to Yes questions are not filled in
         { title: "Vytisknout PDF", callback: () => console.log("TODO") },
         { title: "Zrušit", link: "/auth/waiting-room" },
-        { title: "Editovat", callback: () => setIsEditing(true) },
+        { title: "Editovat", callback: () => setIsAuthEditing(true) },
       ];
     }
   }
@@ -60,20 +60,20 @@ export const FormTemplate = ({ auth }: IFormTemplateProps) => {
           marginX: '20%',
         }}
       >
-        {auth !== undefined && <FormProjectInfo isEditing={isEditing} />}
+        {auth !== undefined && <FormProjectInfo isAuthEditing={isAuthEditing} />}
         <FormProbandInfo />
         {auth === undefined && <FormEntryInfo />}
         <FormQuestions
           title="Část 1"
           questions={questions1}
           auth={auth}
-          isEditing={isEditing}
+          isAuthEditing={isAuthEditing}
         />
         <FormQuestions
           title="Část 2"
           questions={questions2}
           auth={auth}
-          isEditing={isEditing}
+          isAuthEditing={isAuthEditing}
         />
         {auth === undefined && <FormBeforeExamination />}
         {auth === undefined && <FormExaminationConsent />}

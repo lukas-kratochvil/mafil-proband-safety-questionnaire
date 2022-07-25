@@ -67,10 +67,10 @@ const ContentCell = ({ title, element }: IContentCellProps) => {
 }
 
 interface IFormProjectInfoProps {
-  isEditing: boolean;
+  isAuthEditing: boolean;
 }
 
-export const FormProjectInfo = ({ isEditing }: IFormProjectInfoProps) => {
+export const FormProjectInfo = ({ isAuthEditing }: IFormProjectInfoProps) => {
   const [examinationDate, setExaminationDate] = useState<Date | null>(new Date());
 
   const handleExaminationDate = (newValue: Date | null) => setExaminationDate(newValue);
@@ -86,7 +86,7 @@ export const FormProjectInfo = ({ isEditing }: IFormProjectInfoProps) => {
         <ContentCell
           title="Projekt"
           element={
-            isEditing
+            isAuthEditing
               ? <FormAutocomplete options={projects} />
               : <Text text="Jméno projektu" />
           }
@@ -100,7 +100,7 @@ export const FormProjectInfo = ({ isEditing }: IFormProjectInfoProps) => {
         <ContentCell
           title="Fantom"
           element={
-            isEditing
+            isAuthEditing
               ? <Checkbox />
               : <Text text="N" />
           }
@@ -115,7 +115,7 @@ export const FormProjectInfo = ({ isEditing }: IFormProjectInfoProps) => {
         <ContentCell
           title="Přístroj"
           element={
-            isEditing
+            isAuthEditing
               ? <FormAutocomplete options={magnets} />
               : <Text text="N" />
           }
@@ -128,7 +128,7 @@ export const FormProjectInfo = ({ isEditing }: IFormProjectInfoProps) => {
         <ContentCell
           title="Datum měření"
           element={
-            isEditing
+            isAuthEditing
               ? <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DesktopDatePicker
                   inputFormat="dd/MM/yyyy"
