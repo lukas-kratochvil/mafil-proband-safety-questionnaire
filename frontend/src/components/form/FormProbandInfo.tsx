@@ -8,13 +8,15 @@ import { FormCard } from "./FormCard";
 interface IFormTextFieldProps {
   label: string;
   endAdornment?: React.ReactNode;
+  disabled: boolean;
 }
 
-const FormTextField = ({ label, endAdornment }: IFormTextFieldProps) => {
+const FormTextField = ({ label, endAdornment, disabled }: IFormTextFieldProps) => {
   return (
     <TextField
       label={label}
       variant="outlined"
+      disabled={disabled}
       InputProps={{
         endAdornment: endAdornment
       }}
@@ -28,13 +30,15 @@ const FormTextField = ({ label, endAdornment }: IFormTextFieldProps) => {
 interface IFormAutocompleteProps {
   label: string;
   options: string[];
+  disabled: boolean;
 }
 
-const FormAutocomplete = ({ label, options }: IFormAutocompleteProps) => {
+const FormAutocomplete = ({ label, options, disabled }: IFormAutocompleteProps) => {
   return (
     <Autocomplete
       options={options}
       renderInput={(params) => <TextField {...params} label={label} />}
+      disabled={disabled}
     />
   );
 }
@@ -74,7 +78,11 @@ const FormSelect = ({ label, options }: IFormSelectProps) => {
 }
 */
 
-export const FormProbandInfo = () => {
+interface IFormProbandInfoProps {
+  isAuthEditing: boolean;
+}
+
+export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
   const [birthdate, setBirthdate] = useState<Date | null>(null);
 
   const handleBirthdateChange = (newValue: Date | null) => setBirthdate(newValue);
@@ -93,18 +101,30 @@ export const FormProbandInfo = () => {
         >
           {/* 1. row */}
           <Grid item xs={2}>
-            <FormTextField label="Jméno" />
+            <FormTextField
+              label="Jméno"
+              disabled={!isAuthEditing}
+            />
           </Grid>
           <Grid item xs={2}>
-            <FormTextField label="Příjmení" />
+            <FormTextField
+              label="Příjmení"
+              disabled={!isAuthEditing}
+            />
           </Grid>
 
           {/* 2. row */}
           <Grid item xs={2}>
-            <FormTextField label="Email" />
+            <FormTextField
+              label="Email"
+              disabled={!isAuthEditing}
+            />
           </Grid>
           <Grid item xs={2}>
-            <FormTextField label="Telefonní číslo" />
+            <FormTextField
+              label="Telefonní číslo"
+              disabled={!isAuthEditing}
+            />
           </Grid>
 
           <Grid item xs={4}>
@@ -113,7 +133,10 @@ export const FormProbandInfo = () => {
 
           {/* 3. row */}
           <Grid item xs={1}>
-            <FormTextField label="Rodné číslo" />
+            <FormTextField
+              label="Rodné číslo"
+              disabled={!isAuthEditing}
+            />
           </Grid>
           <Grid item xs={1}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -123,28 +146,52 @@ export const FormProbandInfo = () => {
                 value={birthdate}
                 onChange={handleBirthdateChange}
                 renderInput={(params) => <TextField {...params} />}
+                disabled={!isAuthEditing}
               />
             </LocalizationProvider>
           </Grid>
           <Grid item xs={1}>
-            <FormTextField label="Výška" endAdornment={<InputAdornment position="end">cm</InputAdornment>} />
+            <FormTextField
+              label="Výška"
+              endAdornment={<InputAdornment position="end">cm</InputAdornment>}
+              disabled={!isAuthEditing}
+            />
           </Grid>
           <Grid item xs={1}>
-            <FormTextField label="Váha" endAdornment={<InputAdornment position="end">kg</InputAdornment>} />
+            <FormTextField
+              label="Váha"
+              endAdornment={<InputAdornment position="end">kg</InputAdornment>}
+              disabled={!isAuthEditing}
+            />
           </Grid>
 
           {/* 4. row */}
           <Grid item xs={1}>
-            <FormAutocomplete label="Pohlaví" options={genders} />
+            <FormAutocomplete
+              label="Pohlaví" options={genders}
+              disabled={!isAuthEditing}
+            />
           </Grid>
           <Grid item xs={1}>
-            <FormAutocomplete label="Mateřský jazyk" options={nativeLanguages} />
+            <FormAutocomplete
+              label="Mateřský jazyk"
+              options={nativeLanguages}
+              disabled={!isAuthEditing}
+            />
           </Grid>
           <Grid item xs={1}>
-            <FormAutocomplete label="Zraková korekce" options={visualCorrection} />
+            <FormAutocomplete
+              label="Zraková korekce"
+              options={visualCorrection}
+              disabled={!isAuthEditing}
+            />
           </Grid>
           <Grid item xs={1}>
-            <FormAutocomplete label="Stranová dominance" options={sideDominance} />
+            <FormAutocomplete
+              label="Stranová dominance"
+              options={sideDominance}
+              disabled={!isAuthEditing}
+            />
           </Grid>
         </Grid>
       </Stack>
