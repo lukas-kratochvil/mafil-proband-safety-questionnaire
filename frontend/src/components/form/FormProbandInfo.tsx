@@ -1,57 +1,13 @@
-import { Autocomplete, Divider, Grid, InputAdornment, Stack, TextField } from "@mui/material";
-import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { useState } from "react";
+import { Divider, Grid, InputAdornment, Stack } from "@mui/material";
 import { genders, nativeLanguages, sideDominance, visualCorrection } from "./data";
 import { FormCard } from "./FormCard";
-
-interface IFormTextFieldProps {
-  label: string;
-  endAdornment?: React.ReactNode;
-  disabled: boolean;
-}
-
-const FormTextField = ({ label, endAdornment, disabled }: IFormTextFieldProps) => {
-  return (
-    <TextField
-      label={label}
-      variant="outlined"
-      disabled={disabled}
-      InputProps={{
-        endAdornment: endAdornment
-      }}
-      sx={{
-        minWidth: '100%',
-      }}
-    />
-  );
-}
-
-interface IFormAutocompleteProps {
-  label: string;
-  options: string[];
-  disabled: boolean;
-}
-
-const FormAutocomplete = ({ label, options, disabled }: IFormAutocompleteProps) => {
-  return (
-    <Autocomplete
-      options={options}
-      renderInput={(params) => <TextField {...params} label={label} />}
-      disabled={disabled}
-    />
-  );
-}
+import { FormAutocomplete, FormDatePicker, FormTextField } from "./FormUtils";
 
 interface IFormProbandInfoProps {
   isAuthEditing: boolean;
 }
 
 export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
-  const [birthdate, setBirthdate] = useState<Date | null>(null);
-
-  const handleBirthdateChange = (newValue: Date | null) => setBirthdate(newValue);
-
   return (
     <FormCard title={'Osobní údaje'}>
       <Stack
@@ -90,16 +46,10 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             />
           </Grid>
           <Grid item xs={1}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DesktopDatePicker
-                label="Datum narození"
-                inputFormat="dd/MM/yyyy"
-                value={birthdate}
-                onChange={handleBirthdateChange}
-                renderInput={(params) => <TextField {...params} />}
-                disabled={!isAuthEditing}
-              />
-            </LocalizationProvider>
+            <FormDatePicker 
+              label="Datum narození"
+              disabled={!isAuthEditing}
+            />
           </Grid>
           <Grid item xs={1}>
             <FormTextField

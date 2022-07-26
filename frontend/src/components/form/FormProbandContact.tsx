@@ -1,27 +1,6 @@
-import { Grid, Stack, TextField, Typography } from "@mui/material";
+import { Grid, Stack, Typography } from "@mui/material";
 import { FormCard } from "./FormCard";
-
-interface IFormTextFieldProps {
-  label: string;
-  endAdornment?: React.ReactNode;
-  disabled: boolean;
-}
-
-const FormTextField = ({ label, endAdornment, disabled }: IFormTextFieldProps) => {
-  return (
-    <TextField
-      label={label}
-      variant="outlined"
-      disabled={disabled}
-      InputProps={{
-        endAdornment: endAdornment
-      }}
-      sx={{
-        minWidth: '100%',
-      }}
-    />
-  );
-}
+import { FormTextField } from "./FormUtils";
 
 interface IFormProbandInfoProps {
   isAuthEditing: boolean;
