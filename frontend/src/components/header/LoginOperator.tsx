@@ -32,6 +32,7 @@ export const LoginOperator = ({ username }: ILoginOperatorProps) => {
         </Typography>
       </Card>
       <Button
+        href="/auth"
         sx={{
           marginLeft: 4,
           bgcolor: 'black',
