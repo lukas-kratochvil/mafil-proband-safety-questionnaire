@@ -1,4 +1,4 @@
-import { Divider, Grid, InputAdornment, Stack } from "@mui/material";
+import { Divider, Grid, Stack } from "@mui/material";
 import { genders, nativeLanguages, sideDominance, visualCorrection } from "./data";
 import { FormCard } from "./FormCard";
 import { FormAutocomplete, FormDatePicker, FormTextField } from "./FormUtils";
@@ -54,14 +54,14 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           <Grid item xs={1}>
             <FormTextField
               label="Výška"
-              endAdornment={<InputAdornment position="end">cm</InputAdornment>}
+              endAdornmentLabel="cm"
               disabled={!isAuthEditing}
             />
           </Grid>
           <Grid item xs={1}>
             <FormTextField
               label="Váha"
-              endAdornment={<InputAdornment position="end">kg</InputAdornment>}
+              endAdornmentLabel="kg"
               disabled={!isAuthEditing}
             />
           </Grid>
