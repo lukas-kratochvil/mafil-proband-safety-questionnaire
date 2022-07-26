@@ -11,6 +11,7 @@ import { FormProjectInfo } from "./FormProjectInfo"
 import { FormProbandInfo } from "./FormProbandInfo";
 import { FormQuestions } from "./FormQuestions";
 import { FormProbandContact } from "./FormProbandContact";
+import { FormSafetyInfo } from "./FormSafetyInfo";
 
 interface IFormTemplateProps {
   auth?: IAuth;
@@ -61,10 +62,11 @@ export const FormTemplate = ({ auth }: IFormTemplateProps) => {
           marginX: '20%',
         }}
       >
+        {auth === undefined && <FormEntryInfo />}
         {auth !== undefined && <FormProjectInfo isAuthEditing={isAuthEditing} />}
         <FormProbandInfo isAuthEditing={auth === undefined || isAuthEditing} />
         <FormProbandContact isAuthEditing={auth === undefined || isAuthEditing} />
-        {auth === undefined && <FormEntryInfo />}
+        {auth === undefined && <FormSafetyInfo />}
         <FormQuestions
           title="Část 1"
           questions={questions1}

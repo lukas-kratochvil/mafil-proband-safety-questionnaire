@@ -10,9 +10,6 @@ export const FormEntryInfo = () => {
       <Typography minWidth="100%" paddingTop={2}>
         V průběhu vyšetření je důležité dbát pokynů laboranta. Zejména, snažit se minimalizovat jakýkoliv pohyb v průběhu měření.
       </Typography>
-      <Typography minWidth="100%" paddingTop={2}>
-        Přečtěte si, prosím, následující otázky a zatrhněte správnou odpověď. Pravdivé zodpovězení našich dotazů je velmi důležité pro Vaši bezpečnost.
-      </Typography>
     </FormCard>
   );
 }
