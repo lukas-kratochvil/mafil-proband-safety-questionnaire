@@ -43,41 +43,6 @@ const FormAutocomplete = ({ label, options, disabled }: IFormAutocompleteProps) 
   );
 }
 
-// TODO: use only Autocomplete or Select either? OnChange event on this select component does not work!
-/*
-interface IFormSelectProps {
-  label: string;
-  options: string[];
-}
-
-const FormSelect = ({ label, options }: IFormSelectProps) => {
-  const [value, setValue] = useState<string>('');
-
-  const handleChange = (event: SelectChangeEvent) => setValue(event.target.value as string);
-
-  return (
-    <FormControl fullWidth>
-      <InputLabel id={`select-${label}`}>
-        {label}
-      </InputLabel>
-      <Select
-        labelId={`select-${label}`}
-        id="demo-simple-select"
-        value={value}
-        label={label}
-        onChange={handleChange}
-      >
-        {options.map((option, index) =>
-          <MenuItem key={index}>
-            {option}
-          </MenuItem>
-        )}
-      </Select>
-    </FormControl>
-  );
-}
-*/
-
 interface IFormProbandInfoProps {
   isAuthEditing: boolean;
 }
