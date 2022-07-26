@@ -42,7 +42,7 @@ export const LoginPage = () => {
           >
             <Button
               variant="outlined"
-              href="/auth/form-recap" // TODO: redirect to an appropriate authentication page
+              href="/auth/waiting-room" // TODO: redirect to an appropriate authentication page
               startIcon={
                 <Avatar
                   variant="square"
