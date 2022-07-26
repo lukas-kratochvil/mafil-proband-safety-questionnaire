@@ -6,7 +6,7 @@ import { useState } from "react";
 interface IFormTextFieldProps {
   label: string;
   endAdornmentLabel?: string;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 export const FormTextField = ({ label, endAdornmentLabel, disabled }: IFormTextFieldProps) => {
@@ -31,7 +31,7 @@ export const FormTextField = ({ label, endAdornmentLabel, disabled }: IFormTextF
 interface IFormAutocompleteProps {
   label: string;
   options: string[];
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 export const FormAutocomplete = ({ label, options, disabled }: IFormAutocompleteProps) => {
@@ -46,7 +46,7 @@ export const FormAutocomplete = ({ label, options, disabled }: IFormAutocomplete
 
 interface IFormDatePickerProps {
   label: string;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 export const FormDatePicker = ({ label, disabled }: IFormDatePickerProps) => {

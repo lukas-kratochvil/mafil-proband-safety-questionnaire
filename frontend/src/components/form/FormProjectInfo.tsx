@@ -1,146 +1,64 @@
-import { Autocomplete, Checkbox, Grid, TextField, Typography } from "@mui/material";
-import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { useState } from "react";
+import { Checkbox, FormControlLabel, Grid, Stack } from "@mui/material";
 import { magnets, projects } from "./data";
 import { FormCard } from "./FormCard";
+import { FormAutocomplete, FormDatePicker } from "./FormUtils";
 
-interface ITextProps {
-  text: string
-}
-
-const Text = ({ text }: ITextProps) => {
+export const FormProjectInfo = () => {
   return (
-    <Typography
-      style={{
-        display: "inline-block",
-      }}
-    >
-      {text}
-    </Typography>
-  );
-}
-
-interface IFormAutocompleteProps {
-  options: string[];
-}
-
-const FormAutocomplete = ({ options }: IFormAutocompleteProps) => {
-  return (
-    <Autocomplete
-      options={options}
-      renderInput={(params) => <TextField {...params} size="small" />}
-      sx={{
-        width: "100%"
-      }}
-    />
-  );
-}
-
-interface IContentCellProps {
-  title: string;
-  element: JSX.Element;
-}
-
-const ContentCell = ({ title, element }: IContentCellProps) => {
-  return (
-    <Grid
-      container
-      padding={2}
-      height="100%"
-      direction="row"
-      flexWrap="nowrap"
-      alignItems="center"
-      gap={2}
-    >
-      <Typography
-        style={{
-          display: "inline-block",
-          fontWeight: "bold",
-        }}
+    <FormCard title="Informace o projektu">
+      <Stack
+        spacing={1}
+        minWidth="100%"
       >
-        {title}:
-      </Typography>
-      {element}
-    </Grid>
-  );
-}
+        <Grid
+          container
+          direction="row"
+          spacing={2}
+          columns={4}
+        >
+          <Grid
+            item
+            xs={3}
+          >
+            <FormAutocomplete
+              label="Projekt"
+              options={projects}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={1}
+          >
+            <FormControlLabel
+              label="Fantom"
+              labelPlacement="start"
+              control={<Checkbox />}
+              value="start"
+              sx={{
+                height: "100%",
+              }}
+            />
+          </Grid>
 
-interface IFormProjectInfoProps {
-  isAuthEditing: boolean;
-}
-
-export const FormProjectInfo = ({ isAuthEditing }: IFormProjectInfoProps) => {
-  const [examinationDate, setExaminationDate] = useState<Date | null>(new Date());
-
-  const handleExaminationDate = (newValue: Date | null) => setExaminationDate(newValue);
-
-  return (
-    <FormCard mainGridPadding={0}>
-      <Grid
-        item
-        xs={10}
-        borderBottom={1}
-        borderRight={1}
-      >
-        <ContentCell
-          title="Projekt"
-          element={
-            isAuthEditing
-              ? <FormAutocomplete options={projects} />
-              : <Text text="Jméno projektu" />
-          }
-        />
-      </Grid>
-      <Grid
-        item
-        xs={2}
-        borderBottom={1}
-      >
-        <ContentCell
-          title="Fantom"
-          element={
-            isAuthEditing
-              ? <Checkbox />
-              : <Text text="N" />
-          }
-        />
-      </Grid>
-
-      <Grid
-        item
-        xs={8}
-        borderRight={1}
-      >
-        <ContentCell
-          title="Přístroj"
-          element={
-            isAuthEditing
-              ? <FormAutocomplete options={magnets} />
-              : <Text text="N" />
-          }
-        />
-      </Grid>
-      <Grid
-        item
-        xs={4}
-      >
-        <ContentCell
-          title="Datum měření"
-          element={
-            isAuthEditing
-              ? <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DesktopDatePicker
-                  inputFormat="dd/MM/yyyy"
-                  value={examinationDate}
-                  onChange={handleExaminationDate}
-                  renderInput={(params) => <TextField {...params} size="small" sx={{ maxWidth: "10rem" }} />}
-                />
-              </LocalizationProvider>
-              : <Text text={new Date().toDateString()} />
-          }
-        />
-      </Grid>
+          <Grid
+            item
+            xs={3}
+          >
+            <FormAutocomplete
+              label="Přístroj"
+              options={magnets}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={1}
+          >
+            <FormDatePicker
+              label="Datum měření"
+            />
+          </Grid>
+        </Grid>
+      </Stack>
     </FormCard>
   );
 }

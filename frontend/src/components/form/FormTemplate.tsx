@@ -63,7 +63,7 @@ export const FormTemplate = ({ auth }: IFormTemplateProps) => {
         }}
       >
         {auth === undefined && <FormEntryInfo />}
-        {auth !== undefined && <FormProjectInfo isAuthEditing={isAuthEditing} />}
+        {auth !== undefined && <FormProjectInfo />}
         <FormProbandInfo isAuthEditing={auth === undefined || isAuthEditing} />
         <FormProbandContact isAuthEditing={auth === undefined || isAuthEditing} />
         {auth === undefined && <FormSafetyInfo />}
