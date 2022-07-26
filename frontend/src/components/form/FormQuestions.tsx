@@ -51,7 +51,6 @@ export const FormQuestions = ({ title, questions, auth, isAuthEditing }: IFormQu
                 variant="standard"
                 size="small"
                 multiline
-                disabled={!isAuthEditing}
                 key={index}
               />
             }
