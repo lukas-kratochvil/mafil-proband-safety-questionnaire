@@ -24,5 +24,5 @@ export const waitingRoomTableData: IWaitingRoomTableDataProps = {
     [new Date().toDateString(), "Karel", "Novák", "0123456789", new Date().toDateString(), "Muž", "Čeština"],
     [new Date().toDateString(), "Karel", "Novák", "0123456789", new Date().toDateString(), "Muž", "Čeština"],
   ],
-  actionButtonTitles: ["Editovat"],
+  actionButtonTitles: ["Zpracovat"],
 };
