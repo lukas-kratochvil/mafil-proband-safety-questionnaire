@@ -7,11 +7,6 @@ export const tabs: ILinkTabProps[] = [
     href: "/auth/waiting-room",
   },
   {
-    // TODO: number must be updated
-    label: "Formuláře ke kontrole (1)",
-    href: "/auth/forms-to-check",
-  },
-  {
     label: "Poslední visity",
     href: "/auth/recent-visits",
   },
