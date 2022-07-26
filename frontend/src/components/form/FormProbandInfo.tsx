@@ -113,25 +113,11 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             />
           </Grid>
 
-          {/* 2. row */}
-          <Grid item xs={2}>
-            <FormTextField
-              label="Email"
-              disabled={!isAuthEditing}
-            />
-          </Grid>
-          <Grid item xs={2}>
-            <FormTextField
-              label="Telefonní číslo"
-              disabled={!isAuthEditing}
-            />
-          </Grid>
-
           <Grid item xs={4}>
             <Divider flexItem />
           </Grid>
 
-          {/* 3. row */}
+          {/* 2. row */}
           <Grid item xs={1}>
             <FormTextField
               label="Rodné číslo"
@@ -165,7 +151,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             />
           </Grid>
 
-          {/* 4. row */}
+          {/* 3. row */}
           <Grid item xs={1}>
             <FormAutocomplete
               label="Pohlaví" options={genders}

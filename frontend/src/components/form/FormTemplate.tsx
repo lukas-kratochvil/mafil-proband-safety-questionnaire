@@ -10,6 +10,7 @@ import { FormExaminationConsent } from "./FormExaminationConsent";
 import { FormProjectInfo } from "./FormProjectInfo"
 import { FormProbandInfo } from "./FormProbandInfo";
 import { FormQuestions } from "./FormQuestions";
+import { FormProbandContact } from "./FormProbandContact";
 
 interface IFormTemplateProps {
   auth?: IAuth;
@@ -62,6 +63,7 @@ export const FormTemplate = ({ auth }: IFormTemplateProps) => {
       >
         {auth !== undefined && <FormProjectInfo isAuthEditing={isAuthEditing} />}
         <FormProbandInfo isAuthEditing={auth === undefined || isAuthEditing} />
+        <FormProbandContact isAuthEditing={auth === undefined || isAuthEditing} />
         {auth === undefined && <FormEntryInfo />}
         <FormQuestions
           title="Část 1"
