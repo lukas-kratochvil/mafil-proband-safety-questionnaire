@@ -22,7 +22,7 @@ export const FormProbandContact = ({ isAuthEditing }: IFormProbandInfoProps) => 
           {/* 1. row */}
           <Grid item xs={4}>
             <Typography>
-              Pro elektronické zaslání výsledků z měření je potřeba vyplnit alespoň 1 z následujících údajů:
+              Pro elektronické zaslání výsledků z měření je nutné vyplnit alespoň 1 z následujících údajů:
             </Typography>
           </Grid>
           {/* 2. row */}
