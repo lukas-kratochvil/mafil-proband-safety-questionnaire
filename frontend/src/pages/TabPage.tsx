@@ -5,16 +5,17 @@ import { Header } from "../components/header/Header";
 import { Navigation } from "../components/navigation/Navigation";
 
 interface IActionButtonsProps {
+  id: string;
   titles: string[];
 }
 
-const ActionButtons = ({ titles }: IActionButtonsProps) => {
+const ActionButtons = ({ id, titles }: IActionButtonsProps) => {
   return (
     <TableCell>
       {titles.map((title, index) =>
         <Button
           variant="contained"
-          // TODO: use href="/auth/form-recap/{id}"
+          // TODO: use href=`/auth/form-recap/${id}`
           href="/auth/form-recap"
           key={index}
         >
@@ -88,7 +89,8 @@ export const TabPage = ({ auth, data }: ITabPageProps) => {
                       {cell}
                     </TableCell>
                   )}
-                  <ActionButtons titles={data.actionButtonTitles} />
+                  {/* TODO: pass the actual form id */}
+                  <ActionButtons id={index.toString()} titles={data.actionButtonTitles} />
                 </TableRow>
               ))}
             </TableBody>
