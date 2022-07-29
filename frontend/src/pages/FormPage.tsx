@@ -2,7 +2,7 @@ import { Button, Grid, Stack } from "@mui/material";
 import { useState } from "react";
 import { IAuth } from "../App";
 import { Header } from "../components/header/Header";
-import { Navigation } from "../components/operator/navigation/Navigation";
+import { Navigation } from "../components/navigation/Navigation";
 import { questions1, questions2 } from "../data/form_data";
 import { FormBeforeExamination } from "../components/form/FormBeforeExamination";
 import { FormEntryInfo } from "../components/form/FormEntryInfo";

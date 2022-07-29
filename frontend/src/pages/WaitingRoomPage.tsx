@@ -1,7 +1,7 @@
 import { Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { IAuth } from "../App";
 import { Header } from "../components/header/Header";
-import { Navigation } from "../components/operator/navigation/Navigation";
+import { Navigation } from "../components/navigation/Navigation";
 import { waitingRoomTableData } from "../data/waiting_room_data";
 
 interface IActionButtonsProps {

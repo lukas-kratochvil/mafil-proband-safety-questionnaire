@@ -1,6 +1,6 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
-import { tabs } from "../../../data/navigation_data";
+import { tabs } from "../../data/navigation_data";
 
 export interface ILinkTabProps {
   label: string;
