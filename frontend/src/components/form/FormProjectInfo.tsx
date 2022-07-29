@@ -1,5 +1,5 @@
 import { Checkbox, FormControlLabel, Grid, Stack } from "@mui/material";
-import { magnets, projects } from "./data";
+import { magnets, projects } from "../../data/form_data";
 import { FormCard } from "./FormCard";
 import { FormAutocomplete, FormDatePicker } from "./FormUtils";
 

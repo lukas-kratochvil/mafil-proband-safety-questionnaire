@@ -1,4 +1,4 @@
-import { ILinkTabProps } from "./Navigation";
+import { ILinkTabProps } from "../components/operator/navigation/Navigation";
 
 export const tabs: ILinkTabProps[] = [
   {

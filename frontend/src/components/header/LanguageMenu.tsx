@@ -2,7 +2,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 import { Avatar, Button, IconButton, Menu, Tooltip } from "@mui/material";
 import { FlagComponent } from "country-flag-icons/react/3x2";
 import { useState } from "react";
-import { languages } from "./data"
+import { languages } from "../../data/header_data"
 
 export interface ILanguageItemProps {
   name: string;

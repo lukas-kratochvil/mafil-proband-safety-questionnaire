@@ -2,7 +2,7 @@ import { Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, Tabl
 import { IAuth } from "../../../App";
 import { Header } from "../../header/Header";
 import { Navigation } from "../navigation/Navigation";
-import { waitingRoomTableData } from "./data";
+import { waitingRoomTableData } from "../../../data/waiting_room_data";
 
 interface IActionButtonsProps {
   titles: string[];

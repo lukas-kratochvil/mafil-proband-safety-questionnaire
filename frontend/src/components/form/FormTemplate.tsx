@@ -3,7 +3,7 @@ import { useState } from "react";
 import { IAuth } from "../../App";
 import { Header } from "../header/Header";
 import { Navigation } from "../operator/navigation/Navigation";
-import { questions1, questions2 } from "./data";
+import { questions1, questions2 } from "../../data/form_data";
 import { FormBeforeExamination } from "./FormBeforeExamination";
 import { FormEntryInfo } from "./FormEntryInfo";
 import { FormExaminationConsent } from "./FormExaminationConsent";

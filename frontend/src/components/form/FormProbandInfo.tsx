@@ -1,6 +1,6 @@
 import InfoIcon from '@mui/icons-material/Info';
 import { Divider, Grid, Stack, Tooltip, Typography } from "@mui/material";
-import { genders, nativeLanguages, sideDominance, visualCorrection } from "./data";
+import { genders, nativeLanguages, sideDominance, visualCorrection } from "../../data/form_data";
 import { FormCard } from "./FormCard";
 import { FormAutocomplete, FormDatePicker, FormTextField } from "./FormUtils";
 
