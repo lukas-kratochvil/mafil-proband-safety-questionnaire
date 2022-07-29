@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { FormTemplate } from "./components/form/FormTemplate";
-import { LoginPage } from "./components/operator/loginPage/LoginPage";
-import { WaitingRoom } from "./components/operator/waiting-room/WaitingRoom";
+import { LoginPage } from "./components/operator/login_page/LoginPage";
+import { WaitingRoom } from "./components/operator/waiting_room/WaitingRoom";
 
 export interface IAuth {
   username: string;
