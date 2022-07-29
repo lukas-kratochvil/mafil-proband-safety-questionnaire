@@ -1,4 +1,5 @@
-import { Divider, Grid, Stack } from "@mui/material";
+import InfoIcon from '@mui/icons-material/Info';
+import { Divider, Grid, Stack, Tooltip, Typography } from "@mui/material";
 import { genders, nativeLanguages, sideDominance, visualCorrection } from "./data";
 import { FormCard } from "./FormCard";
 import { FormAutocomplete, FormDatePicker, FormTextField } from "./FormUtils";
@@ -42,11 +43,20 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           <Grid item xs={1}>
             <FormTextField
               label="Rodné číslo"
+              endAdornmentLabel={
+                <Tooltip
+                  title={<Typography>V případě, že nemáte české rodné číslo, zadejte, prosím, číslo pojištěnce.</Typography>}
+                  arrow
+                  placement="top-start"
+                >
+                  <InfoIcon sx={{ color: "#2da2e1" }} />
+                </Tooltip>
+              }
               disabled={!isAuthEditing}
             />
           </Grid>
           <Grid item xs={1}>
-            <FormDatePicker 
+            <FormDatePicker
               label="Datum narození"
               disabled={!isAuthEditing}
             />

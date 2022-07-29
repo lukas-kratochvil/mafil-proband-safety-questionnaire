@@ -1,11 +1,11 @@
 import { Autocomplete, InputAdornment, TextField } from "@mui/material";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
 interface IFormTextFieldProps {
   label: string;
-  endAdornmentLabel?: string;
+  endAdornmentLabel?: ReactNode;
   disabled?: boolean;
 }
 
