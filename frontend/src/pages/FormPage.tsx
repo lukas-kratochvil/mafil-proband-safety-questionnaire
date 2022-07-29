@@ -1,19 +1,19 @@
 import { Button, Grid, Stack } from "@mui/material";
 import { useState } from "react";
-import { IAuth } from "../../App";
-import { Header } from "../header/Header";
-import { Navigation } from "../operator/navigation/Navigation";
-import { questions1, questions2 } from "../../data/form_data";
-import { FormBeforeExamination } from "./FormBeforeExamination";
-import { FormEntryInfo } from "./FormEntryInfo";
-import { FormExaminationConsent } from "./FormExaminationConsent";
-import { FormProjectInfo } from "./FormProjectInfo"
-import { FormProbandInfo } from "./FormProbandInfo";
-import { FormQuestions } from "./FormQuestions";
-import { FormProbandContact } from "./FormProbandContact";
-import { FormSafetyInfo } from "./FormSafetyInfo";
+import { IAuth } from "../App";
+import { Header } from "../components/header/Header";
+import { Navigation } from "../components/operator/navigation/Navigation";
+import { questions1, questions2 } from "../data/form_data";
+import { FormBeforeExamination } from "../components/form/FormBeforeExamination";
+import { FormEntryInfo } from "../components/form/FormEntryInfo";
+import { FormExaminationConsent } from "../components/form/FormExaminationConsent";
+import { FormProjectInfo } from "../components/form/FormProjectInfo"
+import { FormProbandInfo } from "../components/form/FormProbandInfo";
+import { FormQuestions } from "../components/form/FormQuestions";
+import { FormProbandContact } from "../components/form/FormProbandContact";
+import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
 
-interface IFormTemplateProps {
+interface IFormPageProps {
   auth?: IAuth;
 }
 
@@ -23,7 +23,7 @@ interface IButtonProps {
   callback?: () => void;
 }
 
-export const FormTemplate = ({ auth }: IFormTemplateProps) => {
+export const FormPage = ({ auth }: IFormPageProps) => {
   const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
 
   let buttons: IButtonProps[];

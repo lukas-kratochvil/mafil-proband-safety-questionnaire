@@ -1,8 +1,8 @@
 import { Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import { IAuth } from "../../../App";
-import { Header } from "../../header/Header";
-import { Navigation } from "../navigation/Navigation";
-import { waitingRoomTableData } from "../../../data/waiting_room_data";
+import { IAuth } from "../App";
+import { Header } from "../components/header/Header";
+import { Navigation } from "../components/operator/navigation/Navigation";
+import { waitingRoomTableData } from "../data/waiting_room_data";
 
 interface IActionButtonsProps {
   titles: string[];
@@ -14,6 +14,7 @@ const ActionButtons = ({ titles }: IActionButtonsProps) => {
       {titles.map((title, index) =>
         <Button
           variant="contained"
+          // TODO: use href="/auth/form-recap/{id}"
           href="/auth/form-recap"
           key={index}
         >
@@ -24,11 +25,11 @@ const ActionButtons = ({ titles }: IActionButtonsProps) => {
   );
 }
 
-interface IWaitingRoomProps {
+interface IWaitingRoomPageProps {
   auth: IAuth;
 }
 
-export const WaitingRoom = ({ auth }: IWaitingRoomProps) => {
+export const WaitingRoomPage = ({ auth }: IWaitingRoomPageProps) => {
   return (
     <>
       <Header auth={auth} />

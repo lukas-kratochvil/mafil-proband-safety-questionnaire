@@ -1,5 +1,5 @@
 import { Avatar, Button, Card, Divider, Grid, Stack, Typography } from "@mui/material";
-import { Header } from "../../header/Header";
+import { Header } from "../components/header/Header";
 
 export const LoginPage = () => {
   return (
