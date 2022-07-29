@@ -2,7 +2,9 @@ import InfoIcon from '@mui/icons-material/Info';
 import { Divider, Grid, Stack, Tooltip, Typography } from "@mui/material";
 import { genders, nativeLanguages, sideDominance, visualCorrection } from "../../data/form_data";
 import { FormCard } from "./FormCard";
-import { FormAutocomplete, FormDatePicker, FormTextField } from "./FormUtils";
+import { FormDatePicker } from "./inputs/FormDatePicker";
+import { FormAutocomplete } from "./inputs/FormAutocomplete";
+import { FormTextField } from "./inputs/FormTextField";
 
 interface IFormProbandInfoProps {
   isAuthEditing: boolean;

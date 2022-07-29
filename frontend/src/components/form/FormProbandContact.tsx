@@ -1,6 +1,6 @@
 import { Grid, Stack, Typography } from "@mui/material";
 import { FormCard } from "./FormCard";
-import { FormTextField } from "./FormUtils";
+import { FormTextField } from "./inputs/FormTextField";
 
 interface IFormProbandInfoProps {
   isAuthEditing: boolean;
