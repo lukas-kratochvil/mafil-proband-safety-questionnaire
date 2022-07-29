@@ -3,14 +3,14 @@ export enum TabType {
   LAST_VISITS,
 }
 
-interface IWaitingRoomTableDataProps {
+export interface ITabPageTableProps {
   type: TabType;
   header: string[];
   data: string[][];
   actionButtonTitles: string[];
 };
 
-export const waitingRoomTableData: IWaitingRoomTableDataProps = {
+export const waitingRoomTableData: ITabPageTableProps = {
   type: TabType.WAITING_ROOM,
   header: ["Registrován/a", "Jméno", "Příjmení", "Rodné číslo", "Datum narození", "Pohlaví", "Mateřský jazyk"],
   data: [

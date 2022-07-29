@@ -1,8 +1,8 @@
 import { Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { IAuth } from "../App";
+import { ITabPageTableProps } from "../data/waiting_room_data";
 import { Header } from "../components/header/Header";
 import { Navigation } from "../components/navigation/Navigation";
-import { waitingRoomTableData } from "../data/waiting_room_data";
 
 interface IActionButtonsProps {
   titles: string[];
@@ -25,11 +25,12 @@ const ActionButtons = ({ titles }: IActionButtonsProps) => {
   );
 }
 
-interface IWaitingRoomPageProps {
+interface ITabPageProps {
   auth: IAuth;
+  data: ITabPageTableProps;
 }
 
-export const WaitingRoomPage = ({ auth }: IWaitingRoomPageProps) => {
+export const TabPage = ({ auth, data }: ITabPageProps) => {
   return (
     <>
       <Header auth={auth} />
@@ -51,7 +52,7 @@ export const WaitingRoomPage = ({ auth }: IWaitingRoomPageProps) => {
           >
             <TableHead>
               <TableRow>
-                {waitingRoomTableData.header.map((title, index) =>
+                {data.header.map((title, index) =>
                   <TableCell
                     key={index}
                     sx={{
@@ -73,7 +74,7 @@ export const WaitingRoomPage = ({ auth }: IWaitingRoomPageProps) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {waitingRoomTableData.data.map((row, index) => (
+              {data.data.map((row, index) => (
                 <TableRow
                   key={index}
                   sx={{
@@ -87,7 +88,7 @@ export const WaitingRoomPage = ({ auth }: IWaitingRoomPageProps) => {
                       {cell}
                     </TableCell>
                   )}
-                  <ActionButtons titles={waitingRoomTableData.actionButtonTitles} />
+                  <ActionButtons titles={data.actionButtonTitles} />
                 </TableRow>
               ))}
             </TableBody>

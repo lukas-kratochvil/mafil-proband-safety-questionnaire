@@ -1,7 +1,8 @@
 import { Route, Routes } from "react-router-dom";
+import { TabPage } from "./pages/TabPage";
+import { waitingRoomTableData } from "./data/waiting_room_data";
 import { FormPage } from "./pages/FormPage";
 import { LoginPage } from "./pages/LoginPage";
-import { WaitingRoomPage } from "./pages/WaitingRoomPage";
 
 export interface IAuth {
   username: string;
@@ -16,8 +17,9 @@ export const App = () => {
     <Routes>
       <Route path='/' element={<FormPage />} />
       <Route path="/auth" element={<LoginPage />} />
+      {/* TODO: actual path should be path='/auth/form-recap/{id}' */}
       <Route path='/auth/form-recap' element={<FormPage auth={auth} />} />
-      <Route path='/auth/waiting-room' element={<WaitingRoomPage  auth={auth} />} />
+      <Route path='/auth/waiting-room' element={<TabPage auth={auth} data={waitingRoomTableData} />} />
     </Routes>
   );
 };

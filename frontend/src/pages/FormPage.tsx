@@ -43,7 +43,7 @@ export const FormPage = ({ auth }: IFormPageProps) => {
       ];
     } else {
       buttons = [
-        // TODO: disable when comments to Yes questions are not filled in
+        // TODO: disable when comments to Yes/No questions are not filled in
         { title: "Finalizovat", callback: () => console.log("TODO") },
         { title: "Zrušit", link: "/auth/waiting-room" },
         { title: "Editovat", callback: () => setIsAuthEditing(true) },
