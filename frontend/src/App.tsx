@@ -15,11 +15,14 @@ export const App = () => {
 
   return (
     <Routes>
-      <Route path='/' element={<FormPage />} />
+      <Route path="/" element={<FormPage />} />
       <Route path="/auth" element={<LoginPage />} />
       {/* TODO: actual path should be path='/auth/form-recap/{id}' */}
-      <Route path='/auth/form-recap' element={<FormPage auth={auth} />} />
-      <Route path='/auth/waiting-room' element={<TabPage auth={auth} data={waitingRoomTableData} />} />
+      <Route path="/auth/form-recap" element={<FormPage auth={auth} />} />
+      <Route
+        path="/auth/waiting-room"
+        element={<TabPage auth={auth} data={waitingRoomTableData} />}
+      />
     </Routes>
   );
 };

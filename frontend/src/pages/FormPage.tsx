@@ -7,7 +7,7 @@ import { questions1, questions2 } from "../data/form_data";
 import { FormBeforeExamination } from "../components/form/FormBeforeExamination";
 import { FormEntryInfo } from "../components/form/FormEntryInfo";
 import { FormExaminationConsent } from "../components/form/FormExaminationConsent";
-import { FormProjectInfo } from "../components/form/FormProjectInfo"
+import { FormProjectInfo } from "../components/form/FormProjectInfo";
 import { FormProbandInfo } from "../components/form/FormProbandInfo";
 import { FormQuestions } from "../components/form/FormQuestions";
 import { FormProbandContact } from "../components/form/FormProbandContact";
@@ -33,22 +33,20 @@ export const FormPage = ({ auth }: IFormPageProps) => {
       // TODO: edit callback
       { title: "Souhlasím", callback: () => console.log("TODO") },
     ];
+  } else if (isAuthEditing) {
+    buttons = [
+      // TODO: edit callback
+      { title: "Uložit změny", callback: () => setIsAuthEditing(false) },
+      // TODO: edit callback
+      { title: "Zrušit", callback: () => setIsAuthEditing(false) },
+    ];
   } else {
-    if (isAuthEditing) {
-      buttons = [
-        // TODO: edit callback
-        { title: "Uložit změny", callback: () => setIsAuthEditing(false) },
-        // TODO: edit callback
-        { title: "Zrušit", callback: () => setIsAuthEditing(false) },
-      ];
-    } else {
-      buttons = [
-        // TODO: disable when comments to Yes/No questions are not filled in
-        { title: "Finalizovat", callback: () => console.log("TODO") },
-        { title: "Zrušit", link: "/auth/waiting-room" },
-        { title: "Editovat", callback: () => setIsAuthEditing(true) },
-      ];
-    }
+    buttons = [
+      // TODO: disable when comments to Yes/No questions are not filled in
+      { title: "Finalizovat", callback: () => console.log("TODO") },
+      { title: "Zrušit", link: "/auth/waiting-room" },
+      { title: "Editovat", callback: () => setIsAuthEditing(true) },
+    ];
   }
 
   return (
@@ -59,13 +57,15 @@ export const FormPage = ({ auth }: IFormPageProps) => {
         spacing={3}
         sx={{
           marginY: 3,
-          marginX: '20%',
+          marginX: "20%",
         }}
       >
         {auth === undefined && <FormEntryInfo />}
         {auth !== undefined && <FormProjectInfo />}
         <FormProbandInfo isAuthEditing={auth === undefined || isAuthEditing} />
-        <FormProbandContact isAuthEditing={auth === undefined || isAuthEditing} />
+        <FormProbandContact
+          isAuthEditing={auth === undefined || isAuthEditing}
+        />
         {auth === undefined && <FormSafetyInfo />}
         <FormQuestions
           title="Část 1"
@@ -81,13 +81,8 @@ export const FormPage = ({ auth }: IFormPageProps) => {
         />
         {auth === undefined && <FormBeforeExamination />}
         {auth === undefined && <FormExaminationConsent />}
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          gap={3}
-        >
-          {buttons.map((button, index) =>
+        <Grid container direction="row" justifyContent="center" gap={3}>
+          {buttons.map((button, index) => (
             <Button
               variant="contained"
               href={button.link}
@@ -96,9 +91,9 @@ export const FormPage = ({ auth }: IFormPageProps) => {
             >
               {button.title}
             </Button>
-          )}
+          ))}
         </Grid>
       </Stack>
     </>
   );
-}
+};

@@ -6,34 +6,36 @@ interface IFormCardProps {
   mainGridPadding?: number;
 }
 
-export const FormCard = ({ children, title, mainGridPadding: gridPadding = 2 }: PropsWithChildren<IFormCardProps>) => {
-  return (
-    <Card
+export const FormCard = ({
+  children,
+  title,
+  mainGridPadding = 2,
+}: PropsWithChildren<IFormCardProps>) => (
+  <Card
+    sx={{
+      border: 2,
+    }}
+  >
+    {title && (
+      <>
+        <Typography
+          textAlign="center"
+          fontWeight="bold"
+          fontSize={20}
+          paddingY={1}
+        >
+          {title}
+        </Typography>
+        <Divider flexItem />
+      </>
+    )}
+    <Grid
+      container
       sx={{
-        border: 2,
+        padding: mainGridPadding,
       }}
     >
-      {title &&
-        <>
-          <Typography
-            textAlign='center'
-            fontWeight='bold'
-            fontSize={20}
-            paddingY={1}
-          >
-            {title}
-          </Typography>
-          <Divider flexItem />
-        </>
-      }
-      <Grid
-        container
-        sx={{
-          padding: gridPadding
-        }}
-      >
-        {children}
-      </Grid>
-    </Card>
-  );
-}
+      {children}
+    </Grid>
+  </Card>
+);

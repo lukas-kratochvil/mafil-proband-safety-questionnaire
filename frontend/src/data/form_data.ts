@@ -1,19 +1,8 @@
-export const projects: string[] = [
-  "Projekt 1",
-  "Projekt 2",
-  "Projekt 3",
-];
+export const projects: string[] = ["Projekt 1", "Projekt 2", "Projekt 3"];
 
-export const magnets: string[] = [
-  "Magnet 1",
-  "Magnet 2",
-];
+export const magnets: string[] = ["Magnet 1", "Magnet 2"];
 
-export const genders: string[] = [
-  "Muž",
-  "Žena",
-  "Jiné",
-];
+export const genders: string[] = ["Muž", "Žena", "Jiné"];
 
 export const nativeLanguages: string[] = [
   "Čeština",

@@ -1,5 +1,5 @@
 import { Box, Tab, Tabs } from "@mui/material";
-import { useState } from "react";
+import React, { useState } from "react";
 import { tabs } from "../../data/navigation_data";
 
 export interface ILinkTabProps {
@@ -7,30 +7,31 @@ export interface ILinkTabProps {
   href: string;
 }
 
-const LinkTab = (props: ILinkTabProps) => {
-  return (
-    <Tab
-      component="a"
-      onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => event.preventDefault()}
-      {...props}
-      sx={{
-        borderRight: 1,
-        borderColor: 'black'
-      }}
-    />
-  );
-}
+const LinkTab = (props: ILinkTabProps) => (
+  <Tab
+    component="a"
+    onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) =>
+      event.preventDefault()
+    }
+    {...props}
+    sx={{
+      borderRight: 1,
+      borderColor: "black",
+    }}
+  />
+);
 
 export const Navigation = () => {
   const [value, setValue] = useState<number>(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => setValue(newValue);;
+  const handleChange = (event: React.SyntheticEvent, newValue: number) =>
+    setValue(newValue);
 
   return (
     <Box
       sx={{
-        width: '100%',
-        backgroundColor: 'orange',
+        width: "100%",
+        backgroundColor: "orange",
         borderTop: 1,
         borderBottom: 1,
       }}
@@ -40,7 +41,9 @@ export const Navigation = () => {
         onChange={handleChange}
         aria-label="top-menu navigation"
       >
-        {tabs.map((tab, index) => <LinkTab key={index} {...tab} />)}
+        {tabs.map((tab, index) => (
+          <LinkTab key={index} {...tab} />
+        ))}
       </Tabs>
     </Box>
   );

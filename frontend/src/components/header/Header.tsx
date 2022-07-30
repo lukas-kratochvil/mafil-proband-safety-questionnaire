@@ -7,28 +7,26 @@ interface IHeaderProps {
   auth?: IAuth;
 }
 
-export const Header = ({ auth }: IHeaderProps) => {
-  return (
-    <AppBar position="static">
-      <Toolbar>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          width={"100%"}
-        >
-          <Box
-            component="img"
-            alt="CEITEC-MAFIL logo"
-            src="/logo_mafil.png"
-            sx={{
-              height: 40,
-            }}
-          />
-          {auth !== undefined && <LoginOperator username={auth.username} />}
-          <LanguageMenu />
-        </Stack>
-      </Toolbar>
-    </AppBar>
-  );
-};
+export const Header = ({ auth }: IHeaderProps) => (
+  <AppBar position="static">
+    <Toolbar>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        width="100%"
+      >
+        <Box
+          component="img"
+          alt="CEITEC-MAFIL logo"
+          src="/logo_mafil.png"
+          sx={{
+            height: 40,
+          }}
+        />
+        {auth !== undefined && <LoginOperator username={auth.username} />}
+        <LanguageMenu />
+      </Stack>
+    </Toolbar>
+  </AppBar>
+);
