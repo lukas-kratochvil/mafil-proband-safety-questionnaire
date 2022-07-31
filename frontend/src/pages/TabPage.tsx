@@ -1,6 +1,10 @@
 import ClearIcon from "@mui/icons-material/Clear";
 import {
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Grid,
   IconButton,
   Paper,
@@ -11,7 +15,9 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
+import { useState } from "react";
 import { IAuth } from "../App";
 import { ITabPageTableProps, TabType } from "../data/waiting_room_data";
 import { Header } from "../components/header/Header";
@@ -22,6 +28,16 @@ interface IActionButtonsProps {
 }
 
 const ActionButtons = ({ tabType }: IActionButtonsProps) => {
+  const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
+
+  const onDelete = () => {
+    setOpenDeleteDialog(false);
+  };
+
+  const onCancel = () => {
+    setOpenDeleteDialog(false);
+  };
+
   switch (tabType) {
     case TabType.WAITING_ROOM:
       return (
@@ -33,7 +49,7 @@ const ActionButtons = ({ tabType }: IActionButtonsProps) => {
           >
             Zpracovat
           </Button>
-          <IconButton>
+          <IconButton onClick={() => setOpenDeleteDialog(true)}>
             <ClearIcon
               sx={{
                 color: "red",
@@ -43,6 +59,16 @@ const ActionButtons = ({ tabType }: IActionButtonsProps) => {
               }}
             />
           </IconButton>
+          <Dialog open={openDeleteDialog}>
+            <DialogTitle>Odstranění záznamu z Čekárny</DialogTitle>
+            <DialogContent>
+              <Typography>Opravdu si přejete odstranit záznam XY z Čekárny?</Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={onDelete}>Odstranit</Button>
+              <Button onClick={onCancel}>Zrušit</Button>
+            </DialogActions>
+          </Dialog>
         </>
       );
     // TODO: last visits table buttons
