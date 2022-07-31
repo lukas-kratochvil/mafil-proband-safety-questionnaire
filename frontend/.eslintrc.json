@@ -4,10 +4,10 @@
         "es2021": true
     },
     "extends": [
-        "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended",
         "airbnb",
-        "prettier"
+        "prettier",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -18,10 +18,10 @@
         "sourceType": "module"
     },
     "plugins": [
+        "prettier",
         "react",
         "react-hooks",
-        "@typescript-eslint",
-        "prettier"
+        "@typescript-eslint"
     ],
     "rules":{
         "import/extensions": ["error", "ignorePackages", { "ts": "never", "tsx": "never" }],
@@ -30,7 +30,9 @@
         "@typescript-eslint/no-use-before-define": ["error"],
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": ["error"],
-        "react/jsx-filename-extension": [ "warn", {"extensions": [".tsx"]} ],
+        "react/jsx-first-prop-new-line": [1, "multiline"],
+        "react/jsx-max-props-per-line": [1, { "maximum": {"single": 3, "multi": 1} }],
+        "react/jsx-filename-extension": ["warn", {"extensions": [".tsx"]}],
         "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],
         "react/jsx-props-no-spreading": "off",
         "react/no-array-index-key": "warn",
