@@ -15,11 +15,10 @@ import { Header } from "../components/header/Header";
 import { Navigation } from "../components/navigation/Navigation";
 
 interface IActionButtonsProps {
-  id: string;
   titles: string[];
 }
 
-const ActionButtons = ({ id, titles }: IActionButtonsProps) => (
+const ActionButtons = ({ titles }: IActionButtonsProps) => (
   <TableCell>
     {titles.map((title, index) => (
       <Button
@@ -82,21 +81,20 @@ export const TabPage = ({ auth, data }: ITabPageProps) => (
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.data.map((row, index) => (
+            {data.data.map((row, rowIndex) => (
               <TableRow
-                key={index}
+                key={rowIndex}
                 sx={{
                   "&:last-child td, &:last-child th": {
                     border: 0,
                   },
                 }}
               >
-                {row.map((cell, index) => (
-                  <TableCell key={index}>{cell}</TableCell>
+                {row.map((cell, cellIndex) => (
+                  <TableCell key={cellIndex}>{cell}</TableCell>
                 ))}
                 {/* TODO: pass the actual form id */}
                 <ActionButtons
-                  id={index.toString()}
                   titles={data.actionButtonTitles}
                 />
               </TableRow>
