@@ -5,9 +5,9 @@
     },
     "extends": [
         "airbnb",
-        "prettier",
         "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -18,10 +18,10 @@
         "sourceType": "module"
     },
     "plugins": [
-        "prettier",
         "react",
         "react-hooks",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "prettier"
     ],
     "rules":{
         "import/extensions": ["error", "ignorePackages", { "ts": "never", "tsx": "never" }],
