@@ -1,27 +1,55 @@
-import { Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
+import {
+  Button,
+  Grid,
+  IconButton,
+  Paper,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import { IAuth } from "../App";
-import { ITabPageTableProps } from "../data/waiting_room_data";
+import { ITabPageTableProps, TabType } from "../data/waiting_room_data";
 import { Header } from "../components/header/Header";
 import { Navigation } from "../components/navigation/Navigation";
 
 interface IActionButtonsProps {
-  titles: string[];
+  tabType: TabType;
 }
 
-const ActionButtons = ({ titles }: IActionButtonsProps) => (
-  <TableCell>
-    {titles.map((title, index) => (
-      <Button
-        variant="contained"
-        // TODO: use href=`/auth/form-recap/${id}`
-        href="/auth/form-recap"
-        key={index}
-      >
-        {title}
-      </Button>
-    ))}
-  </TableCell>
-);
+const ActionButtons = ({ tabType }: IActionButtonsProps) => {
+  switch (tabType) {
+    case TabType.WAITING_ROOM:
+      return (
+        <>
+          <Button
+            variant="contained"
+            // TODO: use href=`/auth/form-recap/${id}`
+            href="/auth/form-recap"
+          >
+            Zpracovat
+          </Button>
+          <IconButton>
+            <ClearIcon
+              sx={{
+                color: "red",
+                background: "pink",
+                border: 1,
+                borderColor: "black",
+              }}
+            />
+          </IconButton>
+        </>
+      );
+    // TODO: last visits table buttons
+    default:
+      return <div>Error… tab page not defined!</div>;
+  }
+};
 
 interface ITabPageProps {
   auth: IAuth;
@@ -83,8 +111,16 @@ export const TabPage = ({ auth, data }: ITabPageProps) => (
                 {row.map((cell, cellIndex) => (
                   <TableCell key={cellIndex}>{cell}</TableCell>
                 ))}
-                {/* TODO: pass the actual form id */}
-                <ActionButtons titles={data.actionButtonTitles} />
+                <TableCell sx={{ maxWidth: "fit-content" }}>
+                  <Grid
+                    container
+                    direction="row"
+                    gap={1}
+                  >
+                    {/* TODO: pass the actual form id */}
+                    <ActionButtons tabType={data.type} />
+                  </Grid>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
