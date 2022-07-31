@@ -64,7 +64,6 @@ export const FormQuestions = ({
               variant="standard"
               size="small"
               multiline
-              key={index}
             />
           )}
         </Stack>

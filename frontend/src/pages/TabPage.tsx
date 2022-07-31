@@ -94,9 +94,7 @@ export const TabPage = ({ auth, data }: ITabPageProps) => (
                   <TableCell key={cellIndex}>{cell}</TableCell>
                 ))}
                 {/* TODO: pass the actual form id */}
-                <ActionButtons
-                  titles={data.actionButtonTitles}
-                />
+                <ActionButtons titles={data.actionButtonTitles} />
               </TableRow>
             ))}
           </TableBody>
