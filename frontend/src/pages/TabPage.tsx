@@ -72,6 +72,25 @@ const ActionButtons = ({ tabType }: IActionButtonsProps) => {
         </>
       );
     // TODO: last visits table buttons
+    case TabType.RECENT_VISITS:
+      return (
+        <>
+          <Button
+            variant="contained"
+            // TODO: use href=`/auth/form-recap/${id}`
+            href="/auth/form-recap"
+          >
+            Stáhnout PDF
+          </Button>
+          <Button
+            variant="contained"
+            // TODO: use href=`/auth/form-recap/${id}`
+            href="/auth/form-recap"
+          >
+            Duplikovat
+          </Button>
+        </>
+      );
     default:
       return <div>Error… tab page not defined!</div>;
   }

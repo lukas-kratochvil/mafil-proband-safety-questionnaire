@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { TabPage } from "./pages/TabPage";
-import { waitingRoomTableData } from "./data/tab_page_table_data";
+import { recentVisitsTableData, waitingRoomTableData } from "./data/tab_page_table_data";
 import { FormPage } from "./pages/FormPage";
 import { LoginPage } from "./pages/LoginPage";
 
@@ -34,6 +34,15 @@ export const App = () => {
           <TabPage
             auth={auth}
             data={waitingRoomTableData}
+          />
+        }
+      />
+      <Route
+        path="/auth/recent-visits"
+        element={
+          <TabPage
+            auth={auth}
+            data={recentVisitsTableData}
           />
         }
       />

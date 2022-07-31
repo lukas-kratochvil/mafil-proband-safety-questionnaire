@@ -10,11 +10,13 @@ export interface ILinkTabProps {
 const LinkTab = (props: ILinkTabProps) => (
   <Tab
     component="a"
-    onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => event.preventDefault()}
     {...props}
     sx={{
       borderRight: 1,
       borderColor: "black",
+      "&:hover": {
+        backgroundColor: "#ffc04d",
+      },
     }}
   />
 );
@@ -37,6 +39,11 @@ export const Navigation = () => {
         value={value}
         onChange={handleChange}
         aria-label="top-menu navigation"
+        TabIndicatorProps={{
+          style: {
+            display: "none",
+          },
+        }}
       >
         {tabs.map((tab, index) => (
           <LinkTab

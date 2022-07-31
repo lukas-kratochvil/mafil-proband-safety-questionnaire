@@ -1,13 +1,12 @@
 export enum TabType {
   WAITING_ROOM,
-  LAST_VISITS,
+  RECENT_VISITS,
 }
 
 export interface ITabPageTableProps {
   type: TabType;
   header: string[];
   data: string[][];
-  actionButtonTitles: string[];
 }
 
 export const waitingRoomTableData: ITabPageTableProps = {
@@ -21,8 +20,18 @@ export const waitingRoomTableData: ITabPageTableProps = {
     [new Date().toDateString(), "Novák, Karel", "0123456789", new Date().toDateString(), "Muž", "Čeština"],
     [new Date().toDateString(), "Novák, Karel", "0123456789", new Date().toDateString(), "Muž", "Čeština"],
     [new Date().toDateString(), "Novák, Karel", "0123456789", new Date().toDateString(), "Muž", "Čeština"],
-    [new Date().toDateString(), "Novák, Karel", "0123456789", new Date().toDateString(), "Muž", "Čeština"],
-    [new Date().toDateString(), "Novák, Karel", "0123456789", new Date().toDateString(), "Muž", "Čeština"],
   ],
-  actionButtonTitles: ["Zpracovat"],
+};
+
+export const recentVisitsTableData: ITabPageTableProps = {
+  type: TabType.RECENT_VISITS,
+  header: ["Visit ID", "Proband", "Projekt", "Přístroj", "Zpracováno", "Zpracoval"],
+  data: [
+    ["123456", "Novák, Karel", "Projekt 1", "M1", new Date().toDateString(), "operatorXY"],
+    ["123456", "Novák, Karel", "Projekt 1", "M1", new Date().toDateString(), "operatorXY"],
+    ["123456", "Novák, Karel", "Projekt 1", "M1", new Date().toDateString(), "operatorXY"],
+    ["123456", "Novák, Karel", "Projekt 1", "M1", new Date().toDateString(), "operatorXY"],
+    ["123456", "Novák, Karel", "Projekt 1", "M1", new Date().toDateString(), "operatorXY"],
+    ["123456", "Novák, Karel", "Projekt 1", "M1", new Date().toDateString(), "operatorXY"],
+  ],
 };
