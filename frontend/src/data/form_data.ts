@@ -4,26 +4,11 @@ export const magnets: string[] = ["Magnet 1", "Magnet 2"];
 
 export const genders: string[] = ["Muž", "Žena", "Jiné"];
 
-export const nativeLanguages: string[] = [
-  "Čeština",
-  "Slovenština",
-  "Angličtina",
-  "Němčina",
-  "Polština",
-];
+export const nativeLanguages: string[] = ["Čeština", "Slovenština", "Angličtina", "Němčina", "Polština"];
 
-export const visualCorrection: string[] = [
-  "Žádná",
-  "≥ 2D (na čtení)",
-  "≥ -2D (do dálky)",
-];
+export const visualCorrection: string[] = ["Žádná", "≥ 2D (na čtení)", "≥ -2D (do dálky)"];
 
-export const sideDominance: string[] = [
-  "Pravák",
-  "Levák",
-  "Přeučený levák",
-  "Neurčeno",
-];
+export const sideDominance: string[] = ["Pravák", "Levák", "Přeučený levák", "Neurčeno"];
 
 export const questions1: string[] = [
   "Prodělal(a) jste operaci hlavy (mozku)?",

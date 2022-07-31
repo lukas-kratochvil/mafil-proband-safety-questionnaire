@@ -1,14 +1,4 @@
-import {
-  Button,
-  Paper,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+import { Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { IAuth } from "../App";
 import { ITabPageTableProps } from "../data/waiting_room_data";
 import { Header } from "../components/header/Header";

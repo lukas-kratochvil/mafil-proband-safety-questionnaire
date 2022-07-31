@@ -1,13 +1,4 @@
-import {
-  FormControl,
-  FormControlLabel,
-  Grid,
-  Radio,
-  RadioGroup,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { FormControl, FormControlLabel, Grid, Radio, RadioGroup, Stack, TextField, Typography } from "@mui/material";
 import { IAuth } from "../../App";
 import { FormCard } from "./FormCard";
 
@@ -18,14 +9,12 @@ interface IFormQuestionsProps {
   isAuthEditing: boolean;
 }
 
-export const FormQuestions = ({
-  title,
-  questions,
-  auth,
-  isAuthEditing,
-}: IFormQuestionsProps) => (
+export const FormQuestions = ({ title, questions, auth, isAuthEditing }: IFormQuestionsProps) => (
   <FormCard title={title}>
-    <Stack spacing={auth === undefined ? 1 : 2} minWidth="100%">
+    <Stack
+      spacing={auth === undefined ? 1 : 2}
+      minWidth="100%"
+    >
       {questions.map((question, index) => (
         <Stack
           key={index}
@@ -44,15 +33,28 @@ export const FormQuestions = ({
           >
             <Typography width="80%">{question}</Typography>
             <FormControl>
-              <RadioGroup row name="question-radio-buttons-group">
+              <RadioGroup
+                row
+                name="question-radio-buttons-group"
+              >
                 <FormControlLabel
                   value="yes"
-                  control={<Radio required disabled={!isAuthEditing} />}
+                  control={
+                    <Radio
+                      required
+                      disabled={!isAuthEditing}
+                    />
+                  }
                   label="Ano"
                 />
                 <FormControlLabel
                   value="no"
-                  control={<Radio required disabled={!isAuthEditing} />}
+                  control={
+                    <Radio
+                      required
+                      disabled={!isAuthEditing}
+                    />
+                  }
                   label="Ne"
                 />
               </RadioGroup>

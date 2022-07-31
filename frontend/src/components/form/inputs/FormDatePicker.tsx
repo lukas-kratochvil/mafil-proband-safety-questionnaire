@@ -8,10 +8,7 @@ interface IFormDatePickerProps {
   disabled?: boolean;
 }
 
-export const FormDatePicker = ({
-  label,
-  disabled = false,
-}: IFormDatePickerProps) => {
+export const FormDatePicker = ({ label, disabled = false }: IFormDatePickerProps) => {
   const [date, setDate] = useState<Date | null>(null);
 
   const handleDateChange = (newValue: Date | null) => setDate(newValue);

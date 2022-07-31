@@ -1,11 +1,6 @@
 import InfoIcon from "@mui/icons-material/Info";
 import { Divider, Grid, Stack, Tooltip, Typography } from "@mui/material";
-import {
-  genders,
-  nativeLanguages,
-  sideDominance,
-  visualCorrection,
-} from "../../data/form_data";
+import { genders, nativeLanguages, sideDominance, visualCorrection } from "../../data/form_data";
 import { FormCard } from "./FormCard";
 import { FormDatePicker } from "./inputs/FormDatePicker";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
@@ -17,31 +12,54 @@ interface IFormProbandInfoProps {
 
 export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => (
   <FormCard title="Osobní údaje">
-    <Stack spacing={1} minWidth="100%">
-      <Grid container direction="row" spacing={2} columns={4}>
+    <Stack
+      spacing={1}
+      minWidth="100%"
+    >
+      <Grid
+        container
+        direction="row"
+        spacing={2}
+        columns={4}
+      >
         {/* 1. row */}
-        <Grid item xs={2}>
-          <FormTextField label="Jméno" disabled={!isAuthEditing} />
+        <Grid
+          item
+          xs={2}
+        >
+          <FormTextField
+            label="Jméno"
+            disabled={!isAuthEditing}
+          />
         </Grid>
-        <Grid item xs={2}>
-          <FormTextField label="Příjmení" disabled={!isAuthEditing} />
+        <Grid
+          item
+          xs={2}
+        >
+          <FormTextField
+            label="Příjmení"
+            disabled={!isAuthEditing}
+          />
         </Grid>
 
-        <Grid item xs={4}>
+        <Grid
+          item
+          xs={4}
+        >
           <Divider flexItem />
         </Grid>
 
         {/* 2. row */}
-        <Grid item xs={1}>
+        <Grid
+          item
+          xs={1}
+        >
           <FormTextField
             label="Rodné číslo"
             endAdornmentLabel={
               <Tooltip
                 title={
-                  <Typography>
-                    V případě, že nemáte české rodné číslo, zadejte, prosím,
-                    číslo pojištěnce.
-                  </Typography>
+                  <Typography>V případě, že nemáte české rodné číslo, zadejte, prosím, číslo pojištěnce.</Typography>
                 }
                 arrow
                 placement="top-start"
@@ -52,17 +70,29 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => (
             disabled={!isAuthEditing}
           />
         </Grid>
-        <Grid item xs={1}>
-          <FormDatePicker label="Datum narození" disabled={!isAuthEditing} />
+        <Grid
+          item
+          xs={1}
+        >
+          <FormDatePicker
+            label="Datum narození"
+            disabled={!isAuthEditing}
+          />
         </Grid>
-        <Grid item xs={1}>
+        <Grid
+          item
+          xs={1}
+        >
           <FormTextField
             label="Výška"
             endAdornmentLabel="cm"
             disabled={!isAuthEditing}
           />
         </Grid>
-        <Grid item xs={1}>
+        <Grid
+          item
+          xs={1}
+        >
           <FormTextField
             label="Váha"
             endAdornmentLabel="kg"
@@ -71,28 +101,40 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => (
         </Grid>
 
         {/* 3. row */}
-        <Grid item xs={1}>
+        <Grid
+          item
+          xs={1}
+        >
           <FormAutocomplete
             label="Pohlaví"
             options={genders}
             disabled={!isAuthEditing}
           />
         </Grid>
-        <Grid item xs={1}>
+        <Grid
+          item
+          xs={1}
+        >
           <FormAutocomplete
             label="Mateřský jazyk"
             options={nativeLanguages}
             disabled={!isAuthEditing}
           />
         </Grid>
-        <Grid item xs={1}>
+        <Grid
+          item
+          xs={1}
+        >
           <FormAutocomplete
             label="Zraková korekce"
             options={visualCorrection}
             disabled={!isAuthEditing}
           />
         </Grid>
-        <Grid item xs={1}>
+        <Grid
+          item
+          xs={1}
+        >
           <FormAutocomplete
             label="Stranová dominance"
             options={sideDominance}

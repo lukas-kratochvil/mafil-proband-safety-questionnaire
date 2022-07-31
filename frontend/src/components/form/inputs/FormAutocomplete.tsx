@@ -6,14 +6,15 @@ interface IFormAutocompleteProps {
   disabled?: boolean;
 }
 
-export const FormAutocomplete = ({
-  label,
-  options,
-  disabled,
-}: IFormAutocompleteProps) => (
+export const FormAutocomplete = ({ label, options, disabled }: IFormAutocompleteProps) => (
   <Autocomplete
     options={options}
-    renderInput={(params) => <TextField {...params} label={label} />}
+    renderInput={(params) => (
+      <TextField
+        {...params}
+        label={label}
+      />
+    )}
     disabled={disabled}
   />
 );

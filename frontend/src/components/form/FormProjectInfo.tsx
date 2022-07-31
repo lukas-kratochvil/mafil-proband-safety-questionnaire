@@ -6,12 +6,29 @@ import { FormAutocomplete } from "./inputs/FormAutocomplete";
 
 export const FormProjectInfo = () => (
   <FormCard title="Informace o projektu">
-    <Stack spacing={1} minWidth="100%">
-      <Grid container direction="row" spacing={2} columns={4}>
-        <Grid item xs={3}>
-          <FormAutocomplete label="Projekt" options={projects} />
+    <Stack
+      spacing={1}
+      minWidth="100%"
+    >
+      <Grid
+        container
+        direction="row"
+        spacing={2}
+        columns={4}
+      >
+        <Grid
+          item
+          xs={3}
+        >
+          <FormAutocomplete
+            label="Projekt"
+            options={projects}
+          />
         </Grid>
-        <Grid item xs={1}>
+        <Grid
+          item
+          xs={1}
+        >
           <FormControlLabel
             label="Fantom"
             labelPlacement="start"
@@ -23,10 +40,19 @@ export const FormProjectInfo = () => (
           />
         </Grid>
 
-        <Grid item xs={3}>
-          <FormAutocomplete label="Přístroj" options={magnets} />
+        <Grid
+          item
+          xs={3}
+        >
+          <FormAutocomplete
+            label="Přístroj"
+            options={magnets}
+          />
         </Grid>
-        <Grid item xs={1}>
+        <Grid
+          item
+          xs={1}
+        >
           <FormDatePicker label="Datum měření" />
         </Grid>
       </Grid>

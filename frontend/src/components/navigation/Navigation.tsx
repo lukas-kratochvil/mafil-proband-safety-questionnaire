@@ -10,9 +10,7 @@ export interface ILinkTabProps {
 const LinkTab = (props: ILinkTabProps) => (
   <Tab
     component="a"
-    onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) =>
-      event.preventDefault()
-    }
+    onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => event.preventDefault()}
     {...props}
     sx={{
       borderRight: 1,
@@ -24,8 +22,7 @@ const LinkTab = (props: ILinkTabProps) => (
 export const Navigation = () => {
   const [value, setValue] = useState<number>(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) =>
-    setValue(newValue);
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => setValue(newValue);
 
   return (
     <Box
@@ -42,7 +39,10 @@ export const Navigation = () => {
         aria-label="top-menu navigation"
       >
         {tabs.map((tab, index) => (
-          <LinkTab key={index} {...tab} />
+          <LinkTab
+            key={index}
+            {...tab}
+          />
         ))}
       </Tabs>
     </Box>

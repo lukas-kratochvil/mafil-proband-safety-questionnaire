@@ -6,11 +6,7 @@ interface IFormCardProps {
   mainGridPadding?: number;
 }
 
-export const FormCard = ({
-  children,
-  title,
-  mainGridPadding = 2,
-}: PropsWithChildren<IFormCardProps>) => (
+export const FormCard = ({ children, title, mainGridPadding = 2 }: PropsWithChildren<IFormCardProps>) => (
   <Card
     sx={{
       border: 2,

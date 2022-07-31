@@ -32,8 +32,7 @@ export const LanguageMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isOpen = Boolean(anchorEl);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) =>
-    setAnchorEl(event.currentTarget);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
   return (
@@ -97,7 +96,10 @@ export const LanguageMenu = () => {
         }}
       >
         {languages.map((language, index) => (
-          <LanguageItem key={index} {...language} />
+          <LanguageItem
+            key={index}
+            {...language}
+          />
         ))}
       </Menu>
     </>

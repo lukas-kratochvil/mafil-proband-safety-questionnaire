@@ -5,7 +5,12 @@ interface ILoginOperatorProps {
 }
 
 export const LoginOperator = ({ username }: ILoginOperatorProps) => (
-  <Grid container direction="row" justifyContent="center" alignItems="center">
+  <Grid
+    container
+    direction="row"
+    justifyContent="center"
+    alignItems="center"
+  >
     <Typography>Přihlášen:</Typography>
     <Card
       sx={{

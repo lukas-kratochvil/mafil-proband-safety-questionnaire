@@ -1,12 +1,4 @@
-import {
-  Avatar,
-  Button,
-  Card,
-  Divider,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Avatar, Button, Card, Divider, Grid, Stack, Typography } from "@mui/material";
 import { Header } from "../components/header/Header";
 
 export const LoginPage = () => (

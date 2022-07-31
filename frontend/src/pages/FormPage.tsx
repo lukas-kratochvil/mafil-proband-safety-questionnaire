@@ -63,9 +63,7 @@ export const FormPage = ({ auth }: IFormPageProps) => {
         {auth === undefined && <FormEntryInfo />}
         {auth !== undefined && <FormProjectInfo />}
         <FormProbandInfo isAuthEditing={auth === undefined || isAuthEditing} />
-        <FormProbandContact
-          isAuthEditing={auth === undefined || isAuthEditing}
-        />
+        <FormProbandContact isAuthEditing={auth === undefined || isAuthEditing} />
         {auth === undefined && <FormSafetyInfo />}
         <FormQuestions
           title="Část 1"
@@ -81,7 +79,12 @@ export const FormPage = ({ auth }: IFormPageProps) => {
         />
         {auth === undefined && <FormBeforeExamination />}
         {auth === undefined && <FormExaminationConsent />}
-        <Grid container direction="row" justifyContent="center" gap={3}>
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          gap={3}
+        >
           {buttons.map((button, index) => (
             <Button
               variant="contained"
