@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { TabPage } from "./pages/TabPage";
-import { waitingRoomTableData } from "./data/waiting_room_data";
+import { waitingRoomTableData } from "./data/tab_page_table_data";
 import { FormPage } from "./pages/FormPage";
 import { LoginPage } from "./pages/LoginPage";
 

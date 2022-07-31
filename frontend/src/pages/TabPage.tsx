@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { IAuth } from "../App";
-import { ITabPageTableProps, TabType } from "../data/waiting_room_data";
+import { ITabPageTableProps, TabType } from "../data/tab_page_table_data";
 import { Header } from "../components/header/Header";
 import { Navigation } from "../components/navigation/Navigation";
 
