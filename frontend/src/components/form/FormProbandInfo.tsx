@@ -5,12 +5,14 @@ import { FormCard } from "./FormCard";
 import { FormDatePicker } from "./inputs/FormDatePicker";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormTextField } from "./inputs/FormTextField";
+import { IAuth } from "../../App";
 
 interface IFormProbandInfoProps {
+  auth?: IAuth;
   isAuthEditing: boolean;
 }
 
-export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => (
+export const FormProbandInfo = ({ auth, isAuthEditing }: IFormProbandInfoProps) => (
   <FormCard title="Osobní údaje">
     <Stack
       spacing={1}
@@ -57,15 +59,18 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => (
           <FormTextField
             label="Rodné číslo"
             endAdornmentLabel={
-              <Tooltip
-                title={
-                  <Typography>V případě, že nemáte české rodné číslo, zadejte, prosím, číslo pojištěnce.</Typography>
-                }
-                arrow
-                placement="top-start"
-              >
-                <InfoIcon sx={{ color: "#2da2e1" }} />
-              </Tooltip>
+              auth === undefined
+              && (
+                <Tooltip
+                  title={
+                    <Typography>V případě, že nemáte české rodné číslo, zadejte, prosím, číslo pojištěnce.</Typography>
+                  }
+                  arrow
+                  placement="top-start"
+                >
+                  <InfoIcon sx={{ color: "#2da2e1" }} />
+                </Tooltip>
+              )
             }
             disabled={!isAuthEditing}
           />

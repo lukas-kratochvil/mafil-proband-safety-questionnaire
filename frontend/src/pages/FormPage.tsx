@@ -62,7 +62,7 @@ export const FormPage = ({ auth }: IFormPageProps) => {
       >
         {auth === undefined && <FormEntryInfo />}
         {auth !== undefined && <FormProjectInfo />}
-        <FormProbandInfo isAuthEditing={auth === undefined || isAuthEditing} />
+        <FormProbandInfo auth={auth} isAuthEditing={auth === undefined || isAuthEditing} />
         <FormProbandContact isAuthEditing={auth === undefined || isAuthEditing} />
         {auth === undefined && <FormSafetyInfo />}
         <FormQuestions
