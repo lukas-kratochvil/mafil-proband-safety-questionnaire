@@ -3,6 +3,7 @@ import { TabPage } from "./pages/TabPage";
 import { recentVisitsTableData, waitingRoomTableData } from "./data/tab_page_table_data";
 import { FormPage } from "./pages/FormPage";
 import { LoginPage } from "./pages/LoginPage";
+import { FormAfterSubmission } from "./pages/FormAfterSubmission";
 
 export interface IAuth {
   username: string;
@@ -18,6 +19,10 @@ export const App = () => {
       <Route
         path="/"
         element={<FormPage />}
+      />
+      <Route
+        path="/form-after-submission"
+        element={<FormAfterSubmission />}
       />
       <Route
         path="/auth"

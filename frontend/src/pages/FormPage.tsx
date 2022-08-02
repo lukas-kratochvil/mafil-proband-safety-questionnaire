@@ -30,8 +30,7 @@ export const FormPage = ({ auth }: IFormPageProps) => {
 
   if (auth === undefined) {
     buttons = [
-      // TODO: edit callback
-      { title: "Souhlasím", callback: () => console.log("TODO") },
+      { title: "Souhlasím", link: "/form-after-submission" },
     ];
   } else if (isAuthEditing) {
     buttons = [
@@ -62,7 +61,10 @@ export const FormPage = ({ auth }: IFormPageProps) => {
       >
         {auth === undefined && <FormEntryInfo />}
         {auth !== undefined && <FormProjectInfo />}
-        <FormProbandInfo auth={auth} isAuthEditing={auth === undefined || isAuthEditing} />
+        <FormProbandInfo
+          auth={auth}
+          isAuthEditing={auth === undefined || isAuthEditing}
+        />
         <FormProbandContact isAuthEditing={auth === undefined || isAuthEditing} />
         {auth === undefined && <FormSafetyInfo />}
         <FormQuestions
