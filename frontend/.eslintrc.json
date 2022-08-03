@@ -21,7 +21,8 @@
         "react",
         "react-hooks",
         "@typescript-eslint",
-        "prettier"
+        "prettier",
+        "unused-imports"
     ],
     "rules":{
         "import/extensions": ["error", "ignorePackages", { "ts": "never", "tsx": "never" }],
@@ -39,7 +40,8 @@
         "react/react-in-jsx-scope": "off",
         "react/require-default-props": "off",
         "react-hooks/exhaustive-deps": "warn",
-        "react-hooks/rules-of-hooks": "error"
+        "react-hooks/rules-of-hooks": "error",
+        "unused-imports/no-unused-imports": "error"
     },
     "settings": {
         "import/resolver": {
