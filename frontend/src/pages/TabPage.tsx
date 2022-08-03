@@ -8,7 +8,6 @@ import {
   Grid,
   IconButton,
   Paper,
-  Stack,
   Table,
   TableBody,
   TableCell,
@@ -20,8 +19,7 @@ import {
 import { useState } from "react";
 import { IAuth } from "../App";
 import { ITabPageTableProps, TabType } from "../data/tab_page_table_data";
-import { Header } from "../components/header/Header";
-import { Navigation } from "../components/navigation/Navigation";
+import { PageTemplate } from "./PageTemplate";
 
 interface IActionButtonsProps {
   tabType: TabType;
@@ -102,75 +100,67 @@ interface ITabPageProps {
 }
 
 export const TabPage = ({ auth, data }: ITabPageProps) => (
-  <>
-    <Header auth={auth} />
-    <Navigation />
-    <Stack
-      spacing={3}
-      sx={{
-        marginTop: 6,
-        marginBottom: 5,
-        marginX: "10%",
-      }}
-    >
-      <TableContainer component={Paper}>
-        <Table
-          aria-label="waiting-room table"
-          sx={{
-            minWidth: 650,
-          }}
-        >
-          <TableHead>
-            <TableRow>
-              {data.header.map((title, index) => (
-                <TableCell
-                  key={index}
-                  sx={{
-                    backgroundColor: "black",
-                    color: "white",
-                  }}
-                >
-                  {title}
-                </TableCell>
-              ))}
+  <PageTemplate
+    auth={auth}
+    isTabPage
+  >
+    <TableContainer component={Paper}>
+      <Table
+        aria-label="waiting-room table"
+        sx={{
+          minWidth: 650,
+        }}
+      >
+        <TableHead>
+          <TableRow>
+            {data.header.map((title, index) => (
               <TableCell
+                key={index}
                 sx={{
                   backgroundColor: "black",
                   color: "white",
                 }}
               >
-                Akce
+                {title}
+              </TableCell>
+            ))}
+            <TableCell
+              sx={{
+                backgroundColor: "black",
+                color: "white",
+              }}
+            >
+              Akce
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.data.map((row, rowIndex) => (
+            <TableRow
+              key={rowIndex}
+              sx={{
+                "&:last-child td, &:last-child th": {
+                  border: 0,
+                },
+              }}
+            >
+              {row.map((cell, cellIndex) => (
+                <TableCell key={cellIndex}>{cell}</TableCell>
+              ))}
+              <TableCell sx={{ maxWidth: "fit-content" }}>
+                <Grid
+                  container
+                  direction="row"
+                  gap={1}
+                >
+                  {/* TODO: pass the actual form id */}
+                  <ActionButtons tabType={data.type} />
+                </Grid>
               </TableCell>
             </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.data.map((row, rowIndex) => (
-              <TableRow
-                key={rowIndex}
-                sx={{
-                  "&:last-child td, &:last-child th": {
-                    border: 0,
-                  },
-                }}
-              >
-                {row.map((cell, cellIndex) => (
-                  <TableCell key={cellIndex}>{cell}</TableCell>
-                ))}
-                <TableCell sx={{ maxWidth: "fit-content" }}>
-                  <Grid
-                    container
-                    direction="row"
-                    gap={1}
-                  >
-                    {/* TODO: pass the actual form id */}
-                    <ActionButtons tabType={data.type} />
-                  </Grid>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Stack>
-  </>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  </PageTemplate>
 );

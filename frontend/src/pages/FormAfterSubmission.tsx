@@ -1,47 +1,36 @@
-import { Button, Card, Divider, Grid, Stack, Typography } from "@mui/material";
-import { Header } from "../components/header/Header";
+import { Button, Card, Divider, Grid, Typography } from "@mui/material";
+import { PageTemplate } from "./PageTemplate";
 
 export const FormAfterSubmission = () => (
-  <>
-    <Header />
-    <Stack
-      spacing={3}
+  <PageTemplate centerize>
+    <Card
       sx={{
-        marginX: "20rem",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "calc(100vh - 64px)", // 64px header
+        border: 2,
+        width: "100%",
       }}
     >
-      <Card
-        sx={{
-          border: 2,
-          width: "100%",
-        }}
+      <Typography
+        textAlign="center"
+        fontSize={20}
+        fontWeight="bold"
+        padding={2}
       >
-        <Typography
-          textAlign="center"
-          fontSize={20}
-          fontWeight="bold"
-          padding={2}
+        Váš formulář byl úspěšně odeslán. Vyčkejte, prosím, na další pokyny operátora.
+      </Typography>
+      <Divider />
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        margin={2}
+      >
+        <Button
+          variant="contained"
+          href="/"
         >
-          Váš formulář byl úspěšně odeslán. Vyčkejte, prosím, na další pokyny operátora.
-        </Typography>
-        <Divider />
-        <Grid
-          container
-          justifyContent="center"
-          alignItems="center"
-          margin={2}
-        >
-          <Button
-            variant="contained"
-            href="/"
-          >
-            Otevřít nový formulář
-          </Button>
-        </Grid>
-      </Card>
-    </Stack>
-  </>
+          Otevřít nový formulář
+        </Button>
+      </Grid>
+    </Card>
+  </PageTemplate>
 );

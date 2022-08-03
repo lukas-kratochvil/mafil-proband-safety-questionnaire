@@ -1,8 +1,6 @@
-import { Button, Grid, Stack } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { useState } from "react";
 import { IAuth } from "../App";
-import { Header } from "../components/header/Header";
-import { Navigation } from "../components/navigation/Navigation";
 import { questions1, questions2 } from "../data/form_data";
 import { FormBeforeExamination } from "../components/form/FormBeforeExamination";
 import { FormEntryInfo } from "../components/form/FormEntryInfo";
@@ -12,6 +10,7 @@ import { FormProbandInfo } from "../components/form/FormProbandInfo";
 import { FormQuestions } from "../components/form/FormQuestions";
 import { FormProbandContact } from "../components/form/FormProbandContact";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
+import { PageTemplate } from "./PageTemplate";
 
 interface IFormPageProps {
   auth?: IAuth;
@@ -29,9 +28,7 @@ export const FormPage = ({ auth }: IFormPageProps) => {
   let buttons: IButtonProps[];
 
   if (auth === undefined) {
-    buttons = [
-      { title: "Souhlasím", link: "/form-after-submission" },
-    ];
+    buttons = [{ title: "Souhlasím", link: "/form-after-submission" }];
   } else if (isAuthEditing) {
     buttons = [
       // TODO: edit callback
@@ -49,56 +46,46 @@ export const FormPage = ({ auth }: IFormPageProps) => {
   }
 
   return (
-    <>
-      <Header auth={auth} />
-      {auth !== undefined && <Navigation />}
-      <Stack
-        spacing={3}
-        sx={{
-          marginY: 3,
-          marginX: "20%",
-        }}
+    <PageTemplate auth={auth}>
+      {auth === undefined && <FormEntryInfo />}
+      {auth !== undefined && <FormProjectInfo />}
+      <FormProbandInfo
+        auth={auth}
+        isAuthEditing={auth === undefined || isAuthEditing}
+      />
+      <FormProbandContact isAuthEditing={auth === undefined || isAuthEditing} />
+      {auth === undefined && <FormSafetyInfo />}
+      <FormQuestions
+        title="Část 1"
+        questions={questions1}
+        auth={auth}
+        isAuthEditing={auth === undefined || isAuthEditing}
+      />
+      <FormQuestions
+        title="Část 2"
+        questions={questions2}
+        auth={auth}
+        isAuthEditing={auth === undefined || isAuthEditing}
+      />
+      {auth === undefined && <FormBeforeExamination />}
+      {auth === undefined && <FormExaminationConsent />}
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        gap={3}
       >
-        {auth === undefined && <FormEntryInfo />}
-        {auth !== undefined && <FormProjectInfo />}
-        <FormProbandInfo
-          auth={auth}
-          isAuthEditing={auth === undefined || isAuthEditing}
-        />
-        <FormProbandContact isAuthEditing={auth === undefined || isAuthEditing} />
-        {auth === undefined && <FormSafetyInfo />}
-        <FormQuestions
-          title="Část 1"
-          questions={questions1}
-          auth={auth}
-          isAuthEditing={auth === undefined || isAuthEditing}
-        />
-        <FormQuestions
-          title="Část 2"
-          questions={questions2}
-          auth={auth}
-          isAuthEditing={auth === undefined || isAuthEditing}
-        />
-        {auth === undefined && <FormBeforeExamination />}
-        {auth === undefined && <FormExaminationConsent />}
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          gap={3}
-        >
-          {buttons.map((button, index) => (
-            <Button
-              variant="contained"
-              href={button.link}
-              onClick={button.callback}
-              key={index}
-            >
-              {button.title}
-            </Button>
-          ))}
-        </Grid>
-      </Stack>
-    </>
+        {buttons.map((button, index) => (
+          <Button
+            variant="contained"
+            href={button.link}
+            onClick={button.callback}
+            key={index}
+          >
+            {button.title}
+          </Button>
+        ))}
+      </Grid>
+    </PageTemplate>
   );
 };
