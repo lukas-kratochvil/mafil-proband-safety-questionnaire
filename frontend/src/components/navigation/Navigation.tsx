@@ -1,25 +1,33 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { tabs } from "../../data/navigation_data";
 
 export interface ILinkTabProps {
   label: string;
-  href: string;
+  link: string;
 }
 
-const LinkTab = (props: ILinkTabProps) => (
-  <Tab
-    component="a"
-    {...props}
-    sx={{
-      borderRight: 1,
-      borderColor: "black",
-      "&:hover": {
-        backgroundColor: "#ffc04d",
-      },
-    }}
-  />
-);
+const LinkTab = ({ label, link }: ILinkTabProps) => {
+  const navigate = useNavigate();
+
+  const handleOnClickTab = () => navigate(link);
+
+  return (
+    <Tab
+      component="a"
+      label={label}
+      onClick={handleOnClickTab}
+      sx={{
+        borderRight: 1,
+        borderColor: "black",
+        "&:hover": {
+          backgroundColor: "#ffc04d",
+        },
+      }}
+    />
+  );
+};
 
 export const Navigation = () => {
   const [value, setValue] = useState<number>(0);

@@ -1,6 +1,6 @@
 import { Button, Grid } from "@mui/material";
 import { useState } from "react";
-import { IAuth } from "../App";
+import { useNavigate } from "react-router-dom";
 import { questions1, questions2 } from "../data/form_data";
 import { FormBeforeExamination } from "../components/form/FormBeforeExamination";
 import { FormEntryInfo } from "../components/form/FormEntryInfo";
@@ -11,24 +11,22 @@ import { FormQuestions } from "../components/form/FormQuestions";
 import { FormProbandContact } from "../components/form/FormProbandContact";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
 import { PageTemplate } from "./PageTemplate";
-
-interface IFormPageProps {
-  auth?: IAuth;
-}
+import { useAuth } from "../hooks/auth/Auth";
 
 interface IButtonProps {
   title: string;
-  link?: string;
   callback?: () => void;
 }
 
-export const FormPage = ({ auth }: IFormPageProps) => {
+export const FormPage = () => {
   const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
+  const { username } = useAuth();
+  const navigate = useNavigate();
 
   let buttons: IButtonProps[];
 
-  if (auth === undefined) {
-    buttons = [{ title: "Souhlasím", link: "/form-after-submission" }];
+  if (username === undefined) {
+    buttons = [{ title: "Souhlasím", callback: () => navigate("/form-after-submission") }];
   } else if (isAuthEditing) {
     buttons = [
       // TODO: edit callback
@@ -40,35 +38,30 @@ export const FormPage = ({ auth }: IFormPageProps) => {
     buttons = [
       // TODO: disable when comments to Yes/No questions are not filled in
       { title: "Finalizovat", callback: () => console.log("TODO") },
-      { title: "Zrušit", link: "/auth/waiting-room" },
+      { title: "Zrušit", callback: () => navigate("/auth/waiting-room") },
       { title: "Editovat", callback: () => setIsAuthEditing(true) },
     ];
   }
 
   return (
-    <PageTemplate auth={auth}>
-      {auth === undefined && <FormEntryInfo />}
-      {auth !== undefined && <FormProjectInfo />}
-      <FormProbandInfo
-        auth={auth}
-        isAuthEditing={auth === undefined || isAuthEditing}
-      />
-      <FormProbandContact isAuthEditing={auth === undefined || isAuthEditing} />
-      {auth === undefined && <FormSafetyInfo />}
+    <PageTemplate>
+      {username === undefined && <FormEntryInfo />}
+      {username !== undefined && <FormProjectInfo />}
+      <FormProbandInfo isAuthEditing={username === undefined || isAuthEditing} />
+      <FormProbandContact isAuthEditing={username === undefined || isAuthEditing} />
+      {username === undefined && <FormSafetyInfo />}
       <FormQuestions
         title="Část 1"
         questions={questions1}
-        auth={auth}
-        isAuthEditing={auth === undefined || isAuthEditing}
+        isAuthEditing={username === undefined || isAuthEditing}
       />
       <FormQuestions
         title="Část 2"
         questions={questions2}
-        auth={auth}
-        isAuthEditing={auth === undefined || isAuthEditing}
+        isAuthEditing={username === undefined || isAuthEditing}
       />
-      {auth === undefined && <FormBeforeExamination />}
-      {auth === undefined && <FormExaminationConsent />}
+      {username === undefined && <FormBeforeExamination />}
+      {username === undefined && <FormExaminationConsent />}
       <Grid
         container
         direction="row"
@@ -78,7 +71,6 @@ export const FormPage = ({ auth }: IFormPageProps) => {
         {buttons.map((button, index) => (
           <Button
             variant="contained"
-            href={button.link}
             onClick={button.callback}
             key={index}
           >

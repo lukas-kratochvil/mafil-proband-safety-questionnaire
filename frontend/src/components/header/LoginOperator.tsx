@@ -1,45 +1,53 @@
 import { Button, Card, Grid, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/auth/Auth";
 
-interface ILoginOperatorProps {
-  username: string;
-}
+export const LoginOperator = () => {
+  const { username, signOut } = useAuth();
+  const navigate = useNavigate();
 
-export const LoginOperator = ({ username }: ILoginOperatorProps) => (
-  <Grid
-    container
-    direction="row"
-    justifyContent="center"
-    alignItems="center"
-  >
-    <Typography>Přihlášen:</Typography>
-    <Card
-      sx={{
-        bgcolor: "white",
-        marginLeft: 1,
-        paddingX: 2,
-        paddingY: 1,
-        maxWidth: 400,
-        textAlign: "center",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-      }}
+  const handleSignOut = () => {
+    signOut();
+    navigate("/auth");
+  };
+
+  return (
+    <Grid
+      container
+      direction="row"
+      justifyContent="center"
+      alignItems="center"
     >
-      <Typography noWrap>{username}</Typography>
-    </Card>
-    <Button
-      href="/auth"
-      sx={{
-        marginLeft: 4,
-        bgcolor: "black",
-        color: "white",
-        border: 1,
-        "&:hover": {
+      <Typography>Přihlášen:</Typography>
+      <Card
+        sx={{
+          bgcolor: "white",
+          marginLeft: 1,
+          paddingX: 2,
+          paddingY: 1,
+          maxWidth: 400,
+          textAlign: "center",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
+        <Typography noWrap>{username}</Typography>
+      </Card>
+      <Button
+        onClick={handleSignOut}
+        sx={{
+          marginLeft: 4,
           bgcolor: "black",
-          color: "pink",
-        },
-      }}
-    >
-      Odhlásit se
-    </Button>
-  </Grid>
-);
+          color: "white",
+          border: 1,
+          "&:hover": {
+            bgcolor: "black",
+            color: "pink",
+          },
+        }}
+      >
+        Odhlásit se
+      </Button>
+    </Grid>
+  );
+};

@@ -17,7 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { IAuth } from "../App";
+import { useNavigate } from "react-router-dom";
 import { ITabPageTableProps, TabType } from "../data/tab_page_table_data";
 import { PageTemplate } from "./PageTemplate";
 
@@ -26,6 +26,7 @@ interface IActionButtonsProps {
 }
 
 const ActionButtons = ({ tabType }: IActionButtonsProps) => {
+  const navigate = useNavigate();
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
 
   const onDelete = () => {
@@ -42,8 +43,8 @@ const ActionButtons = ({ tabType }: IActionButtonsProps) => {
         <>
           <Button
             variant="contained"
-            // TODO: use href=`/auth/form-recap/${id}`
-            href="/auth/form-recap"
+            // TODO: use `/auth/form-recap/${id}`
+            onClick={() => navigate("/auth/form-recap")}
           >
             Zpracovat
           </Button>
@@ -75,15 +76,15 @@ const ActionButtons = ({ tabType }: IActionButtonsProps) => {
         <>
           <Button
             variant="contained"
-            // TODO: use href=`/auth/form-recap/${id}`
-            href="/auth/form-recap"
+            // TODO: use `/auth/form-recap/${id}`
+            onClick={() => navigate("/auth/form-recap")}
           >
             Stáhnout PDF
           </Button>
           <Button
             variant="contained"
-            // TODO: use href=`/auth/form-recap/${id}`
-            href="/auth/form-recap"
+            // TODO: use `/auth/form-recap/${id}`
+            onClick={() => navigate("/auth/form-recap")}
           >
             Duplikovat
           </Button>
@@ -95,15 +96,11 @@ const ActionButtons = ({ tabType }: IActionButtonsProps) => {
 };
 
 interface ITabPageProps {
-  auth: IAuth;
   data: ITabPageTableProps;
 }
 
-export const TabPage = ({ auth, data }: ITabPageProps) => (
-  <PageTemplate
-    auth={auth}
-    isTabPage
-  >
+export const TabPage = ({ data }: ITabPageProps) => (
+  <PageTemplate isTabPage>
     <TableContainer component={Paper}>
       <Table
         aria-label="waiting-room table"
