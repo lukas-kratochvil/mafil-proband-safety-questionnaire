@@ -2,7 +2,7 @@ import { Card, Divider, Grid, Typography } from "@mui/material";
 import { PropsWithChildren } from "react";
 
 interface IFormCardProps {
-  title?: string;
+  title: string;
   mainGridPadding?: number;
 }
 
@@ -12,19 +12,15 @@ export const FormCard = ({ children, title, mainGridPadding = 2 }: PropsWithChil
       border: 2,
     }}
   >
-    {title && (
-      <>
-        <Typography
-          textAlign="center"
-          fontWeight="bold"
-          fontSize="1.25rem"
-          paddingY="0.5rem"
-        >
-          {title}
-        </Typography>
-        <Divider flexItem />
-      </>
-    )}
+    <Typography
+      textAlign="center"
+      fontWeight="bold"
+      fontSize="1.25rem"
+      paddingY="0.5rem"
+    >
+      {title}
+    </Typography>
+    <Divider flexItem />
     <Grid
       container
       sx={{
