@@ -14,7 +14,7 @@ export const FormQuestions = ({ title, questions, isAuthEditing }: IFormQuestion
   return (
     <FormCard title={title}>
       <Stack
-        spacing={username === undefined ? 1 : 2}
+        spacing={username === undefined ? "0.5rem" : "1rem"}
         minWidth="100%"
       >
         {questions.map((question, index) => (
@@ -22,7 +22,7 @@ export const FormQuestions = ({ title, questions, isAuthEditing }: IFormQuestion
             key={index}
             sx={{
               "&:hover": {
-                borderRadius: 1,
+                borderRadius: "0.25rem",
                 backgroundColor: "#f4f4f4",
               },
             }}

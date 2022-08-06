@@ -66,7 +66,7 @@ export const FormPage = () => {
         container
         direction="row"
         justifyContent="center"
-        gap={3}
+        gap="1.5rem"
       >
         {buttons.map((button, index) => (
           <Button

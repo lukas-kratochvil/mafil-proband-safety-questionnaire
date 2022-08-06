@@ -22,10 +22,9 @@ export const LoginOperator = () => {
       <Card
         sx={{
           bgcolor: "white",
-          marginLeft: 1,
-          paddingX: 2,
-          paddingY: 1,
-          maxWidth: 400,
+          marginLeft: "0.5rem",
+          paddingX: "1rem",
+          paddingY: "0.5rem",
           textAlign: "center",
           overflow: "hidden",
           textOverflow: "ellipsis",
@@ -36,7 +35,7 @@ export const LoginOperator = () => {
       <Button
         onClick={handleSignOut}
         sx={{
-          marginLeft: 4,
+          marginLeft: "2rem",
           bgcolor: "black",
           color: "white",
           border: 1,

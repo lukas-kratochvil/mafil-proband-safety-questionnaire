@@ -23,15 +23,15 @@ export const LoginPage = () => {
         <Typography
           textAlign="center"
           fontWeight="bold"
-          fontSize={20}
-          paddingY={1}
+          fontSize="1.25rem"
+          paddingY="0.5rem"
         >
           Bezpečnostní dotazník probanda
         </Typography>
         <Divider flexItem />
         <Typography
           sx={{
-            paddingTop: 3,
+            paddingTop: "1.5rem",
             paddingLeft: "3rem",
           }}
         >
@@ -50,7 +50,7 @@ export const LoginPage = () => {
               <Avatar
                 variant="square"
                 alt="MUNI logo"
-                src="logo_muni.png"
+                src="/logo_muni.png"
                 sx={{
                   marginRight: "0.5rem",
                   width: "2rem",

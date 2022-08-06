@@ -11,7 +11,7 @@ export const FormExaminationConsent = () => (
     </Typography>
     <Typography
       minWidth="100%"
-      paddingTop={2}
+      paddingTop="1rem"
     >
       Beru na vědomí, že moje osobní údaje v rozsahu jméno, příjmení, podpis, datum narození, rodné číslo, pohlaví,
       stranová dominance, výška, váha, zraková korekce, mateřský jazyk, bezpečnostní otázky ke kontraindikacím MR
@@ -24,7 +24,7 @@ export const FormExaminationConsent = () => (
     </Typography>
     <Typography
       minWidth="100%"
-      paddingTop={2}
+      paddingTop="1rem"
     >
       Kontaktní údaje:
     </Typography>

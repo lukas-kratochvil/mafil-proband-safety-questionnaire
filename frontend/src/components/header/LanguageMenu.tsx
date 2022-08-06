@@ -17,8 +17,8 @@ const LanguageItem = ({ name, label, Flag }: ILanguageItemProps) => (
         alt={label}
         variant="rounded"
         sx={{
-          width: 30,
-          height: 25,
+          width: "2rem",
+          height: "1.5rem",
           backgroundColor: "inherit",
         }}
       >
@@ -48,8 +48,8 @@ export const LanguageMenu = () => {
           <LanguageIcon
             style={{
               color: "white",
-              width: 30,
-              height: 30,
+              width: "2rem",
+              height: "2rem",
             }}
           />
         </IconButton>
@@ -66,7 +66,7 @@ export const LanguageMenu = () => {
           elevation: 0,
           sx: {
             overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            filter: "drop-shadow(0 0.25rem 0.5rem rgba(0, 0, 0, 0.32))",
             mt: 1.5,
             backgroundColor: "pink",
             "&:before": {
@@ -74,9 +74,9 @@ export const LanguageMenu = () => {
               display: "block",
               position: "absolute",
               top: 0,
-              right: 15,
-              width: 10,
-              height: 10,
+              right: "1rem",
+              width: "0.65rem",
+              height: "0.65rem",
               bgcolor: "pink",
               transform: "translateY(-50%) rotate(45deg)",
               zIndex: 0,

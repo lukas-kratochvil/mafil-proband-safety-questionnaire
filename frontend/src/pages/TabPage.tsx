@@ -105,7 +105,7 @@ export const TabPage = ({ data }: ITabPageProps) => (
       <Table
         aria-label="waiting-room table"
         sx={{
-          minWidth: 650,
+          minWidth: "40rem",
         }}
       >
         <TableHead>
@@ -148,7 +148,7 @@ export const TabPage = ({ data }: ITabPageProps) => (
                 <Grid
                   container
                   direction="row"
-                  gap={1}
+                  gap="0.5rem"
                 >
                   {/* TODO: pass the actual form id */}
                   <ActionButtons tabType={data.type} />

@@ -13,7 +13,7 @@ export const FormEntryInfo = () => (
     </Typography>
     <Typography
       minWidth="100%"
-      paddingTop={2}
+      paddingTop="1rem"
     >
       V průběhu vyšetření je důležité dbát pokynů laboranta. Zejména, snažit se minimalizovat jakýkoliv pohyb v průběhu
       měření.

@@ -15,9 +15,9 @@ export const FormAfterSubmission = () => {
       >
         <Typography
           textAlign="center"
-          fontSize={20}
+          fontSize="1.25rem"
           fontWeight="bold"
-          padding={2}
+          padding="1rem"
         >
           Váš formulář byl úspěšně odeslán. Vyčkejte, prosím, na další pokyny operátora.
         </Typography>
@@ -26,7 +26,7 @@ export const FormAfterSubmission = () => {
           container
           justifyContent="center"
           alignItems="center"
-          margin={2}
+          padding="1rem"
         >
           <Button
             variant="contained"

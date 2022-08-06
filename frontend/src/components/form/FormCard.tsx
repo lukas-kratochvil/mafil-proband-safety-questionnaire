@@ -17,8 +17,8 @@ export const FormCard = ({ children, title, mainGridPadding = 2 }: PropsWithChil
         <Typography
           textAlign="center"
           fontWeight="bold"
-          fontSize={20}
-          paddingY={1}
+          fontSize="1.25rem"
+          paddingY="0.5rem"
         >
           {title}
         </Typography>

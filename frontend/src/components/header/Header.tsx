@@ -20,7 +20,7 @@ export const Header = () => {
             alt="CEITEC-MAFIL logo"
             src="/logo_mafil.png"
             sx={{
-              height: 40,
+              height: "3rem",
             }}
           />
           {username !== undefined && <LoginOperator />}
