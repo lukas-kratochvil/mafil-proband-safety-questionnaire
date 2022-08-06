@@ -8,7 +8,7 @@ export const Header = () => {
 
   return (
     <AppBar position="static">
-      <Toolbar>
+      <Toolbar variant="dense">
         <Stack
           direction="row"
           alignItems="center"

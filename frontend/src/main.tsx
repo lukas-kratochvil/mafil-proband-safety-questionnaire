@@ -7,6 +7,16 @@ import { App } from "./App";
 import { AuthProvider } from "./hooks/auth/Auth";
 
 const theme = createTheme({
+  components: {
+    MuiToolbar: {
+      styleOverrides: {
+        dense: {
+          height: "4rem",
+          minHeight: "4rem",
+        },
+      },
+    },
+  },
   palette: {
     background: {
       default: "rgb(248, 248, 248)",
