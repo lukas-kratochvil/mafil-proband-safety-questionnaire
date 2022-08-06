@@ -1,5 +1,6 @@
-import { Avatar, Button, Card, Divider, Stack, Typography } from "@mui/material";
+import { Avatar, Button, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { CardBox } from "../components/card/CardBox";
 import { useAuth } from "../hooks/auth/Auth";
 import { PageTemplate } from "./PageTemplate";
 
@@ -14,21 +15,10 @@ export const LoginPage = () => {
 
   return (
     <PageTemplate centerize>
-      <Card
-        sx={{
-          border: 2,
-          width: "30rem",
-        }}
+      <CardBox
+        title="Bezpečnostní dotazník probanda"
+        width="30rem"
       >
-        <Typography
-          textAlign="center"
-          fontWeight="bold"
-          fontSize="1.25rem"
-          paddingY="0.5rem"
-        >
-          Bezpečnostní dotazník probanda
-        </Typography>
-        <Divider flexItem />
         <Typography
           sx={{
             paddingTop: "1.5rem",
@@ -62,7 +52,7 @@ export const LoginPage = () => {
             MUNI
           </Button>
         </Stack>
-      </Card>
+      </CardBox>
     </PageTemplate>
   );
 };

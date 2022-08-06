@@ -1,5 +1,6 @@
-import { Button, Card, Divider, Grid, Typography } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { CardBox } from "../components/card/CardBox";
 import { PageTemplate } from "./PageTemplate";
 
 export const FormAfterSubmission = () => {
@@ -7,21 +8,10 @@ export const FormAfterSubmission = () => {
 
   return (
     <PageTemplate centerize>
-      <Card
-        sx={{
-          border: 2,
-          width: "100%",
-        }}
+      <CardBox
+        title="Váš formulář byl úspěšně odeslán. Vyčkejte, prosím, na další pokyny operátora."
+        width="100%"
       >
-        <Typography
-          textAlign="center"
-          fontSize="1.25rem"
-          fontWeight="bold"
-          padding="1rem"
-        >
-          Váš formulář byl úspěšně odeslán. Vyčkejte, prosím, na další pokyny operátora.
-        </Typography>
-        <Divider />
         <Grid
           container
           justifyContent="center"
@@ -35,7 +25,7 @@ export const FormAfterSubmission = () => {
             Otevřít nový formulář
           </Button>
         </Grid>
-      </Card>
+      </CardBox>
     </PageTemplate>
   );
 };

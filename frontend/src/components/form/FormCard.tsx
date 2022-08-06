@@ -1,5 +1,6 @@
-import { Card, Divider, Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import { PropsWithChildren } from "react";
+import { CardBox } from "../card/CardBox";
 
 interface IFormCardProps {
   title: string;
@@ -7,20 +8,7 @@ interface IFormCardProps {
 }
 
 export const FormCard = ({ children, title, mainGridPadding = 2 }: PropsWithChildren<IFormCardProps>) => (
-  <Card
-    sx={{
-      border: 2,
-    }}
-  >
-    <Typography
-      textAlign="center"
-      fontWeight="bold"
-      fontSize="1.25rem"
-      paddingY="0.5rem"
-    >
-      {title}
-    </Typography>
-    <Divider flexItem />
+  <CardBox title={title}>
     <Grid
       container
       sx={{
@@ -29,5 +17,5 @@ export const FormCard = ({ children, title, mainGridPadding = 2 }: PropsWithChil
     >
       {children}
     </Grid>
-  </Card>
+  </CardBox>
 );
