@@ -23,7 +23,7 @@ export const PageTemplate = ({ children, centerize, isTabPage }: PropsWithChildr
           marginY: centerize ? undefined : "3rem",
           justifyContent: centerize ? "center" : undefined,
           alignItems: centerize ? "center" : undefined,
-          height: centerize ? `calc(100vh - 64px ${username === undefined ? "" : "- 50px"})` : undefined, // 64px header, 50px navigation
+          height: centerize ? `calc(100vh - 64px ${username === undefined ? "" : "- 3rem"})` : undefined, // 64px header, 3rem navigation
         }}
       >
         {children}

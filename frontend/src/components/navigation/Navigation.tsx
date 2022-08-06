@@ -19,6 +19,7 @@ const LinkTab = ({ label, link }: ILinkTabProps) => {
       label={label}
       onClick={handleOnClickTab}
       sx={{
+        height: "3rem",
         borderRight: 1,
         borderColor: "black",
         "&:hover": {
@@ -47,6 +48,9 @@ export const Navigation = () => {
         value={value}
         onChange={handleChange}
         aria-label="top-menu navigation"
+        sx={{
+          height: "3rem",
+        }}
         TabIndicatorProps={{
           style: {
             display: "none",
