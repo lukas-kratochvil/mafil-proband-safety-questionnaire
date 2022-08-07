@@ -10,15 +10,18 @@ interface IAuth {
 const authContext = createContext<IAuth>({} as IAuth);
 
 const useAuthProvider = (): IAuth => {
-  const [username, setUsername] = useState<string | undefined>();
+  const [username, setUsername] = useState<string | undefined>(window.sessionStorage.getItem("authUsername") ?? undefined);
 
   // TODO: call the actual MUNI authentication gate or the one selected
   function signIn() {
-    setUsername("operator");
+    const newUsername = "operator";
+    setUsername(newUsername);
+    window.sessionStorage.setItem("authUsername", newUsername);
   }
 
   function signOut() {
     setUsername(undefined);
+    window.sessionStorage.removeItem("authUsername");
   }
 
   return {
