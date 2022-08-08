@@ -1,4 +1,5 @@
 import { FormControl, FormControlLabel, Grid, Radio, RadioGroup, Stack, TextField, Typography } from "@mui/material";
+import { useState } from "react";
 import { useAuth } from "../../hooks/auth/Auth";
 import { FormCard } from "./FormCard";
 
@@ -7,8 +8,18 @@ interface IQuestionProps {
   isAuthEditing: boolean;
 }
 
+enum RadioGroupOptions {
+  YES = "YES",
+  NO = "NO",
+}
+
 const Question = ({ question, isAuthEditing }: IQuestionProps) => {
   const { username } = useAuth();
+  const [value, setValue] = useState<RadioGroupOptions>(RadioGroupOptions.NO);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue((event.target as HTMLInputElement).value as RadioGroupOptions);
+  };
 
   return (
     <Stack
@@ -30,9 +41,11 @@ const Question = ({ question, isAuthEditing }: IQuestionProps) => {
           <RadioGroup
             row
             name="question-radio-buttons-group"
+            value={value}
+            onChange={handleChange}
           >
             <FormControlLabel
-              value="yes"
+              value={RadioGroupOptions.YES}
               control={
                 <Radio
                   required
@@ -42,7 +55,7 @@ const Question = ({ question, isAuthEditing }: IQuestionProps) => {
               label="Ano"
             />
             <FormControlLabel
-              value="no"
+              value={RadioGroupOptions.NO}
               control={
                 <Radio
                   required
@@ -54,7 +67,7 @@ const Question = ({ question, isAuthEditing }: IQuestionProps) => {
           </RadioGroup>
         </FormControl>
       </Grid>
-      {username !== undefined && (
+      {username !== undefined && value === RadioGroupOptions.YES && (
         <TextField
           label="Komentář"
           variant="standard"
