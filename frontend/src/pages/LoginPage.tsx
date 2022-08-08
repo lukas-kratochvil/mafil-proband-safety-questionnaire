@@ -10,7 +10,8 @@ export const LoginPage = () => {
 
   const handleSignIn = (authMethod: IAuthMethod) => {
     signIn(authMethod);
-    navigate("/auth/waiting-room"); // TODO: redirect to an appropriate authentication page
+    // TODO: redirect to an appropriate authentication page - move the redirection + authentication inside the signIn() method
+    navigate("/auth/waiting-room");
   };
 
   return (
