@@ -1,15 +1,15 @@
 import { Avatar, Button, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { CardBox } from "../components/card/CardBox";
-import { useAuth } from "../hooks/auth/Auth";
+import { IAuthMethod, useAuth } from "../hooks/auth/Auth";
 import { PageTemplate } from "./PageTemplate";
 
 export const LoginPage = () => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
 
-  const handleSignIn = () => {
-    signIn();
+  const handleSignIn = (authMethod: IAuthMethod) => {
+    signIn(authMethod);
     navigate("/auth/waiting-room"); // TODO: redirect to an appropriate authentication page
   };
 
@@ -35,7 +35,7 @@ export const LoginPage = () => {
         >
           <Button
             variant="outlined"
-            onClick={handleSignIn}
+            onClick={() => handleSignIn(IAuthMethod.MUNI)}
             startIcon={
               <Avatar
                 variant="square"

@@ -1,8 +1,12 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 
+export enum IAuthMethod {
+  MUNI,
+}
+
 interface IAuth {
   username?: string;
-  signIn: () => void;
+  signIn: (authMethod: IAuthMethod) => void;
   signOut: () => void;
 }
 
@@ -10,19 +14,32 @@ interface IAuth {
 const authContext = createContext<IAuth>({} as IAuth);
 
 const useAuthProvider = (): IAuth => {
-  const [username, setUsername] = useState<string | undefined>(window.sessionStorage.getItem("authUsername") ?? undefined);
+  const [username, setUsername] = useState<string | undefined>(
+    window.sessionStorage.getItem("authUsername") ?? undefined
+  );
 
-  // TODO: call the actual MUNI authentication gate or the one selected
-  function signIn() {
-    const newUsername = "operator";
-    setUsername(newUsername);
-    window.sessionStorage.setItem("authUsername", newUsername);
-  }
+  const signIn = (authMethod: IAuthMethod) => {
+    let newUsername;
 
-  function signOut() {
+    switch (authMethod) {
+      case IAuthMethod.MUNI:
+        // TODO: call the actual MUNI authentication gate
+        newUsername = `${IAuthMethod[authMethod]}_operator`;
+        break;
+      default:
+        throw new Error(`'${IAuthMethod[authMethod]}' authentication method is not implemented!`);
+    }
+
+    if (newUsername !== undefined) {
+      setUsername(newUsername);
+      window.sessionStorage.setItem("authUsername", newUsername);
+    }
+  };
+
+  const signOut = () => {
     setUsername(undefined);
     window.sessionStorage.removeItem("authUsername");
-  }
+  };
 
   return {
     username,
