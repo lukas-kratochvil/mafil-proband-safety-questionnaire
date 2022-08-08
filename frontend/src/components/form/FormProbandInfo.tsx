@@ -57,17 +57,19 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           <FormTextField
             label="Rodné číslo"
             endAdornmentLabel={
-              username === undefined && (
-                <Tooltip
-                  title={
-                    <Typography>V případě, že nemáte české rodné číslo, zadejte, prosím, číslo pojištěnce.</Typography>
-                  }
-                  arrow
-                  placement="top-start"
-                >
-                  <InfoIcon sx={{ color: "#2da2e1" }} />
-                </Tooltip>
-              )
+              <Tooltip
+                title={
+                  <Typography>
+                    {username === undefined
+                      ? "V případě, že nemáte české rodné číslo, zadejte, prosím, číslo pojištěnce."
+                      : "Pokud proband nemá české rodné číslo, může zadat číslo pojištěnce."}
+                  </Typography>
+                }
+                arrow
+                placement="top-start"
+              >
+                <InfoIcon sx={{ color: "#2da2e1" }} />
+              </Tooltip>
             }
             disabled={!isAuthEditing}
           />
