@@ -72,6 +72,7 @@ export const FormPage = () => {
         <Button
           type="submit"
           variant="contained"
+          color="success"
           onClick={submitButton.callback}
         >
           {submitButton.title}
