@@ -43,8 +43,8 @@ const ActionButtons = ({ tabType }: IActionButtonsProps) => {
         <>
           <Button
             variant="contained"
-            // TODO: use `/auth/form-recap/${id}`
-            onClick={() => navigate("/auth/form-recap")}
+            // TODO: use `/auth/form/${id}`
+            onClick={() => navigate("/auth/form")}
           >
             Zpracovat
           </Button>
@@ -76,15 +76,15 @@ const ActionButtons = ({ tabType }: IActionButtonsProps) => {
         <>
           <Button
             variant="contained"
-            // TODO: use `/auth/form-recap/${id}`
-            onClick={() => navigate("/auth/form-recap")}
+            // TODO: use `/auth/form/${id}`
+            onClick={() => navigate("/auth/form")}
           >
             Stáhnout PDF
           </Button>
           <Button
             variant="contained"
-            // TODO: use `/auth/form-recap/${id}`
-            onClick={() => navigate("/auth/form-recap")}
+            // TODO: use `/auth/form/${id}`
+            onClick={() => navigate("/auth/form")}
           >
             Duplikovat
           </Button>

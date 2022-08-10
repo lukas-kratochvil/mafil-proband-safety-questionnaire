@@ -19,9 +19,9 @@ export const App = () => (
       path="/auth"
       element={<LoginPage />}
     />
-    {/* TODO: actual path should be path='/auth/form-recap/{id}' */}
+    {/* TODO: actual path should be path='/auth/form/{id}' */}
     <Route
-      path="/auth/form-recap"
+      path="/auth/form"
       element={<FormPage />}
     />
     <Route
