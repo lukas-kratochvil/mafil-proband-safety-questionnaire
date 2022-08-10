@@ -23,21 +23,22 @@ export const FormPage = () => {
   const { username } = useAuth();
   const navigate = useNavigate();
 
-  let buttons: IButtonProps[];
+  let submitButton: IButtonProps;
+  let buttons: IButtonProps[] = [];
 
   if (username === undefined) {
-    buttons = [{ title: "Souhlasím", callback: () => navigate("/form-after-submission") }];
+    submitButton = { title: "Souhlasím", callback: () => navigate("/form-after-submission") };
   } else if (isAuthEditing) {
+    // TODO: edit callback
+    submitButton = { title: "Uložit změny", callback: () => setIsAuthEditing(false) };
     buttons = [
-      // TODO: edit callback
-      { title: "Uložit změny", callback: () => setIsAuthEditing(false) },
       // TODO: edit callback
       { title: "Zrušit", callback: () => setIsAuthEditing(false) },
     ];
   } else {
+    // TODO: disable when comments to Yes/No questions are not filled in
+    submitButton = { title: "Finalizovat", callback: () => console.log("TODO") };
     buttons = [
-      // TODO: disable when comments to Yes/No questions are not filled in
-      { title: "Finalizovat", callback: () => console.log("TODO") },
       { title: "Zrušit", callback: () => navigate("/auth/waiting-room") },
       { title: "Editovat", callback: () => setIsAuthEditing(true) },
     ];
@@ -68,6 +69,13 @@ export const FormPage = () => {
         justifyContent="center"
         gap="1.5rem"
       >
+        <Button
+          type="submit"
+          variant="contained"
+          onClick={submitButton.callback}
+        >
+          {submitButton.title}
+        </Button>
         {buttons.map((button, index) => (
           <Button
             variant="contained"
