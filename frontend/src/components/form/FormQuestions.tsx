@@ -15,7 +15,7 @@ enum RadioGroupOptions {
 
 const Question = ({ question, isAuthEditing }: IQuestionProps) => {
   const { username } = useAuth();
-  const [value, setValue] = useState<RadioGroupOptions>(RadioGroupOptions.NO);
+  const [value, setValue] = useState<RadioGroupOptions>();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value as RadioGroupOptions);
