@@ -1,8 +1,9 @@
-import { Checkbox, FormControlLabel, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { magnets, projects } from "../../data/form_data";
 import { FormCard } from "./FormCard";
-import { FormDatePicker } from "./inputs/FormDatePicker";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
+import { FormCheckbox } from "./inputs/FormCheckbox";
+import { FormDatePicker } from "./inputs/FormDatePicker";
 
 export const FormProjectInfo = () => (
   <FormCard title="Informace o projektu">
@@ -25,15 +26,7 @@ export const FormProjectInfo = () => (
         item
         xs={1}
       >
-        <FormControlLabel
-          label="Fantom"
-          labelPlacement="start"
-          control={<Checkbox />}
-          value="start"
-          sx={{
-            height: "100%",
-          }}
-        />
+        <FormCheckbox label="Fantom" />
       </Grid>
       <Grid
         item

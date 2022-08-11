@@ -1,10 +1,11 @@
-import { FormControl, FormControlLabel, Grid, Radio, RadioGroup, Stack, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { FormControlLabel, Grid, Radio, RadioGroup, Stack, TextField, Typography } from "@mui/material";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { IQuestionData } from "../../data/form_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { FormCard } from "./FormCard";
 
 interface IQuestionProps {
-  question: string;
+  question: IQuestionData;
   isAuthEditing: boolean;
 }
 
@@ -15,11 +16,11 @@ enum RadioGroupOptions {
 
 const Question = ({ question, isAuthEditing }: IQuestionProps) => {
   const { username } = useAuth();
-  const [value, setValue] = useState<RadioGroupOptions>();
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value as RadioGroupOptions);
-  };
+  const { control } = useFormContext();
+  const questionAnswer = useWatch({
+    control,
+    name: question.id,
+  });
 
   return (
     <Stack
@@ -36,43 +37,53 @@ const Question = ({ question, isAuthEditing }: IQuestionProps) => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Typography width="80%">{question}</Typography>
-        <FormControl>
-          <RadioGroup
-            row
-            name="question-radio-buttons-group"
-            value={value}
-            onChange={handleChange}
-          >
-            <FormControlLabel
-              value={RadioGroupOptions.YES}
-              control={
-                <Radio
-                  required
-                  disabled={!isAuthEditing}
-                />
-              }
-              label="Ano"
-            />
-            <FormControlLabel
-              value={RadioGroupOptions.NO}
-              control={
-                <Radio
-                  required
-                  disabled={!isAuthEditing}
-                />
-              }
-              label="Ne"
-            />
-          </RadioGroup>
-        </FormControl>
+        <Typography width="80%">{question.text}</Typography>
+        <Controller
+          name={question.id}
+          control={control}
+          render={({ field: { value, ...rest } }) => (
+            <RadioGroup
+              row
+              value={value === undefined ? null : value}
+              {...rest}
+            >
+              <FormControlLabel
+                label="Ano"
+                value={RadioGroupOptions.YES}
+                control={
+                  <Radio
+                    required
+                    disabled={!isAuthEditing}
+                  />
+                }
+              />
+              <FormControlLabel
+                label="Ne"
+                value={RadioGroupOptions.NO}
+                control={
+                  <Radio
+                    required
+                    disabled={!isAuthEditing}
+                  />
+                }
+              />
+            </RadioGroup>
+          )}
+        />
       </Grid>
-      {username !== undefined && value === RadioGroupOptions.YES && (
-        <TextField
-          label="Komentář"
-          variant="standard"
-          size="small"
-          multiline
+      {username !== undefined && questionAnswer === RadioGroupOptions.YES && (
+        <Controller
+          name={`${question.id}-comment`}
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Komentář"
+              variant="standard"
+              size="small"
+              multiline
+            />
+          )}
         />
       )}
     </Stack>
@@ -81,7 +92,7 @@ const Question = ({ question, isAuthEditing }: IQuestionProps) => {
 
 interface IFormQuestionsProps {
   title: string;
-  questions: string[];
+  questions: IQuestionData[];
   isAuthEditing: boolean;
 }
 
@@ -94,9 +105,9 @@ export const FormQuestions = ({ title, questions, isAuthEditing }: IFormQuestion
         spacing={username === undefined ? "0.5rem" : "1rem"}
         minWidth="100%"
       >
-        {questions.map((question, index) => (
+        {questions.map((question) => (
           <Question
-            key={index}
+            key={question.id}
             question={question}
             isAuthEditing={isAuthEditing}
           />
