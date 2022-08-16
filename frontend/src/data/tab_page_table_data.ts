@@ -11,7 +11,7 @@ export interface ITabPageTableProps {
 
 export const waitingRoomTableData: ITabPageTableProps = {
   type: TabType.WAITING_ROOM,
-  header: ["Registrován/a", "Proband", "Rodné číslo", "Datum narození", "Pohlaví", "Mateřský jazyk"],
+  header: ["Datum registrace", "Proband", "Rodné číslo", "Datum narození", "Pohlaví", "Mateřský jazyk"],
   data: [
     [new Date().toDateString(), "Novák, Karel", "0123456789", new Date().toDateString(), "Muž", "Čeština"],
     [new Date().toDateString(), "Novák, Karel", "0123456789", new Date().toDateString(), "Muž", "Čeština"],
