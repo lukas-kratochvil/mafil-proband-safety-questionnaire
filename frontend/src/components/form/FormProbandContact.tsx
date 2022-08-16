@@ -20,7 +20,7 @@ export const FormProbandContact = ({ isAuthEditing }: IFormProbandInfoProps) => 
         xs={4}
       >
         <Typography>
-          Pro elektronické zaslání výsledků z měření je nutné vyplnit alespoň 1 z následujících údajů:
+          V případě, že budete chtít předat Vaše naměřená data elektronickou cestou, vyplňte údaje níže:
         </Typography>
       </Grid>
       {/* 2. row */}
