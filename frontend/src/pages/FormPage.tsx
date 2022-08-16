@@ -40,8 +40,12 @@ export const FormPage = () => {
       { title: "Zrušit", callback: () => setIsAuthEditing(false) },
     ];
   } else {
-    // TODO: disable when comments to Yes/No questions are not filled in
-    submitButton = { title: "Finalizovat", callback: () => console.log("TODO: generate PDF a sign it") };
+    /*
+      TODO:
+        - disable when comments to Yes/No questions are not filled in
+        - actual path should be "/auth/visit-pdf/{id}"
+    */
+    submitButton = { title: "Finalizovat", callback: () => navigate("/auth/visit-pdf") };
     buttons = [
       { title: "Zrušit", callback: () => navigate("/auth/waiting-room") },
       { title: "Editovat", callback: () => setIsAuthEditing(true) },

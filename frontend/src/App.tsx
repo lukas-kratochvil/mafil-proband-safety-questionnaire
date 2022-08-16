@@ -4,6 +4,7 @@ import { recentVisitsTableData, waitingRoomTableData } from "./data/tab_page_tab
 import { FormPage } from "./pages/FormPage";
 import { LoginPage } from "./pages/LoginPage";
 import { FormAfterSubmission } from "./pages/FormAfterSubmission";
+import { PDFPage } from "./pages/PDFPage";
 
 export const App = () => (
   <Routes>
@@ -19,8 +20,8 @@ export const App = () => (
       path="/auth"
       element={<LoginPage />}
     />
-    {/* TODO: actual path should be path='/auth/form/{id}' */}
     <Route
+      // TODO: actual path should be path="/auth/form/{id}"
       path="/auth/form"
       element={<FormPage />}
     />
@@ -31,6 +32,11 @@ export const App = () => (
     <Route
       path="/auth/recent-visits"
       element={<TabPage data={recentVisitsTableData} />}
+    />
+    <Route
+      // TODO: actual path should be path="/auth/visit-pdf/{id}"
+      path="/auth/visit-pdf"
+      element={<PDFPage />}
     />
   </Routes>
 );
