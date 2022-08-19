@@ -4,7 +4,7 @@ import { recentVisitsTableData, waitingRoomTableData } from "./data/tab_page_tab
 import { FormPage } from "./pages/FormPage";
 import { LoginPage } from "./pages/LoginPage";
 import { FormAfterSubmission } from "./pages/FormAfterSubmission";
-import { PDFPage } from "./pages/PDFPage";
+import { VisitDetailPage } from "./pages/VisitDetailPage";
 
 export const App = () => (
   <Routes>
@@ -36,7 +36,7 @@ export const App = () => (
     <Route
       // TODO: actual path should be path="/auth/visit-pdf/{id}"
       path="/auth/visit-pdf"
-      element={<PDFPage />}
+      element={<VisitDetailPage />}
     />
   </Routes>
 );

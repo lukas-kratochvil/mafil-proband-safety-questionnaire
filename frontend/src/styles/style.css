@@ -9,3 +9,8 @@
 .visit-form > * {
   width: 100%;
 }
+
+.visit-pdf {
+  height: 770px; /* TODO: height has to be changed - depends on how will I render the PDF */
+  width: 100%;
+}
