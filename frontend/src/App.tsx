@@ -34,8 +34,8 @@ export const App = () => (
       element={<TabPage data={recentVisitsTableData} />}
     />
     <Route
-      // TODO: actual path should be path="/auth/visit-pdf/{id}"
-      path="/auth/visit-pdf"
+      // TODO: actual path should be path="/auth/visit-detail/{id}"
+      path="/auth/visit-detail"
       element={<VisitDetailPage />}
     />
   </Routes>

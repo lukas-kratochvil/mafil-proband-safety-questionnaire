@@ -43,9 +43,9 @@ export const FormPage = () => {
     /*
       TODO:
         - disable when comments to Yes/No questions are not filled in
-        - actual path should be "/auth/visit-pdf/{id}"
+        - actual path should be "/auth/visit-detail/{id}"
     */
-    submitButton = { title: "Finalizovat", onClick: () => navigate("/auth/visit-pdf") };
+    submitButton = { title: "Finalizovat", onClick: () => navigate("/auth/visit-detail") };
     buttons = [
       { title: "Zrušit", onClick: () => navigate("/auth/waiting-room") },
       { title: "Editovat", onClick: () => setIsAuthEditing(true) },
