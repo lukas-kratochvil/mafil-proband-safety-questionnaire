@@ -17,7 +17,7 @@ import "../styles/style.css";
 
 interface IButtonProps {
   title: string;
-  callback: () => void;
+  onClick: () => void;
 }
 
 export const FormPage = () => {
@@ -31,13 +31,13 @@ export const FormPage = () => {
   let buttons: IButtonProps[] = [];
 
   if (username === undefined) {
-    submitButton = { title: "Souhlasím", callback: () => navigate("/form-after-submission") };
+    submitButton = { title: "Souhlasím", onClick: () => navigate("/form-after-submission") };
   } else if (isAuthEditing) {
     // TODO: edit callback
-    submitButton = { title: "Uložit změny", callback: () => setIsAuthEditing(false) };
+    submitButton = { title: "Uložit změny", onClick: () => setIsAuthEditing(false) };
     buttons = [
       // TODO: edit callback
-      { title: "Zrušit", callback: () => setIsAuthEditing(false) },
+      { title: "Zrušit", onClick: () => setIsAuthEditing(false) },
     ];
   } else {
     /*
@@ -45,16 +45,16 @@ export const FormPage = () => {
         - disable when comments to Yes/No questions are not filled in
         - actual path should be "/auth/visit-pdf/{id}"
     */
-    submitButton = { title: "Finalizovat", callback: () => navigate("/auth/visit-pdf") };
+    submitButton = { title: "Finalizovat", onClick: () => navigate("/auth/visit-pdf") };
     buttons = [
-      { title: "Zrušit", callback: () => navigate("/auth/waiting-room") },
-      { title: "Editovat", callback: () => setIsAuthEditing(true) },
+      { title: "Zrušit", onClick: () => navigate("/auth/waiting-room") },
+      { title: "Editovat", onClick: () => setIsAuthEditing(true) },
     ];
   }
 
   const onSubmit = (data: unknown) => {
     console.log(data);
-    submitButton.callback();
+    submitButton.onClick();
   };
 
   const onError = (errors: unknown) => {
@@ -101,7 +101,7 @@ export const FormPage = () => {
             {buttons.map((button, index) => (
               <Button
                 variant="contained"
-                onClick={button.callback}
+                onClick={button.onClick}
                 key={index}
               >
                 {button.title}
