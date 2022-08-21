@@ -15,7 +15,7 @@ export const FormDatePicker = ({ label, disabled }: IFormDatePickerProps) => {
     <Controller
       name={label}
       control={control}
-      defaultValue={null}
+      defaultValue={new Date()}
       render={({ field }) => (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DesktopDatePicker
