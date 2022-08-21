@@ -18,6 +18,7 @@ export const CardBox = ({ children, width = undefined, title }: PropsWithChildre
       fontWeight="bold"
       fontSize="1.25rem"
       paddingY="0.5rem"
+      bgcolor="#f0f4c3"
     >
       {title}
     </Typography>
