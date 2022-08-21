@@ -1,4 +1,4 @@
-import { Button, Grid, Stack } from "@mui/material";
+import { Alert, AlertColor, Button, Grid, Stack } from "@mui/material";
 import { PageTemplate } from "./PageTemplate";
 import "../styles/style.css";
 import { CardBox } from "../components/card/CardBox";
@@ -8,11 +8,27 @@ const dummyPDF = "/dummy-multipage.pdf";
 
 interface IColoredInfoStripeProps {
   text: string;
-  backgroundColor: string;
+  color: AlertColor;
 }
 
-const ColoredInfoStripe = ({ text, backgroundColor }: IColoredInfoStripeProps) => (
-  <div style={{ backgroundColor, width: "100%", textAlign: "center", fontSize: "1.5rem" }}>{text}</div>
+const ColoredInfoStripe = ({ text, color }: IColoredInfoStripeProps) => (
+  <Alert
+    severity="info"
+    variant="filled"
+    color={color}
+    icon={false}
+    sx={{
+      width: "100%",
+      padding: 0,
+      ".MuiAlert-message": {
+        width: "100%",
+        fontSize: "1rem",
+        textAlign: "center",
+      },
+    }}
+  >
+    {text.toUpperCase()}
+  </Alert>
 );
 
 interface IButtonProps {
@@ -29,7 +45,7 @@ export const VisitDetailPage = () => {
     case VisitState.NEW:
       coloredInfoStripe = {
         text: "Nepodepsáno",
-        backgroundColor: "red",
+        color: "error",
       };
       buttons = [
         {
@@ -45,7 +61,7 @@ export const VisitDetailPage = () => {
     case VisitState.CHECKED:
       coloredInfoStripe = {
         text: "Čeká se na potvrzení podpisu",
-        backgroundColor: "orange",
+        color: "warning",
       };
       buttons = [
         {
@@ -57,7 +73,7 @@ export const VisitDetailPage = () => {
     case VisitState.SIGNED:
       coloredInfoStripe = {
         text: "Podepsáno",
-        backgroundColor: "green",
+        color: "success",
       };
       buttons = [
         {
@@ -69,7 +85,7 @@ export const VisitDetailPage = () => {
     default:
       coloredInfoStripe = {
         text: `ERROR - switch case for the value '${VisitState[visit.state]}' does not exist`,
-        backgroundColor: "red",
+        color: "error",
       };
       buttons = [];
       break;
