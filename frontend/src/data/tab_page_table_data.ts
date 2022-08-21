@@ -25,13 +25,13 @@ export const waitingRoomTableData: ITabPageTableProps = {
 
 export const recentVisitsTableData: ITabPageTableProps = {
   type: TabType.RECENT_VISITS,
-  header: ["Visit ID", "Proband", "Projekt", "Přístroj", "Zpracováno", "Zpracoval"],
+  header: ["Visit ID", "Proband", "Projekt", "Přístroj", "Zpracováno", "Zpracoval", "Podepsáno"],
   data: [
-    ["123456", "Novák, Karel", "Projekt 1", "M1", new Date().toDateString(), "operatorXY"],
-    ["123456", "Novák, Karel", "Projekt 1", "M1", new Date().toDateString(), "operatorXY"],
-    ["123456", "Novák, Karel", "Projekt 1", "M1", new Date().toDateString(), "operatorXY"],
-    ["123456", "Novák, Karel", "Projekt 1", "M1", new Date().toDateString(), "operatorXY"],
-    ["123456", "Novák, Karel", "Projekt 1", "M1", new Date().toDateString(), "operatorXY"],
-    ["123456", "Novák, Karel", "Projekt 1", "M1", new Date().toDateString(), "operatorXY"],
+    ["123456", "Novák, Karel", "Projekt 1", "M1", new Date().toDateString(), "operatorXY", "Ano"],
+    ["123456", "Novák, Karel", "Projekt 1", "M1", new Date().toDateString(), "operatorXY", "Ne"],
+    ["123456", "Novák, Karel", "Projekt 1", "M1", new Date().toDateString(), "operatorXY", "Ne"],
+    ["123456", "Novák, Karel", "Projekt 1", "M1", new Date().toDateString(), "operatorXY", "Ano"],
+    ["123456", "Novák, Karel", "Projekt 1", "M1", new Date().toDateString(), "operatorXY", "Ano"],
+    ["123456", "Novák, Karel", "Projekt 1", "M1", new Date().toDateString(), "operatorXY", "Ne"],
   ],
 };
