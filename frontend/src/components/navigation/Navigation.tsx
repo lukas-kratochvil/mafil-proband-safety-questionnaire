@@ -39,7 +39,7 @@ export const Navigation = () => {
     <Box
       sx={{
         width: "100%",
-        backgroundColor: "orange",
+        backgroundColor: "#ffab40",
         borderTop: 1,
         borderBottom: 1,
       }}
