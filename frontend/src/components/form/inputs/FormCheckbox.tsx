@@ -3,10 +3,11 @@ import { Controller, useFormContext } from "react-hook-form";
 
 interface IFormCheckboxProps {
   label: string;
+  defaultValue?: boolean;
   disabled?: boolean;
 }
 
-export const FormCheckbox = ({ label, disabled }: IFormCheckboxProps) => {
+export const FormCheckbox = ({ label, defaultValue, disabled }: IFormCheckboxProps) => {
   const { control } = useFormContext();
 
   return (
@@ -18,6 +19,7 @@ export const FormCheckbox = ({ label, disabled }: IFormCheckboxProps) => {
         <Controller
           name={label}
           control={control}
+          defaultValue={defaultValue ?? false}
           render={({ field }) => <Checkbox {...field} />}
         />
       }

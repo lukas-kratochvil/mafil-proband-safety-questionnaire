@@ -4,17 +4,19 @@ import { Controller, useFormContext } from "react-hook-form";
 
 interface IFormTextFieldProps {
   label: string;
+  defaultValue?: string;
   endAdornmentLabel?: ReactNode;
   disabled?: boolean;
 }
 
-export const FormTextField = ({ label, endAdornmentLabel, disabled }: IFormTextFieldProps) => {
+export const FormTextField = ({ label, defaultValue, endAdornmentLabel, disabled }: IFormTextFieldProps) => {
   const { control } = useFormContext();
 
   return (
     <Controller
       name={label}
       control={control}
+      defaultValue={defaultValue ?? ""}
       render={({ field }) => (
         <TextField
           {...field}
