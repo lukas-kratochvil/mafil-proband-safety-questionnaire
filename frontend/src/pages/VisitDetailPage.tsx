@@ -22,7 +22,7 @@ const ColoredInfoStripe = ({ text, color }: IColoredInfoStripeProps) => (
     sx={{
       width: "100%",
       padding: 0,
-      ".MuiAlert-message": {
+      "& .MuiAlert-message": {
         width: "100%",
         fontSize: "1rem",
         textAlign: "center",
