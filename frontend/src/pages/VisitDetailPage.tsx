@@ -1,10 +1,12 @@
 import { Alert, AlertColor, Button, Grid, Stack } from "@mui/material";
+import { useEffect, useState } from "react";
 import { PageTemplate } from "./PageTemplate";
 import "../styles/style.css";
 import { CardBox } from "../components/card/CardBox";
 import { dummyVisit, VisitState } from "../data/visit_data";
 
 const dummyPDF = "/dummy-multipage.pdf";
+const visit = dummyVisit;
 
 interface IColoredInfoStripeProps {
   text: string;
@@ -36,60 +38,75 @@ interface IButtonProps {
   onClick: () => void;
 }
 
-export const VisitDetailPage = () => {
-  const visit = dummyVisit;
-  let coloredInfoStripe: IColoredInfoStripeProps;
-  let buttons: IButtonProps[];
-
-  switch (visit.state) {
+const getColoredInfoStripe = (visitState: VisitState): IColoredInfoStripeProps => {
+  switch (visitState) {
     case VisitState.NEW:
-      coloredInfoStripe = {
+      return {
         text: "Nepodepsáno",
         color: "error",
       };
-      buttons = [
-        {
-          title: "Stáhnout PDF a fyzicky podepsat",
-          onClick: () => console.log("TODO"),
-        },
-        {
-          title: "Podepsat elektronicky",
-          onClick: () => console.log("TODO"),
-        },
-      ];
-      break;
     case VisitState.CHECKED:
-      coloredInfoStripe = {
+      return {
         text: "Čeká se na potvrzení podpisu",
         color: "warning",
       };
-      buttons = [
-        {
-          title: "Potvrdit podpis",
-          onClick: () => console.log("TODO"),
-        },
-      ];
-      break;
     case VisitState.SIGNED:
-      coloredInfoStripe = {
+      return {
         text: "Podepsáno",
         color: "success",
       };
-      buttons = [
-        {
-          title: "St8hnout PDF",
-          onClick: () => console.log("TODO"),
-        },
-      ];
-      break;
     default:
-      coloredInfoStripe = {
+      return {
         text: `ERROR - switch case for the value '${VisitState[visit.state]}' does not exist`,
         color: "error",
       };
-      buttons = [];
-      break;
   }
+};
+
+const getButtons = (
+  visitState: VisitState,
+  setVisitState: React.Dispatch<React.SetStateAction<VisitState>>
+): IButtonProps[] => {
+  switch (visitState) {
+    case VisitState.NEW:
+      return [
+        {
+          title: "Stáhnout PDF a fyzicky podepsat",
+          onClick: () => setVisitState(VisitState.CHECKED), // TODO: store in DB
+        },
+        {
+          title: "Podepsat elektronicky",
+          onClick: () => setVisitState(VisitState.CHECKED), // TODO: store in DB
+        },
+      ];
+    case VisitState.CHECKED:
+      return [
+        {
+          title: "Potvrdit podpis",
+          onClick: () => setVisitState(VisitState.SIGNED), // TODO: store in DB
+        },
+      ];
+    case VisitState.SIGNED:
+      return [
+        {
+          title: "Stáhnout PDF",
+          onClick: () => console.log("TODO"),
+        },
+      ];
+    default:
+      return [];
+  }
+};
+
+export const VisitDetailPage = () => {
+  const [visitState, setVisitState] = useState<VisitState>(visit.state);
+  const [coloredInfoStripe, setColoredInfoStripe] = useState<IColoredInfoStripeProps>(getColoredInfoStripe(visitState));
+  const [buttons, setButtons] = useState<IButtonProps[]>(getButtons(visitState, setVisitState));
+
+  useEffect(() => {
+    setColoredInfoStripe(getColoredInfoStripe(visitState));
+    setButtons(getButtons(visitState, setVisitState));
+  }, [visitState]);
 
   return (
     <PageTemplate>
