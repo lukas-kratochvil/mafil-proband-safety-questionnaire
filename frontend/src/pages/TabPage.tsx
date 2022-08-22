@@ -83,7 +83,7 @@ const ActionButtons = ({ tabType }: IActionButtonsProps) => {
           </Button>
           <Button
             variant="contained"
-            // TODO: use `/auth/form/${id}`
+            // TODO: create new form with the same inputs as the initial form and use `/auth/form/${newId}`
             onClick={() => navigate("/auth/form")}
           >
             Duplikovat
