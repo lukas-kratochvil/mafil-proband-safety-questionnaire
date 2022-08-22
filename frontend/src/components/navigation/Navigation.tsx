@@ -42,7 +42,11 @@ export const Navigation = () => {
             - create new FANTOM visit and use its ID
         */
         navigate("/auth/form");
-      }
+      },
+    },
+    {
+      label: "Otevřít formulář probanda",
+      onClick: () => window.open("/", "_blank", "noopener,noreferrer"),
     },
     {
       label: "Poslední visity",
