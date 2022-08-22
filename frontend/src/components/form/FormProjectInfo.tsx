@@ -41,7 +41,10 @@ export const FormProjectInfo = () => (
         item
         xs={1}
       >
-        <FormDatePicker label="Datum měření" />
+        <FormDatePicker
+          label="Datum měření"
+          defaultValue={new Date()}
+        />
       </Grid>
     </Grid>
   </FormCard>

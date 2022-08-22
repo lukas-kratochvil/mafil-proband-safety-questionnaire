@@ -5,17 +5,18 @@ import { Controller, useFormContext } from "react-hook-form";
 
 interface IFormDatePickerProps {
   label: string;
+  defaultValue?: Date;
   disabled?: boolean;
 }
 
-export const FormDatePicker = ({ label, disabled }: IFormDatePickerProps) => {
+export const FormDatePicker = ({ label, defaultValue, disabled }: IFormDatePickerProps) => {
   const { control } = useFormContext();
 
   return (
     <Controller
       name={label}
       control={control}
-      defaultValue={new Date()}
+      defaultValue={defaultValue ?? null}
       render={({ field }) => (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DesktopDatePicker
