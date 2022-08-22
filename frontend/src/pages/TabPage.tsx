@@ -76,10 +76,10 @@ const ActionButtons = ({ tabType }: IActionButtonsProps) => {
         <>
           <Button
             variant="contained"
-            // TODO: use `/auth/form/${id}`
-            onClick={() => navigate("/auth/form")}
+            // TODO: use `/auth/visit-detail/${id}`
+            onClick={() => navigate("/auth/visit-detail")}
           >
-            Stáhnout PDF
+            Zobrazit detail
           </Button>
           <Button
             variant="contained"
