@@ -16,7 +16,7 @@ const LinkTab = ({ label, onClick }: ILinkTabProps) => (
       borderRight: 1,
       borderColor: "black",
       "&:hover": {
-        backgroundColor: "#ffc04d",
+        backgroundColor: "#ffd180",
       },
     }}
   />
