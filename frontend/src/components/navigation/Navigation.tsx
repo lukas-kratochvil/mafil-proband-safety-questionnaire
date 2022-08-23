@@ -9,7 +9,6 @@ export interface ILinkTabProps {
 
 const LinkTab = ({ label, onClick }: ILinkTabProps) => (
   <Tab
-    component="a"
     label={label}
     onClick={onClick}
     sx={{
