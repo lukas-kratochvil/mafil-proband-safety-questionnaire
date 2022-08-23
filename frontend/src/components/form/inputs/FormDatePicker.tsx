@@ -23,7 +23,12 @@ export const FormDatePicker = ({ label, defaultValue, disabled }: IFormDatePicke
             {...field}
             label={label}
             inputFormat="dd/MM/yyyy"
-            renderInput={(params) => <TextField {...params} />}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                sx={{ width: "100%" }}
+              />
+            )}
             disabled={disabled}
           />
         </LocalizationProvider>
