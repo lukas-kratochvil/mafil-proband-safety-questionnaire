@@ -22,12 +22,10 @@ export const FormTextField = ({ label, defaultValue, endAdornmentLabel, disabled
           {...field}
           label={label}
           variant="outlined"
+          fullWidth
           disabled={disabled}
-          InputProps={{
+          inputProps={{
             endAdornment: <InputAdornment position="end">{endAdornmentLabel}</InputAdornment>,
-          }}
-          sx={{
-            minWidth: "100%",
           }}
         />
       )}

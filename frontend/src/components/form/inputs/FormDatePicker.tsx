@@ -26,7 +26,7 @@ export const FormDatePicker = ({ label, defaultValue, disabled }: IFormDatePicke
             renderInput={(params) => (
               <TextField
                 {...params}
-                sx={{ width: "100%" }}
+                fullWidth
               />
             )}
             disabled={disabled}
