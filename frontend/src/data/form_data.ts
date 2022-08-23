@@ -6,7 +6,7 @@ export const genders: string[] = ["Muž", "Žena", "Jiné"];
 
 export const nativeLanguages: string[] = ["Čeština", "Slovenština", "Angličtina", "Němčina", "Polština"];
 
-export const visualCorrection: string[] = ["Žádná", "≥ 2D (na čtení)", "≥ -2D (do dálky)"];
+export const visualCorrection: string[] = ["Ano", "Ne"];
 
 export const sideDominance: string[] = ["Pravák", "Levák", "Přeučený levák", "Neurčeno"];
 

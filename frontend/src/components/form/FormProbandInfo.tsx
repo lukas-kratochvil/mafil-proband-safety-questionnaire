@@ -1,5 +1,6 @@
 import InfoIcon from "@mui/icons-material/Info";
 import { Divider, Grid, Tooltip, Typography } from "@mui/material";
+import { useFormContext, useWatch } from "react-hook-form";
 import { genders, nativeLanguages, sideDominance, visualCorrection } from "../../data/form_data";
 import { FormCard } from "./FormCard";
 import { FormDatePicker } from "./inputs/FormDatePicker";
@@ -13,6 +14,11 @@ interface IFormProbandInfoProps {
 
 export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
   const { username } = useAuth();
+  const { control } = useFormContext();
+  const visualCorrectionAnswer = useWatch({
+    control,
+    name: "Zraková korekce",
+  });
 
   return (
     <FormCard title="Osobní údaje">
@@ -145,6 +151,16 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             label="Zraková korekce"
             options={visualCorrection}
             disabled={!isAuthEditing}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={4}
+        >
+          <FormTextField
+            label="Hodnota zrakové korekce"
+            endAdornmentLabel="D"
+            disabled={!isAuthEditing || visualCorrectionAnswer !== "Ano"}
           />
         </Grid>
       </Grid>
