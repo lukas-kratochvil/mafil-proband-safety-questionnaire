@@ -20,12 +20,12 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
         container
         direction="row"
         spacing={2}
-        columns={4}
+        columns={12}
       >
         {/* 1. row */}
         <Grid
           item
-          xs={2}
+          xs={6}
         >
           <FormTextField
             label="Jméno"
@@ -34,7 +34,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
         </Grid>
         <Grid
           item
-          xs={2}
+          xs={6}
         >
           <FormTextField
             label="Příjmení"
@@ -44,7 +44,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
 
         <Grid
           item
-          xs={4}
+          xs={12}
         >
           <Divider flexItem />
         </Grid>
@@ -52,7 +52,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
         {/* 2. row */}
         <Grid
           item
-          xs={1}
+          xs={4}
         >
           <FormTextField
             label="Rodné číslo"
@@ -76,7 +76,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
         </Grid>
         <Grid
           item
-          xs={1}
+          xs={4}
         >
           <FormDatePicker
             label="Datum narození"
@@ -85,29 +85,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
         </Grid>
         <Grid
           item
-          xs={1}
-        >
-          <FormTextField
-            label="Výška"
-            endAdornmentLabel="cm"
-            disabled={!isAuthEditing}
-          />
-        </Grid>
-        <Grid
-          item
-          xs={1}
-        >
-          <FormTextField
-            label="Váha"
-            endAdornmentLabel="kg"
-            disabled={!isAuthEditing}
-          />
-        </Grid>
-
-        {/* 3. row */}
-        <Grid
-          item
-          xs={1}
+          xs={4}
         >
           <FormAutocomplete
             label="Pohlaví"
@@ -115,9 +93,11 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             disabled={!isAuthEditing}
           />
         </Grid>
+
+        {/* 3. row */}
         <Grid
           item
-          xs={1}
+          xs={4}
         >
           <FormAutocomplete
             label="Mateřský jazyk"
@@ -127,21 +107,43 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
         </Grid>
         <Grid
           item
-          xs={1}
+          xs={4}
         >
-          <FormAutocomplete
-            label="Zraková korekce"
-            options={visualCorrection}
+          <FormTextField
+            label="Výška"
+            endAdornmentLabel="cm"
             disabled={!isAuthEditing}
           />
         </Grid>
         <Grid
           item
-          xs={1}
+          xs={4}
+        >
+          <FormTextField
+            label="Váha"
+            endAdornmentLabel="kg"
+            disabled={!isAuthEditing}
+          />
+        </Grid>
+
+        {/* 4. row */}
+        <Grid
+          item
+          xs={4}
         >
           <FormAutocomplete
             label="Stranová dominance"
             options={sideDominance}
+            disabled={!isAuthEditing}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={4}
+        >
+          <FormAutocomplete
+            label="Zraková korekce"
+            options={visualCorrection}
             disabled={!isAuthEditing}
           />
         </Grid>
