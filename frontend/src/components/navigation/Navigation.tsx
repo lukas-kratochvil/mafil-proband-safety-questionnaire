@@ -15,8 +15,10 @@ const LinkTab = ({ label, onClick }: ILinkTabProps) => (
       height: "3rem",
       borderRight: 1,
       borderColor: "black",
+      opacity: 0.85,
       "&:hover": {
         backgroundColor: "#ffd180",
+        opacity: 1,
       },
     }}
   />
