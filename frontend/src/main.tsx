@@ -9,6 +9,7 @@ import { AuthProvider } from "./hooks/auth/Auth";
 const theme = createTheme({
   components: {
     MuiToolbar: {
+      // set up default Toolbar height so it doesn't change and we can make calculations with this value
       styleOverrides: {
         dense: {
           height: "4rem",
