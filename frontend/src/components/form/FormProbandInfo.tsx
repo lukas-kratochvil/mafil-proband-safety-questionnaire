@@ -160,6 +160,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           <FormTextField
             label="Hodnota zrakové korekce"
             endAdornmentLabel="D"
+            defaultValue="0"
             disabled={!isAuthEditing || visualCorrectionAnswer !== "Ano"}
           />
         </Grid>
