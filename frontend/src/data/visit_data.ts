@@ -4,6 +4,7 @@ export interface IProbandVisit {
   id: string;
   visitId: string;
   state: VisitState;
+  pdf: string;
   projectInfo: IProjectInfo;
   probandInfo: IProbandInfo;
   answersPart1: IAnswer[];
@@ -48,6 +49,7 @@ export const dummyVisit: IProbandVisit = {
   id: "1",
   visitId: "visit123",
   state: VisitState.NEW,
+  pdf: "/dummy-multipage.pdf",
   projectInfo: {
     projectId: "1",
     magnetId: "1",
@@ -81,6 +83,7 @@ export const dummyFantomVisit: IProbandVisit = {
   id: "2",
   visitId: "fantom123",
   state: VisitState.SIGNED,
+  pdf: "/dummy.pdf",
   projectInfo: {
     ...dummyVisit.projectInfo,
     isFantom: true,

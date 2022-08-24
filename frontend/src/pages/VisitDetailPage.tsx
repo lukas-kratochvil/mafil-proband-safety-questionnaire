@@ -4,10 +4,8 @@ import { useParams } from "react-router-dom";
 import { PageTemplate } from "./PageTemplate";
 import "../styles/style.css";
 import { CardBox } from "../components/card/CardBox";
-import { dummyVisit, VisitState } from "../data/visit_data";
-
-const dummyPDF = "/dummy-multipage.pdf";
-const visit = dummyVisit;
+import { VisitState } from "../data/visit_data";
+import { fetchVisit } from "../util/utils";
 
 interface IColoredInfoStripeProps {
   text: string;
@@ -39,7 +37,7 @@ interface IButtonProps {
   onClick: () => void;
 }
 
-const getColoredInfoStripe = (visitState: VisitState): IColoredInfoStripeProps => {
+const getColoredInfoStripe = (visitState?: VisitState): IColoredInfoStripeProps => {
   switch (visitState) {
     case VisitState.NEW:
       return {
@@ -58,16 +56,17 @@ const getColoredInfoStripe = (visitState: VisitState): IColoredInfoStripeProps =
       };
     default:
       return {
-        text: `ERROR - switch case for the value '${VisitState[visit.state]}' does not exist`,
+        text: `ERROR - switch case for the value '${
+          visitState === undefined ? "" : VisitState[visitState]
+        }' does not exist`,
         color: "error",
       };
   }
 };
 
 const getButtons = (
-  visitId: string | undefined,
-  visitState: VisitState,
-  setVisitState: React.Dispatch<React.SetStateAction<VisitState>>
+  visitState: VisitState | undefined,
+  setVisitState: React.Dispatch<React.SetStateAction<VisitState | undefined>>
 ): IButtonProps[] => {
   switch (visitState) {
     case VisitState.NEW:
@@ -118,18 +117,20 @@ const getButtons = (
 
 export const VisitDetailPage = () => {
   const { id } = useParams();
-  const [visitState, setVisitState] = useState<VisitState>(visit.state);
+  const visit = id === undefined ? undefined : fetchVisit(id);
+
+  const [visitState, setVisitState] = useState<VisitState | undefined>(visit?.state);
   const [coloredInfoStripe, setColoredInfoStripe] = useState<IColoredInfoStripeProps>(getColoredInfoStripe(visitState));
-  const [buttons, setButtons] = useState<IButtonProps[]>(getButtons(id, visitState, setVisitState));
+  const [buttons, setButtons] = useState<IButtonProps[]>(getButtons(visitState, setVisitState));
 
   useEffect(() => {
     setColoredInfoStripe(getColoredInfoStripe(visitState));
-    setButtons(getButtons(id, visitState, setVisitState));
+    setButtons(getButtons(visitState, setVisitState));
   }, [id, visitState]);
 
   return (
     <PageTemplate>
-      <CardBox title={`Detail visity ${visit.visitId}`}>
+      <CardBox title={`Detail visity s visitId: ${visit?.visitId}`}>
         <Stack
           spacing="1rem"
           justifyContent="center"
@@ -139,7 +140,7 @@ export const VisitDetailPage = () => {
           <ColoredInfoStripe {...coloredInfoStripe} />
           <iframe
             className="visit-pdf"
-            src={`${dummyPDF}#view=fitH`}
+            src={`${visit?.pdf}#view=fitH`}
             title="Visit detail"
           />
           <Grid
