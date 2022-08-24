@@ -1,5 +1,6 @@
 import { Alert, AlertColor, Button, Grid, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { PageTemplate } from "./PageTemplate";
 import "../styles/style.css";
 import { CardBox } from "../components/card/CardBox";
@@ -64,6 +65,7 @@ const getColoredInfoStripe = (visitState: VisitState): IColoredInfoStripeProps =
 };
 
 const getButtons = (
+  visitId: string | undefined,
   visitState: VisitState,
   setVisitState: React.Dispatch<React.SetStateAction<VisitState>>
 ): IButtonProps[] => {
@@ -72,25 +74,41 @@ const getButtons = (
       return [
         {
           title: "Stáhnout PDF a fyzicky podepsat",
-          onClick: () => setVisitState(VisitState.CHECKED), // TODO: store in DB
+          onClick: () => {
+            /**
+             * TODO:
+             *  - PDF will be generated and stored in DB on the server
+             *  - open system download window, so the auth user can choose where to store it (or show the print windows instead?)
+             */
+            setVisitState(VisitState.CHECKED);
+          },
         },
         {
           title: "Podepsat elektronicky",
-          onClick: () => setVisitState(VisitState.CHECKED), // TODO: store in DB
+          onClick: () => {
+            // TODO: PDF will be generated and stored in DB on the server
+            setVisitState(VisitState.CHECKED);
+          },
         },
       ];
     case VisitState.CHECKED:
       return [
         {
           title: "Potvrdit podpis",
-          onClick: () => setVisitState(VisitState.SIGNED), // TODO: store in DB
+          onClick: () => {
+            // TODO: store the state in DB
+            setVisitState(VisitState.SIGNED);
+          },
         },
       ];
     case VisitState.SIGNED:
       return [
         {
           title: "Stáhnout PDF",
-          onClick: () => console.log("TODO"),
+          onClick: () => {
+            // TODO: open system download window, so the auth user can choose where to store it (or show the print windows instead?)
+            console.log("TODO");
+          },
         },
       ];
     default:
@@ -99,14 +117,15 @@ const getButtons = (
 };
 
 export const VisitDetailPage = () => {
+  const { id } = useParams();
   const [visitState, setVisitState] = useState<VisitState>(visit.state);
   const [coloredInfoStripe, setColoredInfoStripe] = useState<IColoredInfoStripeProps>(getColoredInfoStripe(visitState));
-  const [buttons, setButtons] = useState<IButtonProps[]>(getButtons(visitState, setVisitState));
+  const [buttons, setButtons] = useState<IButtonProps[]>(getButtons(id, visitState, setVisitState));
 
   useEffect(() => {
     setColoredInfoStripe(getColoredInfoStripe(visitState));
-    setButtons(getButtons(visitState, setVisitState));
-  }, [visitState]);
+    setButtons(getButtons(id, visitState, setVisitState));
+  }, [id, visitState]);
 
   return (
     <PageTemplate>

@@ -22,10 +22,11 @@ import { ITabPageTableProps, TabType } from "../data/tab_page_table_data";
 import { PageTemplate } from "./PageTemplate";
 
 interface IActionButtonsProps {
+  visitId: string;
   tabType: TabType;
 }
 
-const ActionButtons = ({ tabType }: IActionButtonsProps) => {
+const ActionButtons = ({ visitId, tabType }: IActionButtonsProps) => {
   const navigate = useNavigate();
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
 
@@ -43,8 +44,7 @@ const ActionButtons = ({ tabType }: IActionButtonsProps) => {
         <>
           <Button
             variant="contained"
-            // TODO: use `/auth/form/${id}`
-            onClick={() => navigate("/auth/form")}
+            onClick={() => navigate(`/auth/form/${visitId}`)}
           >
             Zpracovat
           </Button>
@@ -70,21 +70,22 @@ const ActionButtons = ({ tabType }: IActionButtonsProps) => {
           </Dialog>
         </>
       );
-    // TODO: last visits table buttons
     case TabType.RECENT_VISITS:
       return (
         <>
           <Button
             variant="contained"
-            // TODO: use `/auth/visit-detail/${id}`
-            onClick={() => navigate("/auth/visit-detail")}
+            onClick={() => navigate(`/auth/visit-detail/${visitId}`)}
           >
             Zobrazit detail
           </Button>
           <Button
             variant="contained"
-            // TODO: create new form with the same inputs as the initial form and use `/auth/form/${newId}`
-            onClick={() => navigate("/auth/form")}
+            onClick={() => {
+              // TODO: create new form with the same data as the original form
+              const newVisitId = 1;
+              navigate(`/auth/form/${newVisitId}`);
+            }}
           >
             Duplikovat
           </Button>
@@ -150,8 +151,10 @@ export const TabPage = ({ data }: ITabPageProps) => (
                   direction="row"
                   gap="0.5rem"
                 >
-                  {/* TODO: pass the actual form id */}
-                  <ActionButtons tabType={data.type} />
+                  <ActionButtons
+                    visitId="1" // TODO: pass the actual form id
+                    tabType={data.type}
+                  />
                 </Grid>
               </TableCell>
             </TableRow>

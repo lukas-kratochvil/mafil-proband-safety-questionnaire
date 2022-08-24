@@ -37,12 +37,9 @@ export const Navigation = () => {
     {
       label: "Založit měření na Fantomu",
       onClick: () => {
-        /*
-          TODO:
-            - actual path should be path="/auth/form/{id}"
-            - create new FANTOM visit and use its ID
-        */
-        navigate("/auth/form");
+        // TODO: create new FANTOM visit and use its ID
+        const newFantomVisitId = 1;
+        navigate(`/auth/form/${newFantomVisitId}`);
       },
     },
     {

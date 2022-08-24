@@ -21,8 +21,7 @@ export const App = () => (
       element={<LoginPage />}
     />
     <Route
-      // TODO: actual path should be path="/auth/form/{id}"
-      path="/auth/form"
+      path="/auth/form/:id"
       element={<FormPage />}
     />
     <Route
@@ -34,8 +33,7 @@ export const App = () => (
       element={<TabPage data={recentVisitsTableData} />}
     />
     <Route
-      // TODO: actual path should be path="/auth/visit-detail/{id}"
-      path="/auth/visit-detail"
+      path="/auth/visit-detail/:id"
       element={<VisitDetailPage />}
     />
   </Routes>

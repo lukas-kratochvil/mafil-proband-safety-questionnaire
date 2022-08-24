@@ -1,6 +1,6 @@
 import { Button, Grid } from "@mui/material";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
 import { questions1, questions2 } from "../data/form_data";
 import { FormBeforeExamination } from "../components/form/FormBeforeExamination";
@@ -21,6 +21,7 @@ interface IButtonProps {
 }
 
 export const FormPage = () => {
+  const { id } = useParams();
   const formMethods = useForm();
   const { handleSubmit } = formMethods;
   const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
@@ -31,24 +32,51 @@ export const FormPage = () => {
   let buttons: IButtonProps[] = [];
 
   if (username === undefined) {
-    submitButton = { title: "Souhlasím", onClick: () => navigate("/form-after-submission") };
+    submitButton = {
+      title: "Souhlasím",
+      onClick: () => {
+        // TODO: create visit in DB
+        navigate("/form-after-submission");
+      },
+    };
   } else if (isAuthEditing) {
-    // TODO: edit callback
-    submitButton = { title: "Uložit změny", onClick: () => setIsAuthEditing(false) };
+    submitButton = {
+      title: "Uložit změny",
+      onClick: () => {
+        // TODO: save the changes in DB
+        setIsAuthEditing(false);
+      },
+    };
     buttons = [
-      // TODO: edit callback
-      { title: "Zrušit", onClick: () => setIsAuthEditing(false) },
+      {
+        title: "Zrušit",
+        onClick: () => {
+          // TODO: discard changes and show the original data
+          setIsAuthEditing(false);
+        },
+      },
     ];
   } else {
-    /*
-      TODO:
-        - disable when comments to Yes/No questions are not filled in
-        - actual path should be "/auth/visit-detail/{id}"
-    */
-    submitButton = { title: "Finalizovat", onClick: () => navigate("/auth/visit-detail") };
+    // TODO: disable when comments to Yes/No questions are not filled in
+    submitButton = {
+      title: "Finalizovat",
+      onClick: () => {
+        navigate(`/auth/visit-detail/${id}`);
+      },
+    };
     buttons = [
-      { title: "Zrušit", onClick: () => navigate("/auth/waiting-room") },
-      { title: "Editovat", onClick: () => setIsAuthEditing(true) },
+      {
+        title: "Zrušit",
+        onClick: () => {
+          navigate("/auth/waiting-room");
+        },
+      },
+      {
+        title: "Editovat",
+        onClick: () => {
+          setIsAuthEditing(true);
+        },
+      },
     ];
   }
 
