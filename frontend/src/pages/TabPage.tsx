@@ -19,6 +19,7 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ITabPageTableProps, TabType } from "../data/tab_page_table_data";
+import { dummyVisit } from "../data/visit_data";
 import { PageTemplate } from "./PageTemplate";
 
 interface IActionButtonsProps {
@@ -152,7 +153,7 @@ export const TabPage = ({ data }: ITabPageProps) => (
                   gap="0.5rem"
                 >
                   <ActionButtons
-                    visitId="1" // TODO: pass the actual form id
+                    visitId={dummyVisit.id} // TODO: pass the actual form id
                     tabType={data.type}
                   />
                 </Grid>
