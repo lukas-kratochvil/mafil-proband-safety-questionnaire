@@ -1,3 +1,5 @@
+import { questions1, questions2 } from "./form_data";
+
 export interface IProbandVisit {
   id: string;
   visitId: string;
@@ -65,88 +67,34 @@ export const dummyVisit: IProbandVisit = {
     sideDominance: "Pravák",
     mail: "karel.novak@email.cz",
   },
-  answersPart1: [
-    {
-      questionId: "p1q01",
-      isYes: false,
-    },
-    {
-      questionId: "p1q02",
-      isYes: false,
-    },
-    {
-      questionId: "p1q03",
-      isYes: false,
-    },
-    {
-      questionId: "p1q04",
-      isYes: false,
-    },
-    {
-      questionId: "p1q05",
-      isYes: false,
-    },
-    {
-      questionId: "p1q06",
-      isYes: false,
-    },
-    {
-      questionId: "p1q07",
-      isYes: false,
-    },
-    {
-      questionId: "p1q08",
-      isYes: false,
-    },
-    {
-      questionId: "p1q09",
-      isYes: false,
-    },
-    {
-      questionId: "p1q10",
-      isYes: false,
-    },
-    {
-      questionId: "p1q11",
-      isYes: false,
-    },
-    {
-      questionId: "p1q12",
-      isYes: false,
-    },
-    {
-      questionId: "p1q13",
-      isYes: false,
-    },
-  ],
-  answersPart2: [
-    {
-      questionId: "p2q01",
-      isYes: false,
-    },
-    {
-      questionId: "p2q02",
-      isYes: false,
-    },
-    {
-      questionId: "p2q03",
-      isYes: false,
-    },
-    {
-      questionId: "p2q04",
-      isYes: false,
-    },
-    {
-      questionId: "p2q05",
-      isYes: false,
-    },
-    {
-      questionId: "p2q06",
-      isYes: false,
-    },
-    {
-      questionId: "p2q07",
-      isYes: false,
-    },
-  ],
+  answersPart1: questions1.map((question, i) => ({
+    questionId: question.id,
+    isYes: i % 4 === 3,
+  })),
+  answersPart2: questions2.map((question, i) => ({
+    questionId: question.id,
+    isYes: i % 6 === 0,
+  })),
+};
+
+export const dummyFantomVisit: IProbandVisit = {
+  id: "2",
+  visitId: "fantom123",
+  state: VisitState.NEW,
+  projectInfo: {
+    ...dummyVisit.projectInfo,
+    isFantom: true,
+  },
+  probandInfo: {
+    ...dummyVisit.probandInfo,
+    gender: "Jiné",
+  },
+  answersPart1: questions1.map((question) => ({
+    questionId: question.id,
+    isYes: false,
+  })),
+  answersPart2: questions2.map((question) => ({
+    questionId: question.id,
+    isYes: false,
+  })),
 };
