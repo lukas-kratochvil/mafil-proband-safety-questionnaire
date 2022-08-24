@@ -98,3 +98,5 @@ export const dummyFantomVisit: IProbandVisit = {
     isYes: false,
   })),
 };
+
+export const dummyVisits: IProbandVisit[] = [dummyVisit, dummyFantomVisit];
