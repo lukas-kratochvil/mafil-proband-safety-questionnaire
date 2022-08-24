@@ -15,7 +15,7 @@ export enum VisitState {
   NEW,
   CHECKED,
   SIGNED,
-  DELETED,
+  FANTOM_DONE,
 }
 
 interface IProjectInfo {
@@ -82,7 +82,7 @@ export const dummyVisit: IProbandVisit = {
 export const dummyFantomVisit: IProbandVisit = {
   id: "2",
   visitId: "fantom123",
-  state: VisitState.SIGNED,
+  state: VisitState.FANTOM_DONE,
   pdf: "/dummy.pdf",
   projectInfo: {
     ...dummyVisit.projectInfo,
