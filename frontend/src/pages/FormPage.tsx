@@ -15,6 +15,12 @@ import { PageTemplate } from "./PageTemplate";
 import { useAuth } from "../hooks/auth/Auth";
 import "../styles/style.css";
 
+interface ISubmitButtonProps {
+  title: string;
+  // TODO: edit 'data' data type
+  onClick: (data: unknown) => void;
+}
+
 interface IButtonProps {
   title: string;
   onClick: () => void;
@@ -22,19 +28,21 @@ interface IButtonProps {
 
 export const FormPage = () => {
   const { id } = useParams();
+  // TODO: get visit if 'id' is defined
+  // TODO: set defaultValues for the form - fill data from an existing visit
   const formMethods = useForm();
   const { handleSubmit } = formMethods;
   const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
   const { username } = useAuth();
   const navigate = useNavigate();
 
-  let submitButton: IButtonProps;
+  let submitButton: ISubmitButtonProps;
   let buttons: IButtonProps[] = [];
 
   if (username === undefined) {
     submitButton = {
       title: "Souhlasím",
-      onClick: () => {
+      onClick: (data) => {
         // TODO: create visit in DB
         navigate("/form-after-submission");
       },
@@ -42,7 +50,7 @@ export const FormPage = () => {
   } else if (isAuthEditing) {
     submitButton = {
       title: "Uložit změny",
-      onClick: () => {
+      onClick: (data) => {
         // TODO: save the changes in DB
         setIsAuthEditing(false);
       },
@@ -60,7 +68,8 @@ export const FormPage = () => {
     // TODO: disable when comments to Yes/No questions are not filled in
     submitButton = {
       title: "Finalizovat",
-      onClick: () => {
+      onClick: (data) => {
+        // TODO: store changes in DB if made
         navigate(`/auth/visit-detail/${id}`);
       },
     };
@@ -80,11 +89,14 @@ export const FormPage = () => {
     ];
   }
 
+  // TODO: edit 'data' data type
   const onSubmit = (data: unknown) => {
+    // TODO: submit data
     console.log(data);
-    submitButton.onClick();
+    submitButton.onClick(data);
   };
 
+  // TODO: edit 'data' data type
   const onError = (errors: unknown) => {
     console.log(errors);
   };
