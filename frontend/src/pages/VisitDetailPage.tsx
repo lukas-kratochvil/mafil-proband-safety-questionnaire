@@ -54,6 +54,11 @@ const getColoredInfoStripe = (visitState?: VisitState): IColoredInfoStripeProps 
         text: "Podepsáno",
         color: "success",
       };
+    case VisitState.FANTOM_DONE:
+      return {
+        text: "Fantom se nepodepisuje",
+        color: "info",
+      };
     default:
       return {
         text: `ERROR - switch case for the value '${
@@ -101,6 +106,7 @@ const getButtons = (
         },
       ];
     case VisitState.SIGNED:
+    case VisitState.FANTOM_DONE:
       return [
         {
           title: "Stáhnout PDF",
@@ -137,20 +143,7 @@ export const VisitDetailPage = () => {
           alignItems="center"
           padding="1rem"
         >
-          <Stack
-            spacing="0.5rem"
-            justifyContent="center"
-            alignItems="center"
-            width="100%"
-          >
-            <ColoredInfoStripe {...coloredInfoStripe} />
-            {visit?.projectInfo.isFantom && (
-              <ColoredInfoStripe
-                color="info"
-                text="Fantom se nepodepisuje"
-              />
-            )}
-          </Stack>
+          <ColoredInfoStripe {...coloredInfoStripe} />
           <iframe
             className="visit-pdf"
             src={`${visit?.pdf}#view=fitH`}
