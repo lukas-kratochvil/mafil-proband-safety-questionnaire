@@ -14,6 +14,7 @@ import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
 import { PageTemplate } from "./PageTemplate";
 import { useAuth } from "../hooks/auth/Auth";
 import "../styles/style.css";
+import { fetchVisit } from "../util/utils";
 
 interface ISubmitButtonProps {
   title: string;
@@ -28,7 +29,8 @@ interface IButtonProps {
 
 export const FormPage = () => {
   const { id } = useParams();
-  // TODO: get visit if 'id' is defined
+  const visit = id === undefined ? undefined : fetchVisit(id);
+
   // TODO: set defaultValues for the form - fill data from an existing visit
   const formMethods = useForm();
   const { handleSubmit } = formMethods;
@@ -111,18 +113,24 @@ export const FormPage = () => {
           {username === undefined && <FormEntryInfo />}
           {username !== undefined && <FormProjectInfo />}
           <FormProbandInfo isAuthEditing={username === undefined || isAuthEditing} />
-          <FormProbandContact isAuthEditing={username === undefined || isAuthEditing} />
+          {!visit?.projectInfo.isFantom && (
+            <FormProbandContact isAuthEditing={username === undefined || isAuthEditing} />
+          )}
           {username === undefined && <FormSafetyInfo />}
-          <FormQuestions
-            title="Část 1"
-            questions={questions1}
-            isAuthEditing={username === undefined || isAuthEditing}
-          />
-          <FormQuestions
-            title="Část 2"
-            questions={questions2}
-            isAuthEditing={username === undefined || isAuthEditing}
-          />
+          {!visit?.projectInfo.isFantom && (
+            <>
+              <FormQuestions
+                title="Část 1"
+                questions={questions1}
+                isAuthEditing={username === undefined || isAuthEditing}
+              />
+              <FormQuestions
+                title="Část 2"
+                questions={questions2}
+                isAuthEditing={username === undefined || isAuthEditing}
+              />
+            </>
+          )}
           {username === undefined && <FormBeforeExamination />}
           {username === undefined && <FormExaminationConsent />}
           <Grid
