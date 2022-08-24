@@ -137,7 +137,20 @@ export const VisitDetailPage = () => {
           alignItems="center"
           padding="1rem"
         >
-          <ColoredInfoStripe {...coloredInfoStripe} />
+          <Stack
+            spacing="0.5rem"
+            justifyContent="center"
+            alignItems="center"
+            width="100%"
+          >
+            <ColoredInfoStripe {...coloredInfoStripe} />
+            {visit?.projectInfo.isFantom && (
+              <ColoredInfoStripe
+                color="info"
+                text="Fantom se nepodepisuje"
+              />
+            )}
+          </Stack>
           <iframe
             className="visit-pdf"
             src={`${visit?.pdf}#view=fitH`}
