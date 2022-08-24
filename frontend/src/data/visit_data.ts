@@ -80,7 +80,7 @@ export const dummyVisit: IProbandVisit = {
 export const dummyFantomVisit: IProbandVisit = {
   id: "2",
   visitId: "fantom123",
-  state: VisitState.NEW,
+  state: VisitState.SIGNED,
   projectInfo: {
     ...dummyVisit.projectInfo,
     isFantom: true,
