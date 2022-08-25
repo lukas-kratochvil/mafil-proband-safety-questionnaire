@@ -1,8 +1,8 @@
-import InfoIcon from "@mui/icons-material/Info";
-import { Divider, Grid, Tooltip, Typography } from "@mui/material";
+import { Divider, Grid, Typography } from "@mui/material";
 import { useFormContext, useWatch } from "react-hook-form";
 import { genders, nativeLanguages, sideDominance, visualCorrection } from "../../data/form_data";
 import { useAuth } from "../../hooks/auth/Auth";
+import { InfoTooltip } from "../informative/InfoTooltip";
 import { FormCard } from "./FormCard";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";
@@ -63,19 +63,13 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           <FormTextField
             label="Rodné číslo"
             endAdornmentLabel={
-              <Tooltip
-                title={
-                  <Typography>
-                    {username === undefined
-                      ? "V případě, že nemáte české rodné číslo, zadejte, prosím, číslo pojištěnce."
-                      : "Pokud proband nemá české rodné číslo, může zadat číslo pojištěnce."}
-                  </Typography>
+              <InfoTooltip
+                text={
+                  username === undefined
+                    ? "V případě, že nemáte české rodné číslo, zadejte, prosím, číslo pojištěnce."
+                    : "Pokud proband nemá české rodné číslo, může zadat číslo pojištěnce."
                 }
-                arrow
-                placement="top-start"
-              >
-                <InfoIcon sx={{ color: "#2da2e1" }} />
-              </Tooltip>
+              />
             }
             disabled={!isAuthEditing}
           />
