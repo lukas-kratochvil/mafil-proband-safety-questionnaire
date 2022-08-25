@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import { TablePage, TableType } from "./pages/TablePage";
+import { FormAfterSubmission } from "./pages/FormAfterSubmission";
 import { FormPage } from "./pages/FormPage";
 import { LoginPage } from "./pages/LoginPage";
-import { FormAfterSubmission } from "./pages/FormAfterSubmission";
+import { TablePage, TableType } from "./pages/TablePage";
 import { VisitDetailPage } from "./pages/VisitDetailPage";
 
 export const App = () => (

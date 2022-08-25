@@ -1,20 +1,20 @@
 import { Button, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
-import { questions1, questions2 } from "../data/form_data";
+import { useNavigate, useParams } from "react-router-dom";
 import { FormBeforeExamination } from "../components/form/FormBeforeExamination";
 import { FormEntryInfo } from "../components/form/FormEntryInfo";
 import { FormExaminationConsent } from "../components/form/FormExaminationConsent";
-import { FormProjectInfo } from "../components/form/FormProjectInfo";
-import { FormProbandInfo } from "../components/form/FormProbandInfo";
-import { FormQuestions } from "../components/form/FormQuestions";
 import { FormProbandContact } from "../components/form/FormProbandContact";
+import { FormProbandInfo } from "../components/form/FormProbandInfo";
+import { FormProjectInfo } from "../components/form/FormProjectInfo";
+import { FormQuestions } from "../components/form/FormQuestions";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
-import { PageTemplate } from "./PageTemplate";
+import { questions1, questions2 } from "../data/form_data";
 import { useAuth } from "../hooks/auth/Auth";
 import "../styles/style.css";
 import { fetchVisit } from "../util/utils";
+import { PageTemplate } from "./PageTemplate";
 
 interface ISubmitButtonProps {
   title: string;

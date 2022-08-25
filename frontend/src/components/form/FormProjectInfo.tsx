@@ -17,7 +17,7 @@ export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => (
       spacing={2}
       columns={4}
     >
-      {isFantom &&
+      {isFantom && (
         <Grid
           item
           xs={4}
@@ -27,7 +27,7 @@ export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => (
             color="info"
           />
         </Grid>
-      }
+      )}
       <Grid
         item
         xs={4}

@@ -1,12 +1,12 @@
 import { Button, Grid, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { PageTemplate } from "./PageTemplate";
-import "../styles/style.css";
 import { CardBox } from "../components/card/CardBox";
-import { VisitState } from "../data/visit_data";
-import { fetchVisit } from "../util/utils";
 import { ColoredInfoStripe, IColoredInfoStripeProps } from "../components/feedback/ColoredInfoStripe";
+import { VisitState } from "../data/visit_data";
+import "../styles/style.css";
+import { fetchVisit } from "../util/utils";
+import { PageTemplate } from "./PageTemplate";
 
 interface IButtonProps {
   title: string;

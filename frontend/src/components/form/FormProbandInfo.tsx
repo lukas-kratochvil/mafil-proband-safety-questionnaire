@@ -2,11 +2,11 @@ import InfoIcon from "@mui/icons-material/Info";
 import { Divider, Grid, Tooltip, Typography } from "@mui/material";
 import { useFormContext, useWatch } from "react-hook-form";
 import { genders, nativeLanguages, sideDominance, visualCorrection } from "../../data/form_data";
-import { FormCard } from "./FormCard";
-import { FormDatePicker } from "./inputs/FormDatePicker";
-import { FormAutocomplete } from "./inputs/FormAutocomplete";
-import { FormTextField } from "./inputs/FormTextField";
 import { useAuth } from "../../hooks/auth/Auth";
+import { FormCard } from "./FormCard";
+import { FormAutocomplete } from "./inputs/FormAutocomplete";
+import { FormDatePicker } from "./inputs/FormDatePicker";
+import { FormTextField } from "./inputs/FormTextField";
 
 interface IFormProbandInfoProps {
   isAuthEditing: boolean;
