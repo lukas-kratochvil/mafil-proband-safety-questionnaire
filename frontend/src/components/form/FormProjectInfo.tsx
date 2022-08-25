@@ -2,7 +2,6 @@ import { Grid } from "@mui/material";
 import { magnets, projects } from "../../data/form_data";
 import { FormCard } from "./FormCard";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
-import { FormCheckbox } from "./inputs/FormCheckbox";
 import { FormDatePicker } from "./inputs/FormDatePicker";
 
 export const FormProjectInfo = () => (
@@ -15,18 +14,12 @@ export const FormProjectInfo = () => (
     >
       <Grid
         item
-        xs={3}
+        xs={4}
       >
         <FormAutocomplete
           label="Projekt"
           options={projects}
         />
-      </Grid>
-      <Grid
-        item
-        xs={1}
-      >
-        <FormCheckbox label="Fantom" />
       </Grid>
       <Grid
         item
