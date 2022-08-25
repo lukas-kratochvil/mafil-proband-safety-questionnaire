@@ -45,17 +45,25 @@ interface IAnswer {
   isYes: boolean;
 }
 
-const generateId = (): string => Math.floor(Math.random() * 10000).toString();
+const idCounter = {
+  nextId: "3",
+};
+
+const generateId = (): string => {
+  const id = idCounter.nextId;
+  idCounter.nextId = `${+id + 1}`;
+  return id;
+};
 
 const createVisits = (initialVisit: IProbandVisit, state: VisitState, count: number): IProbandVisit[] => {
-  const visits = [initialVisit];
+  const visits = [];
 
   for (let i = +initialVisit.id; i <= count; i++) {
     const newId: string = generateId();
     const newVisit: IProbandVisit = {
       ...initialVisit,
       id: newId,
-      visitId: `visit${newId}`,
+      visitId: `${initialVisit.projectInfo.isFantom ? "fantom" : "visit"}${newId}`,
       state,
       projectInfo: { ...initialVisit.projectInfo },
       probandInfo: { ...initialVisit.probandInfo },
@@ -104,7 +112,7 @@ export const dummyVisitNew: IProbandVisit = {
 
 export const dummyFantomVisit: IProbandVisit = {
   id: "2",
-  visitId: "fantom123",
+  visitId: "fantom2",
   state: VisitState.FANTOM_DONE,
   pdf: "/dummy.pdf",
   projectInfo: {

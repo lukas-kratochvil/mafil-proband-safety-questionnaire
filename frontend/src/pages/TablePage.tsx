@@ -18,16 +18,21 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ITabPageTableProps, TabType } from "../data/tab_page_table_data";
-import { dummyVisitNew } from "../data/visit_data";
+import { IProbandVisit, VisitState } from "../data/visit_data";
+import { fetchRecentVisits, fetchWaitingRoomVisits } from "../util/utils";
 import { PageTemplate } from "./PageTemplate";
+
+export enum TableType {
+  WAITING_ROOM,
+  RECENT_VISITS,
+}
 
 interface IActionButtonsProps {
   visitId: string;
-  tabType: TabType;
+  tableType: TableType;
 }
 
-const ActionButtons = ({ visitId, tabType }: IActionButtonsProps) => {
+const ActionButtons = ({ visitId, tableType }: IActionButtonsProps) => {
   const navigate = useNavigate();
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
 
@@ -39,8 +44,8 @@ const ActionButtons = ({ visitId, tabType }: IActionButtonsProps) => {
     setOpenDeleteDialog(false);
   };
 
-  switch (tabType) {
-    case TabType.WAITING_ROOM:
+  switch (tableType) {
+    case TableType.WAITING_ROOM:
       return (
         <>
           <Button
@@ -71,7 +76,7 @@ const ActionButtons = ({ visitId, tabType }: IActionButtonsProps) => {
           </Dialog>
         </>
       );
-    case TabType.RECENT_VISITS:
+    case TableType.RECENT_VISITS:
       return (
         <>
           <Button
@@ -97,71 +102,121 @@ const ActionButtons = ({ visitId, tabType }: IActionButtonsProps) => {
   }
 };
 
+const getWaitingRoomRow = (visit: IProbandVisit): string[] => [
+  new Date().toDateString(),
+  `${visit.probandInfo.surname}, ${visit.probandInfo.name}`,
+  visit.probandInfo.personalId,
+  visit.probandInfo.birthdate.toDateString(),
+  visit.probandInfo.gender,
+  visit.probandInfo.nativeLanguage,
+];
+
+const getRecentVisitsRow = (visit: IProbandVisit): string[] => {
+  let isSignedText = "";
+
+  if (visit.state === VisitState.SIGNED) {
+    isSignedText = "Ano";
+  } else if (visit.state === VisitState.CHECKED) {
+    isSignedText = "Ne";
+  }
+
+  return [
+    visit.visitId,
+    `${visit.probandInfo.surname}, ${visit.probandInfo.name}`,
+    visit.projectInfo.projectId,
+    visit.projectInfo.magnetId,
+    new Date().toDateString(),
+    "MUNI_operator",
+    isSignedText,
+  ];
+};
+
 interface ITablePageProps {
-  data: ITabPageTableProps;
+  type: TableType;
 }
 
-export const TablePage = ({ data }: ITablePageProps) => (
-  <PageTemplate isTabPage>
-    <TableContainer component={Paper}>
-      <Table
-        aria-label="waiting-room table"
-        sx={{
-          minWidth: "40rem",
-        }}
-      >
-        <TableHead>
-          <TableRow>
-            {data.header.map((title, index) => (
+export const TablePage = ({ type }: ITablePageProps) => {
+  let header: string[] = [];
+  let getVisitRow: (visit: IProbandVisit) => string[] = (_) => [];
+  let visits: IProbandVisit[] = [];
+
+  switch (type) {
+    case TableType.WAITING_ROOM:
+      header = ["Datum registrace", "Proband", "Rodné číslo", "Datum narození", "Pohlaví", "Mateřský jazyk"];
+      getVisitRow = getWaitingRoomRow;
+      visits = fetchWaitingRoomVisits();
+      break;
+    case TableType.RECENT_VISITS:
+      header = ["Visit ID", "Proband", "Projekt", "Přístroj", "Zpracováno", "Zpracoval", "Podepsáno"];
+      getVisitRow = getRecentVisitsRow;
+      visits = fetchRecentVisits();
+      break;
+    default:
+      break;
+  }
+
+  return (
+    <PageTemplate isTabPage>
+      <TableContainer component={Paper}>
+        <Table
+          aria-label="waiting-room table"
+          sx={{
+            minWidth: "40rem",
+          }}
+        >
+          <TableHead>
+            <TableRow>
+              {header.map((title, index) => (
+                <TableCell
+                  key={index}
+                  sx={{
+                    backgroundColor: "black",
+                    color: "white",
+                  }}
+                >
+                  {title}
+                </TableCell>
+              ))}
               <TableCell
-                key={index}
                 sx={{
                   backgroundColor: "black",
                   color: "white",
                 }}
               >
-                {title}
-              </TableCell>
-            ))}
-            <TableCell
-              sx={{
-                backgroundColor: "black",
-                color: "white",
-              }}
-            >
-              Akce
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.data.map((row, rowIndex) => (
-            <TableRow
-              key={rowIndex}
-              sx={{
-                "&:last-child td, &:last-child th": {
-                  border: 0,
-                },
-              }}
-            >
-              {row.map((cell, cellIndex) => (
-                <TableCell key={cellIndex}>{cell}</TableCell>
-              ))}
-              <TableCell sx={{ maxWidth: "fit-content" }}>
-                <Grid
-                  container
-                  direction="row"
-                  gap="0.5rem"
-                >
-                  <ActionButtons
-                    visitId={dummyVisitNew.id} // TODO: pass the actual form id
-                    tabType={data.type}
-                  />
-                </Grid>
+                Akce
               </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  </PageTemplate>
-);
+          </TableHead>
+          <TableBody>
+            {visits.map((visit) => (
+              <TableRow
+                key={visit.id}
+                sx={{
+                  "&:last-child td, &:last-child th": {
+                    border: 0,
+                  },
+                }}
+              >
+                {getVisitRow(visit).map((cell, cellIndex) => (
+                  <TableCell key={cellIndex}>{cell}</TableCell>
+                ))}
+                <TableCell sx={{ maxWidth: "fit-content" }}>
+                  <Grid
+                    container
+                    direction="row"
+                    gap="0.5rem"
+                  >
+                    <ActionButtons
+                      visitId={visit.id}
+                      tableType={type}
+                    />
+                  </Grid>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </PageTemplate>
+  );
+};

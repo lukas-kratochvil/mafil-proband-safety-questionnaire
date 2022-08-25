@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { TablePage } from "./pages/TablePage";
-import { recentVisitsTableData, waitingRoomTableData } from "./data/tab_page_table_data";
+import { TablePage, TableType } from "./pages/TablePage";
 import { FormPage } from "./pages/FormPage";
 import { LoginPage } from "./pages/LoginPage";
 import { FormAfterSubmission } from "./pages/FormAfterSubmission";
@@ -26,11 +25,11 @@ export const App = () => (
     />
     <Route
       path="/auth/waiting-room"
-      element={<TablePage data={waitingRoomTableData} />}
+      element={<TablePage type={TableType.WAITING_ROOM} />}
     />
     <Route
       path="/auth/recent-visits"
-      element={<TablePage data={recentVisitsTableData} />}
+      element={<TablePage type={TableType.RECENT_VISITS} />}
     />
     <Route
       path="/auth/visit-detail/:id"
