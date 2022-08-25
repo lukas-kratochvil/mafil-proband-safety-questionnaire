@@ -1,4 +1,4 @@
-import { Alert, AlertColor, Button, Grid, Stack } from "@mui/material";
+import { Button, Grid, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { PageTemplate } from "./PageTemplate";
@@ -6,31 +6,7 @@ import "../styles/style.css";
 import { CardBox } from "../components/card/CardBox";
 import { VisitState } from "../data/visit_data";
 import { fetchVisit } from "../util/utils";
-
-interface IColoredInfoStripeProps {
-  text: string;
-  color: AlertColor;
-}
-
-const ColoredInfoStripe = ({ text, color }: IColoredInfoStripeProps) => (
-  <Alert
-    severity="info"
-    variant="filled"
-    color={color}
-    icon={false}
-    sx={{
-      width: "100%",
-      padding: 0,
-      "& .MuiAlert-message": {
-        width: "100%",
-        fontSize: "1rem",
-        textAlign: "center",
-      },
-    }}
-  >
-    {text.toUpperCase()}
-  </Alert>
-);
+import { ColoredInfoStripe, IColoredInfoStripeProps } from "../components/feedback/ColoredInfoStripe";
 
 interface IButtonProps {
   title: string;
