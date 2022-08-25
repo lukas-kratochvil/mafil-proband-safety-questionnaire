@@ -10,4 +10,4 @@ export const fetchWaitingRoomVisits = (): IProbandVisit[] =>
 
 export const fetchRecentVisits = (): IProbandVisit[] =>
   // TODO: get visits from DB
-  dummyVisits.filter((visit) => visit.state === VisitState.CHECKED || visit.state === VisitState.SIGNED);
+  dummyVisits.filter((visit) => [VisitState.CHECKED, VisitState.SIGNED, VisitState.FANTOM_DONE].includes(visit.state));
