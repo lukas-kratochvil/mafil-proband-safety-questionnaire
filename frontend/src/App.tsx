@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { TabPage } from "./pages/TabPage";
+import { TablePage } from "./pages/TablePage";
 import { recentVisitsTableData, waitingRoomTableData } from "./data/tab_page_table_data";
 import { FormPage } from "./pages/FormPage";
 import { LoginPage } from "./pages/LoginPage";
@@ -26,11 +26,11 @@ export const App = () => (
     />
     <Route
       path="/auth/waiting-room"
-      element={<TabPage data={waitingRoomTableData} />}
+      element={<TablePage data={waitingRoomTableData} />}
     />
     <Route
       path="/auth/recent-visits"
-      element={<TabPage data={recentVisitsTableData} />}
+      element={<TablePage data={recentVisitsTableData} />}
     />
     <Route
       path="/auth/visit-detail/:id"

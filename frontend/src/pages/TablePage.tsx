@@ -97,11 +97,11 @@ const ActionButtons = ({ visitId, tabType }: IActionButtonsProps) => {
   }
 };
 
-interface ITabPageProps {
+interface ITablePageProps {
   data: ITabPageTableProps;
 }
 
-export const TabPage = ({ data }: ITabPageProps) => (
+export const TablePage = ({ data }: ITablePageProps) => (
   <PageTemplate isTabPage>
     <TableContainer component={Paper}>
       <Table
