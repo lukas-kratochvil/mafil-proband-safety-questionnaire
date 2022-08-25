@@ -1,5 +1,5 @@
 import { Button, Grid } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
 import { questions1, questions2 } from "../data/form_data";
@@ -30,6 +30,7 @@ interface IButtonProps {
 export const FormPage = () => {
   const { id } = useParams();
   const visit = id === undefined ? undefined : fetchVisit(id);
+  const isFantom = visit?.projectInfo.isFantom || false;
 
   // TODO: set defaultValues for the form - fill data from an existing visit
   const formMethods = useForm();
@@ -37,6 +38,8 @@ export const FormPage = () => {
   const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
   const { username } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => setIsAuthEditing(isFantom), [id, isFantom]);
 
   let submitButton: ISubmitButtonProps;
   let buttons: IButtonProps[] = [];
@@ -47,6 +50,15 @@ export const FormPage = () => {
       onClick: (data) => {
         // TODO: create visit in DB
         navigate("/form-after-submission");
+      },
+    };
+  } else if (isFantom) {
+    // TODO: disable when personal info and comments to Yes/No questions are not filled in
+    submitButton = {
+      title: "Finalizovat",
+      onClick: (data) => {
+        // TODO: store changes in DB if made
+        navigate(`/auth/visit-detail/${id}`);
       },
     };
   } else if (isAuthEditing) {
@@ -67,7 +79,7 @@ export const FormPage = () => {
       },
     ];
   } else {
-    // TODO: disable when comments to Yes/No questions are not filled in
+    // TODO: disable when personal info and comments to Yes/No questions are not filled in
     submitButton = {
       title: "Finalizovat",
       onClick: (data) => {
@@ -111,13 +123,11 @@ export const FormPage = () => {
       >
         <FormProvider {...formMethods}>
           {username === undefined && <FormEntryInfo />}
-          {username !== undefined && <FormProjectInfo isFantom={visit?.projectInfo.isFantom} />}
+          {username !== undefined && <FormProjectInfo isFantom={isFantom} />}
           <FormProbandInfo isAuthEditing={username === undefined || isAuthEditing} />
-          {!visit?.projectInfo.isFantom && (
-            <FormProbandContact isAuthEditing={username === undefined || isAuthEditing} />
-          )}
+          {!isFantom && <FormProbandContact isAuthEditing={username === undefined || isAuthEditing} />}
           {username === undefined && <FormSafetyInfo />}
-          {!visit?.projectInfo.isFantom && (
+          {!isFantom && (
             <>
               <FormQuestions
                 title="Část 1"
