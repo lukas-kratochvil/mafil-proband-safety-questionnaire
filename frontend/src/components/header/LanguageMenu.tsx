@@ -1,7 +1,7 @@
 import LanguageIcon from "@mui/icons-material/Language";
 import { Avatar, Button, IconButton, Menu, Tooltip } from "@mui/material";
 import { FlagComponent } from "country-flag-icons/react/3x2";
-import React, { useState } from "react";
+import { bindMenu, bindTrigger, usePopupState } from "material-ui-popup-state/hooks";
 import { languages } from "../../data/header_data";
 
 export interface ILanguageItemProps {
@@ -29,21 +29,18 @@ const LanguageItem = ({ name, label, Flag }: ILanguageItemProps) => (
 );
 
 export const LanguageMenu = () => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const isOpen = Boolean(anchorEl);
-
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
-  const handleClose = () => setAnchorEl(null);
+  const popupState = usePopupState({
+    variant: "popover",
+    popupId: "language-menu",
+    disableAutoFocus: true,
+  });
 
   return (
     <>
       <Tooltip title="Choose language">
         <IconButton
-          onClick={handleClick}
           size="small"
-          aria-controls={isOpen ? "language-menu" : undefined}
-          aria-haspopup="true"
-          aria-expanded={isOpen ? "true" : undefined}
+          {...bindTrigger(popupState)}
         >
           <LanguageIcon
             style={{
@@ -55,12 +52,6 @@ export const LanguageMenu = () => {
         </IconButton>
       </Tooltip>
       <Menu
-        id="language-menu"
-        aria-labelledby="language-menu"
-        anchorEl={anchorEl}
-        open={isOpen}
-        onClose={handleClose}
-        onClick={handleClose}
         disableScrollLock
         PaperProps={{
           elevation: 0,
@@ -94,6 +85,7 @@ export const LanguageMenu = () => {
         sx={{
           position: "absolute",
         }}
+        {...bindMenu(popupState)}
       >
         {languages.map((language, index) => (
           <LanguageItem
