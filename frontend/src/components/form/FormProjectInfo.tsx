@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import { magnets, projects } from "../../data/form_data";
-import { ColoredInfoStripe } from "../feedback/ColoredInfoStripe";
+import { ColoredInfoStripe } from "../informative/ColoredInfoStripe";
 import { FormCard } from "./FormCard";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";

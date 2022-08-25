@@ -2,7 +2,7 @@ import { Button, Grid, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CardBox } from "../components/card/CardBox";
-import { ColoredInfoStripe, IColoredInfoStripeProps } from "../components/feedback/ColoredInfoStripe";
+import { ColoredInfoStripe, IColoredInfoStripeProps } from "../components/informative/ColoredInfoStripe";
 import { VisitState } from "../data/visit_data";
 import "../styles/style.css";
 import { fetchVisit } from "../util/utils";
