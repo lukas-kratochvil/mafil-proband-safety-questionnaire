@@ -11,6 +11,7 @@ import { PageTemplate } from "./PageTemplate";
 interface IButtonProps {
   title: string;
   onClick: () => void;
+  disabled?: boolean;
 }
 
 const getColoredInfoStripe = (visitState?: VisitState): IColoredInfoStripeProps => {
@@ -69,6 +70,7 @@ const getButtons = (
             // TODO: PDF will be generated and stored in DB on the server
             setVisitState(VisitState.CHECKED);
           },
+          disabled: true,
         },
       ];
     case VisitState.CHECKED:
@@ -136,6 +138,7 @@ export const VisitDetailPage = () => {
                 variant="contained"
                 onClick={button.onClick}
                 key={index}
+                disabled={button.disabled}
               >
                 {button.title}
               </Button>
