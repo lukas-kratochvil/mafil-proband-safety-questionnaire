@@ -153,7 +153,12 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
         >
           <FormTextField
             label="Hodnota zrakové korekce"
-            endAdornmentLabel="D"
+            endAdornmentLabel={
+              <>
+                <Typography sx={{ marginRight: "0.75rem" }}>D</Typography>
+                <InfoTooltip text="Kladné dioptrie značí dalekozrakost, kdy jedinec vidí hůře na blízko. Naopak záporné dioptrie značí krátkozrakost, kdy jedinec vidí hůře na dálku." />
+              </>
+            }
             disabled={!isAuthEditing || visualCorrectionAnswer !== "Ano"}
           />
         </Grid>
