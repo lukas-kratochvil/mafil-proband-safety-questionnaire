@@ -111,7 +111,7 @@ export const FormPage = () => {
       >
         <FormProvider {...formMethods}>
           {username === undefined && <FormEntryInfo />}
-          {username !== undefined && <FormProjectInfo />}
+          {username !== undefined && <FormProjectInfo isFantom={visit?.projectInfo.isFantom} />}
           <FormProbandInfo isAuthEditing={username === undefined || isAuthEditing} />
           {!visit?.projectInfo.isFantom && (
             <FormProbandContact isAuthEditing={username === undefined || isAuthEditing} />

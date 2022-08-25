@@ -1,10 +1,15 @@
 import { Grid } from "@mui/material";
 import { magnets, projects } from "../../data/form_data";
+import { ColoredInfoStripe } from "../feedback/ColoredInfoStripe";
 import { FormCard } from "./FormCard";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";
 
-export const FormProjectInfo = () => (
+interface IFormProjectInfoProps {
+  isFantom?: boolean;
+}
+
+export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => (
   <FormCard title="Informace o projektu">
     <Grid
       container
@@ -12,6 +17,17 @@ export const FormProjectInfo = () => (
       spacing={2}
       columns={4}
     >
+      {isFantom &&
+        <Grid
+          item
+          xs={4}
+        >
+          <ColoredInfoStripe
+            text="Fantom"
+            color="info"
+          />
+        </Grid>
+      }
       <Grid
         item
         xs={4}
