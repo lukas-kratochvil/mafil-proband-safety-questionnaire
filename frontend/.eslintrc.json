@@ -21,16 +21,15 @@
         "react",
         "react-hooks",
         "@typescript-eslint",
-        "prettier",
-        "unused-imports"
+        "prettier"
     ],
     "rules":{
         "import/extensions": ["error", "ignorePackages", { "ts": "never", "tsx": "never" }],
         "import/prefer-default-export": "off",
         "no-plusplus": "off",
+        "no-shadow": "off",
         "no-use-before-define": "off",
         "@typescript-eslint/no-use-before-define": ["error"],
-        "no-shadow": "off",
         "@typescript-eslint/no-shadow": ["error"],
         "react/jsx-first-prop-new-line": [1, "multiline"],
         "react/jsx-max-props-per-line": [1, { "maximum": {"single": 3, "multi": 1} }],
@@ -41,8 +40,7 @@
         "react/react-in-jsx-scope": "off",
         "react/require-default-props": "off",
         "react-hooks/exhaustive-deps": "warn",
-        "react-hooks/rules-of-hooks": "error",
-        "unused-imports/no-unused-imports": "error"
+        "react-hooks/rules-of-hooks": "error"
     },
     "settings": {
         "import/resolver": {
