@@ -45,9 +45,32 @@ interface IAnswer {
   isYes: boolean;
 }
 
-export const dummyVisit: IProbandVisit = {
+const generateId = (): string => Math.floor(Math.random() * 10000).toString();
+
+const createVisits = (initialVisit: IProbandVisit, state: VisitState, count: number): IProbandVisit[] => {
+  const visits = [initialVisit];
+
+  for (let i = +initialVisit.id; i <= count; i++) {
+    const newId: string = generateId();
+    const newVisit: IProbandVisit = {
+      ...initialVisit,
+      id: newId,
+      visitId: `visit${newId}`,
+      state,
+      projectInfo: { ...initialVisit.projectInfo },
+      probandInfo: { ...initialVisit.probandInfo },
+      answersPart1: { ...initialVisit.answersPart1 },
+      answersPart2: { ...initialVisit.answersPart2 },
+    };
+    visits.push(newVisit);
+  }
+
+  return visits;
+};
+
+export const dummyVisitNew: IProbandVisit = {
   id: "1",
-  visitId: "visit123",
+  visitId: "visit1",
   state: VisitState.NEW,
   pdf: "/dummy-multipage.pdf",
   projectInfo: {
@@ -85,11 +108,11 @@ export const dummyFantomVisit: IProbandVisit = {
   state: VisitState.FANTOM_DONE,
   pdf: "/dummy.pdf",
   projectInfo: {
-    ...dummyVisit.projectInfo,
+    ...dummyVisitNew.projectInfo,
     isFantom: true,
   },
   probandInfo: {
-    ...dummyVisit.probandInfo,
+    ...dummyVisitNew.probandInfo,
     gender: "Jiné",
   },
   answersPart1: questions1.map((question) => ({
@@ -102,4 +125,12 @@ export const dummyFantomVisit: IProbandVisit = {
   })),
 };
 
-export const dummyVisits: IProbandVisit[] = [dummyVisit, dummyFantomVisit];
+export const dummyVisits: IProbandVisit[] = [
+  dummyVisitNew,
+  ...createVisits(dummyVisitNew, VisitState.NEW, 3),
+  ...createVisits(dummyVisitNew, VisitState.CHECKED, 4),
+  ...createVisits(dummyVisitNew, VisitState.SIGNED, 2),
+  dummyFantomVisit,
+  ...createVisits(dummyFantomVisit, VisitState.NEW, 1),
+  ...createVisits(dummyFantomVisit, VisitState.FANTOM_DONE, 2),
+];
