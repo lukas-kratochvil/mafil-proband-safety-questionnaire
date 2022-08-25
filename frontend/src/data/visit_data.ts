@@ -46,19 +46,19 @@ interface IAnswer {
 }
 
 const idCounter = {
-  nextId: "3",
+  freeId: "1",
 };
 
 const generateId = (): string => {
-  const id = idCounter.nextId;
-  idCounter.nextId = `${+id + 1}`;
+  const id = idCounter.freeId;
+  idCounter.freeId = `${+id + 1}`;
   return id;
 };
 
 const createVisits = (initialVisit: IProbandVisit, state: VisitState, count: number): IProbandVisit[] => {
   const visits = [];
 
-  for (let i = +initialVisit.id; i <= count; i++) {
+  for (let i = 0; i < count; i++) {
     const newId: string = generateId();
     const newVisit: IProbandVisit = {
       ...initialVisit,
@@ -77,7 +77,7 @@ const createVisits = (initialVisit: IProbandVisit, state: VisitState, count: num
 };
 
 export const dummyVisitNew: IProbandVisit = {
-  id: "1",
+  id: generateId(),
   visitId: "visit1",
   state: VisitState.NEW,
   pdf: "/dummy-multipage.pdf",
@@ -111,7 +111,7 @@ export const dummyVisitNew: IProbandVisit = {
 };
 
 export const dummyFantomVisit: IProbandVisit = {
-  id: "2",
+  id: generateId(),
   visitId: "fantom2",
   state: VisitState.FANTOM_DONE,
   pdf: "/dummy.pdf",
