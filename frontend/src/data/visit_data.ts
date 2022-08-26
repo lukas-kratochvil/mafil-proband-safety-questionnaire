@@ -1,4 +1,4 @@
-import { questions1, questions2 } from "./form_data";
+import { magnets, projects, questions1, questions2 } from "./form_data";
 
 export interface IProbandVisit {
   id: string;
@@ -20,7 +20,9 @@ export enum VisitState {
 
 interface IProjectInfo {
   projectId: string;
-  magnetId: string;
+  projectName: string;
+  magnetDeviceId: string;
+  magnetDeviceName: string;
   isFantom: boolean;
   measurementDate: Date;
 }
@@ -32,12 +34,12 @@ interface IProbandInfo {
   birthdate: Date;
   height: number;
   weight: number;
-  gender: string; // TODO: can be enum or object stored in the database in case of future additions/editations etc.
+  sex: string; // TODO: can be enum or object stored in the database in case of future additions/editations etc.
   nativeLanguage: string; // TODO: can be enum or object stored in the database in case of future additions/editations etc.
   visualCorrection: string; // TODO: can be enum or object stored in the database in case of future additions/editations etc.
   sideDominance: string; // TODO: this should most probably be an enum
-  mail?: string;
-  phone?: string; // TODO: this depends whether they want to choose national phone prefix..
+  email?: string;
+  phoneNumber?: string; // TODO: this depends whether they want to choose national phone prefix..
 }
 
 interface IAnswer {
@@ -83,7 +85,9 @@ export const dummyVisitNew: IProbandVisit = {
   pdf: "/dummy-multipage.pdf",
   projectInfo: {
     projectId: "1",
-    magnetId: "1",
+    projectName: projects[0],
+    magnetDeviceId: "1",
+    magnetDeviceName: magnets[0],
     isFantom: false,
     measurementDate: new Date(),
   },
@@ -94,11 +98,11 @@ export const dummyVisitNew: IProbandVisit = {
     birthdate: new Date(),
     height: 180,
     weight: 85,
-    gender: "Muž",
+    sex: "Muž",
     nativeLanguage: "Čeština",
-    visualCorrection: "Žádná",
+    visualCorrection: "Ne",
     sideDominance: "Pravák",
-    mail: "karel.novak@email.cz",
+    email: "karel.novak@email.cz",
   },
   answersPart1: questions1.map((question, i) => ({
     questionId: question.id,
@@ -121,7 +125,7 @@ export const dummyFantomVisit: IProbandVisit = {
   },
   probandInfo: {
     ...dummyVisitNew.probandInfo,
-    gender: "Jiné",
+    sex: "Jiné",
   },
   answersPart1: questions1.map((question) => ({
     questionId: question.id,

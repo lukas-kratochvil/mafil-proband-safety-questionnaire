@@ -11,6 +11,7 @@ import { FormProjectInfo } from "../components/form/FormProjectInfo";
 import { FormQuestions } from "../components/form/FormQuestions";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
 import { questions1, questions2 } from "../data/form_data";
+import { IProbandVisit } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
 import "../styles/style.css";
 import { fetchVisit } from "../util/utils";
@@ -27,13 +28,52 @@ interface IButtonProps {
   onClick: () => void;
 }
 
+interface IFormDefaultValuesProps {
+  project: string | null;
+  magnetDevice: string | null;
+  measurementDate: Date | null;
+  name: string;
+  surname: string;
+  personalId: string;
+  birthdate: Date | null;
+  sex: string | null;
+  nativeLanguage: string | null;
+  height: string; // TODO: should be number
+  weight: string; // TODO: should be number
+  sideDominance: string | null;
+  visualCorrection: string | null;
+  visualCorrectionValue: string; // TODO: should be number
+  email: string;
+  phoneNumber: string;
+}
+
+// Autocomplete component default value must be one of the options or null
+const loadDefaultValues = (visit: IProbandVisit | undefined): IFormDefaultValuesProps => ({
+  project: visit?.projectInfo.projectName ?? null,
+  magnetDevice: visit?.projectInfo.magnetDeviceName ?? null,
+  measurementDate: visit?.projectInfo.measurementDate ?? new Date(),
+  name: visit?.probandInfo.name ?? "",
+  surname: visit?.probandInfo.surname ?? "",
+  personalId: visit?.probandInfo.personalId ?? "",
+  birthdate: visit?.probandInfo.birthdate ?? null,
+  sex: visit?.probandInfo.sex ?? null,
+  nativeLanguage: visit?.probandInfo.nativeLanguage ?? null,
+  height: visit?.probandInfo.height.toString() ?? "", // TODO
+  weight: visit?.probandInfo.weight.toString() ?? "", // TODO
+  sideDominance: visit?.probandInfo.sideDominance ?? null,
+  visualCorrection: visit?.probandInfo.visualCorrection ?? null,
+  visualCorrectionValue: "", // TODO
+  email: visit?.probandInfo.email ?? "",
+  phoneNumber: visit?.probandInfo.phoneNumber ?? "",
+});
+
 export const FormPage = () => {
   const { id } = useParams();
   const visit = id === undefined ? undefined : fetchVisit(id);
   const isFantom = visit?.projectInfo.isFantom || false;
 
   // TODO: set defaultValues for the form - fill data from an existing visit
-  const formMethods = useForm();
+  const formMethods = useForm({ defaultValues: loadDefaultValues(visit) });
   const { handleSubmit } = formMethods;
   const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
   const { username } = useAuth();

@@ -107,7 +107,7 @@ const getWaitingRoomRow = (visit: IProbandVisit): string[] => [
   `${visit.probandInfo.surname}, ${visit.probandInfo.name}`,
   visit.probandInfo.personalId,
   visit.probandInfo.birthdate.toDateString(),
-  visit.probandInfo.gender,
+  visit.probandInfo.sex,
   visit.probandInfo.nativeLanguage,
 ];
 
@@ -124,7 +124,7 @@ const getRecentVisitsRow = (visit: IProbandVisit): string[] => {
     visit.visitId,
     `${visit.probandInfo.surname}, ${visit.probandInfo.name}`,
     visit.projectInfo.projectId,
-    visit.projectInfo.magnetId,
+    visit.projectInfo.magnetDeviceId,
     new Date().toDateString(),
     "MUNI_operator",
     isSignedText,
