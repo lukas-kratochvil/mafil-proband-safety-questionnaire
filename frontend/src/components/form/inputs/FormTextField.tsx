@@ -7,12 +7,12 @@ interface IFormTextFieldProps extends IFormDefaultInputProps {
   endAdornmentLabel?: ReactNode;
 }
 
-export const FormTextField = ({ label, defaultValue, endAdornmentLabel, disabled }: IFormTextFieldProps) => {
+export const FormTextField = ({ name, label, defaultValue, endAdornmentLabel, disabled }: IFormTextFieldProps) => {
   const { control } = useFormContext();
 
   return (
     <Controller
-      name={label}
+      name={name}
       control={control}
       defaultValue={defaultValue ?? ""}
       render={({ field }) => (

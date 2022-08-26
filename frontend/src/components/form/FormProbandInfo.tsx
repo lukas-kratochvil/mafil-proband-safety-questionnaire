@@ -34,6 +34,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           xs={6}
         >
           <FormTextField
+            name="name"
             label="Jméno"
             disabled={!isAuthEditing}
           />
@@ -43,6 +44,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           xs={6}
         >
           <FormTextField
+            name="surname"
             label="Příjmení"
             disabled={!isAuthEditing}
           />
@@ -61,6 +63,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           xs={4}
         >
           <FormTextField
+            name="personal-id-number"
             label="Rodné číslo"
             endAdornmentLabel={
               <InfoTooltip
@@ -79,6 +82,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           xs={4}
         >
           <FormDatePicker
+            name="birthdate"
             label="Datum narození"
             disabled={!isAuthEditing}
           />
@@ -88,6 +92,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           xs={4}
         >
           <FormAutocomplete
+            name="sex"
             label="Pohlaví"
             options={genders}
             disabled={!isAuthEditing}
@@ -100,6 +105,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           xs={4}
         >
           <FormAutocomplete
+            name="native-language"
             label="Mateřský jazyk"
             options={nativeLanguages}
             disabled={!isAuthEditing}
@@ -110,6 +116,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           xs={4}
         >
           <FormTextField
+            name="height"
             label="Výška"
             endAdornmentLabel="cm"
             disabled={!isAuthEditing}
@@ -120,6 +127,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           xs={4}
         >
           <FormTextField
+            name="weight"
             label="Váha"
             endAdornmentLabel="kg"
             disabled={!isAuthEditing}
@@ -132,6 +140,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           xs={4}
         >
           <FormAutocomplete
+            name="side-dominance"
             label="Stranová dominance"
             options={sideDominance}
             disabled={!isAuthEditing}
@@ -142,6 +151,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           xs={4}
         >
           <FormAutocomplete
+            name="visual-correction"
             label="Zraková korekce"
             options={visualCorrection}
             disabled={!isAuthEditing}
@@ -152,6 +162,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           xs={4}
         >
           <FormTextField
+            name="visual-correction-value"
             label="Hodnota zrakové korekce"
             endAdornmentLabel={
               <>

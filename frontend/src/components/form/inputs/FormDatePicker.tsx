@@ -4,12 +4,12 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { Controller, useFormContext } from "react-hook-form";
 import { IFormDefaultInputProps } from "./form_input";
 
-export const FormDatePicker = ({ label, defaultValue, disabled }: IFormDefaultInputProps) => {
+export const FormDatePicker = ({ name, label, defaultValue, disabled }: IFormDefaultInputProps) => {
   const { control } = useFormContext();
 
   return (
     <Controller
-      name={label}
+      name={name}
       control={control}
       defaultValue={defaultValue ?? null}
       render={({ field }) => (

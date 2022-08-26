@@ -6,12 +6,12 @@ interface IFormAutocompleteProps extends IFormDefaultInputProps {
   options: string[];
 }
 
-export const FormAutocomplete = ({ label, options, defaultValue, disabled }: IFormAutocompleteProps) => {
+export const FormAutocomplete = ({ name, label, options, defaultValue, disabled }: IFormAutocompleteProps) => {
   const { control } = useFormContext();
 
   return (
     <Controller
-      name={label}
+      name={name}
       defaultValue={defaultValue ?? ""}
       control={control}
       render={({ field: { ref, onChange, ...rest } }) => (
