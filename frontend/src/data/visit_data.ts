@@ -105,6 +105,7 @@ export const dummyVisitNew: IProbandVisit = {
     visualCorrectionValue: 0,
     sideDominance: "Pravák",
     email: "karel.novak@email.cz",
+    phoneNumber: "",
   },
   answersPart1: questions1.map((question, i) => ({
     questionId: question.id,
