@@ -1,13 +1,13 @@
-import { FormControlLabel, Grid, Radio, RadioGroup, Stack, TextField, Typography } from "@mui/material";
+import { Grid, Stack, TextField, Typography } from "@mui/material";
 import { Controller, useWatch } from "react-hook-form";
 import { IQuestionData } from "../../data/form_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { FormCard } from "./FormCard";
+import { FormRadioGroup } from "./inputs/FormRadioGroup";
 
 interface IQuestionProps {
   question: IQuestionData;
-  isAuthEditing: boolean;
-  isFantom: boolean;
+  disabled: boolean;
 }
 
 enum RadioGroupOptions {
@@ -15,7 +15,7 @@ enum RadioGroupOptions {
   NO = "NO",
 }
 
-const Question = ({ question, isAuthEditing, isFantom }: IQuestionProps) => {
+const Question = ({ question, disabled }: IQuestionProps) => {
   const { username } = useAuth();
   const questionAnswer = useWatch({ name: question.id });
 
@@ -35,37 +35,22 @@ const Question = ({ question, isAuthEditing, isFantom }: IQuestionProps) => {
         alignItems="center"
       >
         <Typography width="80%">{question.text}</Typography>
-        <Controller
+        <FormRadioGroup
           name={question.id}
-          defaultValue={isFantom ? RadioGroupOptions.NO : null}
-          render={({ field: { value, ...rest } }) => (
-            <RadioGroup
-              row
-              value={value === undefined ? null : value}
-              {...rest}
-            >
-              <FormControlLabel
-                label="Ano"
-                value={RadioGroupOptions.YES}
-                control={
-                  <Radio
-                    required
-                    disabled={!isAuthEditing}
-                  />
-                }
-              />
-              <FormControlLabel
-                label="Ne"
-                value={RadioGroupOptions.NO}
-                control={
-                  <Radio
-                    required
-                    disabled={!isAuthEditing}
-                  />
-                }
-              />
-            </RadioGroup>
-          )}
+          label={`Question: ${question.id}`}
+          radios={[
+            {
+              id: `yes-radio[${question.id}]`,
+              label: "Ano",
+              value: RadioGroupOptions.YES,
+            },
+            {
+              id: `no-radio[${question.id}]`,
+              label: "Ne",
+              value: RadioGroupOptions.NO,
+            },
+          ]}
+          disabled={disabled}
         />
       </Grid>
       {username !== undefined && questionAnswer === RadioGroupOptions.YES && (
@@ -91,10 +76,9 @@ interface IFormQuestionsProps {
   title: string;
   questions: IQuestionData[];
   isAuthEditing: boolean;
-  isFantom: boolean;
 }
 
-export const FormQuestions = ({ title, questions, isAuthEditing, isFantom }: IFormQuestionsProps) => {
+export const FormQuestions = ({ title, questions, isAuthEditing }: IFormQuestionsProps) => {
   const { username } = useAuth();
 
   return (
@@ -107,8 +91,7 @@ export const FormQuestions = ({ title, questions, isAuthEditing, isFantom }: IFo
           <Question
             key={question.id}
             question={question}
-            isAuthEditing={isAuthEditing}
-            isFantom={isFantom}
+            disabled={!isAuthEditing}
           />
         ))}
       </Stack>
