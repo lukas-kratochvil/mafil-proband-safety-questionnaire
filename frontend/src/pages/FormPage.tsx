@@ -38,11 +38,11 @@ interface IFormDefaultValuesProps {
   birthdate: Date | null;
   sex: string | null;
   nativeLanguage: string | null;
-  height: string; // TODO: should be number
-  weight: string; // TODO: should be number
+  height: number | null;
+  weight: number | null;
   sideDominance: string | null;
   visualCorrection: string | null;
-  visualCorrectionValue: string; // TODO: should be number
+  visualCorrectionValue: number | null;
   email: string;
   phoneNumber: string;
 }
@@ -58,11 +58,11 @@ const loadDefaultValues = (visit: IProbandVisit | undefined): IFormDefaultValues
   birthdate: visit?.probandInfo.birthdate ?? null,
   sex: visit?.probandInfo.sex ?? null,
   nativeLanguage: visit?.probandInfo.nativeLanguage ?? null,
-  height: visit?.probandInfo.height.toString() ?? "", // TODO
-  weight: visit?.probandInfo.weight.toString() ?? "", // TODO
+  height: visit?.probandInfo.height ?? null,
+  weight: visit?.probandInfo.weight ?? null,
   sideDominance: visit?.probandInfo.sideDominance ?? null,
   visualCorrection: visit?.probandInfo.visualCorrection ?? null,
-  visualCorrectionValue: visit?.probandInfo.visualCorrectionValue.toString() ?? "", // TODO
+  visualCorrectionValue: visit?.probandInfo.visualCorrectionValue ?? 0,
   email: visit?.probandInfo.email ?? "",
   phoneNumber: visit?.probandInfo.phoneNumber ?? "",
 });
