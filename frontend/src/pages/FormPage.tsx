@@ -28,6 +28,8 @@ interface IButtonProps {
   onClick: () => void;
 }
 
+type TextFieldNumberInput = string | number;
+
 interface IFormDefaultValuesProps {
   project: string | null;
   magnetDevice: string | null;
@@ -38,11 +40,11 @@ interface IFormDefaultValuesProps {
   birthdate: Date | null;
   sex: string | null;
   nativeLanguage: string | null;
-  height: number | null;
-  weight: number | null;
+  height: TextFieldNumberInput;
+  weight: TextFieldNumberInput;
   sideDominance: string | null;
   visualCorrection: string | null;
-  visualCorrectionValue: number | null;
+  visualCorrectionValue: TextFieldNumberInput;
   email: string;
   phoneNumber: string;
 }
@@ -58,8 +60,8 @@ const loadDefaultValues = (visit: IProbandVisit | undefined): IFormDefaultValues
   birthdate: visit?.probandInfo.birthdate ?? null,
   sex: visit?.probandInfo.sex ?? null,
   nativeLanguage: visit?.probandInfo.nativeLanguage ?? null,
-  height: visit?.probandInfo.height ?? null,
-  weight: visit?.probandInfo.weight ?? null,
+  height: visit?.probandInfo.height ?? "",
+  weight: visit?.probandInfo.weight ?? "",
   sideDominance: visit?.probandInfo.sideDominance ?? null,
   visualCorrection: visit?.probandInfo.visualCorrection ?? null,
   visualCorrectionValue: visit?.probandInfo.visualCorrectionValue ?? 0,
