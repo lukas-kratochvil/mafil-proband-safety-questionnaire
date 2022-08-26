@@ -1,7 +1,9 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+import { date, number, object, string } from "yup";
 import { FormBeforeExamination } from "../components/form/FormBeforeExamination";
 import { FormEntryInfo } from "../components/form/FormEntryInfo";
 import { FormExaminationConsent } from "../components/form/FormExaminationConsent";
@@ -10,7 +12,7 @@ import { FormProbandInfo } from "../components/form/FormProbandInfo";
 import { FormProjectInfo } from "../components/form/FormProjectInfo";
 import { FormQuestions } from "../components/form/FormQuestions";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
-import { questions1, questions2 } from "../data/form_data";
+import { genders, magnets, nativeLanguages, projects, questions1, questions2, sideDominance, visualCorrection } from "../data/form_data";
 import { IProbandVisit } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
 import "../styles/style.css";
@@ -69,15 +71,42 @@ const loadDefaultValues = (visit: IProbandVisit | undefined): IFormDefaultValues
   phoneNumber: visit?.probandInfo.phoneNumber ?? "",
 });
 
+const probandFormSchema = object({
+  name: string().trim().required(),
+  surname: string().trim().required(),
+  personalId: string().trim().required(),
+  birthdate: date().nullable().max(new Date()).required(),
+  sex: string().nullable().oneOf(genders).required(), // TODO: change values in oneOf()
+  nativeLanguage: string().nullable().oneOf(nativeLanguages).required(), // TODO: change values in oneOf()
+  height: number().positive().required(),
+  weight: number().positive().required(),
+  sideDominance: string().nullable().oneOf(sideDominance).required(), // TODO: change values in oneOf()
+  visualCorrection: string().nullable().oneOf(visualCorrection).required(), // TODO: change values in oneOf()
+  visualCorrectionValue: number().default(0).when("visualCorrection", {
+    is: "Ano", // TODO: make enum
+    then: number().notOneOf([0]).min(-200).max(200)
+  }),
+  email: string().trim().email(),
+  phoneNumber: string().trim().matches(/^$|^(\+|00)?[1-9]{1}[0-9,\s]{3,}$/),
+}).required();
+
+const operatorFormSchema = probandFormSchema.shape({
+  project: string().nullable().oneOf(projects).required(), // TODO: change values in oneOf()
+  magnetDevice: string().nullable().oneOf(magnets).required(), // TODO: change values in oneOf()
+  measurementDate: date().nullable().required(),
+});
+
 export const FormPage = () => {
   const { id } = useParams();
   const visit = id === undefined ? undefined : fetchVisit(id);
   const isFantom = visit?.projectInfo.isFantom || false;
-
-  const formMethods = useForm({ defaultValues: loadDefaultValues(visit) });
-  const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
   const { username } = useAuth();
+  const formMethods = useForm({
+    defaultValues: loadDefaultValues(visit),
+    resolver: yupResolver(username === undefined ? probandFormSchema : operatorFormSchema),
+  });
   const navigate = useNavigate();
+  const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
 
   useEffect(() => setIsAuthEditing(isFantom), [id, isFantom]);
 
@@ -146,12 +175,14 @@ export const FormPage = () => {
   // TODO: edit 'data' data type
   const onSubmit = (data: unknown) => {
     // TODO: submit data
+    console.log("Submitted data:");
     console.log(data);
     submitButton.onClick(data);
   };
 
   // TODO: edit 'data' data type
   const onError = (errors: unknown) => {
+    console.log("Error:");
     console.log(errors);
   };
 
