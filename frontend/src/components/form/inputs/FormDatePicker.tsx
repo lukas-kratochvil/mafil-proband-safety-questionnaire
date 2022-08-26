@@ -2,14 +2,9 @@ import { TextField } from "@mui/material";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { Controller, useFormContext } from "react-hook-form";
+import { IFormDefaultInputProps } from "./form_input";
 
-interface IFormDatePickerProps {
-  label: string;
-  defaultValue?: Date;
-  disabled?: boolean;
-}
-
-export const FormDatePicker = ({ label, defaultValue, disabled }: IFormDatePickerProps) => {
+export const FormDatePicker = ({ label, defaultValue, disabled }: IFormDefaultInputProps) => {
   const { control } = useFormContext();
 
   return (

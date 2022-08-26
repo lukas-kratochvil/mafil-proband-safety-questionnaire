@@ -1,11 +1,9 @@
 import { Autocomplete, TextField } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
+import { IFormDefaultInputProps } from "./form_input";
 
-interface IFormAutocompleteProps {
-  label: string;
+interface IFormAutocompleteProps extends IFormDefaultInputProps {
   options: string[];
-  defaultValue?: string;
-  disabled?: boolean;
 }
 
 export const FormAutocomplete = ({ label, options, defaultValue, disabled }: IFormAutocompleteProps) => {

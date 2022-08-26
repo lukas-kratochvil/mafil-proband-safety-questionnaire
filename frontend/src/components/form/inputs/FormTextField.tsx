@@ -1,12 +1,10 @@
 import { InputAdornment, TextField } from "@mui/material";
 import { ReactNode } from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import { IFormDefaultInputProps } from "./form_input";
 
-interface IFormTextFieldProps {
-  label: string;
-  defaultValue?: string;
+interface IFormTextFieldProps extends IFormDefaultInputProps {
   endAdornmentLabel?: ReactNode;
-  disabled?: boolean;
 }
 
 export const FormTextField = ({ label, defaultValue, endAdornmentLabel, disabled }: IFormTextFieldProps) => {
