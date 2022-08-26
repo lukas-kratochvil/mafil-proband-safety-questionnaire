@@ -12,7 +12,16 @@ import { FormProbandInfo } from "../components/form/FormProbandInfo";
 import { FormProjectInfo } from "../components/form/FormProjectInfo";
 import { FormQuestions } from "../components/form/FormQuestions";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
-import { genders, magnets, nativeLanguages, projects, questions1, questions2, sideDominance, visualCorrection } from "../data/form_data";
+import {
+  genders,
+  magnets,
+  nativeLanguages,
+  projects,
+  questions1,
+  questions2,
+  sideDominance,
+  visualCorrection,
+} from "../data/form_data";
 import { IProbandVisit } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
 import "../styles/style.css";
@@ -98,7 +107,7 @@ const loadOperatorFormDefaultValues = (visit: IProbandVisit | undefined): IOpera
     visualCorrectionValue: visit.probandInfo.visualCorrectionValue,
     email: visit.probandInfo.email,
     phoneNumber: visit.probandInfo.phoneNumber,
-  }
+  };
 };
 
 const probandFormSchema = object({
@@ -112,12 +121,16 @@ const probandFormSchema = object({
   weight: number().positive().required(),
   sideDominance: string().nullable().oneOf(sideDominance).required(), // TODO: change values in oneOf()
   visualCorrection: string().nullable().oneOf(visualCorrection).required(), // TODO: change values in oneOf()
-  visualCorrectionValue: number().default(0).when("visualCorrection", {
-    is: "Ano", // TODO: make enum
-    then: number().notOneOf([0]).min(-200).max(200)
-  }),
+  visualCorrectionValue: number()
+    .default(0)
+    .when("visualCorrection", {
+      is: "Ano", // TODO: make enum
+      then: number().notOneOf([0]).min(-200).max(200),
+    }),
   email: string().trim().email(),
-  phoneNumber: string().trim().matches(/^$|^(\+|00)?[1-9]{1}[0-9,\s]{3,}$/),
+  phoneNumber: string()
+    .trim()
+    .matches(/^$|^(\+|00)?[1-9]{1}[0-9,\s]{3,}$/),
 }).required();
 
 const operatorFormSchema = probandFormSchema.shape({
