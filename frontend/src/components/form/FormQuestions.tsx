@@ -1,5 +1,5 @@
 import { FormControlLabel, Grid, Radio, RadioGroup, Stack, TextField, Typography } from "@mui/material";
-import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { Controller, useWatch } from "react-hook-form";
 import { IQuestionData } from "../../data/form_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { FormCard } from "./FormCard";
@@ -16,11 +16,7 @@ enum RadioGroupOptions {
 
 const Question = ({ question, isAuthEditing }: IQuestionProps) => {
   const { username } = useAuth();
-  const { control } = useFormContext();
-  const questionAnswer = useWatch({
-    control,
-    name: question.id,
-  });
+  const questionAnswer = useWatch({ name: question.id });
 
   return (
     <Stack
@@ -40,7 +36,6 @@ const Question = ({ question, isAuthEditing }: IQuestionProps) => {
         <Typography width="80%">{question.text}</Typography>
         <Controller
           name={question.id}
-          control={control}
           render={({ field: { value, ...rest } }) => (
             <RadioGroup
               row
@@ -74,7 +69,6 @@ const Question = ({ question, isAuthEditing }: IQuestionProps) => {
       {username !== undefined && questionAnswer === RadioGroupOptions.YES && (
         <Controller
           name={`${question.id}-comment`}
-          control={control}
           render={({ field }) => (
             <TextField
               {...field}

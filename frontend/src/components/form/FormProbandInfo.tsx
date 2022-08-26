@@ -1,5 +1,5 @@
 import { Divider, Grid, Typography } from "@mui/material";
-import { useFormContext, useWatch } from "react-hook-form";
+import { useWatch } from "react-hook-form";
 import { genders, nativeLanguages, sideDominance, visualCorrection } from "../../data/form_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { InfoTooltip } from "../informative/InfoTooltip";
@@ -14,11 +14,7 @@ interface IFormProbandInfoProps {
 
 export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
   const { username } = useAuth();
-  const { control } = useFormContext();
-  const visualCorrectionAnswer = useWatch({
-    control,
-    name: "Zraková korekce",
-  });
+  const visualCorrectionAnswer = useWatch({ name: "Zraková korekce" });
 
   return (
     <FormCard title="Osobní údaje">
