@@ -73,7 +73,6 @@ export const FormPage = () => {
   const isFantom = visit?.projectInfo.isFantom || false;
 
   const formMethods = useForm({ defaultValues: loadDefaultValues(visit) });
-  const { handleSubmit } = formMethods;
   const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
   const { username } = useAuth();
   const navigate = useNavigate();
@@ -156,11 +155,11 @@ export const FormPage = () => {
 
   return (
     <PageTemplate>
-      <form
-        className="visit-form"
-        onSubmit={handleSubmit(onSubmit, onError)}
-      >
-        <FormProvider {...formMethods}>
+      <FormProvider {...formMethods}>
+        <form
+          className="visit-form"
+          onSubmit={formMethods.handleSubmit(onSubmit, onError)}
+        >
           {username === undefined && <FormEntryInfo />}
           {username !== undefined && <FormProjectInfo isFantom={isFantom} />}
           <FormProbandInfo isAuthEditing={username === undefined || isAuthEditing} />
@@ -205,8 +204,8 @@ export const FormPage = () => {
               </Button>
             ))}
           </Grid>
-        </FormProvider>
-      </form>
+        </form>
+      </FormProvider>
     </PageTemplate>
   );
 };
