@@ -7,6 +7,7 @@ import { FormCard } from "./FormCard";
 interface IQuestionProps {
   question: IQuestionData;
   isAuthEditing: boolean;
+  isFantom: boolean;
 }
 
 enum RadioGroupOptions {
@@ -14,7 +15,7 @@ enum RadioGroupOptions {
   NO = "NO",
 }
 
-const Question = ({ question, isAuthEditing }: IQuestionProps) => {
+const Question = ({ question, isAuthEditing, isFantom }: IQuestionProps) => {
   const { username } = useAuth();
   const questionAnswer = useWatch({ name: question.id });
 
@@ -36,6 +37,7 @@ const Question = ({ question, isAuthEditing }: IQuestionProps) => {
         <Typography width="80%">{question.text}</Typography>
         <Controller
           name={question.id}
+          defaultValue={isFantom ? RadioGroupOptions.NO : null}
           render={({ field: { value, ...rest } }) => (
             <RadioGroup
               row
@@ -88,9 +90,10 @@ interface IFormQuestionsProps {
   title: string;
   questions: IQuestionData[];
   isAuthEditing: boolean;
+  isFantom: boolean;
 }
 
-export const FormQuestions = ({ title, questions, isAuthEditing }: IFormQuestionsProps) => {
+export const FormQuestions = ({ title, questions, isAuthEditing, isFantom }: IFormQuestionsProps) => {
   const { username } = useAuth();
 
   return (
@@ -104,6 +107,7 @@ export const FormQuestions = ({ title, questions, isAuthEditing }: IFormQuestion
             key={question.id}
             question={question}
             isAuthEditing={isAuthEditing}
+            isFantom={isFantom}
           />
         ))}
       </Stack>

@@ -171,11 +171,13 @@ export const FormPage = () => {
                 title="Část 1"
                 questions={questions1}
                 isAuthEditing={username === undefined || isAuthEditing}
+                isFantom={isFantom}
               />
               <FormQuestions
                 title="Část 2"
                 questions={questions2}
                 isAuthEditing={username === undefined || isAuthEditing}
+                isFantom={isFantom}
               />
             </>
           )}
