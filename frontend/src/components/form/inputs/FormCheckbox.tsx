@@ -6,22 +6,20 @@ export const FormCheckbox = ({ label, defaultValue, disabled }: IFormDefaultInpu
   const { control } = useFormContext();
 
   return (
-    <FormControlLabel
-      label={label}
-      labelPlacement="start"
-      value="start"
-      control={
-        <Controller
-          name={label}
-          control={control}
-          defaultValue={defaultValue ?? false}
-          render={({ field }) => <Checkbox {...field} />}
+    <Controller
+      name={label}
+      control={control}
+      defaultValue={defaultValue ?? false}
+      render={({ field }) => (
+        <FormControlLabel
+          label={label}
+          labelPlacement="start"
+          value="start"
+          control={<Checkbox {...field} />}
+          disabled={disabled}
+          sx={{ height: "100%" }}
         />
-      }
-      disabled={disabled}
-      sx={{
-        height: "100%",
-      }}
+      )}
     />
   );
 };
