@@ -80,6 +80,7 @@ const loadProbandFormDefaultValues = (): IProbandFormDefaultValuesProps => ({
   phoneNumber: "",
 });
 
+// Autocomplete component default value must be one of the options or null
 const loadOperatorFormDefaultValues = (visit: IProbandVisit | undefined): IOperatorFormDefaultValuesProps => {
   if (visit === undefined) {
     return {
@@ -131,7 +132,7 @@ const probandFormSchema = object({
   phoneNumber: string()
     .trim()
     .matches(/^$|^(\+|00)?[1-9]{1}[0-9,\s]{3,}$/),
-}).required();
+});
 
 const operatorFormSchema = probandFormSchema.shape({
   project: string().nullable().oneOf(projects).required(), // TODO: change values in oneOf()
