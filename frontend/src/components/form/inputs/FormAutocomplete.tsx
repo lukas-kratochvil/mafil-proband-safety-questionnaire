@@ -4,9 +4,10 @@ import { IFormDefaultInputProps } from "./form_input";
 
 interface IFormAutocompleteProps extends IFormDefaultInputProps {
   options: string[];
+  defaultValue?: string;
 }
 
-export const FormAutocomplete = ({ name, label, options, defaultValue, disabled }: IFormAutocompleteProps) => {
+export const FormAutocomplete = ({ name, label, disabled, options, defaultValue }: IFormAutocompleteProps) => {
   const { control } = useFormContext();
 
   return (
