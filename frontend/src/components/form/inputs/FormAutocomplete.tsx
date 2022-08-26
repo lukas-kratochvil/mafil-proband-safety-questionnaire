@@ -4,16 +4,14 @@ import { IFormDefaultInputProps } from "./form_input";
 
 interface IFormAutocompleteProps extends IFormDefaultInputProps {
   options: string[];
-  defaultValue?: string;
 }
 
-export const FormAutocomplete = ({ name, label, disabled, options, defaultValue }: IFormAutocompleteProps) => {
+export const FormAutocomplete = ({ name, label, disabled, options }: IFormAutocompleteProps) => {
   const { control } = useFormContext();
 
   return (
     <Controller
       name={name}
-      defaultValue={defaultValue ?? ""}
       control={control}
       render={({ field: { value, onChange } }) => (
         <Autocomplete

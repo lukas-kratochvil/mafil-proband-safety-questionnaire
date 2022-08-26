@@ -2,18 +2,13 @@ import { Checkbox, FormControlLabel } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 import { IFormDefaultInputProps } from "./form_input";
 
-interface IFormCheckboxProps extends IFormDefaultInputProps {
-  defaultValue?: boolean;
-}
-
-export const FormCheckbox = ({ name, label, disabled, defaultValue }: IFormCheckboxProps) => {
+export const FormCheckbox = ({ name, label, disabled }: IFormDefaultInputProps) => {
   const { control } = useFormContext();
 
   return (
     <Controller
       name={name}
       control={control}
-      defaultValue={defaultValue ?? false}
       render={({ field }) => (
         <FormControlLabel
           label={label}

@@ -4,18 +4,16 @@ import { Controller, useFormContext } from "react-hook-form";
 import { IFormDefaultInputProps } from "./form_input";
 
 interface IFormTextFieldProps extends IFormDefaultInputProps {
-  defaultValue?: string;
   endAdornmentLabel?: ReactNode;
 }
 
-export const FormTextField = ({ name, label, disabled, defaultValue, endAdornmentLabel }: IFormTextFieldProps) => {
+export const FormTextField = ({ name, label, disabled, endAdornmentLabel }: IFormTextFieldProps) => {
   const { control } = useFormContext();
 
   return (
     <Controller
       name={name}
       control={control}
-      defaultValue={defaultValue ?? ""}
       render={({ field }) => (
         <TextField
           {...field}
