@@ -8,7 +8,7 @@ import { IFormDefaultInputProps } from "./form_input";
 export const FormDatePicker = ({ name, label, disabled }: IFormDefaultInputProps) => (
   <Controller
     name={name}
-    render={({ field }) => (
+    render={({ field: { value, onChange } }) => (
       <LocalizationProvider
         dateAdapter={AdapterDateFns}
         /**
@@ -19,7 +19,8 @@ export const FormDatePicker = ({ name, label, disabled }: IFormDefaultInputProps
         adapterLocale={CsLocale}
       >
         <DesktopDatePicker
-          {...field}
+          value={value}
+          onChange={onChange}
           label={label}
           inputFormat="dd/MM/yyyy"
           renderInput={(params) => (
