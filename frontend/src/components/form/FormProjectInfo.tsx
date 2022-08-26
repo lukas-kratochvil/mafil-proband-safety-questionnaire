@@ -43,7 +43,7 @@ export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => (
         xs={3}
       >
         <FormAutocomplete
-          name="magnet-device"
+          name="magnetDevice"
           label="Přístroj"
           options={magnets}
         />
@@ -53,7 +53,7 @@ export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => (
         xs={1}
       >
         <FormDatePicker
-          name="measurement-date"
+          name="measurementDate"
           label="Datum měření"
           defaultValue={new Date()}
         />

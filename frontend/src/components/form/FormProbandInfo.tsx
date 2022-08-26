@@ -63,7 +63,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           xs={4}
         >
           <FormTextField
-            name="personal-id-number"
+            name="personalId"
             label="Rodné číslo"
             endAdornmentLabel={
               <InfoTooltip
@@ -105,7 +105,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           xs={4}
         >
           <FormAutocomplete
-            name="native-language"
+            name="nativeLanguage"
             label="Mateřský jazyk"
             options={nativeLanguages}
             disabled={!isAuthEditing}
@@ -140,7 +140,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           xs={4}
         >
           <FormAutocomplete
-            name="side-dominance"
+            name="sideDominance"
             label="Stranová dominance"
             options={sideDominance}
             disabled={!isAuthEditing}
@@ -151,7 +151,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           xs={4}
         >
           <FormAutocomplete
-            name="visual-correction"
+            name="visualCorrection"
             label="Zraková korekce"
             options={visualCorrection}
             disabled={!isAuthEditing}
@@ -162,7 +162,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           xs={4}
         >
           <FormTextField
-            name="visual-correction-value"
+            name="visualCorrectionValue"
             label="Hodnota zrakové korekce"
             endAdornmentLabel={
               <>

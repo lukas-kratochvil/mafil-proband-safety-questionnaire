@@ -39,7 +39,7 @@ export const FormProbandContact = ({ isAuthEditing }: IFormProbandInfoProps) => 
         xs={2}
       >
         <FormTextField
-          name="phone-number"
+          name="phoneNumber"
           label="Telefonní číslo"
           disabled={!isAuthEditing}
         />
