@@ -32,10 +32,7 @@ interface IButtonProps {
 
 type TextFieldNumberInput = string | number;
 
-interface IFormDefaultValuesProps {
-  project: string | null;
-  magnetDevice: string | null;
-  measurementDate: Date | null;
+interface IProbandFormDefaultValuesProps {
   name: string;
   surname: string;
   personalId: string;
@@ -51,25 +48,58 @@ interface IFormDefaultValuesProps {
   phoneNumber: string;
 }
 
+interface IOperatorFormDefaultValuesProps extends IProbandFormDefaultValuesProps {
+  project: string | null;
+  magnetDevice: string | null;
+  measurementDate: Date | null;
+}
+
 // Autocomplete component default value must be one of the options or null
-const loadDefaultValues = (visit: IProbandVisit | undefined): IFormDefaultValuesProps => ({
-  project: visit?.projectInfo.projectName ?? null,
-  magnetDevice: visit?.projectInfo.magnetDeviceName ?? null,
-  measurementDate: visit?.projectInfo.measurementDate ?? new Date(),
-  name: visit?.probandInfo.name ?? "",
-  surname: visit?.probandInfo.surname ?? "",
-  personalId: visit?.probandInfo.personalId ?? "",
-  birthdate: visit?.probandInfo.birthdate ?? null,
-  sex: visit?.probandInfo.sex ?? null,
-  nativeLanguage: visit?.probandInfo.nativeLanguage ?? null,
-  height: visit?.probandInfo.height ?? "",
-  weight: visit?.probandInfo.weight ?? "",
-  sideDominance: visit?.probandInfo.sideDominance ?? null,
-  visualCorrection: visit?.probandInfo.visualCorrection ?? null,
-  visualCorrectionValue: visit?.probandInfo.visualCorrectionValue ?? 0,
-  email: visit?.probandInfo.email ?? "",
-  phoneNumber: visit?.probandInfo.phoneNumber ?? "",
+const loadProbandFormDefaultValues = (): IProbandFormDefaultValuesProps => ({
+  name: "",
+  surname: "",
+  personalId: "",
+  birthdate: null,
+  sex: null,
+  nativeLanguage: null,
+  height: "",
+  weight: "",
+  sideDominance: null,
+  visualCorrection: null,
+  visualCorrectionValue: 0,
+  email: "",
+  phoneNumber: "",
 });
+
+const loadOperatorFormDefaultValues = (visit: IProbandVisit | undefined): IOperatorFormDefaultValuesProps => {
+  if (visit === undefined) {
+    return {
+      project: null,
+      magnetDevice: null,
+      measurementDate: new Date(),
+      ...loadProbandFormDefaultValues(),
+    };
+  }
+
+  return {
+    project: visit.projectInfo.projectName ?? null,
+    magnetDevice: visit.projectInfo.magnetDeviceName ?? null,
+    measurementDate: visit.projectInfo.measurementDate ?? new Date(),
+    name: visit.probandInfo.name,
+    surname: visit.probandInfo.surname,
+    personalId: visit.probandInfo.personalId,
+    birthdate: visit.probandInfo.birthdate,
+    sex: visit.probandInfo.sex,
+    nativeLanguage: visit.probandInfo.nativeLanguage,
+    height: visit.probandInfo.height,
+    weight: visit.probandInfo.weight,
+    sideDominance: visit.probandInfo.sideDominance,
+    visualCorrection: visit.probandInfo.visualCorrection,
+    visualCorrectionValue: visit.probandInfo.visualCorrectionValue,
+    email: visit.probandInfo.email,
+    phoneNumber: visit.probandInfo.phoneNumber,
+  }
+};
 
 const probandFormSchema = object({
   name: string().trim().required(),
@@ -102,7 +132,7 @@ export const FormPage = () => {
   const isFantom = visit?.projectInfo.isFantom || false;
   const { username } = useAuth();
   const formMethods = useForm({
-    defaultValues: loadDefaultValues(visit),
+    defaultValues: username === undefined ? loadProbandFormDefaultValues() : loadOperatorFormDefaultValues(visit),
     resolver: yupResolver(username === undefined ? probandFormSchema : operatorFormSchema),
   });
   const navigate = useNavigate();

@@ -39,8 +39,8 @@ interface IProbandInfo {
   visualCorrection: string; // TODO: can be enum or object stored in the database in case of future additions/editations etc.
   visualCorrectionValue: number;
   sideDominance: string; // TODO: this should most probably be an enum
-  email?: string;
-  phoneNumber?: string; // TODO: this depends whether they want to choose national phone prefix..
+  email: string;
+  phoneNumber: string; // TODO: this depends whether they want to choose national phone prefix..
 }
 
 interface IAnswer {
