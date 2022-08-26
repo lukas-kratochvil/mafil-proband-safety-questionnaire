@@ -14,7 +14,7 @@ interface IFormProbandInfoProps {
 
 export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
   const { username } = useAuth();
-  const visualCorrectionAnswer = useWatch({ name: "Zraková korekce" });
+  const visualCorrectionAnswer = useWatch({ name: "visualCorrection" });
 
   return (
     <FormCard title="Osobní údaje">
