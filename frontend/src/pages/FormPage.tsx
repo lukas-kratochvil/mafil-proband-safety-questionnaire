@@ -62,7 +62,7 @@ const loadDefaultValues = (visit: IProbandVisit | undefined): IFormDefaultValues
   weight: visit?.probandInfo.weight.toString() ?? "", // TODO
   sideDominance: visit?.probandInfo.sideDominance ?? null,
   visualCorrection: visit?.probandInfo.visualCorrection ?? null,
-  visualCorrectionValue: "", // TODO
+  visualCorrectionValue: visit?.probandInfo.visualCorrectionValue.toString() ?? "", // TODO
   email: visit?.probandInfo.email ?? "",
   phoneNumber: visit?.probandInfo.phoneNumber ?? "",
 });
@@ -72,7 +72,6 @@ export const FormPage = () => {
   const visit = id === undefined ? undefined : fetchVisit(id);
   const isFantom = visit?.projectInfo.isFantom || false;
 
-  // TODO: set defaultValues for the form - fill data from an existing visit
   const formMethods = useForm({ defaultValues: loadDefaultValues(visit) });
   const { handleSubmit } = formMethods;
   const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);

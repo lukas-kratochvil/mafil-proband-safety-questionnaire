@@ -37,6 +37,7 @@ interface IProbandInfo {
   sex: string; // TODO: can be enum or object stored in the database in case of future additions/editations etc.
   nativeLanguage: string; // TODO: can be enum or object stored in the database in case of future additions/editations etc.
   visualCorrection: string; // TODO: can be enum or object stored in the database in case of future additions/editations etc.
+  visualCorrectionValue: number;
   sideDominance: string; // TODO: this should most probably be an enum
   email?: string;
   phoneNumber?: string; // TODO: this depends whether they want to choose national phone prefix..
@@ -101,6 +102,7 @@ export const dummyVisitNew: IProbandVisit = {
     sex: "Muž",
     nativeLanguage: "Čeština",
     visualCorrection: "Ne",
+    visualCorrectionValue: 0,
     sideDominance: "Pravák",
     email: "karel.novak@email.cz",
   },
