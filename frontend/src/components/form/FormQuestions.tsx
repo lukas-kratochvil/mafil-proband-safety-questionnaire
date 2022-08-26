@@ -78,6 +78,7 @@ const Question = ({ question, isAuthEditing, isFantom }: IQuestionProps) => {
               variant="standard"
               size="small"
               multiline
+              required
             />
           )}
         />
