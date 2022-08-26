@@ -15,20 +15,19 @@ export const FormAutocomplete = ({ name, label, disabled, options, defaultValue 
       name={name}
       defaultValue={defaultValue ?? ""}
       control={control}
-      render={({ field: { ref, onChange, ...rest } }) => (
+      render={({ field: { value, onChange } }) => (
         <Autocomplete
           options={options}
-          onChange={(_, value) => onChange(value)}
+          value={value}
+          onChange={(_, val) => onChange(val)}
+          disabled={disabled}
           renderInput={(params) => (
             <TextField
               {...params}
-              {...rest}
               label={label}
-              inputRef={ref}
               fullWidth
             />
           )}
-          disabled={disabled}
         />
       )}
     />
