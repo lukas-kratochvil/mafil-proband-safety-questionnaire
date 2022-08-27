@@ -174,6 +174,7 @@ const operatorFormSchema = probandFormSchema.shape({
 });
 
 export const FormPage = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [visit, setVisit] = useState<IProbandVisit | undefined>(undefined);
   const [questions1, setQuestions1] = useState<IQuestionData[]>([]);
@@ -208,10 +209,22 @@ export const FormPage = () => {
     // TODO: add this if the validation on onChange event is too slow:
     // reValidateMode: "onSubmit",
   });
-  const navigate = useNavigate();
   const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
 
   useEffect(() => setIsAuthEditing(isFantom), [id, isFantom]);
+
+  useEffect(() => {
+    if (visit !== undefined) {
+      const defaultValues = loadOperatorFormDefaultValues(visit);
+      type DefaultValuesPropertyType = keyof typeof defaultValues;
+      Object.keys(defaultValues).forEach((propertyName) => {
+        formMethods.setValue(
+          propertyName as DefaultValuesPropertyType,
+          defaultValues[propertyName as DefaultValuesPropertyType]
+        );
+      });
+    }
+  }, [formMethods, visit]);
 
   let submitButton: ISubmitButtonProps;
   let buttons: IButtonProps[] = [];
