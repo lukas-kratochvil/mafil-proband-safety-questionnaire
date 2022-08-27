@@ -10,11 +10,12 @@ interface IFormTextFieldProps extends IFormDefaultInputProps {
 export const FormTextField = ({ name, label, disabled, endAdornmentLabel }: IFormTextFieldProps) => (
   <Controller
     name={name}
-    render={({ field: { value, onChange } }) => (
+    render={({ field: { value, onChange, ref } }) => (
       <TextField
         label={label}
         value={value}
         onChange={onChange}
+        inputRef={ref}
         variant="outlined"
         fullWidth
         disabled={disabled}

@@ -9,7 +9,7 @@ interface IFormAutocompleteProps extends IFormDefaultInputProps {
 export const FormAutocomplete = ({ name, label, disabled, options }: IFormAutocompleteProps) => (
   <Controller
     name={name}
-    render={({ field: { value, onChange } }) => (
+    render={({ field: { value, onChange, ref } }) => (
       <Autocomplete
         options={options}
         value={value}
@@ -19,6 +19,7 @@ export const FormAutocomplete = ({ name, label, disabled, options }: IFormAutoco
           <TextField
             {...params}
             label={label}
+            inputRef={ref}
             fullWidth
           />
         )}
