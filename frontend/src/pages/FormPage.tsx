@@ -14,6 +14,7 @@ import { FormProbandInfo } from "../components/form/FormProbandInfo";
 import { FormProjectInfo } from "../components/form/FormProjectInfo";
 import { FormQuestions } from "../components/form/FormQuestions";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
+import { IQuestionData } from "../data/question_data";
 import { IProbandVisit } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
 import "../styles/style.css";
@@ -174,10 +175,30 @@ const operatorFormSchema = probandFormSchema.shape({
 
 export const FormPage = () => {
   const { id } = useParams();
+  const [visit, setVisit] = useState<IProbandVisit | undefined>(undefined);
+  const [questions1, setQuestions1] = useState<IQuestionData[]>([]);
+  const [questions2, setQuestions2] = useState<IQuestionData[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isError, setIsError] = useState<boolean>(false);
 
-  const visit = id === undefined ? undefined : fetchVisit(id);
-  const questions1 = fetchCurrentQuestionsPart1();
-  const questions2 = fetchCurrentQuestionsPart2();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const visitResponse = id === undefined ? undefined : fetchVisit(id);
+        const questions1Response = fetchCurrentQuestionsPart1();
+        const questions2Response = fetchCurrentQuestionsPart2();
+
+        setVisit(await visitResponse);
+        setQuestions1(await questions1Response);
+        setQuestions2(await questions2Response);
+        setIsLoading(false);
+      } catch (e) {
+        setIsError(true);
+      }
+    };
+
+    fetchData();
+  }, [id]);
 
   const isFantom = visit?.projectInfo.isFantom || false;
   const { username } = useAuth();

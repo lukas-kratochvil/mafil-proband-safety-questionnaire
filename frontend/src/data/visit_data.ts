@@ -108,11 +108,11 @@ export const dummyVisitNew: IProbandVisit = {
     email: "karel.novak@email.cz",
     phoneNumber: "",
   },
-  answersPart1: fetchCurrentQuestionsPart1().map((question, i) => ({
+  answersPart1: (await fetchCurrentQuestionsPart1()).map((question, i) => ({
     questionId: question.id,
     isYes: i % 4 === 3,
   })),
-  answersPart2: fetchCurrentQuestionsPart2().map((question, i) => ({
+  answersPart2: (await fetchCurrentQuestionsPart2()).map((question, i) => ({
     questionId: question.id,
     isYes: i % 6 === 0,
   })),
@@ -133,11 +133,11 @@ export const dummyFantomVisit: IProbandVisit = {
     surname: "Fantom",
     gender: "Jiné",
   },
-  answersPart1: fetchCurrentQuestionsPart1().map((question) => ({
+  answersPart1: (await fetchCurrentQuestionsPart1()).map((question) => ({
     questionId: question.id,
     isYes: false,
   })),
-  answersPart2: fetchCurrentQuestionsPart2().map((question) => ({
+  answersPart2: (await fetchCurrentQuestionsPart2()).map((question) => ({
     questionId: question.id,
     isYes: false,
   })),

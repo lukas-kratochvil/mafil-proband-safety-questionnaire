@@ -16,7 +16,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IProbandVisit, VisitState } from "../data/visit_data";
 import { fetchRecentVisits, fetchWaitingRoomVisits } from "../util/utils";
@@ -138,22 +138,52 @@ interface ITablePageProps {
 export const TablePage = ({ type }: ITablePageProps) => {
   let header: string[] = [];
   let getVisitRow: (visit: IProbandVisit) => string[] = (_) => [];
-  let visits: IProbandVisit[] = [];
+
+  const [visits, setVisits] = useState<IProbandVisit[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isError, setIsError] = useState<boolean>(false);
 
   switch (type) {
     case TableType.WAITING_ROOM:
       header = ["Datum registrace", "Proband", "Rodné číslo", "Datum narození", "Pohlaví", "Mateřský jazyk"];
       getVisitRow = getWaitingRoomRow;
-      visits = fetchWaitingRoomVisits();
       break;
     case TableType.RECENT_VISITS:
       header = ["Visit ID", "Proband", "Projekt", "Přístroj", "Zpracováno", "Zpracoval", "Podepsáno"];
       getVisitRow = getRecentVisitsRow;
-      visits = fetchRecentVisits();
       break;
     default:
       break;
   }
+
+  useEffect(() => {
+    const fetchVisits = async () => {
+      try {
+        let visitResponse;
+
+        switch (type) {
+          case TableType.WAITING_ROOM:
+            visitResponse = fetchWaitingRoomVisits();
+            break;
+          case TableType.RECENT_VISITS:
+            visitResponse = fetchRecentVisits();
+            break;
+          default:
+            break;
+        }
+
+        if (visitResponse !== undefined) {
+          setVisits(await visitResponse);
+        }
+
+        setIsLoading(false);
+      } catch (e) {
+        setIsError(true);
+      }
+    };
+
+    fetchVisits();
+  }, [type]);
 
   return (
     <PageTemplate isTabPage>
