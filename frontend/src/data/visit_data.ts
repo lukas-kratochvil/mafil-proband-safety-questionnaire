@@ -129,6 +129,8 @@ export const dummyFantomVisit: IProbandVisit = {
   },
   probandInfo: {
     ...dummyVisitNew.probandInfo,
+    name: "Fantom",
+    surname: "Fantom",
     gender: "Jiné",
   },
   answersPart1: fetchCurrentQuestionsPart1().map((question) => ({
