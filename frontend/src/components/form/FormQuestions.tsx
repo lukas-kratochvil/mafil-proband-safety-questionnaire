@@ -1,6 +1,6 @@
 import { Grid, Stack, TextField, Typography } from "@mui/material";
 import { Controller, useWatch } from "react-hook-form";
-import { IQuestionData } from "../../data/form_data";
+import { IQuestionData } from "../../data/question_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { FormCard } from "./FormCard";
 import { FormRadioGroup } from "./inputs/FormRadioGroup";
