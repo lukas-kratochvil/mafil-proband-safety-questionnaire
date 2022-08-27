@@ -152,7 +152,7 @@ export const FormPage = () => {
 
   const isFantom = visit?.projectInfo.isFantom || false;
   const { username } = useAuth();
-  const formMethods = useForm({
+  const formMethods = useForm<IProbandFormDefaultValuesProps | IOperatorFormDefaultValuesProps>({
     defaultValues: username === undefined ? loadProbandFormDefaultValues() : loadOperatorFormDefaultValues(visit),
     resolver: yupResolver(username === undefined ? probandFormSchema : operatorFormSchema),
     // TODO: add this if the validation on onChange event is too slow:
