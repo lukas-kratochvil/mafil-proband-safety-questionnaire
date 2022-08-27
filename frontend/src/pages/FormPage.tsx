@@ -155,6 +155,8 @@ export const FormPage = () => {
   const formMethods = useForm({
     defaultValues: username === undefined ? loadProbandFormDefaultValues() : loadOperatorFormDefaultValues(visit),
     resolver: yupResolver(username === undefined ? probandFormSchema : operatorFormSchema),
+    // TODO: add this if the validation on onChange event is too slow:
+    // reValidateMode: "onSubmit",
   });
   const navigate = useNavigate();
   const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
