@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CardBox } from "../components/card/CardBox";
 import { ColoredInfoStripe, IColoredInfoStripeProps } from "../components/informative/ColoredInfoStripe";
-import { VisitState } from "../data/visit_data";
+import { IProbandVisit, VisitState } from "../data/visit_data";
 import "../styles/style.css";
 import { fetchVisit } from "../util/utils";
 import { PageTemplate } from "./PageTemplate";
@@ -101,16 +101,43 @@ const getButtons = (
 
 export const VisitDetailPage = () => {
   const { id } = useParams();
-  const visit = id === undefined ? undefined : fetchVisit(id);
+  const [visit, setVisit] = useState<IProbandVisit>();
+  const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
+  const [isError, setIsError] = useState<boolean>(false); // TODO: create ErrorPage
 
-  const [visitState, setVisitState] = useState<VisitState | undefined>(visit?.state);
-  const [coloredInfoStripe, setColoredInfoStripe] = useState<IColoredInfoStripeProps>(getColoredInfoStripe(visitState));
-  const [buttons, setButtons] = useState<IButtonProps[]>(getButtons(visitState, setVisitState));
+  const [visitState, setVisitState] = useState<VisitState>();
 
   useEffect(() => {
+    const fetch = async () => {
+      try {
+        const response = await fetchVisit(id);
+
+        if (response === undefined) {
+          setIsError(true);
+        } else {
+          setVisit(response);
+          setVisitState(response.state);
+          setIsLoading(false);
+        }
+      } catch (e) {
+        setIsError(true);
+      }
+    };
+
+    fetch();
+  }, [id]);
+
+  const [coloredInfoStripe, setColoredInfoStripe] = useState<IColoredInfoStripeProps>();
+  const [buttons, setButtons] = useState<IButtonProps[]>();
+
+  useEffect(() => {
+    if (visit !== undefined && visitState !== undefined) {
+      visit.state = visitState;
+    }
+
     setColoredInfoStripe(getColoredInfoStripe(visitState));
     setButtons(getButtons(visitState, setVisitState));
-  }, [id, visitState]);
+  }, [visit, visitState]);
 
   return (
     <PageTemplate>
@@ -121,29 +148,31 @@ export const VisitDetailPage = () => {
           alignItems="center"
           padding="1rem"
         >
-          <ColoredInfoStripe {...coloredInfoStripe} />
+          {coloredInfoStripe && <ColoredInfoStripe {...coloredInfoStripe} />}
           <iframe
             className="visit-pdf"
             src={`${visit?.pdf}#view=fitH`}
             title="Visit detail"
           />
-          <Grid
-            container
-            direction="row"
-            justifyContent="center"
-            gap="1.5rem"
-          >
-            {buttons.map((button, index) => (
-              <Button
-                variant="contained"
-                onClick={button.onClick}
-                key={index}
-                disabled={button.disabled}
-              >
-                {button.title}
-              </Button>
-            ))}
-          </Grid>
+          {buttons && (
+            <Grid
+              container
+              direction="row"
+              justifyContent="center"
+              gap="1.5rem"
+            >
+              {buttons.map((button, index) => (
+                <Button
+                  variant="contained"
+                  onClick={button.onClick}
+                  key={index}
+                  disabled={button.disabled}
+                >
+                  {button.title}
+                </Button>
+              ))}
+            </Grid>
+          )}
         </Stack>
       </CardBox>
     </PageTemplate>
