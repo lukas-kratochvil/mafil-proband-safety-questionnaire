@@ -2,8 +2,9 @@ import { Route, Routes } from "react-router-dom";
 import { FormAfterSubmission } from "./pages/FormAfterSubmission";
 import { FormPage } from "./pages/FormPage";
 import { LoginPage } from "./pages/LoginPage";
-import { TablePage, TableType } from "./pages/TablePage";
+import { RecentVisitsTablePage } from "./pages/RecentVisitsTablePage";
 import { VisitDetailPage } from "./pages/VisitDetailPage";
+import { WaitingRoomTablePage } from "./pages/WaitingRoomTablePage";
 
 export const App = () => (
   <Routes>
@@ -25,11 +26,11 @@ export const App = () => (
     />
     <Route
       path="/auth/waiting-room"
-      element={<TablePage type={TableType.WAITING_ROOM} />}
+      element={<WaitingRoomTablePage />}
     />
     <Route
       path="/auth/recent-visits"
-      element={<TablePage type={TableType.RECENT_VISITS} />}
+      element={<RecentVisitsTablePage />}
     />
     <Route
       path="/auth/visit-detail/:id"
