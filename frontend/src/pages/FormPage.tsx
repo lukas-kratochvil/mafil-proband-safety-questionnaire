@@ -112,7 +112,7 @@ const probandFormSchema = object({
     .max(new Date(), "Maximální povolená hodnota pro datum narození je dnes.")
     .test({
       name: "birthdate-corresponds-to-personalId",
-      message: "Datum narození musí odpovídat poskytnutému českému nebo slovenskému rodnému číslu.",
+      message: "Datum narození není shodné s hodnotou získanou z poskytnutého českého nebo slovenského rodného čísla.",
       test: (birthdate, testContext) => {
         const czechPersonalId = rodnecislo(testContext.parent.personalId);
         return (
@@ -124,7 +124,21 @@ const probandFormSchema = object({
       },
     })
     .required("Datum narození musí být vyplněno."),
-  gender: string().nullable().required("Pohlaví musí být vyplněno."),
+  gender: string()
+    .nullable()
+    .test({
+      name: "gender-corresponds-to-personalId",
+      message: "Pohlaví není shodné s hodnotou získanou z poskytnutého českého nebo slovenského rodného čísla.",
+      test: (gender, testContext) => {
+        const czechPersonalId = rodnecislo(testContext.parent.personalId);
+        return (
+          !czechPersonalId.isValid()
+          || (czechPersonalId.isMale() && ["Muž", "Jiné"].includes(gender ?? ""))
+          || (czechPersonalId.isFemale() && ["Žena", "Jiné"].includes(gender ?? ""))
+        );
+      },
+    })
+    .required("Pohlaví musí být vyplněno."),
   nativeLanguage: string().nullable().required("Mateřský jazyk musí být vyplněn."),
   height: number()
     .typeError("Výška musí být kladné číslo.")
