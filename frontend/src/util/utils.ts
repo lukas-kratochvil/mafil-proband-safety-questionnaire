@@ -1,4 +1,4 @@
-import { IQuestionData, questions } from "../data/form_data";
+import { IQuestionData, questions } from "../data/question_data";
 import { dummyVisits, IProbandVisit, VisitState } from "../data/visit_data";
 
 export const fetchVisit = (visitId: string): IProbandVisit | undefined =>
