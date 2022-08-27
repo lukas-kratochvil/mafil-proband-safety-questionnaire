@@ -1,4 +1,4 @@
-import { IQuestionData, questions1, questions2 } from "../data/form_data";
+import { IQuestionData, questions } from "../data/form_data";
 import { dummyVisits, IProbandVisit, VisitState } from "../data/visit_data";
 
 export const fetchVisit = (visitId: string): IProbandVisit | undefined =>
@@ -14,12 +14,13 @@ export const fetchRecentVisits = (): IProbandVisit[] =>
   dummyVisits.filter((visit) => [VisitState.CHECKED, VisitState.SIGNED, VisitState.FANTOM_DONE].includes(visit.state));
 
 // TODO: get questions from DB
-export const fetchCurrentQuestionsPart1 = (): IQuestionData[] => questions1.filter((question) => question.isValid);
+export const fetchCurrentQuestionsPart1 = (): IQuestionData[] =>
+  questions.filter((question) => question.partNumber === 1 && question.isValid);
 
 // TODO: get questions from DB
-export const fetchCurrentQuestionsPart2 = (): IQuestionData[] => questions2.filter((question) => question.isValid);
+export const fetchCurrentQuestionsPart2 = (): IQuestionData[] =>
+  questions.filter((question) => question.partNumber === 2 && question.isValid);
 
 // TODO: get question from DB
 export const fetchQuestion = (questionId: string): IQuestionData | undefined =>
-  questions1.find((question) => question.id === questionId) ??
-  questions2.find((question) => question.id === questionId);
+  questions.find((question) => question.id === questionId);

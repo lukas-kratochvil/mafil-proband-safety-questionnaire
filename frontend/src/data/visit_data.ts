@@ -1,4 +1,5 @@
-import { magnets, projects, questions1, questions2 } from "./form_data";
+import { fetchCurrentQuestionsPart1, fetchCurrentQuestionsPart2 } from "../util/utils";
+import { magnets, projects } from "./form_data";
 
 export interface IProbandVisit {
   id: string;
@@ -107,11 +108,11 @@ export const dummyVisitNew: IProbandVisit = {
     email: "karel.novak@email.cz",
     phoneNumber: "",
   },
-  answersPart1: questions1.map((question, i) => ({
+  answersPart1: fetchCurrentQuestionsPart1().map((question, i) => ({
     questionId: question.id,
     isYes: i % 4 === 3,
   })),
-  answersPart2: questions2.map((question, i) => ({
+  answersPart2: fetchCurrentQuestionsPart2().map((question, i) => ({
     questionId: question.id,
     isYes: i % 6 === 0,
   })),
@@ -130,11 +131,11 @@ export const dummyFantomVisit: IProbandVisit = {
     ...dummyVisitNew.probandInfo,
     sex: "Jiné",
   },
-  answersPart1: questions1.map((question) => ({
+  answersPart1: fetchCurrentQuestionsPart1().map((question) => ({
     questionId: question.id,
     isYes: false,
   })),
-  answersPart2: questions2.map((question) => ({
+  answersPart2: fetchCurrentQuestionsPart2().map((question) => ({
     questionId: question.id,
     isYes: false,
   })),

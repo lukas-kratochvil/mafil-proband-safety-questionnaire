@@ -12,20 +12,11 @@ import { FormProbandInfo } from "../components/form/FormProbandInfo";
 import { FormProjectInfo } from "../components/form/FormProjectInfo";
 import { FormQuestions } from "../components/form/FormQuestions";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
-import {
-  genders,
-  magnets,
-  nativeLanguages,
-  projects,
-  questions1,
-  questions2,
-  sideDominance,
-  visualCorrection,
-} from "../data/form_data";
+import { genders, magnets, nativeLanguages, projects, sideDominance, visualCorrection } from "../data/form_data";
 import { IProbandVisit } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
 import "../styles/style.css";
-import { fetchVisit } from "../util/utils";
+import { fetchCurrentQuestionsPart1, fetchCurrentQuestionsPart2, fetchVisit } from "../util/utils";
 import { PageTemplate } from "./PageTemplate";
 
 interface ISubmitButtonProps {
@@ -142,7 +133,11 @@ const operatorFormSchema = probandFormSchema.shape({
 
 export const FormPage = () => {
   const { id } = useParams();
+
   const visit = id === undefined ? undefined : fetchVisit(id);
+  const questions1 = fetchCurrentQuestionsPart1();
+  const questions2 = fetchCurrentQuestionsPart2();
+
   const isFantom = visit?.projectInfo.isFantom || false;
   const { username } = useAuth();
   const formMethods = useForm({

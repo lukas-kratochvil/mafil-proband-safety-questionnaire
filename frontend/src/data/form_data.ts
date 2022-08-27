@@ -10,7 +10,7 @@ export const visualCorrection: string[] = ["Ano", "Ne"];
 
 export const sideDominance: string[] = ["Pravák", "Levák", "Přeučený levák", "Neurčeno"];
 
-export type QuestionPartNumber = 1 | 2;
+type QuestionPartNumber = 1 | 2;
 
 export interface IQuestionData {
   id: string;
@@ -19,7 +19,7 @@ export interface IQuestionData {
   isValid: boolean;
 }
 
-export const questions1: IQuestionData[] = [
+export const questions: IQuestionData[] = [
   {
     id: "p1q01",
     text: "Prodělal(a) jste operaci hlavy (mozku)?",
@@ -98,9 +98,6 @@ export const questions1: IQuestionData[] = [
     partNumber: 1,
     isValid: true,
   },
-];
-
-export const questions2: IQuestionData[] = [
   {
     id: "p2q01",
     text: "Máte/měl jste někdy zavedený jakýkoli stimulační implantát (např. kardiostimulátor, defibrilátor apod.)?",
