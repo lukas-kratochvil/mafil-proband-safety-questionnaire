@@ -26,6 +26,7 @@
     "rules":{
         "import/extensions": ["error", "ignorePackages", { "ts": "never", "tsx": "never" }],
         "import/prefer-default-export": "off",
+        "operator-linebreak": ["error", "before"],
         "no-plusplus": "off",
         "no-shadow": "off",
         "no-use-before-define": "off",
