@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import { magnetDevices, projects } from "../../data/form_data";
 import { ColoredInfoStripe } from "../informative/ColoredInfoStripe";
+import { ErrorFeedback } from "./ErrorFeedback";
 import { FormCard } from "./FormCard";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";
@@ -37,6 +38,7 @@ export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => (
           label="Projekt"
           options={projects}
         />
+        <ErrorFeedback name="project" />
       </Grid>
       <Grid
         item
@@ -47,6 +49,7 @@ export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => (
           label="Přístroj"
           options={magnetDevices}
         />
+        <ErrorFeedback name="magnetDevice" />
       </Grid>
       <Grid
         item
@@ -56,6 +59,7 @@ export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => (
           name="measurementDate"
           label="Datum měření"
         />
+        <ErrorFeedback name="measurementDate" />
       </Grid>
     </Grid>
   </FormCard>

@@ -1,4 +1,5 @@
 import { Grid, Typography } from "@mui/material";
+import { ErrorFeedback } from "./ErrorFeedback";
 import { FormCard } from "./FormCard";
 import { FormTextField } from "./inputs/FormTextField";
 
@@ -33,6 +34,7 @@ export const FormProbandContact = ({ isAuthEditing }: IFormProbandInfoProps) => 
           label="Email"
           disabled={!isAuthEditing}
         />
+        <ErrorFeedback name="email" />
       </Grid>
       <Grid
         item
@@ -43,6 +45,7 @@ export const FormProbandContact = ({ isAuthEditing }: IFormProbandInfoProps) => 
           label="Telefonní číslo"
           disabled={!isAuthEditing}
         />
+        <ErrorFeedback name="phoneNumber" />
       </Grid>
     </Grid>
   </FormCard>

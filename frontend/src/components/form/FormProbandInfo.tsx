@@ -3,6 +3,7 @@ import { useWatch } from "react-hook-form";
 import { genders, nativeLanguages, sideDominance, visualCorrection } from "../../data/form_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { InfoTooltip } from "../informative/InfoTooltip";
+import { ErrorFeedback } from "./ErrorFeedback";
 import { FormCard } from "./FormCard";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";
@@ -34,6 +35,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             label="Jméno"
             disabled={!isAuthEditing}
           />
+          <ErrorFeedback name="name" />
         </Grid>
         <Grid
           item
@@ -44,6 +46,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             label="Příjmení"
             disabled={!isAuthEditing}
           />
+          <ErrorFeedback name="surname" />
         </Grid>
 
         <Grid
@@ -72,6 +75,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             }
             disabled={!isAuthEditing}
           />
+          <ErrorFeedback name="personalId" />
         </Grid>
         <Grid
           item
@@ -83,6 +87,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             disabled={!isAuthEditing}
             maxDate={new Date()}
           />
+          <ErrorFeedback name="birthdate" />
         </Grid>
         <Grid
           item
@@ -94,6 +99,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             options={genders}
             disabled={!isAuthEditing}
           />
+          <ErrorFeedback name="gender" />
         </Grid>
 
         {/* 3. row */}
@@ -107,6 +113,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             options={nativeLanguages}
             disabled={!isAuthEditing}
           />
+          <ErrorFeedback name="nativeLanguage" />
         </Grid>
         <Grid
           item
@@ -118,6 +125,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             endAdornmentLabel="cm"
             disabled={!isAuthEditing}
           />
+          <ErrorFeedback name="height" />
         </Grid>
         <Grid
           item
@@ -129,6 +137,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             endAdornmentLabel="kg"
             disabled={!isAuthEditing}
           />
+          <ErrorFeedback name="weight" />
         </Grid>
 
         {/* 4. row */}
@@ -142,6 +151,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             options={sideDominance}
             disabled={!isAuthEditing}
           />
+          <ErrorFeedback name="sideDominance" />
         </Grid>
         <Grid
           item
@@ -153,6 +163,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             options={visualCorrection}
             disabled={!isAuthEditing}
           />
+          <ErrorFeedback name="visualCorrection" />
         </Grid>
         <Grid
           item
@@ -161,14 +172,15 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           <FormTextField
             name="visualCorrectionValue"
             label="Hodnota zrakové korekce"
+            disabled={!isAuthEditing || visualCorrectionAnswer !== "Ano"}
             endAdornmentLabel={
               <>
                 <Typography sx={{ marginRight: "0.75rem" }}>D</Typography>
                 <InfoTooltip text="Kladné dioptrie značí dalekozrakost, kdy jedinec vidí hůře na blízko. Naopak záporné dioptrie značí krátkozrakost, kdy jedinec vidí hůře na dálku." />
               </>
             }
-            disabled={!isAuthEditing || visualCorrectionAnswer !== "Ano"}
           />
+          <ErrorFeedback name="visualCorrectionValue" />
         </Grid>
       </Grid>
     </FormCard>
