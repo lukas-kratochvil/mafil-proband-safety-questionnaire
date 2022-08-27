@@ -306,6 +306,7 @@ export const FormPage = () => {
               type="submit"
               variant="contained"
               color="success"
+              disabled={!formMethods.formState.isValid}
             >
               {submitButton.title}
             </Button>
