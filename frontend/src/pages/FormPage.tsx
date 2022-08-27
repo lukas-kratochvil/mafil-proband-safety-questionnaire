@@ -1,8 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Grid } from "@mui/material";
+import { isEqual } from "date-fns";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+import { rodnecislo } from "rodnecislo";
 import { date, number, object, string } from "yup";
 import { FormBeforeExamination } from "../components/form/FormBeforeExamination";
 import { FormEntryInfo } from "../components/form/FormEntryInfo";
@@ -108,6 +110,19 @@ const probandFormSchema = object({
   birthdate: date()
     .nullable()
     .max(new Date(), "Maximální povolená hodnota pro datum narození je dnes.")
+    .test({
+      name: "birthdate-corresponds-to-personalId",
+      message: "Datum narození musí odpovídat poskytnutému českému nebo slovenskému rodnému číslu.",
+      test: (birthdate, testContext) => {
+        const czechPersonalId = rodnecislo(testContext.parent.personalId);
+        return (
+          birthdate === undefined
+          || birthdate === null
+          || !czechPersonalId.isValid()
+          || isEqual(czechPersonalId.birthDate(), birthdate)
+        );
+      },
+    })
     .required("Datum narození musí být vyplněno."),
   gender: string().nullable().required("Pohlaví musí být vyplněno."),
   nativeLanguage: string().nullable().required("Mateřský jazyk musí být vyplněn."),
