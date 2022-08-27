@@ -107,7 +107,7 @@ const getWaitingRoomRow = (visit: IProbandVisit): string[] => [
   `${visit.probandInfo.surname}, ${visit.probandInfo.name}`,
   visit.probandInfo.personalId,
   visit.probandInfo.birthdate.toDateString(),
-  visit.probandInfo.sex,
+  visit.probandInfo.gender,
   visit.probandInfo.nativeLanguage,
 ];
 

@@ -88,7 +88,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           xs={4}
         >
           <FormAutocomplete
-            name="sex"
+            name="gender"
             label="Pohlaví"
             options={genders}
             disabled={!isAuthEditing}

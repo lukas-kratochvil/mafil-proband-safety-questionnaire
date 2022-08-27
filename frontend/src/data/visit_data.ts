@@ -1,5 +1,5 @@
 import { fetchCurrentQuestionsPart1, fetchCurrentQuestionsPart2 } from "../util/utils";
-import { magnets, projects } from "./form_data";
+import { magnetDevices, projects } from "./form_data";
 
 export interface IProbandVisit {
   id: string;
@@ -35,7 +35,7 @@ interface IProbandInfo {
   birthdate: Date;
   height: number;
   weight: number;
-  sex: string; // TODO: can be enum or object stored in the database in case of future additions/editations etc.
+  gender: string; // TODO: can be enum or object stored in the database in case of future additions/editations etc.
   nativeLanguage: string; // TODO: can be enum or object stored in the database in case of future additions/editations etc.
   visualCorrection: string; // TODO: can be enum or object stored in the database in case of future additions/editations etc.
   visualCorrectionValue: number;
@@ -89,7 +89,7 @@ export const dummyVisitNew: IProbandVisit = {
     projectId: "1",
     projectName: projects[0],
     magnetDeviceId: "1",
-    magnetDeviceName: magnets[0],
+    magnetDeviceName: magnetDevices[0],
     isFantom: false,
     measurementDate: new Date(),
   },
@@ -100,7 +100,7 @@ export const dummyVisitNew: IProbandVisit = {
     birthdate: new Date(),
     height: 180,
     weight: 85,
-    sex: "Muž",
+    gender: "Muž",
     nativeLanguage: "Čeština",
     visualCorrection: "Ne",
     visualCorrectionValue: 0,
@@ -129,7 +129,7 @@ export const dummyFantomVisit: IProbandVisit = {
   },
   probandInfo: {
     ...dummyVisitNew.probandInfo,
-    sex: "Jiné",
+    gender: "Jiné",
   },
   answersPart1: fetchCurrentQuestionsPart1().map((question) => ({
     questionId: question.id,

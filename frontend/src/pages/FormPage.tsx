@@ -12,7 +12,7 @@ import { FormProbandInfo } from "../components/form/FormProbandInfo";
 import { FormProjectInfo } from "../components/form/FormProjectInfo";
 import { FormQuestions } from "../components/form/FormQuestions";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
-import { genders, magnets, nativeLanguages, projects, sideDominance, visualCorrection } from "../data/form_data";
+import { genders, magnetDevices, nativeLanguages, projects, sideDominance, visualCorrection } from "../data/form_data";
 import { IProbandVisit } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
 import "../styles/style.css";
@@ -37,7 +37,7 @@ interface IProbandFormDefaultValuesProps {
   surname: string;
   personalId: string;
   birthdate: Date | null;
-  sex: string | null;
+  gender: string | null;
   nativeLanguage: string | null;
   height: TextFieldNumberInput;
   weight: TextFieldNumberInput;
@@ -60,7 +60,7 @@ const loadProbandFormDefaultValues = (): IProbandFormDefaultValuesProps => ({
   surname: "",
   personalId: "",
   birthdate: null,
-  sex: null,
+  gender: null,
   nativeLanguage: null,
   height: "",
   weight: "",
@@ -90,7 +90,7 @@ const loadOperatorFormDefaultValues = (visit: IProbandVisit | undefined): IOpera
     surname: visit.probandInfo.surname,
     personalId: visit.probandInfo.personalId,
     birthdate: visit.probandInfo.birthdate,
-    sex: visit.probandInfo.sex,
+    gender: visit.probandInfo.gender,
     nativeLanguage: visit.probandInfo.nativeLanguage,
     height: visit.probandInfo.height,
     weight: visit.probandInfo.weight,
@@ -107,7 +107,7 @@ const probandFormSchema = object({
   surname: string().trim().required(),
   personalId: string().trim().required(),
   birthdate: date().nullable().max(new Date()).required(),
-  sex: string().nullable().oneOf(genders).required(), // TODO: change values in oneOf()
+  gender: string().nullable().oneOf(genders).required(), // TODO: change values in oneOf()
   nativeLanguage: string().nullable().oneOf(nativeLanguages).required(), // TODO: change values in oneOf()
   height: number().positive().required(),
   weight: number().positive().required(),
@@ -127,7 +127,7 @@ const probandFormSchema = object({
 
 const operatorFormSchema = probandFormSchema.shape({
   project: string().nullable().oneOf(projects).required(), // TODO: change values in oneOf()
-  magnetDevice: string().nullable().oneOf(magnets).required(), // TODO: change values in oneOf()
+  magnetDevice: string().nullable().oneOf(magnetDevices).required(), // TODO: change values in oneOf()
   measurementDate: date().nullable().required(),
 });
 
