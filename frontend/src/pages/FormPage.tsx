@@ -103,32 +103,73 @@ const loadOperatorFormDefaultValues = (visit: IProbandVisit | undefined): IOpera
 };
 
 const probandFormSchema = object({
-  name: string().trim().required(),
-  surname: string().trim().required(),
-  personalId: string().trim().required(),
-  birthdate: date().nullable().max(new Date()).required(),
-  gender: string().nullable().oneOf(genders).required(), // TODO: change values in oneOf()
-  nativeLanguage: string().nullable().oneOf(nativeLanguages).required(), // TODO: change values in oneOf()
-  height: number().positive().required(),
-  weight: number().positive().required(),
-  sideDominance: string().nullable().oneOf(sideDominance).required(), // TODO: change values in oneOf()
-  visualCorrection: string().nullable().oneOf(visualCorrection).required(), // TODO: change values in oneOf()
+  name: string()
+    .trim()
+    .required("Jméno musí být vyplněno."),
+  surname: string()
+    .trim()
+    .required("Jméno musí být vyplněno."),
+  personalId: string()
+    .trim()
+    .required("Rodné číslo musí být vyplněno."),
+  birthdate: date()
+    .nullable()
+    .max(new Date(), "Maximální povolená hodnota pro datum narození je dnes.")
+    .required("Datum narození musí být vyplněno."),
+  gender: string()
+    .nullable()
+    .oneOf(genders, `Hodnota musí být jedno z: ${genders.map((val) => `'${val}'`).join(", ")}.`) // TODO: is it necessary? - Autocomplete will let us submit only values from provided options
+    .required("Pohlaví musí být vyplněno."), // TODO: change values in oneOf()
+  nativeLanguage: string()
+    .nullable()
+    .oneOf(nativeLanguages, `Hodnota musí být jedno z: ${nativeLanguages.map((val) => `'${val}'`).join(", ")}.`) // TODO: is it necessary? - Autocomplete will let us submit only values from provided options
+    .required("Mateřský jazyk musí být vyplněn."), // TODO: change values in oneOf()
+  height: number()
+    .typeError("Výška musí být kladné číslo.")
+    .positive("Výška musí být kladné číslo.")
+    .required("Výška musí být vyplněna."),
+  weight: number()
+    .typeError("Váha musí být kladné číslo.")
+    .positive("Váha musí být kladné číslo.")
+    .required("Váha musí být vyplněna."),
+  sideDominance: string()
+    .nullable()
+    .oneOf(sideDominance, `Hodnota musí být jedno z: ${sideDominance.join(", ")}.`) // TODO: is it necessary? - Autocomplete will let us submit only values from provided options
+    .required("Stranová dominance musí být vyplněná."), // TODO: change values in oneOf()
+  visualCorrection: string()
+    .nullable()
+    .oneOf(visualCorrection, `Hodnota musí být jedno z: ${visualCorrection.join(", ")}.`) // TODO: is it necessary? - Autocomplete will let us submit only values from provided options
+    .required("Zraková korekce musí být vyplněna."), // TODO: change values in oneOf()
   visualCorrectionValue: number()
     .default(0)
     .when("visualCorrection", {
       is: "Ano", // TODO: make enum
-      then: number().notOneOf([0]).min(-200).max(200),
+      then: number()
+        .notOneOf([0], "Hodnota zrakové korekce se nesmí rovnat nule.")
+        .min(-200, "Hodnota zrakové korekce není validní - je příliš nízká.")
+        .max(200, "Hodnota zrakové korekce není validní - je příliš vysoká.")
+        .required("Hodnota zrakové korekce musí být vyplněna."),
     }),
-  email: string().trim().email(),
+  email: string()
+    .trim()
+    .email("Email není validní."),
   phoneNumber: string()
     .trim()
-    .matches(/^$|^(\+|00)?[1-9]{1}[0-9,\s]{3,}$/),
+    .matches(/^$|^(\+|00)?[1-9]{1}[0-9,\s]{3,}$/, "Telefonní číslo není validní."),
 });
 
 const operatorFormSchema = probandFormSchema.shape({
-  project: string().nullable().oneOf(projects).required(), // TODO: change values in oneOf()
-  magnetDevice: string().nullable().oneOf(magnetDevices).required(), // TODO: change values in oneOf()
-  measurementDate: date().nullable().required(),
+  project: string()
+    .nullable()
+    .oneOf(projects, `Hodnota musí být jedno z: ${projects.map((val) => `'${val}'`).join(", ")}.`) // TODO: is it necessary? - Autocomplete will let us submit only values from provided options
+    .required("Projekt musí být vyplněn."), // TODO: change values in oneOf()
+  magnetDevice: string()
+    .nullable()
+    .oneOf(magnetDevices, `Hodnota musí být jedno z: ${magnetDevices.map((val) => `'${val}'`).join(", ")}.`) // TODO: is it necessary? - Autocomplete will let us submit only values from provided options
+    .required("Přístroj magnetické rezonance musí být vyplněný."), // TODO: change values in oneOf()
+  measurementDate: date()
+    .nullable()
+    .required("Datum měření musí být vyplněno."),
 });
 
 export const FormPage = () => {
