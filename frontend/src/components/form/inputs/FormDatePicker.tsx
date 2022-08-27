@@ -5,7 +5,11 @@ import CsLocale from "date-fns/locale/cs";
 import { Controller } from "react-hook-form";
 import { IFormDefaultInputProps } from "./form_input";
 
-export const FormDatePicker = ({ name, label, disabled }: IFormDefaultInputProps) => (
+interface IFormDatePicker extends IFormDefaultInputProps {
+  maxDate?: Date;
+}
+
+export const FormDatePicker = ({ name, label, disabled, maxDate }: IFormDatePicker) => (
   <Controller
     name={name}
     render={({ field: { value, onChange } }) => (
@@ -23,6 +27,7 @@ export const FormDatePicker = ({ name, label, disabled }: IFormDefaultInputProps
           onChange={onChange}
           label={label}
           inputFormat="dd/MM/yyyy"
+          maxDate={maxDate}
           renderInput={(params) => (
             <TextField
               {...params}

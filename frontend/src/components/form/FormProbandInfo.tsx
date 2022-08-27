@@ -81,6 +81,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             name="birthdate"
             label="Datum narození"
             disabled={!isAuthEditing}
+            maxDate={new Date()}
           />
         </Grid>
         <Grid

@@ -55,7 +55,6 @@ export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => (
         <FormDatePicker
           name="measurementDate"
           label="Datum měření"
-          defaultValue={new Date()}
         />
       </Grid>
     </Grid>
