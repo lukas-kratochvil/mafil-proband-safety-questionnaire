@@ -140,8 +140,8 @@ export const TablePage = ({ type }: ITablePageProps) => {
   let getVisitRow: (visit: IProbandVisit) => string[] = (_) => [];
 
   const [visits, setVisits] = useState<IProbandVisit[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isError, setIsError] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
+  const [isError, setIsError] = useState<boolean>(false); // TODO: create ErrorPage
 
   switch (type) {
     case TableType.WAITING_ROOM:
@@ -169,6 +169,7 @@ export const TablePage = ({ type }: ITablePageProps) => {
             visitResponse = fetchRecentVisits();
             break;
           default:
+            setIsError(true);
             break;
         }
 

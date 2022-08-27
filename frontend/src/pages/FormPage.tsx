@@ -178,8 +178,8 @@ export const FormPage = () => {
   const [visit, setVisit] = useState<IProbandVisit | undefined>(undefined);
   const [questions1, setQuestions1] = useState<IQuestionData[]>([]);
   const [questions2, setQuestions2] = useState<IQuestionData[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isError, setIsError] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
+  const [isError, setIsError] = useState<boolean>(false); // TODO: create ErrorPage
 
   useEffect(() => {
     const fetchData = async () => {
