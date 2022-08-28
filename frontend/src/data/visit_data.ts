@@ -122,7 +122,7 @@ export const dummyFantomVisitNew: IProbandVisit = {
   id: generateId(),
   visitId: "fantom123",
   state: VisitState.NEW,
-  pdf: "",
+  pdf: "/dummy.pdf",
   projectInfo: {
     projectId: "",
     projectName: "",
