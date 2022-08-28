@@ -1,8 +1,8 @@
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { IActionButtonsProps, VisitsTable } from "../components/table/VisitsTable";
-import { IProbandVisit, VisitState } from "../data/visit_data";
-import { fetchRecentVisits } from "../util/utils";
+import { createVisit, dummyVisits, IProbandVisit, VisitState } from "../data/visit_data";
+import { fetchRecentVisits, getDummyVisit } from "../util/utils";
 
 const recentVisitsHeader = ["Visit ID", "Proband", "Projekt", "Přístroj", "Zpracováno", "Zpracoval", "Podepsáno"];
 
@@ -41,8 +41,18 @@ const RecentVisitsActionButtons = ({ visitId }: IActionButtonsProps) => {
         variant="contained"
         onClick={() => {
           // TODO: create new form with the same data as the original form
-          const newVisitId = 1;
-          navigate(`/auth/form/${newVisitId}`);
+          const initialVisit = getDummyVisit(visitId);
+
+          if (initialVisit === undefined) {
+            navigate(`/auth/form/${1}`);
+          } else {
+            const newVisit = createVisit(
+              initialVisit,
+              initialVisit.projectInfo.isFantom ? VisitState.FANTOM_NEW : VisitState.NEW
+            );
+            dummyVisits.push(newVisit);
+            navigate(`/auth/form/${newVisit.id}`);
+          }
         }}
       >
         Duplikovat
