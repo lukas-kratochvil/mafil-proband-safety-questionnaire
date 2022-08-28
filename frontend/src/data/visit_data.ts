@@ -22,9 +22,9 @@ export enum VisitState {
 
 interface IProjectInfo {
   projectId: string;
-  projectName: string;
+  projectName: string | null;
   magnetDeviceId: string;
-  magnetDeviceName: string;
+  magnetDeviceName: string | null;
   isFantom: boolean;
   measurementDate: Date;
 }
@@ -130,9 +130,9 @@ export const dummyFantomVisitNew: IProbandVisit = {
   pdf: "/dummy.pdf",
   projectInfo: {
     projectId: "",
-    projectName: "",
+    projectName: null,
     magnetDeviceId: "",
-    magnetDeviceName: "",
+    magnetDeviceName: null,
     isFantom: true,
     measurementDate: new Date(),
   },
