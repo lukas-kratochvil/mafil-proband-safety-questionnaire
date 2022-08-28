@@ -15,10 +15,10 @@ import { FormProjectInfo } from "../components/form/FormProjectInfo";
 import { FormQuestions } from "../components/form/FormQuestions";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
 import { IQuestionData } from "../data/question_data";
-import { IProbandVisit } from "../data/visit_data";
+import { IProbandVisit, VisitState } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
 import "../styles/style.css";
-import { fetchCurrentQuestions, fetchVisit } from "../util/utils";
+import { fetchCurrentQuestions, fetchVisit, updateDummyVisitState } from "../util/utils";
 import { PageTemplate } from "./PageTemplate";
 
 interface ISubmitButtonProps {
@@ -243,6 +243,7 @@ export const FormPage = () => {
       title: "Finalizovat",
       onClick: (data) => {
         // TODO: store changes in DB if made
+        updateDummyVisitState(id, VisitState.FANTOM_DONE);
         navigate(`/auth/visit-detail/${id}`);
       },
     };
@@ -269,6 +270,7 @@ export const FormPage = () => {
       title: "Finalizovat",
       onClick: (data) => {
         // TODO: store changes in DB if made
+        updateDummyVisitState(id, VisitState.CHECKED);
         navigate(`/auth/visit-detail/${id}`);
       },
     };

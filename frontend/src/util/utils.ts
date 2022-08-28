@@ -2,7 +2,7 @@ import { IQuestionData, QuestionPartNumber, questions } from "../data/question_d
 import { dummyVisits, IProbandVisit, VisitState } from "../data/visit_data";
 
 // TODO: get visits from DB
-export const fetchVisit = async (visitId?: string): Promise<IProbandVisit | undefined> =>
+export const fetchVisit = async (visitId: string | undefined): Promise<IProbandVisit | undefined> =>
   dummyVisits.find((visit) => visit.id === visitId);
 
 // TODO: get visits from DB
@@ -26,9 +26,17 @@ export const fetchQuestion = async (questionId: string): Promise<IQuestionData |
  */
 
 // TODO: get visits from DB
-export const getDummyVisit = (visitId?: string): IProbandVisit | undefined =>
+export const getDummyVisit = (visitId: string | undefined): IProbandVisit | undefined =>
   dummyVisits.find((visit) => visit.id === visitId);
 
 // TODO: delete this method
 export const getDummyVisitCurrentQuestions = (partNumber: QuestionPartNumber): IQuestionData[] =>
   questions.filter((question) => question.partNumber === partNumber && question.isValid);
+
+export const updateDummyVisitState = (visitId: string | undefined, newState: VisitState): void => {
+  const visit = getDummyVisit(visitId);
+
+  if (visit !== undefined) {
+    visit.state = newState;
+  }
+};
