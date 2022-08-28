@@ -21,17 +21,6 @@ import "../styles/style.css";
 import { fetchCurrentQuestions, fetchVisit, updateDummyVisitState } from "../util/utils";
 import { PageTemplate } from "./PageTemplate";
 
-interface ISubmitButtonProps {
-  title: string;
-  // TODO: edit 'data' data type
-  onClick: (data: unknown) => void;
-}
-
-interface IButtonProps {
-  title: string;
-  onClick: () => void;
-}
-
 type TextFieldNumberInput = string | number;
 
 interface IProbandFormDefaultValuesProps {
@@ -55,6 +44,8 @@ interface IOperatorFormDefaultValuesProps extends IProbandFormDefaultValuesProps
   magnetDevice: string | null;
   measurementDate: Date | null;
 }
+
+type FormPropType = IProbandFormDefaultValuesProps | IOperatorFormDefaultValuesProps;
 
 // Autocomplete component default value must be one of the options or null
 const loadProbandFormDefaultValues = (): IProbandFormDefaultValuesProps => ({
@@ -173,6 +164,16 @@ const operatorFormSchema = probandFormSchema.shape({
   measurementDate: date().nullable().required("Datum měření musí být vyplněno."),
 });
 
+interface ISubmitButtonProps {
+  title: string;
+  onClick: (data: FormPropType) => void;
+}
+
+interface IButtonProps {
+  title: string;
+  onClick: () => void;
+}
+
 export const FormPage = () => {
   const navigate = useNavigate();
   const { username } = useAuth();
@@ -185,7 +186,7 @@ export const FormPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
   const [isError, setIsError] = useState<boolean>(false); // TODO: create ErrorPage
 
-  const formMethods = useForm<IProbandFormDefaultValuesProps | IOperatorFormDefaultValuesProps>({
+  const formMethods = useForm<FormPropType>({
     defaultValues: username === undefined ? loadProbandFormDefaultValues() : loadOperatorFormDefaultValues(visit),
     resolver: yupResolver(username === undefined ? probandFormSchema : operatorFormSchema),
     // TODO: add this if the validation on onChange event is too slow:
@@ -237,7 +238,7 @@ export const FormPage = () => {
   if (username === undefined) {
     submitButton = {
       title: "Souhlasím",
-      onClick: (data) => {
+      onClick: (data: FormPropType) => {
         // TODO: create visit in DB
         navigate("/form-after-submission");
       },
@@ -246,7 +247,7 @@ export const FormPage = () => {
     // TODO: disable when personal info and comments to Yes/No questions are not filled in
     submitButton = {
       title: "Finalizovat",
-      onClick: (data) => {
+      onClick: (data: FormPropType) => {
         // TODO: store changes in DB if made
         updateDummyVisitState(id, VisitState.FANTOM_DONE);
         navigate(`/auth/visit-detail/${id}`);
@@ -255,7 +256,7 @@ export const FormPage = () => {
   } else if (isAuthEditing) {
     submitButton = {
       title: "Uložit změny",
-      onClick: (data) => {
+      onClick: (data: FormPropType) => {
         // TODO: save the changes in DB
         setIsAuthEditing(false);
       },
@@ -273,7 +274,7 @@ export const FormPage = () => {
     // TODO: disable when personal info and comments to Yes/No questions are not filled in
     submitButton = {
       title: "Finalizovat",
-      onClick: (data) => {
+      onClick: (data: FormPropType) => {
         // TODO: store changes in DB if made
         updateDummyVisitState(id, VisitState.CHECKED);
         navigate(`/auth/visit-detail/${id}`);
@@ -295,15 +296,14 @@ export const FormPage = () => {
     ];
   }
 
-  // TODO: edit 'data' data type
-  const onSubmit = (data: unknown) => {
+  const onSubmit = (data: FormPropType) => {
     // TODO: submit data
     console.log("Submitted data:");
     console.log(data);
     submitButton.onClick(data);
   };
 
-  // TODO: edit 'data' data type
+  // TODO: edit 'errors' data type
   const onError = (errors: unknown) => {
     console.log("Error:");
     console.log(errors);
