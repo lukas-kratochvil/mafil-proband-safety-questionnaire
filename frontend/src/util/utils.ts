@@ -17,6 +17,10 @@ export const fetchRecentVisits = async (): Promise<IProbandVisit[]> =>
 export const fetchCurrentQuestions = async (partNumber: QuestionPartNumber): Promise<IQuestionData[]> =>
   questions.filter((question) => question.partNumber === partNumber && question.isValid);
 
+// TODO: delete this method
+export const getDummyVisitCurrentQuestions = (partNumber: QuestionPartNumber): IQuestionData[] =>
+  questions.filter((question) => question.partNumber === partNumber && question.isValid);
+
 // TODO: get question from DB
 export const fetchQuestion = async (questionId: string): Promise<IQuestionData | undefined> =>
   questions.find((question) => question.id === questionId);
