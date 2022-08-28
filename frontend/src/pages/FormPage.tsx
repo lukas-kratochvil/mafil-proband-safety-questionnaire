@@ -18,7 +18,7 @@ import { IQuestionData } from "../data/question_data";
 import { IProbandVisit } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
 import "../styles/style.css";
-import { fetchCurrentQuestionsPart1, fetchCurrentQuestionsPart2, fetchVisit } from "../util/utils";
+import { fetchCurrentQuestions, fetchVisit } from "../util/utils";
 import { PageTemplate } from "./PageTemplate";
 
 interface ISubmitButtonProps {
@@ -186,8 +186,8 @@ export const FormPage = () => {
     const fetchData = async () => {
       try {
         const visitResponse = id === undefined ? undefined : fetchVisit(id);
-        const questions1Response = fetchCurrentQuestionsPart1();
-        const questions2Response = fetchCurrentQuestionsPart2();
+        const questions1Response = fetchCurrentQuestions(1);
+        const questions2Response = fetchCurrentQuestions(2);
 
         setVisit(await visitResponse);
         setQuestions1(await questions1Response);

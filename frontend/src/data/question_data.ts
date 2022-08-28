@@ -1,4 +1,4 @@
-type QuestionPartNumber = 1 | 2;
+export type QuestionPartNumber = 1 | 2;
 
 export interface IQuestionData {
   id: string;

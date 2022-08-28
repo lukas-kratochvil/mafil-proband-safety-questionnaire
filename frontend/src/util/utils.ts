@@ -1,4 +1,4 @@
-import { IQuestionData, questions } from "../data/question_data";
+import { IQuestionData, QuestionPartNumber, questions } from "../data/question_data";
 import { dummyVisits, IProbandVisit, VisitState } from "../data/visit_data";
 
 export const fetchVisit = async (visitId?: string): Promise<IProbandVisit | undefined> =>
@@ -14,12 +14,8 @@ export const fetchRecentVisits = async (): Promise<IProbandVisit[]> =>
   dummyVisits.filter((visit) => [VisitState.CHECKED, VisitState.SIGNED, VisitState.FANTOM_DONE].includes(visit.state));
 
 // TODO: get questions from DB
-export const fetchCurrentQuestionsPart1 = async (): Promise<IQuestionData[]> =>
-  questions.filter((question) => question.partNumber === 1 && question.isValid);
-
-// TODO: get questions from DB
-export const fetchCurrentQuestionsPart2 = async (): Promise<IQuestionData[]> =>
-  questions.filter((question) => question.partNumber === 2 && question.isValid);
+export const fetchCurrentQuestions = async (partNumber: QuestionPartNumber): Promise<IQuestionData[]> =>
+  questions.filter((question) => question.partNumber === partNumber && question.isValid);
 
 // TODO: get question from DB
 export const fetchQuestion = async (questionId: string): Promise<IQuestionData | undefined> =>
