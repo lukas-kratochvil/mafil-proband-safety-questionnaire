@@ -60,21 +60,25 @@ const generateId = (): string => {
   return id;
 };
 
+export const createVisit = (initialVisit: IProbandVisit, state: VisitState): IProbandVisit => {
+  const newId: string = generateId();
+  return {
+    ...initialVisit,
+    id: newId,
+    visitId: `${initialVisit.projectInfo.isFantom ? "fantom" : "visit"}${newId}`,
+    state,
+    projectInfo: { ...initialVisit.projectInfo },
+    probandInfo: { ...initialVisit.probandInfo },
+    answersPart1: { ...initialVisit.answersPart1 },
+    answersPart2: { ...initialVisit.answersPart2 },
+  };
+};
+
 const createVisits = (initialVisit: IProbandVisit, state: VisitState, count: number): IProbandVisit[] => {
   const visits = [];
 
   for (let i = 0; i < count; i++) {
-    const newId: string = generateId();
-    const newVisit: IProbandVisit = {
-      ...initialVisit,
-      id: newId,
-      visitId: `${initialVisit.projectInfo.isFantom ? "fantom" : "visit"}${newId}`,
-      state,
-      projectInfo: { ...initialVisit.projectInfo },
-      probandInfo: { ...initialVisit.probandInfo },
-      answersPart1: { ...initialVisit.answersPart1 },
-      answersPart2: { ...initialVisit.answersPart2 },
-    };
+    const newVisit = createVisit(initialVisit, state);
     visits.push(newVisit);
   }
 
