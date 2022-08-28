@@ -175,6 +175,7 @@ const operatorFormSchema = probandFormSchema.shape({
 
 export const FormPage = () => {
   const navigate = useNavigate();
+  const { username } = useAuth();
   const { id } = useParams();
   const [visit, setVisit] = useState<IProbandVisit | undefined>(undefined);
   const [questions1, setQuestions1] = useState<IQuestionData[]>([]);
@@ -183,6 +184,13 @@ export const FormPage = () => {
   const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
   const [isError, setIsError] = useState<boolean>(false); // TODO: create ErrorPage
+
+  const formMethods = useForm<IProbandFormDefaultValuesProps | IOperatorFormDefaultValuesProps>({
+    defaultValues: username === undefined ? loadProbandFormDefaultValues() : loadOperatorFormDefaultValues(visit),
+    resolver: yupResolver(username === undefined ? probandFormSchema : operatorFormSchema),
+    // TODO: add this if the validation on onChange event is too slow:
+    // reValidateMode: "onSubmit",
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -209,14 +217,6 @@ export const FormPage = () => {
 
     fetchData();
   }, [id]);
-
-  const { username } = useAuth();
-  const formMethods = useForm<IProbandFormDefaultValuesProps | IOperatorFormDefaultValuesProps>({
-    defaultValues: username === undefined ? loadProbandFormDefaultValues() : loadOperatorFormDefaultValues(visit),
-    resolver: yupResolver(username === undefined ? probandFormSchema : operatorFormSchema),
-    // TODO: add this if the validation on onChange event is too slow:
-    // reValidateMode: "onSubmit",
-  });
 
   useEffect(() => {
     if (visit !== undefined) {
