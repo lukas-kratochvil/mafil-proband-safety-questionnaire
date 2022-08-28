@@ -91,7 +91,7 @@ const getButtons = (
           title: "Stáhnout PDF",
           onClick: () => {
             // TODO: open system download window, so the auth user can choose where to store it (or show the print windows instead?)
-            console.log("TODO");
+            alert("Funkcionalita bude brzy naimplementována.");
           },
         },
       ];

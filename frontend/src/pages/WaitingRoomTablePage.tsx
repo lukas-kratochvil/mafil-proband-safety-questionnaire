@@ -24,6 +24,7 @@ const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
 
   const onDelete = () => {
+    alert("Funkcionalita bude brzy naimplementována.");
     setOpenDeleteDialog(false);
   };
 

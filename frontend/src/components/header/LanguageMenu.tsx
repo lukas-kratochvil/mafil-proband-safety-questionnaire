@@ -12,7 +12,10 @@ export interface ILanguageItemProps {
 
 const LanguageItem = ({ name, label, Flag }: ILanguageItemProps) => (
   <Tooltip title={name}>
-    <Button size="small">
+    <Button
+      size="small"
+      onClick={() => alert("Funkcionalita bude brzy naimplementována.")}
+    >
       <Avatar
         alt={label}
         variant="rounded"
