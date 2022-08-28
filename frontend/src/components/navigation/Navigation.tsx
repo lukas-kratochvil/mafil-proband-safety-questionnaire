@@ -1,7 +1,7 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { dummyFantomVisit } from "../../data/visit_data";
+import { dummyFantomVisitNew } from "../../data/visit_data";
 
 export interface ILinkTabProps {
   label: string;
@@ -39,7 +39,7 @@ export const Navigation = () => {
       label: "Založit měření na Fantomu",
       onClick: () => {
         // TODO: create new FANTOM visit and use its ID
-        const newFantomVisitId = dummyFantomVisit.id;
+        const newFantomVisitId = dummyFantomVisitNew.id;
         navigate(`/auth/form/${newFantomVisitId}`);
       },
     },

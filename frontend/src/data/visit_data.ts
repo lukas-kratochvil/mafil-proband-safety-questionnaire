@@ -118,6 +118,44 @@ export const dummyVisitNew: IProbandVisit = {
   })),
 };
 
+export const dummyFantomVisitNew: IProbandVisit = {
+  id: generateId(),
+  visitId: "fantom123",
+  state: VisitState.NEW,
+  pdf: "",
+  projectInfo: {
+    projectId: "",
+    projectName: "",
+    magnetDeviceId: "",
+    magnetDeviceName: "",
+    isFantom: true,
+    measurementDate: new Date(),
+  },
+  probandInfo: {
+    name: "",
+    surname: "",
+    personalId: "",
+    birthdate: new Date(),
+    height: 1,
+    weight: 1,
+    gender: "Jiné",
+    nativeLanguage: "Čeština",
+    visualCorrection: "Ne",
+    visualCorrectionValue: 0,
+    sideDominance: "Neurčeno",
+    email: "",
+    phoneNumber: "",
+  },
+  answersPart1: getDummyVisitCurrentQuestions(1).map((question) => ({
+    questionId: question.id,
+    isYes: false,
+  })),
+  answersPart2: getDummyVisitCurrentQuestions(2).map((question) => ({
+    questionId: question.id,
+    isYes: false,
+  })),
+};
+
 export const dummyFantomVisit: IProbandVisit = {
   id: generateId(),
   visitId: "fantom2",
@@ -133,14 +171,8 @@ export const dummyFantomVisit: IProbandVisit = {
     surname: "Fantom",
     gender: "Jiné",
   },
-  answersPart1: getDummyVisitCurrentQuestions(1).map((question) => ({
-    questionId: question.id,
-    isYes: false,
-  })),
-  answersPart2: getDummyVisitCurrentQuestions(2).map((question) => ({
-    questionId: question.id,
-    isYes: false,
-  })),
+  answersPart1: [...dummyFantomVisitNew.answersPart1],
+  answersPart2: [...dummyFantomVisitNew.answersPart2],
 };
 
 export const dummyVisits: IProbandVisit[] = [
@@ -148,6 +180,7 @@ export const dummyVisits: IProbandVisit[] = [
   ...createVisits(dummyVisitNew, VisitState.NEW, 3),
   ...createVisits(dummyVisitNew, VisitState.CHECKED, 4),
   ...createVisits(dummyVisitNew, VisitState.SIGNED, 2),
+  dummyFantomVisitNew,
   dummyFantomVisit,
   ...createVisits(dummyFantomVisit, VisitState.NEW, 1),
   ...createVisits(dummyFantomVisit, VisitState.FANTOM_DONE, 2),
