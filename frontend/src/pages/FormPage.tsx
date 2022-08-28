@@ -180,6 +180,7 @@ export const FormPage = () => {
   const [questions1, setQuestions1] = useState<IQuestionData[]>([]);
   const [questions2, setQuestions2] = useState<IQuestionData[]>([]);
   const [isFantom, setIsFantom] = useState<boolean>(false);
+  const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
   const [isError, setIsError] = useState<boolean>(false); // TODO: create ErrorPage
 
@@ -195,6 +196,7 @@ export const FormPage = () => {
 
         if (fetchedVisit !== undefined) {
           setIsFantom(fetchedVisit.projectInfo.isFantom);
+          setIsAuthEditing(fetchedVisit.projectInfo.isFantom);
         }
 
         setQuestions1(await questions1Response);
@@ -215,9 +217,6 @@ export const FormPage = () => {
     // TODO: add this if the validation on onChange event is too slow:
     // reValidateMode: "onSubmit",
   });
-  const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
-
-  useEffect(() => setIsAuthEditing(isFantom), [id, isFantom]);
 
   useEffect(() => {
     if (visit !== undefined) {
