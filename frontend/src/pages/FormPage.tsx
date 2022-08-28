@@ -340,7 +340,8 @@ export const FormPage = () => {
               type="submit"
               variant="contained"
               color="success"
-              disabled={!formMethods.formState.isValid}
+              // TODO: doesn't work, why??
+              // disabled={!formMethods.formState.isValid}
             >
               {submitButton.title}
             </Button>
