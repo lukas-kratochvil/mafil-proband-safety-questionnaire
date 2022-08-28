@@ -179,6 +179,7 @@ export const FormPage = () => {
   const [visit, setVisit] = useState<IProbandVisit | undefined>(undefined);
   const [questions1, setQuestions1] = useState<IQuestionData[]>([]);
   const [questions2, setQuestions2] = useState<IQuestionData[]>([]);
+  const [isFantom, setIsFantom] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
   const [isError, setIsError] = useState<boolean>(false); // TODO: create ErrorPage
 
@@ -189,7 +190,13 @@ export const FormPage = () => {
         const questions1Response = fetchCurrentQuestions(1);
         const questions2Response = fetchCurrentQuestions(2);
 
-        setVisit(await visitResponse);
+        const fetchedVisit = await visitResponse;
+        setVisit(fetchedVisit);
+
+        if (fetchedVisit !== undefined) {
+          setIsFantom(fetchedVisit.projectInfo.isFantom);
+        }
+
         setQuestions1(await questions1Response);
         setQuestions2(await questions2Response);
         setIsLoading(false);
@@ -201,7 +208,6 @@ export const FormPage = () => {
     fetchData();
   }, [id]);
 
-  const isFantom = visit?.projectInfo.isFantom || false;
   const { username } = useAuth();
   const formMethods = useForm<IProbandFormDefaultValuesProps | IOperatorFormDefaultValuesProps>({
     defaultValues: username === undefined ? loadProbandFormDefaultValues() : loadOperatorFormDefaultValues(visit),
