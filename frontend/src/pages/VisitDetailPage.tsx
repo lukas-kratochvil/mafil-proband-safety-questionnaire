@@ -31,6 +31,7 @@ const getColoredInfoStripe = (visitState?: VisitState): IColoredInfoStripeProps 
         text: "Podepsáno",
         color: "success",
       };
+    case VisitState.FANTOM_NEW: // TODO: remove this, only for the testing purpose
     case VisitState.FANTOM_DONE:
       return {
         text: "Fantom se nepodepisuje",

@@ -7,7 +7,7 @@ export const fetchVisit = async (visitId?: string): Promise<IProbandVisit | unde
 
 export const fetchWaitingRoomVisits = async (): Promise<IProbandVisit[]> =>
   // TODO: get visits from DB
-  dummyVisits.filter((visit) => visit.state === VisitState.NEW);
+  dummyVisits.filter((visit) => [VisitState.NEW, VisitState.FANTOM_NEW].includes(visit.state));
 
 export const fetchRecentVisits = async (): Promise<IProbandVisit[]> =>
   // TODO: get visits from DB

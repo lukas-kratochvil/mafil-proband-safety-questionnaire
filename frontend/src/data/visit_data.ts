@@ -16,6 +16,7 @@ export enum VisitState {
   NEW,
   CHECKED,
   SIGNED,
+  FANTOM_NEW,
   FANTOM_DONE,
 }
 
@@ -121,7 +122,7 @@ export const dummyVisitNew: IProbandVisit = {
 export const dummyFantomVisitNew: IProbandVisit = {
   id: generateId(),
   visitId: "fantom123",
-  state: VisitState.NEW,
+  state: VisitState.FANTOM_NEW,
   pdf: "/dummy.pdf",
   projectInfo: {
     projectId: "",
@@ -182,6 +183,6 @@ export const dummyVisits: IProbandVisit[] = [
   ...createVisits(dummyVisitNew, VisitState.SIGNED, 2),
   dummyFantomVisitNew,
   dummyFantomVisit,
-  ...createVisits(dummyFantomVisit, VisitState.NEW, 1),
+  ...createVisits(dummyFantomVisit, VisitState.FANTOM_NEW, 1),
   ...createVisits(dummyFantomVisit, VisitState.FANTOM_DONE, 2),
 ];

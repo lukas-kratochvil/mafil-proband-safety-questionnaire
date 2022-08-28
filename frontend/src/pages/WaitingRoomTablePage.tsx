@@ -10,7 +10,9 @@ const header = ["Datum registrace", "Proband", "Rodné číslo", "Datum narozen�
 
 const getWaitingRoomRow = (visit: IProbandVisit): string[] => [
   new Date().toDateString(),
-  `${visit.probandInfo.surname}, ${visit.probandInfo.name}`,
+  visit.probandInfo.surname === "" && visit.probandInfo.name === ""
+    ? ""
+    : `${visit.probandInfo.surname}, ${visit.probandInfo.name}`,
   visit.probandInfo.personalId,
   visit.probandInfo.birthdate.toDateString(),
   visit.probandInfo.gender,
