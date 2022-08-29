@@ -25,13 +25,13 @@ export const FormDatePicker = ({ name, label, disabled, maxDate }: IFormDatePick
         <DesktopDatePicker
           value={value}
           onChange={onChange}
+          ref={ref}
           label={label}
           inputFormat="dd/MM/yyyy"
           maxDate={maxDate}
           renderInput={(params) => (
             <TextField
               {...params}
-              inputRef={ref}
               fullWidth
             />
           )}
