@@ -9,7 +9,7 @@ interface IPageTemplateProps {
   isTabPage?: boolean;
 }
 
-export const PageTemplate = ({ children, centerize, isTabPage }: PropsWithChildren<IPageTemplateProps>) => {
+export const PageTemplate = ({ children, centerize, isTabPage: isTablePage }: PropsWithChildren<IPageTemplateProps>) => {
   const { username } = useAuth();
 
   return (
@@ -19,7 +19,7 @@ export const PageTemplate = ({ children, centerize, isTabPage }: PropsWithChildr
       <Stack
         spacing={3}
         sx={{
-          marginX: isTabPage ? "10%" : "20rem",
+          marginX: isTablePage ? "10%" : "20rem",
           marginY: centerize ? undefined : "3rem",
           justifyContent: centerize ? "center" : undefined,
           alignItems: centerize ? "center" : undefined,
