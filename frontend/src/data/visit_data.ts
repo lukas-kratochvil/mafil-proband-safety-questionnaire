@@ -45,9 +45,10 @@ interface IProbandInfo {
   phoneNumber: string; // TODO: this depends whether they want to choose national phone prefix..
 }
 
-interface IAnswer {
+export interface IAnswer {
   questionId: string;
   isYes: boolean;
+  comment: string;
 }
 
 const idCounter = {
@@ -60,6 +61,15 @@ const generateId = (): string => {
   return id;
 };
 
+const loadAnswers = (answers: IAnswer[], visitState: VisitState): IAnswer[] =>
+  answers.map((answer) => ({
+    ...answer,
+    comment:
+      ![VisitState.NEW, VisitState.FANTOM_NEW].includes(visitState) && answer.isYes && answer.comment === ""
+        ? "Komentář"
+        : "",
+  }));
+
 export const createVisit = (initialVisit: IProbandVisit, state: VisitState): IProbandVisit => {
   const newId: string = generateId();
   return {
@@ -69,8 +79,8 @@ export const createVisit = (initialVisit: IProbandVisit, state: VisitState): IPr
     state,
     projectInfo: { ...initialVisit.projectInfo },
     probandInfo: { ...initialVisit.probandInfo },
-    answersPart1: { ...initialVisit.answersPart1 },
-    answersPart2: { ...initialVisit.answersPart2 },
+    answersPart1: { ...loadAnswers(initialVisit.answersPart1, state) },
+    answersPart2: { ...loadAnswers(initialVisit.answersPart2, state) },
   };
 };
 
@@ -116,10 +126,12 @@ export const dummyVisitNew: IProbandVisit = {
   answersPart1: getDummyVisitCurrentQuestions(1).map((question, i) => ({
     questionId: question.id,
     isYes: i % 4 === 3,
+    comment: "",
   })),
   answersPart2: getDummyVisitCurrentQuestions(2).map((question, i) => ({
     questionId: question.id,
     isYes: i % 6 === 0,
+    comment: "",
   })),
 };
 
@@ -154,10 +166,12 @@ export const dummyFantomVisitNew: IProbandVisit = {
   answersPart1: getDummyVisitCurrentQuestions(1).map((question) => ({
     questionId: question.id,
     isYes: false,
+    comment: "",
   })),
   answersPart2: getDummyVisitCurrentQuestions(2).map((question) => ({
     questionId: question.id,
     isYes: false,
+    comment: "",
   })),
 };
 
@@ -176,8 +190,8 @@ export const dummyFantomVisit: IProbandVisit = {
     surname: "Fantom",
     gender: "Jiné",
   },
-  answersPart1: [...dummyFantomVisitNew.answersPart1],
-  answersPart2: [...dummyFantomVisitNew.answersPart2],
+  answersPart1: [...loadAnswers(dummyFantomVisitNew.answersPart1, VisitState.FANTOM_DONE)],
+  answersPart2: [...loadAnswers(dummyFantomVisitNew.answersPart2, VisitState.FANTOM_DONE)],
 };
 
 export const dummyVisits: IProbandVisit[] = [
