@@ -48,7 +48,10 @@ interface IOperatorFormDefaultValuesProps extends IProbandFormDefaultValuesProps
 type FormPropType = IProbandFormDefaultValuesProps | IOperatorFormDefaultValuesProps;
 
 // Autocomplete component default value must be one of the options or null
-const loadProbandFormDefaultValues = (): IProbandFormDefaultValuesProps => ({
+const loadProbandFormDefaultValues = (): IOperatorFormDefaultValuesProps => ({
+  project: null,
+  magnetDevice: null,
+  measurementDate: new Date(),
   name: "",
   surname: "",
   personalId: "",
@@ -65,35 +68,24 @@ const loadProbandFormDefaultValues = (): IProbandFormDefaultValuesProps => ({
 });
 
 // Autocomplete component default value must be one of the options or null
-const loadOperatorFormDefaultValues = (visit: IProbandVisit | undefined): IOperatorFormDefaultValuesProps => {
-  if (visit === undefined) {
-    return {
-      project: null,
-      magnetDevice: null,
-      measurementDate: new Date(),
-      ...loadProbandFormDefaultValues(),
-    };
-  }
-
-  return {
-    project: visit.projectInfo.projectName ?? null,
-    magnetDevice: visit.projectInfo.magnetDeviceName ?? null,
-    measurementDate: visit.projectInfo.measurementDate ?? new Date(),
-    name: visit.probandInfo.name,
-    surname: visit.probandInfo.surname,
-    personalId: visit.probandInfo.personalId,
-    birthdate: visit.probandInfo.birthdate,
-    gender: visit.probandInfo.gender,
-    nativeLanguage: visit.probandInfo.nativeLanguage,
-    height: visit.probandInfo.height,
-    weight: visit.probandInfo.weight,
-    sideDominance: visit.probandInfo.sideDominance,
-    visualCorrection: visit.probandInfo.visualCorrection,
-    visualCorrectionValue: visit.probandInfo.visualCorrectionValue,
-    email: visit.probandInfo.email,
-    phoneNumber: visit.probandInfo.phoneNumber,
-  };
-};
+const loadOperatorFormDefaultValues = (visit: IProbandVisit): IOperatorFormDefaultValuesProps => ({
+  project: visit.projectInfo.projectName ?? null,
+  magnetDevice: visit.projectInfo.magnetDeviceName ?? null,
+  measurementDate: visit.projectInfo.measurementDate ?? new Date(),
+  name: visit.probandInfo.name,
+  surname: visit.probandInfo.surname,
+  personalId: visit.probandInfo.personalId,
+  birthdate: visit.probandInfo.birthdate,
+  gender: visit.probandInfo.gender,
+  nativeLanguage: visit.probandInfo.nativeLanguage,
+  height: visit.probandInfo.height,
+  weight: visit.probandInfo.weight,
+  sideDominance: visit.probandInfo.sideDominance,
+  visualCorrection: visit.probandInfo.visualCorrection,
+  visualCorrectionValue: visit.probandInfo.visualCorrectionValue,
+  email: visit.probandInfo.email,
+  phoneNumber: visit.probandInfo.phoneNumber,
+});
 
 const probandFormSchema = object({
   name: string().trim().required("Jméno musí být vyplněno."),
@@ -187,7 +179,7 @@ export const FormPage = () => {
   const [isError, setIsError] = useState<boolean>(false); // TODO: create ErrorPage
 
   const formMethods = useForm<FormPropType>({
-    defaultValues: username === undefined ? loadProbandFormDefaultValues() : loadOperatorFormDefaultValues(visit),
+    defaultValues: loadProbandFormDefaultValues(),
     resolver: yupResolver(username === undefined ? probandFormSchema : operatorFormSchema),
     // TODO: add this if the validation on onChange event is too slow:
     // reValidateMode: "onSubmit",
