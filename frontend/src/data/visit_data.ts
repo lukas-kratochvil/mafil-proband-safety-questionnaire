@@ -79,8 +79,22 @@ export const createVisit = (initialVisit: IProbandVisit, state: VisitState): IPr
     state,
     projectInfo: { ...initialVisit.projectInfo },
     probandInfo: { ...initialVisit.probandInfo },
-    answersPart1: { ...loadAnswers(initialVisit.answersPart1, state) },
-    answersPart2: { ...loadAnswers(initialVisit.answersPart2, state) },
+    answersPart1: [...loadAnswers(initialVisit.answersPart1, state)],
+    answersPart2: [...loadAnswers(initialVisit.answersPart2, state)],
+  };
+};
+
+export const duplicateVisit = (initialVisit: IProbandVisit): IProbandVisit => {
+  const newId: string = generateId();
+  return {
+    ...initialVisit,
+    id: newId,
+    visitId: `${initialVisit.projectInfo.isFantom ? "fantom" : "visit"}${newId}`,
+    state: initialVisit.projectInfo.isFantom ? VisitState.FANTOM_NEW : VisitState.NEW,
+    projectInfo: { ...initialVisit.projectInfo },
+    probandInfo: { ...initialVisit.probandInfo },
+    answersPart1: [...initialVisit.answersPart1],
+    answersPart2: [...initialVisit.answersPart2],
   };
 };
 

@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { IActionButtonsProps, VisitsTable } from "../components/table/VisitsTable";
-import { createVisit, dummyVisits, IProbandVisit, VisitState } from "../data/visit_data";
+import { dummyVisits, duplicateVisit, IProbandVisit, VisitState } from "../data/visit_data";
 import { fetchRecentVisits, getDummyVisit } from "../util/utils";
 
 const recentVisitsHeader = ["Visit ID", "Proband", "Projekt", "Přístroj", "Zpracováno", "Zpracoval", "Podepsáno"];
@@ -46,10 +46,7 @@ const RecentVisitsActionButtons = ({ visitId }: IActionButtonsProps) => {
           if (initialVisit === undefined) {
             navigate(`/auth/form/${1}`);
           } else {
-            const newVisit = createVisit(
-              initialVisit,
-              initialVisit.projectInfo.isFantom ? VisitState.FANTOM_NEW : VisitState.NEW
-            );
+            const newVisit = duplicateVisit(initialVisit);
             dummyVisits.push(newVisit);
             navigate(`/auth/form/${newVisit.id}`);
           }
