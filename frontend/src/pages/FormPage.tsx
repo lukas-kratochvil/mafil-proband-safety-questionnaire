@@ -192,6 +192,7 @@ export const FormPage = () => {
     // TODO: add this if the validation on onChange event is too slow:
     // reValidateMode: "onSubmit",
   });
+  const { isDirty, isValid } = formMethods.formState;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -348,7 +349,7 @@ export const FormPage = () => {
               variant="contained"
               color="success"
               // TODO: doesn't work, why??
-              // disabled={!formMethods.formState.isValid}
+              // disabled={!isDirty || !isValid}
             >
               {submitButton.title}
             </Button>
