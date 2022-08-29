@@ -23,7 +23,10 @@ import { PageTemplate } from "./PageTemplate";
 
 type TextFieldNumberInput = string | number;
 
-interface IProbandFormDefaultValuesProps {
+interface FormPropType {
+  project: string | null;
+  magnetDevice: string | null;
+  measurementDate: Date | null;
   name: string;
   surname: string;
   personalId: string;
@@ -39,19 +42,11 @@ interface IProbandFormDefaultValuesProps {
   phoneNumber: string;
 }
 
-interface IOperatorFormDefaultValuesProps extends IProbandFormDefaultValuesProps {
-  project: string | null;
-  magnetDevice: string | null;
-  measurementDate: Date | null;
-}
-
-type FormPropType = IProbandFormDefaultValuesProps | IOperatorFormDefaultValuesProps;
-
 // Autocomplete component default value must be one of the options or null
-const loadProbandFormDefaultValues = (): IOperatorFormDefaultValuesProps => ({
+const loadFormDefaultValues = (): FormPropType => ({
   project: null,
   magnetDevice: null,
-  measurementDate: new Date(),
+  measurementDate: null,
   name: "",
   surname: "",
   personalId: "",
@@ -68,7 +63,7 @@ const loadProbandFormDefaultValues = (): IOperatorFormDefaultValuesProps => ({
 });
 
 // Autocomplete component default value must be one of the options or null
-const loadOperatorFormDefaultValues = (visit: IProbandVisit): IOperatorFormDefaultValuesProps => ({
+const loadFormDefaultValuesFromVisit = (visit: IProbandVisit): FormPropType => ({
   project: visit.projectInfo.projectName ?? null,
   magnetDevice: visit.projectInfo.magnetDeviceName ?? null,
   measurementDate: visit.projectInfo.measurementDate ?? new Date(),
@@ -87,7 +82,10 @@ const loadOperatorFormDefaultValues = (visit: IProbandVisit): IOperatorFormDefau
   phoneNumber: visit.probandInfo.phoneNumber,
 });
 
-const probandFormSchema = object({
+const defaultFormSchema = object({
+  project: string().nullable(),
+  magnetDevice: string().nullable(),
+  measurementDate: date().nullable(),
   name: string().trim().required("Jméno musí být vyplněno."),
   surname: string().trim().required("Jméno musí být vyplněno."),
   personalId: string().trim().required("Rodné číslo musí být vyplněno."),
@@ -150,7 +148,7 @@ const probandFormSchema = object({
     .matches(/^$|^(\+|00)?[1-9]{1}[0-9,\s]{3,}$/, "Telefonní číslo není validní."),
 });
 
-const operatorFormSchema = probandFormSchema.shape({
+const operatorFormSchema = defaultFormSchema.shape({
   project: string().nullable().required("Projekt musí být vyplněn."),
   magnetDevice: string().nullable().required("Přístroj magnetické rezonance musí být vyplněný."),
   measurementDate: date().nullable().required("Datum měření musí být vyplněno."),
@@ -179,8 +177,8 @@ export const FormPage = () => {
   const [isError, setIsError] = useState<boolean>(false); // TODO: create ErrorPage
 
   const formMethods = useForm<FormPropType>({
-    defaultValues: loadProbandFormDefaultValues(),
-    resolver: yupResolver(username === undefined ? probandFormSchema : operatorFormSchema),
+    defaultValues: loadFormDefaultValues(),
+    resolver: yupResolver(username === undefined ? defaultFormSchema : operatorFormSchema),
     // TODO: add this if the validation on onChange event is too slow:
     // reValidateMode: "onSubmit",
   });
@@ -215,7 +213,7 @@ export const FormPage = () => {
 
   useEffect(() => {
     if (visit !== undefined) {
-      const defaultValues = loadOperatorFormDefaultValues(visit);
+      const defaultValues = loadFormDefaultValuesFromVisit(visit);
       type DefaultValuesPropertyType = keyof typeof defaultValues;
       Object.keys(defaultValues).forEach((propertyName) => {
         setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
