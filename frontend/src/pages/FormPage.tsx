@@ -192,7 +192,8 @@ export const FormPage = () => {
     // TODO: add this if the validation on onChange event is too slow:
     // reValidateMode: "onSubmit",
   });
-  const { isDirty, isValid } = formMethods.formState;
+  const { handleSubmit, formState, setValue } = formMethods;
+  const { isDirty, isValid } = formState;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -225,13 +226,10 @@ export const FormPage = () => {
       const defaultValues = loadOperatorFormDefaultValues(visit);
       type DefaultValuesPropertyType = keyof typeof defaultValues;
       Object.keys(defaultValues).forEach((propertyName) => {
-        formMethods.setValue(
-          propertyName as DefaultValuesPropertyType,
-          defaultValues[propertyName as DefaultValuesPropertyType]
-        );
+        setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
       });
     }
-  }, [formMethods, visit]);
+  }, [setValue, visit]);
 
   let submitButton: ISubmitButtonProps;
   let buttons: IButtonProps[] = [];
@@ -315,7 +313,7 @@ export const FormPage = () => {
       <FormProvider {...formMethods}>
         <form
           className="visit-form"
-          onSubmit={formMethods.handleSubmit(onSubmit, onError)}
+          onSubmit={handleSubmit(onSubmit, onError)}
         >
           {username === undefined && <FormEntryInfo />}
           {username !== undefined && <FormProjectInfo isFantom={isFantom} />}
