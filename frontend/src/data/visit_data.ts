@@ -1,3 +1,4 @@
+import { AnswerOptionsType } from "../components/form/FormQuestions";
 import { getDummyVisitCurrentQuestions } from "../util/utils";
 import { magnetDevices, projects } from "./form_data";
 
@@ -47,7 +48,7 @@ interface IProbandInfo {
 
 export interface IAnswer {
   questionId: string;
-  isYes: boolean;
+  answer: AnswerOptionsType;
   comment: string;
 }
 
@@ -65,7 +66,7 @@ const loadAnswers = (answers: IAnswer[], visitState: VisitState): IAnswer[] =>
   answers.map((answer) => ({
     ...answer,
     comment:
-      ![VisitState.NEW, VisitState.FANTOM_NEW].includes(visitState) && answer.isYes && answer.comment === ""
+      ![VisitState.NEW, VisitState.FANTOM_NEW].includes(visitState) && answer.answer === "yes" && answer.comment === ""
         ? "Komentář"
         : "",
   }));
@@ -139,12 +140,12 @@ export const dummyVisitNew: IProbandVisit = {
   },
   answersPart1: getDummyVisitCurrentQuestions(1).map((question, i) => ({
     questionId: question.id,
-    isYes: i % 4 === 3,
+    answer: i % 4 === 3 ? "yes" : "no",
     comment: "",
   })),
   answersPart2: getDummyVisitCurrentQuestions(2).map((question, i) => ({
     questionId: question.id,
-    isYes: i % 6 === 0,
+    answer: i % 6 === 0 ? "yes" : "no",
     comment: "",
   })),
 };
@@ -179,12 +180,12 @@ export const dummyFantomVisitNew: IProbandVisit = {
   },
   answersPart1: getDummyVisitCurrentQuestions(1).map((question) => ({
     questionId: question.id,
-    isYes: false,
+    answer: "no",
     comment: "",
   })),
   answersPart2: getDummyVisitCurrentQuestions(2).map((question) => ({
     questionId: question.id,
-    isYes: false,
+    answer: "no",
     comment: "",
   })),
 };

@@ -1,23 +1,36 @@
 import { Grid, Stack, TextField, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import { Controller, useWatch } from "react-hook-form";
 import { IQuestionData } from "../../data/question_data";
+import { IAnswer } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
+import { fetchQuestion } from "../../util/utils";
 import { FormCard } from "./FormCard";
 import { FormRadioGroup } from "./inputs/FormRadioGroup";
 
 interface IQuestionProps {
-  question: IQuestionData;
+  index: number;
+  qac: IAnswer;
   disabled: boolean;
 }
 
-enum RadioGroupOptions {
-  YES = "YES",
-  NO = "NO",
-}
+export type AnswerOptionsType = "yes" | "no" | undefined;
 
-const Question = ({ question, disabled }: IQuestionProps) => {
+const Question = ({ index, qac, disabled }: IQuestionProps) => {
   const { username } = useAuth();
-  const questionAnswer = useWatch({ name: question.id });
+  const [question, setQuestion] = useState<IQuestionData>();
+  const questionAnswer = useWatch({
+    name: `answersPart${question?.partNumber}[${index}].answer`, // TODO: load the question earlier
+    defaultValue: qac.answer,
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setQuestion(await fetchQuestion(qac.questionId));
+    };
+
+    fetchData();
+  }, [qac.questionId]);
 
   return (
     <Stack
@@ -34,36 +47,39 @@ const Question = ({ question, disabled }: IQuestionProps) => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Typography width="80%">{question.text}</Typography>
+        <Typography width="80%">{question?.text}</Typography>
         <FormRadioGroup
-          name={question.id}
-          label={`Question: ${question.id}`}
+          name={`answersPart${question?.partNumber}[${index}].answer`}
+          label={`Question: ${qac.questionId}`}
+          defaultValue={qac.answer}
           radios={[
             {
-              id: `yes-radio[${question.id}]`,
+              id: `yes-radio[${qac.questionId}]`,
               label: "Ano",
-              value: RadioGroupOptions.YES,
+              value: "yes",
             },
             {
-              id: `no-radio[${question.id}]`,
+              id: `no-radio[${qac.questionId}]`,
               label: "Ne",
-              value: RadioGroupOptions.NO,
+              value: "no",
             },
           ]}
           disabled={disabled}
         />
       </Grid>
-      {username !== undefined && questionAnswer === RadioGroupOptions.YES && (
+      {username !== undefined && questionAnswer === "yes" && (
         <Controller
-          name={`${question.id}-comment`}
-          render={({ field }) => (
+          name={`answersPart${question?.partNumber}[${index}].comment`}
+          render={({ field: { value, onChange, ref } }) => (
             <TextField
-              {...field}
               label="Komentář"
+              value={value}
+              onChange={onChange}
+              inputRef={ref}
               variant="standard"
               size="small"
               multiline
-              required
+              disabled={disabled}
             />
           )}
         />
@@ -74,11 +90,11 @@ const Question = ({ question, disabled }: IQuestionProps) => {
 
 interface IFormQuestionsProps {
   title: string;
-  questions: IQuestionData[];
+  qacs: IAnswer[];
   isAuthEditing: boolean;
 }
 
-export const FormQuestions = ({ title, questions, isAuthEditing }: IFormQuestionsProps) => {
+export const FormQuestions = ({ title, qacs, isAuthEditing }: IFormQuestionsProps) => {
   const { username } = useAuth();
 
   return (
@@ -87,10 +103,11 @@ export const FormQuestions = ({ title, questions, isAuthEditing }: IFormQuestion
         spacing={username === undefined ? "0.5rem" : "1rem"}
         minWidth="100%"
       >
-        {questions.map((question) => (
+        {qacs.map((qac, index) => (
           <Question
-            key={question.id}
-            question={question}
+            key={qac.questionId}
+            index={index}
+            qac={qac}
             disabled={!isAuthEditing}
           />
         ))}

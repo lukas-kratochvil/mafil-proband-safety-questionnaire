@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { rodnecislo } from "rodnecislo";
-import { date, number, object, string } from "yup";
+import { array, date, number, object, string } from "yup";
 import { FormBeforeExamination } from "../components/form/FormBeforeExamination";
 import { FormEntryInfo } from "../components/form/FormEntryInfo";
 import { FormExaminationConsent } from "../components/form/FormExaminationConsent";
@@ -14,8 +14,7 @@ import { FormProbandInfo } from "../components/form/FormProbandInfo";
 import { FormProjectInfo } from "../components/form/FormProjectInfo";
 import { FormQuestions } from "../components/form/FormQuestions";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
-import { IQuestionData } from "../data/question_data";
-import { IProbandVisit, VisitState } from "../data/visit_data";
+import { IAnswer, IProbandVisit, VisitState } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
 import "../styles/style.css";
 import { fetchCurrentQuestions, fetchVisit, updateDummyVisitState } from "../util/utils";
@@ -40,6 +39,8 @@ interface FormPropType {
   visualCorrectionValue: TextFieldNumberInput;
   email: string;
   phoneNumber: string;
+  answersPart1: IAnswer[];
+  answersPart2: IAnswer[];
 }
 
 // Autocomplete component default value must be one of the options or null
@@ -60,6 +61,8 @@ const loadFormDefaultValues = (): FormPropType => ({
   visualCorrectionValue: 0,
   email: "",
   phoneNumber: "",
+  answersPart1: [],
+  answersPart2: [],
 });
 
 // Autocomplete component default value must be one of the options or null
@@ -80,6 +83,14 @@ const loadFormDefaultValuesFromVisit = (visit: IProbandVisit): FormPropType => (
   visualCorrectionValue: visit.probandInfo.visualCorrectionValue,
   email: visit.probandInfo.email,
   phoneNumber: visit.probandInfo.phoneNumber,
+  answersPart1: visit.answersPart1,
+  answersPart2: visit.answersPart2,
+});
+
+const answersSchema = object({
+  questionId: string().trim().required(),
+  answer: string().required(),
+  comment: string().nullable(),
 });
 
 const defaultFormSchema = object({
@@ -146,12 +157,25 @@ const defaultFormSchema = object({
   phoneNumber: string()
     .trim()
     .matches(/^$|^(\+|00)?[1-9]{1}[0-9,\s]{3,}$/, "Telefonní číslo není validní."),
+  answersPart1: array().of(answersSchema).required(),
+  answersPart2: array().of(answersSchema).required(),
+});
+
+const operatorAnswersSchema = answersSchema.shape({
+  comment: string()
+    .default("")
+    .when("answer", {
+      is: "yes",
+      then: string().required("Komentář musí být vyplněn."),
+    }),
 });
 
 const operatorFormSchema = defaultFormSchema.shape({
   project: string().nullable().required("Projekt musí být vyplněn."),
   magnetDevice: string().nullable().required("Přístroj magnetické rezonance musí být vyplněný."),
   measurementDate: date().nullable().required("Datum měření musí být vyplněno."),
+  answersPart1: array().of(operatorAnswersSchema).required(),
+  answersPart2: array().of(operatorAnswersSchema).required(),
 });
 
 interface ISubmitButtonProps {
@@ -168,9 +192,9 @@ export const FormPage = () => {
   const navigate = useNavigate();
   const { username } = useAuth();
   const { id } = useParams();
-  const [visit, setVisit] = useState<IProbandVisit | undefined>(undefined);
-  const [questions1, setQuestions1] = useState<IQuestionData[]>([]);
-  const [questions2, setQuestions2] = useState<IQuestionData[]>([]);
+  const [visit, setVisit] = useState<IProbandVisit | undefined>();
+  const [answersPart1, setAnswersPart1] = useState<IAnswer[]>([]);
+  const [answersPart2, setAnswersPart2] = useState<IAnswer[]>([]);
   const [isFantom, setIsFantom] = useState<boolean>(false);
   const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
@@ -182,26 +206,41 @@ export const FormPage = () => {
     // TODO: add this if the validation on onChange event is too slow:
     // reValidateMode: "onSubmit",
   });
-  const { handleSubmit, formState, setValue } = formMethods;
+  const { formState, handleSubmit, setValue } = formMethods;
   const { isDirty, isValid } = formState;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const visitResponse = id === undefined ? undefined : fetchVisit(id);
-        const questions1Response = fetchCurrentQuestions(1);
-        const questions2Response = fetchCurrentQuestions(2);
+        const fetchedVisit = id === undefined ? undefined : await fetchVisit(id);
 
-        const fetchedVisit = await visitResponse;
-        setVisit(fetchedVisit);
-
-        if (fetchedVisit !== undefined) {
+        if (fetchedVisit === undefined) {
+          console.log("FETCHING DEFAULT QUESTIONS");
+          const questionsPart1 = await fetchCurrentQuestions(1);
+          setAnswersPart1(
+            questionsPart1.map((question) => ({
+              questionId: question.id,
+              answer: undefined,
+              comment: "",
+            }))
+          );
+          const questionsPart2 = await fetchCurrentQuestions(2);
+          setAnswersPart2(
+            questionsPart2.map((question) => ({
+              questionId: question.id,
+              answer: undefined,
+              comment: "",
+            }))
+          );
+        } else {
           setIsFantom(fetchedVisit.projectInfo.isFantom);
           setIsAuthEditing(fetchedVisit.projectInfo.isFantom);
+          console.log("FETCHING QUESTIONS FROM THE VISIT");
+          setAnswersPart1(fetchedVisit.answersPart1);
+          setAnswersPart2(fetchedVisit.answersPart2);
+          setVisit(fetchedVisit);
         }
 
-        setQuestions1(await questions1Response);
-        setQuestions2(await questions2Response);
         setIsLoading(false);
       } catch (e) {
         setIsError(true);
@@ -212,14 +251,22 @@ export const FormPage = () => {
   }, [id]);
 
   useEffect(() => {
-    if (visit !== undefined) {
+    if (visit === undefined) {
+      answersPart1.forEach((answer, i) => setValue(`answersPart1.${i}`, answer));
+      answersPart2.forEach((answer, i) => setValue(`answersPart2.${i}`, answer));
+    } else {
+      console.log("SETTING DEFAULT VALUES");
       const defaultValues = loadFormDefaultValuesFromVisit(visit);
       type DefaultValuesPropertyType = keyof typeof defaultValues;
       Object.keys(defaultValues).forEach((propertyName) => {
         setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
+        console.log(
+          propertyName as DefaultValuesPropertyType,
+          defaultValues[propertyName as DefaultValuesPropertyType]
+        );
       });
     }
-  }, [setValue, visit]);
+  }, [answersPart1, answersPart2, setValue, visit]);
 
   let submitButton: ISubmitButtonProps;
   let buttons: IButtonProps[] = [];
@@ -314,12 +361,12 @@ export const FormPage = () => {
             <>
               <FormQuestions
                 title="Část 1"
-                questions={questions1}
+                qacs={answersPart1}
                 isAuthEditing={username === undefined || isAuthEditing}
               />
               <FormQuestions
                 title="Část 2"
-                questions={questions2}
+                qacs={answersPart2}
                 isAuthEditing={username === undefined || isAuthEditing}
               />
             </>

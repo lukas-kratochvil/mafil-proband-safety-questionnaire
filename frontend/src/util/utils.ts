@@ -1,5 +1,5 @@
 import { IQuestionData, QuestionPartNumber, questions } from "../data/question_data";
-import { dummyVisits, IProbandVisit, VisitState } from "../data/visit_data";
+import { dummyVisits, IAnswer, IProbandVisit, VisitState } from "../data/visit_data";
 
 // TODO: get visits from DB
 export const fetchVisit = async (visitId: string | undefined): Promise<IProbandVisit | undefined> =>
@@ -16,6 +16,10 @@ export const fetchRecentVisits = async (): Promise<IProbandVisit[]> =>
 // TODO: get questions from DB
 export const fetchCurrentQuestions = async (partNumber: QuestionPartNumber): Promise<IQuestionData[]> =>
   questions.filter((question) => question.partNumber === partNumber && question.isValid);
+
+// TODO: get questions from DB
+export const fetchAnswerQuestions = async (answers: IAnswer[]): Promise<IQuestionData[]> =>
+  answers.map((answer) => questions.filter((question) => question.id === answer.questionId)[0]);
 
 // TODO: get question from DB
 export const fetchQuestion = async (questionId: string): Promise<IQuestionData | undefined> =>

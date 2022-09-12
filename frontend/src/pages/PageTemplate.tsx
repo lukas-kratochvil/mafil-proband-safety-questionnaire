@@ -9,7 +9,11 @@ interface IPageTemplateProps {
   isTabPage?: boolean;
 }
 
-export const PageTemplate = ({ children, centerize, isTabPage: isTablePage }: PropsWithChildren<IPageTemplateProps>) => {
+export const PageTemplate = ({
+  children,
+  centerize,
+  isTabPage: isTablePage,
+}: PropsWithChildren<IPageTemplateProps>) => {
   const { username } = useAuth();
 
   return (

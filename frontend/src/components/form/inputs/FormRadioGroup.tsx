@@ -10,12 +10,13 @@ export interface IRadioProps {
 
 interface IFormRadioGroupProps extends IFormDefaultInputProps {
   radios: IRadioProps[];
+  defaultValue?: string;
 }
 
-export const FormRadioGroup = ({ name, disabled, radios }: IFormRadioGroupProps) => (
+export const FormRadioGroup = ({ name, disabled, radios, defaultValue }: IFormRadioGroupProps) => (
   <Controller
     name={name}
-    defaultValue={null} // TODO: load through defaultValues in the useForm()
+    defaultValue={defaultValue ?? null} // TODO: load through defaultValues in the useForm()
     render={({ field: { value, onChange } }) => (
       <RadioGroup
         value={value}
