@@ -206,7 +206,7 @@ export const FormPage = () => {
     // TODO: add this if the validation on onChange event is too slow:
     // reValidateMode: "onSubmit",
   });
-  const { formState, handleSubmit, setValue } = formMethods;
+  const { formState, handleSubmit, reset, setValue } = formMethods;
   const { isDirty, isValid } = formState;
 
   useEffect(() => {
@@ -301,7 +301,7 @@ export const FormPage = () => {
       {
         title: "Zrušit",
         onClick: () => {
-          // TODO: discard changes and show the original data
+          reset();
           setIsAuthEditing(false);
         },
       },
