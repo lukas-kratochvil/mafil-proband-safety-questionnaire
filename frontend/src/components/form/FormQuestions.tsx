@@ -22,7 +22,7 @@ const Question = ({ index, partNumber, qac, disabled }: IQuestionProps) => {
   const { username } = useAuth();
   const [question, setQuestion] = useState<IQuestionData>();
   const questionAnswer = useWatch({
-    name: `answersPart${partNumber}[${index}].answer`, // TODO: load the question earlier
+    name: `answersPart${partNumber}[${index}].answer`,
     defaultValue: qac.answer,
   });
 

@@ -283,7 +283,6 @@ export const FormPage = () => {
       },
     };
   } else if (isFantom) {
-    // TODO: disable when personal info and comments to Yes/No questions are not filled in
     submitButton = {
       title: "Finalizovat",
       onClick: (data: FormPropType) => {
@@ -310,7 +309,6 @@ export const FormPage = () => {
       },
     ];
   } else {
-    // TODO: disable when personal info and comments to Yes/No questions are not filled in
     submitButton = {
       title: "Finalizovat",
       onClick: (data: FormPropType) => {
@@ -342,7 +340,7 @@ export const FormPage = () => {
     submitButton.onClick(data);
   };
 
-  // TODO: edit 'errors' data type
+  // TODO: DELETE - only for development purposes
   const onError = (errors: unknown) => {
     console.log("Error:");
     console.log(errors);
@@ -388,7 +386,7 @@ export const FormPage = () => {
               type="submit"
               variant="contained"
               color="success"
-              // TODO: doesn't work, why??
+              // TODO: doesn't work, why?? Should disable submit button when form isn't correctly filled
               // disabled={!isDirty || !isValid}
             >
               {submitButton.title}
