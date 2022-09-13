@@ -1,19 +1,23 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { Typography } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 
 interface IErrorFeedbackProps {
   name: string;
 }
 
-export const ErrorFeedback = ({ name }: IErrorFeedbackProps) => (
-  <ErrorMessage
-    name={name}
-    as={
-      <Typography
-        color="red"
-        fontSize="1rem"
-        paddingX="0.5rem"
-      />
-    }
-  />
-);
+export const ErrorFeedback = ({ name }: IErrorFeedbackProps) => {
+  const theme = useTheme();
+
+  return (
+    <ErrorMessage
+      name={name}
+      as={
+        <Typography
+          color={theme.palette.error.main}
+          fontSize="1rem"
+          paddingX="0.5rem"
+        />
+      }
+    />
+  )
+};
