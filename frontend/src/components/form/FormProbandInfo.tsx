@@ -1,4 +1,5 @@
 import { Divider, Grid, Typography } from "@mui/material";
+import { isValid } from "date-fns";
 import { useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { rodnecislo } from "rodnecislo";
@@ -19,6 +20,8 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
   const { username } = useAuth();
   const { resetField, setValue } = useFormContext();
   const personalIdValue = useWatch({ name: "personalId" });
+  const birthdateValue = useWatch({ name: "birthdate" });
+  const genderValue = useWatch({ name: "gender" });
   const visualCorrectionAnswer = useWatch({ name: "visualCorrection" });
 
   useEffect(() => {
@@ -34,6 +37,16 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
       }
     }
   }, [setValue, personalIdValue]);
+
+  useEffect(() => {
+    if (personalIdValue === "" && isValid(birthdateValue) && genderValue !== null) {
+      const year = birthdateValue.getFullYear();
+      const month = birthdateValue.getMonth() + 1;
+      const day = genderValue === "Žena" ? birthdateValue.getDate() + 50 : birthdateValue.getDate();
+
+      setValue("personalId", `${year % 100}${month < 10 ? `0${month}` : month}${day < 10 ? `0${day}` : day}`);
+    }
+  }, [setValue, birthdateValue, genderValue, personalIdValue]);
 
   useEffect(() => {
     if (visualCorrectionAnswer !== "Ano") {

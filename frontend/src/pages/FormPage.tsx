@@ -388,8 +388,8 @@ export const FormPage = () => {
               type="submit"
               variant="contained"
               color="success"
-            // TODO: doesn't work, why?? Should disable submit button when form isn't correctly filled
-            // disabled={!isDirty || !isValid}
+              // TODO: doesn't work, why?? Should disable submit button when form isn't correctly filled
+              // disabled={!isDirty || !isValid}
             >
               {submitButton.title}
             </Button>
