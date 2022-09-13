@@ -31,6 +31,8 @@ const LanguageItem = ({ name, label, Flag }: ILanguageItemProps) => (
   </Tooltip>
 );
 
+const paperBgColor = "rgb(250, 200, 200)";
+
 export const LanguageMenu = () => {
   const popupState = usePopupState({
     variant: "popover",
@@ -62,7 +64,7 @@ export const LanguageMenu = () => {
             overflow: "visible",
             filter: "drop-shadow(0 0.25rem 0.5rem rgba(0, 0, 0, 0.32))",
             mt: 1.5,
-            backgroundColor: "pink",
+            backgroundColor: paperBgColor,
             "&:before": {
               content: '""',
               display: "block",
@@ -71,7 +73,7 @@ export const LanguageMenu = () => {
               right: "1rem",
               width: "0.65rem",
               height: "0.65rem",
-              bgcolor: "pink",
+              bgcolor: paperBgColor,
               transform: "translateY(-50%) rotate(45deg)",
               zIndex: 0,
             },
