@@ -1,7 +1,7 @@
 import { Grid, Stack, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Controller, useWatch } from "react-hook-form";
-import { IQuestionData } from "../../data/question_data";
+import { IQuestionData, QuestionPartNumber } from "../../data/question_data";
 import { IAnswer } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { fetchQuestion } from "../../util/utils";
@@ -10,17 +10,18 @@ import { FormRadioGroup } from "./inputs/FormRadioGroup";
 
 interface IQuestionProps {
   index: number;
+  partNumber: QuestionPartNumber;
   qac: IAnswer;
   disabled: boolean;
 }
 
 export type AnswerOptionsType = "yes" | "no" | undefined;
 
-const Question = ({ index, qac, disabled }: IQuestionProps) => {
+const Question = ({ index, partNumber, qac, disabled }: IQuestionProps) => {
   const { username } = useAuth();
   const [question, setQuestion] = useState<IQuestionData>();
   const questionAnswer = useWatch({
-    name: `answersPart${question?.partNumber}[${index}].answer`, // TODO: load the question earlier
+    name: `answersPart${partNumber}[${index}].answer`, // TODO: load the question earlier
     defaultValue: qac.answer,
   });
 
@@ -49,7 +50,7 @@ const Question = ({ index, qac, disabled }: IQuestionProps) => {
       >
         <Typography width="80%">{question?.text}</Typography>
         <FormRadioGroup
-          name={`answersPart${question?.partNumber}[${index}].answer`}
+          name={`answersPart${partNumber}[${index}].answer`}
           label={`Question: ${qac.questionId}`}
           defaultValue={qac.answer}
           radios={[
@@ -69,7 +70,7 @@ const Question = ({ index, qac, disabled }: IQuestionProps) => {
       </Grid>
       {username !== undefined && questionAnswer === "yes" && (
         <Controller
-          name={`answersPart${question?.partNumber}[${index}].comment`}
+          name={`answersPart${partNumber}[${index}].comment`}
           render={({ field: { value, onChange, ref } }) => (
             <TextField
               label="Komentář"
@@ -90,11 +91,12 @@ const Question = ({ index, qac, disabled }: IQuestionProps) => {
 
 interface IFormQuestionsProps {
   title: string;
+  partNumber: QuestionPartNumber;
   qacs: IAnswer[];
   isAuthEditing: boolean;
 }
 
-export const FormQuestions = ({ title, qacs, isAuthEditing }: IFormQuestionsProps) => {
+export const FormQuestions = ({ title, partNumber, qacs, isAuthEditing }: IFormQuestionsProps) => {
   const { username } = useAuth();
 
   return (
@@ -107,6 +109,7 @@ export const FormQuestions = ({ title, qacs, isAuthEditing }: IFormQuestionsProp
           <Question
             key={qac.questionId}
             index={index}
+            partNumber={partNumber}
             qac={qac}
             disabled={!isAuthEditing}
           />

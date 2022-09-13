@@ -361,11 +361,13 @@ export const FormPage = () => {
             <>
               <FormQuestions
                 title="Část 1"
+                partNumber={1}
                 qacs={answersPart1}
                 isAuthEditing={username === undefined || isAuthEditing}
               />
               <FormQuestions
                 title="Část 2"
+                partNumber={2}
                 qacs={answersPart2}
                 isAuthEditing={username === undefined || isAuthEditing}
               />
