@@ -21,7 +21,7 @@ const LanguageItem = ({ name, label, Flag }: ILanguageItemProps) => (
       sx={{
         "&:hover": {
           backgroundColor: langHoverBgColor,
-        }
+        },
       }}
     >
       <Avatar

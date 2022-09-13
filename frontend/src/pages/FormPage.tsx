@@ -96,12 +96,13 @@ const answersSchema = object({
 const defaultFormSchema = object({
   project: string().nullable(),
   magnetDevice: string().nullable(),
-  measurementDate: date().nullable(),
+  measurementDate: date().typeError("Datum není validní.").nullable(),
   name: string().trim().required("Jméno musí být vyplněno."),
   surname: string().trim().required("Jméno musí být vyplněno."),
   personalId: string().trim().required("Rodné číslo musí být vyplněno."),
   birthdate: date()
     .nullable()
+    .typeError("Datum není validní.")
     .max(new Date(), "Maximální povolená hodnota pro datum narození je dnes.")
     .test({
       name: "birthdate-corresponds-to-personalId",
@@ -145,6 +146,7 @@ const defaultFormSchema = object({
   visualCorrection: string().nullable().required("Zraková korekce musí být vyplněna."),
   visualCorrectionValue: number()
     .default(0)
+    .typeError("Hodnota zrakové korekce není validní.")
     .when("visualCorrection", {
       is: "Ano", // TODO: make enum
       then: number()
@@ -386,8 +388,8 @@ export const FormPage = () => {
               type="submit"
               variant="contained"
               color="success"
-              // TODO: doesn't work, why?? Should disable submit button when form isn't correctly filled
-              // disabled={!isDirty || !isValid}
+            // TODO: doesn't work, why?? Should disable submit button when form isn't correctly filled
+            // disabled={!isDirty || !isValid}
             >
               {submitButton.title}
             </Button>
