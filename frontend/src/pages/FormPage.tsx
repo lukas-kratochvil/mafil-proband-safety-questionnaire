@@ -89,7 +89,7 @@ const loadFormDefaultValuesFromVisit = (visit: IProbandVisit): FormPropType => (
 
 const answersSchema = object({
   questionId: string().trim().required(),
-  answer: string().required(),
+  answer: string().required("Odpoveď na bezpečnostní otázku je povinná."),
   comment: string().nullable(),
 });
 
@@ -174,8 +174,8 @@ const operatorFormSchema = defaultFormSchema.shape({
   project: string().nullable().required("Projekt musí být vyplněn."),
   magnetDevice: string().nullable().required("Přístroj magnetické rezonance musí být vyplněný."),
   measurementDate: date().nullable().required("Datum měření musí být vyplněno."),
-  answersPart1: array().of(operatorAnswersSchema).required(),
-  answersPart2: array().of(operatorAnswersSchema).required(),
+  answersPart1: array().of(operatorAnswersSchema).required("Všechny bezpečnostní otázky v části 1 musí být zodpovězeny."),
+  answersPart2: array().of(operatorAnswersSchema).required("Všechny bezpečnostní otázky v části 2 musí být zodpovězeny."),
 });
 
 interface ISubmitButtonProps {

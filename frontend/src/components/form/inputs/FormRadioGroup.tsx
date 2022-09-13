@@ -28,12 +28,7 @@ export const FormRadioGroup = ({ name, disabled, radios, defaultValue }: IFormRa
             label={radio.label}
             value={radio.value}
             key={radio.id}
-            control={
-              <Radio
-                required
-                disabled={disabled}
-              />
-            }
+            control={<Radio disabled={disabled} />}
           />
         ))}
       </RadioGroup>

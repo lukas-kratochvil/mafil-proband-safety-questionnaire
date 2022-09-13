@@ -5,6 +5,7 @@ import { IQuestionData, QuestionPartNumber } from "../../data/question_data";
 import { IAnswer } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { fetchQuestion } from "../../util/utils";
+import { ErrorFeedback } from "./ErrorFeedback";
 import { FormCard } from "./FormCard";
 import { FormRadioGroup } from "./inputs/FormRadioGroup";
 
@@ -67,23 +68,27 @@ const Question = ({ index, partNumber, qac, disabled }: IQuestionProps) => {
           ]}
           disabled={disabled}
         />
+        <ErrorFeedback name={`answersPart${partNumber}[${index}].answer`} />
       </Grid>
       {username !== undefined && questionAnswer === "yes" && (
-        <Controller
-          name={`answersPart${partNumber}[${index}].comment`}
-          render={({ field: { value, onChange, ref } }) => (
-            <TextField
-              label="Komentář"
-              value={value}
-              onChange={onChange}
-              inputRef={ref}
-              variant="standard"
-              size="small"
-              multiline
-              disabled={disabled}
-            />
-          )}
-        />
+        <>
+          <Controller
+            name={`answersPart${partNumber}[${index}].comment`}
+            render={({ field: { value, onChange, ref } }) => (
+              <TextField
+                label="Komentář"
+                value={value}
+                onChange={onChange}
+                inputRef={ref}
+                variant="standard"
+                size="small"
+                multiline
+                disabled={disabled}
+              />
+            )}
+          />
+          <ErrorFeedback name={`answersPart${partNumber}[${index}].comment`} />
+        </>
       )}
     </Stack>
   );
