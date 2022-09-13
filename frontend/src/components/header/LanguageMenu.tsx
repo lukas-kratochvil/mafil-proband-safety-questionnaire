@@ -4,6 +4,9 @@ import { FlagComponent } from "country-flag-icons/react/3x2";
 import { bindMenu, bindTrigger, usePopupState } from "material-ui-popup-state/hooks";
 import { languages } from "../../data/header_data";
 
+const paperBgColor = "#fac8c8";
+const langHoverBgColor = "#e8b5b5";
+
 export interface ILanguageItemProps {
   name: string;
   label: string;
@@ -15,6 +18,11 @@ const LanguageItem = ({ name, label, Flag }: ILanguageItemProps) => (
     <Button
       size="small"
       onClick={() => alert("Funkcionalita bude brzy naimplementována.")}
+      sx={{
+        "&:hover": {
+          backgroundColor: langHoverBgColor,
+        }
+      }}
     >
       <Avatar
         alt={label}
@@ -30,8 +38,6 @@ const LanguageItem = ({ name, label, Flag }: ILanguageItemProps) => (
     </Button>
   </Tooltip>
 );
-
-const paperBgColor = "rgb(250, 200, 200)";
 
 export const LanguageMenu = () => {
   const popupState = usePopupState({
