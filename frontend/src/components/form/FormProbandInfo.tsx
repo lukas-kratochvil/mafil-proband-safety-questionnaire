@@ -200,7 +200,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             endAdornmentLabel={
               <>
                 <Typography sx={{ marginRight: "0.75rem" }}>D</Typography>
-                <InfoTooltip text="Kladné dioptrie značí dalekozrakost, kdy jedinec vidí hůře na blízko. Naopak záporné dioptrie značí krátkozrakost, kdy jedinec vidí hůře na dálku." />
+                <InfoTooltip text="Kladné dioptrie značí dalekozrakost, což znamená, že vidíte hůře na blízko. Naopak záporné dioptrie značí krátkozrakost, tedy vidíte hůře na dálku." />
               </>
             }
           />
