@@ -255,17 +255,16 @@ export const FormPage = () => {
   }, [id]);
 
   useEffect(() => {
-    if (visit === undefined) {
-      answersPart1.forEach((answer, i) => setValue(`answersPart1.${i}`, answer));
-      answersPart2.forEach((answer, i) => setValue(`answersPart2.${i}`, answer));
-    } else {
+    if (visit !== undefined) {
       console.log("SETTING DEFAULT VALUES");
       const defaultValues = loadFormDefaultValuesFromVisit(visit);
       type DefaultValuesPropertyType = keyof typeof defaultValues;
       Object.keys(defaultValues).forEach((propertyName) => {
         setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
         console.log(
+          "-->",
           propertyName as DefaultValuesPropertyType,
+          ":",
           defaultValues[propertyName as DefaultValuesPropertyType]
         );
       });
