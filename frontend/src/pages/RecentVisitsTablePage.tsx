@@ -2,7 +2,8 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { IActionButtonsProps, VisitsTable } from "../components/table/VisitsTable";
 import { dummyVisits, duplicateVisit, IVisit, VisitState } from "../data/visit_data";
-import { fetchRecentVisits, getDummyVisit } from "../util/utils";
+import { fetchRecentVisits } from "../util/utils";
+import { getDummyVisit } from "../util/utils.dev";
 
 const recentVisitsHeader = ["Visit ID", "Proband", "Projekt", "Přístroj", "Zpracováno", "Zpracoval", "Podepsáno"];
 

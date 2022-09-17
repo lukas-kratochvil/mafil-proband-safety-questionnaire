@@ -17,7 +17,8 @@ import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
 import { IQac, IVisit, VisitState } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
 import "../styles/style.css";
-import { fetchCurrentQuestions, fetchVisit, updateDummyVisitState } from "../util/utils";
+import { fetchCurrentQuestions, fetchVisit } from "../util/utils";
+import { updateDummyVisitState } from "../util/utils.dev";
 import { PageTemplate } from "./PageTemplate";
 
 type TextFieldNumberInput = string | number;

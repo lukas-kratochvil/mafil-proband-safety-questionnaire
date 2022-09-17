@@ -23,22 +23,3 @@ export const fetchAnswerQuestions = async (answers: IQac[]): Promise<IQuestionDa
 // TODO: get question from DB
 export const fetchQuestion = async (questionId: string): Promise<IQuestionData | undefined> =>
   questions.find((question) => question.id === questionId);
-
-/**
- * TODO: functions below must be deleted!
- */
-
-// TODO: get visits from DB
-export const getDummyVisit = (visitId: string | undefined): IVisit | undefined =>
-  dummyVisits.find((visit) => visit.id === visitId);
-
-// TODO: delete this method
-export const getDummyVisitCurrentQuestions = (): IQuestionData[] => questions;
-
-export const updateDummyVisitState = (visitId: string | undefined, newState: VisitState): void => {
-  const visit = getDummyVisit(visitId);
-
-  if (visit !== undefined) {
-    visit.state = newState;
-  }
-};

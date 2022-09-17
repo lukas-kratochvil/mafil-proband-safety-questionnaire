@@ -1,5 +1,5 @@
 import { AnswerOptionsType } from "../components/form/FormQuestions";
-import { getDummyVisitCurrentQuestions } from "../util/utils";
+import { getDummyVisitCurrentQuestions } from "../util/utils.dev";
 import { magnetDevices, projects } from "./form_data";
 import { QuestionPartNumber } from "./question_data";
 
