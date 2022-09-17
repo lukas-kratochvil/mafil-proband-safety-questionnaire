@@ -79,7 +79,6 @@ const Question = ({ index, qac, disabled }: IQuestionProps) => {
                 value={value}
                 onChange={onChange}
                 inputRef={ref}
-                variant="standard"
                 size="small"
                 multiline
                 disabled={disabled}

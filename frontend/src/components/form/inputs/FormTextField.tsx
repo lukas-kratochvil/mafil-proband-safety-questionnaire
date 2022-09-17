@@ -16,7 +16,6 @@ export const FormTextField = ({ name, label, disabled, endAdornmentLabel }: IFor
         value={value}
         onChange={onChange}
         inputRef={ref}
-        variant="outlined"
         fullWidth
         disabled={disabled}
         InputProps={{
