@@ -4,7 +4,6 @@ export interface IQuestionData {
   id: string;
   text: string;
   partNumber: QuestionPartNumber;
-  isValid: boolean;
 }
 
 const questions1 = [
@@ -39,7 +38,6 @@ const createQuestions = (questions: string[], partNumber: QuestionPartNumber): I
       id: `p${partNumber}q${index + 1 < 10 ? `0${index + 1}` : `${index + 1}`}`,
       text,
       partNumber,
-      isValid: true,
     })
   );
 

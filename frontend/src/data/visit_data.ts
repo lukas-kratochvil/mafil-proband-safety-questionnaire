@@ -1,6 +1,7 @@
 import { AnswerOptionsType } from "../components/form/FormQuestions";
 import { getDummyVisitCurrentQuestions } from "../util/utils";
 import { magnetDevices, projects } from "./form_data";
+import { QuestionPartNumber } from "./question_data";
 
 export interface IProbandVisit {
   id: string;
@@ -9,8 +10,7 @@ export interface IProbandVisit {
   pdf: string;
   projectInfo: IProjectInfo;
   probandInfo: IProbandInfo;
-  answersPart1: IAnswer[];
-  answersPart2: IAnswer[];
+  answers: IQac[];
 }
 
 export enum VisitState {
@@ -46,8 +46,9 @@ interface IProbandInfo {
   phoneNumber: string; // TODO: this depends whether they want to choose national phone prefix..
 }
 
-export interface IAnswer {
+export interface IQac {
   questionId: string;
+  partNumber: QuestionPartNumber;
   answer: AnswerOptionsType;
   comment: string;
 }
@@ -62,7 +63,7 @@ const generateId = (): string => {
   return id;
 };
 
-const loadAnswers = (answers: IAnswer[], visitState: VisitState): IAnswer[] =>
+const loadAnswers = (answers: IQac[], visitState: VisitState): IQac[] =>
   answers.map((answer) => ({
     ...answer,
     comment:
@@ -80,8 +81,7 @@ export const createVisit = (initialVisit: IProbandVisit, state: VisitState): IPr
     state,
     projectInfo: { ...initialVisit.projectInfo },
     probandInfo: { ...initialVisit.probandInfo },
-    answersPart1: [...loadAnswers(initialVisit.answersPart1, state)],
-    answersPart2: [...loadAnswers(initialVisit.answersPart2, state)],
+    answers: [...loadAnswers(initialVisit.answers, state)],
   };
 };
 
@@ -94,8 +94,7 @@ export const duplicateVisit = (initialVisit: IProbandVisit): IProbandVisit => {
     state: initialVisit.projectInfo.isFantom ? VisitState.FANTOM_NEW : VisitState.NEW,
     projectInfo: { ...initialVisit.projectInfo },
     probandInfo: { ...initialVisit.probandInfo },
-    answersPart1: [...initialVisit.answersPart1],
-    answersPart2: [...initialVisit.answersPart2],
+    answers: [...initialVisit.answers],
   };
 };
 
@@ -138,14 +137,11 @@ export const dummyVisitNew: IProbandVisit = {
     email: "karel.novak@email.cz",
     phoneNumber: "",
   },
-  answersPart1: getDummyVisitCurrentQuestions(1).map((question, i) => ({
+  answers: getDummyVisitCurrentQuestions()
+  .map((question, i) => ({
     questionId: question.id,
-    answer: i % 4 === 3 ? "yes" : "no",
-    comment: "",
-  })),
-  answersPart2: getDummyVisitCurrentQuestions(2).map((question, i) => ({
-    questionId: question.id,
-    answer: i % 6 === 0 ? "yes" : "no",
+    partNumber: question.partNumber,
+    answer: i % 5 === 4 ? "yes" : "no",
     comment: "",
   })),
 };
@@ -178,13 +174,10 @@ export const dummyFantomVisitNew: IProbandVisit = {
     email: "",
     phoneNumber: "",
   },
-  answersPart1: getDummyVisitCurrentQuestions(1).map((question) => ({
+  answers: getDummyVisitCurrentQuestions()
+  .map((question) => ({
     questionId: question.id,
-    answer: "no",
-    comment: "",
-  })),
-  answersPart2: getDummyVisitCurrentQuestions(2).map((question) => ({
-    questionId: question.id,
+    partNumber: question.partNumber,
     answer: "no",
     comment: "",
   })),
@@ -205,8 +198,7 @@ export const dummyFantomVisit: IProbandVisit = {
     surname: "Fantom",
     gender: "Jiné",
   },
-  answersPart1: [...loadAnswers(dummyFantomVisitNew.answersPart1, VisitState.FANTOM_DONE)],
-  answersPart2: [...loadAnswers(dummyFantomVisitNew.answersPart2, VisitState.FANTOM_DONE)],
+  answers: [...loadAnswers(dummyFantomVisitNew.answers, VisitState.FANTOM_DONE)],
 };
 
 export const dummyVisits: IProbandVisit[] = [

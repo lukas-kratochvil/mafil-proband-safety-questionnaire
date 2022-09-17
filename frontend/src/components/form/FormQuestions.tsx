@@ -1,8 +1,8 @@
 import { Grid, Stack, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Controller, useWatch } from "react-hook-form";
-import { IQuestionData, QuestionPartNumber } from "../../data/question_data";
-import { IAnswer } from "../../data/visit_data";
+import { IQuestionData } from "../../data/question_data";
+import { IQac } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { fetchQuestion } from "../../util/utils";
 import { ErrorFeedback } from "./ErrorFeedback";
@@ -11,18 +11,17 @@ import { FormRadioGroup } from "./inputs/FormRadioGroup";
 
 interface IQuestionProps {
   index: number;
-  partNumber: QuestionPartNumber;
-  qac: IAnswer;
+  qac: IQac;
   disabled: boolean;
 }
 
 export type AnswerOptionsType = "yes" | "no" | undefined;
 
-const Question = ({ index, partNumber, qac, disabled }: IQuestionProps) => {
+const Question = ({ index, qac, disabled }: IQuestionProps) => {
   const { username } = useAuth();
   const [question, setQuestion] = useState<IQuestionData>();
   const questionAnswer = useWatch({
-    name: `answersPart${partNumber}[${index}].answer`,
+    name: `answersPart${qac.partNumber}[${index}].answer`,
     defaultValue: qac.answer,
   });
 
@@ -51,7 +50,7 @@ const Question = ({ index, partNumber, qac, disabled }: IQuestionProps) => {
       >
         <Typography width="80%">{question?.text}</Typography>
         <FormRadioGroup
-          name={`answersPart${partNumber}[${index}].answer`}
+          name={`answersPart${qac.partNumber}[${index}].answer`}
           label={`Question: ${qac.questionId}`}
           defaultValue={qac.answer}
           radios={[
@@ -68,12 +67,12 @@ const Question = ({ index, partNumber, qac, disabled }: IQuestionProps) => {
           ]}
           disabled={disabled}
         />
-        <ErrorFeedback name={`answersPart${partNumber}[${index}].answer`} />
+        <ErrorFeedback name={`answersPart${qac.partNumber}[${index}].answer`} />
       </Grid>
       {username !== undefined && questionAnswer === "yes" && (
         <>
           <Controller
-            name={`answersPart${partNumber}[${index}].comment`}
+            name={`answersPart${qac.partNumber}[${index}].comment`}
             render={({ field: { value, onChange, ref } }) => (
               <TextField
                 label="Komentář"
@@ -87,7 +86,7 @@ const Question = ({ index, partNumber, qac, disabled }: IQuestionProps) => {
               />
             )}
           />
-          <ErrorFeedback name={`answersPart${partNumber}[${index}].comment`} />
+          <ErrorFeedback name={`answersPart${qac.partNumber}[${index}].comment`} />
         </>
       )}
     </Stack>
@@ -96,12 +95,11 @@ const Question = ({ index, partNumber, qac, disabled }: IQuestionProps) => {
 
 interface IFormQuestionsProps {
   title: string;
-  partNumber: QuestionPartNumber;
-  qacs: IAnswer[];
+  qacs: IQac[];
   isAuthEditing: boolean;
 }
 
-export const FormQuestions = ({ title, partNumber, qacs, isAuthEditing }: IFormQuestionsProps) => {
+export const FormQuestions = ({ title, qacs, isAuthEditing }: IFormQuestionsProps) => {
   const { username } = useAuth();
 
   return (
@@ -114,7 +112,6 @@ export const FormQuestions = ({ title, partNumber, qacs, isAuthEditing }: IFormQ
           <Question
             key={qac.questionId}
             index={index}
-            partNumber={partNumber}
             qac={qac}
             disabled={!isAuthEditing}
           />

@@ -14,7 +14,7 @@ import { FormProbandInfo } from "../components/form/FormProbandInfo";
 import { FormProjectInfo } from "../components/form/FormProjectInfo";
 import { FormQuestions } from "../components/form/FormQuestions";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
-import { IAnswer, IProbandVisit, VisitState } from "../data/visit_data";
+import { IQac, IProbandVisit, VisitState } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
 import "../styles/style.css";
 import { fetchCurrentQuestions, fetchVisit, updateDummyVisitState } from "../util/utils";
@@ -39,8 +39,7 @@ interface FormPropType {
   visualCorrectionValue: TextFieldNumberInput;
   email: string;
   phoneNumber: string;
-  answersPart1: IAnswer[];
-  answersPart2: IAnswer[];
+  answers: IQac[];
 }
 
 // Autocomplete component default value must be one of the options or null
@@ -61,8 +60,7 @@ const loadFormDefaultValues = (): FormPropType => ({
   visualCorrectionValue: 0,
   email: "",
   phoneNumber: "",
-  answersPart1: [],
-  answersPart2: [],
+  answers: [],
 });
 
 // Autocomplete component default value must be one of the options or null
@@ -83,12 +81,12 @@ const loadFormDefaultValuesFromVisit = (visit: IProbandVisit): FormPropType => (
   visualCorrectionValue: visit.probandInfo.visualCorrectionValue,
   email: visit.probandInfo.email,
   phoneNumber: visit.probandInfo.phoneNumber,
-  answersPart1: visit.answersPart1,
-  answersPart2: visit.answersPart2,
+  answers: visit.answers,
 });
 
 const answersSchema = object({
   questionId: string().trim().required(),
+  partNumber: number().oneOf([1, 2]).required(),
   answer: string().nullable().required("Odpoveď na bezpečnostní otázku je povinná."),
   comment: string().nullable(),
 });
@@ -159,8 +157,7 @@ const defaultFormSchema = object({
   phoneNumber: string()
     .trim()
     .matches(/^$|^(\+|00)?[1-9]{1}[0-9,\s]{3,}$/, "Telefonní číslo není validní."),
-  answersPart1: array().of(answersSchema).required(),
-  answersPart2: array().of(answersSchema).required(),
+  answers: array().of(answersSchema).required(),
 });
 
 const operatorAnswersSchema = answersSchema.shape({
@@ -178,10 +175,7 @@ const operatorFormSchema = defaultFormSchema.shape({
   measurementDate: date().nullable().required("Datum měření musí být vyplněno."),
   answersPart1: array()
     .of(operatorAnswersSchema)
-    .required("Všechny bezpečnostní otázky v části 1 musí být zodpovězeny."),
-  answersPart2: array()
-    .of(operatorAnswersSchema)
-    .required("Všechny bezpečnostní otázky v části 2 musí být zodpovězeny."),
+    .required("Všechny bezpečnostní otázky musí být zodpovězeny."),
 });
 
 interface ISubmitButtonProps {
@@ -199,8 +193,7 @@ export const FormPage = () => {
   const { username } = useAuth();
   const { id } = useParams();
   const [visit, setVisit] = useState<IProbandVisit | undefined>();
-  const [answersPart1, setAnswersPart1] = useState<IAnswer[]>([]);
-  const [answersPart2, setAnswersPart2] = useState<IAnswer[]>([]);
+  const [qacs, setQacs] = useState<IQac[]>([]);
   const [isFantom, setIsFantom] = useState<boolean>(false);
   const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
@@ -222,18 +215,11 @@ export const FormPage = () => {
 
         if (fetchedVisit === undefined) {
           console.log("FETCHING DEFAULT QUESTIONS");
-          const questionsPart1 = await fetchCurrentQuestions(1);
-          setAnswersPart1(
-            questionsPart1.map((question) => ({
-              questionId: question.id,
-              answer: undefined,
-              comment: "",
-            }))
-          );
-          const questionsPart2 = await fetchCurrentQuestions(2);
-          setAnswersPart2(
-            questionsPart2.map((question) => ({
-              questionId: question.id,
+          const fetchedQacs = await fetchCurrentQuestions();
+          setQacs(
+            fetchedQacs.map((qac) => ({
+              questionId: qac.id,
+              partNumber: qac.partNumber,
               answer: undefined,
               comment: "",
             }))
@@ -242,8 +228,7 @@ export const FormPage = () => {
           setIsFantom(fetchedVisit.projectInfo.isFantom);
           setIsAuthEditing(fetchedVisit.projectInfo.isFantom);
           console.log("FETCHING QUESTIONS FROM THE VISIT");
-          setAnswersPart1(fetchedVisit.answersPart1);
-          setAnswersPart2(fetchedVisit.answersPart2);
+          setQacs(fetchedVisit.answers);
           setVisit(fetchedVisit);
         }
 
@@ -271,7 +256,7 @@ export const FormPage = () => {
         );
       });
     }
-  }, [answersPart1, answersPart2, setValue, visit]);
+  }, [setValue, visit]);
 
   let submitButton: ISubmitButtonProps;
   let buttons: IButtonProps[] = [];
@@ -364,14 +349,12 @@ export const FormPage = () => {
             <>
               <FormQuestions
                 title="Část 1"
-                partNumber={1}
-                qacs={answersPart1}
+                qacs={qacs.filter((qac) => qac.partNumber === 1)}
                 isAuthEditing={username === undefined || isAuthEditing}
               />
               <FormQuestions
                 title="Část 2"
-                partNumber={2}
-                qacs={answersPart2}
+                qacs={qacs.filter((qac) => qac.partNumber === 2)}
                 isAuthEditing={username === undefined || isAuthEditing}
               />
             </>
