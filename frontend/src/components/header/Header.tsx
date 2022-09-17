@@ -1,5 +1,6 @@
 import { AppBar, Box, Stack, Toolbar } from "@mui/material";
 import { useAuth } from "../../hooks/auth/Auth";
+import { Navigation } from "../navigation/Navigation";
 import { LanguageMenu } from "./LanguageMenu";
 import { LoginOperator } from "./LoginOperator";
 
@@ -27,6 +28,7 @@ export const Header = () => {
           <LanguageMenu />
         </Stack>
       </Toolbar>
+      {username !== undefined && <Navigation />}
     </AppBar>
   );
 };

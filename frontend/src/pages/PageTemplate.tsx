@@ -1,7 +1,6 @@
 import { Stack } from "@mui/material";
 import { PropsWithChildren } from "react";
 import { Header } from "../components/header/Header";
-import { Navigation } from "../components/navigation/Navigation";
 import { useAuth } from "../hooks/auth/Auth";
 
 interface IPageTemplateProps {
@@ -15,7 +14,6 @@ export const PageTemplate = ({ children, centerize, isTablePage }: PropsWithChil
   return (
     <>
       <Header />
-      {username !== undefined && <Navigation />}
       <Stack
         spacing={3}
         sx={{

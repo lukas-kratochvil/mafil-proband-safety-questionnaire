@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs, useTheme } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { dummyFantomVisitNew } from "../../data/visit_data";
@@ -8,22 +8,26 @@ export interface ILinkTabProps {
   onClick: () => void;
 }
 
-const LinkTab = ({ label, onClick }: ILinkTabProps) => (
-  <Tab
-    label={label}
-    onClick={onClick}
-    sx={{
-      height: "3rem",
-      borderRight: 1,
-      borderColor: "black",
-      opacity: 0.85,
-      "&:hover": {
-        backgroundColor: "#ffd180",
-        opacity: 1,
-      },
-    }}
-  />
-);
+const LinkTab = ({ label, onClick }: ILinkTabProps) => {
+  const theme = useTheme();
+
+  return (
+    <Tab
+      label={label}
+      onClick={onClick}
+      sx={{
+        color: theme.palette.text.primary,
+        borderRight: 1,
+        borderColor: "black",
+        opacity: 0.85,
+        "&:hover": {
+          backgroundColor: "#ffd180",
+          opacity: 1,
+        },
+      }}
+    />
+  );
+};
 
 export const Navigation = () => {
   const navigate = useNavigate();
@@ -62,6 +66,7 @@ export const Navigation = () => {
         backgroundColor: "#ffab40",
         borderTop: 1,
         borderBottom: 1,
+        borderColor: "black",
       }}
     >
       <Tabs
