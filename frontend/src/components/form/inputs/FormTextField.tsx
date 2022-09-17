@@ -16,7 +16,6 @@ export const FormTextField = ({ name, label, disabled, endAdornmentLabel }: IFor
         value={value}
         onChange={onChange}
         inputRef={ref}
-        fullWidth
         disabled={disabled}
         InputProps={{
           endAdornment: <InputAdornment position="end">{endAdornmentLabel}</InputAdornment>,

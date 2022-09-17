@@ -20,7 +20,6 @@ export const FormAutocomplete = ({ name, label, disabled, options }: IFormAutoco
             {...params}
             label={label}
             inputRef={ref}
-            fullWidth
           />
         )}
       />

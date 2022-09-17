@@ -29,12 +29,7 @@ export const FormDatePicker = ({ name, label, disabled, maxDate }: IFormDatePick
           label={label}
           inputFormat="dd.MM.yyyy"
           maxDate={maxDate}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              fullWidth
-            />
-          )}
+          renderInput={(params) => <TextField {...params} />}
           disabled={disabled}
         />
       </LocalizationProvider>
