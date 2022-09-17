@@ -1,5 +1,5 @@
 import { IQuestionData, questions } from "../data/question_data";
-import { dummyVisits, IQac, IProbandVisit, VisitState } from "../data/visit_data";
+import { dummyVisits, IProbandVisit, IQac, VisitState } from "../data/visit_data";
 
 // TODO: get visits from DB
 export const fetchVisit = async (visitId: string | undefined): Promise<IProbandVisit | undefined> =>

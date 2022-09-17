@@ -137,8 +137,7 @@ export const dummyVisitNew: IProbandVisit = {
     email: "karel.novak@email.cz",
     phoneNumber: "",
   },
-  answers: getDummyVisitCurrentQuestions()
-  .map((question, i) => ({
+  answers: getDummyVisitCurrentQuestions().map((question, i) => ({
     questionId: question.id,
     partNumber: question.partNumber,
     answer: i % 5 === 4 ? "yes" : "no",
@@ -174,8 +173,7 @@ export const dummyFantomVisitNew: IProbandVisit = {
     email: "",
     phoneNumber: "",
   },
-  answers: getDummyVisitCurrentQuestions()
-  .map((question) => ({
+  answers: getDummyVisitCurrentQuestions().map((question) => ({
     questionId: question.id,
     partNumber: question.partNumber,
     answer: "no",

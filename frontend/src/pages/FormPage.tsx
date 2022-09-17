@@ -14,7 +14,7 @@ import { FormProbandInfo } from "../components/form/FormProbandInfo";
 import { FormProjectInfo } from "../components/form/FormProjectInfo";
 import { FormQuestions } from "../components/form/FormQuestions";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
-import { IQac, IProbandVisit, VisitState } from "../data/visit_data";
+import { IProbandVisit, IQac, VisitState } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
 import "../styles/style.css";
 import { fetchCurrentQuestions, fetchVisit, updateDummyVisitState } from "../util/utils";
@@ -173,9 +173,7 @@ const operatorFormSchema = defaultFormSchema.shape({
   project: string().nullable().required("Projekt musí být vyplněn."),
   magnetDevice: string().nullable().required("Přístroj magnetické rezonance musí být vyplněný."),
   measurementDate: date().nullable().required("Datum měření musí být vyplněno."),
-  answersPart1: array()
-    .of(operatorAnswersSchema)
-    .required("Všechny bezpečnostní otázky musí být zodpovězeny."),
+  answers: array().of(operatorAnswersSchema).required("Všechny bezpečnostní otázky musí být zodpovězeny."),
 });
 
 interface ISubmitButtonProps {
@@ -350,12 +348,12 @@ export const FormPage = () => {
               <FormQuestions
                 title="Část 1"
                 qacs={qacs.filter((qac) => qac.partNumber === 1)}
-                isAuthEditing={username === undefined || isAuthEditing}
+                isAuthEditing={isAuthEditing}
               />
               <FormQuestions
                 title="Část 2"
                 qacs={qacs.filter((qac) => qac.partNumber === 2)}
-                isAuthEditing={username === undefined || isAuthEditing}
+                isAuthEditing={isAuthEditing}
               />
             </>
           )}

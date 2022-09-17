@@ -21,7 +21,7 @@ const Question = ({ index, qac, disabled }: IQuestionProps) => {
   const { username } = useAuth();
   const [question, setQuestion] = useState<IQuestionData>();
   const questionAnswer = useWatch({
-    name: `answersPart${qac.partNumber}[${index}].answer`,
+    name: `answers[${index}].answer`,
     defaultValue: qac.answer,
   });
 
@@ -50,7 +50,7 @@ const Question = ({ index, qac, disabled }: IQuestionProps) => {
       >
         <Typography width="80%">{question?.text}</Typography>
         <FormRadioGroup
-          name={`answersPart${qac.partNumber}[${index}].answer`}
+          name={`answers[${index}].answer`}
           label={`Question: ${qac.questionId}`}
           defaultValue={qac.answer}
           radios={[
@@ -67,12 +67,12 @@ const Question = ({ index, qac, disabled }: IQuestionProps) => {
           ]}
           disabled={disabled}
         />
-        <ErrorFeedback name={`answersPart${qac.partNumber}[${index}].answer`} />
+        <ErrorFeedback name={`answers[${index}].answer`} />
       </Grid>
       {username !== undefined && questionAnswer === "yes" && (
         <>
           <Controller
-            name={`answersPart${qac.partNumber}[${index}].comment`}
+            name={`answers[${index}].comment`}
             render={({ field: { value, onChange, ref } }) => (
               <TextField
                 label="Komentář"
@@ -86,7 +86,7 @@ const Question = ({ index, qac, disabled }: IQuestionProps) => {
               />
             )}
           />
-          <ErrorFeedback name={`answersPart${qac.partNumber}[${index}].comment`} />
+          <ErrorFeedback name={`answers[${index}].comment`} />
         </>
       )}
     </Stack>
