@@ -27,6 +27,11 @@ const theme = createTheme({
     background: {
       default: "rgb(248, 248, 248)",
     },
+    text: {
+      primary: "rgba(0, 0, 0, 1)",
+      secondary: "rgba(0, 0, 0, 0.73)",
+      disabled: "rgba(0, 0, 0, 0.51)",
+    },
   },
 });
 
