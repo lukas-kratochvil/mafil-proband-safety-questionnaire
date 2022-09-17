@@ -1,6 +1,6 @@
 import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { FunctionComponent, useEffect, useState } from "react";
-import { IProbandVisit } from "../../data/visit_data";
+import { IVisit } from "../../data/visit_data";
 import { PageTemplate } from "../../pages/PageTemplate";
 
 export interface IActionButtonsProps {
@@ -9,13 +9,13 @@ export interface IActionButtonsProps {
 
 interface IVisitsTableProps {
   header: string[];
-  fetchVisits: () => Promise<IProbandVisit[]>;
-  getVisitRow: (visit: IProbandVisit) => string[];
+  fetchVisits: () => Promise<IVisit[]>;
+  getVisitRow: (visit: IVisit) => string[];
   ActionButtons: FunctionComponent<IActionButtonsProps>;
 }
 
 export const VisitsTable = ({ header, fetchVisits, getVisitRow, ActionButtons }: IVisitsTableProps) => {
-  const [visits, setVisits] = useState<IProbandVisit[]>([]);
+  const [visits, setVisits] = useState<IVisit[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
   const [isError, setIsError] = useState<boolean>(false); // TODO: create ErrorPage
 

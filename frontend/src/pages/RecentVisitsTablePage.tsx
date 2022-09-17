@@ -1,12 +1,12 @@
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { IActionButtonsProps, VisitsTable } from "../components/table/VisitsTable";
-import { dummyVisits, duplicateVisit, IProbandVisit, VisitState } from "../data/visit_data";
+import { dummyVisits, duplicateVisit, IVisit, VisitState } from "../data/visit_data";
 import { fetchRecentVisits, getDummyVisit } from "../util/utils";
 
 const recentVisitsHeader = ["Visit ID", "Proband", "Projekt", "Přístroj", "Zpracováno", "Zpracoval", "Podepsáno"];
 
-const getRecentVisitsRow = (visit: IProbandVisit): string[] => {
+const getRecentVisitsRow = (visit: IVisit): string[] => {
   let isSignedText = "";
 
   if (visit.state === VisitState.SIGNED) {

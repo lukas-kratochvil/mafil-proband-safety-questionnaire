@@ -14,7 +14,7 @@ import { FormProbandInfo } from "../components/form/FormProbandInfo";
 import { FormProjectInfo } from "../components/form/FormProjectInfo";
 import { FormQuestions } from "../components/form/FormQuestions";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
-import { IProbandVisit, IQac, VisitState } from "../data/visit_data";
+import { IQac, IVisit, VisitState } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
 import "../styles/style.css";
 import { fetchCurrentQuestions, fetchVisit, updateDummyVisitState } from "../util/utils";
@@ -64,7 +64,7 @@ const loadFormDefaultValues = (): FormPropType => ({
 });
 
 // Autocomplete component default value must be one of the options or null
-const loadFormDefaultValuesFromVisit = (visit: IProbandVisit): FormPropType => ({
+const loadFormDefaultValuesFromVisit = (visit: IVisit): FormPropType => ({
   project: visit.projectInfo.projectName ?? null,
   magnetDevice: visit.projectInfo.magnetDeviceName ?? null,
   measurementDate: visit.projectInfo.measurementDate ?? new Date(),
@@ -190,7 +190,7 @@ export const FormPage = () => {
   const navigate = useNavigate();
   const { username } = useAuth();
   const { id } = useParams();
-  const [visit, setVisit] = useState<IProbandVisit | undefined>();
+  const [visit, setVisit] = useState<IVisit | undefined>();
   const [qacs, setQacs] = useState<IQac[]>([]);
   const [isFantom, setIsFantom] = useState<boolean>(false);
   const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
@@ -213,9 +213,9 @@ export const FormPage = () => {
 
         if (fetchedVisit === undefined) {
           console.log("FETCHING DEFAULT QUESTIONS");
-          const fetchedQacs = await fetchCurrentQuestions();
+          const questions = await fetchCurrentQuestions();
           setQacs(
-            fetchedQacs.map((qac) => ({
+            questions.map((qac) => ({
               questionId: qac.id,
               partNumber: qac.partNumber,
               answer: undefined,

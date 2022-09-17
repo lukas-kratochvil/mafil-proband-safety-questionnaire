@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CardBox } from "../components/card/CardBox";
 import { ColoredInfoStripe, IColoredInfoStripeProps } from "../components/informative/ColoredInfoStripe";
-import { IProbandVisit, VisitState } from "../data/visit_data";
+import { IVisit, VisitState } from "../data/visit_data";
 import "../styles/style.css";
 import { fetchVisit } from "../util/utils";
 import { PageTemplate } from "./PageTemplate";
@@ -102,7 +102,7 @@ const getButtons = (
 
 export const VisitDetailPage = () => {
   const { id } = useParams();
-  const [visit, setVisit] = useState<IProbandVisit>();
+  const [visit, setVisit] = useState<IVisit>();
   const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
   const [isError, setIsError] = useState<boolean>(false); // TODO: create ErrorPage
 

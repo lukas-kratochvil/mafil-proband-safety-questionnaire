@@ -3,12 +3,12 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IActionButtonsProps, VisitsTable } from "../components/table/VisitsTable";
-import { IProbandVisit } from "../data/visit_data";
+import { IVisit } from "../data/visit_data";
 import { fetchWaitingRoomVisits } from "../util/utils";
 
 const header = ["Datum registrace", "Proband", "Rodné číslo", "Datum narození", "Pohlaví", "Mateřský jazyk"];
 
-const getWaitingRoomRow = (visit: IProbandVisit): string[] => [
+const getWaitingRoomRow = (visit: IVisit): string[] => [
   new Date().toDateString(),
   visit.probandInfo.surname === "" && visit.probandInfo.name === ""
     ? ""

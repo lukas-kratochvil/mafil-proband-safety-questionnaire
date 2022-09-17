@@ -3,7 +3,7 @@ import { getDummyVisitCurrentQuestions } from "../util/utils";
 import { magnetDevices, projects } from "./form_data";
 import { QuestionPartNumber } from "./question_data";
 
-export interface IProbandVisit {
+export interface IVisit {
   id: string;
   visitId: string;
   state: VisitState;
@@ -72,7 +72,7 @@ const loadAnswers = (answers: IQac[], visitState: VisitState): IQac[] =>
         : "",
   }));
 
-export const createVisit = (initialVisit: IProbandVisit, state: VisitState): IProbandVisit => {
+export const createVisit = (initialVisit: IVisit, state: VisitState): IVisit => {
   const newId: string = generateId();
   return {
     ...initialVisit,
@@ -85,7 +85,7 @@ export const createVisit = (initialVisit: IProbandVisit, state: VisitState): IPr
   };
 };
 
-export const duplicateVisit = (initialVisit: IProbandVisit): IProbandVisit => {
+export const duplicateVisit = (initialVisit: IVisit): IVisit => {
   const newId: string = generateId();
   return {
     ...initialVisit,
@@ -98,7 +98,7 @@ export const duplicateVisit = (initialVisit: IProbandVisit): IProbandVisit => {
   };
 };
 
-const createVisits = (initialVisit: IProbandVisit, state: VisitState, count: number): IProbandVisit[] => {
+const createVisits = (initialVisit: IVisit, state: VisitState, count: number): IVisit[] => {
   const visits = [];
 
   for (let i = 0; i < count; i++) {
@@ -109,7 +109,7 @@ const createVisits = (initialVisit: IProbandVisit, state: VisitState, count: num
   return visits;
 };
 
-export const dummyVisitNew: IProbandVisit = {
+export const dummyVisitNew: IVisit = {
   id: generateId(),
   visitId: "visit1",
   state: VisitState.NEW,
@@ -145,7 +145,7 @@ export const dummyVisitNew: IProbandVisit = {
   })),
 };
 
-export const dummyFantomVisitNew: IProbandVisit = {
+export const dummyFantomVisitNew: IVisit = {
   id: generateId(),
   visitId: "fantom123",
   state: VisitState.FANTOM_NEW,
@@ -181,7 +181,7 @@ export const dummyFantomVisitNew: IProbandVisit = {
   })),
 };
 
-export const dummyFantomVisit: IProbandVisit = {
+export const dummyFantomVisit: IVisit = {
   id: generateId(),
   visitId: "fantom2",
   state: VisitState.FANTOM_DONE,
@@ -199,7 +199,7 @@ export const dummyFantomVisit: IProbandVisit = {
   answers: [...loadAnswers(dummyFantomVisitNew.answers, VisitState.FANTOM_DONE)],
 };
 
-export const dummyVisits: IProbandVisit[] = [
+export const dummyVisits: IVisit[] = [
   dummyVisitNew,
   ...createVisits(dummyVisitNew, VisitState.NEW, 3),
   ...createVisits(dummyVisitNew, VisitState.CHECKED, 4),

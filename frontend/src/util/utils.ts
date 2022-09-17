@@ -1,16 +1,16 @@
 import { IQuestionData, questions } from "../data/question_data";
-import { dummyVisits, IProbandVisit, IQac, VisitState } from "../data/visit_data";
+import { dummyVisits, IQac, IVisit, VisitState } from "../data/visit_data";
 
 // TODO: get visits from DB
-export const fetchVisit = async (visitId: string | undefined): Promise<IProbandVisit | undefined> =>
+export const fetchVisit = async (visitId: string | undefined): Promise<IVisit | undefined> =>
   dummyVisits.find((visit) => visit.id === visitId);
 
 // TODO: get visits from DB
-export const fetchWaitingRoomVisits = async (): Promise<IProbandVisit[]> =>
+export const fetchWaitingRoomVisits = async (): Promise<IVisit[]> =>
   dummyVisits.filter((visit) => [VisitState.NEW, VisitState.FANTOM_NEW].includes(visit.state));
 
 // TODO: get visits from DB
-export const fetchRecentVisits = async (): Promise<IProbandVisit[]> =>
+export const fetchRecentVisits = async (): Promise<IVisit[]> =>
   dummyVisits.filter((visit) => [VisitState.CHECKED, VisitState.SIGNED, VisitState.FANTOM_DONE].includes(visit.state));
 
 // TODO: get questions from DB
@@ -29,7 +29,7 @@ export const fetchQuestion = async (questionId: string): Promise<IQuestionData |
  */
 
 // TODO: get visits from DB
-export const getDummyVisit = (visitId: string | undefined): IProbandVisit | undefined =>
+export const getDummyVisit = (visitId: string | undefined): IVisit | undefined =>
   dummyVisits.find((visit) => visit.id === visitId);
 
 // TODO: delete this method
