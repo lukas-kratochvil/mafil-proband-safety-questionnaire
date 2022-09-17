@@ -345,7 +345,7 @@ export const FormPage = () => {
           <FormProbandInfo isAuthEditing={username === undefined || isAuthEditing} />
           {!isFantom && <FormProbandContact isAuthEditing={username === undefined || isAuthEditing} />}
           {username === undefined && <FormSafetyInfo />}
-          {!isFantom && (
+          {username !== undefined && !isFantom && (
             <>
               <FormQuestions
                 title="Část 1"
@@ -358,6 +358,13 @@ export const FormPage = () => {
                 isAuthEditing={username === undefined || isAuthEditing}
               />
             </>
+          )}
+          {username === undefined && (
+            <FormQuestions
+              title="Bezpečnostní otázky"
+              qacs={qacs}
+              isAuthEditing
+            />
           )}
           {username === undefined && <FormBeforeExamination />}
           {username === undefined && <FormExaminationConsent />}
