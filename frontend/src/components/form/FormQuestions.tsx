@@ -99,24 +99,20 @@ interface IFormQuestionsProps {
   isAuthEditing: boolean;
 }
 
-export const FormQuestions = ({ title, qacs, isAuthEditing }: IFormQuestionsProps) => {
-  const { username } = useAuth();
-
-  return (
-    <FormCard title={title}>
-      <Stack
-        spacing={username === undefined ? "0.5rem" : "1rem"}
-        minWidth="100%"
-      >
-        {qacs.map((qac, index) => (
-          <Question
-            key={qac.questionId}
-            index={index}
-            qac={qac}
-            disabled={!isAuthEditing}
-          />
-        ))}
-      </Stack>
-    </FormCard>
-  );
-};
+export const FormQuestions = ({ title, qacs, isAuthEditing }: IFormQuestionsProps) => (
+  <FormCard title={title}>
+    <Stack
+      spacing="0.5rem"
+      minWidth="100%"
+    >
+      {qacs.map((qac, index) => (
+        <Question
+          key={qac.questionId}
+          index={index}
+          qac={qac}
+          disabled={!isAuthEditing}
+        />
+      ))}
+    </Stack>
+  </FormCard>
+);
