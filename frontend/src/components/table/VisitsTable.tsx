@@ -34,7 +34,7 @@ export const VisitsTable = ({ header, fetchVisits, getVisitRow, ActionButtons }:
   }, [fetchVisits]);
 
   return (
-    <PageTemplate isTabPage>
+    <PageTemplate isTablePage>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: "40rem" }}>
           <TableHead>

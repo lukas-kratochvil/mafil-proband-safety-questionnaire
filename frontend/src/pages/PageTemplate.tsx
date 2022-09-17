@@ -6,14 +6,10 @@ import { useAuth } from "../hooks/auth/Auth";
 
 interface IPageTemplateProps {
   centerize?: boolean;
-  isTabPage?: boolean;
+  isTablePage?: boolean;
 }
 
-export const PageTemplate = ({
-  children,
-  centerize,
-  isTabPage: isTablePage,
-}: PropsWithChildren<IPageTemplateProps>) => {
+export const PageTemplate = ({ children, centerize, isTablePage }: PropsWithChildren<IPageTemplateProps>) => {
   const { username } = useAuth();
 
   return (

@@ -5,7 +5,8 @@ import { dummyVisits, IVisit, VisitState } from "../data/visit_data";
  * TODO: functions in this file must be deleted!
  */
 
-export const getDummyVisit = (visitId: string | undefined): IVisit | undefined => dummyVisits.find((visit) => visit.id === visitId);
+export const getDummyVisit = (visitId: string | undefined): IVisit | undefined =>
+  dummyVisits.find((visit) => visit.id === visitId);
 
 export const getDummyVisitCurrentQuestions = (): IQuestionData[] => questions;
 
