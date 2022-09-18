@@ -1,16 +1,20 @@
 import InfoIcon from "@mui/icons-material/Info";
-import { Tooltip } from "@mui/material";
+import { Tooltip, useTheme } from "@mui/material";
 
 interface IInfoTooltipProps {
   text: string;
 }
 
-export const InfoTooltip = ({ text }: IInfoTooltipProps) => (
-  <Tooltip
-    title={text}
-    arrow
-    placement="top-start"
-  >
-    <InfoIcon sx={{ color: "#2da2e1" }} />
-  </Tooltip>
-);
+export const InfoTooltip = ({ text }: IInfoTooltipProps) => {
+  const theme = useTheme();
+
+  return (
+    <Tooltip
+      title={text}
+      arrow
+      placement="top-start"
+    >
+      <InfoIcon sx={{ color: theme.palette.info.light }} />
+    </Tooltip>
+  );
+};
