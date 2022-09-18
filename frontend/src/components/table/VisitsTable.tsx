@@ -1,5 +1,6 @@
-import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import { FunctionComponent, useEffect, useState } from "react";
+import { Box } from "@mui/material";
+import MaterialReactTable, { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
+import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { IVisit } from "../../data/visit_data";
 import { PageTemplate } from "../../pages/PageTemplate";
 
@@ -8,85 +9,85 @@ export interface IActionButtonsProps {
 }
 
 interface IVisitsTableProps {
-  header: string[];
+  header: MRTColumnDef<IVisit>[];
   fetchVisits: () => Promise<IVisit[]>;
-  getVisitRow: (visit: IVisit) => string[];
   ActionButtons: FunctionComponent<IActionButtonsProps>;
+  actionButtonsSize: number;
 }
 
-export const VisitsTable = ({ header, fetchVisits, getVisitRow, ActionButtons }: IVisitsTableProps) => {
+export const VisitsTable = ({ header, fetchVisits, ActionButtons, actionButtonsSize }: IVisitsTableProps) => {
   const [visits, setVisits] = useState<IVisit[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
-  const [isError, setIsError] = useState<boolean>(false); // TODO: create ErrorPage
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isRefetching, setIsRefetching] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [showSkeleton, setShowSkeleton] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchTableVisits = async () => {
+      if (visits.length === 0) {
+        setIsLoading(true);
+      } else {
+        setIsRefetching(true);
+      }
+
       try {
-        const response = await fetchVisits();
-        setVisits(response);
+        const fetchedVisits = await fetchVisits();
+        setVisits(fetchedVisits);
+        setShowSkeleton(false);
         setIsLoading(false);
+        setIsRefetching(false);
       } catch (e) {
         setIsError(true);
       }
     };
 
     fetchTableVisits();
-  }, [fetchVisits]);
+  }, [fetchVisits, visits.length]);
+
+  const columns = useMemo<MRTColumnDef<IVisit>[]>(() => header, [header]);
 
   return (
     <PageTemplate isTablePage>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: "40rem" }}>
-          <TableHead>
-            <TableRow>
-              {header.map((title, index) => (
-                <TableCell
-                  key={index}
-                  sx={{
-                    backgroundColor: "black",
-                    color: "white",
-                  }}
-                >
-                  {title}
-                </TableCell>
-              ))}
-              <TableCell
-                sx={{
-                  backgroundColor: "black",
-                  color: "white",
-                }}
-              >
-                Akce
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {visits.map((visit) => (
-              <TableRow
-                key={visit.id}
-                sx={{
-                  "&:last-child td, &:last-child th": {
-                    border: 0,
-                  },
-                }}
-              >
-                {getVisitRow(visit).map((cell, cellIndex) => (
-                  <TableCell key={cellIndex}>{cell}</TableCell>
-                ))}
-                <TableCell sx={{ maxWidth: "fit-content" }}>
-                  <Grid
-                    container
-                    direction="row"
-                    gap="0.5rem"
-                  >
-                    <ActionButtons visitId={visit.id} />
-                  </Grid>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <MaterialReactTable
+        columns={columns}
+        data={visits}
+        enableDensityToggle={false}
+        enableEditing={false}
+        enableColumnFilters={false}
+        enableHiding={false}
+        enableBottomToolbar={false}
+        enableRowActions
+        displayColumnDefOptions={{
+          "mrt-row-actions": {
+            size: actionButtonsSize, // change width of actions
+          },
+        }}
+        renderRowActions={({ row }) => (
+          <Box
+            sx={{
+              display: "flex",
+              gap: "1rem",
+            }}
+          >
+            <ActionButtons visitId={row.original.id} />
+          </Box>
+        )}
+        muiToolbarAlertBannerProps={
+          isError
+            ? {
+                color: "error",
+                children: "Error loading data",
+              }
+            : undefined
+        }
+        positionActionsColumn="last"
+        state={{
+          isLoading,
+          showAlertBanner: isError,
+          showProgressBars: isRefetching,
+          showSkeletons: showSkeleton,
+        }}
+      />
     </PageTemplate>
   );
 };

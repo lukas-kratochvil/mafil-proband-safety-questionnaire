@@ -1,31 +1,54 @@
 import { Button } from "@mui/material";
+import { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 import { useNavigate } from "react-router-dom";
 import { IActionButtonsProps, VisitsTable } from "../components/table/VisitsTable";
 import { dummyVisits, duplicateVisit, IVisit, VisitState } from "../data/visit_data";
 import { fetchRecentVisits } from "../util/utils";
 import { getDummyVisit } from "../util/utils.dev";
 
-const recentVisitsHeader = ["Visit ID", "Proband", "Projekt", "Přístroj", "Zpracováno", "Zpracoval", "Podepsáno"];
-
-const getRecentVisitsRow = (visit: IVisit): string[] => {
-  let isSignedText = "";
-
-  if (visit.state === VisitState.SIGNED) {
-    isSignedText = "Ano";
-  } else if (visit.state === VisitState.CHECKED) {
-    isSignedText = "Ne";
-  }
-
-  return [
-    visit.visitId,
-    `${visit.probandInfo.surname}, ${visit.probandInfo.name}`,
-    visit.projectInfo.projectId,
-    visit.projectInfo.magnetDeviceId,
-    new Date().toDateString(),
-    "MUNI_operator",
-    isSignedText,
-  ];
-};
+const header: MRTColumnDef<IVisit>[] = [
+  {
+    accessorKey: "visitId",
+    header: "Visit ID",
+    size: 100,
+  },
+  {
+    accessorFn: (visit) => `${visit.probandInfo.surname}, ${visit.probandInfo.name}`,
+    id: "proband",
+    header: "Proband",
+  },
+  {
+    accessorKey: "projectInfo.projectName",
+    header: "Projekt",
+  },
+  {
+    accessorKey: "projectInfo.magnetDeviceName",
+    header: "Přístroj",
+  },
+  {
+    accessorFn: () => new Date().toDateString(),
+    id: "processedDate",
+    header: "Zpracováno",
+  },
+  {
+    accessorFn: () => "MUNI_operator",
+    id: "processUser",
+    header: "Zpracoval",
+  },
+  {
+    accessorFn: (visit) => {
+      if (visit.state === VisitState.SIGNED) {
+        return "Ano";
+      }
+      if (visit.state === VisitState.CHECKED) {
+        return "Ne";
+      }
+      return "";
+    },
+    id: "signedUser",
+    header: "Podepsáno",
+  },
+];
 
 const RecentVisitsActionButtons = ({ visitId }: IActionButtonsProps) => {
   const navigate = useNavigate();
@@ -61,9 +84,9 @@ const RecentVisitsActionButtons = ({ visitId }: IActionButtonsProps) => {
 
 export const RecentVisitsTablePage = () => (
   <VisitsTable
-    header={recentVisitsHeader}
+    header={header}
     fetchVisits={fetchRecentVisits}
-    getVisitRow={getRecentVisitsRow}
     ActionButtons={RecentVisitsActionButtons}
+    actionButtonsSize={320}
   />
 );

@@ -1,22 +1,40 @@
 import ClearIcon from "@mui/icons-material/Clear";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material";
+import { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IActionButtonsProps, VisitsTable } from "../components/table/VisitsTable";
 import { IVisit } from "../data/visit_data";
 import { fetchWaitingRoomVisits } from "../util/utils";
 
-const header = ["Datum registrace", "Proband", "Rodné číslo", "Datum narození", "Pohlaví", "Mateřský jazyk"];
-
-const getWaitingRoomRow = (visit: IVisit): string[] => [
-  new Date().toDateString(),
-  visit.probandInfo.surname === "" && visit.probandInfo.name === ""
-    ? ""
-    : `${visit.probandInfo.surname}, ${visit.probandInfo.name}`,
-  visit.probandInfo.personalId,
-  visit.probandInfo.birthdate.toDateString(),
-  visit.probandInfo.gender,
-  visit.probandInfo.nativeLanguage,
+const header: MRTColumnDef<IVisit>[] = [
+  {
+    accessorFn: () => new Date().toDateString(),
+    id: "registrationDate",
+    header: "Datum registrace",
+  },
+  {
+    accessorFn: (visit) => `${visit.probandInfo.surname}, ${visit.probandInfo.name}`,
+    id: "proband",
+    header: "Proband",
+  },
+  {
+    accessorKey: "probandInfo.personalId",
+    header: "Rodné číslo",
+  },
+  {
+    accessorFn: (visit) => `${visit.probandInfo.birthdate.toDateString()}`,
+    id: "probandInfo.birthdate",
+    header: "Datum narození",
+  },
+  {
+    accessorKey: "probandInfo.gender",
+    header: "Pohlaví",
+  },
+  {
+    accessorKey: "probandInfo.nativeLanguage",
+    header: "Mateřský jazyk",
+  },
 ];
 
 const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
@@ -68,7 +86,7 @@ export const WaitingRoomTablePage = () => (
   <VisitsTable
     header={header}
     fetchVisits={fetchWaitingRoomVisits}
-    getVisitRow={getWaitingRoomRow}
     ActionButtons={WaitingRoomActionButtons}
+    actionButtonsSize={100}
   />
 );
