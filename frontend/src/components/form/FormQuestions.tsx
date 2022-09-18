@@ -1,4 +1,4 @@
-import { Grid, Stack, TextField, Typography } from "@mui/material";
+import { Grid, Stack, TextField, Typography, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Controller, useWatch } from "react-hook-form";
 import { IQuestionData } from "../../data/question_data";
@@ -18,6 +18,7 @@ interface IQuestionProps {
 export type AnswerOptionsType = "yes" | "no" | undefined;
 
 const Question = ({ index, qac, disabled }: IQuestionProps) => {
+  const theme = useTheme();
   const { username } = useAuth();
   const [question, setQuestion] = useState<IQuestionData>();
   const questionAnswer = useWatch({
@@ -38,7 +39,7 @@ const Question = ({ index, qac, disabled }: IQuestionProps) => {
       sx={{
         "&:hover": {
           borderRadius: "0.25rem",
-          backgroundColor: "#f4f4f4",
+          backgroundColor: theme.palette.grey[100],
         },
       }}
     >
