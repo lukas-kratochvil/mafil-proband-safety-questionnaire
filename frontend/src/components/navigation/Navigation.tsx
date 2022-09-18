@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { dummyFantomVisitNew } from "../../data/visit_data";
 
-export interface ILinkTabProps {
+interface ILinkTabProps {
   label: string;
   onClick: () => void;
 }
@@ -17,8 +17,6 @@ const LinkTab = ({ label, onClick }: ILinkTabProps) => {
       onClick={onClick}
       sx={{
         color: theme.palette.text.primary,
-        borderRight: 1,
-        borderColor: "black",
         opacity: 0.85,
         "&:hover": {
           backgroundColor: "#ffb74d",
@@ -31,7 +29,9 @@ const LinkTab = ({ label, onClick }: ILinkTabProps) => {
 
 export const Navigation = () => {
   const navigate = useNavigate();
-  const [value, setValue] = useState<number>(0);
+  const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
+
+  const handleChange = (event: React.SyntheticEvent, value: number) => setCurrentTabIndex(value);
 
   const tabs: ILinkTabProps[] = [
     {
@@ -57,20 +57,17 @@ export const Navigation = () => {
     },
   ];
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => setValue(newValue);
-
   return (
     <Box
       sx={{
         width: "100%",
         backgroundColor: "#ffab40",
         borderTop: 1,
-        borderBottom: 1,
-        borderColor: "black",
+        borderColor: "divider",
       }}
     >
       <Tabs
-        value={value}
+        value={currentTabIndex}
         onChange={handleChange}
         aria-label="top-menu navigation"
         sx={{
