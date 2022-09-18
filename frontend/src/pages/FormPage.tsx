@@ -12,7 +12,7 @@ import { FormExaminationConsent } from "../components/form/FormExaminationConsen
 import { FormProbandContact } from "../components/form/FormProbandContact";
 import { FormProbandInfo } from "../components/form/FormProbandInfo";
 import { FormProjectInfo } from "../components/form/FormProjectInfo";
-import { FormQuestions } from "../components/form/FormQuestions";
+import { FormQuestions, IFormQac } from "../components/form/FormQuestions";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
 import { IQac, IVisit, VisitState } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
@@ -192,7 +192,7 @@ export const FormPage = () => {
   const { username } = useAuth();
   const { id } = useParams();
   const [visit, setVisit] = useState<IVisit | undefined>();
-  const [qacs, setQacs] = useState<IQac[]>([]);
+  const [qacs, setQacs] = useState<IFormQac[]>([]);
   const [isFantom, setIsFantom] = useState<boolean>(false);
   const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
@@ -216,7 +216,8 @@ export const FormPage = () => {
           console.log("FETCHING DEFAULT QUESTIONS");
           const questions = await fetchCurrentQuestions();
           setQacs(
-            questions.map((qac) => ({
+            questions.map((qac, index) => ({
+              index,
               questionId: qac.id,
               partNumber: qac.partNumber,
               answer: undefined,
@@ -227,7 +228,7 @@ export const FormPage = () => {
           setIsFantom(fetchedVisit.projectInfo.isFantom);
           setIsAuthEditing(fetchedVisit.projectInfo.isFantom);
           console.log("FETCHING QUESTIONS FROM THE VISIT");
-          setQacs(fetchedVisit.answers);
+          setQacs(fetchedVisit.answers.map((answer, index) => ({ index, ...answer })));
           setVisit(fetchedVisit);
         }
 
@@ -380,8 +381,8 @@ export const FormPage = () => {
               type="submit"
               variant="contained"
               color="success"
-              // TODO: doesn't work, why?? Should disable submit button when form isn't correctly filled
-              // disabled={!isDirty || !isValid}
+            // TODO: doesn't work, why?? Should disable submit button when form isn't correctly filled
+            // disabled={!isDirty || !isValid}
             >
               {submitButton.title}
             </Button>

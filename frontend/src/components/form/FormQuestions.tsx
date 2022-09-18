@@ -9,20 +9,23 @@ import { ErrorFeedback } from "./ErrorFeedback";
 import { FormCard } from "./FormCard";
 import { FormRadioGroup } from "./inputs/FormRadioGroup";
 
-interface IQuestionProps {
+export interface IFormQac extends IQac {
   index: number;
-  qac: IQac;
+}
+
+interface IQuestionProps {
+  qac: IFormQac;
   disabled: boolean;
 }
 
 export type AnswerOptionsType = "yes" | "no" | undefined;
 
-const Question = ({ index, qac, disabled }: IQuestionProps) => {
+const Question = ({ qac, disabled }: IQuestionProps) => {
   const theme = useTheme();
   const { username } = useAuth();
   const [question, setQuestion] = useState<IQuestionData>();
   const questionAnswer = useWatch({
-    name: `answers[${index}].answer`,
+    name: `answers[${qac.index}].answer`,
     defaultValue: qac.answer,
   });
 
@@ -51,7 +54,7 @@ const Question = ({ index, qac, disabled }: IQuestionProps) => {
       >
         <Typography width="80%">{question?.text}</Typography>
         <FormRadioGroup
-          name={`answers[${index}].answer`}
+          name={`answers[${qac.index}].answer`}
           label={`Question: ${qac.questionId}`}
           defaultValue={qac.answer}
           radios={[
@@ -68,12 +71,12 @@ const Question = ({ index, qac, disabled }: IQuestionProps) => {
           ]}
           disabled={disabled}
         />
-        <ErrorFeedback name={`answers[${index}].answer`} />
+        <ErrorFeedback name={`answers[${qac.index}].answer`} />
       </Grid>
       {username !== undefined && questionAnswer === "yes" && (
         <>
           <Controller
-            name={`answers[${index}].comment`}
+            name={`answers[${qac.index}].comment`}
             render={({ field: { value, onChange, ref } }) => (
               <TextField
                 label="Komentář"
@@ -86,7 +89,7 @@ const Question = ({ index, qac, disabled }: IQuestionProps) => {
               />
             )}
           />
-          <ErrorFeedback name={`answers[${index}].comment`} />
+          <ErrorFeedback name={`answers[${qac.index}].comment`} />
         </>
       )}
     </Stack>
@@ -95,7 +98,7 @@ const Question = ({ index, qac, disabled }: IQuestionProps) => {
 
 interface IFormQuestionsProps {
   title: string;
-  qacs: IQac[];
+  qacs: IFormQac[];
   isAuthEditing: boolean;
 }
 
@@ -105,10 +108,9 @@ export const FormQuestions = ({ title, qacs, isAuthEditing }: IFormQuestionsProp
       spacing="0.5rem"
       minWidth="100%"
     >
-      {qacs.map((qac, index) => (
+      {qacs.map((qac) => (
         <Question
           key={qac.questionId}
-          index={index}
           qac={qac}
           disabled={!isAuthEditing}
         />
