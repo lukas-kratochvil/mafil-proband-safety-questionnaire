@@ -1,8 +1,9 @@
-import { Button, Card, Grid, Typography } from "@mui/material";
+import { Button, Card, Grid, Typography, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth/Auth";
 
 export const LoginOperator = () => {
+  const theme = useTheme();
   const { username, signOut } = useAuth();
   const navigate = useNavigate();
 
@@ -21,7 +22,7 @@ export const LoginOperator = () => {
       <Typography>Přihlášen:</Typography>
       <Card
         sx={{
-          bgcolor: "white",
+          bgcolor: theme.palette.primary.contrastText,
           marginLeft: "0.5rem",
           paddingX: "1rem",
           paddingY: "0.5rem",
@@ -36,11 +37,11 @@ export const LoginOperator = () => {
         onClick={handleSignOut}
         sx={{
           marginLeft: "2rem",
-          bgcolor: "black",
-          color: "white",
+          bgcolor: theme.palette.common.black,
+          color: theme.palette.primary.contrastText,
           border: 1,
           "&:hover": {
-            bgcolor: "black",
+            bgcolor: theme.palette.common.black,
             color: "pink",
           },
         }}

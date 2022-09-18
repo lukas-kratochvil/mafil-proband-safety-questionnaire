@@ -1,5 +1,5 @@
 import LanguageIcon from "@mui/icons-material/Language";
-import { Avatar, Button, IconButton, Menu, Tooltip } from "@mui/material";
+import { Avatar, Button, IconButton, Menu, Tooltip, useTheme } from "@mui/material";
 import { FlagComponent } from "country-flag-icons/react/3x2";
 import { bindMenu, bindTrigger, usePopupState } from "material-ui-popup-state/hooks";
 import { languages } from "../../data/header_data";
@@ -40,6 +40,7 @@ const LanguageItem = ({ name, label, Flag }: ILanguageItemProps) => (
 );
 
 export const LanguageMenu = () => {
+  const theme = useTheme();
   const popupState = usePopupState({
     variant: "popover",
     popupId: "language-menu",
@@ -55,7 +56,7 @@ export const LanguageMenu = () => {
         >
           <LanguageIcon
             style={{
-              color: "white",
+              color: theme.palette.primary.contrastText,
               width: "2rem",
               height: "2rem",
             }}
