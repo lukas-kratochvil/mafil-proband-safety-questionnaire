@@ -16,7 +16,7 @@ interface IFormRadioGroupProps extends IFormDefaultInputProps {
 export const FormRadioGroup = ({ name, disabled, radios, defaultValue }: IFormRadioGroupProps) => (
   <Controller
     name={name}
-    // defaultValue cannot be loaded in the useForm(), we need to set the defaultValue manually here due to: https://github.com/react-hook-form/react-hook-form/discussions/8153#discussioncomment-2533857
+    // useForm() does not set default value for the radio group component, we need to set the defaultValue manually here due to: https://github.com/react-hook-form/react-hook-form/discussions/8153#discussioncomment-2533857
     defaultValue={defaultValue ?? null}
     render={({ field: { value, onChange } }) => (
       <RadioGroup

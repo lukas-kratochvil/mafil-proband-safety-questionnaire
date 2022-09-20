@@ -247,8 +247,6 @@ export const FormPage = () => {
       const defaultValues = loadFormDefaultValuesFromVisit(visit);
       type DefaultValuesPropertyType = keyof typeof defaultValues;
       Object.keys(defaultValues)
-        // 'answers' defaultValue must be set manually due to: https://github.com/react-hook-form/react-hook-form/discussions/8153#discussioncomment-2533857
-        .filter((propertyName) => propertyName !== "answers")
         .forEach((propertyName) => {
           setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
           console.log(
