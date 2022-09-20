@@ -21,7 +21,7 @@ export const PageTemplate = ({ children, centerize, isTablePage }: PropsWithChil
             // content height is minus 4rem header and minus 3rem navigation (if viewed in the auth version)
             height: centerize ? `calc(100vh - 4rem ${username === undefined ? "" : "- 3rem"})` : undefined,
             width: "100%",
-            maxWidth: isTablePage ? "80%" : "67.5rem",
+            maxWidth: isTablePage ? "90%" : "67.5rem",
             marginX: "auto",
             marginY: centerize ? undefined : "3rem",
             justifyContent: centerize ? "center" : undefined,
