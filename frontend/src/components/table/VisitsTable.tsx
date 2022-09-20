@@ -62,6 +62,7 @@ export const VisitsTable = ({ header, fetchVisits, ActionButtons, actionButtonsS
             size: actionButtonsSize, // change width of actions
           },
         }}
+        positionActionsColumn="last"
         renderRowActions={({ row }) => (
           <Box
             sx={{
@@ -80,7 +81,6 @@ export const VisitsTable = ({ header, fetchVisits, ActionButtons, actionButtonsS
               }
             : undefined
         }
-        positionActionsColumn="last"
         state={{
           isLoading,
           showAlertBanner: isError,

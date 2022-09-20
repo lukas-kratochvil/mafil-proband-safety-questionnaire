@@ -5,6 +5,7 @@ import { QuestionPartNumber } from "./question_data";
 
 export interface IVisit {
   id: string;
+  createdAt: Date;
   visitId: string;
   state: VisitState;
   pdf: string;
@@ -77,10 +78,14 @@ export const createVisit = (initialVisit: IVisit, state: VisitState): IVisit => 
   return {
     ...initialVisit,
     id: newId,
+    createdAt: new Date(+`16630${+newId % 10}0000000`),
     visitId: `${initialVisit.projectInfo.isFantom ? "fantom" : "visit"}${newId}`,
     state,
     projectInfo: { ...initialVisit.projectInfo },
-    probandInfo: { ...initialVisit.probandInfo },
+    probandInfo: {
+      ...initialVisit.probandInfo,
+      birthdate: new Date((initialVisit.probandInfo.birthdate.valueOf() % 1000000000) + +newId * 10000000),
+    },
     answers: [...loadAnswers(initialVisit.answers, state)],
   };
 };
@@ -111,6 +116,7 @@ const createVisits = (initialVisit: IVisit, state: VisitState, count: number): I
 
 export const dummyVisitNew: IVisit = {
   id: generateId(),
+  createdAt: new Date(1663390000000),
   visitId: "visit1",
   state: VisitState.NEW,
   pdf: "/dummy-multipage.pdf",
@@ -147,6 +153,7 @@ export const dummyVisitNew: IVisit = {
 
 export const dummyFantomVisitNew: IVisit = {
   id: generateId(),
+  createdAt: new Date(1663700000000),
   visitId: "fantom123",
   state: VisitState.FANTOM_NEW,
   pdf: "/dummy.pdf",
@@ -159,9 +166,9 @@ export const dummyFantomVisitNew: IVisit = {
     measurementDate: new Date(),
   },
   probandInfo: {
-    name: "",
-    surname: "",
-    personalId: "",
+    name: "Fantom 1",
+    surname: "Fantom 1",
+    personalId: "123456789",
     birthdate: new Date(),
     height: 1,
     weight: 1,
@@ -183,6 +190,7 @@ export const dummyFantomVisitNew: IVisit = {
 
 export const dummyFantomVisit: IVisit = {
   id: generateId(),
+  createdAt: new Date(1663000000000),
   visitId: "fantom2",
   state: VisitState.FANTOM_DONE,
   pdf: "/dummy.pdf",

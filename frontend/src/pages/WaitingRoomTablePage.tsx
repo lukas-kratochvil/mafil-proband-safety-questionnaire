@@ -1,5 +1,6 @@
 import ClearIcon from "@mui/icons-material/Clear";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material";
+import { compareAsc, format, parse } from "date-fns";
 import { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,9 +10,14 @@ import { fetchWaitingRoomVisits } from "../util/utils";
 
 const header: MRTColumnDef<IVisit>[] = [
   {
-    accessorFn: () => new Date().toDateString(),
-    id: "registrationDate",
+    accessorFn: (visit) => format(visit.createdAt, "d.M.yyyy H:mm"),
+    id: "createdAt",
     header: "Datum registrace",
+    sortingFn: (rowA, rowB, columnId) =>
+      compareAsc(
+        parse(`${rowA.getValue(columnId)}`, "d.M.yyyy H:mm", new Date()),
+        parse(`${rowB.getValue(columnId)}`, "d.M.yyyy H:mm", new Date())
+      ),
   },
   {
     accessorFn: (visit) => `${visit.probandInfo.surname}, ${visit.probandInfo.name}`,
@@ -23,9 +29,14 @@ const header: MRTColumnDef<IVisit>[] = [
     header: "Rodné číslo",
   },
   {
-    accessorFn: (visit) => `${visit.probandInfo.birthdate.toDateString()}`,
+    accessorFn: (visit) => format(visit.probandInfo.birthdate, "d.M.yyyy"),
     id: "probandInfo.birthdate",
     header: "Datum narození",
+    sortingFn: (rowA, rowB, columnId) =>
+      compareAsc(
+        parse(`${rowA.getValue(columnId)}`, "d.M.yyyy", new Date()),
+        parse(`${rowB.getValue(columnId)}`, "d.M.yyyy", new Date())
+      ),
   },
   {
     accessorKey: "probandInfo.gender",
