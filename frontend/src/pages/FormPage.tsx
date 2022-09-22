@@ -198,9 +198,10 @@ export const FormPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
   const [isError, setIsError] = useState<boolean>(false); // TODO: create ErrorPage
 
+  const schema = username === undefined ? defaultFormSchema : operatorFormSchema;
   const formMethods = useForm<FormPropType>({
     defaultValues: loadFormDefaultValues(),
-    resolver: yupResolver(username === undefined ? defaultFormSchema : operatorFormSchema),
+    resolver: yupResolver(schema),
     // TODO: add this if the validation on onChange event is too slow:
     // reValidateMode: "onSubmit",
   });
