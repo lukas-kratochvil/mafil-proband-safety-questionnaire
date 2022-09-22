@@ -1,4 +1,5 @@
 import { Button } from "@mui/material";
+import { compareAsc, format, parse } from "date-fns";
 import { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 import { useNavigate } from "react-router-dom";
 import { IActionButtonsProps, VisitsTable } from "../components/table/VisitsTable";
@@ -26,9 +27,15 @@ const header: MRTColumnDef<IVisit>[] = [
     header: "Přístroj",
   },
   {
-    accessorFn: () => new Date().toDateString(),
+    // TODO: change 'visit.createdAt' for some other attribute - firstly, we need to solve which attribute should be created for this purpose
+    accessorFn: (visit) => format(visit.createdAt, "d.M.yyyy H:mm"),
     id: "processedDate",
     header: "Zpracováno",
+    sortingFn: (rowA, rowB, columnId) =>
+      compareAsc(
+        parse(`${rowA.getValue(columnId)}`, "d.M.yyyy H:mm", new Date()),
+        parse(`${rowB.getValue(columnId)}`, "d.M.yyyy H:mm", new Date())
+      ),
   },
   {
     accessorFn: () => "MUNI_operator",
@@ -37,13 +44,10 @@ const header: MRTColumnDef<IVisit>[] = [
   },
   {
     accessorFn: (visit) => {
-      if (visit.state === VisitState.SIGNED) {
-        return "Ano";
+      if (visit.state === VisitState.FANTOM_DONE) {
+        return "Nepodepisuje se";
       }
-      if (visit.state === VisitState.CHECKED) {
-        return "Ne";
-      }
-      return "";
+      return visit.state === VisitState.SIGNED ? "Ano" : "Ne";
     },
     id: "signedUser",
     header: "Podepsáno",
