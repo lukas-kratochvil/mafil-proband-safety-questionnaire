@@ -1,4 +1,4 @@
-import { Grid, Stack, TextField, Typography, useTheme } from "@mui/material";
+import { Grid, Stack, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Controller, useWatch } from "react-hook-form";
 import { IQuestionData } from "../../data/question_data";
@@ -22,6 +22,7 @@ export type AnswerOptionsType = "yes" | "no" | undefined;
 
 const Question = ({ qac, disabled }: IQuestionProps) => {
   const theme = useTheme();
+  const matchesUpSmBreakpoint = useMediaQuery(theme.breakpoints.up("sm"));
   const { username } = useAuth();
   const [question, setQuestion] = useState<IQuestionData>();
   const questionAnswer = useWatch({
@@ -38,7 +39,13 @@ const Question = ({ qac, disabled }: IQuestionProps) => {
   }, [qac.questionId]);
 
   return (
-    <Stack
+    <Grid
+      container
+      direction="row"
+      justifyContent="space-between"
+      alignItems="center"
+      columns={1}
+      columnGap={6}
       sx={{
         "&:hover": {
           borderRadius: "0.25rem",
@@ -47,12 +54,17 @@ const Question = ({ qac, disabled }: IQuestionProps) => {
       }}
     >
       <Grid
-        container
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
+        item
+        xs={1}
+        sm
       >
-        <Typography width="80%">{question?.text}</Typography>
+        <Typography>{question?.text}</Typography>
+      </Grid>
+      <Grid
+        item
+        xs={1}
+        sm="auto"
+      >
         <FormRadioGroup
           name={`answers[${qac.index}].answer`}
           label={`Question: ${qac.questionId}`}
@@ -70,11 +82,15 @@ const Question = ({ qac, disabled }: IQuestionProps) => {
             },
           ]}
           disabled={disabled}
+          sx={{ justifyContent: matchesUpSmBreakpoint ? "flex-end" : "flex-start" }}
         />
         <ErrorFeedback name={`answers[${qac.index}].answer`} />
       </Grid>
       {username !== undefined && questionAnswer === "yes" && (
-        <>
+        <Grid
+          item
+          xs={1}
+        >
           <Controller
             name={`answers[${qac.index}].comment`}
             render={({ field: { value, onChange, ref } }) => (
@@ -90,9 +106,9 @@ const Question = ({ qac, disabled }: IQuestionProps) => {
             )}
           />
           <ErrorFeedback name={`answers[${qac.index}].comment`} />
-        </>
+        </Grid>
       )}
-    </Stack>
+    </Grid>
   );
 };
 
