@@ -13,12 +13,12 @@ export const FormProbandContact = ({ isAuthEditing }: IFormProbandInfoProps) => 
       container
       direction="row"
       spacing={2}
-      columns={4}
+      columns={2}
     >
       {/* 1. row */}
       <Grid
         item
-        xs={4}
+        xs={2}
       >
         <Typography>
           V případě, že budete chtít předat Vaše naměřená data elektronickou cestou, vyplňte údaje níže:
@@ -28,6 +28,7 @@ export const FormProbandContact = ({ isAuthEditing }: IFormProbandInfoProps) => 
       <Grid
         item
         xs={2}
+        sm={1}
       >
         <FormTextField
           name="email"
@@ -39,6 +40,7 @@ export const FormProbandContact = ({ isAuthEditing }: IFormProbandInfoProps) => 
       <Grid
         item
         xs={2}
+        sm={1}
       >
         <FormTextField
           name="phoneNumber"
