@@ -16,12 +16,12 @@ export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => (
       container
       direction="row"
       spacing={2}
-      columns={4}
+      columns={12}
     >
       {isFantom && (
         <Grid
           item
-          xs={4}
+          xs={12}
         >
           <ColoredInfoStripe
             text="Fantom"
@@ -31,7 +31,7 @@ export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => (
       )}
       <Grid
         item
-        xs={4}
+        xs={12}
       >
         <FormAutocomplete
           name="project"
@@ -42,7 +42,9 @@ export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => (
       </Grid>
       <Grid
         item
-        xs={3}
+        xs={12}
+        sm={6}
+        md={8}
       >
         <FormAutocomplete
           name="magnetDevice"
@@ -53,7 +55,9 @@ export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => (
       </Grid>
       <Grid
         item
-        xs={1}
+        xs={12}
+        sm={6}
+        md={4}
       >
         <FormDatePicker
           name="measurementDate"
