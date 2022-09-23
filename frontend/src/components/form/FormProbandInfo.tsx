@@ -65,7 +65,8 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
         {/* 1. row */}
         <Grid
           item
-          xs={6}
+          xs={12}
+          sm={6}
         >
           <FormTextField
             name="name"
@@ -76,7 +77,8 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
         </Grid>
         <Grid
           item
-          xs={6}
+          xs={12}
+          sm={6}
         >
           <FormTextField
             name="surname"
@@ -96,7 +98,9 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
         {/* 2. row */}
         <Grid
           item
-          xs={4}
+          xs={12}
+          sm={6}
+          md={4}
         >
           <FormTextField
             name="personalId"
@@ -116,7 +120,9 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
         </Grid>
         <Grid
           item
-          xs={4}
+          xs={12}
+          sm={6}
+          md={4}
         >
           <FormDatePicker
             name="birthdate"
@@ -128,7 +134,9 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
         </Grid>
         <Grid
           item
-          xs={4}
+          xs={12}
+          sm={6}
+          md={4}
         >
           <FormAutocomplete
             name="gender"
@@ -142,7 +150,9 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
         {/* 3. row */}
         <Grid
           item
-          xs={4}
+          xs={12}
+          sm={6}
+          md={4}
         >
           <FormAutocomplete
             name="nativeLanguage"
@@ -154,7 +164,9 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
         </Grid>
         <Grid
           item
-          xs={4}
+          xs={12}
+          sm={6}
+          md={4}
         >
           <FormTextField
             name="height"
@@ -166,7 +178,9 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
         </Grid>
         <Grid
           item
-          xs={4}
+          xs={12}
+          sm={6}
+          md={4}
         >
           <FormTextField
             name="weight"
@@ -180,19 +194,9 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
         {/* 4. row */}
         <Grid
           item
-          xs={4}
-        >
-          <FormAutocomplete
-            name="sideDominance"
-            label="Stranová dominance"
-            options={sideDominance}
-            disabled={!isAuthEditing}
-          />
-          <ErrorFeedback name="sideDominance" />
-        </Grid>
-        <Grid
-          item
-          xs={4}
+          xs={12}
+          sm={6}
+          md={4}
         >
           <FormAutocomplete
             name="visualCorrection"
@@ -204,7 +208,9 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
         </Grid>
         <Grid
           item
-          xs={4}
+          xs={12}
+          sm={6}
+          md={4}
         >
           <FormTextField
             name="visualCorrectionValue"
@@ -218,6 +224,20 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             }
           />
           <ErrorFeedback name="visualCorrectionValue" />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={4}
+        >
+          <FormAutocomplete
+            name="sideDominance"
+            label="Stranová dominance"
+            options={sideDominance}
+            disabled={!isAuthEditing}
+          />
+          <ErrorFeedback name="sideDominance" />
         </Grid>
       </Grid>
     </FormCard>
