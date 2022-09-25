@@ -1,16 +1,10 @@
-import { Button, Card, Grid, Typography, useTheme } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Card, Grid, Typography, useTheme } from "@mui/material";
 import { useAuth } from "../../hooks/auth/Auth";
+import { LogOutButton } from "./LogOutButton";
 
 export const LoginOperator = () => {
   const theme = useTheme();
-  const { username, signOut } = useAuth();
-  const navigate = useNavigate();
-
-  const handleSignOut = () => {
-    signOut();
-    navigate("/auth");
-  };
+  const { username } = useAuth();
 
   return (
     <Grid
@@ -25,6 +19,7 @@ export const LoginOperator = () => {
           bgcolor: theme.palette.primary.contrastText,
           maxWidth: "15rem",
           marginLeft: "0.5rem",
+          marginRight: "1rem",
           paddingX: "1rem",
           paddingY: "0.5rem",
           textAlign: "center",
@@ -34,21 +29,7 @@ export const LoginOperator = () => {
       >
         <Typography noWrap>{username}</Typography>
       </Card>
-      <Button
-        onClick={handleSignOut}
-        sx={{
-          marginLeft: "1rem",
-          bgcolor: theme.palette.common.black,
-          color: theme.palette.primary.contrastText,
-          border: 1,
-          "&:hover": {
-            bgcolor: theme.palette.common.black,
-            color: "pink",
-          },
-        }}
-      >
-        Odhlásit se
-      </Button>
+      <LogOutButton />
     </Grid>
   );
 };

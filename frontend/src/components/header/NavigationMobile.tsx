@@ -1,9 +1,9 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Box, Button, Container, Grid, IconButton, Menu, MenuItem, Tooltip, Typography, useTheme } from "@mui/material";
+import { Box, Container, Grid, IconButton, Menu, MenuItem, Tooltip, Typography, useTheme } from "@mui/material";
 import { bindMenu, bindTrigger, usePopupState } from "material-ui-popup-state/hooks";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth/Auth";
+import { LogOutButton } from "./LogOutButton";
 import { INavigationItem } from "./Navigation";
 
 interface INavigationMobileProps {
@@ -12,14 +12,7 @@ interface INavigationMobileProps {
 
 export const NavigationMobile = ({ items }: INavigationMobileProps) => {
   const theme = useTheme();
-  const { username, signOut } = useAuth();
-  const navigate = useNavigate();
-
-  const handleSignOut = () => {
-    signOut();
-    navigate("/auth");
-  };
-
+  const { username } = useAuth();
   const popupState = usePopupState({
     variant: "popover",
     popupId: "menu",
@@ -63,19 +56,7 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
             <Typography noWrap>{username}</Typography>
           </Grid>
           <Container sx={{ width: "fit-content" }}>
-            <Button
-              onClick={handleSignOut}
-              sx={{
-                bgcolor: theme.palette.common.black,
-                color: theme.palette.primary.contrastText,
-                "&:hover": {
-                  bgcolor: theme.palette.common.black,
-                  color: "pink",
-                },
-              }}
-            >
-              Odhlásit se
-            </Button>
+            <LogOutButton />
           </Container>
         </Box>
         {items.map((item, index) => (
