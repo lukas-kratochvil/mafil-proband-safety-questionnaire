@@ -23,6 +23,7 @@ export const LoginOperator = () => {
       <Card
         sx={{
           bgcolor: theme.palette.primary.contrastText,
+          maxWidth: "15rem",
           marginLeft: "0.5rem",
           paddingX: "1rem",
           paddingY: "0.5rem",
@@ -36,7 +37,7 @@ export const LoginOperator = () => {
       <Button
         onClick={handleSignOut}
         sx={{
-          marginLeft: "2rem",
+          marginLeft: "1rem",
           bgcolor: theme.palette.common.black,
           color: theme.palette.primary.contrastText,
           border: 1,
