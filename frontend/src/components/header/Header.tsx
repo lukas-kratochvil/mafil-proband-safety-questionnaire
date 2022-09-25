@@ -16,7 +16,7 @@ const CeitecMafilLogo = () => {
       component="img"
       alt="CEITEC-MAFIL logo"
       src="/logo_mafil.png"
-      sx={{ height: matchesOnlyXsBreakpoint ? "2rem" : "3rem" }}
+      sx={{ height: matchesOnlyXsBreakpoint ? "2.25rem" : "3rem" }}
     />
   );
 };
@@ -62,7 +62,7 @@ export const Header = () => {
         >
           {matchesDownMdBreakpoint ? (
             <>
-              <NavigationMobile items={navigationItems} />
+              {username !== undefined && <NavigationMobile items={navigationItems} />}
               <CeitecMafilLogo />
               <LanguageMenu />
             </>
