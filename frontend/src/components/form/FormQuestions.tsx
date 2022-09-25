@@ -122,7 +122,7 @@ export const FormQuestions = ({ title, qacs, isAuthEditing }: IFormQuestionsProp
   <FormCard title={title}>
     <Stack
       spacing="0.5rem"
-      minWidth="100%"
+      width="100%"
     >
       {qacs.map((qac) => (
         <Question

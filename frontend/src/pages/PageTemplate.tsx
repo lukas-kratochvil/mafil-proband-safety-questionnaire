@@ -23,7 +23,7 @@ export const PageTemplate = ({ children, centerize, isTablePage }: PropsWithChil
             width: "100%",
             maxWidth: isTablePage ? "95%" : "67.5rem",
             marginX: "auto",
-            marginY: centerize ? "auto" : "3rem",
+            marginY: centerize ? "auto" : "2rem",
             justifyContent: centerize ? "center" : undefined,
             alignItems: centerize ? "center" : undefined,
           }}

@@ -14,7 +14,7 @@ const InlineBoldText = ({ children }: PropsWithChildren) => (
 export const FormBeforeExamination = () => (
   <FormCard title="Před vyšetřením">
     <Typography
-      minWidth="100%"
+      width="100%"
       component="div"
     >
       Před vyšetřením si prosím&nbsp;

@@ -142,7 +142,7 @@ export const VisitDetailPage = () => {
 
   return (
     <PageTemplate>
-      <CardBox title={`Detail visity s visitId: ${visit?.visitId}`}>
+      <CardBox title={`Detail visity: ${visit?.visitId}`}>
         <Stack
           spacing="1rem"
           justifyContent="center"
