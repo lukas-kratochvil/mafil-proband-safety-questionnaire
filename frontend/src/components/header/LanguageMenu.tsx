@@ -49,10 +49,10 @@ export const LanguageMenu = () => {
 
   return (
     <>
-      <Tooltip title="Choose language">
+      <Tooltip title="Vyberte jazyk">
         <IconButton
-          size="small"
           {...bindTrigger(popupState)}
+          size="small"
         >
           <LanguageIcon
             style={{
@@ -64,13 +64,14 @@ export const LanguageMenu = () => {
         </IconButton>
       </Tooltip>
       <Menu
+        {...bindMenu(popupState)}
         disableScrollLock
         PaperProps={{
           elevation: 0,
           sx: {
             overflow: "visible",
             filter: "drop-shadow(0 0.25rem 0.5rem rgba(0, 0, 0, 0.32))",
-            mt: 1.5,
+            marginTop: "0.75rem",
             backgroundColor: paperBgColor,
             "&:before": {
               content: '""',
@@ -97,11 +98,10 @@ export const LanguageMenu = () => {
         sx={{
           position: "absolute",
         }}
-        {...bindMenu(popupState)}
       >
-        {languages.map((language, index) => (
+        {languages.map((language) => (
           <LanguageItem
-            key={index}
+            key={language.label}
             {...language}
           />
         ))}
