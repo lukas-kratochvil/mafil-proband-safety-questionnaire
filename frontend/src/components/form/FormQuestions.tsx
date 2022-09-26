@@ -93,12 +93,11 @@ const Question = ({ qac, disabled }: IQuestionProps) => {
         >
           <Controller
             name={`answers[${qac.index}].comment`}
-            render={({ field: { value, onChange, ref } }) => (
+            render={({ field: { ref, ...rest } }) => (
               <TextField
-                label="Komentář"
-                value={value}
-                onChange={onChange}
+                {...rest}
                 inputRef={ref}
+                label="Komentář"
                 size="small"
                 multiline
                 disabled={disabled}

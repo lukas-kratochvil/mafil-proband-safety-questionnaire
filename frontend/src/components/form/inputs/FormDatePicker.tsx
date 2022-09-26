@@ -12,7 +12,7 @@ interface IFormDatePicker extends IFormDefaultInputProps {
 export const FormDatePicker = ({ name, label, disabled, maxDate }: IFormDatePicker) => (
   <Controller
     name={name}
-    render={({ field: { value, onChange, ref } }) => (
+    render={({ field }) => (
       <LocalizationProvider
         dateAdapter={AdapterDateFns}
         /**
@@ -23,13 +23,19 @@ export const FormDatePicker = ({ name, label, disabled, maxDate }: IFormDatePick
         adapterLocale={CsLocale}
       >
         <DesktopDatePicker
-          value={value}
-          onChange={onChange}
-          ref={ref}
+          value={field.value}
+          onChange={field.onChange}
+          ref={field.ref}
           label={label}
           inputFormat="dd.MM.yyyy"
           maxDate={maxDate}
-          renderInput={(params) => <TextField {...params} />}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              onBlur={field.onBlur}
+              name={field.name}
+            />
+          )}
           disabled={disabled}
         />
       </LocalizationProvider>

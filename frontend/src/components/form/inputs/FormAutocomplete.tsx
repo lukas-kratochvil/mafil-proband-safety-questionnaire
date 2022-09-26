@@ -9,17 +9,19 @@ interface IFormAutocompleteProps extends IFormDefaultInputProps {
 export const FormAutocomplete = ({ name, label, disabled, options }: IFormAutocompleteProps) => (
   <Controller
     name={name}
-    render={({ field: { value, onChange, ref } }) => (
+    render={({ field }) => (
       <Autocomplete
         options={options}
-        value={value}
-        onChange={(_, val) => onChange(val)}
+        value={field.value}
+        onChange={(_, val) => field.onChange(val)}
+        onBlur={field.onBlur}
         disabled={disabled}
         renderInput={(params) => (
           <TextField
             {...params}
             label={label}
-            inputRef={ref}
+            inputRef={field.ref}
+            name={field.name}
           />
         )}
       />

@@ -19,10 +19,9 @@ export const FormRadioGroup = ({ name, disabled, radios, defaultValue, sx }: IFo
     name={name}
     // useForm() does not set default value for the radio group component, we need to set the defaultValue manually here due to: https://github.com/react-hook-form/react-hook-form/discussions/8153#discussioncomment-2533857
     defaultValue={defaultValue ?? null}
-    render={({ field: { value, onChange } }) => (
+    render={({ field }) => (
       <RadioGroup
-        value={value}
-        onChange={onChange}
+        {...field}
         row
         sx={sx}
       >
