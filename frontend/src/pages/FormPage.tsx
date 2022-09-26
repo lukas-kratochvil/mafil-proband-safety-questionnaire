@@ -243,7 +243,9 @@ export const FormPage = () => {
   }, [id]);
 
   useEffect(() => {
-    if (visit !== undefined) {
+    if (visit === undefined) {
+      setValue("answers", qacs);
+    } else {
       console.log("SETTING DEFAULT VALUES");
       const defaultValues = loadFormDefaultValuesFromVisit(visit);
       type DefaultValuesPropertyType = keyof typeof defaultValues;
@@ -257,7 +259,7 @@ export const FormPage = () => {
         );
       });
     }
-  }, [setValue, visit]);
+  }, [qacs, setValue, visit]);
 
   let submitButton: ISubmitButtonProps;
   let buttons: IButtonProps[] = [];
