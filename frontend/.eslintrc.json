@@ -20,6 +20,7 @@
     "plugins": [
         "react",
         "react-hooks",
+        "react-hooks-addons",
         "@typescript-eslint",
         "prettier"
     ],
@@ -42,7 +43,8 @@
         "react/react-in-jsx-scope": "off",
         "react/require-default-props": "off",
         "react-hooks/exhaustive-deps": "warn",
-        "react-hooks/rules-of-hooks": "error"
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks-addons/no-unused-deps": "warn"
     },
     "settings": {
         "import/resolver": {
