@@ -23,6 +23,11 @@ const getColoredInfoStripe = (visitState?: VisitState): IColoredInfoStripeProps 
       };
     case VisitState.CHECKED:
       return {
+        text: "Vyběr způsobu podepsání visity",
+        color: "info",
+      };
+    case VisitState.SIGN_CHOSEN:
+      return {
         text: "Čeká se na potvrzení podpisu",
         color: "warning",
       };
@@ -52,7 +57,7 @@ const getButtons = (
   setVisitState: React.Dispatch<React.SetStateAction<VisitState | undefined>>
 ): IButtonProps[] => {
   switch (visitState) {
-    case VisitState.NEW:
+    case VisitState.CHECKED:
       return [
         {
           title: "Stáhnout PDF a fyzicky podepsat",
@@ -62,19 +67,19 @@ const getButtons = (
              *  - PDF will be generated and stored in DB on the server
              *  - open system download window, so the auth user can choose where to store it (or show the print windows instead?)
              */
-            setVisitState(VisitState.CHECKED);
+            setVisitState(VisitState.SIGN_CHOSEN);
           },
         },
         {
           title: "Podepsat elektronicky",
           onClick: () => {
             // TODO: PDF will be generated and stored in DB on the server
-            setVisitState(VisitState.CHECKED);
+            setVisitState(VisitState.SIGN_CHOSEN);
           },
           disabled: true,
         },
       ];
-    case VisitState.CHECKED:
+    case VisitState.SIGN_CHOSEN:
       return [
         {
           title: "Potvrdit podpis",

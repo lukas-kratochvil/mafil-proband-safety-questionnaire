@@ -17,6 +17,7 @@ export interface IVisit {
 export enum VisitState {
   NEW,
   CHECKED,
+  SIGN_CHOSEN,
   SIGNED,
   FANTOM_NEW,
   FANTOM_DONE,
