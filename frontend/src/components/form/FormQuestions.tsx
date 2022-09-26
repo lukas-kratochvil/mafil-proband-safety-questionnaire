@@ -100,7 +100,7 @@ const Question = ({ qac, disabled }: IQuestionProps) => {
                 label="Komentář"
                 size="small"
                 multiline
-                disabled={disabled}
+                disabled={questionAnswer !== "yes" && disabled}
               />
             )}
           />
