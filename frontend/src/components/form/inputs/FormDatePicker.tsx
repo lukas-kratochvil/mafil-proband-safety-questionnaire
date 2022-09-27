@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material";
-import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import CsLocale from "date-fns/locale/cs";
 import { Controller } from "react-hook-form";
@@ -22,7 +22,7 @@ export const FormDatePicker = ({ name, label, disabled, maxDate }: IFormDatePick
          */
         adapterLocale={CsLocale}
       >
-        <DesktopDatePicker
+        <DatePicker
           value={field.value}
           onChange={field.onChange}
           ref={field.ref}
