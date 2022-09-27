@@ -18,7 +18,7 @@ const getColoredInfoStripe = (visitState?: VisitState): IColoredInfoStripeProps 
   switch (visitState) {
     case VisitState.NEW:
       return {
-        text: "Nepodepsáno",
+        text: "Nezkontrolováno",
         color: "error",
       };
     case VisitState.CHECKED:
