@@ -23,7 +23,7 @@ const getColoredInfoStripe = (visitState?: VisitState): IColoredInfoStripeProps 
       };
     case VisitState.CHECKED:
       return {
-        text: "Vyběr způsobu podepsání visity",
+        text: "Výběr způsobu podepsání visity",
         color: "info",
       };
     case VisitState.SIGN_CHOSEN:
@@ -36,7 +36,7 @@ const getColoredInfoStripe = (visitState?: VisitState): IColoredInfoStripeProps 
         text: "Podepsáno",
         color: "success",
       };
-    case VisitState.FANTOM_NEW: // TODO: remove this, only for the testing purpose
+    case VisitState.FANTOM_NEW:
     case VisitState.FANTOM_DONE:
       return {
         text: "Fantom se nepodepisuje",

@@ -11,7 +11,9 @@ export const fetchWaitingRoomVisits = async (): Promise<IVisit[]> =>
 
 // TODO: get visits from MAFIL DB – all the visits with assigned visitName and generated PDF are fetched from MAFIL DB
 export const fetchRecentVisits = async (): Promise<IVisit[]> =>
-  dummyVisits.filter((visit) => [VisitState.CHECKED, VisitState.SIGNED, VisitState.FANTOM_DONE].includes(visit.state));
+  dummyVisits.filter((visit) =>
+    [VisitState.CHECKED, VisitState.SIGN_CHOSEN, VisitState.SIGNED, VisitState.FANTOM_DONE].includes(visit.state)
+  );
 
 // TODO: get questions from DB
 export const fetchCurrentQuestions = async (): Promise<IQuestionData[]> => questions;
