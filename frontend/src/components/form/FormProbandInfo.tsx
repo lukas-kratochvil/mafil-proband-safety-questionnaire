@@ -62,7 +62,6 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
         spacing={2}
         columns={12}
       >
-        {/* 1. row */}
         <Grid
           item
           xs={12}
@@ -95,7 +94,6 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           <Divider flexItem />
         </Grid>
 
-        {/* 2. row */}
         <Grid
           item
           xs={12}
@@ -146,8 +144,6 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           />
           <ErrorFeedback name="gender" />
         </Grid>
-
-        {/* 3. row */}
         <Grid
           item
           xs={12}
@@ -190,8 +186,6 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           />
           <ErrorFeedback name="weight" />
         </Grid>
-
-        {/* 4. row */}
         <Grid
           item
           xs={12}

@@ -68,7 +68,7 @@ const RecentVisitsActionButtons = ({ visitId }: IActionButtonsProps) => {
       <Button
         variant="contained"
         onClick={() => {
-          // TODO: create new form with the same data as the original form
+          // TODO: create new form in DB with the same data as the original form
           const initialVisit = getDummyVisit(visitId);
 
           if (initialVisit === undefined) {

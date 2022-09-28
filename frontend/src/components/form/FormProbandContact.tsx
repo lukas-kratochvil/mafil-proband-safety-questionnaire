@@ -15,7 +15,6 @@ export const FormProbandContact = ({ isAuthEditing }: IFormProbandInfoProps) => 
       spacing={2}
       columns={2}
     >
-      {/* 1. row */}
       <Grid
         item
         xs={2}
@@ -24,7 +23,6 @@ export const FormProbandContact = ({ isAuthEditing }: IFormProbandInfoProps) => 
           V případě, že budete chtít předat Vaše naměřená data elektronickou cestou, vyplňte údaje níže:
         </Typography>
       </Grid>
-      {/* 2. row */}
       <Grid
         item
         xs={2}
