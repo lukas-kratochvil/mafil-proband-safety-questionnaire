@@ -82,7 +82,16 @@ export const createVisit = (initialVisit: IVisit, state: VisitState): IVisit => 
     createdAt: new Date(+`16630${+newId % 10}0000000`),
     visitId: `${initialVisit.projectInfo.isFantom ? "fantom" : "visit"}${newId}`,
     state,
-    projectInfo: { ...initialVisit.projectInfo },
+    projectInfo:
+      state === VisitState.NEW
+        ? {
+            ...initialVisit.projectInfo,
+            project: null,
+            device: null,
+          }
+        : {
+            ...initialVisit.projectInfo,
+          },
     probandInfo: {
       ...initialVisit.probandInfo,
       birthdate: new Date((initialVisit.probandInfo.birthdate.valueOf() % 1000000000) + +newId * 10000000),
