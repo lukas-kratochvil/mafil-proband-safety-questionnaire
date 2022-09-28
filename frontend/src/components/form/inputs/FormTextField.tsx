@@ -1,13 +1,14 @@
 import { InputAdornment, TextField } from "@mui/material";
-import { ReactNode } from "react";
+import { HTMLInputTypeAttribute, ReactNode } from "react";
 import { Controller } from "react-hook-form";
 import { IFormDefaultInputProps } from "./form_input";
 
 interface IFormTextFieldProps extends IFormDefaultInputProps {
+  type?: HTMLInputTypeAttribute;
   endAdornmentLabel?: ReactNode;
 }
 
-export const FormTextField = ({ name, label, disabled, endAdornmentLabel }: IFormTextFieldProps) => (
+export const FormTextField = ({ name, label, disabled, type, endAdornmentLabel }: IFormTextFieldProps) => (
   <Controller
     name={name}
     render={({ field: { ref, ...rest } }) => (
@@ -16,6 +17,7 @@ export const FormTextField = ({ name, label, disabled, endAdornmentLabel }: IFor
         inputRef={ref}
         label={label}
         disabled={disabled}
+        type={type ?? "text"}
         InputProps={{
           endAdornment: <InputAdornment position="end">{endAdornmentLabel}</InputAdornment>,
         }}

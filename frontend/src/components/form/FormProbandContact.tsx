@@ -45,6 +45,7 @@ export const FormProbandContact = ({ isAuthEditing }: IFormProbandInfoProps) => 
         <FormTextField
           name="phoneNumber"
           label="Telefonní číslo"
+          type="tel"
           disabled={!isAuthEditing}
         />
         <ErrorFeedback name="phoneNumber" />
