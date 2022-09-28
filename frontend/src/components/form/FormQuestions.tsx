@@ -1,6 +1,6 @@
 import { Grid, Stack, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Controller, useWatch } from "react-hook-form";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { IQuestionData } from "../../data/question_data";
 import { IQac } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
@@ -25,18 +25,26 @@ const Question = ({ qac, disabled }: IQuestionProps) => {
   const matchesUpSmBreakpoint = useMediaQuery(theme.breakpoints.up("sm"));
   const { username } = useAuth();
   const [question, setQuestion] = useState<IQuestionData>();
+  const { setValue } = useFormContext();
   const questionAnswer = useWatch({
     name: `answers[${qac.index}].answer`,
     defaultValue: qac.answer,
   });
 
   useEffect(() => {
+    // TODO: fetch question from DB
     const fetchData = async () => {
       setQuestion(await fetchQuestion(qac.questionId));
     };
 
     fetchData();
   }, [qac.questionId]);
+
+  useEffect(() => {
+    if (questionAnswer !== "yes") {
+      setValue(`answers[${qac.index}].comment`, "");
+    }
+  }, [qac.index, questionAnswer, setValue]);
 
   return (
     <Grid
