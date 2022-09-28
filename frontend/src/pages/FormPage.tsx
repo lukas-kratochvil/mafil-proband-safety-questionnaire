@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, useMediaQuery, useTheme } from "@mui/material";
 import { isEqual } from "date-fns";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -188,6 +188,8 @@ interface IButtonProps {
 }
 
 export const FormPage = () => {
+  const theme = useTheme();
+  const matchesDownSmBreakpoint = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
   const { username } = useAuth();
   const { id } = useParams();
@@ -373,9 +375,10 @@ export const FormPage = () => {
           {username === undefined && <FormExaminationConsent />}
           <Grid
             container
-            direction="row"
+            direction={matchesDownSmBreakpoint ? "column" : "row"}
             justifyContent="center"
-            gap="1.5rem"
+            gap={matchesDownSmBreakpoint ? "0.5rem" : "1.5rem"}
+            sx={{ width: matchesDownSmBreakpoint ? "12rem" : "fit-content" }}
           >
             <Button
               type="submit"
@@ -388,9 +391,9 @@ export const FormPage = () => {
             </Button>
             {buttons.map((button, index) => (
               <Button
+                key={index}
                 variant="contained"
                 onClick={button.onClick}
-                key={index}
               >
                 {button.title}
               </Button>
