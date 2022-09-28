@@ -43,7 +43,7 @@ interface FormPropType {
   answers: IQac[];
 }
 
-// Autocomplete component default value must be one of the options or null
+// Autocomplete component default value must be one of the options provided or null
 const loadFormDefaultValues = (): FormPropType => ({
   project: null,
   device: null,
@@ -64,25 +64,13 @@ const loadFormDefaultValues = (): FormPropType => ({
   answers: [],
 });
 
-// Autocomplete component default value must be one of the options or null
+// Autocomplete component default value must be one of the options provided or null
 const loadFormDefaultValuesFromVisit = (visit: IVisit): FormPropType => ({
   project: visit.projectInfo.project ?? null,
   device: visit.projectInfo.device ?? null,
   measurementDate: visit.projectInfo.measurementDate ?? new Date(),
-  name: visit.probandInfo.name,
-  surname: visit.probandInfo.surname,
-  personalId: visit.probandInfo.personalId,
-  birthdate: visit.probandInfo.birthdate,
-  gender: visit.probandInfo.gender,
-  nativeLanguage: visit.probandInfo.nativeLanguage,
-  height: visit.probandInfo.height,
-  weight: visit.probandInfo.weight,
-  sideDominance: visit.probandInfo.sideDominance,
-  visualCorrection: visit.probandInfo.visualCorrection,
-  visualCorrectionValue: visit.probandInfo.visualCorrectionValue,
-  email: visit.probandInfo.email,
-  phoneNumber: visit.probandInfo.phoneNumber,
-  answers: visit.answers,
+  ...visit.probandInfo,
+  answers: visit.answers.map((answer) => ({ ...answer })),
 });
 
 const answersSchema = object({
