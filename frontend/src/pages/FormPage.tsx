@@ -66,8 +66,8 @@ const loadFormDefaultValues = (): FormPropType => ({
 
 // Autocomplete component default value must be one of the options or null
 const loadFormDefaultValuesFromVisit = (visit: IVisit): FormPropType => ({
-  project: visit.projectInfo.projectName ?? null,
-  magnetDevice: visit.projectInfo.magnetDeviceName ?? null,
+  project: visit.projectInfo.project ?? null,
+  magnetDevice: visit.projectInfo.magnetDevice ?? null,
   measurementDate: visit.projectInfo.measurementDate ?? new Date(),
   name: visit.probandInfo.name,
   surname: visit.probandInfo.surname,
