@@ -25,7 +25,7 @@ type TextFieldNumberInput = string | number;
 
 interface FormPropType {
   project: string | null;
-  magnetDevice: string | null;
+  device: string | null;
   measurementDate: Date | null;
   name: string;
   surname: string;
@@ -46,7 +46,7 @@ interface FormPropType {
 // Autocomplete component default value must be one of the options or null
 const loadFormDefaultValues = (): FormPropType => ({
   project: null,
-  magnetDevice: null,
+  device: null,
   measurementDate: null,
   name: "",
   surname: "",
@@ -67,7 +67,7 @@ const loadFormDefaultValues = (): FormPropType => ({
 // Autocomplete component default value must be one of the options or null
 const loadFormDefaultValuesFromVisit = (visit: IVisit): FormPropType => ({
   project: visit.projectInfo.project ?? null,
-  magnetDevice: visit.projectInfo.magnetDevice ?? null,
+  device: visit.projectInfo.device ?? null,
   measurementDate: visit.projectInfo.measurementDate ?? new Date(),
   name: visit.probandInfo.name,
   surname: visit.probandInfo.surname,
@@ -94,7 +94,7 @@ const answersSchema = object({
 
 const defaultFormSchema = object({
   project: string().nullable(),
-  magnetDevice: string().nullable(),
+  device: string().nullable(),
   measurementDate: date().typeError("Datum není validní.").nullable(),
   name: string().trim().required("Jméno musí být vyplněno."),
   surname: string().trim().required("Jméno musí být vyplněno."),
@@ -172,7 +172,7 @@ const operatorAnswersSchema = answersSchema.shape({
 
 const operatorFormSchema = defaultFormSchema.shape({
   project: string().nullable().required("Projekt musí být vyplněn."),
-  magnetDevice: string().nullable().required("Přístroj magnetické rezonance musí být vyplněný."),
+  device: string().nullable().required("Přístroj magnetické rezonance musí být vyplněný."),
   measurementDate: date().nullable().required("Datum měření musí být vyplněno."),
   answers: array().of(operatorAnswersSchema).required("Všechny bezpečnostní otázky musí být zodpovězeny."),
 });

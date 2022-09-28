@@ -47,11 +47,11 @@ export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => (
         md={8}
       >
         <FormAutocomplete
-          name="magnetDevice"
+          name="device"
           label="Přístroj"
           options={magnetDevices}
         />
-        <ErrorFeedback name="magnetDevice" />
+        <ErrorFeedback name="device" />
       </Grid>
       <Grid
         item

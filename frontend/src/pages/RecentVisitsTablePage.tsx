@@ -23,7 +23,7 @@ const header: MRTColumnDef<IVisit>[] = [
     header: "Projekt",
   },
   {
-    accessorKey: "projectInfo.magnetDevice",
+    accessorKey: "projectInfo.device",
     header: "Přístroj",
   },
   {

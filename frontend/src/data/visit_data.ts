@@ -27,7 +27,7 @@ interface IProjectInfo {
   projectId: string;
   project: string | null;
   magnetDeviceId: string;
-  magnetDevice: string | null;
+  device: string | null;
   isFantom: boolean;
   measurementDate: Date;
 }
@@ -125,7 +125,7 @@ export const dummyVisitNew: IVisit = {
     projectId: "1",
     project: projects[0],
     magnetDeviceId: "1",
-    magnetDevice: magnetDevices[0],
+    device: magnetDevices[0],
     isFantom: false,
     measurementDate: new Date(),
   },
@@ -162,7 +162,7 @@ export const dummyFantomVisitNew: IVisit = {
     projectId: "",
     project: null,
     magnetDeviceId: "",
-    magnetDevice: null,
+    device: null,
     isFantom: true,
     measurementDate: new Date(),
   },
