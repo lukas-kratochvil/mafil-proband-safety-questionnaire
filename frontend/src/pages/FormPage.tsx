@@ -311,15 +311,15 @@ export const FormPage = () => {
     };
     buttons = [
       {
-        title: "Zrušit",
-        onClick: () => {
-          navigate("/auth/waiting-room");
-        },
-      },
-      {
         title: "Editovat",
         onClick: () => {
           setIsAuthEditing(true);
+        },
+      },
+      {
+        title: "Zrušit",
+        onClick: () => {
+          navigate("/auth/waiting-room");
         },
       },
     ];
