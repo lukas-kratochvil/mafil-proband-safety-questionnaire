@@ -66,6 +66,7 @@ const getButtons = (
              * TODO:
              *  - PDF will be generated and stored in DB on the server
              *  - open system download window, so the auth user can choose where to store it (or show the print windows instead?)
+             *  - check my Firefox bookmarks for some interesting websites!!!
              */
             setVisitState(VisitState.SIGN_CHOSEN);
           },
@@ -155,6 +156,7 @@ export const VisitDetailPage = () => {
           padding="1rem"
         >
           {coloredInfoStripe && <ColoredInfoStripe {...coloredInfoStripe} />}
+          {/* TODO: set width of <iframe> so that there's not so much space on the sides - depends on the generated PDF width */}
           <iframe
             className="visit-pdf"
             src={`${visit?.pdf}#view=fitH`}
