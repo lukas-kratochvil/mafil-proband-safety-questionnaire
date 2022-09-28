@@ -271,6 +271,13 @@ export const FormPage = () => {
         navigate(`/auth/visit-detail/${id}`);
       },
     };
+    buttons = [
+      {
+        title: "Zrušit",
+        // Navigate back to the previous page
+        onClick: () => navigate(-1),
+      },
+    ];
   } else if (isAuthEditing) {
     submitButton = {
       title: "Uložit změny",
@@ -306,9 +313,7 @@ export const FormPage = () => {
       },
       {
         title: "Zrušit",
-        onClick: () => {
-          navigate("/auth/waiting-room");
-        },
+        onClick: () => navigate("/auth/waiting-room"),
       },
     ];
   }
