@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import { magnetDevices, projects } from "../../data/form_data";
+import { devices, projects } from "../../data/form_data";
 import { ColoredInfoStripe } from "../informative/ColoredInfoStripe";
 import { ErrorFeedback } from "./ErrorFeedback";
 import { FormCard } from "./FormCard";
@@ -49,7 +49,7 @@ export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => (
         <FormAutocomplete
           name="device"
           label="Přístroj"
-          options={magnetDevices}
+          options={devices}
         />
         <ErrorFeedback name="device" />
       </Grid>
