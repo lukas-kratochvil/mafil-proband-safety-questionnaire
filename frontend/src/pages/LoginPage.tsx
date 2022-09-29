@@ -16,42 +16,35 @@ export const LoginPage = () => {
 
   return (
     <PageTemplate centerize>
-      <CardBox
-        title="Bezpečnostní dotazník probanda"
-        width="30rem"
-      >
-        <Typography
+      <CardBox title="Bezpečnostní dotazník probanda">
+        <Stack
+          spacing="1rem"
           sx={{
-            paddingTop: "1.5rem",
-            paddingLeft: "3rem",
+            paddingY: "1.5rem",
+            paddingX: "2rem",
           }}
         >
-          Přihlásit se přes:
-        </Typography>
-        <Stack
-          spacing={1}
-          paddingTop="1rem"
-          paddingBottom="2rem"
-          paddingX="8rem"
-        >
-          <Button
-            variant="outlined"
-            onClick={() => handleSignIn(IAuthMethod.MUNI)}
-            startIcon={
-              <Avatar
-                variant="square"
-                alt="MUNI logo"
-                src="/logo_muni.png"
-                sx={{
-                  marginRight: "0.5rem",
-                  width: "2rem",
-                  height: "2rem",
-                }}
-              />
-            }
-          >
-            MUNI
-          </Button>
+          <Typography>Přihlásit se přes:</Typography>
+          <Stack spacing="0.5rem">
+            <Button
+              variant="outlined"
+              onClick={() => handleSignIn(IAuthMethod.MUNI)}
+              startIcon={
+                <Avatar
+                  variant="square"
+                  alt="MUNI logo"
+                  src="/logo_muni.png"
+                  sx={{
+                    marginRight: "0.5rem",
+                    width: "2rem",
+                    height: "2rem",
+                  }}
+                />
+              }
+            >
+              MUNI
+            </Button>
+          </Stack>
         </Stack>
       </CardBox>
     </PageTemplate>
