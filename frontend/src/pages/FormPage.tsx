@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Grid, useMediaQuery, useTheme } from "@mui/material";
+import { Button, Grid, Stack, useMediaQuery, useTheme } from "@mui/material";
 import { isEqual } from "date-fns";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -334,64 +334,66 @@ export const FormPage = () => {
   return (
     <PageTemplate>
       <FormProvider {...formMethods}>
-        <form
-          className="visit-form"
-          onSubmit={handleSubmit(onSubmit, onError)}
-        >
-          {username === undefined && <FormEntryInfo />}
-          {username !== undefined && <FormProjectInfo isFantom={isFantom} />}
-          <FormProbandInfo isAuthEditing={username === undefined || isAuthEditing} />
-          {!isFantom && <FormProbandContact isAuthEditing={username === undefined || isAuthEditing} />}
-          {username === undefined && <FormSafetyInfo />}
-          {username !== undefined && !isFantom && (
-            <>
-              <FormQuestions
-                title="Část 1"
-                qacs={qacs.filter((qac) => qac.partNumber === 1)}
-                isAuthEditing={isAuthEditing}
-              />
-              <FormQuestions
-                title="Část 2"
-                qacs={qacs.filter((qac) => qac.partNumber === 2)}
-                isAuthEditing={isAuthEditing}
-              />
-            </>
-          )}
-          {username === undefined && (
-            <FormQuestions
-              title="Bezpečnostní otázky"
-              qacs={qacs}
-              isAuthEditing
-            />
-          )}
-          {username === undefined && <FormBeforeExamination />}
-          {username === undefined && <FormExaminationConsent />}
-          <Grid
-            container
-            direction={matchesDownSmBreakpoint ? "column" : "row"}
-            justifyContent="center"
-            gap={matchesDownSmBreakpoint ? "0.5rem" : "1.5rem"}
-            sx={{ width: matchesDownSmBreakpoint ? "12rem" : "fit-content" }}
+        <form onSubmit={handleSubmit(onSubmit, onError)}>
+          <Stack
+            spacing="1.5rem"
+            alignItems="stretch"
           >
-            <Button
-              type="submit"
-              variant="contained"
-              color="success"
-              // TODO: doesn't work, why?? Should disable submit button when form isn't correctly filled
-              // disabled={!isDirty || !isValid}
+            {username === undefined && <FormEntryInfo />}
+            {username !== undefined && <FormProjectInfo isFantom={isFantom} />}
+            <FormProbandInfo isAuthEditing={username === undefined || isAuthEditing} />
+            {!isFantom && <FormProbandContact isAuthEditing={username === undefined || isAuthEditing} />}
+            {username === undefined && <FormSafetyInfo />}
+            {username !== undefined && !isFantom && (
+              <>
+                <FormQuestions
+                  title="Část 1"
+                  qacs={qacs.filter((qac) => qac.partNumber === 1)}
+                  isAuthEditing={isAuthEditing}
+                />
+                <FormQuestions
+                  title="Část 2"
+                  qacs={qacs.filter((qac) => qac.partNumber === 2)}
+                  isAuthEditing={isAuthEditing}
+                />
+              </>
+            )}
+            {username === undefined && (
+              <FormQuestions
+                title="Bezpečnostní otázky"
+                qacs={qacs}
+                isAuthEditing
+              />
+            )}
+            {username === undefined && <FormBeforeExamination />}
+            {username === undefined && <FormExaminationConsent />}
+            <Grid
+              container
+              direction={matchesDownSmBreakpoint ? "column" : "row"}
+              justifyContent="center"
+              gap={matchesDownSmBreakpoint ? "0.5rem" : "1.5rem"}
+              sx={{ width: matchesDownSmBreakpoint ? "12rem" : "100%" }}
             >
-              {submitButton.title}
-            </Button>
-            {buttons.map((button, index) => (
               <Button
-                key={index}
+                type="submit"
                 variant="contained"
-                onClick={button.onClick}
+                color="success"
+                // TODO: doesn't work, why?? Should disable submit button when form isn't correctly filled
+                // disabled={!isDirty || !isValid}
               >
-                {button.title}
+                {submitButton.title}
               </Button>
-            ))}
-          </Grid>
+              {buttons.map((button, index) => (
+                <Button
+                  key={index}
+                  variant="contained"
+                  onClick={button.onClick}
+                >
+                  {button.title}
+                </Button>
+              ))}
+            </Grid>
+          </Stack>
         </form>
       </FormProvider>
     </PageTemplate>

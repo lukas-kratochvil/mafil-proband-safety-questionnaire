@@ -1,15 +1,3 @@
-.visit-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.visit-form > * {
-  width: 100%;
-}
-
 .visit-pdf {
   height: 770px; /* TODO: height has to be changed - depends on how will I render the PDF */
   width: 100%;
