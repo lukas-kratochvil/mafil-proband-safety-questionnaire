@@ -36,7 +36,7 @@ export const InfoTooltip = ({ text }: IInfoTooltipProps) => {
       >
         <IconButton
           onClick={handleTooltipOpen}
-          sx={{ marginRight: "-0.75rem" }}
+          sx={{ marginX: "-0.5rem" }}
         >
           <InfoIcon sx={{ color: theme.palette.info.light }} />
         </IconButton>
