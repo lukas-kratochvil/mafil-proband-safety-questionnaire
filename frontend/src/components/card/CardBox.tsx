@@ -21,7 +21,8 @@ export const CardBox = ({ children, title, width }: PropsWithChildren<ICardBoxPr
         textAlign="center"
         fontWeight="bold"
         fontSize="1.25rem"
-        padding="0.5rem"
+        paddingY="0.5rem"
+        paddingX="1rem"
         bgcolor="#f0f4c3"
       >
         {title}
