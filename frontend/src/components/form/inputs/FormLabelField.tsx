@@ -13,7 +13,12 @@ export const FormLabelField = ({ children, label }: PropsWithChildren<IFormLabel
       wrap="nowrap"
       paddingRight="3rem"
     >
-      <Typography noWrap width="fit-content">{label}</Typography>
+      <Typography
+        noWrap
+        width="fit-content"
+      >
+        {label}
+      </Typography>
       <Typography width="fit-content">:</Typography>
     </Grid>
     {children}
