@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { PropsWithChildren } from "react";
 
 interface IFormLabelFieldProps {
@@ -7,7 +7,15 @@ interface IFormLabelFieldProps {
 
 export const FormLabelField = ({ children, label }: PropsWithChildren<IFormLabelFieldProps>) => (
   <>
-    <Typography>{`${label}:`}</Typography>
+    <Grid
+      container
+      direction="row"
+      wrap="nowrap"
+      paddingRight="3rem"
+    >
+      <Typography noWrap width="fit-content">{label}</Typography>
+      <Typography width="fit-content">:</Typography>
+    </Grid>
     {children}
   </>
 );
