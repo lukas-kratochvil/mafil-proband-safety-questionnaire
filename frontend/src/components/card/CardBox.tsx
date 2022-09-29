@@ -3,10 +3,9 @@ import { PropsWithChildren } from "react";
 
 interface ICardBoxProps {
   title: string;
-  width?: string;
 }
 
-export const CardBox = ({ children, title, width }: PropsWithChildren<ICardBoxProps>) => {
+export const CardBox = ({ children, title }: PropsWithChildren<ICardBoxProps>) => {
   const theme = useTheme();
 
   return (
@@ -14,7 +13,6 @@ export const CardBox = ({ children, title, width }: PropsWithChildren<ICardBoxPr
       sx={{
         border: 1,
         borderColor: theme.palette.grey[600],
-        width,
       }}
     >
       <Typography
