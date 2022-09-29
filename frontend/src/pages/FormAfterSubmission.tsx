@@ -8,10 +8,7 @@ export const FormAfterSubmission = () => {
 
   return (
     <PageTemplate centerize>
-      <CardBox
-        title="Váš formulář byl úspěšně odeslán. Vyčkejte, prosím, na další pokyny operátora."
-        width="100%"
-      >
+      <CardBox title="Váš formulář byl úspěšně odeslán. Vyčkejte, prosím, na další pokyny operátora.">
         <Grid
           container
           justifyContent="center"
