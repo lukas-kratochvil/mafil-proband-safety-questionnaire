@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { TextField, useMediaQuery, useTheme } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import CsLocale from "date-fns/locale/cs";
@@ -10,37 +10,43 @@ interface IFormDatePicker extends IFormDefaultInputProps {
   maxDate?: Date;
 }
 
-export const FormDatePicker = ({ name, label, disabled, maxDate }: IFormDatePicker) => (
-  <FormLabelField label={label}>
-    <Controller
-      name={name}
-      render={({ field }) => (
-        <LocalizationProvider
-          dateAdapter={AdapterDateFns}
-          /**
-           * TODO:
-           *  - change when different language is chosen
-           *  - find 'Answer : 6' on this page https://www.anycodings.com/2022/01/reactjs-material-ui-how-to-use.html and create similar language mapping
-           */
-          adapterLocale={CsLocale}
-        >
-          <DatePicker
-            value={field.value}
-            onChange={field.onChange}
-            ref={field.ref}
-            inputFormat="dd.MM.yyyy"
-            maxDate={maxDate}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                onBlur={field.onBlur}
-                name={field.name}
-              />
-            )}
-            disabled={disabled}
-          />
-        </LocalizationProvider>
-      )}
-    />
-  </FormLabelField>
-);
+export const FormDatePicker = ({ name, label, disabled, maxDate }: IFormDatePicker) => {
+  const theme = useTheme();
+  const matchesDownSmBreakpoint = useMediaQuery(theme.breakpoints.down("sm"));
+
+  return (
+    <FormLabelField label={label}>
+      <Controller
+        name={name}
+        render={({ field }) => (
+          <LocalizationProvider
+            dateAdapter={AdapterDateFns}
+            /**
+             * TODO:
+             *  - change when different language is chosen
+             *  - find 'Answer : 6' on this page https://www.anycodings.com/2022/01/reactjs-material-ui-how-to-use.html and create similar language mapping
+             */
+            adapterLocale={CsLocale}
+          >
+            <DatePicker
+              value={field.value}
+              onChange={field.onChange}
+              ref={field.ref}
+              inputFormat="dd.MM.yyyy"
+              maxDate={maxDate}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  onBlur={field.onBlur}
+                  name={field.name}
+                  size={matchesDownSmBreakpoint ? "small" : "medium"}
+                />
+              )}
+              disabled={disabled}
+            />
+          </LocalizationProvider>
+        )}
+      />
+    </FormLabelField>
+  );
+};
