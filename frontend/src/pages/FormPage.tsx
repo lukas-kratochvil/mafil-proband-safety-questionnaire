@@ -371,6 +371,7 @@ export const FormPage = () => {
               container
               direction={matchesDownSmBreakpoint ? "column" : "row"}
               justifyContent="center"
+              alignSelf="center"
               gap={matchesDownSmBreakpoint ? "0.5rem" : "1.5rem"}
               sx={{ width: matchesDownSmBreakpoint ? "12rem" : "100%" }}
             >
