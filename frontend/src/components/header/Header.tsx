@@ -64,15 +64,14 @@ export const Header = () => {
             <>
               {username !== undefined && <NavigationMobile items={navigationItems} />}
               <CeitecMafilLogo />
-              <LanguageMenu />
             </>
           ) : (
             <>
               <CeitecMafilLogo />
               {username !== undefined && <LoginOperator />}
-              <LanguageMenu />
             </>
           )}
+          <LanguageMenu />
         </Stack>
       </Toolbar>
       {!matchesDownMdBreakpoint && username !== undefined && <Navigation items={navigationItems} />}
