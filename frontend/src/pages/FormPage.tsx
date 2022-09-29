@@ -336,7 +336,7 @@ export const FormPage = () => {
       <FormProvider {...formMethods}>
         <form onSubmit={handleSubmit(onSubmit, onError)}>
           <Stack
-            spacing="1.5rem"
+            spacing={matchesDownSmBreakpoint ? "1rem" : "1.5rem"}
             alignItems="stretch"
           >
             {username === undefined && <FormEntryInfo />}
