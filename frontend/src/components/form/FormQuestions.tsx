@@ -7,6 +7,7 @@ import { useAuth } from "../../hooks/auth/Auth";
 import { fetchQuestion } from "../../util/utils";
 import { ErrorFeedback } from "./ErrorFeedback";
 import { FormCard } from "./FormCard";
+import { FormLabelField } from "./inputs/FormLabelField";
 import { FormRadioGroup } from "./inputs/FormRadioGroup";
 
 export interface IFormQac extends IQac {
@@ -99,20 +100,21 @@ const Question = ({ qac, disabled }: IQuestionProps) => {
           item
           xs={1}
         >
-          <Controller
-            name={`answers[${qac.index}].comment`}
-            render={({ field: { ref, ...rest } }) => (
-              <TextField
-                {...rest}
-                inputRef={ref}
-                label="Komentář"
-                size="small"
-                multiline
-                disabled={questionAnswer !== "yes" && disabled}
-              />
-            )}
-          />
-          <ErrorFeedback name={`answers[${qac.index}].comment`} />
+          <FormLabelField label="Komentář">
+            <Controller
+              name={`answers[${qac.index}].comment`}
+              render={({ field: { ref, ...rest } }) => (
+                <TextField
+                  {...rest}
+                  inputRef={ref}
+                  size="small"
+                  multiline
+                  disabled={questionAnswer !== "yes" && disabled}
+                />
+              )}
+            />
+            <ErrorFeedback name={`answers[${qac.index}].comment`} />
+          </FormLabelField>
         </Grid>
       )}
     </Grid>
