@@ -66,22 +66,29 @@ export const Header = () => {
           alignItems="center"
           wrap="nowrap"
         >
-          <Grid
-            item
-            xs
-          >
-            {matchesDownMdBreakpoint ? (
-              username !== undefined && <NavigationMobile items={navigationItems} />
-            ) : (
+          {username === undefined ? (
+            <Grid
+              item
+              xs
+            >
               <CeitecMafilLogo />
-            )}
-          </Grid>
-          <Grid
-            item
-            xs="auto"
-          >
-            {matchesDownMdBreakpoint ? <CeitecMafilLogo /> : username !== undefined && <LoginOperator />}
-          </Grid>
+            </Grid>
+          ) : (
+            <>
+              <Grid
+                item
+                xs
+              >
+                {matchesDownMdBreakpoint ? <NavigationMobile items={navigationItems} /> : <CeitecMafilLogo />}
+              </Grid>
+              <Grid
+                item
+                xs="auto"
+              >
+                {matchesDownMdBreakpoint ? <CeitecMafilLogo /> : <LoginOperator />}
+              </Grid>
+            </>
+          )}
           <Grid
             item
             xs
