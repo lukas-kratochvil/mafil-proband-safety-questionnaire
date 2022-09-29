@@ -1,5 +1,5 @@
 import LanguageIcon from "@mui/icons-material/Language";
-import { Avatar, Button, IconButton, Menu, Tooltip, useTheme } from "@mui/material";
+import { Avatar, Button, Grid, IconButton, Menu, Tooltip, useTheme } from "@mui/material";
 import { FlagComponent } from "country-flag-icons/react/3x2";
 import { bindMenu, bindTrigger, usePopupState } from "material-ui-popup-state/hooks";
 import { languages } from "../../data/header_data";
@@ -48,7 +48,10 @@ export const LanguageMenu = () => {
   });
 
   return (
-    <>
+    <Grid
+      container
+      justifyContent="flex-end"
+    >
       <Tooltip title="Vyberte jazyk">
         <IconButton
           {...bindTrigger(popupState)}
@@ -106,6 +109,6 @@ export const LanguageMenu = () => {
           />
         ))}
       </Menu>
-    </>
+    </Grid>
   );
 };

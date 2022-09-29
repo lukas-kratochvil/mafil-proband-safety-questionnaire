@@ -1,4 +1,4 @@
-import { AppBar, Box, Stack, Toolbar, useMediaQuery, useTheme } from "@mui/material";
+import { AppBar, Box, Grid, Toolbar, useMediaQuery, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { dummyFantomVisitNew } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
@@ -12,12 +12,17 @@ const CeitecMafilLogo = () => {
   const matchesOnlyXsBreakpoint = useMediaQuery(theme.breakpoints.only("xs"));
 
   return (
-    <Box
-      component="img"
-      alt="CEITEC-MAFIL logo"
-      src="/logo_mafil.png"
-      sx={{ height: matchesOnlyXsBreakpoint ? "2.25rem" : "3rem" }}
-    />
+    <Grid
+      container
+      justifyContent="flex-start"
+    >
+      <Box
+        component="img"
+        alt="CEITEC-MAFIL logo"
+        src="/logo_mafil.png"
+        sx={{ height: matchesOnlyXsBreakpoint ? "2.25rem" : "3rem" }}
+      />
+    </Grid>
   );
 };
 
@@ -54,25 +59,36 @@ export const Header = () => {
   return (
     <AppBar position="static">
       <Toolbar variant="dense">
-        <Stack
+        <Grid
+          container
           direction="row"
-          alignItems="center"
           justifyContent="space-between"
-          width="100%"
+          alignItems="center"
+          wrap="nowrap"
         >
-          {matchesDownMdBreakpoint ? (
-            <>
-              {username !== undefined && <NavigationMobile items={navigationItems} />}
+          <Grid
+            item
+            xs
+          >
+            {matchesDownMdBreakpoint ? (
+              username !== undefined && <NavigationMobile items={navigationItems} />
+            ) : (
               <CeitecMafilLogo />
-            </>
-          ) : (
-            <>
-              <CeitecMafilLogo />
-              {username !== undefined && <LoginOperator />}
-            </>
-          )}
-          <LanguageMenu />
-        </Stack>
+            )}
+          </Grid>
+          <Grid
+            item
+            xs="auto"
+          >
+            {matchesDownMdBreakpoint ? <CeitecMafilLogo /> : username !== undefined && <LoginOperator />}
+          </Grid>
+          <Grid
+            item
+            xs
+          >
+            <LanguageMenu />
+          </Grid>
+        </Grid>
       </Toolbar>
       {!matchesDownMdBreakpoint && username !== undefined && <Navigation items={navigationItems} />}
     </AppBar>
