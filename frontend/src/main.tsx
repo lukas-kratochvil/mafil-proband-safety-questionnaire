@@ -8,6 +8,15 @@ import { AuthProvider } from "./hooks/auth/Auth";
 
 const theme = createTheme({
   components: {
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          "&.Mui-disabled": {
+            backgroundColor: "#eeeeee",
+          },
+        },
+      },
+    },
     MuiTextField: {
       defaultProps: {
         fullWidth: true,
