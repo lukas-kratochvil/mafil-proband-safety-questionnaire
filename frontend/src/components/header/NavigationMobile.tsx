@@ -2,6 +2,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   Box,
+  Card,
   Container,
   Grid,
   IconButton,
@@ -29,10 +30,7 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
   const [isDrawerOpened, setIsDrawerOpened] = useState<boolean>(false);
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-    if (
-      event.type === "keydown"
-      && ((event as React.KeyboardEvent).key === "Tab" || (event as React.KeyboardEvent).key === "Shift")
-    ) {
+    if (event && event.type === "keydown" && ["Tab", "Shift"].includes((event as React.KeyboardEvent).key)) {
       return;
     }
 
@@ -55,42 +53,53 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
           />
         </IconButton>
       </Tooltip>
-      {/* <Drawer */}
       <SwipeableDrawer
         anchor="left"
+        // TODO: some low-end mobile devices won't be able to follow the fingers at 60 FPS - 'disableBackdropTransition' parameter may be used
+        // disableBackdropTransition
         open={isDrawerOpened}
         onOpen={toggleDrawer(true)}
         onClose={toggleDrawer(false)}
       >
         <Box
-          sx={{ width: 250 }}
+          sx={{ minWidth: "15rem" }}
           role="menu"
-          onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
         >
-          <Box
+          <Grid
+            container
+            direction="column"
+            rowGap={2}
             sx={{
               paddingX: "1rem",
-              paddingY: "1.5rem",
+              paddingTop: "2.5rem",
+              paddingBottom: "1rem",
               backgroundColor: theme.palette.primary.light,
-              borderTop: 1,
-              borderBottom: 1,
             }}
           >
-            <Grid
-              container
-              direction="row"
-              columnGap="0.5rem"
-              sx={{ marginBottom: "1rem" }}
+            <Card
+              sx={{
+                bgcolor: theme.palette.primary.contrastText,
+                maxWidth: "15rem",
+                marginLeft: "0.5rem",
+                marginRight: "1rem",
+                paddingX: "0.75rem",
+                paddingY: "0.5rem",
+                display: "inline-flex",
+                columnGap: "0.5rem",
+                textAlign: "center",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
             >
               <AccountCircleIcon />
               <Typography noWrap>{username}</Typography>
-            </Grid>
+            </Card>
             <Container sx={{ width: "fit-content" }}>
               <LogOutButton />
             </Container>
-          </Box>
-          <List>
+          </Grid>
+          <List onClick={toggleDrawer(false)}>
             {items.map((item, index) => (
               <ListItem
                 key={index}
@@ -102,7 +111,6 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
           </List>
         </Box>
       </SwipeableDrawer>
-      {/* </Drawer> */}
     </>
   );
 };
