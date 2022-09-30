@@ -8,8 +8,13 @@ export const LoginOperator = () => (
     direction="row"
     justifyContent="center"
     alignItems="center"
+    gap="1rem"
   >
-    <OperatorCard />
-    <LogOutButton />
+    <Grid item>
+      <OperatorCard />
+    </Grid>
+    <Grid item>
+      <LogOutButton />
+    </Grid>
   </Grid>
 );

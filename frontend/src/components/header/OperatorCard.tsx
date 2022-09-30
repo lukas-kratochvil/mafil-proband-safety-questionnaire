@@ -10,9 +10,8 @@ export const OperatorCard = () => {
     <Card
       sx={{
         bgcolor: theme.palette.primary.contrastText,
+        minWidth: "10rem",
         maxWidth: "15rem",
-        marginLeft: "0.5rem",
-        marginRight: "1rem",
         paddingX: "0.75rem",
         paddingY: "0.5rem",
         display: "inline-flex",

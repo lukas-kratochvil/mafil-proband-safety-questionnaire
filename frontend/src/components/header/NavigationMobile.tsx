@@ -1,7 +1,6 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   Box,
-  Container,
   Grid,
   IconButton,
   List,
@@ -64,6 +63,7 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
           <Grid
             container
             direction="column"
+            alignItems="center"
             rowGap={2}
             sx={{
               paddingX: "1rem",
@@ -73,9 +73,7 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
             }}
           >
             <OperatorCard />
-            <Container sx={{ width: "fit-content" }}>
-              <LogOutButton />
-            </Container>
+            <LogOutButton />
           </Grid>
           <List onClick={toggleDrawer(false)}>
             {items.map((item, index) => (
