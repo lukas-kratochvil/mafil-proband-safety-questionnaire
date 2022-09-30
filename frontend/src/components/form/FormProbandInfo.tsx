@@ -59,7 +59,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
       <Grid
         container
         direction="row"
-        spacing={2}
+        spacing="1rem"
         columns={12}
       >
         <Grid

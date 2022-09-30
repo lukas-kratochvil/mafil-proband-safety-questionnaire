@@ -17,7 +17,7 @@ export const PageTemplate = ({ children, centerize, isTablePage }: PropsWithChil
       <Header />
       <main>
         <Stack
-          spacing={3}
+          spacing="1.5rem"
           sx={{
             // content height is minus 4rem header and minus 3rem navigation (if viewed in the auth version)
             height: centerize ? `calc(100vh - 4rem ${username === undefined ? "" : "- 3rem"})` : undefined,

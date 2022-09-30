@@ -64,7 +64,7 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
             container
             direction="column"
             alignItems="center"
-            rowGap={2}
+            rowGap="1rem"
             sx={{
               paddingX: "1rem",
               paddingTop: "2.5rem",

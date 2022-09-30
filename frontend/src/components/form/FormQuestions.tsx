@@ -54,7 +54,7 @@ const Question = ({ qac, disabled }: IQuestionProps) => {
       justifyContent="space-between"
       alignItems="center"
       columns={1}
-      columnGap={6}
+      columnGap="3rem"
       sx={{
         "&:hover": {
           borderRadius: "0.25rem",

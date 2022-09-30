@@ -15,7 +15,7 @@ export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => (
     <Grid
       container
       direction="row"
-      spacing={2}
+      spacing="1rem"
       columns={12}
     >
       {isFantom && (
