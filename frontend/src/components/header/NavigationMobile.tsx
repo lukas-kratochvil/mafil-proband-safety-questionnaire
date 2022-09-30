@@ -1,8 +1,6 @@
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   Box,
-  Card,
   Container,
   Grid,
   IconButton,
@@ -11,13 +9,12 @@ import {
   ListItemButton,
   SwipeableDrawer,
   Tooltip,
-  Typography,
   useTheme,
 } from "@mui/material";
 import { useState } from "react";
-import { useAuth } from "../../hooks/auth/Auth";
 import { LogOutButton } from "./LogOutButton";
 import { INavigationItem } from "./Navigation";
+import { OperatorCard } from "./OperatorCard";
 
 interface INavigationMobileProps {
   items: INavigationItem[];
@@ -25,8 +22,6 @@ interface INavigationMobileProps {
 
 export const NavigationMobile = ({ items }: INavigationMobileProps) => {
   const theme = useTheme();
-  const { username } = useAuth();
-
   const [isDrawerOpened, setIsDrawerOpened] = useState<boolean>(false);
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -77,24 +72,7 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
               backgroundColor: theme.palette.primary.light,
             }}
           >
-            <Card
-              sx={{
-                bgcolor: theme.palette.primary.contrastText,
-                maxWidth: "15rem",
-                marginLeft: "0.5rem",
-                marginRight: "1rem",
-                paddingX: "0.75rem",
-                paddingY: "0.5rem",
-                display: "inline-flex",
-                columnGap: "0.5rem",
-                textAlign: "center",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              <AccountCircleIcon />
-              <Typography noWrap>{username}</Typography>
-            </Card>
+            <OperatorCard />
             <Container sx={{ width: "fit-content" }}>
               <LogOutButton />
             </Container>
