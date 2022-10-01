@@ -1,15 +1,6 @@
-import { Box, Typography } from "@mui/material";
-import { PropsWithChildren } from "react";
+import { Typography } from "@mui/material";
+import { BoldTextSpan } from "../text/BoldTextSpan";
 import { FormCard } from "./FormCard";
-
-const BoldTextSpan = ({ children }: PropsWithChildren) => (
-  <Box
-    component="span"
-    fontWeight={500}
-  >
-    {children}
-  </Box>
-);
 
 export const FormBeforeExamination = () => (
   <FormCard title="Před vyšetřením">
