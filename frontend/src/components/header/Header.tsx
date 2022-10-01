@@ -2,11 +2,12 @@ import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import RecentActorsIcon from "@mui/icons-material/RecentActors";
 import ScienceIcon from "@mui/icons-material/Science";
-import { AppBar, Box, Grid, Toolbar, useMediaQuery, useTheme } from "@mui/material";
+import { AppBar, Grid, Toolbar, useMediaQuery, useTheme } from "@mui/material";
 import { ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 import { dummyFantomVisitNew } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
+import { CeitecMafilLogo } from "./CeitecMafilLogo";
 import { LanguageMenu } from "./LanguageMenu";
 import { LoginOperator } from "./LoginOperator";
 import { Navigation } from "./Navigation";
@@ -17,22 +18,6 @@ export interface INavigationItem {
   onClick: () => void;
   icon: ReactElement;
 }
-
-const CeitecMafilLogo = () => {
-  const theme = useTheme();
-  const matchesOnlyXsBreakpoint = useMediaQuery(theme.breakpoints.only("xs"));
-
-  return (
-    <Box display="flex">
-      <Box
-        component="img"
-        alt="CEITEC-MAFIL logo"
-        src="/logo_mafil.png"
-        sx={{ height: matchesOnlyXsBreakpoint ? "2.25rem" : "3rem" }}
-      />
-    </Box>
-  );
-};
 
 export const Header = () => {
   const { username } = useAuth();
