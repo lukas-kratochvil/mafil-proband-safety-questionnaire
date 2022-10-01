@@ -1,29 +1,7 @@
-import { Box, Tab, Tabs, useTheme } from "@mui/material";
+import { Box, Tabs } from "@mui/material";
 import React, { useState } from "react";
 import { INavigationItem } from "./Header";
-
-interface ILinkTabProps {
-  tab: INavigationItem;
-}
-
-const LinkTab = ({ tab }: ILinkTabProps) => {
-  const theme = useTheme();
-
-  return (
-    <Tab
-      label={tab.label}
-      onClick={tab.onClick}
-      sx={{
-        color: theme.palette.text.primary,
-        opacity: 0.85,
-        "&:hover": {
-          backgroundColor: "#ffb74d",
-          opacity: 1,
-        },
-      }}
-    />
-  );
-};
+import { NavigationTab } from "./NavigationTab";
 
 interface INavigationProps {
   items: INavigationItem[];
@@ -65,7 +43,7 @@ export const Navigation = ({ items }: INavigationProps) => {
         }}
       >
         {items.map((item, index) => (
-          <LinkTab
+          <NavigationTab
             key={index}
             tab={item}
           />
