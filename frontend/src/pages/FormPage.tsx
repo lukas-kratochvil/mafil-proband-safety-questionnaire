@@ -1,9 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Grid, Stack, useMediaQuery, useTheme } from "@mui/material";
+import { Stack, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { FormBeforeExamination } from "../components/form/FormBeforeExamination";
+import { FormButtons, IFormButtonsProps } from "../components/form/FormButtons";
 import { FormEntryInfo } from "../components/form/FormEntryInfo";
 import { FormExaminationConsent } from "../components/form/FormExaminationConsent";
 import { FormProbandContact } from "../components/form/FormProbandContact";
@@ -50,16 +51,6 @@ const loadFormDefaultValuesFromVisit = (visit: IVisit): FormPropType => ({
   ...visit.probandInfo,
   answers: visit.answers.map((answer) => ({ ...answer })),
 });
-
-interface ISubmitButtonProps {
-  title: string;
-  onClick: (data: FormPropType) => void;
-}
-
-interface IButtonProps {
-  title: string;
-  onClick: () => void;
-}
 
 export const FormPage = () => {
   const { id } = useParams();
@@ -139,78 +130,86 @@ export const FormPage = () => {
     }
   }, [qacs, setValue, visit]);
 
-  let submitButton: ISubmitButtonProps;
-  let buttons: IButtonProps[] = [];
+  let formButtons: IFormButtonsProps;
 
   if (username === undefined) {
-    submitButton = {
-      title: "Souhlasím",
-      onClick: (data: FormPropType) => {
-        // TODO: create visit in DB
-        navigate("/form-after-submission");
+    formButtons = {
+      submitButtonProps: {
+        title: "Souhlasím",
+        onClick: (data: FormPropType) => {
+          // TODO: create visit in DB
+          navigate("/form-after-submission");
+        },
       },
+      buttonsProps: [],
     };
   } else if (isFantom) {
-    submitButton = {
-      title: "Finalizovat",
-      onClick: (data: FormPropType) => {
-        // TODO: store changes in DB if made
-        updateDummyVisitState(id, VisitState.FANTOM_DONE);
-        navigate(`/auth/visit-detail/${id}`);
+    formButtons = {
+      submitButtonProps: {
+        title: "Finalizovat",
+        onClick: (data: FormPropType) => {
+          // TODO: store changes in DB if made
+          updateDummyVisitState(id, VisitState.FANTOM_DONE);
+          navigate(`/auth/visit-detail/${id}`);
+        },
       },
+      buttonsProps: [
+        {
+          title: "Zrušit",
+          // Navigate back to the previous page
+          onClick: () => navigate(-1),
+        },
+      ],
     };
-    buttons = [
-      {
-        title: "Zrušit",
-        // Navigate back to the previous page
-        onClick: () => navigate(-1),
-      },
-    ];
   } else if (isAuthEditing) {
-    submitButton = {
-      title: "Uložit změny",
-      onClick: (data: FormPropType) => {
-        // TODO: save the changes in DB
-        setIsAuthEditing(false);
-      },
-    };
-    buttons = [
-      {
-        title: "Zrušit",
-        onClick: () => {
-          reset();
+    formButtons = {
+      submitButtonProps: {
+        title: "Uložit změny",
+        onClick: (data: FormPropType) => {
+          // TODO: save the changes in DB
           setIsAuthEditing(false);
         },
       },
-    ];
-  } else {
-    submitButton = {
-      title: "Finalizovat",
-      onClick: (data: FormPropType) => {
-        // TODO: store changes in DB if made
-        updateDummyVisitState(id, VisitState.CHECKED);
-        navigate(`/auth/visit-detail/${id}`);
-      },
+      buttonsProps: [
+        {
+          title: "Zrušit",
+          onClick: () => {
+            reset();
+            setIsAuthEditing(false);
+          },
+        },
+      ],
     };
-    buttons = [
-      {
-        title: "Editovat",
-        onClick: () => {
-          setIsAuthEditing(true);
+  } else {
+    formButtons = {
+      submitButtonProps: {
+        title: "Finalizovat",
+        onClick: (data: FormPropType) => {
+          // TODO: store changes in DB if made
+          updateDummyVisitState(id, VisitState.CHECKED);
+          navigate(`/auth/visit-detail/${id}`);
         },
       },
-      {
-        title: "Zrušit",
-        onClick: () => navigate("/auth/waiting-room"),
-      },
-    ];
+      buttonsProps: [
+        {
+          title: "Editovat",
+          onClick: () => {
+            setIsAuthEditing(true);
+          },
+        },
+        {
+          title: "Zrušit",
+          onClick: () => navigate("/auth/waiting-room"),
+        },
+      ],
+    };
   }
 
   const onSubmit = (data: FormPropType) => {
     // TODO: submit data
     console.log("Submitted data:");
     console.log(data);
-    submitButton.onClick(data);
+    formButtons.submitButtonProps.onClick(data);
   };
 
   // TODO: DELETE - only for development purposes
@@ -262,33 +261,7 @@ export const FormPage = () => {
                 )}
               </>
             )}
-            <Grid
-              container
-              direction={matchesDownSmBreakpoint ? "column" : "row"}
-              justifyContent="center"
-              alignSelf="center"
-              gap={matchesDownSmBreakpoint ? "0.5rem" : "1.5rem"}
-              sx={{ width: matchesDownSmBreakpoint ? "12rem" : "100%" }}
-            >
-              <Button
-                type="submit"
-                variant="contained"
-                color="success"
-                // TODO: doesn't work, why?? Should disable submit button when form isn't correctly filled
-                // disabled={!isDirty || !isValid}
-              >
-                {submitButton.title}
-              </Button>
-              {buttons.map((button, index) => (
-                <Button
-                  key={index}
-                  variant="contained"
-                  onClick={button.onClick}
-                >
-                  {button.title}
-                </Button>
-              ))}
-            </Grid>
+            <FormButtons {...formButtons} />
           </Stack>
         </form>
       </FormProvider>
