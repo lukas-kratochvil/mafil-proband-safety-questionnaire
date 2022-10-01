@@ -1,12 +1,12 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   Box,
+  Drawer,
   Grid,
   IconButton,
   List,
   ListItem,
   ListItemButton,
-  SwipeableDrawer,
   Tooltip,
   useTheme,
 } from "@mui/material";
@@ -24,7 +24,7 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
   const [isDrawerOpened, setIsDrawerOpened] = useState<boolean>(false);
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-    if (event && event.type === "keydown" && ["Tab", "Shift"].includes((event as React.KeyboardEvent).key)) {
+    if (event.type === "keydown" && ["Tab", "Shift"].includes((event as React.KeyboardEvent).key)) {
       return;
     }
 
@@ -47,12 +47,9 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
           />
         </IconButton>
       </Tooltip>
-      <SwipeableDrawer
+      <Drawer
         anchor="left"
-        // TODO: some low-end mobile devices won't be able to follow the fingers at 60 FPS - 'disableBackdropTransition' parameter may be used
-        disableBackdropTransition
         open={isDrawerOpened}
-        onOpen={toggleDrawer(true)}
         onClose={toggleDrawer(false)}
         PaperProps={{
           sx: {
@@ -115,7 +112,7 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
             ))}
           </List>
         </Box>
-      </SwipeableDrawer>
+      </Drawer>
     </>
   );
 };
