@@ -5,7 +5,7 @@ import { array, date, number, object, string } from "yup";
 export const answersSchema = object({
   questionId: string().trim().required(),
   partNumber: number().oneOf([1, 2]).required(),
-  answer: string().nullable().required("Odpoveď na bezpečnostní otázku je povinná."),
+  answer: string().nullable().required("Pole je povinné."),
   comment: string().nullable(),
 });
 
@@ -13,9 +13,9 @@ export const defaultFormSchema = object({
   project: string().nullable(),
   device: string().nullable(),
   measurementDate: date().typeError("Datum není validní.").nullable(),
-  name: string().trim().required("Jméno musí být vyplněno."),
-  surname: string().trim().required("Jméno musí být vyplněno."),
-  personalId: string().trim().required("Rodné číslo musí být vyplněno."),
+  name: string().trim().required("Pole je povinné."),
+  surname: string().trim().required("Pole je povinné."),
+  personalId: string().trim().required("Pole je povinné."),
   birthdate: date()
     .nullable()
     .typeError("Datum není validní.")
@@ -33,7 +33,7 @@ export const defaultFormSchema = object({
         );
       },
     })
-    .required("Datum narození musí být vyplněno."),
+    .required("Pole je povinné."),
   gender: string()
     .nullable()
     .test({
@@ -48,18 +48,18 @@ export const defaultFormSchema = object({
         );
       },
     })
-    .required("Pohlaví musí být vyplněno."),
+    .required("Pole je povinné."),
   nativeLanguage: string().nullable().required("Mateřský jazyk musí být vyplněn."),
   height: number()
     .typeError("Výška musí být kladné číslo.")
     .positive("Výška musí být kladné číslo.")
-    .required("Výška musí být vyplněna."),
+    .required("Pole je povinné."),
   weight: number()
     .typeError("Váha musí být kladné číslo.")
     .positive("Váha musí být kladné číslo.")
-    .required("Váha musí být vyplněna."),
-  sideDominance: string().nullable().required("Stranová dominance musí být vyplněná."),
-  visualCorrection: string().nullable().required("Zraková korekce musí být vyplněna."),
+    .required("Pole je povinné."),
+  sideDominance: string().nullable().required("Pole je povinné."),
+  visualCorrection: string().nullable().required("Pole je povinné."),
   visualCorrectionValue: number()
     .default(0)
     .typeError("Hodnota zrakové korekce není validní.")
@@ -69,7 +69,7 @@ export const defaultFormSchema = object({
         .notOneOf([0], "Hodnota zrakové korekce se nesmí rovnat nule.")
         .min(-200, "Hodnota zrakové korekce není validní - je příliš nízká.")
         .max(200, "Hodnota zrakové korekce není validní - je příliš vysoká.")
-        .required("Hodnota zrakové korekce musí být vyplněna."),
+        .required("Pole je povinné."),
     }),
   email: string().trim().email("Email není validní."),
   phoneNumber: string()

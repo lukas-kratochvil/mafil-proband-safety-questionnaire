@@ -6,13 +6,13 @@ const operatorAnswersSchema = answersSchema.shape({
     .default("")
     .when("answer", {
       is: "yes",
-      then: string().trim().required("Komentář musí být vyplněn."),
+      then: string().trim().required("Pole je povinné."),
     }),
 });
 
 export const operatorFormSchema = defaultFormSchema.shape({
-  project: string().nullable().required("Projekt musí být vyplněn."),
-  device: string().nullable().required("Přístroj magnetické rezonance musí být vyplněný."),
-  measurementDate: date().nullable().required("Datum měření musí být vyplněno."),
+  project: string().nullable().required("Pole je povinné."),
+  device: string().nullable().required("Pole je povinné."),
+  measurementDate: date().nullable().required("Pole je povinné."),
   answers: array().of(operatorAnswersSchema).required("Všechny bezpečnostní otázky musí být zodpovězeny."),
 });
