@@ -1,4 +1,4 @@
-import { AnswerOptionsType } from "../components/form/FormQuestions";
+import { AnswerOptionsType } from "../components/form/FormQuestion";
 import { getDummyVisitCurrentQuestions } from "../util/utils.dev";
 import { devices, projects } from "./form_data";
 import { QuestionPartNumber } from "./question_data";

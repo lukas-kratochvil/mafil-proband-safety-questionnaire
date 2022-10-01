@@ -9,7 +9,8 @@ import { FormExaminationConsent } from "../components/form/FormExaminationConsen
 import { FormProbandContact } from "../components/form/FormProbandContact";
 import { FormProbandInfo } from "../components/form/FormProbandInfo";
 import { FormProjectInfo } from "../components/form/FormProjectInfo";
-import { FormQuestions, IFormQac } from "../components/form/FormQuestions";
+import { IFormQac } from "../components/form/FormQuestion";
+import { FormQuestions } from "../components/form/FormQuestions";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
 import { defaultFormSchema } from "../components/form/schemas/form-schema_default";
 import { operatorFormSchema } from "../components/form/schemas/form-schema_operator";
