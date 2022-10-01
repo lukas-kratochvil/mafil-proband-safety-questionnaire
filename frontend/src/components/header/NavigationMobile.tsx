@@ -50,7 +50,7 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
       <SwipeableDrawer
         anchor="left"
         // TODO: some low-end mobile devices won't be able to follow the fingers at 60 FPS - 'disableBackdropTransition' parameter may be used
-        // disableBackdropTransition
+        disableBackdropTransition
         open={isDrawerOpened}
         onOpen={toggleDrawer(true)}
         onClose={toggleDrawer(false)}
