@@ -1,15 +1,18 @@
 import InfoIcon from "@mui/icons-material/Info";
-import { ClickAwayListener, IconButton, Tooltip, useMediaQuery, useTheme } from "@mui/material";
+import { ClickAwayListener, IconButton, styled, Tooltip, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
+
+const StyledInfoIcon = styled(InfoIcon)(() => {
+  const theme = useTheme();
+  return { color: theme.palette.info.light };
+}) as typeof InfoIcon;
 
 interface IInfoTooltipProps {
   text: string;
 }
 
 export const InfoTooltip = ({ text }: IInfoTooltipProps) => {
-  const theme = useTheme();
   const matchesPointerDevice = useMediaQuery("(pointer: fine)");
-
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleTooltipClose = () => setIsOpen(false);
   const handleTooltipOpen = () => setIsOpen(true);
@@ -20,7 +23,7 @@ export const InfoTooltip = ({ text }: IInfoTooltipProps) => {
       arrow
       placement="top-start"
     >
-      <InfoIcon sx={{ color: theme.palette.info.light }} />
+      <StyledInfoIcon />
     </Tooltip>
   ) : (
     <ClickAwayListener onClickAway={handleTooltipClose}>
@@ -36,9 +39,12 @@ export const InfoTooltip = ({ text }: IInfoTooltipProps) => {
       >
         <IconButton
           onClick={handleTooltipOpen}
-          sx={{ marginX: "-0.5rem" }}
+          sx={{
+            // margin is placing the info button the same way as is the info icon placed for pointer devices
+            marginX: "-0.5rem",
+          }}
         >
-          <InfoIcon sx={{ color: theme.palette.info.light }} />
+          <StyledInfoIcon />
         </IconButton>
       </Tooltip>
     </ClickAwayListener>
