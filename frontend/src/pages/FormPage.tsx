@@ -1,11 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Grid, Stack, useMediaQuery, useTheme } from "@mui/material";
-import { isEqual } from "date-fns";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { rodnecislo } from "rodnecislo";
-import { array, date, number, object, string } from "yup";
 import { FormBeforeExamination } from "../components/form/FormBeforeExamination";
 import { FormEntryInfo } from "../components/form/FormEntryInfo";
 import { FormExaminationConsent } from "../components/form/FormExaminationConsent";
@@ -14,34 +11,14 @@ import { FormProbandInfo } from "../components/form/FormProbandInfo";
 import { FormProjectInfo } from "../components/form/FormProjectInfo";
 import { FormQuestions, IFormQac } from "../components/form/FormQuestions";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
-import { IQac, IVisit, VisitState } from "../data/visit_data";
+import { defaultFormSchema, operatorFormSchema } from "../components/form/schemas/visit_schema";
+import { FormPropType } from "../components/form/types/types";
+import { IVisit, VisitState } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
 import "../styles/style.css";
 import { fetchCurrentQuestions, fetchVisit } from "../util/utils";
 import { updateDummyVisitState } from "../util/utils.dev";
 import { PageTemplate } from "./PageTemplate";
-
-type TextFieldNumberInput = string | number;
-
-interface FormPropType {
-  project: string | null;
-  device: string | null;
-  measurementDate: Date | null;
-  name: string;
-  surname: string;
-  personalId: string;
-  birthdate: Date | null;
-  gender: string | null;
-  nativeLanguage: string | null;
-  height: TextFieldNumberInput;
-  weight: TextFieldNumberInput;
-  sideDominance: string | null;
-  visualCorrection: string | null;
-  visualCorrectionValue: TextFieldNumberInput;
-  email: string;
-  phoneNumber: string;
-  answers: IQac[];
-}
 
 // Autocomplete component default value must be one of the options provided or null
 const loadFormDefaultValues = (): FormPropType => ({
@@ -71,98 +48,6 @@ const loadFormDefaultValuesFromVisit = (visit: IVisit): FormPropType => ({
   measurementDate: visit.projectInfo.measurementDate ?? new Date(),
   ...visit.probandInfo,
   answers: visit.answers.map((answer) => ({ ...answer })),
-});
-
-const answersSchema = object({
-  questionId: string().trim().required(),
-  partNumber: number().oneOf([1, 2]).required(),
-  answer: string().nullable().required("Odpoveď na bezpečnostní otázku je povinná."),
-  comment: string().nullable(),
-});
-
-const defaultFormSchema = object({
-  project: string().nullable(),
-  device: string().nullable(),
-  measurementDate: date().typeError("Datum není validní.").nullable(),
-  name: string().trim().required("Jméno musí být vyplněno."),
-  surname: string().trim().required("Jméno musí být vyplněno."),
-  personalId: string().trim().required("Rodné číslo musí být vyplněno."),
-  birthdate: date()
-    .nullable()
-    .typeError("Datum není validní.")
-    .max(new Date(), "Maximální povolená hodnota pro datum narození je dnes.")
-    .test({
-      name: "birthdate-corresponds-to-personalId",
-      message: "Datum narození není shodné s hodnotou získanou z poskytnutého českého nebo slovenského rodného čísla.",
-      test: (birthdate, testContext) => {
-        const czechPersonalId = rodnecislo(testContext.parent.personalId);
-        return (
-          birthdate === undefined
-          || birthdate === null
-          || !czechPersonalId.isValid()
-          || isEqual(czechPersonalId.birthDate(), birthdate)
-        );
-      },
-    })
-    .required("Datum narození musí být vyplněno."),
-  gender: string()
-    .nullable()
-    .test({
-      name: "gender-corresponds-to-personalId",
-      message: "Pohlaví není shodné s hodnotou získanou z poskytnutého českého nebo slovenského rodného čísla.",
-      test: (gender, testContext) => {
-        const czechPersonalId = rodnecislo(testContext.parent.personalId);
-        return (
-          !czechPersonalId.isValid()
-          || (czechPersonalId.isMale() && ["Muž", "Jiné"].includes(gender ?? ""))
-          || (czechPersonalId.isFemale() && ["Žena", "Jiné"].includes(gender ?? ""))
-        );
-      },
-    })
-    .required("Pohlaví musí být vyplněno."),
-  nativeLanguage: string().nullable().required("Mateřský jazyk musí být vyplněn."),
-  height: number()
-    .typeError("Výška musí být kladné číslo.")
-    .positive("Výška musí být kladné číslo.")
-    .required("Výška musí být vyplněna."),
-  weight: number()
-    .typeError("Váha musí být kladné číslo.")
-    .positive("Váha musí být kladné číslo.")
-    .required("Váha musí být vyplněna."),
-  sideDominance: string().nullable().required("Stranová dominance musí být vyplněná."),
-  visualCorrection: string().nullable().required("Zraková korekce musí být vyplněna."),
-  visualCorrectionValue: number()
-    .default(0)
-    .typeError("Hodnota zrakové korekce není validní.")
-    .when("visualCorrection", {
-      is: "Ano", // TODO: make enum
-      then: number()
-        .notOneOf([0], "Hodnota zrakové korekce se nesmí rovnat nule.")
-        .min(-200, "Hodnota zrakové korekce není validní - je příliš nízká.")
-        .max(200, "Hodnota zrakové korekce není validní - je příliš vysoká.")
-        .required("Hodnota zrakové korekce musí být vyplněna."),
-    }),
-  email: string().trim().email("Email není validní."),
-  phoneNumber: string()
-    .trim()
-    .matches(/^$|^(\+|00)?[1-9]{1}[0-9,\s]{3,}$/, "Telefonní číslo není validní."),
-  answers: array().of(answersSchema).required(),
-});
-
-const operatorAnswersSchema = answersSchema.shape({
-  comment: string()
-    .default("")
-    .when("answer", {
-      is: "yes",
-      then: string().trim().required("Komentář musí být vyplněn."),
-    }),
-});
-
-const operatorFormSchema = defaultFormSchema.shape({
-  project: string().nullable().required("Projekt musí být vyplněn."),
-  device: string().nullable().required("Přístroj magnetické rezonance musí být vyplněný."),
-  measurementDate: date().nullable().required("Datum měření musí být vyplněno."),
-  answers: array().of(operatorAnswersSchema).required("Všechny bezpečnostní otázky musí být zodpovězeny."),
 });
 
 interface ISubmitButtonProps {
