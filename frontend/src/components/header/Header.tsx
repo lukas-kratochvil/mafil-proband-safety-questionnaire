@@ -23,17 +23,14 @@ const CeitecMafilLogo = () => {
   const matchesOnlyXsBreakpoint = useMediaQuery(theme.breakpoints.only("xs"));
 
   return (
-    <Grid
-      container
-      justifyContent="flex-start"
-    >
+    <Box display="flex">
       <Box
         component="img"
         alt="CEITEC-MAFIL logo"
         src="/logo_mafil.png"
         sx={{ height: matchesOnlyXsBreakpoint ? "2.25rem" : "3rem" }}
       />
-    </Grid>
+    </Box>
   );
 };
 
