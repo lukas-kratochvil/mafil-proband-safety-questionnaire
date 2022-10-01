@@ -62,11 +62,13 @@ interface IButtonProps {
 }
 
 export const FormPage = () => {
-  const theme = useTheme();
-  const matchesDownSmBreakpoint = useMediaQuery(theme.breakpoints.down("sm"));
+  const { id } = useParams();
   const navigate = useNavigate();
   const { username } = useAuth();
-  const { id } = useParams();
+
+  const theme = useTheme();
+  const matchesDownSmBreakpoint = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [visit, setVisit] = useState<IVisit | undefined>();
   const [qacs, setQacs] = useState<IFormQac[]>([]);
   const [isFantom, setIsFantom] = useState<boolean>(false);
@@ -225,34 +227,41 @@ export const FormPage = () => {
             spacing={matchesDownSmBreakpoint ? "1rem" : "1.5rem"}
             alignItems="stretch"
           >
-            {username === undefined && <FormEntryInfo />}
-            {username !== undefined && <FormProjectInfo isFantom={isFantom} />}
-            <FormProbandInfo isAuthEditing={username === undefined || isAuthEditing} />
-            {!isFantom && <FormProbandContact isAuthEditing={username === undefined || isAuthEditing} />}
-            {username === undefined && <FormSafetyInfo />}
-            {username !== undefined && !isFantom && (
+            {username === undefined ? (
               <>
+                <FormEntryInfo />
+                <FormProbandInfo isAuthEditing />
+                <FormProbandContact isAuthEditing />
+                <FormSafetyInfo />
                 <FormQuestions
-                  title="Část 1"
-                  qacs={qacs.filter((qac) => qac.partNumber === 1)}
-                  isAuthEditing={isAuthEditing}
+                  title="Bezpečnostní otázky"
+                  qacs={qacs}
+                  isAuthEditing
                 />
-                <FormQuestions
-                  title="Část 2"
-                  qacs={qacs.filter((qac) => qac.partNumber === 2)}
-                  isAuthEditing={isAuthEditing}
-                />
+                <FormBeforeExamination />
+                <FormExaminationConsent />
+              </>
+            ) : (
+              <>
+                <FormProjectInfo isFantom={isFantom} />
+                <FormProbandInfo isAuthEditing={isAuthEditing} />
+                {!isFantom && (
+                  <>
+                    <FormProbandContact isAuthEditing={isAuthEditing} />
+                    <FormQuestions
+                      title="Část 1"
+                      qacs={qacs.filter((qac) => qac.partNumber === 1)}
+                      isAuthEditing={isAuthEditing}
+                    />
+                    <FormQuestions
+                      title="Část 2"
+                      qacs={qacs.filter((qac) => qac.partNumber === 2)}
+                      isAuthEditing={isAuthEditing}
+                    />
+                  </>
+                )}
               </>
             )}
-            {username === undefined && (
-              <FormQuestions
-                title="Bezpečnostní otázky"
-                qacs={qacs}
-                isAuthEditing
-              />
-            )}
-            {username === undefined && <FormBeforeExamination />}
-            {username === undefined && <FormExaminationConsent />}
             <Grid
               container
               direction={matchesDownSmBreakpoint ? "column" : "row"}
