@@ -4,8 +4,13 @@ import { dummyFantomVisitNew } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { LanguageMenu } from "./LanguageMenu";
 import { LoginOperator } from "./LoginOperator";
-import { INavigationItem, Navigation } from "./Navigation";
+import { Navigation } from "./Navigation";
 import { NavigationMobile } from "./NavigationMobile";
+
+export interface INavigationItem {
+  label: string;
+  onClick: () => void;
+}
 
 const CeitecMafilLogo = () => {
   const theme = useTheme();

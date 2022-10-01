@@ -11,8 +11,8 @@ import {
   useTheme,
 } from "@mui/material";
 import { useState } from "react";
+import { INavigationItem } from "./Header";
 import { LogOutButton } from "./LogOutButton";
-import { INavigationItem } from "./Navigation";
 import { OperatorCard } from "./OperatorCard";
 
 interface INavigationMobileProps {

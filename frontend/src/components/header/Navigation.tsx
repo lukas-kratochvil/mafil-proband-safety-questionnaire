@@ -1,10 +1,6 @@
 import { Box, Tab, Tabs, useTheme } from "@mui/material";
 import React, { useState } from "react";
-
-export interface INavigationItem {
-  label: string;
-  onClick: () => void;
-}
+import { INavigationItem } from "./Header";
 
 interface ILinkTabProps {
   tab: INavigationItem;
