@@ -54,15 +54,16 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
         open={isDrawerOpened}
         onOpen={toggleDrawer(true)}
         onClose={toggleDrawer(false)}
+        PaperProps={{
+          sx: {
+            backgroundColor: "#ffab40",
+          }
+        }}
       >
         <Box
           role="menu"
           onKeyDown={toggleDrawer(false)}
-          sx={{
-            minWidth: "15rem",
-            height: "100%",
-            backgroundColor: "#ffab40",
-          }}
+          sx={{ minWidth: "15rem" }}
         >
           <Grid
             container
