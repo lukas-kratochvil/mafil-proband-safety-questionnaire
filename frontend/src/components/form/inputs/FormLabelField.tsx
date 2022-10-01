@@ -1,26 +1,33 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, useTheme } from "@mui/material";
 import { PropsWithChildren } from "react";
 
-interface IFormLabelFieldProps {
+export interface IFormLabelFieldProps {
   label: string;
+  isOptional?: boolean;
 }
 
-export const FormLabelField = ({ children, label }: PropsWithChildren<IFormLabelFieldProps>) => (
-  <>
-    <Grid
-      container
-      direction="row"
-      wrap="nowrap"
-      paddingRight="3rem"
-    >
-      <Typography
-        noWrap
-        width="fit-content"
+export const FormLabelField = ({ children, label, isOptional }: PropsWithChildren<IFormLabelFieldProps>) => {
+  const theme = useTheme();
+
+  return (
+    <>
+      <Grid
+        container
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
       >
-        {label}
-      </Typography>
-      <Typography width="fit-content">:</Typography>
-    </Grid>
-    {children}
-  </>
-);
+        <Typography>{label}</Typography>
+        {isOptional && (
+          <Typography
+            fontSize="0.85rem"
+            color={theme.palette.text.secondary}
+          >
+            (nepovinné)
+          </Typography>
+        )}
+      </Grid>
+      {children}
+    </>
+  );
+};

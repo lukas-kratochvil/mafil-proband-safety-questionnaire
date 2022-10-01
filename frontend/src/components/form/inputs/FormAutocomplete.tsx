@@ -7,12 +7,15 @@ interface IFormAutocompleteProps extends IFormDefaultInputProps {
   options: string[];
 }
 
-export const FormAutocomplete = ({ name, label, disabled, options }: IFormAutocompleteProps) => {
+export const FormAutocomplete = ({ name, label, isOptional, disabled, options }: IFormAutocompleteProps) => {
   const theme = useTheme();
   const matchesDownSmBreakpoint = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <FormLabelField label={label}>
+    <FormLabelField
+      label={label}
+      isOptional={isOptional}
+    >
       <Controller
         name={name}
         render={({ field }) => (

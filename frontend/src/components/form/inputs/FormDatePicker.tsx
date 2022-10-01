@@ -10,12 +10,15 @@ interface IFormDatePicker extends IFormDefaultInputProps {
   maxDate?: Date;
 }
 
-export const FormDatePicker = ({ name, label, disabled, maxDate }: IFormDatePicker) => {
+export const FormDatePicker = ({ name, label, isOptional, disabled, maxDate }: IFormDatePicker) => {
   const theme = useTheme();
   const matchesDownSmBreakpoint = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <FormLabelField label={label}>
+    <FormLabelField
+      label={label}
+      isOptional={isOptional}
+    >
       <Controller
         name={name}
         render={({ field }) => (

@@ -9,12 +9,15 @@ interface IFormTextFieldProps extends IFormDefaultInputProps {
   endAdornmentLabel?: ReactNode;
 }
 
-export const FormTextField = ({ name, label, disabled, type, endAdornmentLabel }: IFormTextFieldProps) => {
+export const FormTextField = ({ name, label, isOptional, disabled, type, endAdornmentLabel }: IFormTextFieldProps) => {
   const theme = useTheme();
   const matchesDownSmBreakpoint = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <FormLabelField label={label}>
+    <FormLabelField
+      label={label}
+      isOptional={isOptional}
+    >
       <Controller
         name={name}
         render={({ field: { ref, ...rest } }) => (

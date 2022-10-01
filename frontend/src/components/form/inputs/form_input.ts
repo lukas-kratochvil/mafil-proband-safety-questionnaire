@@ -1,5 +1,6 @@
-export interface IFormDefaultInputProps {
+import { IFormLabelFieldProps } from "./FormLabelField";
+
+export interface IFormDefaultInputProps extends IFormLabelFieldProps {
   name: string;
-  label: string;
   disabled?: boolean;
 }

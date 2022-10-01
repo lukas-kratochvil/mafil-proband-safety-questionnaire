@@ -31,6 +31,7 @@ export const FormProbandContact = ({ disableInputs }: IFormProbandInfoProps) => 
         <FormTextField
           name="email"
           label="Email"
+          isOptional
           disabled={disableInputs}
         />
         <ErrorFeedback name="email" />
@@ -44,6 +45,7 @@ export const FormProbandContact = ({ disableInputs }: IFormProbandInfoProps) => 
           name="phoneNumber"
           label="Telefonní číslo"
           type="tel"
+          isOptional
           disabled={disableInputs}
         />
         <ErrorFeedback name="phoneNumber" />
