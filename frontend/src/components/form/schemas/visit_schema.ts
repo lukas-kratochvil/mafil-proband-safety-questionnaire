@@ -1,6 +1,6 @@
-import { array, date, number, object, string } from "yup";
 import { isEqual } from "date-fns";
 import { rodnecislo } from "rodnecislo";
+import { array, date, number, object, string } from "yup";
 import { answersSchema, operatorAnswersSchema } from "./answers_schema";
 
 export const defaultFormSchema = object({

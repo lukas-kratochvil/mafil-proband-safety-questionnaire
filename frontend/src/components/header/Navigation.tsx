@@ -52,6 +52,7 @@ export const Navigation = ({ items }: INavigationProps) => {
           "& .MuiTabs-flexContainer": {
             // This will create multiple rows depending on the items count and lenght
             flexWrap: "wrap",
+            height: "100%",
           },
         }}
         // This will be 1 row with arrows to scroll
