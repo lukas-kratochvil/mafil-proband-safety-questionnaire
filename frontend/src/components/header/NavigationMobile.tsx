@@ -56,9 +56,13 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
         onClose={toggleDrawer(false)}
       >
         <Box
-          sx={{ minWidth: "15rem" }}
           role="menu"
           onKeyDown={toggleDrawer(false)}
+          sx={{
+            minWidth: "15rem",
+            height: "100%",
+            backgroundColor: "#ffab40",
+          }}
         >
           <Grid
             container
@@ -69,19 +73,43 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
               paddingX: "1rem",
               paddingTop: "2.5rem",
               paddingBottom: "1rem",
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: theme.palette.primary.main,
             }}
           >
             <OperatorCard />
             <LogOutButton />
           </Grid>
-          <List onClick={toggleDrawer(false)}>
+          <List
+            onClick={toggleDrawer(false)}
+            sx={{
+              paddingTop: "1rem",
+              borderTop: 1,
+              borderColor: "divider",
+            }}
+          >
             {items.map((item, index) => (
               <ListItem
                 key={index}
                 disablePadding
               >
-                <ListItemButton onClick={item.onClick}>{item.label}</ListItemButton>
+                <ListItemButton
+                  onClick={item.onClick}
+                  sx={{
+                    paddingY: "1rem",
+                    color: "rgba(0, 0, 0, 1)",
+                    opacity: 0.85,
+                    fontSize: "0.85rem",
+                    fontWeight: 500,
+                    letterSpacing: "0.02857rem",
+                    textTransform: "uppercase",
+                    "&:hover": {
+                      backgroundColor: "#ffb74d",
+                      opacity: 1,
+                    },
+                  }}
+                >
+                  {item.label}
+                </ListItemButton>
               </ListItem>
             ))}
           </List>
