@@ -15,7 +15,6 @@ import { defaultFormSchema, operatorFormSchema } from "../components/form/schema
 import { FormPropType } from "../components/form/types/types";
 import { IVisit, VisitState } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
-import "../styles/style.css";
 import { fetchCurrentQuestions, fetchVisit } from "../util/utils";
 import { updateDummyVisitState } from "../util/utils.dev";
 import { PageTemplate } from "./PageTemplate";

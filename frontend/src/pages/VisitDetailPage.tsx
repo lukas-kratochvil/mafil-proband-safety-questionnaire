@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { CardBox } from "../components/card/CardBox";
 import { ColoredInfoStripe, IColoredInfoStripeProps } from "../components/informative/ColoredInfoStripe";
 import { IVisit, VisitState } from "../data/visit_data";
-import "../styles/style.css";
 import { fetchVisit } from "../util/utils";
 import { PageTemplate } from "./PageTemplate";
 
@@ -158,9 +157,10 @@ export const VisitDetailPage = () => {
           {coloredInfoStripe && <ColoredInfoStripe {...coloredInfoStripe} />}
           {/* TODO: set width of <iframe> so that there's not so much space on the sides - depends on the generated PDF width */}
           <iframe
-            className="visit-pdf"
             src={`${visit?.pdf}#view=fitH`}
             title="Visit detail"
+            height="770px"
+            width="100%"
           />
           {buttons && (
             <Grid
