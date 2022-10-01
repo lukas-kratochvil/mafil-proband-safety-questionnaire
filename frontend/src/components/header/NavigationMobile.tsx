@@ -1,15 +1,5 @@
 import MenuIcon from "@mui/icons-material/Menu";
-import {
-  Box,
-  Drawer,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  Tooltip,
-  useTheme,
-} from "@mui/material";
+import { Box, Drawer, Grid, IconButton, List, ListItem, ListItemButton, Tooltip, useTheme } from "@mui/material";
 import { useState } from "react";
 import { INavigationItem } from "./Header";
 import { LogOutButton } from "./LogOutButton";
@@ -54,7 +44,7 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
         PaperProps={{
           sx: {
             backgroundColor: "#ffab40",
-          }
+          },
         }}
       >
         <Box
@@ -106,7 +96,14 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
                     },
                   }}
                 >
-                  {item.label}
+                  <Grid
+                    container
+                    alignItems="center"
+                    columnGap="1rem"
+                  >
+                    {item.icon}
+                    {item.label}
+                  </Grid>
                 </ListItemButton>
               </ListItem>
             ))}
