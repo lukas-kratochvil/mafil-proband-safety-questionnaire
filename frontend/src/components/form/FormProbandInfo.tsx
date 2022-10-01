@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { rodnecislo } from "rodnecislo";
 import { genders, nativeLanguages, sideDominance, visualCorrection } from "../../data/form_data";
-import { useAuth } from "../../hooks/auth/Auth";
 import { InfoTooltip } from "../informative/InfoTooltip";
 import { ErrorFeedback } from "./ErrorFeedback";
 import { FormCard } from "./FormCard";
@@ -17,7 +16,6 @@ interface IFormProbandInfoProps {
 }
 
 export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
-  const { username } = useAuth();
   const { resetField, setValue } = useFormContext();
   const personalIdValue = useWatch({ name: "personalId" });
   const birthdateValue = useWatch({ name: "birthdate" });
@@ -104,13 +102,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             name="personalId"
             label="Rodné číslo"
             endAdornmentLabel={
-              <InfoTooltip
-                text={
-                  username === undefined
-                    ? "V případě, že nemáte české rodné číslo, zadejte, prosím, číslo pojištěnce."
-                    : "Pokud proband nemá české rodné číslo, může zadat číslo pojištěnce."
-                }
-              />
+              <InfoTooltip text="V případě, že nemáte české rodné číslo, zadejte, prosím, číslo pojištěnce." />
             }
             disabled={!isAuthEditing}
           />
