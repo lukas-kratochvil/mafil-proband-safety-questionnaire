@@ -5,10 +5,10 @@ import { FormQuestion, IFormQac } from "./FormQuestion";
 interface IFormQuestionsProps {
   title: string;
   qacs: IFormQac[];
-  isAuthEditing: boolean;
+  disableInputs: boolean;
 }
 
-export const FormQuestions = ({ title, qacs, isAuthEditing }: IFormQuestionsProps) => (
+export const FormQuestions = ({ title, qacs, disableInputs }: IFormQuestionsProps) => (
   <FormCard title={title}>
     <Stack
       spacing="0.5rem"
@@ -18,7 +18,7 @@ export const FormQuestions = ({ title, qacs, isAuthEditing }: IFormQuestionsProp
         <FormQuestion
           key={qac.questionId}
           qac={qac}
-          disabled={!isAuthEditing}
+          disabled={disableInputs}
         />
       ))}
     </Stack>

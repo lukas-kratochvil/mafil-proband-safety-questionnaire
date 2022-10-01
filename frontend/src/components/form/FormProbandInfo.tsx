@@ -12,10 +12,10 @@ import { FormDatePicker } from "./inputs/FormDatePicker";
 import { FormTextField } from "./inputs/FormTextField";
 
 interface IFormProbandInfoProps {
-  isAuthEditing: boolean;
+  disableInputs: boolean;
 }
 
-export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
+export const FormProbandInfo = ({ disableInputs }: IFormProbandInfoProps) => {
   const { resetField, setValue } = useFormContext();
   const personalIdValue = useWatch({ name: "personalId" });
   const birthdateValue = useWatch({ name: "birthdate" });
@@ -68,7 +68,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           <FormTextField
             name="name"
             label="Jméno"
-            disabled={!isAuthEditing}
+            disabled={disableInputs}
           />
           <ErrorFeedback name="name" />
         </Grid>
@@ -80,7 +80,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           <FormTextField
             name="surname"
             label="Příjmení"
-            disabled={!isAuthEditing}
+            disabled={disableInputs}
           />
           <ErrorFeedback name="surname" />
         </Grid>
@@ -104,7 +104,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             endAdornmentLabel={
               <InfoTooltip text="V případě, že nemáte české rodné číslo, zadejte, prosím, číslo pojištěnce." />
             }
-            disabled={!isAuthEditing}
+            disabled={disableInputs}
           />
           <ErrorFeedback name="personalId" />
         </Grid>
@@ -117,7 +117,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           <FormDatePicker
             name="birthdate"
             label="Datum narození"
-            disabled={!isAuthEditing}
+            disabled={disableInputs}
             maxDate={new Date()}
           />
           <ErrorFeedback name="birthdate" />
@@ -132,7 +132,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             name="gender"
             label="Pohlaví"
             options={genders}
-            disabled={!isAuthEditing}
+            disabled={disableInputs}
           />
           <ErrorFeedback name="gender" />
         </Grid>
@@ -146,7 +146,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             name="nativeLanguage"
             label="Mateřský jazyk"
             options={nativeLanguages}
-            disabled={!isAuthEditing}
+            disabled={disableInputs}
           />
           <ErrorFeedback name="nativeLanguage" />
         </Grid>
@@ -160,7 +160,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             name="height"
             label="Výška"
             endAdornmentLabel="cm"
-            disabled={!isAuthEditing}
+            disabled={disableInputs}
           />
           <ErrorFeedback name="height" />
         </Grid>
@@ -174,7 +174,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             name="weight"
             label="Váha"
             endAdornmentLabel="kg"
-            disabled={!isAuthEditing}
+            disabled={disableInputs}
           />
           <ErrorFeedback name="weight" />
         </Grid>
@@ -188,7 +188,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             name="visualCorrection"
             label="Zraková korekce"
             options={visualCorrection}
-            disabled={!isAuthEditing}
+            disabled={disableInputs}
           />
           <ErrorFeedback name="visualCorrection" />
         </Grid>
@@ -201,7 +201,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
           <FormTextField
             name="visualCorrectionValue"
             label="Hodnota zrakové korekce"
-            disabled={!isAuthEditing || visualCorrectionAnswer !== "Ano"}
+            disabled={disableInputs || visualCorrectionAnswer !== "Ano"}
             endAdornmentLabel={
               <>
                 <Typography sx={{ marginRight: "0.75rem" }}>D</Typography>
@@ -221,7 +221,7 @@ export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
             name="sideDominance"
             label="Stranová dominance"
             options={sideDominance}
-            disabled={!isAuthEditing}
+            disabled={disableInputs}
           />
           <ErrorFeedback name="sideDominance" />
         </Grid>

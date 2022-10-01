@@ -4,10 +4,10 @@ import { FormCard } from "./FormCard";
 import { FormTextField } from "./inputs/FormTextField";
 
 interface IFormProbandInfoProps {
-  isAuthEditing: boolean;
+  disableInputs: boolean;
 }
 
-export const FormProbandContact = ({ isAuthEditing }: IFormProbandInfoProps) => (
+export const FormProbandContact = ({ disableInputs }: IFormProbandInfoProps) => (
   <FormCard title="Kontaktní údaje">
     <Grid
       container
@@ -31,7 +31,7 @@ export const FormProbandContact = ({ isAuthEditing }: IFormProbandInfoProps) => 
         <FormTextField
           name="email"
           label="Email"
-          disabled={!isAuthEditing}
+          disabled={disableInputs}
         />
         <ErrorFeedback name="email" />
       </Grid>
@@ -44,7 +44,7 @@ export const FormProbandContact = ({ isAuthEditing }: IFormProbandInfoProps) => 
           name="phoneNumber"
           label="Telefonní číslo"
           type="tel"
-          disabled={!isAuthEditing}
+          disabled={disableInputs}
         />
         <ErrorFeedback name="phoneNumber" />
       </Grid>

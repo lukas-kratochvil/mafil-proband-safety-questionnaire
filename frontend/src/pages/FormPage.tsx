@@ -229,13 +229,13 @@ export const FormPage = () => {
             {username === undefined ? (
               <>
                 <FormEntryInfo />
-                <FormProbandInfo isAuthEditing />
-                <FormProbandContact isAuthEditing />
+                <FormProbandInfo disableInputs={false} />
+                <FormProbandContact disableInputs={false} />
                 <FormSafetyInfo />
                 <FormQuestions
                   title="Bezpečnostní otázky"
                   qacs={qacs}
-                  isAuthEditing
+                  disableInputs={false}
                 />
                 <FormBeforeExamination />
                 <FormExaminationConsent />
@@ -243,19 +243,19 @@ export const FormPage = () => {
             ) : (
               <>
                 <FormProjectInfo isFantom={isFantom} />
-                <FormProbandInfo isAuthEditing={isAuthEditing} />
+                <FormProbandInfo disableInputs={!isAuthEditing} />
                 {!isFantom && (
                   <>
-                    <FormProbandContact isAuthEditing={isAuthEditing} />
+                    <FormProbandContact disableInputs={!isAuthEditing} />
                     <FormQuestions
                       title="Část 1"
                       qacs={qacs.filter((qac) => qac.partNumber === 1)}
-                      isAuthEditing={isAuthEditing}
+                      disableInputs={!isAuthEditing}
                     />
                     <FormQuestions
                       title="Část 2"
                       qacs={qacs.filter((qac) => qac.partNumber === 2)}
-                      isAuthEditing={isAuthEditing}
+                      disableInputs={!isAuthEditing}
                     />
                   </>
                 )}
