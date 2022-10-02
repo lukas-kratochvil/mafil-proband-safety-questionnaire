@@ -9,15 +9,18 @@ import { IActionButtonsProps, VisitsTable } from "../components/table/VisitsTabl
 import { IVisit } from "../data/visit_data";
 import { fetchWaitingRoomVisits } from "../util/fetch";
 
+const createdAtFormat = "d.M.yyyy H:mm";
+const probandBirthdateFormat = "d.M.yyyy";
+
 const header: MRTColumnDef<IVisit>[] = [
   {
-    accessorFn: (visit) => format(visit.createdAt, "d.M.yyyy H:mm"),
+    accessorFn: (visit) => format(visit.createdAt, createdAtFormat),
     id: "createdAt",
     header: "Datum registrace",
     sortingFn: (rowA, rowB, columnId) =>
       compareAsc(
-        parse(`${rowA.getValue(columnId)}`, "d.M.yyyy H:mm", new Date()),
-        parse(`${rowB.getValue(columnId)}`, "d.M.yyyy H:mm", new Date())
+        parse(`${rowA.getValue(columnId)}`, createdAtFormat, new Date()),
+        parse(`${rowB.getValue(columnId)}`, createdAtFormat, new Date())
       ),
   },
   {
@@ -30,13 +33,13 @@ const header: MRTColumnDef<IVisit>[] = [
     header: "Rodné číslo",
   },
   {
-    accessorFn: (visit) => format(visit.probandInfo.birthdate, "d.M.yyyy"),
+    accessorFn: (visit) => format(visit.probandInfo.birthdate, probandBirthdateFormat),
     id: "probandInfo.birthdate",
     header: "Datum narození",
     sortingFn: (rowA, rowB, columnId) =>
       compareAsc(
-        parse(`${rowA.getValue(columnId)}`, "d.M.yyyy", new Date()),
-        parse(`${rowB.getValue(columnId)}`, "d.M.yyyy", new Date())
+        parse(`${rowA.getValue(columnId)}`, probandBirthdateFormat, new Date()),
+        parse(`${rowB.getValue(columnId)}`, probandBirthdateFormat, new Date())
       ),
   },
   {

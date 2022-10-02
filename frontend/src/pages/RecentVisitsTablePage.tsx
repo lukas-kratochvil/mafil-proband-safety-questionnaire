@@ -7,6 +7,8 @@ import { dummyVisits, duplicateVisit, IVisit, VisitState } from "../data/visit_d
 import { fetchRecentVisits } from "../util/fetch";
 import { getDummyVisit } from "../util/fetch.dev";
 
+const processedDateFormat = "d.M.yyyy H:mm";
+
 const header: MRTColumnDef<IVisit>[] = [
   {
     accessorKey: "visitId",
@@ -28,13 +30,13 @@ const header: MRTColumnDef<IVisit>[] = [
   },
   {
     // TODO: change 'visit.createdAt' for some other attribute - firstly, we need to solve which attribute should be created for this purpose
-    accessorFn: (visit) => format(visit.createdAt, "d.M.yyyy H:mm"),
+    accessorFn: (visit) => format(visit.createdAt, processedDateFormat),
     id: "processedDate",
     header: "Zpracováno",
     sortingFn: (rowA, rowB, columnId) =>
       compareAsc(
-        parse(`${rowA.getValue(columnId)}`, "d.M.yyyy H:mm", new Date()),
-        parse(`${rowB.getValue(columnId)}`, "d.M.yyyy H:mm", new Date())
+        parse(`${rowA.getValue(columnId)}`, processedDateFormat, new Date()),
+        parse(`${rowB.getValue(columnId)}`, processedDateFormat, new Date())
       ),
   },
   {
