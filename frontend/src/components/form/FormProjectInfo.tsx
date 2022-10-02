@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { fetchDevices, fetchProjects } from "../../util/utils";
-import { ColoredInfoStripe } from "../informative/ColoredInfoStripe";
+import { ColoredInfoStripe, ColoredInfoStripeColors } from "../informative/ColoredInfoStripe";
 import { ErrorFeedback } from "./ErrorFeedback";
 import { FormCard } from "./FormCard";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
@@ -41,7 +41,7 @@ export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => {
           >
             <ColoredInfoStripe
               text="Fantom"
-              color="info"
+              color={ColoredInfoStripeColors.BLUE}
             />
           </Grid>
         )}

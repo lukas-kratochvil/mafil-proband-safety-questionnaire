@@ -2,7 +2,11 @@ import { Button, Grid, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CardBox } from "../components/card/CardBox";
-import { ColoredInfoStripe, IColoredInfoStripeProps } from "../components/informative/ColoredInfoStripe";
+import {
+  ColoredInfoStripe,
+  ColoredInfoStripeColors,
+  IColoredInfoStripeProps,
+} from "../components/informative/ColoredInfoStripe";
 import { IVisit, VisitState } from "../data/visit_data";
 import { fetchVisitDetail } from "../util/utils";
 import { PageTemplate } from "./PageTemplate";
@@ -18,35 +22,35 @@ const getColoredInfoStripe = (visitState?: VisitState): IColoredInfoStripeProps 
     case VisitState.NEW:
       return {
         text: "Nezkontrolováno",
-        color: "error",
+        color: ColoredInfoStripeColors.RED,
       };
     case VisitState.CHECKED:
       return {
         text: "Výběr způsobu podepsání visity",
-        color: "info",
+        color: ColoredInfoStripeColors.BLUE,
       };
     case VisitState.SIGN_CHOSEN:
       return {
         text: "Čeká se na potvrzení podpisu",
-        color: "warning",
+        color: ColoredInfoStripeColors.ORANGE,
       };
     case VisitState.SIGNED:
       return {
         text: "Podepsáno",
-        color: "success",
+        color: ColoredInfoStripeColors.GREEN,
       };
     case VisitState.FANTOM_NEW:
     case VisitState.FANTOM_DONE:
       return {
         text: "Fantom se nepodepisuje",
-        color: "info",
+        color: ColoredInfoStripeColors.BLUE,
       };
     default:
       return {
         text: `ERROR - switch case for the value '${
           visitState === undefined ? "" : VisitState[visitState]
         }' does not exist`,
-        color: "error",
+        color: ColoredInfoStripeColors.RED,
       };
   }
 };
