@@ -26,20 +26,18 @@ export const Navigation = ({ items }: INavigationProps) => {
         value={currentTabIndex}
         onChange={handleChange}
         aria-label="top-menu navigation"
+        variant="scrollable"
+        scrollButtons="auto"
+        TabIndicatorProps={{
+          style: {
+            // Hide tab underline
+            display: "none",
+          },
+        }}
         sx={{
           minHeight: "3rem",
           "& .MuiTabs-flexContainer": {
-            // This will create multiple rows depending on the items count and lenght
-            flexWrap: "wrap",
             height: "100%",
-          },
-        }}
-        // This will be 1 row with arrows to scroll
-        // variant="scrollable"
-        // scrollButtons="auto"
-        TabIndicatorProps={{
-          style: {
-            display: "none",
           },
         }}
       >
