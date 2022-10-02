@@ -5,6 +5,10 @@ import { dummyVisits, IQac, IVisit, VisitState } from "../data/visit_data";
 export const fetchVisit = async (visitId: string | undefined): Promise<IVisit | undefined> =>
   dummyVisits.find((visit) => visit.id === visitId);
 
+// TODO: get visits from MAFILDB
+export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVisit | undefined> =>
+  dummyVisits.find((visit) => visit.id === visitId);
+
 // TODO: get visits from DB
 export const fetchWaitingRoomVisits = async (): Promise<IVisit[]> =>
   dummyVisits.filter((visit) => [VisitState.NEW, VisitState.FANTOM_NEW].includes(visit.state));

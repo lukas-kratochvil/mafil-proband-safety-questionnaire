@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { CardBox } from "../components/card/CardBox";
 import { ColoredInfoStripe, IColoredInfoStripeProps } from "../components/informative/ColoredInfoStripe";
 import { IVisit, VisitState } from "../data/visit_data";
-import { fetchVisit } from "../util/utils";
+import { fetchVisitDetail } from "../util/utils";
 import { PageTemplate } from "./PageTemplate";
 
 interface IButtonProps {
@@ -116,13 +116,13 @@ export const VisitDetailPage = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const response = await fetchVisit(id);
+        const fetchedVisit = await fetchVisitDetail(id);
 
-        if (response === undefined) {
+        if (fetchedVisit === undefined) {
           setIsError(true);
         } else {
-          setVisit(response);
-          setVisitState(response.state);
+          setVisit(fetchedVisit);
+          setVisitState(fetchedVisit.state);
           setIsLoading(false);
         }
       } catch (e) {
