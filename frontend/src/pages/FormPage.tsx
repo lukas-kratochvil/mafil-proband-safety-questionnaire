@@ -187,6 +187,12 @@ export const FormPage = () => {
           );
           setFormEditState(FormEditState.USER_EDIT);
         } else {
+          if (username === undefined) {
+            console.log("UNAUTHORIZED ACCESS!");
+            setIsError(true);
+            return;
+          }
+
           setFormEditState(fetchedVisit.projectInfo.isFantom ? FormEditState.FANTOM : FormEditState.OPERATOR_CHECK);
           console.log("FETCHING QUESTIONS FROM THE VISIT");
           setQacs(fetchedVisit.answers.map((answer, index) => ({ index, ...answer })));
