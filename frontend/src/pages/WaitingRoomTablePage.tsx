@@ -1,5 +1,6 @@
 import ClearIcon from "@mui/icons-material/Clear";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material";
+import { red } from "@mui/material/colors";
 import { compareAsc, format, parse } from "date-fns";
 import { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 import { useState } from "react";
@@ -72,10 +73,11 @@ const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
       <IconButton onClick={() => setOpenDeleteDialog(true)}>
         <ClearIcon
           sx={{
-            color: "red",
-            background: "pink",
+            color: red[600],
+            background: red[100],
             border: 1,
-            borderColor: "black",
+            borderColor: red[600],
+            borderRadius: "50%"
           }}
         />
       </IconButton>

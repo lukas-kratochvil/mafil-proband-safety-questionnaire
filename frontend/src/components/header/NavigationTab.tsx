@@ -1,4 +1,5 @@
 import { Tab, useTheme } from "@mui/material";
+import { amber } from "@mui/material/colors";
 import { INavigationItem } from "./Header";
 
 interface INavigationTabProps {
@@ -16,7 +17,7 @@ export const NavigationTab = ({ tab }: INavigationTabProps) => {
         color: theme.palette.text.primary,
         opacity: 0.85,
         "&:hover": {
-          backgroundColor: "#ffb74d",
+          backgroundColor: amber[600],
           opacity: 1,
         },
       }}

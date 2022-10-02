@@ -1,4 +1,5 @@
 import { Box, Tabs } from "@mui/material";
+import { amber } from "@mui/material/colors";
 import React, { useState } from "react";
 import { INavigationItem } from "./Header";
 import { NavigationTab } from "./NavigationTab";
@@ -16,7 +17,7 @@ export const Navigation = ({ items }: INavigationProps) => {
     <Box
       sx={{
         width: "100%",
-        backgroundColor: "#ffab40",
+        backgroundColor: amber[700],
         borderTop: 1,
         borderColor: "divider",
       }}

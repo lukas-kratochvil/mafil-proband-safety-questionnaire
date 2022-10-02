@@ -1,5 +1,6 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Drawer, Grid, IconButton, List, ListItem, ListItemButton, Tooltip, useTheme } from "@mui/material";
+import { amber } from "@mui/material/colors";
 import { useState } from "react";
 import { INavigationItem } from "./Header";
 import { LogOutButton } from "./LogOutButton";
@@ -43,7 +44,7 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
         onClose={toggleDrawer(false)}
         PaperProps={{
           sx: {
-            backgroundColor: "#ffab40",
+            backgroundColor: amber[700],
           },
         }}
       >
@@ -91,7 +92,7 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
                     letterSpacing: "0.02857rem",
                     textTransform: "uppercase",
                     "&:hover": {
-                      backgroundColor: "#ffb74d",
+                      backgroundColor: amber[600],
                       opacity: 1,
                     },
                   }}
