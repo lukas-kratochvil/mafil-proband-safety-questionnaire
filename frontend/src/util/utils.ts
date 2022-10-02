@@ -1,3 +1,4 @@
+import { devicesDev, projectsDev } from "../data/form_data";
 import { IQuestionData, questions } from "../data/question_data";
 import { dummyVisits, IQac, IVisit, VisitState } from "../data/visit_data";
 
@@ -29,3 +30,9 @@ export const fetchAnswerQuestions = async (answers: IQac[]): Promise<IQuestionDa
 // TODO: get question from DB
 export const fetchQuestion = async (questionId: string): Promise<IQuestionData | undefined> =>
   questions.find((question) => question.id === questionId);
+
+// TODO: get projects from MAFILDB
+export const fetchProjects = async (): Promise<string[]> => projectsDev;
+
+// TODO: get devices from MAFILDB
+export const fetchDevices = async (): Promise<string[]> => devicesDev;

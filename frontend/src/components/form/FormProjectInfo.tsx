@@ -1,5 +1,6 @@
 import { Grid } from "@mui/material";
-import { devices, projects } from "../../data/form_data";
+import { useEffect, useState } from "react";
+import { fetchDevices, fetchProjects } from "../../util/utils";
 import { ColoredInfoStripe } from "../informative/ColoredInfoStripe";
 import { ErrorFeedback } from "./ErrorFeedback";
 import { FormCard } from "./FormCard";
@@ -10,61 +11,77 @@ interface IFormProjectInfoProps {
   isFantom?: boolean;
 }
 
-export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => (
-  <FormCard title="Informace o projektu">
-    <Grid
-      container
-      direction="row"
-      spacing="1rem"
-      columns={12}
-    >
-      {isFantom && (
+export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => {
+  const [projects, setProjects] = useState<string[]>([]);
+  const [devices, setDevices] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const projectsPromise = fetchProjects();
+      const devicesPromise = fetchDevices();
+      setProjects(await projectsPromise);
+      setDevices(await devicesPromise);
+    };
+
+    fetch();
+  }, []);
+
+  return (
+    <FormCard title="Informace o projektu">
+      <Grid
+        container
+        direction="row"
+        spacing="1rem"
+        columns={12}
+      >
+        {isFantom && (
+          <Grid
+            item
+            xs={12}
+          >
+            <ColoredInfoStripe
+              text="Fantom"
+              color="info"
+            />
+          </Grid>
+        )}
         <Grid
           item
           xs={12}
         >
-          <ColoredInfoStripe
-            text="Fantom"
-            color="info"
+          <FormAutocomplete
+            name="project"
+            label="Projekt"
+            options={projects}
           />
+          <ErrorFeedback name="project" />
         </Grid>
-      )}
-      <Grid
-        item
-        xs={12}
-      >
-        <FormAutocomplete
-          name="project"
-          label="Projekt"
-          options={projects}
-        />
-        <ErrorFeedback name="project" />
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={8}
+        >
+          <FormAutocomplete
+            name="device"
+            label="Přístroj"
+            options={devices}
+          />
+          <ErrorFeedback name="device" />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={4}
+        >
+          <FormDatePicker
+            name="measurementDate"
+            label="Datum měření"
+          />
+          <ErrorFeedback name="measurementDate" />
+        </Grid>
       </Grid>
-      <Grid
-        item
-        xs={12}
-        sm={6}
-        md={8}
-      >
-        <FormAutocomplete
-          name="device"
-          label="Přístroj"
-          options={devices}
-        />
-        <ErrorFeedback name="device" />
-      </Grid>
-      <Grid
-        item
-        xs={12}
-        sm={6}
-        md={4}
-      >
-        <FormDatePicker
-          name="measurementDate"
-          label="Datum měření"
-        />
-        <ErrorFeedback name="measurementDate" />
-      </Grid>
-    </Grid>
-  </FormCard>
-);
+    </FormCard>
+  );
+};

@@ -1,6 +1,6 @@
 import { AnswerOptionsType } from "../components/form/FormQuestion";
 import { getDummyVisitCurrentQuestions } from "../util/utils.dev";
-import { devices, projects } from "./form_data";
+import { devicesDev, projectsDev } from "./form_data";
 import { QuestionPartNumber } from "./question_data";
 
 export interface IVisit {
@@ -132,9 +132,9 @@ export const dummyVisitNew: IVisit = {
   pdf: "/dummy-multipage.pdf",
   projectInfo: {
     projectId: "1",
-    project: projects[0],
+    project: projectsDev[0],
     magnetDeviceId: "1",
-    device: devices[0],
+    device: devicesDev[0],
     isFantom: false,
     measurementDate: new Date(),
   },
