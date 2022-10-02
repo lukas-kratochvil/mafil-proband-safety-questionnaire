@@ -1,5 +1,12 @@
 import { IQac } from "../../../data/visit_data";
 
+export enum FormEditState {
+  USER_EDIT,
+  FANTOM,
+  OPERATOR_CHECK,
+  OPERATOR_EDIT,
+}
+
 type TextFieldNumberInput = string | number;
 
 export interface FormPropType {

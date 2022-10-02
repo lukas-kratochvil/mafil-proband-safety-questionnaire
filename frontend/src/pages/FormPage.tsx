@@ -1,8 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Stack, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { FormProvider, useForm, UseFormReset } from "react-hook-form";
+import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
 import { FormBeforeExamination } from "../components/form/FormBeforeExamination";
 import { FormButtons, IFormButtonsProps } from "../components/form/FormButtons";
 import { FormEntryInfo } from "../components/form/FormEntryInfo";
@@ -15,7 +15,7 @@ import { FormQuestions } from "../components/form/FormQuestions";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
 import { defaultFormSchema } from "../components/form/schemas/form-schema_default";
 import { operatorFormSchema } from "../components/form/schemas/form-schema_operator";
-import { FormPropType } from "../components/form/types/types";
+import { FormEditState, FormPropType } from "../components/form/types/types";
 import { IVisit, VisitState } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
 import { fetchCurrentQuestions, fetchVisit } from "../util/utils";
@@ -52,6 +52,91 @@ const loadFormDefaultValuesFromVisit = (visit: IVisit): FormPropType => ({
   answers: visit.answers.map((answer) => ({ ...answer })),
 });
 
+const getFormButtons = (
+  id: string,
+  navigate: NavigateFunction,
+  formEditState: FormEditState,
+  setFormEditState: React.Dispatch<React.SetStateAction<FormEditState>>,
+  reset: UseFormReset<FormPropType>
+): IFormButtonsProps => {
+  if (formEditState === FormEditState.USER_EDIT) {
+    return {
+      submitButtonProps: {
+        title: "Souhlasím",
+        onClick: (data: FormPropType) => {
+          // TODO: create visit in DB
+          navigate("/form-after-submission");
+        },
+      },
+      buttonsProps: [],
+    };
+  }
+
+  if (formEditState === FormEditState.FANTOM) {
+    return {
+      submitButtonProps: {
+        title: "Finalizovat",
+        onClick: (data: FormPropType) => {
+          // TODO: store changes in DB if made
+          updateDummyVisitState(id, VisitState.FANTOM_DONE);
+          navigate(`/auth/visit-detail/${id}`);
+        },
+      },
+      buttonsProps: [
+        {
+          title: "Zrušit",
+          // Navigate back to the previous page
+          onClick: () => navigate(-1),
+        },
+      ],
+    };
+  }
+
+  if (formEditState === FormEditState.OPERATOR_EDIT) {
+    return {
+      submitButtonProps: {
+        title: "Uložit změny",
+        onClick: (data: FormPropType) => {
+          // TODO: save the changes in DB
+          setFormEditState(FormEditState.OPERATOR_CHECK);
+        },
+      },
+      buttonsProps: [
+        {
+          title: "Zrušit",
+          onClick: () => {
+            reset();
+            setFormEditState(FormEditState.OPERATOR_CHECK);
+          },
+        },
+      ],
+    };
+  }
+
+  return {
+    submitButtonProps: {
+      title: "Finalizovat",
+      onClick: (data: FormPropType) => {
+        // TODO: store changes in DB if made
+        updateDummyVisitState(id, VisitState.CHECKED);
+        navigate(`/auth/visit-detail/${id}`);
+      },
+    },
+    buttonsProps: [
+      {
+        title: "Editovat",
+        onClick: () => {
+          setFormEditState(FormEditState.OPERATOR_EDIT);
+        },
+      },
+      {
+        title: "Zrušit",
+        onClick: () => navigate("/auth/waiting-room"),
+      },
+    ],
+  };
+};
+
 export const FormPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -62,8 +147,8 @@ export const FormPage = () => {
 
   const [visit, setVisit] = useState<IVisit | undefined>();
   const [qacs, setQacs] = useState<IFormQac[]>([]);
-  const [isFantom, setIsFantom] = useState<boolean>(false);
-  const [isAuthEditing, setIsAuthEditing] = useState<boolean>(false);
+  const [formEditState, setFormEditState] = useState<FormEditState>(FormEditState.USER_EDIT);
+  const [disableInputs, setDisableInputs] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
   const [isError, setIsError] = useState<boolean>(false); // TODO: create ErrorPage
 
@@ -83,6 +168,12 @@ export const FormPage = () => {
         const fetchedVisit = id === undefined ? undefined : await fetchVisit(id);
 
         if (fetchedVisit === undefined) {
+          if (username !== undefined) {
+            console.log("AUTH DOES NOT FETCHED THE VISIT!");
+            setIsError(true);
+            return;
+          }
+
           console.log("FETCHING DEFAULT QUESTIONS");
           const questions = await fetchCurrentQuestions();
           setQacs(
@@ -94,9 +185,9 @@ export const FormPage = () => {
               comment: "",
             }))
           );
+          setFormEditState(FormEditState.USER_EDIT);
         } else {
-          setIsFantom(fetchedVisit.projectInfo.isFantom);
-          setIsAuthEditing(fetchedVisit.projectInfo.isFantom);
+          setFormEditState(fetchedVisit.projectInfo.isFantom ? FormEditState.FANTOM : FormEditState.OPERATOR_CHECK);
           console.log("FETCHING QUESTIONS FROM THE VISIT");
           setQacs(fetchedVisit.answers.map((answer, index) => ({ index, ...answer })));
           setVisit(fetchedVisit);
@@ -109,7 +200,7 @@ export const FormPage = () => {
     };
 
     fetchData();
-  }, [id]);
+  }, [id, username]);
 
   useEffect(() => {
     if (visit === undefined) {
@@ -130,80 +221,12 @@ export const FormPage = () => {
     }
   }, [qacs, setValue, visit]);
 
-  let formButtons: IFormButtonsProps;
+  useEffect(
+    () => setDisableInputs(![FormEditState.FANTOM, FormEditState.OPERATOR_EDIT].includes(formEditState)),
+    [formEditState]
+  );
 
-  if (username === undefined) {
-    formButtons = {
-      submitButtonProps: {
-        title: "Souhlasím",
-        onClick: (data: FormPropType) => {
-          // TODO: create visit in DB
-          navigate("/form-after-submission");
-        },
-      },
-      buttonsProps: [],
-    };
-  } else if (isFantom) {
-    formButtons = {
-      submitButtonProps: {
-        title: "Finalizovat",
-        onClick: (data: FormPropType) => {
-          // TODO: store changes in DB if made
-          updateDummyVisitState(id, VisitState.FANTOM_DONE);
-          navigate(`/auth/visit-detail/${id}`);
-        },
-      },
-      buttonsProps: [
-        {
-          title: "Zrušit",
-          // Navigate back to the previous page
-          onClick: () => navigate(-1),
-        },
-      ],
-    };
-  } else if (isAuthEditing) {
-    formButtons = {
-      submitButtonProps: {
-        title: "Uložit změny",
-        onClick: (data: FormPropType) => {
-          // TODO: save the changes in DB
-          setIsAuthEditing(false);
-        },
-      },
-      buttonsProps: [
-        {
-          title: "Zrušit",
-          onClick: () => {
-            reset();
-            setIsAuthEditing(false);
-          },
-        },
-      ],
-    };
-  } else {
-    formButtons = {
-      submitButtonProps: {
-        title: "Finalizovat",
-        onClick: (data: FormPropType) => {
-          // TODO: store changes in DB if made
-          updateDummyVisitState(id, VisitState.CHECKED);
-          navigate(`/auth/visit-detail/${id}`);
-        },
-      },
-      buttonsProps: [
-        {
-          title: "Editovat",
-          onClick: () => {
-            setIsAuthEditing(true);
-          },
-        },
-        {
-          title: "Zrušit",
-          onClick: () => navigate("/auth/waiting-room"),
-        },
-      ],
-    };
-  }
+  const formButtons = getFormButtons(id, navigate, formEditState, setFormEditState, reset);
 
   const onSubmit = (data: FormPropType) => {
     // TODO: submit data
@@ -226,7 +249,7 @@ export const FormPage = () => {
             spacing={matchesDownSmBreakpoint ? "1rem" : "1.5rem"}
             alignItems="stretch"
           >
-            {username === undefined ? (
+            {formEditState === FormEditState.USER_EDIT ? (
               <>
                 <FormEntryInfo />
                 <FormProbandInfo disableInputs={false} />
@@ -242,20 +265,20 @@ export const FormPage = () => {
               </>
             ) : (
               <>
-                <FormProjectInfo isFantom={isFantom} />
-                <FormProbandInfo disableInputs={!isAuthEditing} />
-                {!isFantom && (
+                <FormProjectInfo isFantom={formEditState === FormEditState.FANTOM} />
+                <FormProbandInfo disableInputs={disableInputs} />
+                {formEditState !== FormEditState.FANTOM && (
                   <>
-                    <FormProbandContact disableInputs={!isAuthEditing} />
+                    <FormProbandContact disableInputs={disableInputs} />
                     <FormQuestions
                       title="Část 1"
                       qacs={qacs.filter((qac) => qac.partNumber === 1)}
-                      disableInputs={!isAuthEditing}
+                      disableInputs={disableInputs}
                     />
                     <FormQuestions
                       title="Část 2"
                       qacs={qacs.filter((qac) => qac.partNumber === 2)}
-                      disableInputs={!isAuthEditing}
+                      disableInputs={disableInputs}
                     />
                   </>
                 )}
