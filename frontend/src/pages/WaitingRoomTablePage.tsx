@@ -54,6 +54,8 @@ const header: MRTColumnDef<IVisit>[] = [
 
 const deleteButtonMainColor = red[600];
 const deleteButtonBgcolor = red[100];
+const deleteButtonHoverMainColor = red[700];
+const deleteButtonHoverBgcolor = red[200];
 
 const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
   const navigate = useNavigate();
@@ -71,19 +73,33 @@ const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
   return (
     <>
       <Button
+        size="small"
         variant="contained"
         onClick={() => navigate(`/auth/form/${visitId}`)}
       >
         Zpracovat
       </Button>
-      <IconButton onClick={() => setOpenDeleteDialog(true)}>
+      <IconButton
+        onClick={() => setOpenDeleteDialog(true)}
+        sx={{
+          padding: "0.21rem",
+          height: "fit-content",
+          width: "fit-content",
+        }}
+      >
         <ClearIcon
           sx={{
+            height: "1.5rem",
+            width: "1.5rem",
             color: deleteButtonMainColor,
-            background: deleteButtonBgcolor,
+            backgroundColor: deleteButtonBgcolor,
             border: 1,
             borderColor: deleteButtonMainColor,
             borderRadius: "50%",
+            "&:hover": {
+              color: deleteButtonHoverMainColor,
+              backgroundColor: deleteButtonHoverBgcolor,
+            },
           }}
         />
       </IconButton>

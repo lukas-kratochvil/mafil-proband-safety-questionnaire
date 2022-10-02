@@ -62,12 +62,14 @@ const RecentVisitsActionButtons = ({ visitId }: IActionButtonsProps) => {
   return (
     <>
       <Button
+        size="small"
         variant="contained"
         onClick={() => navigate(`/auth/visit-detail/${visitId}`)}
       >
         Zobrazit detail
       </Button>
       <Button
+        size="small"
         variant="contained"
         onClick={() => {
           // TODO: create new form in DB with the same data as the original form
