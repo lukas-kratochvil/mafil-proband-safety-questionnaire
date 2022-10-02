@@ -49,6 +49,9 @@ const header: MRTColumnDef<IVisit>[] = [
   },
 ];
 
+const deleteButtonMainColor = red[600];
+const deleteButtonBgcolor = red[100];
+
 const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
   const navigate = useNavigate();
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
@@ -73,11 +76,11 @@ const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
       <IconButton onClick={() => setOpenDeleteDialog(true)}>
         <ClearIcon
           sx={{
-            color: red[600],
-            background: red[100],
+            color: deleteButtonMainColor,
+            background: deleteButtonBgcolor,
             border: 1,
-            borderColor: red[600],
-            borderRadius: "50%"
+            borderColor: deleteButtonMainColor,
+            borderRadius: "50%",
           }}
         />
       </IconButton>
