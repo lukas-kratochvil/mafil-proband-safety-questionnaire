@@ -221,10 +221,7 @@ export const FormPage = () => {
     }
   }, [qacs, setValue, visit]);
 
-  useEffect(
-    () => setDisableInputs(![FormEditState.FANTOM, FormEditState.OPERATOR_EDIT].includes(formEditState)),
-    [formEditState]
-  );
+  useEffect(() => setDisableInputs(formEditState === FormEditState.OPERATOR_CHECK), [formEditState]);
 
   const formButtons = getFormButtons(id, navigate, formEditState, setFormEditState, reset);
 
