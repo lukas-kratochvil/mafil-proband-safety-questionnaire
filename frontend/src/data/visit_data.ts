@@ -16,8 +16,8 @@ export interface IVisit {
 
 export enum VisitState {
   NEW,
-  CHECKED,
-  SIGN_CHOSEN,
+  APPROVED,
+  FOR_SIGNATURE,
   SIGNED,
   FANTOM_NEW,
   FANTOM_DONE,
@@ -220,7 +220,7 @@ export const dummyFantomVisit: IVisit = {
 export const dummyVisits: IVisit[] = [
   dummyVisitNew,
   ...createVisits(dummyVisitNew, VisitState.NEW, 3),
-  ...createVisits(dummyVisitNew, VisitState.CHECKED, 4),
+  ...createVisits(dummyVisitNew, VisitState.APPROVED, 4),
   ...createVisits(dummyVisitNew, VisitState.SIGNED, 2),
   dummyFantomVisitNew,
   dummyFantomVisit,

@@ -214,7 +214,7 @@ export const FormPage = () => {
             title: "Finalizovat",
             onClick: (data: FormPropType) => {
               // TODO: store changes in DB if made
-              updateDummyVisitState(id, VisitState.CHECKED);
+              updateDummyVisitState(id, VisitState.APPROVED);
               navigate(`/auth/visit-detail/${id}`);
             },
           },
