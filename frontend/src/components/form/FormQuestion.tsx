@@ -4,7 +4,7 @@ import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { IQuestionData } from "../../data/question_data";
 import { IQac } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
-import { fetchQuestion } from "../../util/utils";
+import { fetchQuestion } from "../../util/fetch";
 import { ErrorFeedback } from "./ErrorFeedback";
 import { FormLabelField } from "./inputs/FormLabelField";
 import { FormRadioGroup } from "./inputs/FormRadioGroup";

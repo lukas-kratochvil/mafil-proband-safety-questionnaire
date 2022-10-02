@@ -8,7 +8,7 @@ import {
   IColoredInfoStripeProps,
 } from "../components/informative/ColoredInfoStripe";
 import { IVisit, VisitState } from "../data/visit_data";
-import { fetchVisitDetail } from "../util/utils";
+import { fetchVisitDetail } from "../util/fetch";
 import { PageTemplate } from "./PageTemplate";
 
 interface IButtonProps {

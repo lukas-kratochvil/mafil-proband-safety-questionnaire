@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IActionButtonsProps, VisitsTable } from "../components/table/VisitsTable";
 import { IVisit } from "../data/visit_data";
-import { fetchWaitingRoomVisits } from "../util/utils";
+import { fetchWaitingRoomVisits } from "../util/fetch";
 
 const header: MRTColumnDef<IVisit>[] = [
   {

@@ -18,8 +18,8 @@ import { operatorFormSchema } from "../components/form/schemas/form-schema_opera
 import { FormEditState, FormPropType } from "../components/form/types/types";
 import { IVisit, VisitState } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
-import { fetchCurrentQuestions, fetchVisit } from "../util/utils";
-import { updateDummyVisitState } from "../util/utils.dev";
+import { fetchCurrentQuestions, fetchVisit } from "../util/fetch";
+import { updateDummyVisitState } from "../util/fetch.dev";
 import { PageTemplate } from "./PageTemplate";
 
 // Autocomplete component default value must be one of the options provided or null

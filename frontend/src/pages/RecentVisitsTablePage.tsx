@@ -4,8 +4,8 @@ import { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 import { useNavigate } from "react-router-dom";
 import { IActionButtonsProps, VisitsTable } from "../components/table/VisitsTable";
 import { dummyVisits, duplicateVisit, IVisit, VisitState } from "../data/visit_data";
-import { fetchRecentVisits } from "../util/utils";
-import { getDummyVisit } from "../util/utils.dev";
+import { fetchRecentVisits } from "../util/fetch";
+import { getDummyVisit } from "../util/fetch.dev";
 
 const header: MRTColumnDef<IVisit>[] = [
   {

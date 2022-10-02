@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
-import { fetchDevices, fetchProjects } from "../../util/utils";
+import { fetchDevices, fetchProjects } from "../../util/fetch";
 import { ColoredInfoStripe, ColoredInfoStripeColors } from "../informative/ColoredInfoStripe";
 import { ErrorFeedback } from "./ErrorFeedback";
 import { FormCard } from "./FormCard";
