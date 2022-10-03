@@ -65,7 +65,6 @@ export const FormPage = () => {
   const [formEditState, setFormEditState] = useState<FormEditState>(
     username === undefined ? FormEditState.PROBAND_EDIT : FormEditState.OPERATOR_CHECK
   );
-  const [disableInputs, setDisableInputs] = useState<boolean>(formEditState === FormEditState.OPERATOR_CHECK);
 
   const [buttonsAreLoading, setButtonsAreLoading] = useState<boolean>(true);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>({} as IFormButtonsProps);
@@ -82,8 +81,6 @@ export const FormPage = () => {
   });
   const { formState, handleSubmit, reset, setValue } = formMethods;
   const { isDirty, isValid } = formState;
-
-  useEffect(() => setDisableInputs(formEditState === FormEditState.OPERATOR_CHECK), [formEditState]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -274,19 +271,19 @@ export const FormPage = () => {
             ) : (
               <>
                 <FormProjectInfo isFantom={formEditState === FormEditState.FANTOM} />
-                <FormProbandInfo disableInputs={disableInputs} />
+                <FormProbandInfo disableInputs={formEditState === FormEditState.OPERATOR_CHECK} />
                 {formEditState !== FormEditState.FANTOM && (
                   <>
-                    <FormProbandContact disableInputs={disableInputs} />
+                    <FormProbandContact disableInputs={formEditState === FormEditState.OPERATOR_CHECK} />
                     <FormQuestions
                       title="Část 1"
                       qacs={qacs.filter((qac) => qac.partNumber === 1)}
-                      disableInputs={disableInputs}
+                      disableInputs={formEditState === FormEditState.OPERATOR_CHECK}
                     />
                     <FormQuestions
                       title="Část 2"
                       qacs={qacs.filter((qac) => qac.partNumber === 2)}
-                      disableInputs={disableInputs}
+                      disableInputs={formEditState === FormEditState.OPERATOR_CHECK}
                     />
                   </>
                 )}
