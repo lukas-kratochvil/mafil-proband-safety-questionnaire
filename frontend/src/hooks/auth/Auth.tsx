@@ -1,12 +1,29 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
+import { trustedOperators } from "../../data/operator_data";
+import { authenticateOperator } from "../../util/fetch";
 
 export enum IAuthMethod {
   MUNI,
 }
 
+export interface IOperator {
+  name: string;
+  surname: string;
+  uco: string;
+  email: string;
+  hasHigherPermission: boolean;
+}
+
+export interface IAuthGateOperator {
+  name: string;
+  surname: string;
+  uco: string;
+  email: string;
+}
+
 interface IAuth {
-  username?: string;
-  signIn: (authMethod: IAuthMethod) => void;
+  operator: IOperator | undefined;
+  signIn: (authMethod: IAuthMethod) => Promise<boolean>;
   signOut: () => void;
 }
 
@@ -14,35 +31,44 @@ interface IAuth {
 const authContext = createContext<IAuth>({} as IAuth);
 
 const useAuthProvider = (): IAuth => {
-  const [username, setUsername] = useState<string | undefined>(
-    window.sessionStorage.getItem("authUsername") ?? undefined
-  );
+  const [operator, setOperator] = useState<IOperator | undefined>(() => {
+    const storedOperator = window.sessionStorage.getItem("operator");
+    return storedOperator === null ? undefined : JSON.parse(storedOperator);
+  });
 
-  const signIn = (authMethod: IAuthMethod) => {
-    let newUsername;
+  const signIn = async (authMethod: IAuthMethod) => {
+    let loggingOperator: IAuthGateOperator;
 
     switch (authMethod) {
       case IAuthMethod.MUNI:
         // TODO: call the actual MUNI authentication gate
-        newUsername = `${IAuthMethod[authMethod]}_operator`;
+        loggingOperator = { ...trustedOperators[0] };
         break;
       default:
         throw new Error(`'${IAuthMethod[authMethod]}' authentication method is not implemented!`);
     }
 
-    if (newUsername !== undefined) {
-      setUsername(newUsername);
-      window.sessionStorage.setItem("authUsername", newUsername);
+    const fetchedOperator = await authenticateOperator(loggingOperator);
+
+    if (fetchedOperator === undefined) {
+      return false;
     }
+
+    if (fetchedOperator !== undefined) {
+      setOperator(fetchedOperator);
+      window.sessionStorage.setItem("operator", JSON.stringify(fetchedOperator));
+    }
+
+    return true;
   };
 
   const signOut = () => {
-    setUsername(undefined);
-    window.sessionStorage.removeItem("authUsername");
+    setOperator(undefined);
+    window.sessionStorage.removeItem("operator");
   };
 
   return {
-    username,
+    operator,
     signIn,
     signOut,
   };

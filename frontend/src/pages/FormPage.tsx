@@ -55,7 +55,7 @@ const loadFormDefaultValuesFromVisit = (visit: IVisit): FormPropType => ({
 export const FormPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { username } = useAuth();
+  const { operator } = useAuth();
 
   const theme = useTheme();
   const matchesDownSmBreakpoint = useMediaQuery(theme.breakpoints.down("sm"));
@@ -72,7 +72,7 @@ export const FormPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
   const [isError, setIsError] = useState<boolean>(false); // TODO: create ErrorPage
 
-  const schema = username === undefined ? defaultFormSchema : operatorFormSchema;
+  const schema = operator === undefined ? defaultFormSchema : operatorFormSchema;
   const formMethods = useForm<FormPropType>({
     defaultValues: loadFormDefaultValues(),
     resolver: yupResolver(schema),
@@ -88,7 +88,7 @@ export const FormPage = () => {
         const fetchedVisit = id === undefined ? undefined : await fetchVisit(id);
 
         if (fetchedVisit === undefined) {
-          if (username !== undefined) {
+          if (operator !== undefined) {
             console.log("AUTH DOES NOT FETCHED THE VISIT!");
             setIsError(true);
             return;
@@ -108,7 +108,7 @@ export const FormPage = () => {
             }))
           );
         } else {
-          if (username === undefined) {
+          if (operator === undefined) {
             console.log("UNAUTHORIZED ACCESS!");
             setIsError(true);
             return;
@@ -128,7 +128,7 @@ export const FormPage = () => {
     };
 
     fetchData();
-  }, [id, username]);
+  }, [id, operator]);
 
   useEffect(() => {
     if (visit === undefined) {

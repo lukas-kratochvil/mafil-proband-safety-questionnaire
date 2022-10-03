@@ -21,7 +21,7 @@ interface IFormQuestionProps extends IFormInputsProps {
 export const FormQuestion = ({ qac, disableInputs }: IFormQuestionProps) => {
   const theme = useTheme();
   const matchesUpSmBreakpoint = useMediaQuery(theme.breakpoints.up("sm"));
-  const { username } = useAuth();
+  const { operator } = useAuth();
   const [question, setQuestion] = useState<IQuestionData>();
   const { setValue } = useFormContext();
   const questionAnswer = useWatch({
@@ -92,7 +92,7 @@ export const FormQuestion = ({ qac, disableInputs }: IFormQuestionProps) => {
         />
         <ErrorFeedback name={`answers[${qac.index}].answer`} />
       </Grid>
-      {username !== undefined && questionAnswer === "yes" && (
+      {operator !== undefined && questionAnswer === "yes" && (
         <Grid
           item
           xs={1}

@@ -8,10 +8,11 @@ export const LoginPage = () => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
 
-  const handleSignIn = (authMethod: IAuthMethod) => {
-    signIn(authMethod);
-    // TODO: redirect to an appropriate authentication page - move the redirection + authentication inside the signIn() method
-    navigate("/auth/waiting-room");
+  const handleSignIn = async (authMethod: IAuthMethod) => {
+    if (await signIn(authMethod)) {
+      // TODO: redirect to an appropriate authentication page - move the redirection + authentication inside the signIn() method
+      navigate("/auth/waiting-room");
+    }
   };
 
   return (
@@ -28,7 +29,9 @@ export const LoginPage = () => {
           <Stack spacing="0.5rem">
             <Button
               variant="outlined"
-              onClick={() => handleSignIn(IAuthMethod.MUNI)}
+              onClick={async () => {
+                await handleSignIn(IAuthMethod.MUNI);
+              }}
               startIcon={
                 <Avatar
                   variant="square"

@@ -20,7 +20,7 @@ export interface INavigationItem {
 }
 
 export const Header = () => {
-  const { username } = useAuth();
+  const { operator } = useAuth();
   const navigate = useNavigate();
   const theme = useTheme();
   const matchesDownMdBreakpoint = useMediaQuery(theme.breakpoints.down("md"));
@@ -63,7 +63,7 @@ export const Header = () => {
           alignItems="center"
           wrap="nowrap"
         >
-          {username === undefined ? (
+          {operator === undefined ? (
             <Grid
               item
               xs
@@ -94,7 +94,7 @@ export const Header = () => {
           </Grid>
         </Grid>
       </Toolbar>
-      {!matchesDownMdBreakpoint && username !== undefined && <Navigation items={navigationItems} />}
+      {!matchesDownMdBreakpoint && operator !== undefined && <Navigation items={navigationItems} />}
     </AppBar>
   );
 };

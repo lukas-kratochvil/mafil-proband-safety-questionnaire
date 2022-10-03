@@ -8,7 +8,7 @@ import { VisitDetailPage } from "./pages/VisitDetailPage";
 import { WaitingRoomTablePage } from "./pages/WaitingRoomTablePage";
 
 export const App = () => {
-  const { username } = useAuth();
+  const { operator } = useAuth();
 
   return (
     <Routes>
@@ -28,7 +28,7 @@ export const App = () => {
         path="/auth"
         element={<LoginPage />}
       />
-      {username && (
+      {operator && (
         <>
           <Route
             path="/auth/form/:id"

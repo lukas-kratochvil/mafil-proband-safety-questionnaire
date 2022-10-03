@@ -3,7 +3,7 @@ import { Card, Typography, useTheme } from "@mui/material";
 import { useAuth } from "../../hooks/auth/Auth";
 
 export const OperatorCard = () => {
-  const { username } = useAuth();
+  const { operator } = useAuth();
   const theme = useTheme();
 
   return (
@@ -21,7 +21,7 @@ export const OperatorCard = () => {
       }}
     >
       <AccountCircleIcon />
-      <Typography noWrap>{username}</Typography>
+      <Typography noWrap>{`${operator?.name} ${operator?.surname}`}</Typography>
     </Card>
   );
 };
