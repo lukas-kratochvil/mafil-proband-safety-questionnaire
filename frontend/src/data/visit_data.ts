@@ -1,4 +1,3 @@
-import { AnswerOptionsType } from "../components/form/FormQuestion";
 import { getDummyVisitCurrentQuestions } from "../util/fetch.dev";
 import { devicesDev, projectsDev } from "./form_data";
 import { QuestionPartNumber } from "./question_data";
@@ -50,6 +49,8 @@ interface IProbandInfo {
   email: string;
   phoneNumber: string;
 }
+
+type AnswerOptionsType = "yes" | "no" | undefined;
 
 export interface IQac {
   questionId: string;

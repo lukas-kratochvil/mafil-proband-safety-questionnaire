@@ -14,8 +14,6 @@ export interface IFormQac extends IQac {
   index: number;
 }
 
-export type AnswerOptionsType = "yes" | "no" | undefined;
-
 interface IFormQuestionProps extends IFormInputsProps {
   qac: IFormQac;
 }
