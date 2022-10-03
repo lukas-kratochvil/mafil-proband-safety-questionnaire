@@ -10,12 +10,9 @@ import { FormCard } from "./FormCard";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";
 import { FormTextField } from "./inputs/FormTextField";
+import { IFormInputsProps } from "./types/types";
 
-interface IFormProbandInfoProps {
-  disableInputs: boolean;
-}
-
-export const FormProbandInfo = ({ disableInputs }: IFormProbandInfoProps) => {
+export const FormProbandInfo = ({ disableInputs }: IFormInputsProps) => {
   const { resetField, setValue } = useFormContext();
   const personalIdValue = useWatch({ name: "personalId" });
   const birthdateValue = useWatch({ name: "birthdate" });

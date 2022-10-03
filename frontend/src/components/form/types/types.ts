@@ -7,6 +7,10 @@ export enum FormEditState {
   OPERATOR_EDIT,
 }
 
+export interface IFormInputsProps {
+  disableInputs?: boolean;
+}
+
 type TextFieldNumberInput = string | number;
 
 export interface FormPropType {

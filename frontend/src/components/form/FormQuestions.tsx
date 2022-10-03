@@ -1,11 +1,11 @@
 import { Stack } from "@mui/material";
 import { FormCard } from "./FormCard";
 import { FormQuestion, IFormQac } from "./FormQuestion";
+import { IFormInputsProps } from "./types/types";
 
-interface IFormQuestionsProps {
+interface IFormQuestionsProps extends IFormInputsProps {
   title: string;
   qacs: IFormQac[];
-  disableInputs: boolean;
 }
 
 export const FormQuestions = ({ title, qacs, disableInputs }: IFormQuestionsProps) => (
@@ -18,7 +18,7 @@ export const FormQuestions = ({ title, qacs, disableInputs }: IFormQuestionsProp
         <FormQuestion
           key={qac.questionId}
           qac={qac}
-          disabled={disableInputs}
+          disableInputs={disableInputs}
         />
       ))}
     </Stack>

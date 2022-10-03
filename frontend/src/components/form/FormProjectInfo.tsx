@@ -6,12 +6,13 @@ import { ErrorFeedback } from "./ErrorFeedback";
 import { FormCard } from "./FormCard";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";
+import { IFormInputsProps } from "./types/types";
 
-interface IFormProjectInfoProps {
+interface IFormProjectInfoProps extends IFormInputsProps {
   isFantom?: boolean;
 }
 
-export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => {
+export const FormProjectInfo = ({ isFantom, disableInputs }: IFormProjectInfoProps) => {
   const [projects, setProjects] = useState<string[]>([]);
   const [devices, setDevices] = useState<string[]>([]);
 
@@ -53,6 +54,7 @@ export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => {
             name="project"
             label="Projekt"
             options={projects}
+            disabled={disableInputs}
           />
           <ErrorFeedback name="project" />
         </Grid>
@@ -66,6 +68,7 @@ export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => {
             name="device"
             label="Přístroj"
             options={devices}
+            disabled={disableInputs}
           />
           <ErrorFeedback name="device" />
         </Grid>
@@ -78,6 +81,7 @@ export const FormProjectInfo = ({ isFantom }: IFormProjectInfoProps) => {
           <FormDatePicker
             name="measurementDate"
             label="Datum měření"
+            disabled={disableInputs}
           />
           <ErrorFeedback name="measurementDate" />
         </Grid>

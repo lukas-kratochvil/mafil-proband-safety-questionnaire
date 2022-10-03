@@ -8,6 +8,7 @@ import { fetchQuestion } from "../../util/fetch";
 import { ErrorFeedback } from "./ErrorFeedback";
 import { FormLabelField } from "./inputs/FormLabelField";
 import { FormRadioGroup } from "./inputs/FormRadioGroup";
+import { IFormInputsProps } from "./types/types";
 
 export interface IFormQac extends IQac {
   index: number;
@@ -15,12 +16,11 @@ export interface IFormQac extends IQac {
 
 export type AnswerOptionsType = "yes" | "no" | undefined;
 
-interface IFormQuestionProps {
+interface IFormQuestionProps extends IFormInputsProps {
   qac: IFormQac;
-  disabled: boolean;
 }
 
-export const FormQuestion = ({ qac, disabled }: IFormQuestionProps) => {
+export const FormQuestion = ({ qac, disableInputs }: IFormQuestionProps) => {
   const theme = useTheme();
   const matchesUpSmBreakpoint = useMediaQuery(theme.breakpoints.up("sm"));
   const { username } = useAuth();
@@ -89,7 +89,7 @@ export const FormQuestion = ({ qac, disabled }: IFormQuestionProps) => {
               value: "no",
             },
           ]}
-          disabled={disabled}
+          disabled={disableInputs}
           sx={{ justifyContent: matchesUpSmBreakpoint ? "flex-end" : "flex-start" }}
         />
         <ErrorFeedback name={`answers[${qac.index}].answer`} />
@@ -108,7 +108,7 @@ export const FormQuestion = ({ qac, disabled }: IFormQuestionProps) => {
                   inputRef={ref}
                   size="small"
                   multiline
-                  disabled={questionAnswer !== "yes" && disabled}
+                  disabled={questionAnswer !== "yes" && disableInputs}
                 />
               )}
             />

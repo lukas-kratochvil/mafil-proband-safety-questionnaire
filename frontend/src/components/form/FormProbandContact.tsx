@@ -2,12 +2,9 @@ import { Grid, Typography } from "@mui/material";
 import { ErrorFeedback } from "./ErrorFeedback";
 import { FormCard } from "./FormCard";
 import { FormTextField } from "./inputs/FormTextField";
+import { IFormInputsProps } from "./types/types";
 
-interface IFormProbandInfoProps {
-  disableInputs: boolean;
-}
-
-export const FormProbandContact = ({ disableInputs }: IFormProbandInfoProps) => (
+export const FormProbandContact = ({ disableInputs }: IFormInputsProps) => (
   <FormCard title="Kontaktní údaje">
     <Grid
       container
