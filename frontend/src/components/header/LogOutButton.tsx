@@ -1,17 +1,12 @@
 import { Button, useTheme } from "@mui/material";
 import { red } from "@mui/material/colors";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth/Auth";
 
 export const LogOutButton = () => {
   const theme = useTheme();
   const { logOut } = useAuth();
-  const navigate = useNavigate();
 
-  const handleSignOut = () => {
-    logOut();
-    navigate("/auth");
-  };
+  const handleSignOut = () => logOut();
 
   return (
     <Button

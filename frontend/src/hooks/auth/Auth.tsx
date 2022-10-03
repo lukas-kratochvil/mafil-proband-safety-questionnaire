@@ -1,4 +1,5 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { trustedOperators } from "../../data/operator_data";
 import { authenticateOperator } from "../../util/fetch";
 
@@ -31,6 +32,7 @@ interface IAuth {
 const authContext = createContext<IAuth>({} as IAuth);
 
 const useAuthProvider = (): IAuth => {
+  const navigate = useNavigate();
   const [operator, setOperator] = useState<IOperator | undefined>(() => {
     const storedOperator = window.sessionStorage.getItem("operator");
     return storedOperator === null ? undefined : JSON.parse(storedOperator);
@@ -59,12 +61,14 @@ const useAuthProvider = (): IAuth => {
       window.sessionStorage.setItem("operator", JSON.stringify(fetchedOperator));
     }
 
+    navigate("/auth/waiting-room");
     return true;
   };
 
   const logOut = () => {
     setOperator(undefined);
     window.sessionStorage.removeItem("operator");
+    navigate("/auth");
   };
 
   return {

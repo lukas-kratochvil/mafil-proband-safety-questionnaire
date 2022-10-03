@@ -1,17 +1,15 @@
 import { Avatar, Button, Stack, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { CardBox } from "../components/card/CardBox";
 import { IAuthMethod, useAuth } from "../hooks/auth/Auth";
 import { PageTemplate } from "./PageTemplate";
 
 export const LoginPage = () => {
   const { logIn } = useAuth();
-  const navigate = useNavigate();
 
   const handleLogIn = async (authMethod: IAuthMethod) => {
-    if (await logIn(authMethod)) {
-      // TODO: redirect to an appropriate authentication page - move the redirection + authentication inside the logIn() method
-      navigate("/auth/waiting-room");
+    if (!await logIn(authMethod)) {
+      // TODO: show some Alert that operator does not have access to the app authenticated version
+      Error("Login was unsuccessful!");
     }
   };
 
