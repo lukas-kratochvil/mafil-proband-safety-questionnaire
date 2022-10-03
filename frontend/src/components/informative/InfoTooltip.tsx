@@ -1,11 +1,6 @@
-import InfoIcon from "@mui/icons-material/Info";
-import { ClickAwayListener, IconButton, styled, Tooltip, useMediaQuery, useTheme } from "@mui/material";
+import { ClickAwayListener, IconButton, Tooltip, useMediaQuery } from "@mui/material";
 import { useState } from "react";
-
-const StyledInfoIcon = styled(InfoIcon)(() => {
-  const theme = useTheme();
-  return { color: theme.palette.info.light };
-}) as typeof InfoIcon;
+import { StyledInfoIcon } from "./StyledInfoIcon";
 
 interface IInfoTooltipProps {
   text: string;
