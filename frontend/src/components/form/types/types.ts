@@ -1,7 +1,7 @@
 import { IQac } from "../../../data/visit_data";
 
 export enum FormEditState {
-  USER_EDIT,
+  PROBAND_EDIT,
   FANTOM,
   OPERATOR_CHECK,
   OPERATOR_EDIT,

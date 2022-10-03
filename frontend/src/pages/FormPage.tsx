@@ -63,7 +63,7 @@ export const FormPage = () => {
   const [visit, setVisit] = useState<IVisit | undefined>();
   const [qacs, setQacs] = useState<IFormQac[]>([]);
   const [formEditState, setFormEditState] = useState<FormEditState>(
-    username === undefined ? FormEditState.USER_EDIT : FormEditState.OPERATOR_CHECK
+    username === undefined ? FormEditState.PROBAND_EDIT : FormEditState.OPERATOR_CHECK
   );
   const [disableInputs, setDisableInputs] = useState<boolean>(formEditState === FormEditState.OPERATOR_CHECK);
 
@@ -97,7 +97,7 @@ export const FormPage = () => {
             return;
           }
 
-          setFormEditState(FormEditState.USER_EDIT);
+          setFormEditState(FormEditState.PROBAND_EDIT);
 
           console.log("FETCHING DEFAULT QUESTIONS");
           const questions = await fetchCurrentQuestions();
@@ -154,7 +154,7 @@ export const FormPage = () => {
 
   useEffect(() => {
     switch (formEditState) {
-      case FormEditState.USER_EDIT: {
+      case FormEditState.PROBAND_EDIT: {
         setFormButtons({
           submitButtonProps: {
             title: "Souhlasím",
@@ -257,7 +257,7 @@ export const FormPage = () => {
             spacing={matchesDownSmBreakpoint ? "1rem" : "1.5rem"}
             alignItems="stretch"
           >
-            {formEditState === FormEditState.USER_EDIT ? (
+            {formEditState === FormEditState.PROBAND_EDIT ? (
               <>
                 <FormEntryInfo />
                 <FormProbandInfo disableInputs={false} />
