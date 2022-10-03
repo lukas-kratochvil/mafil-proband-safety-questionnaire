@@ -28,7 +28,7 @@ export const Header = () => {
   const navigationItems: INavigationItem[] = [
     {
       // TODO: number must be updated
-      label: "Čekárna (2)",
+      label: "Čekárna (?)",
       onClick: () => navigate("/auth/waiting-room"),
       icon: <PendingActionsIcon />,
     },
@@ -43,7 +43,7 @@ export const Header = () => {
     },
     {
       label: "Otevřít formulář probanda",
-      onClick: () => window.open("/", "_blank", "noopener,noreferrer"),
+      onClick: () => window.open("/form", "_blank", "noopener,noreferrer"),
       icon: <PersonAddAlt1Icon />,
     },
     {

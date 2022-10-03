@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "./hooks/auth/Auth";
 import { FormAfterSubmission } from "./pages/FormAfterSubmission";
 import { FormPage } from "./pages/FormPage";
@@ -14,6 +14,10 @@ export const App = () => {
     <Routes>
       <Route
         path="/"
+        element={<Navigate to="/form" />}
+      />
+      <Route
+        path="/form"
         element={<FormPage />}
       />
       <Route

@@ -17,7 +17,7 @@ export const FormAfterSubmission = () => {
         >
           <Button
             variant="contained"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/form")}
           >
             Otevřít nový formulář
           </Button>
