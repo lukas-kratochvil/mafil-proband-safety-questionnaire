@@ -5,12 +5,12 @@ import { IAuthMethod, useAuth } from "../hooks/auth/Auth";
 import { PageTemplate } from "./PageTemplate";
 
 export const LoginPage = () => {
-  const { signIn } = useAuth();
+  const { logIn } = useAuth();
   const navigate = useNavigate();
 
-  const handleSignIn = async (authMethod: IAuthMethod) => {
-    if (await signIn(authMethod)) {
-      // TODO: redirect to an appropriate authentication page - move the redirection + authentication inside the signIn() method
+  const handleLogIn = async (authMethod: IAuthMethod) => {
+    if (await logIn(authMethod)) {
+      // TODO: redirect to an appropriate authentication page - move the redirection + authentication inside the logIn() method
       navigate("/auth/waiting-room");
     }
   };
@@ -30,7 +30,7 @@ export const LoginPage = () => {
             <Button
               variant="outlined"
               onClick={async () => {
-                await handleSignIn(IAuthMethod.MUNI);
+                await handleLogIn(IAuthMethod.MUNI);
               }}
               startIcon={
                 <Avatar

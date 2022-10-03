@@ -23,8 +23,8 @@ export interface IAuthGateOperator {
 
 interface IAuth {
   operator: IOperator | undefined;
-  signIn: (authMethod: IAuthMethod) => Promise<boolean>;
-  signOut: () => void;
+  logIn: (authMethod: IAuthMethod) => Promise<boolean>;
+  logOut: () => void;
 }
 
 // defaultValue argument is only used when a component does not have a matching Provider above it in the tree – helpful for testing components in isolation
@@ -36,7 +36,7 @@ const useAuthProvider = (): IAuth => {
     return storedOperator === null ? undefined : JSON.parse(storedOperator);
   });
 
-  const signIn = async (authMethod: IAuthMethod) => {
+  const logIn = async (authMethod: IAuthMethod) => {
     let loggingOperator: IAuthGateOperator;
 
     switch (authMethod) {
@@ -62,15 +62,15 @@ const useAuthProvider = (): IAuth => {
     return true;
   };
 
-  const signOut = () => {
+  const logOut = () => {
     setOperator(undefined);
     window.sessionStorage.removeItem("operator");
   };
 
   return {
     operator,
-    signIn,
-    signOut,
+    logIn,
+    logOut,
   };
 };
 

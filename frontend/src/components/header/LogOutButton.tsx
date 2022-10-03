@@ -5,11 +5,11 @@ import { useAuth } from "../../hooks/auth/Auth";
 
 export const LogOutButton = () => {
   const theme = useTheme();
-  const { signOut } = useAuth();
+  const { logOut } = useAuth();
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    signOut();
+    logOut();
     navigate("/auth");
   };
 
