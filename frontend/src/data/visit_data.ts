@@ -16,11 +16,14 @@ export interface IVisit {
 
 export enum VisitState {
   NEW,
+  IN_APPROVAL,
   APPROVED,
+  DISAPPROVED,
   FOR_SIGNATURE,
   SIGNED,
   FANTOM_NEW,
   FANTOM_DONE,
+  DELETED,
 }
 
 interface IProjectInfo {
@@ -39,13 +42,13 @@ interface IProbandInfo {
   birthdate: Date;
   height: number;
   weight: number;
-  gender: string; // TODO: can be enum or object stored in the database in case of future additions/editations etc.
-  nativeLanguage: string; // TODO: can be enum or object stored in the database in case of future additions/editations etc.
-  visualCorrection: string; // TODO: can be enum or object stored in the database in case of future additions/editations etc.
+  gender: string; // TODO: should be enum
+  nativeLanguage: string; // TODO: object stored in the database
+  visualCorrection: string; // TODO: should be enum
   visualCorrectionValue: number;
-  sideDominance: string; // TODO: this should most probably be an enum
+  sideDominance: string; // TODO: should be enum
   email: string;
-  phoneNumber: string; // TODO: this depends whether they want to choose national phone prefix..
+  phoneNumber: string;
 }
 
 export interface IQac {
@@ -220,6 +223,8 @@ export const dummyFantomVisit: IVisit = {
 export const dummyVisits: IVisit[] = [
   dummyVisitNew,
   ...createVisits(dummyVisitNew, VisitState.NEW, 3),
+  ...createVisits(dummyVisitNew, VisitState.IN_APPROVAL, 2),
+  ...createVisits(dummyVisitNew, VisitState.DISAPPROVED, 3),
   ...createVisits(dummyVisitNew, VisitState.APPROVED, 4),
   ...createVisits(dummyVisitNew, VisitState.SIGNED, 2),
   dummyFantomVisitNew,
