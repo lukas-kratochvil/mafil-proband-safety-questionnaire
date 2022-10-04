@@ -119,7 +119,8 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
           // Form from 'ApprovalTablePage' must be initially called with 'OPERATOR_APPROVE_DISABLED'
           if (
             initialEditState === FormEditState.OPERATOR_APPROVE_DISABLED
-            && fetchedVisit.state !== VisitState.IN_APPROVAL
+            && fetchedVisit.state === VisitState.IN_APPROVAL
+            && operator.hasHigherPermission
           ) {
             setFormEditState(FormEditState.OPERATOR_APPROVE);
           }
@@ -136,7 +137,7 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
     };
 
     fetchData();
-  }, [id, operator]);
+  }, [id, initialEditState, operator]);
 
   useEffect(() => {
     if (visit === undefined) {
@@ -282,7 +283,7 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
             },
             {
               title: "Zpět",
-              onClick: () => navigate("/auth/waiting-room"),
+              onClick: () => navigate(-1),
             },
           ],
         });
