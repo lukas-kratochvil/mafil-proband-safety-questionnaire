@@ -15,7 +15,7 @@ import { FormQuestions } from "../components/form/FormQuestions";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
 import { defaultFormSchema } from "../components/form/schemas/form-schema_default";
 import { operatorFormSchema } from "../components/form/schemas/form-schema_operator";
-import { FormEditState, FormPropType } from "../components/form/types/types";
+import { UserFormContext, FormPropType } from "../components/form/types/types";
 import { IVisit, VisitState } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
 import { fetchCurrentQuestions, fetchVisit } from "../util/fetch";
@@ -53,10 +53,10 @@ const loadFormDefaultValuesFromVisit = (visit: IVisit): FormPropType => ({
 });
 
 interface IFormPageProps {
-  initialEditState: FormEditState;
+  initialUserFormContext: UserFormContext;
 }
 
-export const FormPage = ({ initialEditState }: IFormPageProps) => {
+export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { operator } = useAuth();
@@ -66,7 +66,7 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
 
   const [visit, setVisit] = useState<IVisit | undefined>();
   const [qacs, setQacs] = useState<IFormQac[]>([]);
-  const [formEditState, setFormEditState] = useState<FormEditState>(initialEditState);
+  const [userFormContext, setUserFormContext] = useState<UserFormContext>(initialUserFormContext);
 
   const [buttonsAreLoading, setButtonsAreLoading] = useState<boolean>(true);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>({} as IFormButtonsProps);
@@ -117,15 +117,15 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
           }
 
           if (
-            initialEditState === FormEditState.OPERATOR_APPROVE_DISABLED
+            initialUserFormContext === UserFormContext.OPERATOR_APPROVE_DISABLED
             && fetchedVisit.state === VisitState.IN_APPROVAL
             && operator.hasHigherPermission
             ) {
             // form from 'ApprovalTablePage' must be initially called with 'OPERATOR_APPROVE_DISABLED'
-            setFormEditState(FormEditState.OPERATOR_APPROVE);
-          } else if (initialEditState === FormEditState.OPERATOR_CHECK && fetchedVisit.projectInfo.isFantom) {
+            setUserFormContext(UserFormContext.OPERATOR_APPROVE);
+          } else if (initialUserFormContext === UserFormContext.OPERATOR_CHECK && fetchedVisit.projectInfo.isFantom) {
             // visit to be finalized (proband visit or new fantom visit) is initially called with 'OPERATOR_CHECK'
-            setFormEditState(FormEditState.FANTOM);
+            setUserFormContext(UserFormContext.FANTOM);
           }
 
           console.log("FETCHING QUESTIONS FROM THE VISIT");
@@ -140,7 +140,7 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
     };
 
     fetchData();
-  }, [id, initialEditState, operator]);
+  }, [id, initialUserFormContext, operator]);
 
   useEffect(() => {
     if (visit === undefined) {
@@ -162,8 +162,8 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
   }, [qacs, setValue, visit]);
 
   useEffect(() => {
-    switch (formEditState) {
-      case FormEditState.PROBAND_EDIT:
+    switch (userFormContext) {
+      case UserFormContext.PROBAND_EDIT:
         setFormButtons({
           submitButtonProps: {
             title: "Souhlasím",
@@ -175,7 +175,7 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
           buttonsProps: [],
         });
         break;
-      case FormEditState.FANTOM:
+      case UserFormContext.FANTOM:
         setFormButtons({
           submitButtonProps: {
             title: "Finalizovat",
@@ -194,7 +194,7 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
           ],
         });
         break;
-      case FormEditState.OPERATOR_CHECK:
+      case UserFormContext.OPERATOR_CHECK:
         setFormButtons({
           submitButtonProps: {
             title: "Finalizovat",
@@ -224,7 +224,7 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
             {
               title: "Editovat",
               onClick: () => {
-                setFormEditState(FormEditState.OPERATOR_EDIT);
+                setUserFormContext(UserFormContext.OPERATOR_EDIT);
               },
             },
             {
@@ -234,14 +234,14 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
           ],
         });
         break;
-      case FormEditState.OPERATOR_EDIT:
+      case UserFormContext.OPERATOR_EDIT:
         setFormButtons({
           submitButtonProps: {
             title: "Uložit změny",
             onClick: (data: FormPropType) => {
               // TODO: save the changes in DB
-              setFormEditState(
-                operator?.hasHigherPermission ? FormEditState.OPERATOR_APPROVE : FormEditState.OPERATOR_CHECK
+              setUserFormContext(
+                operator?.hasHigherPermission ? UserFormContext.OPERATOR_APPROVE : UserFormContext.OPERATOR_CHECK
               );
             },
           },
@@ -251,15 +251,15 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
               onClick: () => {
                 // TODO: reset to previously saved data
                 reset();
-                setFormEditState(
-                  operator?.hasHigherPermission ? FormEditState.OPERATOR_APPROVE : FormEditState.OPERATOR_CHECK
+                setUserFormContext(
+                  operator?.hasHigherPermission ? UserFormContext.OPERATOR_APPROVE : UserFormContext.OPERATOR_CHECK
                 );
               },
             },
           ],
         });
         break;
-      case FormEditState.OPERATOR_APPROVE:
+      case UserFormContext.OPERATOR_APPROVE:
         setFormButtons({
           submitButtonProps: {
             title: "Schvaluji",
@@ -281,7 +281,7 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
             {
               title: "Editovat",
               onClick: () => {
-                setFormEditState(FormEditState.OPERATOR_EDIT);
+                setUserFormContext(UserFormContext.OPERATOR_EDIT);
               },
             },
             {
@@ -292,11 +292,11 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
         });
         break;
       default:
-        // FormEditState.OPERATOR_APPROVE_DISABLED
+        // UserFormContext.OPERATOR_APPROVE_DISABLED
         setFormButtons({
           submitButtonProps: undefined,
           buttonsProps: [
-            // Even though it's the only button for this FormEditState, doesn't have 'submit' type because MUI uses <span> for buttons
+            // Even though it's the only button for this UserFormContext, doesn't have 'submit' type because MUI uses <span> for buttons
             {
               title: "Zpět",
               onClick: () => navigate(-1),
@@ -306,7 +306,7 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
         break;
     }
     setButtonsAreLoading(false);
-  }, [formEditState, id, navigate, operator?.hasHigherPermission, reset]);
+  }, [userFormContext, id, navigate, operator?.hasHigherPermission, reset]);
 
   const onSubmit = (data: FormPropType) => {
     // TODO: submit data
@@ -329,7 +329,7 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
             spacing={matchesDownSmBreakpoint ? "1rem" : "1.5rem"}
             alignItems="stretch"
           >
-            {formEditState === FormEditState.PROBAND_EDIT ? (
+            {userFormContext === UserFormContext.PROBAND_EDIT ? (
               <>
                 <FormEntryInfo />
                 <FormProbandInfo disableInputs={false} />
@@ -346,44 +346,44 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
             ) : (
               <>
                 <FormProjectInfo
-                  isFantom={formEditState === FormEditState.FANTOM}
-                  disableInputs={[FormEditState.OPERATOR_APPROVE, FormEditState.OPERATOR_APPROVE_DISABLED].includes(
-                    formEditState
+                  isFantom={userFormContext === UserFormContext.FANTOM}
+                  disableInputs={[UserFormContext.OPERATOR_APPROVE, UserFormContext.OPERATOR_APPROVE_DISABLED].includes(
+                    userFormContext
                   )}
                 />
                 <FormProbandInfo
                   disableInputs={[
-                    FormEditState.OPERATOR_CHECK,
-                    FormEditState.OPERATOR_APPROVE,
-                    FormEditState.OPERATOR_APPROVE_DISABLED,
-                  ].includes(formEditState)}
+                    UserFormContext.OPERATOR_CHECK,
+                    UserFormContext.OPERATOR_APPROVE,
+                    UserFormContext.OPERATOR_APPROVE_DISABLED,
+                  ].includes(userFormContext)}
                 />
-                {formEditState !== FormEditState.FANTOM && (
+                {userFormContext !== UserFormContext.FANTOM && (
                   <>
                     <FormProbandContact
                       disableInputs={[
-                        FormEditState.OPERATOR_CHECK,
-                        FormEditState.OPERATOR_APPROVE,
-                        FormEditState.OPERATOR_APPROVE_DISABLED,
-                      ].includes(formEditState)}
+                        UserFormContext.OPERATOR_CHECK,
+                        UserFormContext.OPERATOR_APPROVE,
+                        UserFormContext.OPERATOR_APPROVE_DISABLED,
+                      ].includes(userFormContext)}
                     />
                     <FormQuestions
                       title="Část 1"
                       qacs={qacs.filter((qac) => qac.partNumber === 1)}
                       disableInputs={[
-                        FormEditState.OPERATOR_CHECK,
-                        FormEditState.OPERATOR_APPROVE,
-                        FormEditState.OPERATOR_APPROVE_DISABLED,
-                      ].includes(formEditState)}
+                        UserFormContext.OPERATOR_CHECK,
+                        UserFormContext.OPERATOR_APPROVE,
+                        UserFormContext.OPERATOR_APPROVE_DISABLED,
+                      ].includes(userFormContext)}
                     />
                     <FormQuestions
                       title="Část 2"
                       qacs={qacs.filter((qac) => qac.partNumber === 2)}
                       disableInputs={[
-                        FormEditState.OPERATOR_CHECK,
-                        FormEditState.OPERATOR_APPROVE,
-                        FormEditState.OPERATOR_APPROVE_DISABLED,
-                      ].includes(formEditState)}
+                        UserFormContext.OPERATOR_CHECK,
+                        UserFormContext.OPERATOR_APPROVE,
+                        UserFormContext.OPERATOR_APPROVE_DISABLED,
+                      ].includes(userFormContext)}
                     />
                   </>
                 )}

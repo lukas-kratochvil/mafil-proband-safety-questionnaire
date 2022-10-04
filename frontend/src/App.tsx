@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { FormEditState } from "./components/form/types/types";
+import { UserFormContext } from "./components/form/types/types";
 import { useAuth } from "./hooks/auth/Auth";
 import { ApprovalTablePage } from "./pages/ApprovalTablePage";
 import { FormAfterSubmission } from "./pages/FormAfterSubmission";
@@ -20,7 +20,7 @@ export const App = () => {
       />
       <Route
         path="/form"
-        element={<FormPage initialEditState={FormEditState.PROBAND_EDIT} />}
+        element={<FormPage initialUserFormContext={UserFormContext.PROBAND_EDIT} />}
       />
       <Route
         path="/form-after-submission"
@@ -34,7 +34,7 @@ export const App = () => {
         <>
           <Route
             path="/auth/form/:id"
-            element={<FormPage initialEditState={FormEditState.OPERATOR_CHECK} />}
+            element={<FormPage initialUserFormContext={UserFormContext.OPERATOR_CHECK} />}
           />
           <Route
             path="/auth/waiting-room"
@@ -46,7 +46,7 @@ export const App = () => {
           />
           <Route
             path="/auth/approval/form/:id"
-            element={<FormPage initialEditState={FormEditState.OPERATOR_APPROVE_DISABLED} />}
+            element={<FormPage initialUserFormContext={UserFormContext.OPERATOR_APPROVE_DISABLED} />}
           />
           <Route
             path="/auth/recent-visits"
