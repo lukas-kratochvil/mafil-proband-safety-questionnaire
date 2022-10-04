@@ -178,7 +178,7 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
             title: "Finalizovat",
             onClick: (data: FormPropType) => {
               // TODO: store changes in DB if made
-              updateDummyVisitState(id, VisitState.FANTOM_DONE);
+              updateDummyVisitState(id, VisitState.SIGNED);
               navigate(`/auth/visit-detail/${id}`);
             },
           },

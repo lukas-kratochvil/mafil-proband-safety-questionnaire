@@ -46,7 +46,7 @@ const header: MRTColumnDef<IVisit>[] = [
   },
   {
     accessorFn: (visit) => {
-      if (visit.state === VisitState.FANTOM_DONE) {
+      if (visit.projectInfo.isFantom) {
         return "Nepodepisuje se";
       }
       return visit.state === VisitState.SIGNED ? "Ano" : "Ne";

@@ -3,14 +3,13 @@ import { devicesDev, projectsDev } from "./form_data";
 import { QuestionPartNumber } from "./question_data";
 
 export enum VisitState {
+  FANTOM_NEW,
   NEW,
   IN_APPROVAL,
   APPROVED,
   DISAPPROVED,
   FOR_SIGNATURE,
   SIGNED,
-  FANTOM_NEW,
-  FANTOM_DONE,
   DELETED,
 }
 
@@ -74,7 +73,7 @@ const loadAnswers = (answers: IQac[], visitState: VisitState): IQac[] =>
     ...answer,
     comment:
       // For dev data purposes – approved visit must have some comment to a question answered with 'yes'
-      [VisitState.FANTOM_DONE, VisitState.APPROVED, VisitState.FOR_SIGNATURE, VisitState.SIGNED].includes(visitState)
+      [VisitState.APPROVED, VisitState.FOR_SIGNATURE, VisitState.SIGNED].includes(visitState)
       && answer.answer === "yes"
       && answer.comment === ""
         ? "Komentář"
@@ -209,7 +208,7 @@ export const dummyFantomVisit: IVisit = {
   id: generateId(),
   createdAt: new Date(1663000000000),
   visitId: "fantom2",
-  state: VisitState.FANTOM_DONE,
+  state: VisitState.SIGNED,
   pdf: "/dummy.pdf",
   projectInfo: {
     ...dummyVisitNew.projectInfo,
@@ -221,7 +220,7 @@ export const dummyFantomVisit: IVisit = {
     surname: "Fantom",
     gender: "Jiné",
   },
-  answers: [...loadAnswers(dummyFantomVisitNew.answers, VisitState.FANTOM_DONE)],
+  answers: [...loadAnswers(dummyFantomVisitNew.answers, VisitState.SIGNED)],
 };
 
 export const dummyVisits: IVisit[] = [
@@ -234,5 +233,5 @@ export const dummyVisits: IVisit[] = [
   dummyFantomVisitNew,
   dummyFantomVisit,
   ...createVisits(dummyFantomVisit, VisitState.FANTOM_NEW, 1),
-  ...createVisits(dummyFantomVisit, VisitState.FANTOM_DONE, 2),
+  ...createVisits(dummyFantomVisit, VisitState.SIGNED, 2),
 ];

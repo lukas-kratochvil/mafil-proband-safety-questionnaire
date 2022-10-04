@@ -17,7 +17,10 @@ interface IButtonProps {
   disabled?: boolean;
 }
 
-const getColoredInfoStripe = (visitState?: VisitState): IColoredInfoStripeProps => {
+const getColoredInfoStripe = (
+  visitState: VisitState | undefined,
+  visit: IVisit | undefined
+): IColoredInfoStripeProps => {
   switch (visitState) {
     case VisitState.NEW:
       return {
@@ -36,14 +39,8 @@ const getColoredInfoStripe = (visitState?: VisitState): IColoredInfoStripeProps 
       };
     case VisitState.SIGNED:
       return {
-        text: "Podepsáno",
-        color: ColoredInfoStripeColors.GREEN,
-      };
-    case VisitState.FANTOM_NEW:
-    case VisitState.FANTOM_DONE:
-      return {
-        text: "Fantom se nepodepisuje",
-        color: ColoredInfoStripeColors.BLUE,
+        text: visit?.projectInfo.isFantom ? "Fantom se nepodepisuje" : "Podepsáno",
+        color: visit?.projectInfo.isFantom ? ColoredInfoStripeColors.BLUE : ColoredInfoStripeColors.GREEN,
       };
     default:
       return {
@@ -94,7 +91,6 @@ const getButtons = (
         },
       ];
     case VisitState.SIGNED:
-    case VisitState.FANTOM_DONE:
       return [
         {
           title: "Stáhnout PDF",
@@ -145,7 +141,7 @@ export const VisitDetailPage = () => {
       visit.state = visitState;
     }
 
-    setColoredInfoStripe(getColoredInfoStripe(visitState));
+    setColoredInfoStripe(getColoredInfoStripe(visitState, visit));
     setButtons(getButtons(visitState, setVisitState));
   }, [visit, visitState]);
 
