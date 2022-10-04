@@ -91,6 +91,7 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
 
         if (fetchedVisit === undefined) {
           if (operator !== undefined) {
+            // TODO
             console.log("AUTH DOES NOT FETCHED THE VISIT!");
             setIsError(true);
             return;
@@ -109,6 +110,7 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
           );
         } else {
           if (operator === undefined) {
+            // TODO
             console.log("UNAUTHORIZED ACCESS!");
             setIsError(true);
             return;
@@ -243,6 +245,7 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
             {
               title: "Zrušit",
               onClick: () => {
+                // TODO: reset to previously saved data
                 reset();
                 setFormEditState(
                   operator?.hasHigherPermission ? FormEditState.OPERATOR_APPROVE : FormEditState.OPERATOR_CHECK
@@ -289,6 +292,7 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
         setFormButtons({
           submitButtonProps: undefined,
           buttonsProps: [
+            // Even though it's the only button for this FormEditState, doesn't have 'submit' type because MUI uses <span> for buttons
             {
               title: "Zpět",
               onClick: () => navigate(-1),
@@ -301,12 +305,10 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
   }, [formEditState, id, navigate, operator?.hasHigherPermission, reset]);
 
   const onSubmit = (data: FormPropType) => {
-    // if (formEditState !== FormEditState.OPERATOR_APPROVE_DISABLED) {
     // TODO: submit data
     console.log("Submitted data:");
     console.log(data);
     formButtons.submitButtonProps?.onClick(data);
-    // }
   };
 
   // TODO: DELETE - only for development purposes
