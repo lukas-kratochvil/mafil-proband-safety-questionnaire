@@ -73,7 +73,10 @@ const loadAnswers = (answers: IQac[], visitState: VisitState): IQac[] =>
   answers.map((answer) => ({
     ...answer,
     comment:
-      ![VisitState.NEW, VisitState.FANTOM_NEW].includes(visitState) && answer.answer === "yes" && answer.comment === ""
+      // For dev data purposes – approved visit must have some comment to a question answered with 'yes'
+      [VisitState.FANTOM_DONE, VisitState.APPROVED, VisitState.FOR_SIGNATURE, VisitState.SIGNED].includes(visitState)
+      && answer.answer === "yes"
+      && answer.comment === ""
         ? "Komentář"
         : "",
   }));
