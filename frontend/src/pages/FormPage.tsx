@@ -169,7 +169,7 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
             title: "Souhlasím",
             onClick: (data: FormPropType) => {
               // TODO: create visit in DB
-              navigate("/form-after-submission");
+              navigate("/home");
             },
           },
           buttonsProps: [],

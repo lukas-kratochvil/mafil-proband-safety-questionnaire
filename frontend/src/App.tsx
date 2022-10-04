@@ -23,7 +23,7 @@ export const App = () => {
         element={<FormPage initialUserFormContext={UserFormContext.PROBAND_EDIT} />}
       />
       <Route
-        path="/form-after-submission"
+        path="/home"
         element={<FormAfterSubmission />}
       />
       <Route
