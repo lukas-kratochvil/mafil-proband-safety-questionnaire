@@ -116,13 +116,16 @@ export const FormPage = ({ initialEditState }: IFormPageProps) => {
             return;
           }
 
-          // Form from 'ApprovalTablePage' must be initially called with 'OPERATOR_APPROVE_DISABLED'
           if (
             initialEditState === FormEditState.OPERATOR_APPROVE_DISABLED
             && fetchedVisit.state === VisitState.IN_APPROVAL
             && operator.hasHigherPermission
-          ) {
+            ) {
+            // form from 'ApprovalTablePage' must be initially called with 'OPERATOR_APPROVE_DISABLED'
             setFormEditState(FormEditState.OPERATOR_APPROVE);
+          } else if (initialEditState === FormEditState.OPERATOR_CHECK && fetchedVisit.projectInfo.isFantom) {
+            // visit to be finalized (proband visit or new fantom visit) is initially called with 'OPERATOR_CHECK'
+            setFormEditState(FormEditState.FANTOM);
           }
 
           console.log("FETCHING QUESTIONS FROM THE VISIT");
