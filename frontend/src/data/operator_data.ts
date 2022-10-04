@@ -1,6 +1,6 @@
 import { IOperator } from "../hooks/auth/Auth";
 
-const operator1: IOperator = {
+const operatorSpecial: IOperator = {
   name: "Operator",
   surname: "Special",
   uco: "123456",
@@ -8,7 +8,7 @@ const operator1: IOperator = {
   hasHigherPermission: true,
 };
 
-const operator2: IOperator = {
+const operatorMR: IOperator = {
   name: "Operator",
   surname: "MR",
   uco: "987654",
@@ -16,4 +16,4 @@ const operator2: IOperator = {
   hasHigherPermission: false,
 };
 
-export const trustedOperators = [operator1, operator2];
+export const trustedOperators = [operatorSpecial, operatorMR];

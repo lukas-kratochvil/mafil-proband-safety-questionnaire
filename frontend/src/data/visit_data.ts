@@ -2,17 +2,6 @@ import { getDummyVisitCurrentQuestions } from "../util/fetch.dev";
 import { devicesDev, projectsDev } from "./form_data";
 import { QuestionPartNumber } from "./question_data";
 
-export interface IVisit {
-  id: string;
-  createdAt: Date;
-  visitId: string;
-  state: VisitState;
-  pdf: string;
-  projectInfo: IProjectInfo;
-  probandInfo: IProbandInfo;
-  answers: IQac[];
-}
-
 export enum VisitState {
   NEW,
   IN_APPROVAL,
@@ -23,6 +12,17 @@ export enum VisitState {
   FANTOM_NEW,
   FANTOM_DONE,
   DELETED,
+}
+
+export interface IVisit {
+  id: string;
+  createdAt: Date;
+  visitId: string;
+  state: VisitState;
+  pdf: string;
+  projectInfo: IProjectInfo;
+  probandInfo: IProbandInfo;
+  answers: IQac[];
 }
 
 interface IProjectInfo {
