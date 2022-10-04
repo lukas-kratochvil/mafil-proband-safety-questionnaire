@@ -16,7 +16,7 @@ export const App = () => {
     <Routes>
       <Route
         path="/"
-        element={<Navigate to="/form" />}
+        element={<Navigate to="/home" />}
       />
       <Route
         path="/form"
