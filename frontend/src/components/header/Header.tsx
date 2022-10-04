@@ -35,6 +35,16 @@ export const Header = () => {
       icon: <PendingActionsIcon />,
     },
     {
+      label: "Schvalování",
+      onClick: () => navigate("/auth/approval"),
+      icon: <ApprovalIcon />,
+    },
+    {
+      label: "Poslední visity",
+      onClick: () => navigate("/auth/recent-visits"),
+      icon: <RecentActorsIcon />,
+    },
+    {
       label: "Založit měření na Fantomu",
       onClick: () => {
         // TODO: create new FANTOM visit and use its ID
@@ -47,16 +57,6 @@ export const Header = () => {
       label: "Otevřít formulář probanda",
       onClick: () => window.open("/form", "_blank", "noopener,noreferrer"),
       icon: <PersonAddAlt1Icon />,
-    },
-    {
-      label: "Schvalování",
-      onClick: () => navigate("/auth/approval"),
-      icon: <ApprovalIcon />,
-    },
-    {
-      label: "Poslední visity",
-      onClick: () => navigate("/auth/recent-visits"),
-      icon: <RecentActorsIcon />,
     },
   ];
 
