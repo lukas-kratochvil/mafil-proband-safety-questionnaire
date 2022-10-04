@@ -15,7 +15,7 @@ import { FormQuestions } from "../components/form/FormQuestions";
 import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
 import { defaultFormSchema } from "../components/form/schemas/form-schema_default";
 import { operatorFormSchema } from "../components/form/schemas/form-schema_operator";
-import { UserFormContext, FormPropType } from "../components/form/types/types";
+import { FormPropType, UserFormContext } from "../components/form/types/types";
 import { IVisit, VisitState } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
 import { fetchCurrentQuestions, fetchVisit } from "../util/fetch";
@@ -120,7 +120,7 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
             initialUserFormContext === UserFormContext.OPERATOR_APPROVE_DISABLED
             && fetchedVisit.state === VisitState.IN_APPROVAL
             && operator.hasHigherPermission
-            ) {
+          ) {
             // form from 'ApprovalTablePage' must be initially called with 'OPERATOR_APPROVE_DISABLED'
             setUserFormContext(UserFormContext.OPERATOR_APPROVE);
           } else if (initialUserFormContext === UserFormContext.OPERATOR_CHECK && fetchedVisit.projectInfo.isFantom) {

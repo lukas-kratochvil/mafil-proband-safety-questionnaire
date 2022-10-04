@@ -2,8 +2,8 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { UserFormContext } from "./components/form/types/types";
 import { useAuth } from "./hooks/auth/Auth";
 import { ApprovalTablePage } from "./pages/ApprovalTablePage";
-import { FormAfterSubmission } from "./pages/FormAfterSubmission";
 import { FormPage } from "./pages/FormPage";
+import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
 import { RecentVisitsTablePage } from "./pages/RecentVisitsTablePage";
 import { VisitDetailPage } from "./pages/VisitDetailPage";
@@ -19,12 +19,12 @@ export const App = () => {
         element={<Navigate to="/home" />}
       />
       <Route
-        path="/form"
-        element={<FormPage initialUserFormContext={UserFormContext.PROBAND_EDIT} />}
+        path="/home"
+        element={<HomePage />}
       />
       <Route
-        path="/home"
-        element={<FormAfterSubmission />}
+        path="/form"
+        element={<FormPage initialUserFormContext={UserFormContext.PROBAND_EDIT} />}
       />
       <Route
         path="/auth"

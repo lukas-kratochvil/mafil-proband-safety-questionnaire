@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { CardBox } from "../components/card/CardBox";
 import { PageTemplate } from "./PageTemplate";
 
-export const FormAfterSubmission = () => {
+export const HomePage = () => {
   const navigate = useNavigate();
 
   return (
