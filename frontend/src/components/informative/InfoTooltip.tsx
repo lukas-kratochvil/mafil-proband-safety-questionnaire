@@ -1,12 +1,13 @@
-import { ClickAwayListener, IconButton, Tooltip, useMediaQuery } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
+import { ClickAwayListener, IconButton, Tooltip, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
-import { StyledInfoIcon } from "./StyledInfoIcon";
 
 interface IInfoTooltipProps {
   text: string;
 }
 
 export const InfoTooltip = ({ text }: IInfoTooltipProps) => {
+  const theme = useTheme();
   const matchesPointerDevice = useMediaQuery("(pointer: fine)");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleTooltipClose = () => setIsOpen(false);
@@ -18,7 +19,7 @@ export const InfoTooltip = ({ text }: IInfoTooltipProps) => {
       arrow
       placement="top-start"
     >
-      <StyledInfoIcon />
+      <InfoIcon sx={{ color: theme.palette.info.light }} />
     </Tooltip>
   ) : (
     <ClickAwayListener onClickAway={handleTooltipClose}>
@@ -39,7 +40,7 @@ export const InfoTooltip = ({ text }: IInfoTooltipProps) => {
             marginX: "-0.5rem",
           }}
         >
-          <StyledInfoIcon />
+          <InfoIcon sx={{ color: theme.palette.info.light }} />
         </IconButton>
       </Tooltip>
     </ClickAwayListener>

@@ -63,7 +63,7 @@ export const FormPage = () => {
   const [visit, setVisit] = useState<IVisit | undefined>();
   const [qacs, setQacs] = useState<IFormQac[]>([]);
   const [formEditState, setFormEditState] = useState<FormEditState>(
-    username === undefined ? FormEditState.PROBAND_EDIT : FormEditState.OPERATOR_CHECK
+    operator === undefined ? FormEditState.PROBAND_EDIT : FormEditState.OPERATOR_CHECK
   );
 
   const [buttonsAreLoading, setButtonsAreLoading] = useState<boolean>(true);

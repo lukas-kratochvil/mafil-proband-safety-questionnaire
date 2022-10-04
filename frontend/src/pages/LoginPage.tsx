@@ -7,7 +7,7 @@ export const LoginPage = () => {
   const { logIn } = useAuth();
 
   const handleLogIn = async (authMethod: IAuthMethod) => {
-    if (!await logIn(authMethod)) {
+    if (!(await logIn(authMethod))) {
       // TODO: show some Alert that operator does not have access to the app authenticated version
       Error("Login was unsuccessful!");
     }
