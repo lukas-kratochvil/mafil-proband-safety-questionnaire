@@ -214,7 +214,7 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
           },
           buttonsProps: [
             {
-              title: "Neschvaluji",
+              title: "Neschválit",
               onClick: () => {
                 // TODO: store changes in DB if made
                 updateDummyVisitState(id, VisitState.DISAPPROVED);
