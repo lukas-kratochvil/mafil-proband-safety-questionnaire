@@ -12,7 +12,7 @@ interface IButtonProps {
 }
 
 export interface IFormButtonsProps {
-  submitButtonProps: ISubmitButtonProps;
+  submitButtonProps: ISubmitButtonProps | undefined;
   buttonsProps: IButtonProps[];
 }
 
@@ -29,15 +29,17 @@ export const FormButtons = ({ submitButtonProps, buttonsProps }: IFormButtonsPro
       gap={matchesDownSmBreakpoint ? "0.5rem" : "1.5rem"}
       sx={{ width: matchesDownSmBreakpoint ? "12rem" : "100%" }}
     >
-      <Button
-        type="submit"
-        variant="contained"
-        color="success"
-        // TODO: doesn't work, why?? Should disable submit button when form isn't correctly filled
-        // disabled={!isDirty || !isValid}
-      >
-        {submitButtonProps.title}
-      </Button>
+      {submitButtonProps && (
+        <Button
+          type="submit"
+          variant="contained"
+          color="success"
+          // TODO: doesn't work, why?? Should disable submit button when form isn't correctly filled
+          // disabled={!isDirty || !isValid}
+        >
+          {submitButtonProps.title}
+        </Button>
+      )}
       {buttonsProps.map((buttonProps, index) => (
         <Button
           key={index}

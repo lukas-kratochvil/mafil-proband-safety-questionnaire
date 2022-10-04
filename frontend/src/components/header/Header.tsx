@@ -1,3 +1,4 @@
+import ApprovalIcon from "@mui/icons-material/Approval";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import RecentActorsIcon from "@mui/icons-material/RecentActors";
@@ -25,6 +26,7 @@ export const Header = () => {
   const theme = useTheme();
   const matchesDownMdBreakpoint = useMediaQuery(theme.breakpoints.down("md"));
 
+  // TODO: extract outside the component?
   const navigationItems: INavigationItem[] = [
     {
       // TODO: number must be updated
@@ -45,6 +47,11 @@ export const Header = () => {
       label: "Otevřít formulář probanda",
       onClick: () => window.open("/form", "_blank", "noopener,noreferrer"),
       icon: <PersonAddAlt1Icon />,
+    },
+    {
+      label: "Schvalování",
+      onClick: () => navigate("/auth/approval"),
+      icon: <ApprovalIcon />,
     },
     {
       label: "Poslední visity",

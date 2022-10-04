@@ -52,7 +52,11 @@ const loadFormDefaultValuesFromVisit = (visit: IVisit): FormPropType => ({
   answers: visit.answers.map((answer) => ({ ...answer })),
 });
 
-export const FormPage = () => {
+interface IFormPageProps {
+  initialEditState: FormEditState;
+}
+
+export const FormPage = ({ initialEditState }: IFormPageProps) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { operator } = useAuth();
@@ -62,9 +66,7 @@ export const FormPage = () => {
 
   const [visit, setVisit] = useState<IVisit | undefined>();
   const [qacs, setQacs] = useState<IFormQac[]>([]);
-  const [formEditState, setFormEditState] = useState<FormEditState>(
-    operator === undefined ? FormEditState.PROBAND_EDIT : FormEditState.OPERATOR_CHECK
-  );
+  const [formEditState, setFormEditState] = useState<FormEditState>(initialEditState);
 
   const [buttonsAreLoading, setButtonsAreLoading] = useState<boolean>(true);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>({} as IFormButtonsProps);
@@ -94,8 +96,6 @@ export const FormPage = () => {
             return;
           }
 
-          setFormEditState(FormEditState.PROBAND_EDIT);
-
           console.log("FETCHING DEFAULT QUESTIONS");
           const questions = await fetchCurrentQuestions();
           setQacs(
@@ -114,7 +114,13 @@ export const FormPage = () => {
             return;
           }
 
-          setFormEditState(fetchedVisit.projectInfo.isFantom ? FormEditState.FANTOM : FormEditState.OPERATOR_CHECK);
+          // Form from 'ApprovalTablePage' must be initially called with 'OPERATOR_APPROVE_DISABLED'
+          if (
+            initialEditState === FormEditState.OPERATOR_APPROVE_DISABLED
+            && fetchedVisit.state !== VisitState.IN_APPROVAL
+          ) {
+            setFormEditState(FormEditState.OPERATOR_APPROVE);
+          }
 
           console.log("FETCHING QUESTIONS FROM THE VISIT");
           setQacs(fetchedVisit.answers.map((answer, index) => ({ index, ...answer })));
@@ -151,7 +157,7 @@ export const FormPage = () => {
 
   useEffect(() => {
     switch (formEditState) {
-      case FormEditState.PROBAND_EDIT: {
+      case FormEditState.PROBAND_EDIT:
         setFormButtons({
           submitButtonProps: {
             title: "Souhlasím",
@@ -163,8 +169,7 @@ export const FormPage = () => {
           buttonsProps: [],
         });
         break;
-      }
-      case FormEditState.FANTOM: {
+      case FormEditState.FANTOM:
         setFormButtons({
           submitButtonProps: {
             title: "Finalizovat",
@@ -183,39 +188,33 @@ export const FormPage = () => {
           ],
         });
         break;
-      }
-      case FormEditState.OPERATOR_EDIT: {
-        setFormButtons({
-          submitButtonProps: {
-            title: "Uložit změny",
-            onClick: (data: FormPropType) => {
-              // TODO: save the changes in DB
-              setFormEditState(FormEditState.OPERATOR_CHECK);
-            },
-          },
-          buttonsProps: [
-            {
-              title: "Zrušit",
-              onClick: () => {
-                reset();
-                setFormEditState(FormEditState.OPERATOR_CHECK);
-              },
-            },
-          ],
-        });
-        break;
-      }
-      default: {
+      case FormEditState.OPERATOR_CHECK:
         setFormButtons({
           submitButtonProps: {
             title: "Finalizovat",
             onClick: (data: FormPropType) => {
               // TODO: store changes in DB if made
-              updateDummyVisitState(id, VisitState.APPROVED);
-              navigate(`/auth/visit-detail/${id}`);
+              if (
+                operator?.hasHigherPermission
+                || data.answers.find((answer) => answer.partNumber === 2 && answer.answer === "yes") === undefined
+              ) {
+                updateDummyVisitState(id, VisitState.APPROVED);
+                navigate(`/auth/visit-detail/${id}`);
+              } else {
+                updateDummyVisitState(id, VisitState.IN_APPROVAL);
+                navigate("/auth/waiting-room");
+              }
             },
           },
           buttonsProps: [
+            {
+              title: "Neschvaluji",
+              onClick: () => {
+                // TODO: store changes in DB if made
+                updateDummyVisitState(id, VisitState.DISAPPROVED);
+                navigate("/auth/approval");
+              },
+            },
             {
               title: "Editovat",
               onClick: () => {
@@ -228,16 +227,86 @@ export const FormPage = () => {
             },
           ],
         });
-      }
+        break;
+      case FormEditState.OPERATOR_EDIT:
+        setFormButtons({
+          submitButtonProps: {
+            title: "Uložit změny",
+            onClick: (data: FormPropType) => {
+              // TODO: save the changes in DB
+              setFormEditState(
+                operator?.hasHigherPermission ? FormEditState.OPERATOR_APPROVE : FormEditState.OPERATOR_CHECK
+              );
+            },
+          },
+          buttonsProps: [
+            {
+              title: "Zrušit",
+              onClick: () => {
+                reset();
+                setFormEditState(
+                  operator?.hasHigherPermission ? FormEditState.OPERATOR_APPROVE : FormEditState.OPERATOR_CHECK
+                );
+              },
+            },
+          ],
+        });
+        break;
+      case FormEditState.OPERATOR_APPROVE:
+        setFormButtons({
+          submitButtonProps: {
+            title: "Schvaluji",
+            onClick: () => {
+              // TODO: store changes in DB if made
+              updateDummyVisitState(id, VisitState.APPROVED);
+              navigate(`/auth/visit-detail/${id}`);
+            },
+          },
+          buttonsProps: [
+            {
+              title: "Neschvaluji",
+              onClick: () => {
+                // TODO: store changes in DB if made
+                updateDummyVisitState(id, VisitState.DISAPPROVED);
+                navigate("/auth/approval");
+              },
+            },
+            {
+              title: "Editovat",
+              onClick: () => {
+                setFormEditState(FormEditState.OPERATOR_EDIT);
+              },
+            },
+            {
+              title: "Zpět",
+              onClick: () => navigate("/auth/waiting-room"),
+            },
+          ],
+        });
+        break;
+      default:
+        // FormEditState.OPERATOR_APPROVE_DISABLED
+        setFormButtons({
+          submitButtonProps: undefined,
+          buttonsProps: [
+            {
+              title: "Zpět",
+              onClick: () => navigate(-1),
+            },
+          ],
+        });
+        break;
     }
     setButtonsAreLoading(false);
-  }, [formEditState, id, navigate, reset]);
+  }, [formEditState, id, navigate, operator?.hasHigherPermission, reset]);
 
   const onSubmit = (data: FormPropType) => {
+    // if (formEditState !== FormEditState.OPERATOR_APPROVE_DISABLED) {
     // TODO: submit data
     console.log("Submitted data:");
     console.log(data);
-    formButtons.submitButtonProps.onClick(data);
+    formButtons.submitButtonProps?.onClick(data);
+    // }
   };
 
   // TODO: DELETE - only for development purposes
@@ -270,20 +339,45 @@ export const FormPage = () => {
               </>
             ) : (
               <>
-                <FormProjectInfo isFantom={formEditState === FormEditState.FANTOM} />
-                <FormProbandInfo disableInputs={formEditState === FormEditState.OPERATOR_CHECK} />
+                <FormProjectInfo
+                  isFantom={formEditState === FormEditState.FANTOM}
+                  disableInputs={[FormEditState.OPERATOR_APPROVE, FormEditState.OPERATOR_APPROVE_DISABLED].includes(
+                    formEditState
+                  )}
+                />
+                <FormProbandInfo
+                  disableInputs={[
+                    FormEditState.OPERATOR_CHECK,
+                    FormEditState.OPERATOR_APPROVE,
+                    FormEditState.OPERATOR_APPROVE_DISABLED,
+                  ].includes(formEditState)}
+                />
                 {formEditState !== FormEditState.FANTOM && (
                   <>
-                    <FormProbandContact disableInputs={formEditState === FormEditState.OPERATOR_CHECK} />
+                    <FormProbandContact
+                      disableInputs={[
+                        FormEditState.OPERATOR_CHECK,
+                        FormEditState.OPERATOR_APPROVE,
+                        FormEditState.OPERATOR_APPROVE_DISABLED,
+                      ].includes(formEditState)}
+                    />
                     <FormQuestions
                       title="Část 1"
                       qacs={qacs.filter((qac) => qac.partNumber === 1)}
-                      disableInputs={formEditState === FormEditState.OPERATOR_CHECK}
+                      disableInputs={[
+                        FormEditState.OPERATOR_CHECK,
+                        FormEditState.OPERATOR_APPROVE,
+                        FormEditState.OPERATOR_APPROVE_DISABLED,
+                      ].includes(formEditState)}
                     />
                     <FormQuestions
                       title="Část 2"
                       qacs={qacs.filter((qac) => qac.partNumber === 2)}
-                      disableInputs={formEditState === FormEditState.OPERATOR_CHECK}
+                      disableInputs={[
+                        FormEditState.OPERATOR_CHECK,
+                        FormEditState.OPERATOR_APPROVE,
+                        FormEditState.OPERATOR_APPROVE_DISABLED,
+                      ].includes(formEditState)}
                     />
                   </>
                 )}
