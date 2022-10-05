@@ -1,6 +1,6 @@
 import { Button, Grid, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CardBox } from "../components/card/CardBox";
 import {
   ColoredInfoStripe,
@@ -53,7 +53,7 @@ const getColoredInfoStripe = (
 const getButtons = (
   visitState: VisitState | undefined,
   setVisitState: React.Dispatch<React.SetStateAction<VisitState | undefined>>
-): IButtonProps[] => {
+): IButtonProps[] | undefined => {
   switch (visitState) {
     case VisitState.APPROVED:
       return [
@@ -99,12 +99,13 @@ const getButtons = (
         },
       ];
     default:
-      return [];
+      return undefined;
   }
 };
 
 export const VisitDetailPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [visit, setVisit] = useState<IVisit>();
   const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
   const [isError, setIsError] = useState<boolean>(false); // TODO: create ErrorPage
@@ -140,8 +141,14 @@ export const VisitDetailPage = () => {
     }
 
     setColoredInfoStripe(getColoredInfoStripe(visitState, visit));
-    setButtons(getButtons(visitState, setVisitState));
-  }, [visit, visitState]);
+    const stateButtons: IButtonProps[] = getButtons(visitState, setVisitState) || [
+      {
+        title: "Zpět",
+        onClick: () => navigate(-1),
+      },
+    ];
+    setButtons(stateButtons);
+  }, [navigate, visit, visitState]);
 
   return (
     <PageTemplate>
