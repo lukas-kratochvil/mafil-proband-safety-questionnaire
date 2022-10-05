@@ -24,12 +24,12 @@ export const fetchWaitingRoomVisits = async (): Promise<IVisit[]> =>
 
 // TODO: get visits from DB
 export const fetchApprovalVisits = async (): Promise<IVisit[]> =>
-  dummyVisits.filter((visit) => [VisitState.IN_APPROVAL, VisitState.DISAPPROVED].includes(visit.state));
+  dummyVisits.filter((visit) => visit.state === VisitState.IN_APPROVAL);
 
 // TODO: get visits from MAFIL DB – all the visits with assigned visitName and generated PDF are fetched from MAFIL DB
 export const fetchRecentVisits = async (): Promise<IVisit[]> =>
   dummyVisits.filter((visit) =>
-    [VisitState.APPROVED, VisitState.FOR_SIGNATURE, VisitState.SIGNED].includes(visit.state)
+    [VisitState.APPROVED, VisitState.DISAPPROVED, VisitState.FOR_SIGNATURE, VisitState.SIGNED].includes(visit.state)
   );
 
 // TODO: get questions from DB
