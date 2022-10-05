@@ -22,15 +22,15 @@ const getColoredInfoStripe = (
   visit: IVisit | undefined
 ): IColoredInfoStripeProps => {
   switch (visitState) {
-    case VisitState.NEW:
-      return {
-        text: "Nezkontrolováno",
-        color: ColoredInfoStripeColors.RED,
-      };
     case VisitState.APPROVED:
       return {
         text: "Výběr způsobu podepsání visity",
         color: ColoredInfoStripeColors.BLUE,
+      };
+    case VisitState.DISAPPROVED:
+      return {
+        text: "Neschváleno",
+        color: ColoredInfoStripeColors.RED,
       };
     case VisitState.FOR_SIGNATURE:
       return {
@@ -39,14 +39,12 @@ const getColoredInfoStripe = (
       };
     case VisitState.SIGNED:
       return {
-        text: visit?.projectInfo.isFantom ? "Fantom se nepodepisuje" : "Podepsáno",
-        color: visit?.projectInfo.isFantom ? ColoredInfoStripeColors.BLUE : ColoredInfoStripeColors.GREEN,
+        text: visit?.projectInfo.isFantom ? "Dokončeno" : "Podepsáno",
+        color: ColoredInfoStripeColors.GREEN,
       };
     default:
       return {
-        text: `ERROR - switch case for the value '${
-          visitState === undefined ? "" : VisitState[visitState]
-        }' does not exist`,
+        text: "ERROR - switch case does not exist for this state!",
         color: ColoredInfoStripeColors.RED,
       };
   }
