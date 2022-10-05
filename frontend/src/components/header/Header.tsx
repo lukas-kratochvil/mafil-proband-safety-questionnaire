@@ -35,7 +35,7 @@ export const Header = () => {
       icon: <PendingActionsIcon />,
     },
     {
-      label: "Schvalování",
+      label: "Ke schválení (?)",
       onClick: () => navigate("/auth/approval"),
       icon: <ApprovalIcon />,
     },
