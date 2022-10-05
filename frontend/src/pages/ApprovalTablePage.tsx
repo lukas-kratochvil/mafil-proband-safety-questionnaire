@@ -3,7 +3,7 @@ import { compareAsc, format, parse } from "date-fns";
 import { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 import { useNavigate } from "react-router-dom";
 import { IActionButtonsProps, VisitsTable } from "../components/table/VisitsTable";
-import { IVisit, VisitState } from "../data/visit_data";
+import { IVisit } from "../data/visit_data";
 import { fetchApprovalVisits } from "../util/fetch";
 
 const createdAtFormat = "d.M.yyyy H:mm";
@@ -42,11 +42,6 @@ const header: MRTColumnDef<IVisit>[] = [
   {
     accessorKey: "projectInfo.project",
     header: "Projekt",
-  },
-  {
-    accessorFn: (visit) => (visit.state === VisitState.DISAPPROVED ? "Neschváleno" : "Probíhá"),
-    id: "state",
-    header: "Stav schvalování",
   },
 ];
 
