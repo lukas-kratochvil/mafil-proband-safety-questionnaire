@@ -45,6 +45,27 @@ export const LoginPage = () => {
             >
               MUNI
             </Button>
+            {/* TODO: delete this button under called 'MUNI - s vyšším oprávněním' - only for test purposes */}
+            <Button
+              variant="outlined"
+              onClick={async () => {
+                await handleLogIn(IAuthMethod.MUNI_HIGHER_PERMISSION);
+              }}
+              startIcon={
+                <Avatar
+                  variant="square"
+                  alt="MUNI logo"
+                  src="/logo_muni.png"
+                  sx={{
+                    marginRight: "0.5rem",
+                    width: "2rem",
+                    height: "2rem",
+                  }}
+                />
+              }
+            >
+              MUNI - s vyšším oprávněním
+            </Button>
           </Stack>
         </Stack>
       </CardBox>

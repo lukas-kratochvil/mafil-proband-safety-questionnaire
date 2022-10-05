@@ -1,10 +1,11 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { trustedOperators } from "../../data/operator_data";
+import { operatorMR, operatorSpecial } from "../../data/operator_data";
 import { authenticateOperator } from "../../util/fetch";
 
 export enum IAuthMethod {
   MUNI,
+  MUNI_HIGHER_PERMISSION, // TODO: delete - only for test purposes
 }
 
 export interface IOperator {
@@ -44,7 +45,11 @@ const useAuthProvider = (): IAuth => {
     switch (authMethod) {
       case IAuthMethod.MUNI:
         // TODO: call the actual MUNI authentication gate
-        loggingOperator = { ...trustedOperators[0] };
+        loggingOperator = { ...operatorMR };
+        break;
+      case IAuthMethod.MUNI_HIGHER_PERMISSION:
+        // TODO: delete this case - only for test pruposes
+        loggingOperator = { ...operatorSpecial };
         break;
       default:
         throw new Error(`'${IAuthMethod[authMethod]}' authentication method is not implemented!`);
