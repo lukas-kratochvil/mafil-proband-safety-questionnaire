@@ -9,6 +9,7 @@ interface ISubmitButtonProps {
 interface IButtonProps {
   title: string;
   onClick: () => void;
+  showErrorColor?: boolean;
 }
 
 export interface IFormButtonsProps {
@@ -44,6 +45,7 @@ export const FormButtons = ({ submitButtonProps, buttonsProps }: IFormButtonsPro
         <Button
           key={index}
           variant="contained"
+          color={buttonProps.showErrorColor ? "error" : undefined}
           onClick={buttonProps.onClick}
         >
           {buttonProps.title}

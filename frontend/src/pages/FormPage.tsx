@@ -220,6 +220,7 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
                 updateDummyVisitState(id, VisitState.DISAPPROVED);
                 navigate("/auth/approval");
               },
+              showErrorColor: true,
             },
             {
               title: "Editovat",
@@ -277,6 +278,7 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
                 updateDummyVisitState(id, VisitState.DISAPPROVED);
                 navigate("/auth/approval");
               },
+              showErrorColor: true,
             },
             {
               title: "Editovat",
