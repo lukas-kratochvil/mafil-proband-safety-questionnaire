@@ -3,14 +3,14 @@ import { devicesDev, projectsDev } from "./form_data";
 import { QuestionPartNumber } from "./question_data";
 
 export enum VisitState {
-  FANTOM_NEW,
-  NEW,
-  IN_APPROVAL,
-  APPROVED,
-  DISAPPROVED,
-  FOR_SIGNATURE,
-  SIGNED,
-  DELETED,
+  FANTOM_NEW = "Nový Fantom",
+  NEW = "Nové",
+  IN_APPROVAL = "Ve schvalování",
+  APPROVED = "Schváleno",
+  DISAPPROVED = "Neschváleno",
+  FOR_SIGNATURE = "K podpisu",
+  SIGNED = "Podepsáno",
+  DELETED = "Smazáno",
 }
 
 export interface IVisit {
