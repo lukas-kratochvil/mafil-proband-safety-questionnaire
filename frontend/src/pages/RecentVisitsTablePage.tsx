@@ -3,7 +3,7 @@ import { compareAsc, format, parse } from "date-fns";
 import { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 import { useNavigate } from "react-router-dom";
 import { IActionButtonsProps, VisitsTable } from "../components/table/VisitsTable";
-import { dummyVisits, duplicateVisit, IVisit, VisitState } from "../data/visit_data";
+import { dummyVisits, duplicateVisit, IVisit } from "../data/visit_data";
 import { fetchRecentVisits } from "../util/fetch";
 import { getDummyVisit } from "../util/fetch.dev";
 
@@ -45,14 +45,9 @@ const header: MRTColumnDef<IVisit>[] = [
     header: "Zpracoval",
   },
   {
-    accessorFn: (visit) => {
-      if (visit.projectInfo.isFantom) {
-        return "Nepodepisuje se";
-      }
-      return visit.state === VisitState.SIGNED ? "Ano" : "Ne";
-    },
-    id: "signedUser",
-    header: "Podepsáno",
+    accessorFn: (visit) => (visit.projectInfo.isFantom ? "Dokončeno" : visit.state),
+    id: "state",
+    header: "Stav",
   },
 ];
 
