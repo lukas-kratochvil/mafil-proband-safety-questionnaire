@@ -26,7 +26,7 @@ export const fetchWaitingRoomVisits = async (): Promise<IVisit[]> =>
 export const fetchApprovalVisits = async (): Promise<IVisit[]> =>
   dummyVisits.filter((visit) => visit.state === VisitState.IN_APPROVAL);
 
-// TODO: get visits from MAFIL DB – all the visits with assigned visitName and generated PDF are fetched from MAFIL DB
+// TODO: get visits from MAFIL DB – all the visits with assigned visitId and generated PDF are fetched from MAFIL DB
 export const fetchRecentVisits = async (): Promise<IVisit[]> =>
   dummyVisits.filter((visit) =>
     [VisitState.APPROVED, VisitState.DISAPPROVED, VisitState.FOR_SIGNATURE, VisitState.SIGNED].includes(visit.state)
