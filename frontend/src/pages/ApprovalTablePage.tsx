@@ -21,9 +21,17 @@ const header: MRTColumnDef<IVisit>[] = [
       ),
   },
   {
+    accessorKey: "projectInfo.project",
+    header: "Projekt",
+  },
+  {
     accessorFn: (visit) => `${visit.probandInfo.surname}, ${visit.probandInfo.name}`,
     id: "proband",
     header: "Proband",
+  },
+  {
+    accessorKey: "probandInfo.personalId",
+    header: "Rodné číslo",
   },
   {
     accessorFn: (visit) => format(visit.probandInfo.birthdate, probandBirthdateFormat),
@@ -40,8 +48,8 @@ const header: MRTColumnDef<IVisit>[] = [
     header: "Pohlaví",
   },
   {
-    accessorKey: "projectInfo.project",
-    header: "Projekt",
+    accessorKey: "probandInfo.nativeLanguage",
+    header: "Mateřský jazyk",
   },
 ];
 
