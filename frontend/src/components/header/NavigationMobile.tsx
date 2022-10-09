@@ -52,7 +52,7 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
         <Box
           role="menu"
           onKeyDown={toggleDrawer(false)}
-          sx={{ minWidth: "15rem" }}
+          sx={{ maxWidth: "20rem" }}
         >
           <Box sx={{ backgroundColor: theme.palette.primary.main }}>
             <Box
@@ -80,7 +80,6 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
           <List
             onClick={toggleDrawer(false)}
             sx={{
-              paddingTop: "1rem",
               borderTop: 1,
               borderColor: "divider",
             }}
