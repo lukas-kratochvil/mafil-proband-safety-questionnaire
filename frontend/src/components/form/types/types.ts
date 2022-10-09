@@ -13,6 +13,10 @@ export interface IFormInputsProps {
   disableInputs?: boolean;
 }
 
+export interface IFantomFormInputsProps extends IFormInputsProps {
+  isFantom?: boolean;
+}
+
 type TextFieldNumberInput = string | number;
 
 export interface FormPropType {

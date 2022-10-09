@@ -6,13 +6,9 @@ import { ErrorFeedback } from "./ErrorFeedback";
 import { FormCard } from "./FormCard";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";
-import { IFormInputsProps } from "./types/types";
+import { IFantomFormInputsProps } from "./types/types";
 
-interface IFormProjectInfoProps extends IFormInputsProps {
-  isFantom?: boolean;
-}
-
-export const FormProjectInfo = ({ isFantom, disableInputs }: IFormProjectInfoProps) => {
+export const FormProjectInfo = ({ isFantom, disableInputs }: IFantomFormInputsProps) => {
   const [projects, setProjects] = useState<string[]>([]);
   const [devices, setDevices] = useState<string[]>([]);
 
