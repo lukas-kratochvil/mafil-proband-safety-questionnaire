@@ -111,8 +111,15 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
                     alignItems="center"
                     columnGap="1rem"
                   >
-                    {item.icon}
-                    {item.label}
+                    <Grid item>
+                      {item.icon}
+                    </Grid>
+                    <Grid
+                      item
+                      xs
+                    >
+                      {item.label}
+                    </Grid>
                   </Grid>
                 </ListItemButton>
               </ListItem>
