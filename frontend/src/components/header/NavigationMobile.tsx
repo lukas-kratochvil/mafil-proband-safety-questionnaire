@@ -1,3 +1,4 @@
+import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Drawer, Grid, IconButton, List, ListItem, ListItemButton, Tooltip, useTheme } from "@mui/material";
 import { amber } from "@mui/material/colors";
@@ -53,21 +54,29 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
           onKeyDown={toggleDrawer(false)}
           sx={{ minWidth: "15rem" }}
         >
-          <Grid
-            container
-            direction="column"
-            alignItems="center"
-            rowGap="1rem"
-            sx={{
-              paddingX: "1rem",
-              paddingTop: "2.5rem",
-              paddingBottom: "1rem",
-              backgroundColor: theme.palette.primary.main,
-            }}
-          >
-            <OperatorCard />
-            <LogOutButton />
-          </Grid>
+          <Box sx={{ backgroundColor: theme.palette.primary.main }}>
+            <Box
+              display="flex"
+              justifyContent="flex-end"
+            >
+              <IconButton
+                onClick={toggleDrawer(false)}
+                sx={{ alignSelf: "flex-end" }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </Box>
+            <Grid
+              container
+              direction="column"
+              alignItems="center"
+              rowGap="1rem"
+              sx={{ padding: "1rem" }}
+            >
+              <OperatorCard />
+              <LogOutButton />
+            </Grid>
+          </Box>
           <List
             onClick={toggleDrawer(false)}
             sx={{
