@@ -58,7 +58,7 @@ export const LanguageMenu = () => {
           size="small"
         >
           <LanguageIcon
-            style={{
+            sx={{
               color: theme.palette.primary.contrastText,
               width: "2rem",
               height: "2rem",

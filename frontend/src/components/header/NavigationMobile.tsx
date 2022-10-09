@@ -30,7 +30,7 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
           onClick={toggleDrawer(true)}
         >
           <MenuIcon
-            style={{
+            sx={{
               color: theme.palette.primary.contrastText,
               width: "2rem",
               height: "2rem",
