@@ -23,15 +23,19 @@ export const FormProbandInfo = ({ disableInputs }: IFormInputsProps) => {
     const czechPersonalId = rodnecislo(personalIdValue);
 
     if (czechPersonalId.isValid()) {
-      setValue("birthdate", czechPersonalId.birthDate());
+      if (birthdateValue === null) {
+        setValue("birthdate", czechPersonalId.birthDate());
+      }
 
-      if (czechPersonalId.isMale()) {
-        setValue("gender", "Muž");
-      } else if (czechPersonalId.isFemale()) {
-        setValue("gender", "Žena");
+      if (genderValue === null) {
+        if (czechPersonalId.isMale()) {
+          setValue("gender", "Muž");
+        } else if (czechPersonalId.isFemale()) {
+          setValue("gender", "Žena");
+        }
       }
     }
-  }, [setValue, personalIdValue]);
+  }, [setValue, personalIdValue, birthdateValue, genderValue]);
 
   useEffect(() => {
     if (personalIdValue === "" && isValid(birthdateValue) && genderValue !== null) {
