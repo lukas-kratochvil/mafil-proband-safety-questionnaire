@@ -6,7 +6,6 @@ import ScienceIcon from "@mui/icons-material/Science";
 import { AppBar, Grid, Toolbar, useMediaQuery, useTheme } from "@mui/material";
 import { ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
-import { dummyFantomVisitNew } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { CeitecMafilLogo } from "./CeitecMafilLogo";
 import { LanguageMenu } from "./LanguageMenu";
@@ -46,11 +45,7 @@ export const Header = () => {
     },
     {
       label: "Založit měření na Fantomu",
-      onClick: () => {
-        // TODO: create new FANTOM visit and use its ID
-        const newFantomVisitId = dummyFantomVisitNew.id;
-        navigate(`/auth/form/${newFantomVisitId}`);
-      },
+      onClick: () => navigate("/auth/form"),
       icon: <ScienceIcon />,
     },
     {

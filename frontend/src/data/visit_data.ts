@@ -3,7 +3,6 @@ import { devicesDev, projectsDev } from "./form_data";
 import { QuestionPartNumber } from "./question_data";
 
 export enum VisitState {
-  FANTOM_NEW = "Nový Fantom",
   NEW = "Nové",
   IN_APPROVAL = "Ve schvalování",
   APPROVED = "Schváleno",
@@ -112,7 +111,7 @@ export const duplicateVisit = (initialVisit: IVisit): IVisit => {
     ...initialVisit,
     id: newId,
     visitId: `${initialVisit.projectInfo.isFantom ? "fantom" : "visit"}${newId}`,
-    state: initialVisit.projectInfo.isFantom ? VisitState.FANTOM_NEW : VisitState.NEW,
+    state: VisitState.NEW,
     projectInfo: { ...initialVisit.projectInfo },
     probandInfo: { ...initialVisit.probandInfo },
     answers: [...initialVisit.answers],
@@ -167,11 +166,11 @@ export const dummyVisitNew: IVisit = {
   })),
 };
 
-export const dummyFantomVisitNew: IVisit = {
+const dummyFantomVisitNew: IVisit = {
   id: generateId(),
   createdAt: new Date(1663700000000),
   visitId: "fantom123",
-  state: VisitState.FANTOM_NEW,
+  state: VisitState.NEW,
   pdf: "/dummy.pdf",
   projectInfo: {
     projectId: "",
@@ -230,8 +229,6 @@ export const dummyVisits: IVisit[] = [
   ...createVisits(dummyVisitNew, VisitState.DISAPPROVED, 3),
   ...createVisits(dummyVisitNew, VisitState.APPROVED, 4),
   ...createVisits(dummyVisitNew, VisitState.SIGNED, 2),
-  dummyFantomVisitNew,
   dummyFantomVisit,
-  ...createVisits(dummyFantomVisit, VisitState.FANTOM_NEW, 1),
   ...createVisits(dummyFantomVisit, VisitState.SIGNED, 2),
 ];

@@ -20,7 +20,7 @@ export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVi
 
 // TODO: get visits from DB
 export const fetchWaitingRoomVisits = async (): Promise<IVisit[]> =>
-  dummyVisits.filter((visit) => [VisitState.NEW, VisitState.FANTOM_NEW].includes(visit.state));
+  dummyVisits.filter((visit) => visit.state === VisitState.NEW);
 
 // TODO: get visits from DB
 export const fetchApprovalVisits = async (): Promise<IVisit[]> =>

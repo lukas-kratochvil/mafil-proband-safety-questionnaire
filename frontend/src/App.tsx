@@ -33,7 +33,7 @@ export const App = () => {
       {operator && (
         <>
           <Route
-            path="/auth/form/:id"
+            path="/auth/form"
             element={<FormPage initialUserFormContext={UserFormContext.OPERATOR_CHECK} />}
           />
           <Route
