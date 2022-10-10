@@ -75,7 +75,7 @@ const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
       <Button
         size="small"
         variant="contained"
-        onClick={() => navigate(`/auth/form/${visitId}`)}
+        onClick={() => navigate(`/auth/waiting-room/form/${visitId}`)}
       >
         Zpracovat
       </Button>

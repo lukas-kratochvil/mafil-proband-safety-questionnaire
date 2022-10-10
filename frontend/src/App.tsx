@@ -41,6 +41,10 @@ export const App = () => {
             element={<WaitingRoomTablePage />}
           />
           <Route
+            path="/auth/waiting-room/form/:id"
+            element={<FormPage initialUserFormContext={UserFormContext.OPERATOR_CHECK} />}
+          />
+          <Route
             path="/auth/approval"
             element={<ApprovalTablePage />}
           />
