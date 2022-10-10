@@ -34,7 +34,7 @@ export const App = () => {
         <>
           <Route
             path="/auth/form"
-            element={<FormPage initialUserFormContext={UserFormContext.OPERATOR_CHECK} />}
+            element={<FormPage initialUserFormContext={UserFormContext.FANTOM} />}
           />
           <Route
             path="/auth/waiting-room"

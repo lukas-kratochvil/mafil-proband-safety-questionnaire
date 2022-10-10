@@ -16,7 +16,7 @@ import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
 import { defaultFormSchema } from "../components/form/schemas/form-schema_default";
 import { operatorFormSchema } from "../components/form/schemas/form-schema_operator";
 import { FormPropType, UserFormContext } from "../components/form/types/types";
-import { IVisit, VisitState } from "../data/visit_data";
+import { createVisit, IVisit, VisitState } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
 import { fetchCurrentQuestions, fetchVisit } from "../util/fetch";
 import { updateDummyVisitState } from "../util/fetch.dev";
@@ -41,6 +41,12 @@ const loadFormDefaultValues = (): FormPropType => ({
   email: "",
   phoneNumber: "",
   answers: [],
+});
+
+const loadFantomFormDefaultValues = (): FormPropType => ({
+  ...loadFormDefaultValues(),
+  measurementDate: new Date(),
+  gender: "Jiné",
 });
 
 // Autocomplete component default value must be one of the options provided or null
@@ -90,24 +96,32 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
         const fetchedVisit = id === undefined ? undefined : await fetchVisit(id);
 
         if (fetchedVisit === undefined) {
-          if (operator !== undefined) {
-            // TODO
-            console.log("AUTH DOES NOT FETCHED THE VISIT!");
-            setIsError(true);
-            return;
-          }
-
           console.log("FETCHING DEFAULT QUESTIONS");
           const questions = await fetchCurrentQuestions();
-          setQacs(
-            questions.map((qac, index) => ({
-              index,
-              questionId: qac.id,
-              partNumber: qac.partNumber,
-              answer: undefined,
-              comment: "",
-            }))
-          );
+
+          if (operator === undefined) {
+            // Proband visit
+            setQacs(
+              questions.map((qac, index) => ({
+                index,
+                questionId: qac.id,
+                partNumber: qac.partNumber,
+                answer: undefined,
+                comment: "",
+              }))
+            );
+          } else {
+            // Fantom visit
+            setQacs(
+              questions.map((qac, index) => ({
+                index,
+                questionId: qac.id,
+                partNumber: qac.partNumber,
+                answer: "no",
+                comment: "",
+              }))
+            );
+          }
         } else {
           if (operator === undefined) {
             // TODO
@@ -123,9 +137,6 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
           ) {
             // form from 'ApprovalTablePage' must be initially called with 'OPERATOR_APPROVE_DISABLED'
             setUserFormContext(UserFormContext.OPERATOR_APPROVE);
-          } else if (initialUserFormContext === UserFormContext.OPERATOR_CHECK && fetchedVisit.projectInfo.isFantom) {
-            // visit to be finalized (proband visit or new fantom visit) is initially called with 'OPERATOR_CHECK'
-            setUserFormContext(UserFormContext.FANTOM);
           }
 
           console.log("FETCHING QUESTIONS FROM THE VISIT");
@@ -144,6 +155,20 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
 
   useEffect(() => {
     if (visit === undefined) {
+      if (operator !== undefined) {
+        const defaultValues = loadFantomFormDefaultValues();
+        type DefaultValuesPropertyType = keyof typeof defaultValues;
+        Object.keys(defaultValues).forEach((propertyName) => {
+          setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
+          console.log(
+            "-->",
+            propertyName as DefaultValuesPropertyType,
+            ":",
+            defaultValues[propertyName as DefaultValuesPropertyType]
+          );
+        });
+      }
+
       setValue("answers", qacs);
     } else {
       console.log("SETTING DEFAULT VALUES");
@@ -159,7 +184,7 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
         );
       });
     }
-  }, [qacs, setValue, visit]);
+  }, [operator, qacs, setValue, visit]);
 
   useEffect(() => {
     switch (userFormContext) {
@@ -180,9 +205,38 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
           submitButtonProps: {
             title: "Finalizovat",
             onClick: (data: FormPropType) => {
-              // TODO: store changes in DB if made
-              updateDummyVisitState(id, VisitState.SIGNED);
-              navigate(`/auth/visit-detail/${id}`);
+              // TODO: create fantom visit in DB
+              const newFantomVisit = createVisit(
+                {
+                  ...data,
+                  id: "123",
+                  createdAt: new Date(),
+                  visitId: "123",
+                  pdf: "/dummy.pdf",
+                  state: VisitState.SIGNED,
+                  projectInfo: {
+                    ...data,
+                    projectId: "1",
+                    magnetDeviceId: "1",
+                    isFantom: true,
+                    measurementDate: data.measurementDate ?? new Date(),
+                  },
+                  probandInfo: {
+                    ...data,
+                    birthdate: data.birthdate ?? new Date(),
+                    height: typeof data.height === "string" ? +data.height : data.height,
+                    weight: typeof data.weight === "string" ? +data.weight : data.weight,
+                    gender: "Jiné",
+                    nativeLanguage: data.nativeLanguage ?? "Angličtina",
+                    visualCorrection: data.visualCorrection ?? "Ne",
+                    visualCorrectionValue:
+                      typeof data.visualCorrectionValue === "string" ? +data.visualCorrectionValue : 0,
+                    sideDominance: "Neurčeno",
+                  },
+                },
+                VisitState.SIGNED
+              );
+              navigate(`/auth/visit-detail/${newFantomVisit.id}`);
             },
           },
           buttonsProps: [
