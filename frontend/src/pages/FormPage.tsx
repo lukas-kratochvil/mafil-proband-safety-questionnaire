@@ -408,6 +408,7 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
                   )}
                 />
                 <FormProbandInfo
+                  isFantom={userFormContext === UserFormContext.FANTOM}
                   disableInputs={[
                     UserFormContext.OPERATOR_CHECK,
                     UserFormContext.OPERATOR_APPROVE,

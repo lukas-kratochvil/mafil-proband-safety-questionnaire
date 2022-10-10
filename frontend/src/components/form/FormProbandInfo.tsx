@@ -10,9 +10,9 @@ import { FormCard } from "./FormCard";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";
 import { FormTextField } from "./inputs/FormTextField";
-import { IFormInputsProps } from "./types/types";
+import { IFantomFormInputsProps } from "./types/types";
 
-export const FormProbandInfo = ({ disableInputs }: IFormInputsProps) => {
+export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsProps) => {
   const { resetField, setValue } = useFormContext();
   const personalIdValue = useWatch({ name: "personalId" });
   const birthdateValue = useWatch({ name: "birthdate" });
@@ -27,7 +27,7 @@ export const FormProbandInfo = ({ disableInputs }: IFormInputsProps) => {
         setValue("birthdate", czechPersonalId.birthDate());
       }
 
-      if (genderValue === null) {
+      if (!isFantom && genderValue === null) {
         if (czechPersonalId.isMale()) {
           setValue("gender", "Muž");
         } else if (czechPersonalId.isFemale()) {
@@ -35,7 +35,7 @@ export const FormProbandInfo = ({ disableInputs }: IFormInputsProps) => {
         }
       }
     }
-  }, [setValue, personalIdValue, birthdateValue, genderValue]);
+  }, [setValue, personalIdValue, birthdateValue, genderValue, isFantom]);
 
   useEffect(() => {
     if (personalIdValue === "" && isValid(birthdateValue) && genderValue !== null) {
@@ -133,7 +133,7 @@ export const FormProbandInfo = ({ disableInputs }: IFormInputsProps) => {
             name="gender"
             label="Pohlaví"
             options={genders}
-            disabled={disableInputs}
+            disabled={disableInputs || isFantom}
           />
           <ErrorFeedback name="gender" />
         </Grid>
