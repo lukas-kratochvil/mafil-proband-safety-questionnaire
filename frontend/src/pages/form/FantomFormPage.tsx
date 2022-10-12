@@ -9,7 +9,6 @@ import { FormPropType } from "../../components/form/types/types";
 import { createNewVisitFromFormData } from "../../components/form/util/utils";
 import { dummyVisits, VisitState } from "../../data/visit_data";
 import { fetchCurrentQuestions } from "../../util/fetch";
-import { getBackButtonProps } from "../../util/utils";
 import { FormContent } from "./FormContent";
 
 export const FantomFormPage = () => {
@@ -32,7 +31,12 @@ export const FantomFormPage = () => {
         navigate(`/auth/visit/${newFantomVisit.id}`);
       },
     },
-    buttonsProps: [getBackButtonProps(navigate, "Zrušit")],
+    buttonsProps: [
+      {
+        title: "Zrušit",
+        onClick: () => navigate(-1),
+      },
+    ],
   };
 
   useEffect(() => {

@@ -1,4 +1,7 @@
+import { NavigateFunction } from "react-router-dom";
 import { createVisit, IVisit, VisitState } from "../../../data/visit_data";
+import { updateDummyVisitState } from "../../../util/fetch.dev";
+import { IButtonProps } from "../FormButtons";
 import { FormPropType } from "../types/types";
 
 // Autocomplete component default value must be one of the options provided or null
@@ -75,3 +78,13 @@ export const createNewVisitFromFormData = (data: FormPropType, state: VisitState
     },
     state
   );
+
+export const getDisapproveButtonProps = (id: string | undefined, navigate: NavigateFunction): IButtonProps => ({
+  title: "Neschválit",
+  onClick: () => {
+    // TODO: store changes in DB if made
+    updateDummyVisitState(id, VisitState.DISAPPROVED);
+    navigate("/auth/approval");
+  },
+  showErrorColor: true,
+});

@@ -8,11 +8,14 @@ import { FormProjectInfo } from "../../components/form/FormProjectInfo";
 import { IFormQac } from "../../components/form/FormQuestion";
 import { FormQuestions } from "../../components/form/FormQuestions";
 import { FormPropType } from "../../components/form/types/types";
-import { createNewVisitFromFormData, loadFormDefaultValuesVisitDuplication } from "../../components/form/util/utils";
+import {
+  createNewVisitFromFormData,
+  getDisapproveButtonProps,
+  loadFormDefaultValuesVisitDuplication,
+} from "../../components/form/util/utils";
 import { dummyVisits, VisitState } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { fetchVisit } from "../../util/fetch";
-import { updateDummyVisitState } from "../../util/fetch.dev";
 import { getBackButtonProps } from "../../util/utils";
 import { FormContent } from "./FormContent";
 
@@ -132,15 +135,7 @@ export const DuplicationFormPage = () => {
           },
         },
         buttonsProps: [
-          {
-            title: "Neschválit",
-            onClick: () => {
-              // TODO: store changes in DB if made
-              updateDummyVisitState(id, VisitState.DISAPPROVED);
-              navigate("/auth/approval");
-            },
-            showErrorColor: true,
-          },
+          getDisapproveButtonProps(id, navigate),
           {
             title: "Editovat",
             onClick: () => setIsEditing(true),

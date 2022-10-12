@@ -8,7 +8,7 @@ import { FormProjectInfo } from "../../components/form/FormProjectInfo";
 import { IFormQac } from "../../components/form/FormQuestion";
 import { FormQuestions } from "../../components/form/FormQuestions";
 import { FormPropType } from "../../components/form/types/types";
-import { loadFormDefaultValuesFromVisit } from "../../components/form/util/utils";
+import { getDisapproveButtonProps, loadFormDefaultValuesFromVisit } from "../../components/form/util/utils";
 import { VisitState } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { fetchVisit } from "../../util/fetch";
@@ -113,15 +113,7 @@ export const WaitingRoomFormPage = () => {
           },
         },
         buttonsProps: [
-          {
-            title: "Neschválit",
-            onClick: () => {
-              // TODO: store changes in DB if made
-              updateDummyVisitState(id, VisitState.DISAPPROVED);
-              navigate("/auth/approval");
-            },
-            showErrorColor: true,
-          },
+          getDisapproveButtonProps(id, navigate),
           {
             title: "Editovat",
             onClick: () => setIsEditing(true),

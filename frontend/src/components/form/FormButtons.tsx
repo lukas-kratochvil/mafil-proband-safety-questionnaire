@@ -7,7 +7,7 @@ interface ISubmitButtonProps {
   onClick: (data: FormPropType) => void;
 }
 
-interface IButtonProps {
+export interface IButtonProps {
   title: string;
   onClick: () => void;
   showErrorColor?: boolean;
