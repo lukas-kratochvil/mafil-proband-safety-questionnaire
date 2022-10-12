@@ -236,13 +236,12 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
                 },
                 VisitState.SIGNED
               );
-              navigate(`/auth/visit-detail/${newFantomVisit.id}`);
+              navigate(`/auth/visit/${newFantomVisit.id}`);
             },
           },
           buttonsProps: [
             {
               title: "Zrušit",
-              // Navigate back to the previous page
               onClick: () => navigate(-1),
             },
           ],
@@ -259,7 +258,7 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
                 || data.answers.find((answer) => answer.partNumber === 2 && answer.answer === "yes") === undefined
               ) {
                 updateDummyVisitState(id, VisitState.APPROVED);
-                navigate(`/auth/visit-detail/${id}`);
+                navigate(`/auth/visit/${id}`);
               } else {
                 updateDummyVisitState(id, VisitState.IN_APPROVAL);
                 navigate("/auth/waiting-room");
@@ -278,13 +277,11 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
             },
             {
               title: "Editovat",
-              onClick: () => {
-                setUserFormContext(UserFormContext.OPERATOR_EDIT);
-              },
+              onClick: () => setUserFormContext(UserFormContext.OPERATOR_EDIT),
             },
             {
               title: "Zrušit",
-              onClick: () => navigate("/auth/waiting-room"),
+              onClick: () => navigate(-1),
             },
           ],
         });
@@ -321,7 +318,7 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
             onClick: () => {
               // TODO: store changes in DB if made
               updateDummyVisitState(id, VisitState.APPROVED);
-              navigate(`/auth/visit-detail/${id}`);
+              navigate(`/auth/visit/${id}`);
             },
           },
           buttonsProps: [
@@ -336,9 +333,7 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
             },
             {
               title: "Editovat",
-              onClick: () => {
-                setUserFormContext(UserFormContext.OPERATOR_EDIT);
-              },
+              onClick: () => setUserFormContext(UserFormContext.OPERATOR_EDIT),
             },
             {
               title: "Zpět",

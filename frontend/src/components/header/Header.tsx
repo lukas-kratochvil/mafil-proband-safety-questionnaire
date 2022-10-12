@@ -45,7 +45,7 @@ export const Header = () => {
     },
     {
       label: "Založit měření na Fantomu",
-      onClick: () => navigate("/auth/form"),
+      onClick: () => navigate("/auth/fantom-form"),
       icon: <ScienceIcon />,
     },
     {

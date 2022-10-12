@@ -59,7 +59,7 @@ const RecentVisitsActionButtons = ({ visitId }: IActionButtonsProps) => {
       <Button
         size="small"
         variant="contained"
-        onClick={() => navigate(`/auth/visit-detail/${visitId}`)}
+        onClick={() => navigate(`/auth/visit/${visitId}`)}
       >
         Zobrazit detail
       </Button>
@@ -67,15 +67,16 @@ const RecentVisitsActionButtons = ({ visitId }: IActionButtonsProps) => {
         size="small"
         variant="contained"
         onClick={() => {
-          // TODO: create new form in DB with the same data as the original form
+          // TODO: create new form (not in DB!) with the same data as the original form
           const initialVisit = getDummyVisit(visitId);
 
           if (initialVisit === undefined) {
-            navigate(`/auth/form/${1}`);
+            // TODO: show some error instead!
+            navigate(`/auth/waiting-room/form/${1}`);
           } else {
             const newVisit = duplicateVisit(initialVisit);
             dummyVisits.push(newVisit);
-            navigate(`/auth/form/${newVisit.id}`);
+            navigate(`/auth/waiting-room/form/${newVisit.id}`);
           }
         }}
       >

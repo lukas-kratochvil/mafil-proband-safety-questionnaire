@@ -33,7 +33,7 @@ export const App = () => {
       {operator && (
         <>
           <Route
-            path="/auth/form"
+            path="/auth/fantom-form"
             element={<FormPage initialUserFormContext={UserFormContext.FANTOM} />}
           />
           <Route
@@ -57,7 +57,7 @@ export const App = () => {
             element={<RecentVisitsTablePage />}
           />
           <Route
-            path="/auth/visit-detail/:id"
+            path="/auth/visit/:id"
             element={<VisitDetailPage />}
           />
         </>
