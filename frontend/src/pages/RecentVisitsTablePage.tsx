@@ -3,7 +3,7 @@ import { compareAsc, format, parse } from "date-fns";
 import { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 import { useNavigate } from "react-router-dom";
 import { IActionButtonsProps, VisitsTable } from "../components/table/VisitsTable";
-import { dummyVisits, duplicateVisit, IVisit } from "../data/visit_data";
+import { IVisit } from "../data/visit_data";
 import { fetchRecentVisits } from "../util/fetch";
 import { getDummyVisit } from "../util/fetch.dev";
 
@@ -72,11 +72,9 @@ const RecentVisitsActionButtons = ({ visitId }: IActionButtonsProps) => {
 
           if (initialVisit === undefined) {
             // TODO: show some error instead!
-            navigate(`/auth/waiting-room/form/${1}`);
+            navigate(`/auth/form/${1}/duplication`);
           } else {
-            const newVisit = duplicateVisit(initialVisit);
-            dummyVisits.push(newVisit);
-            navigate(`/auth/waiting-room/form/${newVisit.id}`);
+            navigate(`/auth/form/${initialVisit.id}/duplication`);
           }
         }}
       >

@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "./hooks/auth/Auth";
 import { ApprovalTablePage } from "./pages/ApprovalTablePage";
 import { ApprovalFormPage } from "./pages/form/ApprovalFormPage";
+import { DuplicationFormPage } from "./pages/form/DuplicationFormPage";
 import { FantomFormPage } from "./pages/form/FantomFormPage";
 import { ProbandFormPage } from "./pages/form/ProbandFormPage";
 import { WaitingRoomFormPage } from "./pages/form/WaitingRoomFormPage";
@@ -53,6 +54,10 @@ export const App = () => {
           <Route
             path="/auth/approval/form/:id"
             element={<ApprovalFormPage />}
+          />
+          <Route
+            path="/auth/form/:id/duplication"
+            element={<DuplicationFormPage />}
           />
           <Route
             path="/auth/recent-visits"

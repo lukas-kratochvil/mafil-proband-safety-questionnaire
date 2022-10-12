@@ -9,8 +9,8 @@ import { FormProjectInfo } from "../../components/form/FormProjectInfo";
 import { IFormQac } from "../../components/form/FormQuestion";
 import { operatorFormSchema } from "../../components/form/schemas/form-schema_operator";
 import { FormPropType } from "../../components/form/types/types";
-import { loadFantomFormDefaultValues } from "../../components/form/util/utils";
-import { createVisit, VisitState } from "../../data/visit_data";
+import { createNewVisitFromFormData, loadFantomFormDefaultValues } from "../../components/form/util/utils";
+import { dummyVisits, VisitState } from "../../data/visit_data";
 import { fetchCurrentQuestions } from "../../util/fetch";
 import { PageTemplate } from "../PageTemplate";
 
@@ -39,35 +39,8 @@ export const FantomFormPage = () => {
       title: "Finalizovat",
       onClick: (data: FormPropType) => {
         // TODO: create fantom visit in DB
-        const newFantomVisit = createVisit(
-          {
-            ...data,
-            id: "123",
-            createdAt: new Date(),
-            visitId: "123",
-            pdf: "/dummy.pdf",
-            state: VisitState.SIGNED,
-            projectInfo: {
-              ...data,
-              projectId: "1",
-              magnetDeviceId: "1",
-              isFantom: true,
-              measurementDate: data.measurementDate ?? new Date(),
-            },
-            probandInfo: {
-              ...data,
-              birthdate: data.birthdate ?? new Date(),
-              height: typeof data.height === "string" ? +data.height : data.height,
-              weight: typeof data.weight === "string" ? +data.weight : data.weight,
-              gender: "Jiné",
-              nativeLanguage: data.nativeLanguage ?? "Angličtina",
-              visualCorrection: data.visualCorrection ?? "Ne",
-              visualCorrectionValue: typeof data.visualCorrectionValue === "string" ? +data.visualCorrectionValue : 0,
-              sideDominance: "Neurčeno",
-            },
-          },
-          VisitState.SIGNED
-        );
+        const newFantomVisit = createNewVisitFromFormData(data, VisitState.SIGNED);
+        dummyVisits.push(newFantomVisit);
         navigate(`/auth/visit/${newFantomVisit.id}`);
       },
     },
