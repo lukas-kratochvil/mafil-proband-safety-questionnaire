@@ -26,9 +26,9 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
       if (birthdateValue === null) {
         let newBirthdate = czechPersonalId.birthDate();
 
-        // When proband's personal ID starts with 00 and current year is 2022, it's more likely proband was born in the year 2000 than 1900
-        if (differenceInCalendarYears(newBirthdate, Date.now()) >= 100) {
-          newBirthdate = addYears(newBirthdate, 1000);
+        // When proband's personal ID starts with '00' and current year is 2022, it's more likely proband was born in the year 2000 than 1900
+        if (Math.abs(differenceInCalendarYears(newBirthdate, Date.now())) >= 100) {
+          newBirthdate = addYears(newBirthdate, 100);
         }
 
         setValue("birthdate", newBirthdate);
