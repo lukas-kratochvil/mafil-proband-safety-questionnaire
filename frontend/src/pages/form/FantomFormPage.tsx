@@ -9,37 +9,10 @@ import { FormProjectInfo } from "../../components/form/FormProjectInfo";
 import { IFormQac } from "../../components/form/FormQuestion";
 import { operatorFormSchema } from "../../components/form/schemas/form-schema_operator";
 import { FormPropType } from "../../components/form/types/types";
+import { loadFantomFormDefaultValues } from "../../components/form/util/utils";
 import { createVisit, VisitState } from "../../data/visit_data";
 import { fetchCurrentQuestions } from "../../util/fetch";
 import { PageTemplate } from "../PageTemplate";
-
-// Autocomplete component default value must be one of the options provided or null
-const loadFormDefaultValues = (): FormPropType => ({
-  project: null,
-  device: null,
-  measurementDate: null,
-  name: "",
-  surname: "",
-  personalId: "",
-  birthdate: null,
-  gender: null,
-  nativeLanguage: null,
-  height: "",
-  weight: "",
-  sideDominance: null,
-  visualCorrection: null,
-  visualCorrectionValue: 0,
-  email: "",
-  phoneNumber: "",
-  answers: [],
-});
-
-// Autocomplete component default value must be one of the options provided or null
-const loadFantomFormDefaultValues = (): FormPropType => ({
-  ...loadFormDefaultValues(),
-  measurementDate: new Date(),
-  gender: "Jiné",
-});
 
 export const FantomFormPage = () => {
   const navigate = useNavigate();

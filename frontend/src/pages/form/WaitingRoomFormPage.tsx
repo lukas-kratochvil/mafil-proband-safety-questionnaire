@@ -11,41 +11,12 @@ import { IFormQac } from "../../components/form/FormQuestion";
 import { FormQuestions } from "../../components/form/FormQuestions";
 import { operatorFormSchema } from "../../components/form/schemas/form-schema_operator";
 import { FormPropType } from "../../components/form/types/types";
-import { IVisit, VisitState } from "../../data/visit_data";
+import { loadFormDefaultValues, loadFormDefaultValuesFromVisit } from "../../components/form/util/utils";
+import { VisitState } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { fetchVisit } from "../../util/fetch";
 import { updateDummyVisitState } from "../../util/fetch.dev";
 import { PageTemplate } from "../PageTemplate";
-
-// Autocomplete component default value must be one of the options provided or null
-const loadFormDefaultValues = (): FormPropType => ({
-  project: null,
-  device: null,
-  measurementDate: null,
-  name: "",
-  surname: "",
-  personalId: "",
-  birthdate: null,
-  gender: null,
-  nativeLanguage: null,
-  height: "",
-  weight: "",
-  sideDominance: null,
-  visualCorrection: null,
-  visualCorrectionValue: 0,
-  email: "",
-  phoneNumber: "",
-  answers: [],
-});
-
-// Autocomplete component default value must be one of the options provided or null
-const loadFormDefaultValuesFromVisit = (visit: IVisit): FormPropType => ({
-  project: visit.projectInfo.project ?? null,
-  device: visit.projectInfo.device ?? null,
-  measurementDate: visit.projectInfo.measurementDate ?? new Date(),
-  ...visit.probandInfo,
-  answers: visit.answers.map((answer) => ({ ...answer })),
-});
 
 export const WaitingRoomFormPage = () => {
   const { id } = useParams();

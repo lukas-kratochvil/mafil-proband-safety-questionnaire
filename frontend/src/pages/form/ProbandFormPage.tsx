@@ -14,29 +14,9 @@ import { FormQuestions } from "../../components/form/FormQuestions";
 import { FormSafetyInfo } from "../../components/form/FormSafetyInfo";
 import { defaultFormSchema } from "../../components/form/schemas/form-schema_default";
 import { FormPropType } from "../../components/form/types/types";
+import { loadFormDefaultValues } from "../../components/form/util/utils";
 import { fetchCurrentQuestions } from "../../util/fetch";
 import { PageTemplate } from "../PageTemplate";
-
-// Autocomplete component default value must be one of the options provided or null
-const loadFormDefaultValues = (): FormPropType => ({
-  project: null,
-  device: null,
-  measurementDate: null,
-  name: "",
-  surname: "",
-  personalId: "",
-  birthdate: null,
-  gender: null,
-  nativeLanguage: null,
-  height: "",
-  weight: "",
-  sideDominance: null,
-  visualCorrection: null,
-  visualCorrectionValue: 0,
-  email: "",
-  phoneNumber: "",
-  answers: [],
-});
 
 export const ProbandFormPage = () => {
   const navigate = useNavigate();
