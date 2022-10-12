@@ -10,14 +10,14 @@ import { FormCard } from "./FormCard";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";
 import { FormTextField } from "./inputs/FormTextField";
-import { IFantomFormInputsProps } from "./types/types";
+import { FormPropType, IFantomFormInputsProps } from "./types/types";
 
 export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsProps) => {
   const { resetField, setValue } = useFormContext();
-  const personalIdValue = useWatch({ name: "personalId" });
-  const birthdateValue = useWatch({ name: "birthdate" });
-  const genderValue = useWatch({ name: "gender" });
-  const visualCorrectionAnswer = useWatch({ name: "visualCorrection" });
+  const personalIdValue = useWatch<FormPropType, "personalId">({ name: "personalId" });
+  const birthdateValue = useWatch<FormPropType, "birthdate">({ name: "birthdate" });
+  const genderValue = useWatch<FormPropType, "gender">({ name: "gender" });
+  const visualCorrectionAnswer = useWatch<FormPropType, "visualCorrection">({ name: "visualCorrection" });
 
   useEffect(() => {
     const czechPersonalId = rodnecislo(personalIdValue);
@@ -38,7 +38,7 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
   }, [setValue, personalIdValue, birthdateValue, genderValue, isFantom]);
 
   useEffect(() => {
-    if (personalIdValue === "" && isValid(birthdateValue) && genderValue !== null) {
+    if (personalIdValue === "" && birthdateValue !== null && isValid(birthdateValue) && genderValue !== null) {
       const year = birthdateValue.getFullYear();
       const month = birthdateValue.getMonth() + 1;
       const day = genderValue === "Žena" ? birthdateValue.getDate() + 50 : birthdateValue.getDate();

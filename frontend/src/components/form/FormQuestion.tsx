@@ -8,7 +8,7 @@ import { fetchQuestion } from "../../util/fetch";
 import { ErrorFeedback } from "./ErrorFeedback";
 import { FormLabelField } from "./inputs/FormLabelField";
 import { FormRadioGroup } from "./inputs/FormRadioGroup";
-import { IFormInputsProps } from "./types/types";
+import { FormPropType, IFormInputsProps } from "./types/types";
 
 export interface IFormQac extends IQac {
   index: number;
@@ -24,7 +24,7 @@ export const FormQuestion = ({ qac, disableInputs }: IFormQuestionProps) => {
   const { operator } = useAuth();
   const [question, setQuestion] = useState<IQuestionData>();
   const { setValue } = useFormContext();
-  const questionAnswer = useWatch({
+  const questionAnswer = useWatch<FormPropType, `answers.${number}.answer`>({
     name: `answers.${qac.index}.answer`,
     defaultValue: qac.answer,
   });
