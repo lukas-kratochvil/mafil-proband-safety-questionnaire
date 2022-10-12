@@ -13,6 +13,7 @@ import { VisitState } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { fetchVisit } from "../../util/fetch";
 import { updateDummyVisitState } from "../../util/fetch.dev";
+import { getBackButtonProps } from "../../util/utils";
 import { FormContent } from "./FormContent";
 
 export const ApprovalFormPage = () => {
@@ -118,23 +119,15 @@ export const ApprovalFormPage = () => {
               title: "Editovat",
               onClick: () => setIsEditing(true),
             },
-            {
-              title: "Zpět",
-              onClick: () => navigate(-1),
-            },
+            getBackButtonProps(navigate),
           ],
         });
       }
     } else {
       setFormButtons({
         submitButtonProps: undefined,
-        buttonsProps: [
-          // Even though it's the only button, it doesn't have 'submit' type because MUI uses <span> for buttons
-          {
-            title: "Zpět",
-            onClick: () => navigate(-1),
-          },
-        ],
+        // Even though it's the only button, it doesn't have 'submit' type because MUI uses <span> for buttons
+        buttonsProps: [getBackButtonProps(navigate)],
       });
     }
   }, [id, isEditing, navigate, operator?.hasHigherPermission, reset]);

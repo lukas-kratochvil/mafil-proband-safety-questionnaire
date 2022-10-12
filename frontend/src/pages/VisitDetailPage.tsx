@@ -9,6 +9,7 @@ import {
 } from "../components/informative/ColoredInfoStripe";
 import { IVisit, VisitState } from "../data/visit_data";
 import { fetchVisitDetail } from "../util/fetch";
+import { getBackButtonProps } from "../util/utils";
 import { PageTemplate } from "./PageTemplate";
 
 interface IButtonProps {
@@ -141,12 +142,7 @@ export const VisitDetailPage = () => {
     }
 
     setColoredInfoStripe(getColoredInfoStripe(visitState, visit));
-    const stateButtons: IButtonProps[] = getButtons(visitState, setVisitState) || [
-      {
-        title: "Zpět",
-        onClick: () => navigate(-1),
-      },
-    ];
+    const stateButtons: IButtonProps[] = getButtons(visitState, setVisitState) || [getBackButtonProps(navigate)];
     setButtons(stateButtons);
   }, [navigate, visit, visitState]);
 
