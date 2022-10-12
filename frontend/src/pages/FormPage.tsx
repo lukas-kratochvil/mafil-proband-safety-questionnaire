@@ -3,17 +3,12 @@ import { Stack, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { FormBeforeExamination } from "../components/form/FormBeforeExamination";
 import { FormButtons, IFormButtonsProps } from "../components/form/FormButtons";
-import { FormEntryInfo } from "../components/form/FormEntryInfo";
-import { FormExaminationConsent } from "../components/form/FormExaminationConsent";
 import { FormProbandContact } from "../components/form/FormProbandContact";
 import { FormProbandInfo } from "../components/form/FormProbandInfo";
 import { FormProjectInfo } from "../components/form/FormProjectInfo";
 import { IFormQac } from "../components/form/FormQuestion";
 import { FormQuestions } from "../components/form/FormQuestions";
-import { FormSafetyInfo } from "../components/form/FormSafetyInfo";
-import { defaultFormSchema } from "../components/form/schemas/form-schema_default";
 import { operatorFormSchema } from "../components/form/schemas/form-schema_operator";
 import { FormPropType, UserFormContext } from "../components/form/types/types";
 import { createVisit, IVisit, VisitState } from "../data/visit_data";
@@ -80,11 +75,10 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
   const [isError, setIsError] = useState<boolean>(false); // TODO: create ErrorPage
 
-  const schema = operator === undefined ? defaultFormSchema : operatorFormSchema;
   const formMethods = useForm<FormPropType>({
     mode: "onChange",
     defaultValues: loadFormDefaultValues(),
-    resolver: yupResolver(schema),
+    resolver: yupResolver(operatorFormSchema),
     // TODO: add this if the validation on onChange event is too slow:
     // reValidateMode: "onSubmit",
   });
@@ -96,32 +90,19 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
         const fetchedVisit = id === undefined ? undefined : await fetchVisit(id);
 
         if (fetchedVisit === undefined) {
+          // Fantom visit
           console.log("FETCHING DEFAULT QUESTIONS");
           const questions = await fetchCurrentQuestions();
 
-          if (operator === undefined) {
-            // Proband visit
-            setQacs(
-              questions.map((qac, index) => ({
-                index,
-                questionId: qac.id,
-                partNumber: qac.partNumber,
-                answer: undefined,
-                comment: "",
-              }))
-            );
-          } else {
-            // Fantom visit
-            setQacs(
-              questions.map((qac, index) => ({
-                index,
-                questionId: qac.id,
-                partNumber: qac.partNumber,
-                answer: "no",
-                comment: "",
-              }))
-            );
-          }
+          setQacs(
+            questions.map((qac, index) => ({
+              index,
+              questionId: qac.id,
+              partNumber: qac.partNumber,
+              answer: "no",
+              comment: "",
+            }))
+          );
         } else {
           if (operator === undefined) {
             // TODO
@@ -155,19 +136,17 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
 
   useEffect(() => {
     if (visit === undefined) {
-      if (operator !== undefined) {
-        const defaultValues = loadFantomFormDefaultValues();
-        type DefaultValuesPropertyType = keyof typeof defaultValues;
-        Object.keys(defaultValues).forEach((propertyName) => {
-          setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
-          console.log(
-            "-->",
-            propertyName as DefaultValuesPropertyType,
-            ":",
-            defaultValues[propertyName as DefaultValuesPropertyType]
-          );
-        });
-      }
+      const defaultValues = loadFantomFormDefaultValues();
+      type DefaultValuesPropertyType = keyof typeof defaultValues;
+      Object.keys(defaultValues).forEach((propertyName) => {
+        setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
+        console.log(
+          "-->",
+          propertyName as DefaultValuesPropertyType,
+          ":",
+          defaultValues[propertyName as DefaultValuesPropertyType]
+        );
+      });
 
       setValue("answers", qacs);
     } else {
@@ -184,22 +163,10 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
         );
       });
     }
-  }, [operator, qacs, setValue, visit]);
+  }, [qacs, setValue, visit]);
 
   useEffect(() => {
     switch (userFormContext) {
-      case UserFormContext.PROBAND_EDIT:
-        setFormButtons({
-          submitButtonProps: {
-            title: "Souhlasím",
-            onClick: (data: FormPropType) => {
-              // TODO: create visit in DB
-              navigate("/home");
-            },
-          },
-          buttonsProps: [],
-        });
-        break;
       case UserFormContext.FANTOM:
         setFormButtons({
           submitButtonProps: {
@@ -380,65 +347,47 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
             spacing={matchesDownSmBreakpoint ? "1rem" : "1.5rem"}
             alignItems="stretch"
           >
-            {userFormContext === UserFormContext.PROBAND_EDIT ? (
+            <FormProjectInfo
+              isFantom={userFormContext === UserFormContext.FANTOM}
+              disableInputs={[UserFormContext.OPERATOR_APPROVE, UserFormContext.OPERATOR_APPROVE_DISABLED].includes(
+                userFormContext
+              )}
+            />
+            <FormProbandInfo
+              isFantom={userFormContext === UserFormContext.FANTOM}
+              disableInputs={[
+                UserFormContext.OPERATOR_CHECK,
+                UserFormContext.OPERATOR_APPROVE,
+                UserFormContext.OPERATOR_APPROVE_DISABLED,
+              ].includes(userFormContext)}
+            />
+            {userFormContext !== UserFormContext.FANTOM && (
               <>
-                <FormEntryInfo />
-                <FormProbandInfo disableInputs={false} />
-                <FormProbandContact disableInputs={false} />
-                <FormSafetyInfo />
-                <FormQuestions
-                  title="Bezpečnostní otázky"
-                  qacs={qacs}
-                  disableInputs={false}
-                />
-                <FormBeforeExamination />
-                <FormExaminationConsent />
-              </>
-            ) : (
-              <>
-                <FormProjectInfo
-                  isFantom={userFormContext === UserFormContext.FANTOM}
-                  disableInputs={[UserFormContext.OPERATOR_APPROVE, UserFormContext.OPERATOR_APPROVE_DISABLED].includes(
-                    userFormContext
-                  )}
-                />
-                <FormProbandInfo
-                  isFantom={userFormContext === UserFormContext.FANTOM}
+                <FormProbandContact
                   disableInputs={[
                     UserFormContext.OPERATOR_CHECK,
                     UserFormContext.OPERATOR_APPROVE,
                     UserFormContext.OPERATOR_APPROVE_DISABLED,
                   ].includes(userFormContext)}
                 />
-                {userFormContext !== UserFormContext.FANTOM && (
-                  <>
-                    <FormProbandContact
-                      disableInputs={[
-                        UserFormContext.OPERATOR_CHECK,
-                        UserFormContext.OPERATOR_APPROVE,
-                        UserFormContext.OPERATOR_APPROVE_DISABLED,
-                      ].includes(userFormContext)}
-                    />
-                    <FormQuestions
-                      title="Část 1"
-                      qacs={qacs.filter((qac) => qac.partNumber === 1)}
-                      disableInputs={[
-                        UserFormContext.OPERATOR_CHECK,
-                        UserFormContext.OPERATOR_APPROVE,
-                        UserFormContext.OPERATOR_APPROVE_DISABLED,
-                      ].includes(userFormContext)}
-                    />
-                    <FormQuestions
-                      title="Část 2"
-                      qacs={qacs.filter((qac) => qac.partNumber === 2)}
-                      disableInputs={[
-                        UserFormContext.OPERATOR_CHECK,
-                        UserFormContext.OPERATOR_APPROVE,
-                        UserFormContext.OPERATOR_APPROVE_DISABLED,
-                      ].includes(userFormContext)}
-                    />
-                  </>
-                )}
+                <FormQuestions
+                  title="Část 1"
+                  qacs={qacs.filter((qac) => qac.partNumber === 1)}
+                  disableInputs={[
+                    UserFormContext.OPERATOR_CHECK,
+                    UserFormContext.OPERATOR_APPROVE,
+                    UserFormContext.OPERATOR_APPROVE_DISABLED,
+                  ].includes(userFormContext)}
+                />
+                <FormQuestions
+                  title="Část 2"
+                  qacs={qacs.filter((qac) => qac.partNumber === 2)}
+                  disableInputs={[
+                    UserFormContext.OPERATOR_CHECK,
+                    UserFormContext.OPERATOR_APPROVE,
+                    UserFormContext.OPERATOR_APPROVE_DISABLED,
+                  ].includes(userFormContext)}
+                />
               </>
             )}
             {!buttonsAreLoading && <FormButtons {...formButtons} />}

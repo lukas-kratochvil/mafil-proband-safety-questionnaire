@@ -5,6 +5,7 @@ import { ApprovalTablePage } from "./pages/ApprovalTablePage";
 import { FormPage } from "./pages/FormPage";
 import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
+import { ProbandFormPage } from "./pages/form/ProbandFormPage";
 import { RecentVisitsTablePage } from "./pages/RecentVisitsTablePage";
 import { VisitDetailPage } from "./pages/VisitDetailPage";
 import { WaitingRoomTablePage } from "./pages/WaitingRoomTablePage";
@@ -24,7 +25,7 @@ export const App = () => {
       />
       <Route
         path="/form"
-        element={<FormPage initialUserFormContext={UserFormContext.PROBAND_EDIT} />}
+        element={<ProbandFormPage />}
       />
       <Route
         path="/auth"
