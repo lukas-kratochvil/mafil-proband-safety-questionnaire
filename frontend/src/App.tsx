@@ -1,11 +1,10 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { UserFormContext } from "./components/form/types/types";
 import { useAuth } from "./hooks/auth/Auth";
 import { ApprovalTablePage } from "./pages/ApprovalTablePage";
+import { ApprovalFormPage } from "./pages/form/ApprovalFormPage";
 import { FantomFormPage } from "./pages/form/FantomFormPage";
 import { ProbandFormPage } from "./pages/form/ProbandFormPage";
 import { WaitingRoomFormPage } from "./pages/form/WaitingRoomFormPage";
-import { FormPage } from "./pages/FormPage";
 import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
 import { RecentVisitsTablePage } from "./pages/RecentVisitsTablePage";
@@ -53,7 +52,7 @@ export const App = () => {
           />
           <Route
             path="/auth/approval/form/:id"
-            element={<FormPage initialUserFormContext={UserFormContext.OPERATOR_APPROVE_DISABLED} />}
+            element={<ApprovalFormPage />}
           />
           <Route
             path="/auth/recent-visits"
