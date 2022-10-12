@@ -2,7 +2,7 @@ import { createVisit, IVisit, VisitState } from "../../../data/visit_data";
 import { FormPropType } from "../types/types";
 
 // Autocomplete component default value must be one of the options provided or null
-export const loadFormDefaultValues = (): FormPropType => ({
+export const loadEmptyDefaultValues = (): FormPropType => ({
   project: null,
   device: null,
   measurementDate: null,
@@ -24,7 +24,7 @@ export const loadFormDefaultValues = (): FormPropType => ({
 
 // Autocomplete component default value must be one of the options provided or null
 export const loadFantomFormDefaultValues = (): FormPropType => ({
-  ...loadFormDefaultValues(),
+  ...loadEmptyDefaultValues(),
   measurementDate: new Date(),
   gender: "Jiné",
 });

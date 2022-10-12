@@ -1,9 +1,13 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { defaultFormSchema } from "./components/form/schemas/form-schema_default";
+import { operatorFormSchema } from "./components/form/schemas/form-schema_operator";
+import { loadFantomFormDefaultValues } from "./components/form/util/utils";
 import { useAuth } from "./hooks/auth/Auth";
 import { ApprovalTablePage } from "./pages/ApprovalTablePage";
 import { ApprovalFormPage } from "./pages/form/ApprovalFormPage";
 import { DuplicationFormPage } from "./pages/form/DuplicationFormPage";
 import { FantomFormPage } from "./pages/form/FantomFormPage";
+import { FormPageTemplate } from "./pages/form/FormPageTemplate";
 import { ProbandFormPage } from "./pages/form/ProbandFormPage";
 import { WaitingRoomFormPage } from "./pages/form/WaitingRoomFormPage";
 import { HomePage } from "./pages/HomePage";
@@ -27,7 +31,12 @@ export const App = () => {
       />
       <Route
         path="/form"
-        element={<ProbandFormPage />}
+        element={
+          <FormPageTemplate
+            FormPage={ProbandFormPage}
+            validationSchema={defaultFormSchema}
+          />
+        }
       />
       <Route
         path="/auth"
@@ -37,7 +46,13 @@ export const App = () => {
         <>
           <Route
             path="/auth/fantom-form"
-            element={<FantomFormPage />}
+            element={
+              <FormPageTemplate
+                FormPage={FantomFormPage}
+                validationSchema={operatorFormSchema}
+                loadDefaultValues={loadFantomFormDefaultValues}
+              />
+            }
           />
           <Route
             path="/auth/waiting-room"
@@ -45,7 +60,12 @@ export const App = () => {
           />
           <Route
             path="/auth/waiting-room/form/:id"
-            element={<WaitingRoomFormPage />}
+            element={
+              <FormPageTemplate
+                FormPage={WaitingRoomFormPage}
+                validationSchema={operatorFormSchema}
+              />
+            }
           />
           <Route
             path="/auth/approval"
@@ -53,11 +73,21 @@ export const App = () => {
           />
           <Route
             path="/auth/approval/form/:id"
-            element={<ApprovalFormPage />}
+            element={
+              <FormPageTemplate
+                FormPage={ApprovalFormPage}
+                validationSchema={operatorFormSchema}
+              />
+            }
           />
           <Route
             path="/auth/form/:id/duplication"
-            element={<DuplicationFormPage />}
+            element={
+              <FormPageTemplate
+                FormPage={DuplicationFormPage}
+                validationSchema={operatorFormSchema}
+              />
+            }
           />
           <Route
             path="/auth/recent-visits"
