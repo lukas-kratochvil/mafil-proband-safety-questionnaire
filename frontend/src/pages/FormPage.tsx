@@ -82,13 +82,13 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
 
   const schema = operator === undefined ? defaultFormSchema : operatorFormSchema;
   const formMethods = useForm<FormPropType>({
+    mode: "onChange",
     defaultValues: loadFormDefaultValues(),
     resolver: yupResolver(schema),
     // TODO: add this if the validation on onChange event is too slow:
     // reValidateMode: "onSubmit",
   });
-  const { formState, handleSubmit, reset, setValue } = formMethods;
-  const { isDirty, isValid } = formState;
+  const { handleSubmit, reset, setValue } = formMethods;
 
   useEffect(() => {
     const fetchData = async () => {
