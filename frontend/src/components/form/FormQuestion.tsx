@@ -25,7 +25,7 @@ export const FormQuestion = ({ qac, disableInputs }: IFormQuestionProps) => {
   const [question, setQuestion] = useState<IQuestionData>();
   const { setValue } = useFormContext();
   const questionAnswer = useWatch({
-    name: `answers[${qac.index}].answer`,
+    name: `answers.${qac.index}.answer`,
     defaultValue: qac.answer,
   });
 
@@ -40,7 +40,7 @@ export const FormQuestion = ({ qac, disableInputs }: IFormQuestionProps) => {
 
   useEffect(() => {
     if (questionAnswer !== "yes") {
-      setValue(`answers[${qac.index}].comment`, "");
+      setValue(`answers.${qac.index}.comment`, "");
     }
   }, [qac.index, questionAnswer, setValue]);
 
@@ -72,7 +72,7 @@ export const FormQuestion = ({ qac, disableInputs }: IFormQuestionProps) => {
         sm="auto"
       >
         <FormRadioGroup
-          name={`answers[${qac.index}].answer`}
+          name={`answers.${qac.index}.answer`}
           label={`Question: ${qac.questionId}`}
           defaultValue={qac.answer}
           radios={[
@@ -90,7 +90,7 @@ export const FormQuestion = ({ qac, disableInputs }: IFormQuestionProps) => {
           disabled={disableInputs}
           sx={{ justifyContent: matchesUpSmBreakpoint ? "flex-end" : "flex-start" }}
         />
-        <ErrorFeedback name={`answers[${qac.index}].answer`} />
+        <ErrorFeedback name={`answers.${qac.index}.answer`} />
       </Grid>
       {operator !== undefined && questionAnswer === "yes" && (
         <Grid
@@ -99,7 +99,7 @@ export const FormQuestion = ({ qac, disableInputs }: IFormQuestionProps) => {
         >
           <FormLabelField label="Komentář">
             <Controller
-              name={`answers[${qac.index}].comment`}
+              name={`answers.${qac.index}.comment`}
               render={({ field: { ref, ...rest } }) => (
                 <TextField
                   {...rest}
@@ -110,7 +110,7 @@ export const FormQuestion = ({ qac, disableInputs }: IFormQuestionProps) => {
                 />
               )}
             />
-            <ErrorFeedback name={`answers[${qac.index}].comment`} />
+            <ErrorFeedback name={`answers.${qac.index}.comment`} />
           </FormLabelField>
         </Grid>
       )}
