@@ -13,6 +13,7 @@ import { dummyVisits, VisitState } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { fetchVisit } from "../../util/fetch";
 import { updateDummyVisitState } from "../../util/fetch.dev";
+import { getBackButtonProps } from "../../util/utils";
 import { FormContent } from "./FormContent";
 
 export const DuplicationFormPage = () => {
@@ -86,12 +87,7 @@ export const DuplicationFormPage = () => {
             navigate(`/auth/visit/${newFantomVisit.id}`);
           },
         },
-        buttonsProps: [
-          {
-            title: "Zrušit",
-            onClick: () => navigate(-1),
-          },
-        ],
+        buttonsProps: [getBackButtonProps(navigate, "Zrušit")],
       });
     } else if (isEditing) {
       setFormButtons({
@@ -149,10 +145,7 @@ export const DuplicationFormPage = () => {
             title: "Editovat",
             onClick: () => setIsEditing(true),
           },
-          {
-            title: "Zrušit",
-            onClick: () => navigate(-1),
-          },
+          getBackButtonProps(navigate, "Zrušit"),
         ],
       });
     }

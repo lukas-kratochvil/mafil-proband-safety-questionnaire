@@ -13,6 +13,7 @@ import { VisitState } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { fetchVisit } from "../../util/fetch";
 import { updateDummyVisitState } from "../../util/fetch.dev";
+import { getBackButtonProps } from "../../util/utils";
 import { FormContent } from "./FormContent";
 
 export const WaitingRoomFormPage = () => {
@@ -125,10 +126,7 @@ export const WaitingRoomFormPage = () => {
             title: "Editovat",
             onClick: () => setIsEditing(true),
           },
-          {
-            title: "Zrušit",
-            onClick: () => navigate(-1),
-          },
+          getBackButtonProps(navigate, "Zrušit"),
         ],
       });
     }
