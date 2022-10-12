@@ -11,9 +11,9 @@ import { IFormQac } from "../components/form/FormQuestion";
 import { FormQuestions } from "../components/form/FormQuestions";
 import { operatorFormSchema } from "../components/form/schemas/form-schema_operator";
 import { FormPropType, UserFormContext } from "../components/form/types/types";
-import { createVisit, IVisit, VisitState } from "../data/visit_data";
+import { IVisit, VisitState } from "../data/visit_data";
 import { useAuth } from "../hooks/auth/Auth";
-import { fetchCurrentQuestions, fetchVisit } from "../util/fetch";
+import { fetchVisit } from "../util/fetch";
 import { updateDummyVisitState } from "../util/fetch.dev";
 import { PageTemplate } from "./PageTemplate";
 
@@ -36,12 +36,6 @@ const loadFormDefaultValues = (): FormPropType => ({
   email: "",
   phoneNumber: "",
   answers: [],
-});
-
-const loadFantomFormDefaultValues = (): FormPropType => ({
-  ...loadFormDefaultValues(),
-  measurementDate: new Date(),
-  gender: "Jiné",
 });
 
 // Autocomplete component default value must be one of the options provided or null
@@ -90,40 +84,29 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
         const fetchedVisit = id === undefined ? undefined : await fetchVisit(id);
 
         if (fetchedVisit === undefined) {
-          // Fantom visit
-          console.log("FETCHING DEFAULT QUESTIONS");
-          const questions = await fetchCurrentQuestions();
-
-          setQacs(
-            questions.map((qac, index) => ({
-              index,
-              questionId: qac.id,
-              partNumber: qac.partNumber,
-              answer: "no",
-              comment: "",
-            }))
-          );
-        } else {
-          if (operator === undefined) {
-            // TODO
-            console.log("UNAUTHORIZED ACCESS!");
-            setIsError(true);
-            return;
-          }
-
-          if (
-            initialUserFormContext === UserFormContext.OPERATOR_APPROVE_DISABLED
-            && fetchedVisit.state === VisitState.IN_APPROVAL
-            && operator.hasHigherPermission
-          ) {
-            // form from 'ApprovalTablePage' must be initially called with 'OPERATOR_APPROVE_DISABLED'
-            setUserFormContext(UserFormContext.OPERATOR_APPROVE);
-          }
-
-          console.log("FETCHING QUESTIONS FROM THE VISIT");
-          setQacs(fetchedVisit.answers.map((answer, index) => ({ index, ...answer })));
-          setVisit(fetchedVisit);
+          setIsError(true);
+          return;
         }
+
+        if (operator === undefined) {
+          // TODO
+          console.log("UNAUTHORIZED ACCESS!");
+          setIsError(true);
+          return;
+        }
+
+        if (
+          initialUserFormContext === UserFormContext.OPERATOR_APPROVE_DISABLED
+          && fetchedVisit.state === VisitState.IN_APPROVAL
+          && operator.hasHigherPermission
+        ) {
+          // form from 'ApprovalTablePage' must be initially called with 'OPERATOR_APPROVE_DISABLED'
+          setUserFormContext(UserFormContext.OPERATOR_APPROVE);
+        }
+
+        console.log("FETCHING QUESTIONS FROM THE VISIT");
+        setQacs(fetchedVisit.answers.map((answer, index) => ({ index, ...answer })));
+        setVisit(fetchedVisit);
 
         setIsLoading(false);
       } catch (e) {
@@ -136,84 +119,27 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
 
   useEffect(() => {
     if (visit === undefined) {
-      const defaultValues = loadFantomFormDefaultValues();
-      type DefaultValuesPropertyType = keyof typeof defaultValues;
-      Object.keys(defaultValues).forEach((propertyName) => {
-        setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
-        console.log(
-          "-->",
-          propertyName as DefaultValuesPropertyType,
-          ":",
-          defaultValues[propertyName as DefaultValuesPropertyType]
-        );
-      });
-
-      setValue("answers", qacs);
-    } else {
-      console.log("SETTING DEFAULT VALUES");
-      const defaultValues = loadFormDefaultValuesFromVisit(visit);
-      type DefaultValuesPropertyType = keyof typeof defaultValues;
-      Object.keys(defaultValues).forEach((propertyName) => {
-        setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
-        console.log(
-          "-->",
-          propertyName as DefaultValuesPropertyType,
-          ":",
-          defaultValues[propertyName as DefaultValuesPropertyType]
-        );
-      });
+      console.log("VISIT NOT FOUND!");
+      setIsError(true);
+      return;
     }
-  }, [qacs, setValue, visit]);
+
+    console.log("SETTING DEFAULT VALUES");
+    const defaultValues = loadFormDefaultValuesFromVisit(visit);
+    type DefaultValuesPropertyType = keyof typeof defaultValues;
+    Object.keys(defaultValues).forEach((propertyName) => {
+      setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
+      console.log(
+        "-->",
+        propertyName as DefaultValuesPropertyType,
+        ":",
+        defaultValues[propertyName as DefaultValuesPropertyType]
+      );
+    });
+  }, [setValue, visit]);
 
   useEffect(() => {
     switch (userFormContext) {
-      case UserFormContext.FANTOM:
-        setFormButtons({
-          submitButtonProps: {
-            title: "Finalizovat",
-            onClick: (data: FormPropType) => {
-              // TODO: create fantom visit in DB
-              const newFantomVisit = createVisit(
-                {
-                  ...data,
-                  id: "123",
-                  createdAt: new Date(),
-                  visitId: "123",
-                  pdf: "/dummy.pdf",
-                  state: VisitState.SIGNED,
-                  projectInfo: {
-                    ...data,
-                    projectId: "1",
-                    magnetDeviceId: "1",
-                    isFantom: true,
-                    measurementDate: data.measurementDate ?? new Date(),
-                  },
-                  probandInfo: {
-                    ...data,
-                    birthdate: data.birthdate ?? new Date(),
-                    height: typeof data.height === "string" ? +data.height : data.height,
-                    weight: typeof data.weight === "string" ? +data.weight : data.weight,
-                    gender: "Jiné",
-                    nativeLanguage: data.nativeLanguage ?? "Angličtina",
-                    visualCorrection: data.visualCorrection ?? "Ne",
-                    visualCorrectionValue:
-                      typeof data.visualCorrectionValue === "string" ? +data.visualCorrectionValue : 0,
-                    sideDominance: "Neurčeno",
-                  },
-                },
-                VisitState.SIGNED
-              );
-              navigate(`/auth/visit/${newFantomVisit.id}`);
-            },
-          },
-          buttonsProps: [
-            {
-              title: "Zrušit",
-              onClick: () => navigate(-1),
-            },
-          ],
-        });
-        break;
       case UserFormContext.OPERATOR_CHECK:
         setFormButtons({
           submitButtonProps: {
@@ -348,48 +274,42 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
             alignItems="stretch"
           >
             <FormProjectInfo
-              isFantom={userFormContext === UserFormContext.FANTOM}
               disableInputs={[UserFormContext.OPERATOR_APPROVE, UserFormContext.OPERATOR_APPROVE_DISABLED].includes(
                 userFormContext
               )}
             />
             <FormProbandInfo
-              isFantom={userFormContext === UserFormContext.FANTOM}
               disableInputs={[
                 UserFormContext.OPERATOR_CHECK,
                 UserFormContext.OPERATOR_APPROVE,
                 UserFormContext.OPERATOR_APPROVE_DISABLED,
               ].includes(userFormContext)}
             />
-            {userFormContext !== UserFormContext.FANTOM && (
-              <>
-                <FormProbandContact
-                  disableInputs={[
-                    UserFormContext.OPERATOR_CHECK,
-                    UserFormContext.OPERATOR_APPROVE,
-                    UserFormContext.OPERATOR_APPROVE_DISABLED,
-                  ].includes(userFormContext)}
-                />
-                <FormQuestions
-                  title="Část 1"
-                  qacs={qacs.filter((qac) => qac.partNumber === 1)}
-                  disableInputs={[
-                    UserFormContext.OPERATOR_CHECK,
-                    UserFormContext.OPERATOR_APPROVE,
-                    UserFormContext.OPERATOR_APPROVE_DISABLED,
-                  ].includes(userFormContext)}
-                />
-                <FormQuestions
-                  title="Část 2"
-                  qacs={qacs.filter((qac) => qac.partNumber === 2)}
-                  disableInputs={[
-                    UserFormContext.OPERATOR_CHECK,
-                    UserFormContext.OPERATOR_APPROVE,
-                    UserFormContext.OPERATOR_APPROVE_DISABLED,
-                  ].includes(userFormContext)}
-                />
-              </>
-            )}
+            <FormProbandContact
+              disableInputs={[
+                UserFormContext.OPERATOR_CHECK,
+                UserFormContext.OPERATOR_APPROVE,
+                UserFormContext.OPERATOR_APPROVE_DISABLED,
+              ].includes(userFormContext)}
+            />
+            <FormQuestions
+              title="Část 1"
+              qacs={qacs.filter((qac) => qac.partNumber === 1)}
+              disableInputs={[
+                UserFormContext.OPERATOR_CHECK,
+                UserFormContext.OPERATOR_APPROVE,
+                UserFormContext.OPERATOR_APPROVE_DISABLED,
+              ].includes(userFormContext)}
+            />
+            <FormQuestions
+              title="Část 2"
+              qacs={qacs.filter((qac) => qac.partNumber === 2)}
+              disableInputs={[
+                UserFormContext.OPERATOR_CHECK,
+                UserFormContext.OPERATOR_APPROVE,
+                UserFormContext.OPERATOR_APPROVE_DISABLED,
+              ].includes(userFormContext)}
+            />
             {!buttonsAreLoading && <FormButtons {...formButtons} />}
           </Stack>
         </form>

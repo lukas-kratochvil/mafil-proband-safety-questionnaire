@@ -2,10 +2,11 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { UserFormContext } from "./components/form/types/types";
 import { useAuth } from "./hooks/auth/Auth";
 import { ApprovalTablePage } from "./pages/ApprovalTablePage";
+import { FantomFormPage } from "./pages/form/FantomFormPage";
+import { ProbandFormPage } from "./pages/form/ProbandFormPage";
 import { FormPage } from "./pages/FormPage";
 import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
-import { ProbandFormPage } from "./pages/form/ProbandFormPage";
 import { RecentVisitsTablePage } from "./pages/RecentVisitsTablePage";
 import { VisitDetailPage } from "./pages/VisitDetailPage";
 import { WaitingRoomTablePage } from "./pages/WaitingRoomTablePage";
@@ -35,7 +36,7 @@ export const App = () => {
         <>
           <Route
             path="/auth/fantom-form"
-            element={<FormPage initialUserFormContext={UserFormContext.FANTOM} />}
+            element={<FantomFormPage />}
           />
           <Route
             path="/auth/waiting-room"
