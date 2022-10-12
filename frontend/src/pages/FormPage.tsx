@@ -84,6 +84,7 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
         const fetchedVisit = id === undefined ? undefined : await fetchVisit(id);
 
         if (fetchedVisit === undefined) {
+          console.log("VISIT NOT FOUND!");
           setIsError(true);
           return;
         }
@@ -95,11 +96,7 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
           return;
         }
 
-        if (
-          initialUserFormContext === UserFormContext.OPERATOR_APPROVE_DISABLED
-          && fetchedVisit.state === VisitState.IN_APPROVAL
-          && operator.hasHigherPermission
-        ) {
+        if (initialUserFormContext === UserFormContext.OPERATOR_APPROVE_DISABLED && operator.hasHigherPermission) {
           // form from 'ApprovalTablePage' must be initially called with 'OPERATOR_APPROVE_DISABLED'
           setUserFormContext(UserFormContext.OPERATOR_APPROVE);
         }
@@ -140,54 +137,13 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
 
   useEffect(() => {
     switch (userFormContext) {
-      case UserFormContext.OPERATOR_CHECK:
-        setFormButtons({
-          submitButtonProps: {
-            title: "Finalizovat",
-            onClick: (data: FormPropType) => {
-              // TODO: store changes in DB if made
-              if (
-                operator?.hasHigherPermission
-                || data.answers.find((answer) => answer.partNumber === 2 && answer.answer === "yes") === undefined
-              ) {
-                updateDummyVisitState(id, VisitState.APPROVED);
-                navigate(`/auth/visit/${id}`);
-              } else {
-                updateDummyVisitState(id, VisitState.IN_APPROVAL);
-                navigate("/auth/waiting-room");
-              }
-            },
-          },
-          buttonsProps: [
-            {
-              title: "Neschválit",
-              onClick: () => {
-                // TODO: store changes in DB if made
-                updateDummyVisitState(id, VisitState.DISAPPROVED);
-                navigate("/auth/approval");
-              },
-              showErrorColor: true,
-            },
-            {
-              title: "Editovat",
-              onClick: () => setUserFormContext(UserFormContext.OPERATOR_EDIT),
-            },
-            {
-              title: "Zrušit",
-              onClick: () => navigate(-1),
-            },
-          ],
-        });
-        break;
       case UserFormContext.OPERATOR_EDIT:
         setFormButtons({
           submitButtonProps: {
             title: "Uložit změny",
             onClick: (data: FormPropType) => {
               // TODO: save the changes in DB
-              setUserFormContext(
-                operator?.hasHigherPermission ? UserFormContext.OPERATOR_APPROVE : UserFormContext.OPERATOR_CHECK
-              );
+              setUserFormContext(UserFormContext.OPERATOR_APPROVE);
             },
           },
           buttonsProps: [
@@ -196,9 +152,7 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
               onClick: () => {
                 // TODO: reset to previously saved data
                 reset();
-                setUserFormContext(
-                  operator?.hasHigherPermission ? UserFormContext.OPERATOR_APPROVE : UserFormContext.OPERATOR_CHECK
-                );
+                setUserFormContext(UserFormContext.OPERATOR_APPROVE);
               },
             },
           ],
@@ -273,42 +227,18 @@ export const FormPage = ({ initialUserFormContext }: IFormPageProps) => {
             spacing={matchesDownSmBreakpoint ? "1rem" : "1.5rem"}
             alignItems="stretch"
           >
-            <FormProjectInfo
-              disableInputs={[UserFormContext.OPERATOR_APPROVE, UserFormContext.OPERATOR_APPROVE_DISABLED].includes(
-                userFormContext
-              )}
-            />
-            <FormProbandInfo
-              disableInputs={[
-                UserFormContext.OPERATOR_CHECK,
-                UserFormContext.OPERATOR_APPROVE,
-                UserFormContext.OPERATOR_APPROVE_DISABLED,
-              ].includes(userFormContext)}
-            />
-            <FormProbandContact
-              disableInputs={[
-                UserFormContext.OPERATOR_CHECK,
-                UserFormContext.OPERATOR_APPROVE,
-                UserFormContext.OPERATOR_APPROVE_DISABLED,
-              ].includes(userFormContext)}
-            />
+            <FormProjectInfo disableInputs={userFormContext !== UserFormContext.OPERATOR_EDIT} />
+            <FormProbandInfo disableInputs={userFormContext !== UserFormContext.OPERATOR_EDIT} />
+            <FormProbandContact disableInputs={userFormContext !== UserFormContext.OPERATOR_EDIT} />
             <FormQuestions
               title="Část 1"
               qacs={qacs.filter((qac) => qac.partNumber === 1)}
-              disableInputs={[
-                UserFormContext.OPERATOR_CHECK,
-                UserFormContext.OPERATOR_APPROVE,
-                UserFormContext.OPERATOR_APPROVE_DISABLED,
-              ].includes(userFormContext)}
+              disableInputs={userFormContext !== UserFormContext.OPERATOR_EDIT}
             />
             <FormQuestions
               title="Část 2"
               qacs={qacs.filter((qac) => qac.partNumber === 2)}
-              disableInputs={[
-                UserFormContext.OPERATOR_CHECK,
-                UserFormContext.OPERATOR_APPROVE,
-                UserFormContext.OPERATOR_APPROVE_DISABLED,
-              ].includes(userFormContext)}
+              disableInputs={userFormContext !== UserFormContext.OPERATOR_EDIT}
             />
             {!buttonsAreLoading && <FormButtons {...formButtons} />}
           </Stack>

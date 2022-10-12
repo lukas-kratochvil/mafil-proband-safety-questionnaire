@@ -4,6 +4,7 @@ import { useAuth } from "./hooks/auth/Auth";
 import { ApprovalTablePage } from "./pages/ApprovalTablePage";
 import { FantomFormPage } from "./pages/form/FantomFormPage";
 import { ProbandFormPage } from "./pages/form/ProbandFormPage";
+import { WaitingRoomFormPage } from "./pages/form/WaitingRoomFormPage";
 import { FormPage } from "./pages/FormPage";
 import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
@@ -44,7 +45,7 @@ export const App = () => {
           />
           <Route
             path="/auth/waiting-room/form/:id"
-            element={<FormPage initialUserFormContext={UserFormContext.OPERATOR_CHECK} />}
+            element={<WaitingRoomFormPage />}
           />
           <Route
             path="/auth/approval"

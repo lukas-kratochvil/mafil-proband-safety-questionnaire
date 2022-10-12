@@ -3,7 +3,6 @@ import { IQac } from "../../../data/visit_data";
 export enum UserFormContext {
   OPERATOR_APPROVE_DISABLED,
   OPERATOR_APPROVE,
-  OPERATOR_CHECK,
   OPERATOR_EDIT,
 }
 
