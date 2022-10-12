@@ -1,5 +1,5 @@
 import { Divider, Grid, Typography } from "@mui/material";
-import { isValid } from "date-fns";
+import { addYears, differenceInCalendarYears, isValid } from "date-fns";
 import { useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { rodnecislo } from "rodnecislo";
@@ -24,7 +24,14 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
 
     if (czechPersonalId.isValid()) {
       if (birthdateValue === null) {
-        setValue("birthdate", czechPersonalId.birthDate());
+        let newBirthdate = czechPersonalId.birthDate();
+
+        // When proband's personal ID starts with 00 and current year is 2022, it's more likely proband was born in the year 2000 than 1900
+        if (differenceInCalendarYears(newBirthdate, Date.now()) >= 100) {
+          newBirthdate = addYears(newBirthdate, 1000);
+        }
+
+        setValue("birthdate", newBirthdate);
       }
 
       if (!isFantom && genderValue === null) {
