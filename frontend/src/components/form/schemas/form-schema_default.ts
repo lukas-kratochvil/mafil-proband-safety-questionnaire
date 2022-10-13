@@ -73,6 +73,7 @@ export const defaultFormSchema = object({
     .when("visualCorrection", {
       is: VisualCorrection.YES,
       then: number()
+        .typeError("Hodnota zrakové korekce není validní.")
         .notOneOf([0], "Hodnota zrakové korekce se nesmí rovnat nule.")
         .min(-200, "Hodnota zrakové korekce není validní - je příliš nízká.")
         .max(200, "Hodnota zrakové korekce není validní - je příliš vysoká.")
