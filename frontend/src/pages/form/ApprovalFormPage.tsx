@@ -136,11 +136,13 @@ export const ApprovalFormPage = () => {
         title="Část 1"
         qacs={qacs.filter((qac) => qac.partNumber === 1)}
         disableInputs={!isEditing}
+        disableComment={!operator?.hasHigherPermission}
       />
       <FormQuestions
         title="Část 2"
         qacs={qacs.filter((qac) => qac.partNumber === 2)}
         disableInputs={!isEditing}
+        disableComment={!operator?.hasHigherPermission}
       />
     </FormContent>
   );

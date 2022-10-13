@@ -16,9 +16,10 @@ export interface IFormQac extends IQac {
 
 interface IFormQuestionProps extends IFormInputsProps {
   qac: IFormQac;
+  disableComment?: boolean;
 }
 
-export const FormQuestion = ({ qac, disableInputs }: IFormQuestionProps) => {
+export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuestionProps) => {
   const theme = useTheme();
   const matchesUpSmBreakpoint = useMediaQuery(theme.breakpoints.up("sm"));
   const { operator } = useAuth();
@@ -106,7 +107,7 @@ export const FormQuestion = ({ qac, disableInputs }: IFormQuestionProps) => {
                   inputRef={ref}
                   size="small"
                   multiline
-                  disabled={questionAnswer !== "yes" && disableInputs}
+                  disabled={disableComment || (questionAnswer !== "yes" && disableInputs)}
                 />
               )}
             />
