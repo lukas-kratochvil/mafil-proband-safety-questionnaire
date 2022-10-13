@@ -1,4 +1,5 @@
 import { NavigateFunction } from "react-router-dom";
+import { Gender, SideDominance, VisualCorrection } from "../../../data/form_data";
 import { createVisit, IVisit, VisitState } from "../../../data/visit_data";
 import { updateDummyVisitState } from "../../../util/fetch.dev";
 import { IButtonProps } from "../FormButtons";
@@ -29,7 +30,7 @@ export const loadEmptyDefaultValues = (): FormPropType => ({
 export const loadFantomFormDefaultValues = (): FormPropType => ({
   ...loadEmptyDefaultValues(),
   measurementDate: new Date(),
-  gender: "Jiné",
+  gender: Gender.OTHER,
 });
 
 // Autocomplete component default value must be one of the options provided or null
@@ -69,11 +70,11 @@ export const createNewVisitFromFormData = (data: FormPropType, state: VisitState
         birthdate: data.birthdate ?? new Date(),
         height: typeof data.height === "string" ? +data.height : data.height,
         weight: typeof data.weight === "string" ? +data.weight : data.weight,
-        gender: "Jiné",
+        gender: Gender.OTHER,
         nativeLanguage: data.nativeLanguage ?? "Angličtina",
-        visualCorrection: data.visualCorrection ?? "Ne",
+        visualCorrection: data.visualCorrection ?? VisualCorrection.NO,
         visualCorrectionValue: typeof data.visualCorrectionValue === "string" ? +data.visualCorrectionValue : 0,
-        sideDominance: "Neurčeno",
+        sideDominance: SideDominance.UNDETERMINED,
       },
     },
     state

@@ -3,7 +3,7 @@ import { addYears, differenceInCalendarYears, isValid } from "date-fns";
 import { useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { rodnecislo } from "rodnecislo";
-import { genders, nativeLanguages, sideDominance, visualCorrection } from "../../data/form_data";
+import { Gender, nativeLanguages, SideDominance, VisualCorrection } from "../../data/form_data";
 import { InfoTooltip } from "../informative/InfoTooltip";
 import { ErrorFeedback } from "./ErrorFeedback";
 import { FormCard } from "./FormCard";
@@ -36,9 +36,9 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
 
       if (!isFantom && genderValue === null) {
         if (czechPersonalId.isMale()) {
-          setValue("gender", "Muž");
+          setValue("gender", Gender.MAN);
         } else if (czechPersonalId.isFemale()) {
-          setValue("gender", "Žena");
+          setValue("gender", Gender.WOMAN);
         }
       }
     }
@@ -48,14 +48,14 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
     if (personalIdValue === "" && birthdateValue !== null && isValid(birthdateValue) && genderValue !== null) {
       const year = birthdateValue.getFullYear();
       const month = birthdateValue.getMonth() + 1;
-      const day = genderValue === "Žena" ? birthdateValue.getDate() + 50 : birthdateValue.getDate();
+      const day = genderValue === Gender.WOMAN ? birthdateValue.getDate() + 50 : birthdateValue.getDate();
 
       setValue("personalId", `${year % 100}${month < 10 ? `0${month}` : month}${day < 10 ? `0${day}` : day}`);
     }
   }, [setValue, birthdateValue, genderValue, personalIdValue]);
 
   useEffect(() => {
-    if (visualCorrectionAnswer !== "Ano") {
+    if (visualCorrectionAnswer !== VisualCorrection.YES) {
       resetField("visualCorrectionValue");
     }
   }, [resetField, visualCorrectionAnswer]);
@@ -139,7 +139,7 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
           <FormAutocomplete
             name="gender"
             label="Pohlaví"
-            options={genders}
+            options={Object.values(Gender)}
             disabled={disableInputs || isFantom}
           />
           <ErrorFeedback name="gender" />
@@ -195,7 +195,7 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
           <FormAutocomplete
             name="visualCorrection"
             label="Zraková korekce"
-            options={visualCorrection}
+            options={Object.values(VisualCorrection)}
             disabled={disableInputs}
           />
           <ErrorFeedback name="visualCorrection" />
@@ -209,7 +209,7 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
           <FormTextField
             name="visualCorrectionValue"
             label="Hodnota zrakové korekce"
-            disabled={disableInputs || visualCorrectionAnswer !== "Ano"}
+            disabled={disableInputs || visualCorrectionAnswer !== VisualCorrection.YES}
             endAdornmentLabel={
               <>
                 <Typography sx={{ marginRight: "0.75rem" }}>D</Typography>
@@ -228,7 +228,7 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
           <FormAutocomplete
             name="sideDominance"
             label="Stranová dominance"
-            options={sideDominance}
+            options={Object.values(SideDominance)}
             disabled={disableInputs}
           />
           <ErrorFeedback name="sideDominance" />

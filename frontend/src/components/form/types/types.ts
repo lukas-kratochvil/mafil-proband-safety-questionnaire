@@ -1,3 +1,4 @@
+import { Gender, SideDominance, VisualCorrection } from "../../../data/form_data";
 import { IQac } from "../../../data/visit_data";
 
 export interface IFormInputsProps {
@@ -18,12 +19,12 @@ export interface FormPropType {
   surname: string;
   personalId: string;
   birthdate: Date | null;
-  gender: string | null;
+  gender: Gender | null;
   nativeLanguage: string | null;
   height: TextFieldNumberInput;
   weight: TextFieldNumberInput;
-  sideDominance: string | null;
-  visualCorrection: string | null;
+  sideDominance: SideDominance | null;
+  visualCorrection: VisualCorrection | null;
   visualCorrectionValue: TextFieldNumberInput;
   email: string;
   phoneNumber: string;

@@ -1,6 +1,7 @@
 import { isEqual } from "date-fns";
 import { rodnecislo } from "rodnecislo";
-import { array, date, number, object, string } from "yup";
+import { array, date, mixed, number, object, string } from "yup";
+import { Gender, SideDominance, VisualCorrection } from "../../../data/form_data";
 
 export const answersSchema = object({
   questionId: string().trim().required(),
@@ -34,17 +35,20 @@ export const defaultFormSchema = object({
       },
     })
     .required("Pole je povinné."),
-  gender: string()
+  gender: mixed<Gender>()
     .nullable()
+    .oneOf(Object.values(Gender))
     .test({
       name: "gender-corresponds-to-personalId",
       message: "Pohlaví není shodné s hodnotou získanou z poskytnutého českého nebo slovenského rodného čísla.",
       test: (gender, testContext) => {
         const czechPersonalId = rodnecislo(testContext.parent.personalId);
         return (
-          !czechPersonalId.isValid()
-          || (czechPersonalId.isMale() && ["Muž", "Jiné"].includes(gender ?? ""))
-          || (czechPersonalId.isFemale() && ["Žena", "Jiné"].includes(gender ?? ""))
+          gender === null
+          || gender === undefined
+          || !czechPersonalId.isValid()
+          || (czechPersonalId.isMale() && [Gender.MAN, Gender.OTHER].includes(gender))
+          || (czechPersonalId.isFemale() && [Gender.WOMAN, Gender.OTHER].includes(gender))
         );
       },
     })
@@ -58,13 +62,16 @@ export const defaultFormSchema = object({
     .typeError("Váha musí být kladné číslo.")
     .positive("Váha musí být kladné číslo.")
     .required("Pole je povinné."),
-  sideDominance: string().nullable().required("Pole je povinné."),
-  visualCorrection: string().nullable().required("Pole je povinné."),
+  sideDominance: mixed<SideDominance>().nullable().oneOf(Object.values(SideDominance)).required("Pole je povinné."),
+  visualCorrection: mixed<VisualCorrection>()
+    .nullable()
+    .oneOf(Object.values(VisualCorrection))
+    .required("Pole je povinné."),
   visualCorrectionValue: number()
     .default(0)
     .typeError("Hodnota zrakové korekce není validní.")
     .when("visualCorrection", {
-      is: "Ano", // TODO: make enum
+      is: VisualCorrection.YES,
       then: number()
         .notOneOf([0], "Hodnota zrakové korekce se nesmí rovnat nule.")
         .min(-200, "Hodnota zrakové korekce není validní - je příliš nízká.")

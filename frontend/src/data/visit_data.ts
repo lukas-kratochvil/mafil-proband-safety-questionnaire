@@ -1,5 +1,5 @@
 import { getDummyVisitCurrentQuestions } from "../util/fetch.dev";
-import { devicesDev, projectsDev } from "./form_data";
+import { devicesDev, Gender, projectsDev, SideDominance, VisualCorrection } from "./form_data";
 import { QuestionPartNumber } from "./question_data";
 
 export enum VisitState {
@@ -39,11 +39,11 @@ interface IProbandInfo {
   birthdate: Date;
   height: number;
   weight: number;
-  gender: string; // TODO: should be enum
+  gender: Gender;
   nativeLanguage: string; // TODO: object stored in the database
-  visualCorrection: string; // TODO: should be enum
+  visualCorrection: VisualCorrection;
   visualCorrectionValue: number;
-  sideDominance: string; // TODO: should be enum
+  sideDominance: SideDominance;
   email: string;
   phoneNumber: string;
 }
@@ -157,11 +157,11 @@ export const dummyVisitNew: IVisit = {
     birthdate: new Date(),
     height: 180,
     weight: 85,
-    gender: "Muž",
+    gender: Gender.MAN,
     nativeLanguage: "Čeština",
-    visualCorrection: "Ne",
+    visualCorrection: VisualCorrection.NO,
     visualCorrectionValue: 0,
-    sideDominance: "Pravák",
+    sideDominance: SideDominance.RIGHT_HANDED,
     email: "karel.novak@email.cz",
     phoneNumber: "",
   },
@@ -194,11 +194,11 @@ const dummyFantomVisitNew: IVisit = {
     birthdate: new Date(),
     height: 1,
     weight: 1,
-    gender: "Jiné",
+    gender: Gender.OTHER,
     nativeLanguage: "Čeština",
-    visualCorrection: "Ne",
+    visualCorrection: VisualCorrection.NO,
     visualCorrectionValue: 0,
-    sideDominance: "Neurčeno",
+    sideDominance: SideDominance.UNDETERMINED,
     email: "",
     phoneNumber: "",
   },
@@ -224,7 +224,7 @@ export const dummyFantomVisit: IVisit = {
     ...dummyVisitNew.probandInfo,
     name: "Fantom",
     surname: "Fantom",
-    gender: "Jiné",
+    gender: Gender.OTHER,
   },
   answers: [...loadAnswers(dummyFantomVisitNew.answers, VisitState.SIGNED)],
 };
