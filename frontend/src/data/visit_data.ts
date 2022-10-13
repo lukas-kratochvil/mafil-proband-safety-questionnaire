@@ -72,7 +72,13 @@ const loadAnswers = (answers: IQac[], visitState: VisitState): IQac[] =>
     ...answer,
     comment:
       // For dev data purposes – approved visit must have some comment to a question answered with 'yes'
-      [VisitState.APPROVED, VisitState.DISAPPROVED, VisitState.FOR_SIGNATURE, VisitState.SIGNED].includes(visitState)
+      [
+        VisitState.IN_APPROVAL,
+        VisitState.APPROVED,
+        VisitState.DISAPPROVED,
+        VisitState.FOR_SIGNATURE,
+        VisitState.SIGNED,
+      ].includes(visitState)
       && answer.answer === "yes"
       && answer.comment === ""
         ? "Komentář"
