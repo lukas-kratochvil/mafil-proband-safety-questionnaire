@@ -27,8 +27,10 @@
     "rules":{
         "import/extensions": ["error", "ignorePackages", { "ts": "never", "tsx": "never" }],
         "import/no-duplicates": "off",
+        "import/order": ["error", {"newlines-between": "never", "alphabetize": {"order": "asc"}, "groups": ["builtin", "external", "internal", "parent", "sibling"]}],
         "import/prefer-default-export": "off",
         "operator-linebreak": ["error", "before"],
+        "no-multiple-empty-lines": "error",
         "no-plusplus": "off",
         "no-shadow": "off",
         "no-use-before-define": "off",
