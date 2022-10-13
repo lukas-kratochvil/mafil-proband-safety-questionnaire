@@ -10,7 +10,7 @@ export interface IRadioProps {
 
 interface IFormRadioGroupProps extends IFormDefaultInputProps {
   radios: IRadioProps[];
-  defaultValue?: string;
+  defaultValue: string | null;
   sx?: SxProps<Theme>;
 }
 
@@ -18,7 +18,7 @@ export const FormRadioGroup = ({ name, disabled, radios, defaultValue, sx }: IFo
   <Controller
     name={name}
     // useForm() does not set default value for the radio group component, we need to set the defaultValue manually here due to: https://github.com/react-hook-form/react-hook-form/discussions/8153#discussioncomment-2533857
-    defaultValue={defaultValue ?? null}
+    defaultValue={defaultValue}
     render={({ field }) => (
       <RadioGroup
         {...field}

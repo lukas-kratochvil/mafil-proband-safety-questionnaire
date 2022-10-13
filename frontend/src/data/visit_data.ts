@@ -48,7 +48,7 @@ interface IProbandInfo {
   phoneNumber: string;
 }
 
-type AnswerOptionsType = "yes" | "no" | undefined;
+type AnswerOptionsType = "yes" | "no" | null;
 
 export interface IQac {
   questionId: string;
