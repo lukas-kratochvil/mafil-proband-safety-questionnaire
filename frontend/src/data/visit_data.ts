@@ -68,22 +68,23 @@ const generateId = (): string => {
 };
 
 const loadAnswers = (answers: IQac[], visitState: VisitState): IQac[] =>
-  answers.map((answer) => ({
-    ...answer,
-    comment:
+  answers.map((answer) => {
+    let comment = answer.comment.trim().length > 0 ? answer.comment : "";
+
+    if (
+      answer.answer === "yes"
+      && ((VisitState.IN_APPROVAL && answer.partNumber === 1)
+        || [VisitState.APPROVED, VisitState.DISAPPROVED, VisitState.FOR_SIGNATURE, VisitState.SIGNED].includes(visitState))
+    ) {
+      comment = "Komentář";
+    }
+
+    return {
+      ...answer,
       // For dev data purposes – approved visit must have some comment to a question answered with 'yes'
-      [
-        VisitState.IN_APPROVAL,
-        VisitState.APPROVED,
-        VisitState.DISAPPROVED,
-        VisitState.FOR_SIGNATURE,
-        VisitState.SIGNED,
-      ].includes(visitState)
-      && answer.answer === "yes"
-      && answer.comment === ""
-        ? "Komentář"
-        : "",
-  }));
+      comment,
+    };
+  });
 
 export const createVisit = (initialVisit: IVisit, state: VisitState): IVisit => {
   const newId: string = generateId();
