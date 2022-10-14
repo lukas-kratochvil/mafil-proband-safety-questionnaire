@@ -1,11 +1,12 @@
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Box, Drawer, Grid, IconButton, List, ListItem, ListItemButton, Tooltip, useTheme } from "@mui/material";
+import { Box, Drawer, Grid, IconButton, List, Tooltip, useTheme } from "@mui/material";
 import { amber } from "@mui/material/colors";
 import { useState } from "react";
 import { INavigationItem } from "../../Header";
 import { LogOutButton } from "../../LogOutButton";
 import { OperatorCard } from "../../OperatorCard";
+import { NavigationMobileTab } from "./NavigationMobileTab";
 
 interface INavigationMobileProps {
   items: INavigationItem[];
@@ -85,41 +86,10 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
             }}
           >
             {items.map((item, index) => (
-              <ListItem
+              <NavigationMobileTab
                 key={index}
-                disablePadding
-              >
-                <ListItemButton
-                  onClick={item.onClick}
-                  sx={{
-                    paddingY: "1rem",
-                    color: "rgba(0, 0, 0, 1)",
-                    opacity: 0.85,
-                    fontSize: "0.85rem",
-                    fontWeight: 500,
-                    letterSpacing: "0.02857rem",
-                    textTransform: "uppercase",
-                    "&:hover": {
-                      backgroundColor: amber[600],
-                      opacity: 1,
-                    },
-                  }}
-                >
-                  <Grid
-                    container
-                    alignItems="center"
-                    columnGap="1rem"
-                  >
-                    <Grid item>{item.icon}</Grid>
-                    <Grid
-                      item
-                      xs
-                    >
-                      {item.label}
-                    </Grid>
-                  </Grid>
-                </ListItemButton>
-              </ListItem>
+                tab={item}
+              />
             ))}
           </List>
         </Box>
