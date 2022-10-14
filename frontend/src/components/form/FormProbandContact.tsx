@@ -1,11 +1,11 @@
 import { Grid, Typography } from "@mui/material";
 import { ErrorFeedback } from "./ErrorFeedback";
-import { FormCard } from "./FormCard";
+import { FormCardContainer } from "./FormCardContainer";
 import { FormTextField } from "./inputs/FormTextField";
 import { IFormInputsProps } from "./types/types";
 
 export const FormProbandContact = ({ disableInputs }: IFormInputsProps) => (
-  <FormCard title="Kontaktní údaje">
+  <FormCardContainer title="Kontaktní údaje">
     <Grid
       container
       direction="row"
@@ -48,5 +48,5 @@ export const FormProbandContact = ({ disableInputs }: IFormInputsProps) => (
         <ErrorFeedback name="phoneNumber" />
       </Grid>
     </Grid>
-  </FormCard>
+  </FormCardContainer>
 );

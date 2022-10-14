@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material";
-import { FormCard } from "./FormCard";
+import { FormCardContainer } from "./FormCardContainer";
 import { FormQac, FormQuestion } from "./FormQuestion";
 import { IFormInputsProps } from "./types/types";
 
@@ -10,7 +10,7 @@ interface IFormQuestionsProps extends IFormInputsProps {
 }
 
 export const FormQuestions = ({ title, qacs, disableInputs, disableComment }: IFormQuestionsProps) => (
-  <FormCard title={title}>
+  <FormCardContainer title={title}>
     <Stack
       spacing="0.5rem"
       width="100%"
@@ -24,5 +24,5 @@ export const FormQuestions = ({ title, qacs, disableInputs, disableComment }: IF
         />
       ))}
     </Stack>
-  </FormCard>
+  </FormCardContainer>
 );

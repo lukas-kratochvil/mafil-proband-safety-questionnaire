@@ -1,8 +1,8 @@
 import { Typography } from "@mui/material";
-import { FormCard } from "./FormCard";
+import { FormCardContainer } from "./FormCardContainer";
 
 export const FormExaminationConsent = () => (
-  <FormCard title="Souhlas s vyšetřením v Laboratoři multimodálního a funkčního zobrazování">
+  <FormCardContainer title="Souhlas s vyšetřením v Laboratoři multimodálního a funkčního zobrazování">
     <Typography width="100%">
       Prohlašuji, že jsem četl/a informace k MR vyšetření (strana 1 až 2 tohoto dokumentu) a porozuměl/a jsem jejich
       smyslu. Prohlašuji, že jsem pravdivě vyplnil/a tento dotazník. Prohlašuji, že jsem byl/a poučena o výzkumné
@@ -34,5 +34,5 @@ export const FormExaminationConsent = () => (
     <Typography width="100%">kontaktní osoba: Michal Mikl</Typography>
     <Typography width="100%">telefon: + 420 54949 6099</Typography>
     <Typography width="100%">email: mafil@ceitec.muni.cz</Typography>
-  </FormCard>
+  </FormCardContainer>
 );

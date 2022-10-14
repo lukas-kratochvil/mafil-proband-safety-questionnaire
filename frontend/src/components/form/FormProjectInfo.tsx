@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { fetchDevices, fetchProjects } from "../../util/fetch";
 import { ColoredInfoStripe, ColoredInfoStripeColors } from "../informative/ColoredInfoStripe";
 import { ErrorFeedback } from "./ErrorFeedback";
-import { FormCard } from "./FormCard";
+import { FormCardContainer } from "./FormCardContainer";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";
 import { IFantomFormInputsProps } from "./types/types";
@@ -24,7 +24,7 @@ export const FormProjectInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
   }, []);
 
   return (
-    <FormCard title="Informace o projektu">
+    <FormCardContainer title="Informace o projektu">
       <Grid
         container
         direction="row"
@@ -82,6 +82,6 @@ export const FormProjectInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
           <ErrorFeedback name="measurementDate" />
         </Grid>
       </Grid>
-    </FormCard>
+    </FormCardContainer>
   );
 };

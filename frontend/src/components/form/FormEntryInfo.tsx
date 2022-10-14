@@ -1,8 +1,8 @@
 import { Typography } from "@mui/material";
-import { FormCard } from "./FormCard";
+import { FormCardContainer } from "./FormCardContainer";
 
 export const FormEntryInfo = () => (
-  <FormCard title="Úvodní informace">
+  <FormCardContainer title="Úvodní informace">
     <Typography width="100%">
       Vítáme Vás na pracovišti magnetické rezonance (MR). Jde o moderní zobrazovací metodu používanou v medicíně, která
       na rozdíl od RTG vyšetření nepoužívá ionizující záření. Principem metody je sledování chování tkání a orgánů ve
@@ -18,5 +18,5 @@ export const FormEntryInfo = () => (
       V průběhu vyšetření je důležité dbát pokynů laboranta. Zejména, snažit se minimalizovat jakýkoliv pohyb v průběhu
       měření.
     </Typography>
-  </FormCard>
+  </FormCardContainer>
 );

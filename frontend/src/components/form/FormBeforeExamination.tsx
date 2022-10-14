@@ -1,9 +1,9 @@
 import { Typography } from "@mui/material";
 import { BoldTextSpan } from "../text/BoldTextSpan";
-import { FormCard } from "./FormCard";
+import { FormCardContainer } from "./FormCardContainer";
 
 export const FormBeforeExamination = () => (
-  <FormCard title="Před vyšetřením">
+  <FormCardContainer title="Před vyšetřením">
     <Typography width="100%">
       Před vyšetřením si prosím&nbsp;
       <BoldTextSpan>odložte všechny elektricky vodivé/ kovové předměty</BoldTextSpan>
@@ -16,5 +16,5 @@ export const FormBeforeExamination = () => (
       zkonzultovat slékařem, což by bylo zajištěno výzkumným pracovníkem příslušné studie na základě Vašeho rozhodnutí
       vinformovaném souhlasu.
     </Typography>
-  </FormCard>
+  </FormCardContainer>
 );

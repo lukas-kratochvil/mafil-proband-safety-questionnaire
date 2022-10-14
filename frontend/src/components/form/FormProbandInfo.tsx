@@ -6,7 +6,7 @@ import { rodnecislo } from "rodnecislo";
 import { Gender, nativeLanguages, SideDominance, VisualCorrection } from "../../data/form_data";
 import { InfoTooltip } from "../informative/InfoTooltip";
 import { ErrorFeedback } from "./ErrorFeedback";
-import { FormCard } from "./FormCard";
+import { FormCardContainer } from "./FormCardContainer";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";
 import { FormTextField } from "./inputs/FormTextField";
@@ -61,7 +61,7 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
   }, [resetField, visualCorrectionAnswer]);
 
   return (
-    <FormCard title="Osobní údaje">
+    <FormCardContainer title="Osobní údaje">
       <Grid
         container
         direction="row"
@@ -234,6 +234,6 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
           <ErrorFeedback name="sideDominance" />
         </Grid>
       </Grid>
-    </FormCard>
+    </FormCardContainer>
   );
 };
