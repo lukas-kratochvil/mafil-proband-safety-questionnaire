@@ -12,7 +12,7 @@ import { FormQuestions } from "../../components/form/FormQuestions";
 import { FormSafetyInfo } from "../../components/form/FormSafetyInfo";
 import { FormPropType } from "../../components/form/types/types";
 import { fetchCurrentQuestions } from "../../util/fetch";
-import { FormContent } from "./FormContent";
+import { FormContainer } from "./FormContainer";
 
 export const ProbandFormPage = () => {
   const navigate = useNavigate();
@@ -64,7 +64,7 @@ export const ProbandFormPage = () => {
   }, [qacs, setValue]);
 
   return (
-    <FormContent
+    <FormContainer
       isError={isError}
       buttons={formButtons}
     >
@@ -79,6 +79,6 @@ export const ProbandFormPage = () => {
       />
       <FormBeforeExamination />
       <FormExaminationConsent />
-    </FormContent>
+    </FormContainer>
   );
 };

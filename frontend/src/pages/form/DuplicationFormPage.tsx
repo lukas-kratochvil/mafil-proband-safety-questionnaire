@@ -18,7 +18,7 @@ import { AnswerOption, dummyVisits, VisitState } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { fetchVisit } from "../../util/fetch";
 import { getBackButtonProps } from "../../util/utils";
-import { FormContent } from "./FormContent";
+import { FormContainer } from "./FormContainer";
 
 export const DuplicationFormPage = () => {
   const { id } = useParams();
@@ -150,7 +150,7 @@ export const DuplicationFormPage = () => {
   }, [id, isEditing, isFantom, navigate, operator?.hasHigherPermission, reset]);
 
   return (
-    <FormContent
+    <FormContainer
       isError={isError}
       buttons={formButtons}
     >
@@ -174,6 +174,6 @@ export const DuplicationFormPage = () => {
           />
         </>
       )}
-    </FormContent>
+    </FormContainer>
   );
 };

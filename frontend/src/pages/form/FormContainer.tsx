@@ -4,12 +4,12 @@ import { useFormContext } from "react-hook-form";
 import { FormButtons, IFormButtonsProps } from "../../components/form/FormButtons";
 import { FormPropType } from "../../components/form/types/types";
 
-interface IFormContentProps {
+interface IFormContainerProps {
   isError: boolean;
   buttons: IFormButtonsProps | undefined;
 }
 
-export const FormContent = ({ children, isError, buttons }: PropsWithChildren<IFormContentProps>) => {
+export const FormContainer = ({ children, isError, buttons }: PropsWithChildren<IFormContainerProps>) => {
   const theme = useTheme();
   const matchesDownSmBreakpoint = useMediaQuery(theme.breakpoints.down("sm"));
 

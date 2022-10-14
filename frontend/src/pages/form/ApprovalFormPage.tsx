@@ -15,7 +15,7 @@ import { useAuth } from "../../hooks/auth/Auth";
 import { fetchVisit } from "../../util/fetch";
 import { updateDummyVisitState } from "../../util/fetch.dev";
 import { getBackButtonProps } from "../../util/utils";
-import { FormContent } from "./FormContent";
+import { FormContainer } from "./FormContainer";
 
 export const ApprovalFormPage = () => {
   const { id } = useParams();
@@ -126,7 +126,7 @@ export const ApprovalFormPage = () => {
   }, [id, isEditing, navigate, operator?.hasHigherPermission, reset]);
 
   return (
-    <FormContent
+    <FormContainer
       isError={isError}
       buttons={formButtons}
     >
@@ -145,6 +145,6 @@ export const ApprovalFormPage = () => {
         disableInputs={!isEditing}
         disableComment={!operator?.hasHigherPermission}
       />
-    </FormContent>
+    </FormContainer>
   );
 };

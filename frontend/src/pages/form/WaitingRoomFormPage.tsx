@@ -15,7 +15,7 @@ import { useAuth } from "../../hooks/auth/Auth";
 import { fetchVisit } from "../../util/fetch";
 import { updateDummyVisitState } from "../../util/fetch.dev";
 import { getBackButtonProps } from "../../util/utils";
-import { FormContent } from "./FormContent";
+import { FormContainer } from "./FormContainer";
 
 export const WaitingRoomFormPage = () => {
   const { id } = useParams();
@@ -128,7 +128,7 @@ export const WaitingRoomFormPage = () => {
   }, [id, isEditing, navigate, operator?.hasHigherPermission, reset]);
 
   return (
-    <FormContent
+    <FormContainer
       isError={isError}
       buttons={formButtons}
     >
@@ -145,6 +145,6 @@ export const WaitingRoomFormPage = () => {
         qacs={qacs.filter((qac) => qac.partNumber === QuestionPartNumber.TWO)}
         disableInputs={!isEditing}
       />
-    </FormContent>
+    </FormContainer>
   );
 };

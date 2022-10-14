@@ -10,7 +10,7 @@ import { createNewVisitFromFormData } from "../../components/form/util/utils";
 import { AnswerOption, dummyVisits, VisitState } from "../../data/visit_data";
 import { fetchCurrentQuestions } from "../../util/fetch";
 import { getBackButtonProps } from "../../util/utils";
-import { FormContent } from "./FormContent";
+import { FormContainer } from "./FormContainer";
 
 export const FantomFormPage = () => {
   const navigate = useNavigate();
@@ -64,12 +64,12 @@ export const FantomFormPage = () => {
   }, [qacs, setValue]);
 
   return (
-    <FormContent
+    <FormContainer
       isError={isError}
       buttons={formButtons}
     >
       <FormProjectInfo isFantom />
       <FormProbandInfo isFantom />
-    </FormContent>
+    </FormContainer>
   );
 };
