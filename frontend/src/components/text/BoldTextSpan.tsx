@@ -1,11 +1,14 @@
 import { Box } from "@mui/material";
-import { PropsWithChildren } from "react";
 
-export const BoldTextSpan = ({ children }: PropsWithChildren) => (
+interface IBoldTextSpanProps {
+  text: string;
+}
+
+export const BoldTextSpan = ({ text }: IBoldTextSpanProps) => (
   <Box
     component="span"
     fontWeight={500}
   >
-    {children}
+    {text}
   </Box>
 );

@@ -6,9 +6,9 @@ export const FormBeforeExamination = () => (
   <FormCardContainer title="Před vyšetřením">
     <Typography width="100%">
       Před vyšetřením si prosím&nbsp;
-      <BoldTextSpan>odložte všechny elektricky vodivé/ kovové předměty</BoldTextSpan>
+      <BoldTextSpan text="odložte všechny elektricky vodivé/kovové předměty" />
       &nbsp;(šperky, hodinky, gumičky, sponky, piercing) a součásti oděvu, které obsahují&nbsp;
-      <BoldTextSpan>elektricky vodivé materiály</BoldTextSpan>
+      <BoldTextSpan text="elektricky vodivé materiály" />
       &nbsp;např. podprsenka skovovými kosticemi, kovové nášivky, funkční prádlo sobsahem stříbra. Vyšetření probíhá za
       účelem vědeckého výzkumu. Účelem vyšetření není poskytování zdravotních služeb nebo zjišťování Vašeho zdravotního
       stavu. Sesbíraná data nebude vyhodnocovat lékař, ale vědecký pracovník. Vpřípadě, že by vědecký pracovník pojal
