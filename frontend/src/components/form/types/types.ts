@@ -10,6 +10,7 @@ export interface IFantomFormInputsProps extends IFormInputsProps {
   isFantom?: boolean;
 }
 
+// Form fields having this data type are validated as numbers
 type TextFieldNumberInput = string | number;
 
 export type FormAnswer = Override<IQac, { answer: AnswerOption | null }>;
