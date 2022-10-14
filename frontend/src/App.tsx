@@ -12,7 +12,7 @@ import { WaitingRoomTablePage } from "./pages/WaitingRoomTablePage";
 import { ApprovalFormPage } from "./pages/form/ApprovalFormPage";
 import { DuplicationFormPage } from "./pages/form/DuplicationFormPage";
 import { FantomFormPage } from "./pages/form/FantomFormPage";
-import { FormPageTemplate } from "./pages/form/FormPageTemplate";
+import { FormPageContainer } from "./pages/form/FormPageContainer";
 import { ProbandFormPage } from "./pages/form/ProbandFormPage";
 import { WaitingRoomFormPage } from "./pages/form/WaitingRoomFormPage";
 
@@ -32,7 +32,7 @@ export const App = () => {
       <Route
         path="/form"
         element={
-          <FormPageTemplate
+          <FormPageContainer
             FormPage={ProbandFormPage}
             validationSchema={defaultFormSchema}
           />
@@ -47,7 +47,7 @@ export const App = () => {
           <Route
             path="/auth/fantom-form"
             element={
-              <FormPageTemplate
+              <FormPageContainer
                 FormPage={FantomFormPage}
                 validationSchema={operatorFormSchema}
                 loadDefaultValues={loadFantomFormDefaultValues}
@@ -61,7 +61,7 @@ export const App = () => {
           <Route
             path="/auth/waiting-room/form/:id"
             element={
-              <FormPageTemplate
+              <FormPageContainer
                 FormPage={WaitingRoomFormPage}
                 validationSchema={operatorFormSchema}
               />
@@ -74,7 +74,7 @@ export const App = () => {
           <Route
             path="/auth/approval/form/:id"
             element={
-              <FormPageTemplate
+              <FormPageContainer
                 FormPage={ApprovalFormPage}
                 validationSchema={operatorFormSchema}
               />
@@ -83,7 +83,7 @@ export const App = () => {
           <Route
             path="/auth/form/:id/duplication"
             element={
-              <FormPageTemplate
+              <FormPageContainer
                 FormPage={DuplicationFormPage}
                 validationSchema={operatorFormSchema}
               />

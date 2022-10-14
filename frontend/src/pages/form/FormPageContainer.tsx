@@ -5,13 +5,13 @@ import { FormPropType } from "../../components/form/types/types";
 import { loadEmptyDefaultValues } from "../../components/form/util/utils";
 import { PageContainer } from "../PageContainer";
 
-interface IFormPageTemplateProps {
+interface IFormPageContainerProps {
   FormPage: () => JSX.Element;
   validationSchema: AnyObjectSchema;
   loadDefaultValues?: () => FormPropType;
 }
 
-export const FormPageTemplate = ({ FormPage, loadDefaultValues, validationSchema }: IFormPageTemplateProps) => {
+export const FormPageContainer = ({ FormPage, loadDefaultValues, validationSchema }: IFormPageContainerProps) => {
   const formMethods = useForm<FormPropType>({
     mode: "onChange",
     defaultValues: loadDefaultValues === undefined ? loadEmptyDefaultValues() : loadDefaultValues(),
