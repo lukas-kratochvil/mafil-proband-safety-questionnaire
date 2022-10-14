@@ -11,8 +11,8 @@ import { useAuth } from "../../hooks/auth/Auth";
 import { CeitecMafilLogo } from "./CeitecMafilLogo";
 import { LanguageMenu } from "./LanguageMenu";
 import { LoginOperator } from "./LoginOperator";
-import { Navigation } from "./Navigation";
-import { NavigationMobile } from "./NavigationMobile";
+import { Navigation } from "./navigation/Navigation";
+import { NavigationMobile } from "./navigation/mobile/NavigationMobile";
 
 export interface INavigationItem {
   urlPrefix: string;

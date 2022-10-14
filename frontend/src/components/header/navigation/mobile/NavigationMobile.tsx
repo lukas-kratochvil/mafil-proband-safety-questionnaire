@@ -3,9 +3,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Drawer, Grid, IconButton, List, ListItem, ListItemButton, Tooltip, useTheme } from "@mui/material";
 import { amber } from "@mui/material/colors";
 import { useState } from "react";
-import { INavigationItem } from "./Header";
-import { LogOutButton } from "./LogOutButton";
-import { OperatorCard } from "./OperatorCard";
+import { INavigationItem } from "../../Header";
+import { LogOutButton } from "../../LogOutButton";
+import { OperatorCard } from "../../OperatorCard";
 
 interface INavigationMobileProps {
   items: INavigationItem[];

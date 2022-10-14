@@ -1,7 +1,7 @@
 import { Tab, useTheme } from "@mui/material";
 import { amber } from "@mui/material/colors";
 import { useLocation } from "react-router-dom";
-import { INavigationItem } from "./Header";
+import { INavigationItem } from "../Header";
 
 interface INavigationTabProps {
   tab: INavigationItem;

@@ -1,7 +1,7 @@
 import { Box, Tabs } from "@mui/material";
 import { amber } from "@mui/material/colors";
 import React, { useState } from "react";
-import { INavigationItem } from "./Header";
+import { INavigationItem } from "../Header";
 import { NavigationTab } from "./NavigationTab";
 
 interface INavigationProps {
