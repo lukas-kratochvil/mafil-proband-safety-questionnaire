@@ -15,6 +15,7 @@ import { Navigation } from "./Navigation";
 import { NavigationMobile } from "./NavigationMobile";
 
 export interface INavigationItem {
+  urlPrefix: string;
   label: string;
   onClick: () => void;
   icon: ReactElement;
@@ -29,28 +30,33 @@ export const Header = () => {
   // TODO: extract outside the component?
   const navigationItems: INavigationItem[] = [
     {
+      urlPrefix: UrlBasePaths.WAITING_ROOM,
       // TODO: number must be updated
       label: "Čekárna (?)",
       onClick: () => navigate(UrlBasePaths.WAITING_ROOM),
       icon: <PendingActionsIcon />,
     },
     {
+      urlPrefix: UrlBasePaths.APPROVAL,
       // TODO: number must be updated
       label: "Ke schválení (?)",
       onClick: () => navigate(UrlBasePaths.APPROVAL),
       icon: <ApprovalIcon />,
     },
     {
+      urlPrefix: UrlBasePaths.RECENT_VISITS,
       label: "Poslední visity",
       onClick: () => navigate(UrlBasePaths.RECENT_VISITS),
       icon: <RecentActorsIcon />,
     },
     {
+      urlPrefix: UrlBasePaths.FANTOM_FORM,
       label: "Založit měření na Fantomu",
       onClick: () => navigate(UrlBasePaths.FANTOM_FORM),
       icon: <ScienceIcon />,
     },
     {
+      urlPrefix: UrlBasePaths.PROBAND_FORM,
       label: "Otevřít formulář probanda",
       onClick: () => window.open(UrlBasePaths.PROBAND_FORM, "_blank", "noopener,noreferrer"),
       icon: <PersonAddAlt1Icon />,

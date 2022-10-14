@@ -18,8 +18,6 @@ export const Navigation = ({ items }: INavigationProps) => {
       sx={{
         width: "100%",
         backgroundColor: amber[700],
-        borderTop: 1,
-        borderColor: "divider",
       }}
     >
       <Tabs
