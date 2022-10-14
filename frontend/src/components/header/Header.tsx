@@ -34,6 +34,7 @@ export const Header = () => {
       icon: <PendingActionsIcon />,
     },
     {
+      // TODO: number must be updated
       label: "Ke schválení (?)",
       onClick: () => navigate("/auth/approval"),
       icon: <ApprovalIcon />,
