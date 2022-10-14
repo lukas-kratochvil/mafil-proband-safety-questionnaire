@@ -5,12 +5,12 @@ import { IFormButtonsProps } from "../../components/form/FormButtons";
 import { FormProbandContact } from "../../components/form/FormProbandContact";
 import { FormProbandInfo } from "../../components/form/FormProbandInfo";
 import { FormProjectInfo } from "../../components/form/FormProjectInfo";
-import { IFormQac } from "../../components/form/FormQuestion";
+import { FormQac } from "../../components/form/FormQuestion";
 import { FormQuestions } from "../../components/form/FormQuestions";
 import { FormPropType } from "../../components/form/types/types";
 import { getDisapproveButtonProps, loadFormDefaultValuesFromVisit } from "../../components/form/util/utils";
 import { QuestionPartNumber } from "../../data/question_data";
-import { VisitState } from "../../data/visit_data";
+import { AnswerOption, VisitState } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { fetchVisit } from "../../util/fetch";
 import { updateDummyVisitState } from "../../util/fetch.dev";
@@ -24,7 +24,7 @@ export const WaitingRoomFormPage = () => {
   const { reset, setValue } = useFormContext();
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [qacs, setQacs] = useState<IFormQac[]>([]);
+  const [qacs, setQacs] = useState<FormQac[]>([]);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
 
   // TODO: use MUI Skeleton while data is fetching/loading
@@ -104,7 +104,7 @@ export const WaitingRoomFormPage = () => {
             if (
               operator?.hasHigherPermission
               || data.answers.find(
-                (answer) => answer.partNumber === QuestionPartNumber.TWO && answer.answer === "yes"
+                (answer) => answer.partNumber === QuestionPartNumber.TWO && answer.answer === AnswerOption.YES
               ) === undefined
             ) {
               updateDummyVisitState(id, VisitState.APPROVED);

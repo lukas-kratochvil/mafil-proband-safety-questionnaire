@@ -1,6 +1,6 @@
 import { NavigateFunction } from "react-router-dom";
 import { Gender, SideDominance, VisualCorrection } from "../../../data/form_data";
-import { createVisit, IVisit, VisitState } from "../../../data/visit_data";
+import { AnswerOption, createVisit, IVisit, VisitState } from "../../../data/visit_data";
 import { updateDummyVisitState } from "../../../util/fetch.dev";
 import { IButtonProps } from "../FormButtons";
 import { FormPropType } from "../types/types";
@@ -76,6 +76,7 @@ export const createNewVisitFromFormData = (data: FormPropType, state: VisitState
         visualCorrectionValue: typeof data.visualCorrectionValue === "string" ? +data.visualCorrectionValue : 0,
         sideDominance: SideDominance.UNDETERMINED,
       },
+      answers: data.answers.map((answer) => ({ ...answer, answer: answer.answer ?? AnswerOption.NO })),
     },
     state
   );

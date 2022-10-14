@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { IFormButtonsProps } from "../../components/form/FormButtons";
 import { FormProbandInfo } from "../../components/form/FormProbandInfo";
 import { FormProjectInfo } from "../../components/form/FormProjectInfo";
-import { IFormQac } from "../../components/form/FormQuestion";
+import { FormQac } from "../../components/form/FormQuestion";
 import { FormPropType } from "../../components/form/types/types";
 import { createNewVisitFromFormData } from "../../components/form/util/utils";
-import { dummyVisits, VisitState } from "../../data/visit_data";
+import { AnswerOption, dummyVisits, VisitState } from "../../data/visit_data";
 import { fetchCurrentQuestions } from "../../util/fetch";
 import { getBackButtonProps } from "../../util/utils";
 import { FormContent } from "./FormContent";
@@ -16,7 +16,7 @@ export const FantomFormPage = () => {
   const navigate = useNavigate();
   const { setValue } = useFormContext();
 
-  const [qacs, setQacs] = useState<IFormQac[]>([]);
+  const [qacs, setQacs] = useState<FormQac[]>([]);
 
   // TODO: use MUI Skeleton while data is fetching/loading
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -45,7 +45,7 @@ export const FantomFormPage = () => {
             index,
             questionId: qac.id,
             partNumber: qac.partNumber,
-            answer: "no",
+            answer: AnswerOption.NO,
             comment: "",
           }))
         );

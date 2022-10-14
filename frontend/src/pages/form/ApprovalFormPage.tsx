@@ -5,7 +5,7 @@ import { IFormButtonsProps } from "../../components/form/FormButtons";
 import { FormProbandContact } from "../../components/form/FormProbandContact";
 import { FormProbandInfo } from "../../components/form/FormProbandInfo";
 import { FormProjectInfo } from "../../components/form/FormProjectInfo";
-import { IFormQac } from "../../components/form/FormQuestion";
+import { FormQac } from "../../components/form/FormQuestion";
 import { FormQuestions } from "../../components/form/FormQuestions";
 import { FormPropType } from "../../components/form/types/types";
 import { getDisapproveButtonProps, loadFormDefaultValuesFromVisit } from "../../components/form/util/utils";
@@ -24,7 +24,7 @@ export const ApprovalFormPage = () => {
   const { reset, setValue } = useFormContext<FormPropType>();
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [qacs, setQacs] = useState<IFormQac[]>([]);
+  const [qacs, setQacs] = useState<FormQac[]>([]);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
 
   // TODO: use MUI Skeleton while data is fetching/loading

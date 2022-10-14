@@ -1,5 +1,5 @@
 import { Gender, SideDominance, VisualCorrection } from "../../../data/form_data";
-import { IQac } from "../../../data/visit_data";
+import { AnswerOption, IQac } from "../../../data/visit_data";
 
 export interface IFormInputsProps {
   disableInputs?: boolean;
@@ -10,6 +10,8 @@ export interface IFantomFormInputsProps extends IFormInputsProps {
 }
 
 type TextFieldNumberInput = string | number;
+
+export type FormAnswer = Omit<IQac, "answer"> & { answer: AnswerOption | null };
 
 export interface FormPropType {
   project: string | null;
@@ -28,5 +30,5 @@ export interface FormPropType {
   visualCorrectionValue: TextFieldNumberInput;
   email: string;
   phoneNumber: string;
-  answers: IQac[];
+  answers: FormAnswer[];
 }

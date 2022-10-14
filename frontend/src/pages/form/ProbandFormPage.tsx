@@ -7,7 +7,7 @@ import { FormEntryInfo } from "../../components/form/FormEntryInfo";
 import { FormExaminationConsent } from "../../components/form/FormExaminationConsent";
 import { FormProbandContact } from "../../components/form/FormProbandContact";
 import { FormProbandInfo } from "../../components/form/FormProbandInfo";
-import { IFormQac } from "../../components/form/FormQuestion";
+import { FormQac } from "../../components/form/FormQuestion";
 import { FormQuestions } from "../../components/form/FormQuestions";
 import { FormSafetyInfo } from "../../components/form/FormSafetyInfo";
 import { FormPropType } from "../../components/form/types/types";
@@ -18,7 +18,7 @@ export const ProbandFormPage = () => {
   const navigate = useNavigate();
   const { setValue } = useFormContext();
 
-  const [qacs, setQacs] = useState<IFormQac[]>([]);
+  const [qacs, setQacs] = useState<FormQac[]>([]);
 
   // TODO: use MUI Skeleton while data is fetching/loading
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -45,7 +45,7 @@ export const ProbandFormPage = () => {
             index,
             questionId: qac.id,
             partNumber: qac.partNumber,
-            answer: undefined,
+            answer: null,
             comment: "",
           }))
         );

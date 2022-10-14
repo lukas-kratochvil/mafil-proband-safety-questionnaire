@@ -2,20 +2,18 @@ import { Grid, TextField, Typography, useMediaQuery, useTheme } from "@mui/mater
 import { useEffect, useState } from "react";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { IQuestionData } from "../../data/question_data";
-import { IQac } from "../../data/visit_data";
+import { AnswerOption } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { fetchQuestion } from "../../util/fetch";
 import { ErrorFeedback } from "./ErrorFeedback";
 import { FormLabelField } from "./inputs/FormLabelField";
 import { FormRadioGroup } from "./inputs/FormRadioGroup";
-import { FormPropType, IFormInputsProps } from "./types/types";
+import { FormAnswer, FormPropType, IFormInputsProps } from "./types/types";
 
-export interface IFormQac extends IQac {
-  index: number;
-}
+export type FormQac = FormAnswer & { index: number };
 
 interface IFormQuestionProps extends IFormInputsProps {
-  qac: IFormQac;
+  qac: FormQac;
   disableComment?: boolean;
 }
 
@@ -40,7 +38,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
   }, [qac.questionId]);
 
   useEffect(() => {
-    if (questionAnswer !== "yes") {
+    if (questionAnswer !== AnswerOption.YES) {
       setValue(`answers.${qac.index}.comment`, "");
     }
   }, [qac.index, questionAnswer, setValue]);
@@ -76,24 +74,17 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
           name={`answers.${qac.index}.answer`}
           label={`Question: ${qac.questionId}`}
           defaultValue={qac.answer}
-          radios={[
-            {
-              id: `yes-radio[${qac.questionId}]`,
-              label: "Ano",
-              value: "yes",
-            },
-            {
-              id: `no-radio[${qac.questionId}]`,
-              label: "Ne",
-              value: "no",
-            },
-          ]}
+          radios={Object.values(AnswerOption).map((answer) => ({
+            id: `${answer}-radio[${qac.questionId}]`,
+            label: answer === AnswerOption.YES ? "Ano" : "Ne",
+            value: answer,
+          }))}
           disabled={disableInputs}
           sx={{ justifyContent: matchesUpSmBreakpoint ? "flex-end" : "flex-start" }}
         />
         <ErrorFeedback name={`answers.${qac.index}.answer`} />
       </Grid>
-      {operator !== undefined && questionAnswer === "yes" && (
+      {operator !== undefined && questionAnswer === AnswerOption.YES && (
         <Grid
           item
           xs={1}
@@ -107,7 +98,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
                   inputRef={ref}
                   size="small"
                   multiline
-                  disabled={disableComment || (questionAnswer !== "yes" && disableInputs)}
+                  disabled={disableComment || (questionAnswer !== AnswerOption.YES && disableInputs)}
                 />
               )}
             />

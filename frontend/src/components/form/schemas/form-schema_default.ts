@@ -3,6 +3,7 @@ import { rodnecislo } from "rodnecislo";
 import { array, date, mixed, number, object, string } from "yup";
 import { Gender, SideDominance, VisualCorrection } from "../../../data/form_data";
 import { QuestionPartNumber } from "../../../data/question_data";
+import { AnswerOption } from "../../../data/visit_data";
 
 export const answersSchema = object({
   questionId: string().trim().required(),
@@ -13,7 +14,7 @@ export const answersSchema = object({
         .map((val) => +val)
     )
     .required(),
-  answer: string().nullable().required("Pole je povinné."),
+  answer: mixed<AnswerOption>().nullable().oneOf(Object.values(AnswerOption)).required("Pole je povinné."),
   comment: string().nullable(),
 });
 

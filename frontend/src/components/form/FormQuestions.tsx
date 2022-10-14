@@ -1,11 +1,11 @@
 import { Stack } from "@mui/material";
 import { FormCard } from "./FormCard";
-import { FormQuestion, IFormQac } from "./FormQuestion";
+import { FormQac, FormQuestion } from "./FormQuestion";
 import { IFormInputsProps } from "./types/types";
 
 interface IFormQuestionsProps extends IFormInputsProps {
   title: string;
-  qacs: IFormQac[];
+  qacs: FormQac[];
   disableComment?: boolean;
 }
 

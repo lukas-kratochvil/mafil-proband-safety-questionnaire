@@ -48,12 +48,15 @@ interface IProbandInfo {
   phoneNumber: string;
 }
 
-type AnswerOptionsType = "yes" | "no" | null;
+export enum AnswerOption {
+  YES = "yes",
+  NO = "no",
+}
 
 export interface IQac {
   questionId: string;
   partNumber: QuestionPartNumber;
-  answer: AnswerOptionsType;
+  answer: AnswerOption;
   comment: string;
 }
 
@@ -72,7 +75,7 @@ const loadAnswers = (answers: IQac[], visitState: VisitState): IQac[] =>
     let comment = answer.comment.trim().length > 0 ? answer.comment : "";
 
     if (
-      answer.answer === "yes"
+      answer.answer === AnswerOption.YES
       && ((VisitState.IN_APPROVAL && answer.partNumber === QuestionPartNumber.ONE)
         || [VisitState.APPROVED, VisitState.DISAPPROVED, VisitState.FOR_SIGNATURE, VisitState.SIGNED].includes(visitState))
     ) {
@@ -168,7 +171,7 @@ export const dummyVisitNew: IVisit = {
   answers: getDummyVisitCurrentQuestions().map((question, i) => ({
     questionId: question.id,
     partNumber: question.partNumber,
-    answer: i % 5 === 4 ? "yes" : "no",
+    answer: i % 5 === 4 ? AnswerOption.YES : AnswerOption.NO,
     comment: "",
   })),
 };
@@ -205,7 +208,7 @@ const dummyFantomVisitNew: IVisit = {
   answers: getDummyVisitCurrentQuestions().map((question) => ({
     questionId: question.id,
     partNumber: question.partNumber,
-    answer: "no",
+    answer: AnswerOption.NO,
     comment: "",
   })),
 };

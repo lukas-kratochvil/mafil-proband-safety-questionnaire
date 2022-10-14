@@ -5,7 +5,7 @@ import { IFormButtonsProps } from "../../components/form/FormButtons";
 import { FormProbandContact } from "../../components/form/FormProbandContact";
 import { FormProbandInfo } from "../../components/form/FormProbandInfo";
 import { FormProjectInfo } from "../../components/form/FormProjectInfo";
-import { IFormQac } from "../../components/form/FormQuestion";
+import { FormQac } from "../../components/form/FormQuestion";
 import { FormQuestions } from "../../components/form/FormQuestions";
 import { FormPropType } from "../../components/form/types/types";
 import {
@@ -14,7 +14,7 @@ import {
   loadFormDefaultValuesVisitDuplication,
 } from "../../components/form/util/utils";
 import { QuestionPartNumber } from "../../data/question_data";
-import { dummyVisits, VisitState } from "../../data/visit_data";
+import { AnswerOption, dummyVisits, VisitState } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { fetchVisit } from "../../util/fetch";
 import { getBackButtonProps } from "../../util/utils";
@@ -28,7 +28,7 @@ export const DuplicationFormPage = () => {
 
   const [isFantom, setIsFantom] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [qacs, setQacs] = useState<IFormQac[]>([]);
+  const [qacs, setQacs] = useState<FormQac[]>([]);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>({} as IFormButtonsProps);
 
   // TODO: use MUI Skeleton while data is fetching/loading
@@ -122,7 +122,7 @@ export const DuplicationFormPage = () => {
             const isApproved
               = operator?.hasHigherPermission
               || data.answers.find(
-                (answer) => answer.partNumber === QuestionPartNumber.TWO && answer.answer === "yes"
+                (answer) => answer.partNumber === QuestionPartNumber.TWO && answer.answer === AnswerOption.YES
               ) === undefined;
             const newVisit = createNewVisitFromFormData(
               data,
