@@ -8,14 +8,14 @@ export interface IActionButtonsProps {
   visitId: string;
 }
 
-interface IVisitsTableProps {
+interface IInteractingTableProps {
   header: MRTColumnDef<IVisit>[];
   fetchVisits: () => Promise<IVisit[]>;
   ActionButtons: FunctionComponent<IActionButtonsProps>;
   actionButtonsSize: number;
 }
 
-export const VisitsTable = ({ header, fetchVisits, ActionButtons, actionButtonsSize }: IVisitsTableProps) => {
+export const InteractingTable = ({ header, fetchVisits, ActionButtons, actionButtonsSize }: IInteractingTableProps) => {
   const [visits, setVisits] = useState<IVisit[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isRefetching, setIsRefetching] = useState<boolean>(false);

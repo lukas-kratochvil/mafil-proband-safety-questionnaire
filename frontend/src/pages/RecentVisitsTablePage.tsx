@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { compareAsc, format, parse } from "date-fns";
 import { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 import { useNavigate } from "react-router-dom";
-import { IActionButtonsProps, VisitsTable } from "../components/table/VisitsTable";
+import { IActionButtonsProps, InteractingTable } from "../components/table/InteractingTable";
 import { IVisit } from "../data/visit_data";
 import { fetchRecentVisits } from "../util/fetch";
 import { getDummyVisit } from "../util/fetch.dev";
@@ -85,7 +85,7 @@ const RecentVisitsActionButtons = ({ visitId }: IActionButtonsProps) => {
 };
 
 export const RecentVisitsTablePage = () => (
-  <VisitsTable
+  <InteractingTable
     header={header}
     fetchVisits={fetchRecentVisits}
     ActionButtons={RecentVisitsActionButtons}

@@ -5,7 +5,7 @@ import { compareAsc, format, parse } from "date-fns";
 import { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { IActionButtonsProps, VisitsTable } from "../components/table/VisitsTable";
+import { IActionButtonsProps, InteractingTable } from "../components/table/InteractingTable";
 import { IVisit } from "../data/visit_data";
 import { fetchWaitingRoomVisits } from "../util/fetch";
 
@@ -118,7 +118,7 @@ const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
 };
 
 export const WaitingRoomTablePage = () => (
-  <VisitsTable
+  <InteractingTable
     header={header}
     fetchVisits={fetchWaitingRoomVisits}
     ActionButtons={WaitingRoomActionButtons}
