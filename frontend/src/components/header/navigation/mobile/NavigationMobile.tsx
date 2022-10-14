@@ -1,18 +1,15 @@
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Drawer, Grid, IconButton, List, Tooltip, useTheme } from "@mui/material";
-import { amber } from "@mui/material/colors";
 import { useState } from "react";
-import { INavigationItem } from "../../Header";
+import { useNavigate } from "react-router-dom";
 import { LogOutButton } from "../../LogOutButton";
 import { OperatorCard } from "../../OperatorCard";
+import { getTabs, TAB_DEFAULT_COLOR } from "../common";
 import { NavigationMobileTab } from "./NavigationMobileTab";
 
-interface INavigationMobileProps {
-  items: INavigationItem[];
-}
-
-export const NavigationMobile = ({ items }: INavigationMobileProps) => {
+export const NavigationMobile = () => {
+  const navigate = useNavigate();
   const theme = useTheme();
   const [isDrawerOpened, setIsDrawerOpened] = useState<boolean>(false);
 
@@ -20,7 +17,6 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
     if (event.type === "keydown" && ["Tab", "Shift"].includes((event as React.KeyboardEvent).key)) {
       return;
     }
-
     setIsDrawerOpened(open);
   };
 
@@ -46,7 +42,7 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
         onClose={toggleDrawer(false)}
         PaperProps={{
           sx: {
-            backgroundColor: amber[700],
+            backgroundColor: TAB_DEFAULT_COLOR,
           },
         }}
       >
@@ -85,10 +81,10 @@ export const NavigationMobile = ({ items }: INavigationMobileProps) => {
               borderColor: "divider",
             }}
           >
-            {items.map((item, index) => (
+            {getTabs(navigate).map((tab) => (
               <NavigationMobileTab
-                key={index}
-                tab={item}
+                key={tab.urlPrefix}
+                {...tab}
               />
             ))}
           </List>

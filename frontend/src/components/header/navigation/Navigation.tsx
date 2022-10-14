@@ -1,14 +1,11 @@
 import { Box, Tabs } from "@mui/material";
-import { amber } from "@mui/material/colors";
 import React, { useState } from "react";
-import { INavigationItem } from "../Header";
+import { useNavigate } from "react-router-dom";
 import { NavigationTab } from "./NavigationTab";
+import { getTabs, TAB_DEFAULT_COLOR } from "./common";
 
-interface INavigationProps {
-  items: INavigationItem[];
-}
-
-export const Navigation = ({ items }: INavigationProps) => {
+export const Navigation = () => {
+  const navigate = useNavigate();
   const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
 
   const handleChange = (_event: React.SyntheticEvent, value: number) => setCurrentTabIndex(value);
@@ -17,7 +14,7 @@ export const Navigation = ({ items }: INavigationProps) => {
     <Box
       sx={{
         width: "100%",
-        backgroundColor: amber[700],
+        backgroundColor: TAB_DEFAULT_COLOR,
       }}
     >
       <Tabs
@@ -39,10 +36,10 @@ export const Navigation = ({ items }: INavigationProps) => {
           },
         }}
       >
-        {items.map((item, index) => (
+        {getTabs(navigate).map((tab) => (
           <NavigationTab
-            key={index}
-            tab={item}
+            key={tab.urlPrefix}
+            {...tab}
           />
         ))}
       </Tabs>

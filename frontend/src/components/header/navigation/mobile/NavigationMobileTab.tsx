@@ -1,35 +1,18 @@
-import { Grid, ListItem, ListItemButton } from "@mui/material";
-import { amber } from "@mui/material/colors";
+import { Grid, ListItem, ListItemButton, useTheme } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import { INavigationItem } from "../../Header";
+import { getCommonTabSx, ITabProps } from "../common";
 
-interface INavigationMobileTabProps {
-  tab: INavigationItem
-}
-
-export const NavigationMobileTab = ({ tab }: INavigationMobileTabProps) => {
+export const NavigationMobileTab = ({ urlPrefix, label, onClick, Icon }: ITabProps) => {
+  const theme = useTheme();
   const location = useLocation();
-
-  const isSelected = location.pathname.startsWith(tab.urlPrefix);
-  const highlightColor = amber[600];
 
   return (
     <ListItem disablePadding>
       <ListItemButton
-        onClick={tab.onClick}
+        onClick={onClick}
         sx={{
           paddingY: "1rem",
-          color: "rgba(0, 0, 0, 1)",
-          backgroundColor: isSelected ? highlightColor : undefined,
-          opacity: 0.85,
-          fontSize: "0.85rem",
-          fontWeight: 500,
-          letterSpacing: "0.02857rem",
-          textTransform: "uppercase",
-          "&:hover": {
-            backgroundColor: highlightColor,
-            opacity: 1,
-          },
+          ...getCommonTabSx(theme, location, urlPrefix),
         }}
       >
         <Grid
@@ -37,12 +20,14 @@ export const NavigationMobileTab = ({ tab }: INavigationMobileTabProps) => {
           alignItems="center"
           columnGap="1rem"
         >
-          <Grid item>{tab.icon}</Grid>
+          <Grid item>
+            <Icon />
+          </Grid>
           <Grid
             item
             xs
           >
-            {tab.label}
+            {label}
           </Grid>
         </Grid>
       </ListItemButton>
