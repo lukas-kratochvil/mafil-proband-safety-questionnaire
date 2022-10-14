@@ -29,7 +29,7 @@ export const FantomFormPage = () => {
         // TODO: create fantom visit in DB
         const newFantomVisit = createNewVisitFromFormData(data, VisitState.SIGNED);
         dummyVisits.push(newFantomVisit);
-        navigate(`/auth/visit/${newFantomVisit.id}`);
+        navigate(`/auth/recent-visits/visit/${newFantomVisit.id}`);
       },
     },
     buttonsProps: [getBackButtonProps(navigate, "Zrušit")],

@@ -103,7 +103,7 @@ export const ApprovalFormPage = () => {
             onClick: () => {
               // TODO: store changes in DB if made
               updateDummyVisitState(id, VisitState.APPROVED);
-              navigate(`/auth/visit/${id}`);
+              navigate(`/auth/recent-visits/visit/${id}`);
             },
           },
           buttonsProps: [

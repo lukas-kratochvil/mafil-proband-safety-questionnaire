@@ -84,7 +84,7 @@ export const App = () => {
               }
             />
             <Route
-              path="/auth/form/:id/duplication"
+              path="/auth/recent-visits/duplicate/:id"
               element={
                 <FormPageContainer
                   FormPage={DuplicationFormPage}
@@ -97,7 +97,7 @@ export const App = () => {
               element={<RecentVisitsTablePage />}
             />
             <Route
-              path="/auth/visit/:id"
+              path="/auth/recent-visits/visit/:id"
               element={<VisitDetailPage />}
             />
           </>

@@ -59,7 +59,7 @@ const RecentVisitsActionButtons = ({ visitId }: IActionButtonsProps) => {
       <Button
         size="small"
         variant="contained"
-        onClick={() => navigate(`/auth/visit/${visitId}`)}
+        onClick={() => navigate(`/auth/recent-visits/visit/${visitId}`)}
       >
         Zobrazit detail
       </Button>
@@ -72,9 +72,9 @@ const RecentVisitsActionButtons = ({ visitId }: IActionButtonsProps) => {
 
           if (initialVisit === undefined) {
             // TODO: show some error instead!
-            navigate(`/auth/form/${1}/duplication`);
+            navigate(`/auth/recent-visits/duplicate/${1}`);
           } else {
-            navigate(`/auth/form/${initialVisit.id}/duplication`);
+            navigate(`/auth/recent-visits/duplicate/${initialVisit.id}`);
           }
         }}
       >

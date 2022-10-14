@@ -108,7 +108,7 @@ export const WaitingRoomFormPage = () => {
               ) === undefined
             ) {
               updateDummyVisitState(id, VisitState.APPROVED);
-              navigate(`/auth/visit/${id}`);
+              navigate(`/auth/recent-visits/visit/${id}`);
             } else {
               updateDummyVisitState(id, VisitState.IN_APPROVAL);
               navigate("/auth/waiting-room");
