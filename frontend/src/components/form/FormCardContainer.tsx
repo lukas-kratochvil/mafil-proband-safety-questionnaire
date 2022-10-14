@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import { PropsWithChildren } from "react";
-import { CardBox } from "../card/CardBox";
+import { CardContainer } from "../card/CardContainer";
 
 interface IFormCardContainerProps {
   title: string;
@@ -12,12 +12,12 @@ export const FormCardContainer = ({
   title,
   mainGridPadding = 2,
 }: PropsWithChildren<IFormCardContainerProps>) => (
-  <CardBox title={title}>
+  <CardContainer title={title}>
     <Grid
       container
       sx={{ padding: mainGridPadding }}
     >
       {children}
     </Grid>
-  </CardBox>
+  </CardContainer>
 );

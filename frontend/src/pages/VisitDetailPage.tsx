@@ -1,7 +1,7 @@
 import { Button, Grid, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { CardBox } from "../components/card/CardBox";
+import { CardContainer } from "../components/card/CardContainer";
 import {
   ColoredInfoStripe,
   ColoredInfoStripeColors,
@@ -148,7 +148,7 @@ export const VisitDetailPage = () => {
 
   return (
     <PageTemplate>
-      <CardBox title={`Detail visity: ${visit?.visitId}`}>
+      <CardContainer title={`Detail visity: ${visit?.visitId}`}>
         <Stack
           spacing="1rem"
           justifyContent="center"
@@ -183,7 +183,7 @@ export const VisitDetailPage = () => {
             </Grid>
           )}
         </Stack>
-      </CardBox>
+      </CardContainer>
     </PageTemplate>
   );
 };

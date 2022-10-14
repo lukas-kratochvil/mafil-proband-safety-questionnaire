@@ -1,6 +1,6 @@
 import { Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { CardBox } from "../components/card/CardBox";
+import { CardContainer } from "../components/card/CardContainer";
 import { PageTemplate } from "./PageTemplate";
 
 export const HomePage = () => {
@@ -8,7 +8,7 @@ export const HomePage = () => {
 
   return (
     <PageTemplate centerize>
-      <CardBox title="Váš formulář byl úspěšně odeslán. Vyčkejte, prosím, na další pokyny operátora.">
+      <CardContainer title="Váš formulář byl úspěšně odeslán. Vyčkejte, prosím, na další pokyny operátora.">
         <Grid
           container
           justifyContent="center"
@@ -22,7 +22,7 @@ export const HomePage = () => {
             Otevřít nový formulář
           </Button>
         </Grid>
-      </CardBox>
+      </CardContainer>
     </PageTemplate>
   );
 };

@@ -1,5 +1,5 @@
 import { Avatar, Button, Stack, Typography } from "@mui/material";
-import { CardBox } from "../components/card/CardBox";
+import { CardContainer } from "../components/card/CardContainer";
 import { IAuthMethod, useAuth } from "../hooks/auth/Auth";
 import { PageTemplate } from "./PageTemplate";
 
@@ -15,7 +15,7 @@ export const LoginPage = () => {
 
   return (
     <PageTemplate centerize>
-      <CardBox title="Bezpečnostní dotazník probanda">
+      <CardContainer title="Bezpečnostní dotazník probanda">
         <Stack
           spacing="1rem"
           sx={{
@@ -68,7 +68,7 @@ export const LoginPage = () => {
             </Button>
           </Stack>
         </Stack>
-      </CardBox>
+      </CardContainer>
     </PageTemplate>
   );
 };

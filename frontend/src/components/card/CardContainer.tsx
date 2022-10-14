@@ -2,11 +2,11 @@ import { Card, Divider, Typography, useTheme } from "@mui/material";
 import { lime } from "@mui/material/colors";
 import { PropsWithChildren } from "react";
 
-interface ICardBoxProps {
+interface ICardContainerProps {
   title: string;
 }
 
-export const CardBox = ({ children, title }: PropsWithChildren<ICardBoxProps>) => {
+export const CardContainer = ({ children, title }: PropsWithChildren<ICardContainerProps>) => {
   const theme = useTheme();
 
   return (
