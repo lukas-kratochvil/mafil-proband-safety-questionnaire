@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+import { UrlBasePaths } from "../../App";
 import { IFormButtonsProps } from "../../components/form/FormButtons";
 import { FormProbandContact } from "../../components/form/FormProbandContact";
 import { FormProbandInfo } from "../../components/form/FormProbandInfo";
@@ -108,10 +109,10 @@ export const WaitingRoomFormPage = () => {
               ) === undefined
             ) {
               updateDummyVisitState(id, VisitState.APPROVED);
-              navigate(`/auth/recent-visits/visit/${id}`);
+              navigate(`${UrlBasePaths.RECENT_VISITS}/visit/${id}`);
             } else {
               updateDummyVisitState(id, VisitState.IN_APPROVAL);
-              navigate("/auth/waiting-room");
+              navigate(UrlBasePaths.WAITING_ROOM);
             }
           },
         },

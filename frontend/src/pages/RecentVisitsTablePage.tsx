@@ -2,6 +2,7 @@ import { Button } from "@mui/material";
 import { compareAsc, format, parse } from "date-fns";
 import { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 import { useNavigate } from "react-router-dom";
+import { UrlBasePaths } from "../App";
 import { IActionButtonsProps, InteractingTable } from "../components/table/InteractingTable";
 import { IVisit } from "../data/visit_data";
 import { fetchRecentVisits } from "../util/fetch";
@@ -59,7 +60,7 @@ const RecentVisitsActionButtons = ({ visitId }: IActionButtonsProps) => {
       <Button
         size="small"
         variant="contained"
-        onClick={() => navigate(`/auth/recent-visits/visit/${visitId}`)}
+        onClick={() => navigate(`${UrlBasePaths.RECENT_VISITS}/visit/${visitId}`)}
       >
         Zobrazit detail
       </Button>
@@ -72,9 +73,9 @@ const RecentVisitsActionButtons = ({ visitId }: IActionButtonsProps) => {
 
           if (initialVisit === undefined) {
             // TODO: show some error instead!
-            navigate(`/auth/recent-visits/duplicate/${1}`);
+            navigate(`${UrlBasePaths.RECENT_VISITS}/duplicate/${1}`);
           } else {
-            navigate(`/auth/recent-visits/duplicate/${initialVisit.id}`);
+            navigate(`${UrlBasePaths.RECENT_VISITS}/duplicate/${initialVisit.id}`);
           }
         }}
       >

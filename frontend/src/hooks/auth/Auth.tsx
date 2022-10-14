@@ -1,5 +1,6 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { UrlBasePaths } from "../../App";
 import { operatorMR, operatorSpecial } from "../../data/operator_data";
 import { authenticateOperator } from "../../util/fetch";
 
@@ -66,14 +67,14 @@ const useAuthProvider = (): IAuth => {
       window.sessionStorage.setItem("operator", JSON.stringify(fetchedOperator));
     }
 
-    navigate("/auth/waiting-room");
+    navigate(UrlBasePaths.WAITING_ROOM);
     return true;
   };
 
   const logOut = () => {
     setOperator(undefined);
     window.sessionStorage.removeItem("operator");
-    navigate("/auth");
+    navigate(UrlBasePaths.AUTH);
   };
 
   return {

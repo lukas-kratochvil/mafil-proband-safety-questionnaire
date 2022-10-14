@@ -17,6 +17,16 @@ import { FormPageContainer } from "./pages/form/FormPageContainer";
 import { ProbandFormPage } from "./pages/form/ProbandFormPage";
 import { WaitingRoomFormPage } from "./pages/form/WaitingRoomFormPage";
 
+export enum UrlBasePaths {
+  PROBAND_HOME = "/home",
+  PROBAND_FORM = "/form",
+  AUTH = "/auth",
+  FANTOM_FORM = "/auth/fantom-form",
+  WAITING_ROOM = "/auth/waiting-room",
+  APPROVAL = "/auth/approval",
+  RECENT_VISITS = "/auth/recent-visits",
+}
+
 export const App = () => {
   const { operator } = useAuth();
 
@@ -26,14 +36,14 @@ export const App = () => {
       <Routes>
         <Route
           path="/"
-          element={<Navigate to="/form" />}
+          element={<Navigate to={UrlBasePaths.PROBAND_FORM} />}
         />
         <Route
-          path="/home"
+          path={UrlBasePaths.PROBAND_HOME}
           element={<HomePage />}
         />
         <Route
-          path="/form"
+          path={UrlBasePaths.PROBAND_FORM}
           element={
             <FormPageContainer
               FormPage={ProbandFormPage}
@@ -42,13 +52,13 @@ export const App = () => {
           }
         />
         <Route
-          path="/auth"
+          path={UrlBasePaths.AUTH}
           element={<LoginPage />}
         />
         {operator && (
           <>
             <Route
-              path="/auth/fantom-form"
+              path={UrlBasePaths.FANTOM_FORM}
               element={
                 <FormPageContainer
                   FormPage={FantomFormPage}
@@ -58,11 +68,11 @@ export const App = () => {
               }
             />
             <Route
-              path="/auth/waiting-room"
+              path={UrlBasePaths.WAITING_ROOM}
               element={<WaitingRoomTablePage />}
             />
             <Route
-              path="/auth/waiting-room/form/:id"
+              path={`${UrlBasePaths.WAITING_ROOM}/form/:id`}
               element={
                 <FormPageContainer
                   FormPage={WaitingRoomFormPage}
@@ -71,11 +81,11 @@ export const App = () => {
               }
             />
             <Route
-              path="/auth/approval"
+              path={UrlBasePaths.APPROVAL}
               element={<ApprovalTablePage />}
             />
             <Route
-              path="/auth/approval/form/:id"
+              path={`${UrlBasePaths.APPROVAL}/form/:id`}
               element={
                 <FormPageContainer
                   FormPage={ApprovalFormPage}
@@ -84,7 +94,7 @@ export const App = () => {
               }
             />
             <Route
-              path="/auth/recent-visits/duplicate/:id"
+              path={`${UrlBasePaths.RECENT_VISITS}/duplicate/:id`}
               element={
                 <FormPageContainer
                   FormPage={DuplicationFormPage}
@@ -93,11 +103,11 @@ export const App = () => {
               }
             />
             <Route
-              path="/auth/recent-visits"
+              path={UrlBasePaths.RECENT_VISITS}
               element={<RecentVisitsTablePage />}
             />
             <Route
-              path="/auth/recent-visits/visit/:id"
+              path={`${UrlBasePaths.RECENT_VISITS}/visit/:id`}
               element={<VisitDetailPage />}
             />
           </>

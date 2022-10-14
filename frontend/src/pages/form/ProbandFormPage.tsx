@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { UrlBasePaths } from "../../App";
 import { FormBeforeExamination } from "../../components/form/FormBeforeExamination";
 import { IFormButtonsProps } from "../../components/form/FormButtons";
 import { FormEntryInfo } from "../../components/form/FormEntryInfo";
@@ -29,7 +30,7 @@ export const ProbandFormPage = () => {
       title: "Souhlasím",
       onClick: (data: FormPropType) => {
         // TODO: create visit in DB
-        navigate("/home");
+        navigate(UrlBasePaths.PROBAND_HOME);
       },
     },
     buttonsProps: [],

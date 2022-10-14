@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { UrlBasePaths } from "../../App";
 import { IFormButtonsProps } from "../../components/form/FormButtons";
 import { FormProbandInfo } from "../../components/form/FormProbandInfo";
 import { FormProjectInfo } from "../../components/form/FormProjectInfo";
@@ -29,7 +30,7 @@ export const FantomFormPage = () => {
         // TODO: create fantom visit in DB
         const newFantomVisit = createNewVisitFromFormData(data, VisitState.SIGNED);
         dummyVisits.push(newFantomVisit);
-        navigate(`/auth/recent-visits/visit/${newFantomVisit.id}`);
+        navigate(`${UrlBasePaths.RECENT_VISITS}/visit/${newFantomVisit.id}`);
       },
     },
     buttonsProps: [getBackButtonProps(navigate, "Zrušit")],

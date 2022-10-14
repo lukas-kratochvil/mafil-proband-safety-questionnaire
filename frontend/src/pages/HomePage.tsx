@@ -1,5 +1,6 @@
 import { Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { UrlBasePaths } from "../App";
 import { CardContainer } from "../components/card/CardContainer";
 import { PageContainer } from "./PageContainer";
 
@@ -17,7 +18,7 @@ export const HomePage = () => {
         >
           <Button
             variant="contained"
-            onClick={() => navigate("/form")}
+            onClick={() => navigate(UrlBasePaths.PROBAND_FORM)}
           >
             Otevřít nový formulář
           </Button>

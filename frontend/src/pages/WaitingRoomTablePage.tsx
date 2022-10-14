@@ -5,6 +5,7 @@ import { compareAsc, format, parse } from "date-fns";
 import { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { UrlBasePaths } from "../App";
 import { IActionButtonsProps, InteractingTable } from "../components/table/InteractingTable";
 import { IVisit } from "../data/visit_data";
 import { fetchWaitingRoomVisits } from "../util/fetch";
@@ -75,7 +76,7 @@ const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
       <Button
         size="small"
         variant="contained"
-        onClick={() => navigate(`/auth/waiting-room/form/${visitId}`)}
+        onClick={() => navigate(`${UrlBasePaths.WAITING_ROOM}/form/${visitId}`)}
       >
         Zpracovat
       </Button>

@@ -6,6 +6,7 @@ import ScienceIcon from "@mui/icons-material/Science";
 import { AppBar, Grid, Toolbar, useMediaQuery, useTheme } from "@mui/material";
 import { ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
+import { UrlBasePaths } from "../../App";
 import { useAuth } from "../../hooks/auth/Auth";
 import { CeitecMafilLogo } from "./CeitecMafilLogo";
 import { LanguageMenu } from "./LanguageMenu";
@@ -30,28 +31,28 @@ export const Header = () => {
     {
       // TODO: number must be updated
       label: "Čekárna (?)",
-      onClick: () => navigate("/auth/waiting-room"),
+      onClick: () => navigate(UrlBasePaths.WAITING_ROOM),
       icon: <PendingActionsIcon />,
     },
     {
       // TODO: number must be updated
       label: "Ke schválení (?)",
-      onClick: () => navigate("/auth/approval"),
+      onClick: () => navigate(UrlBasePaths.APPROVAL),
       icon: <ApprovalIcon />,
     },
     {
       label: "Poslední visity",
-      onClick: () => navigate("/auth/recent-visits"),
+      onClick: () => navigate(UrlBasePaths.RECENT_VISITS),
       icon: <RecentActorsIcon />,
     },
     {
       label: "Založit měření na Fantomu",
-      onClick: () => navigate("/auth/fantom-form"),
+      onClick: () => navigate(UrlBasePaths.FANTOM_FORM),
       icon: <ScienceIcon />,
     },
     {
       label: "Otevřít formulář probanda",
-      onClick: () => window.open("/form", "_blank", "noopener,noreferrer"),
+      onClick: () => window.open(UrlBasePaths.PROBAND_FORM, "_blank", "noopener,noreferrer"),
       icon: <PersonAddAlt1Icon />,
     },
   ];

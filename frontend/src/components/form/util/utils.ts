@@ -1,4 +1,5 @@
 import { NavigateFunction } from "react-router-dom";
+import { UrlBasePaths } from "../../../App";
 import { Gender, SideDominance, VisualCorrection } from "../../../data/form_data";
 import { AnswerOption, createVisit, IVisit, VisitState } from "../../../data/visit_data";
 import { updateDummyVisitState } from "../../../util/fetch.dev";
@@ -86,7 +87,7 @@ export const getDisapproveButtonProps = (id: string | undefined, navigate: Navig
   onClick: () => {
     // TODO: store changes in DB if made
     updateDummyVisitState(id, VisitState.DISAPPROVED);
-    navigate("/auth/approval");
+    navigate(UrlBasePaths.APPROVAL);
   },
   showErrorColor: true,
 });

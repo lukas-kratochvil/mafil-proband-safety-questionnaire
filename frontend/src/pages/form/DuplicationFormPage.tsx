@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+import { UrlBasePaths } from "../../App";
 import { IFormButtonsProps } from "../../components/form/FormButtons";
 import { FormProbandContact } from "../../components/form/FormProbandContact";
 import { FormProbandInfo } from "../../components/form/FormProbandInfo";
@@ -88,7 +89,7 @@ export const DuplicationFormPage = () => {
             // TODO: create fantom visit in DB
             const newFantomVisit = createNewVisitFromFormData(data, VisitState.SIGNED);
             dummyVisits.push(newFantomVisit);
-            navigate(`/auth/recent-visits/visit/${newFantomVisit.id}`);
+            navigate(`${UrlBasePaths.RECENT_VISITS}/visit/${newFantomVisit.id}`);
           },
         },
         buttonsProps: [getBackButtonProps(navigate, "Zrušit")],
@@ -131,9 +132,9 @@ export const DuplicationFormPage = () => {
             dummyVisits.push(newVisit);
 
             if (isApproved) {
-              navigate(`/auth/recent-visits/visit/${newVisit.id}`);
+              navigate(`${UrlBasePaths.RECENT_VISITS}/visit/${newVisit.id}`);
             } else {
-              navigate("/auth/recent-visits");
+              navigate(UrlBasePaths.RECENT_VISITS);
             }
           },
         },

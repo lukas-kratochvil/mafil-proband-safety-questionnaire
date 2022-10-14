@@ -2,6 +2,7 @@ import { Button } from "@mui/material";
 import { compareAsc, format, parse } from "date-fns";
 import { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 import { useNavigate } from "react-router-dom";
+import { UrlBasePaths } from "../App";
 import { IActionButtonsProps, InteractingTable } from "../components/table/InteractingTable";
 import { IVisit } from "../data/visit_data";
 import { fetchApprovalVisits } from "../util/fetch";
@@ -60,7 +61,7 @@ const ApprovalActionButtons = ({ visitId }: IActionButtonsProps) => {
     <Button
       size="small"
       variant="contained"
-      onClick={() => navigate(`/auth/approval/form/${visitId}`)}
+      onClick={() => navigate(`${UrlBasePaths.APPROVAL}/form/${visitId}`)}
     >
       Zobrazit
     </Button>
