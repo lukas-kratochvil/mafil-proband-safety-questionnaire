@@ -1,6 +1,6 @@
-import { IFormLabelFieldProps } from "./FormLabelField";
+import { IFormLabelFieldContainerProps } from "./FormLabelFieldContainer";
 
-export interface IFormDefaultInputProps extends IFormLabelFieldProps {
+export interface IFormDefaultInputProps extends IFormLabelFieldContainerProps {
   name: string;
   disabled?: boolean;
 }

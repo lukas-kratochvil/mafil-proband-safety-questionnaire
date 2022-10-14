@@ -1,12 +1,16 @@
 import { Grid, Typography, useTheme } from "@mui/material";
 import { PropsWithChildren } from "react";
 
-export interface IFormLabelFieldProps {
+export interface IFormLabelFieldContainerProps {
   label: string;
   isOptional?: boolean;
 }
 
-export const FormLabelField = ({ children, label, isOptional }: PropsWithChildren<IFormLabelFieldProps>) => {
+export const FormLabelFieldContainer = ({
+  children,
+  label,
+  isOptional,
+}: PropsWithChildren<IFormLabelFieldContainerProps>) => {
   const theme = useTheme();
 
   return (

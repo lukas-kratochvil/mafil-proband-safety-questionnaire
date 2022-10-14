@@ -6,7 +6,7 @@ import { AnswerOption } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { fetchQuestion } from "../../util/fetch";
 import { ErrorFeedback } from "./ErrorFeedback";
-import { FormLabelField } from "./inputs/FormLabelField";
+import { FormLabelFieldContainer } from "./inputs/FormLabelFieldContainer";
 import { FormRadioGroup } from "./inputs/FormRadioGroup";
 import { FormAnswer, FormPropType, IFormInputsProps } from "./types/types";
 
@@ -89,7 +89,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
           item
           xs={1}
         >
-          <FormLabelField label="Komentář">
+          <FormLabelFieldContainer label="Komentář">
             <Controller
               name={`answers.${qac.index}.comment`}
               render={({ field: { ref, ...rest } }) => (
@@ -103,7 +103,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
               )}
             />
             <ErrorFeedback name={`answers.${qac.index}.comment`} />
-          </FormLabelField>
+          </FormLabelFieldContainer>
         </Grid>
       )}
     </Grid>
