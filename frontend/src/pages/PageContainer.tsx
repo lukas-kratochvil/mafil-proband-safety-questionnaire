@@ -3,12 +3,12 @@ import { PropsWithChildren } from "react";
 import { Header } from "../components/header/Header";
 import { useAuth } from "../hooks/auth/Auth";
 
-interface IPageTemplateProps {
+interface IPageContainerProps {
   centerize?: boolean;
   isTablePage?: boolean;
 }
 
-export const PageTemplate = ({ children, centerize, isTablePage }: PropsWithChildren<IPageTemplateProps>) => {
+export const PageContainer = ({ children, centerize, isTablePage }: PropsWithChildren<IPageContainerProps>) => {
   const { operator } = useAuth();
   const theme = useTheme();
 

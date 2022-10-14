@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { AnyObjectSchema } from "yup";
 import { FormPropType } from "../../components/form/types/types";
 import { loadEmptyDefaultValues } from "../../components/form/util/utils";
-import { PageTemplate } from "../PageTemplate";
+import { PageContainer } from "../PageContainer";
 
 interface IFormPageTemplateProps {
   FormPage: () => JSX.Element;
@@ -21,10 +21,10 @@ export const FormPageTemplate = ({ FormPage, loadDefaultValues, validationSchema
   });
 
   return (
-    <PageTemplate>
+    <PageContainer>
       <FormProvider {...formMethods}>
         <FormPage />
       </FormProvider>
-    </PageTemplate>
+    </PageContainer>
   );
 };

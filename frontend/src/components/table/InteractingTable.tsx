@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import MaterialReactTable, { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { IVisit } from "../../data/visit_data";
-import { PageTemplate } from "../../pages/PageTemplate";
+import { PageContainer } from "../../pages/PageContainer";
 
 export interface IActionButtonsProps {
   visitId: string;
@@ -47,7 +47,7 @@ export const InteractingTable = ({ header, fetchVisits, ActionButtons, actionBut
   const columns = useMemo<MRTColumnDef<IVisit>[]>(() => header, [header]);
 
   return (
-    <PageTemplate isTablePage>
+    <PageContainer isTablePage>
       <MaterialReactTable
         columns={columns}
         data={visits}
@@ -88,6 +88,6 @@ export const InteractingTable = ({ header, fetchVisits, ActionButtons, actionBut
           showSkeletons: showSkeleton,
         }}
       />
-    </PageTemplate>
+    </PageContainer>
   );
 };

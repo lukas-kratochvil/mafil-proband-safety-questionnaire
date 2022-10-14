@@ -10,7 +10,7 @@ import {
 import { IVisit, VisitState } from "../data/visit_data";
 import { fetchVisitDetail } from "../util/fetch";
 import { getBackButtonProps } from "../util/utils";
-import { PageTemplate } from "./PageTemplate";
+import { PageContainer } from "./PageContainer";
 
 interface IButtonProps {
   title: string;
@@ -147,7 +147,7 @@ export const VisitDetailPage = () => {
   }, [navigate, visit, visitState]);
 
   return (
-    <PageTemplate>
+    <PageContainer>
       <CardContainer title={`Detail visity: ${visit?.visitId}`}>
         <Stack
           spacing="1rem"
@@ -184,6 +184,6 @@ export const VisitDetailPage = () => {
           )}
         </Stack>
       </CardContainer>
-    </PageTemplate>
+    </PageContainer>
   );
 };

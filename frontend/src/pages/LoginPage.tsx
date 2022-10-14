@@ -1,7 +1,7 @@
 import { Avatar, Button, Stack, Typography } from "@mui/material";
 import { CardContainer } from "../components/card/CardContainer";
 import { IAuthMethod, useAuth } from "../hooks/auth/Auth";
-import { PageTemplate } from "./PageTemplate";
+import { PageContainer } from "./PageContainer";
 
 export const LoginPage = () => {
   const { logIn } = useAuth();
@@ -14,7 +14,7 @@ export const LoginPage = () => {
   };
 
   return (
-    <PageTemplate centerize>
+    <PageContainer centerize>
       <CardContainer title="Bezpečnostní dotazník probanda">
         <Stack
           spacing="1rem"
@@ -69,6 +69,6 @@ export const LoginPage = () => {
           </Stack>
         </Stack>
       </CardContainer>
-    </PageTemplate>
+    </PageContainer>
   );
 };

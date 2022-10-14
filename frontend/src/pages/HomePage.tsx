@@ -1,13 +1,13 @@
 import { Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { CardContainer } from "../components/card/CardContainer";
-import { PageTemplate } from "./PageTemplate";
+import { PageContainer } from "./PageContainer";
 
 export const HomePage = () => {
   const navigate = useNavigate();
 
   return (
-    <PageTemplate centerize>
+    <PageContainer centerize>
       <CardContainer title="Váš formulář byl úspěšně odeslán. Vyčkejte, prosím, na další pokyny operátora.">
         <Grid
           container
@@ -23,6 +23,6 @@ export const HomePage = () => {
           </Button>
         </Grid>
       </CardContainer>
-    </PageTemplate>
+    </PageContainer>
   );
 };
