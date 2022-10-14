@@ -29,7 +29,7 @@ export const DuplicationFormPage = () => {
   const [isFantom, setIsFantom] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [qacs, setQacs] = useState<FormQac[]>([]);
-  const [formButtons, setFormButtons] = useState<IFormButtonsProps>({} as IFormButtonsProps);
+  const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
 
   // TODO: use MUI Skeleton while data is fetching/loading
   const [isLoading, setIsLoading] = useState<boolean>(true);
