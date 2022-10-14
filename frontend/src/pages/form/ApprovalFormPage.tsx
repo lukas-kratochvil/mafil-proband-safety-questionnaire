@@ -9,6 +9,7 @@ import { IFormQac } from "../../components/form/FormQuestion";
 import { FormQuestions } from "../../components/form/FormQuestions";
 import { FormPropType } from "../../components/form/types/types";
 import { getDisapproveButtonProps, loadFormDefaultValuesFromVisit } from "../../components/form/util/utils";
+import { QuestionPartNumber } from "../../data/question_data";
 import { VisitState } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { fetchVisit } from "../../util/fetch";
@@ -134,13 +135,13 @@ export const ApprovalFormPage = () => {
       <FormProbandContact disableInputs={!isEditing} />
       <FormQuestions
         title="Část 1"
-        qacs={qacs.filter((qac) => qac.partNumber === 1)}
+        qacs={qacs.filter((qac) => qac.partNumber === QuestionPartNumber.ONE)}
         disableInputs={!isEditing}
         disableComment={!operator?.hasHigherPermission}
       />
       <FormQuestions
         title="Část 2"
-        qacs={qacs.filter((qac) => qac.partNumber === 2)}
+        qacs={qacs.filter((qac) => qac.partNumber === QuestionPartNumber.TWO)}
         disableInputs={!isEditing}
         disableComment={!operator?.hasHigherPermission}
       />

@@ -1,4 +1,7 @@
-export type QuestionPartNumber = 1 | 2;
+export enum QuestionPartNumber {
+  ONE = 1,
+  TWO = 2,
+}
 
 export interface IQuestionData {
   id: string;

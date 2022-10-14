@@ -9,6 +9,7 @@ import { IFormQac } from "../../components/form/FormQuestion";
 import { FormQuestions } from "../../components/form/FormQuestions";
 import { FormPropType } from "../../components/form/types/types";
 import { getDisapproveButtonProps, loadFormDefaultValuesFromVisit } from "../../components/form/util/utils";
+import { QuestionPartNumber } from "../../data/question_data";
 import { VisitState } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { fetchVisit } from "../../util/fetch";
@@ -102,7 +103,9 @@ export const WaitingRoomFormPage = () => {
             // TODO: store changes in DB if made
             if (
               operator?.hasHigherPermission
-              || data.answers.find((answer) => answer.partNumber === 2 && answer.answer === "yes") === undefined
+              || data.answers.find(
+                (answer) => answer.partNumber === QuestionPartNumber.TWO && answer.answer === "yes"
+              ) === undefined
             ) {
               updateDummyVisitState(id, VisitState.APPROVED);
               navigate(`/auth/visit/${id}`);
@@ -134,12 +137,12 @@ export const WaitingRoomFormPage = () => {
       <FormProbandContact disableInputs={!isEditing} />
       <FormQuestions
         title="Část 1"
-        qacs={qacs.filter((qac) => qac.partNumber === 1)}
+        qacs={qacs.filter((qac) => qac.partNumber === QuestionPartNumber.ONE)}
         disableInputs={!isEditing}
       />
       <FormQuestions
         title="Část 2"
-        qacs={qacs.filter((qac) => qac.partNumber === 2)}
+        qacs={qacs.filter((qac) => qac.partNumber === QuestionPartNumber.TWO)}
         disableInputs={!isEditing}
       />
     </FormContent>

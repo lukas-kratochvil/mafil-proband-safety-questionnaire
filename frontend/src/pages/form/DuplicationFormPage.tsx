@@ -13,6 +13,7 @@ import {
   getDisapproveButtonProps,
   loadFormDefaultValuesVisitDuplication,
 } from "../../components/form/util/utils";
+import { QuestionPartNumber } from "../../data/question_data";
 import { dummyVisits, VisitState } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { fetchVisit } from "../../util/fetch";
@@ -120,7 +121,9 @@ export const DuplicationFormPage = () => {
             // TODO: store changes in DB if made
             const isApproved
               = operator?.hasHigherPermission
-              || data.answers.find((answer) => answer.partNumber === 2 && answer.answer === "yes") === undefined;
+              || data.answers.find(
+                (answer) => answer.partNumber === QuestionPartNumber.TWO && answer.answer === "yes"
+              ) === undefined;
             const newVisit = createNewVisitFromFormData(
               data,
               isApproved ? VisitState.APPROVED : VisitState.IN_APPROVAL
@@ -161,12 +164,12 @@ export const DuplicationFormPage = () => {
           <FormProbandContact disableInputs={!isEditing} />
           <FormQuestions
             title="Část 1"
-            qacs={qacs.filter((qac) => qac.partNumber === 1)}
+            qacs={qacs.filter((qac) => qac.partNumber === QuestionPartNumber.ONE)}
             disableInputs={!isEditing}
           />
           <FormQuestions
             title="Část 2"
-            qacs={qacs.filter((qac) => qac.partNumber === 2)}
+            qacs={qacs.filter((qac) => qac.partNumber === QuestionPartNumber.TWO)}
             disableInputs={!isEditing}
           />
         </>

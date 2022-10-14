@@ -2,10 +2,17 @@ import { isEqual } from "date-fns";
 import { rodnecislo } from "rodnecislo";
 import { array, date, mixed, number, object, string } from "yup";
 import { Gender, SideDominance, VisualCorrection } from "../../../data/form_data";
+import { QuestionPartNumber } from "../../../data/question_data";
 
 export const answersSchema = object({
   questionId: string().trim().required(),
-  partNumber: number().oneOf([1, 2]).required(),
+  partNumber: number()
+    .oneOf(
+      Object.values(QuestionPartNumber)
+        .filter((val) => typeof val === "number")
+        .map((val) => +val)
+    )
+    .required(),
   answer: string().nullable().required("Pole je povinné."),
   comment: string().nullable(),
 });

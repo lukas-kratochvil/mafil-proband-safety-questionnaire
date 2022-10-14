@@ -73,7 +73,7 @@ const loadAnswers = (answers: IQac[], visitState: VisitState): IQac[] =>
 
     if (
       answer.answer === "yes"
-      && ((VisitState.IN_APPROVAL && answer.partNumber === 1)
+      && ((VisitState.IN_APPROVAL && answer.partNumber === QuestionPartNumber.ONE)
         || [VisitState.APPROVED, VisitState.DISAPPROVED, VisitState.FOR_SIGNATURE, VisitState.SIGNED].includes(visitState))
     ) {
       comment = "Komentář";
