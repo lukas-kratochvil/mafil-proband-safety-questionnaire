@@ -64,9 +64,8 @@ export const LanguageMenu = () => {
         transition
         disablePortal
         sx={{
-          // Needed to make popper clickable over the the navigation bar
-          zIndex: 1,
-          minWidth: "8.75rem",
+          zIndex: 1000,
+          minWidth: "8rem",
         }}
       >
         {({ TransitionProps }) => (
@@ -87,6 +86,7 @@ export const LanguageMenu = () => {
                       key={language.name}
                       onClick={popupState.close}
                       sx={{
+                        fontSize: "0.9rem",
                         "&:hover": { ...languageItemHoverFocus },
                         "&:focus-visible": { ...languageItemHoverFocus },
                       }}
