@@ -14,12 +14,26 @@ import {
 } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import { bindPopper, bindToggle, usePopupState } from "material-ui-popup-state/hooks";
-import { languages } from "../../data/header_data";
 
-export interface ILanguageItemProps {
+interface ILanguageItemProps {
   name: string;
   label: string;
 }
+
+const languages: ILanguageItemProps[] = [
+  {
+    name: "Čeština",
+    label: "CZ",
+  },
+  {
+    name: "Slovenčina",
+    label: "SK",
+  },
+  {
+    name: "English",
+    label: "EN",
+  },
+];
 
 const languageItemHoverFocus: SxProps<Theme> = {
   color: blue[800],
