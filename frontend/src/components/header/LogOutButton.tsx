@@ -1,22 +1,19 @@
-import { Button, useTheme } from "@mui/material";
+import { Button } from "@mui/material";
 import { red } from "@mui/material/colors";
 import { useAuth } from "../../hooks/auth/Auth";
 
 export const LogOutButton = () => {
-  const theme = useTheme();
   const { logOut } = useAuth();
-
-  const handleSignOut = () => logOut();
 
   return (
     <Button
       variant="contained"
-      onClick={handleSignOut}
+      onClick={logOut}
       sx={{
-        bgcolor: theme.palette.common.black,
-        color: theme.palette.primary.contrastText,
+        bgcolor: ({ palette }) => palette.common.black,
+        color: ({ palette }) => palette.primary.contrastText,
         "&:hover": {
-          bgcolor: theme.palette.common.black,
+          bgcolor: ({ palette }) => palette.common.black,
           color: red[200],
         },
       }}

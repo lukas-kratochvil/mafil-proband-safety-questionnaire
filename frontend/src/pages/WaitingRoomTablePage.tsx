@@ -93,13 +93,13 @@ const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
             height: "1.5rem",
             width: "1.5rem",
             color: deleteButtonMainColor,
-            backgroundColor: deleteButtonBgcolor,
+            bgcolor: deleteButtonBgcolor,
             border: 1,
             borderColor: deleteButtonMainColor,
             borderRadius: "50%",
             "&:hover": {
               color: deleteButtonHoverMainColor,
-              backgroundColor: deleteButtonHoverBgcolor,
+              bgcolor: deleteButtonHoverBgcolor,
             },
           }}
         />

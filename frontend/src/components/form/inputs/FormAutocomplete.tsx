@@ -1,4 +1,4 @@
-import { Autocomplete, CircularProgress, TextField, useMediaQuery, useTheme } from "@mui/material";
+import { Autocomplete, CircularProgress, TextField, Theme, useMediaQuery } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { FormLabelFieldContainer } from "./FormLabelFieldContainer";
 import { IFormDefaultInputProps } from "./form_input";
@@ -8,8 +8,7 @@ interface IFormAutocompleteProps extends IFormDefaultInputProps {
 }
 
 export const FormAutocomplete = ({ name, label, isOptional, disabled, options }: IFormAutocompleteProps) => {
-  const theme = useTheme();
-  const matchesDownSmBreakpoint = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const loading = options.length === 0;
 
   return (

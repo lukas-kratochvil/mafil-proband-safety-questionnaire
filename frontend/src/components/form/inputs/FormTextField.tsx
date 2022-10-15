@@ -1,4 +1,4 @@
-import { InputAdornment, TextField, useMediaQuery, useTheme } from "@mui/material";
+import { InputAdornment, TextField, Theme, useMediaQuery } from "@mui/material";
 import { HTMLInputTypeAttribute, ReactNode } from "react";
 import { Controller } from "react-hook-form";
 import { FormLabelFieldContainer } from "./FormLabelFieldContainer";
@@ -10,8 +10,7 @@ interface IFormTextFieldProps extends IFormDefaultInputProps {
 }
 
 export const FormTextField = ({ name, label, isOptional, disabled, type, endAdornmentLabel }: IFormTextFieldProps) => {
-  const theme = useTheme();
-  const matchesDownSmBreakpoint = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
   return (
     <FormLabelFieldContainer

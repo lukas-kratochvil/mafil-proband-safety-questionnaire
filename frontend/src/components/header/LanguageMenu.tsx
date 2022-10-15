@@ -25,7 +25,7 @@ export interface ILanguageItemProps {
 
 const languageItemHoverFocus: SxProps<Theme> = {
   color: blue[800],
-  backgroundColor: blue[50],
+  bgcolor: blue[50],
 };
 
 export const LanguageMenu = () => {
@@ -50,9 +50,9 @@ export const LanguageMenu = () => {
         endIcon={<ArrowDropDownIcon />}
         sx={{
           textTransform: "unset",
-          backgroundColor: blue[600],
+          bgcolor: blue[600],
           "&:hover": {
-            backgroundColor: blue[800],
+            bgcolor: blue[800],
           },
         }}
       >

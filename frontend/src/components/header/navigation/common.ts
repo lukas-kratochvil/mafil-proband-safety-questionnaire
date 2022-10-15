@@ -15,19 +15,19 @@ export const TAB_HIGHLIGHT_COLOR = amber[600];
 export const isTabSelected = (location: Location, urlPrefix: string): boolean =>
   location.pathname.startsWith(urlPrefix);
 
-export const getCommonTabSx = (theme: Theme, location: Location, urlPrefix: string): SxProps<Theme> => {
+export const getCommonTabSx = (location: Location, urlPrefix: string): SxProps<Theme> => {
   const isSelected = isTabSelected(location, urlPrefix);
 
   return {
-    color: theme.palette.text.primary,
-    backgroundColor: isSelected ? TAB_HIGHLIGHT_COLOR : undefined,
+    color: ({ palette }) => palette.text.primary,
+    bgcolor: isSelected ? TAB_HIGHLIGHT_COLOR : undefined,
     opacity: isSelected ? 1 : 0.85,
     fontSize: "0.85rem",
     fontWeight: 500,
     letterSpacing: "0.02857rem",
     textTransform: "uppercase",
     "&:hover": {
-      backgroundColor: TAB_HIGHLIGHT_COLOR,
+      bgcolor: TAB_HIGHLIGHT_COLOR,
       opacity: 1,
     },
   };

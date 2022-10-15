@@ -1,4 +1,4 @@
-import { Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Stack, Theme, Typography, useMediaQuery } from "@mui/material";
 import { PropsWithChildren } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormButtons, IFormButtonsProps } from "../../components/form/FormButtons";
@@ -10,8 +10,7 @@ interface IFormContainerProps {
 }
 
 export const FormContainer = ({ children, isError, buttons }: PropsWithChildren<IFormContainerProps>) => {
-  const theme = useTheme();
-  const matchesDownSmBreakpoint = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
   const { handleSubmit } = useFormContext<FormPropType>();
 

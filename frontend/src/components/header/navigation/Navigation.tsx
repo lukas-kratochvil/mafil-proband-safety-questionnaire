@@ -14,7 +14,7 @@ export const Navigation = () => {
     <Box
       sx={{
         width: "100%",
-        backgroundColor: TAB_DEFAULT_COLOR,
+        bgcolor: TAB_DEFAULT_COLOR,
       }}
     >
       <Tabs

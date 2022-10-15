@@ -1,4 +1,4 @@
-import { Button, Grid, useMediaQuery, useTheme } from "@mui/material";
+import { Button, Grid, Theme, useMediaQuery } from "@mui/material";
 import { useFormState } from "react-hook-form";
 import { FormPropType } from "./types/types";
 
@@ -19,8 +19,7 @@ export interface IFormButtonsProps {
 }
 
 export const FormButtons = ({ submitButtonProps, buttonsProps }: IFormButtonsProps) => {
-  const theme = useTheme();
-  const matchesDownSmBreakpoint = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
   /* 
     For the submit button disabling to work:

@@ -1,4 +1,4 @@
-import { TextField, useMediaQuery, useTheme } from "@mui/material";
+import { TextField, Theme, useMediaQuery } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import CsLocale from "date-fns/locale/cs";
@@ -11,8 +11,7 @@ interface IFormDatePicker extends IFormDefaultInputProps {
 }
 
 export const FormDatePicker = ({ name, label, isOptional, disabled, maxDate }: IFormDatePicker) => {
-  const theme = useTheme();
-  const matchesDownSmBreakpoint = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
   return (
     <FormLabelFieldContainer

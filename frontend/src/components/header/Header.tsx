@@ -1,4 +1,4 @@
-import { AppBar, Grid, Toolbar, useMediaQuery, useTheme } from "@mui/material";
+import { AppBar, Grid, Theme, Toolbar, useMediaQuery } from "@mui/material";
 import { useAuth } from "../../hooks/auth/Auth";
 import { CeitecMafilLogo } from "./CeitecMafilLogo";
 import { LanguageMenu } from "./LanguageMenu";
@@ -8,8 +8,7 @@ import { NavigationMobile } from "./navigation/mobile/NavigationMobile";
 
 export const Header = () => {
   const { operator } = useAuth();
-  const theme = useTheme();
-  const matchesDownMdBreakpoint = useMediaQuery(theme.breakpoints.down("md"));
+  const matchesDownMdBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
 
   return (
     <AppBar position="static">

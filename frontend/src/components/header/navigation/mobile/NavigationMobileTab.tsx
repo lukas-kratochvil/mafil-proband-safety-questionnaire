@@ -1,9 +1,8 @@
-import { Grid, ListItem, ListItemButton, useTheme } from "@mui/material";
+import { Grid, ListItem, ListItemButton } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import { getCommonTabSx, ITabProps } from "../common";
 
 export const NavigationMobileTab = ({ urlPrefix, label, onClick, Icon }: ITabProps) => {
-  const theme = useTheme();
   const location = useLocation();
 
   return (
@@ -12,7 +11,7 @@ export const NavigationMobileTab = ({ urlPrefix, label, onClick, Icon }: ITabPro
         onClick={onClick}
         sx={{
           paddingY: "1rem",
-          ...getCommonTabSx(theme, location, urlPrefix),
+          ...getCommonTabSx(location, urlPrefix),
         }}
       >
         <Grid

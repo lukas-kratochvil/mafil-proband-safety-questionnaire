@@ -1,6 +1,6 @@
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Box, Drawer, Grid, IconButton, List, Tooltip, useTheme } from "@mui/material";
+import { Box, Drawer, Grid, IconButton, List, Tooltip } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LogOutButton } from "../../LogOutButton";
@@ -10,7 +10,6 @@ import { NavigationMobileTab } from "./NavigationMobileTab";
 
 export const NavigationMobile = () => {
   const navigate = useNavigate();
-  const theme = useTheme();
   const [isDrawerOpened, setIsDrawerOpened] = useState<boolean>(false);
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -29,7 +28,7 @@ export const NavigationMobile = () => {
         >
           <MenuIcon
             sx={{
-              color: theme.palette.primary.contrastText,
+              color: ({ palette }) => palette.primary.contrastText,
               width: "2rem",
               height: "2rem",
             }}
@@ -42,7 +41,7 @@ export const NavigationMobile = () => {
         onClose={toggleDrawer(false)}
         PaperProps={{
           sx: {
-            backgroundColor: TAB_DEFAULT_COLOR,
+            bgcolor: TAB_DEFAULT_COLOR,
           },
         }}
       >
@@ -51,7 +50,7 @@ export const NavigationMobile = () => {
           onKeyDown={toggleDrawer(false)}
           sx={{ maxWidth: "20rem" }}
         >
-          <Box sx={{ backgroundColor: theme.palette.primary.main }}>
+          <Box sx={{ bgcolor: ({ palette }) => palette.primary.main }}>
             <Box
               display="flex"
               justifyContent="flex-end"

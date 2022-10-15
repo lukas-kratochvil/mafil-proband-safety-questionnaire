@@ -1,4 +1,4 @@
-import { Grid, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Grid, TextField, Theme, Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { IQuestionData } from "../../data/question_data";
@@ -18,8 +18,7 @@ interface IFormQuestionProps extends IFormInputsProps {
 }
 
 export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuestionProps) => {
-  const theme = useTheme();
-  const matchesUpSmBreakpoint = useMediaQuery(theme.breakpoints.up("sm"));
+  const matchesUpSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
   const { operator } = useAuth();
   const [question, setQuestion] = useState<IQuestionData>();
   const { setValue } = useFormContext();
@@ -54,7 +53,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
       sx={{
         "&:hover": {
           borderRadius: "0.25rem",
-          backgroundColor: theme.palette.grey[100],
+          bgcolor: ({ palette }) => palette.grey[100],
         },
       }}
     >

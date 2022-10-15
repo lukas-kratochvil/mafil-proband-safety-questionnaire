@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { blue, green, orange, red } from "@mui/material/colors";
 
 export enum ColoredInfoStripeColors {
@@ -33,28 +33,24 @@ export interface IColoredInfoStripeProps {
   color: ColoredInfoStripeColors;
 }
 
-export const ColoredInfoStripe = ({ text, color }: IColoredInfoStripeProps) => {
-  const theme = useTheme();
-
-  return (
-    <Box
-      sx={{
-        width: "100%",
-        paddingTop: "0.45rem",
-        paddingBottom: "0.5rem",
-        borderRadius: "0.25rem",
-        backgroundColor: mapBackgroundColor(color),
-      }}
+export const ColoredInfoStripe = ({ text, color }: IColoredInfoStripeProps) => (
+  <Box
+    sx={{
+      width: "100%",
+      paddingTop: "0.45rem",
+      paddingBottom: "0.5rem",
+      borderRadius: "0.25rem",
+      bgcolor: mapBackgroundColor(color),
+    }}
+  >
+    <Typography
+      width="100%"
+      fontWeight={500}
+      color={({ palette }) => palette.common.white}
+      textAlign="center"
+      textTransform="uppercase"
     >
-      <Typography
-        width="100%"
-        fontWeight={500}
-        color={theme.palette.common.white}
-        textAlign="center"
-        textTransform="uppercase"
-      >
-        {text}
-      </Typography>
-    </Box>
-  );
-};
+      {text}
+    </Typography>
+  </Box>
+);

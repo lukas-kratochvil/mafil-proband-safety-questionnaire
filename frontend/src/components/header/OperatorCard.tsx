@@ -1,15 +1,14 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Card, Typography, useTheme } from "@mui/material";
+import { Card, Typography } from "@mui/material";
 import { useAuth } from "../../hooks/auth/Auth";
 
 export const OperatorCard = () => {
   const { operator } = useAuth();
-  const theme = useTheme();
 
   return (
     <Card
       sx={{
-        bgcolor: theme.palette.primary.contrastText,
+        bgcolor: ({ palette }) => palette.primary.contrastText,
         minWidth: 0,
         maxWidth: "15rem",
         width: "100%",
