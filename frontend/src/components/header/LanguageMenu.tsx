@@ -13,14 +13,12 @@ import {
   Theme,
 } from "@mui/material";
 import { blue } from "@mui/material/colors";
-import { FlagComponent } from "country-flag-icons/react/3x2";
 import { bindPopper, bindToggle, usePopupState } from "material-ui-popup-state/hooks";
 import { languages } from "../../data/header_data";
 
 export interface ILanguageItemProps {
   name: string;
   label: string;
-  Flag: FlagComponent;
 }
 
 const languageItemHoverFocus: SxProps<Theme> = {
