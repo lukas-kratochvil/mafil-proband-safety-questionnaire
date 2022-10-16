@@ -1,5 +1,8 @@
 {
   "translation": {
+    "common": {
+      "logOutButton": "Odhlásit se"
+    },
     "homePage": {
       "title": "Váš formulář byl úspěšně odeslán. Vyčkejte, prosím, na další pokyny operátora.",
       "openNewFormButton": "Otevřít nový formulář"
