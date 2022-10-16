@@ -1,5 +1,8 @@
 {
   "translation": {
-    
+    "homePage": {
+      "title": "Your form has been successfully submitted. Please wait for further instructions from the operator.",
+      "openNewFormButton": "Open new form"
+    }
   }
 }

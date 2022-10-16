@@ -1,5 +1,8 @@
 {
   "translation": {
-    
+    "homePage": {
+      "title": "Váš formulár bol úspešne odoslaný. Počkajte, prosím, na ďalšie pokyny operátora.",
+      "openNewFormButton": "Otvoriť nový formulár"
+    }
   }
 }
