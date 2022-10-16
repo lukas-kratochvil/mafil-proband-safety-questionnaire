@@ -1,9 +1,12 @@
 import { Avatar, Button, Stack, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { CardContainer } from "../components/card/CardContainer";
 import { IAuthMethod, useAuth } from "../hooks/auth/Auth";
+import { defaultNS } from "../i18n";
 import { PageContainer } from "./PageContainer";
 
 export const LoginPage = () => {
+  const { t } = useTranslation(defaultNS, { keyPrefix: "loginPage" });
   const { logIn } = useAuth();
 
   const handleLogIn = async (authMethod: IAuthMethod) => {
@@ -15,7 +18,7 @@ export const LoginPage = () => {
 
   return (
     <PageContainer centerize>
-      <CardContainer title="Bezpečnostní dotazník probanda">
+      <CardContainer title={t("title")}>
         <Stack
           spacing="1rem"
           sx={{
@@ -23,7 +26,7 @@ export const LoginPage = () => {
             paddingX: "2rem",
           }}
         >
-          <Typography>Přihlásit se přes:</Typography>
+          <Typography>{t("loginText")}</Typography>
           <Stack spacing="0.5rem">
             <Button
               variant="outlined"

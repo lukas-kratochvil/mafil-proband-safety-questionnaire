@@ -3,6 +3,10 @@
     "homePage": {
       "title": "Váš formulář byl úspěšně odeslán. Vyčkejte, prosím, na další pokyny operátora.",
       "openNewFormButton": "Otevřít nový formulář"
+    },
+    "loginPage": {
+      "title": "Bezpečnostní dotazník probanda",
+      "loginText": "Přihlásit se přes:"
     }
   }
 }
