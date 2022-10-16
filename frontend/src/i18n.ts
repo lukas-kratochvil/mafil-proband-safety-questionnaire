@@ -12,7 +12,7 @@ export const resources = {
   sk,
 } as const;
 
-export type LocalizedLanguageKeys = keyof typeof resources;
+export type LocalizationKeys = keyof typeof resources;
 
 i18next
   // detect user language

@@ -15,10 +15,10 @@ import {
 import { blue } from "@mui/material/colors";
 import { bindPopper, bindToggle, usePopupState } from "material-ui-popup-state/hooks";
 import { useTranslation } from "react-i18next";
-import { LocalizedLanguageKeys } from "../../i18n";
+import { LocalizationKeys } from "../../i18n";
 
 type SupportedLanguageType = {
-  [key in LocalizedLanguageKeys]: {
+  [key in LocalizationKeys]: {
     nativeName: string;
   };
 };
