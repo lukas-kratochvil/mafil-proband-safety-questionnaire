@@ -12,7 +12,7 @@ export const resources = {
   sk,
 } as const;
 
-export const availableLanguages = Object.keys(resources);
+export type LocalizedLanguageKeys = keyof typeof resources;
 
 i18next
   // detect user language

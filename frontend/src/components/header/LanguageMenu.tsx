@@ -14,26 +14,22 @@ import {
 } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import { bindPopper, bindToggle, usePopupState } from "material-ui-popup-state/hooks";
+import { useTranslation } from "react-i18next";
+import { LocalizedLanguageKeys } from "../../i18n";
 
-interface ILanguageItemProps {
-  name: string;
-  label: string;
-}
+type SupportedLanguageType = {
+  [key in LocalizedLanguageKeys]: {
+    nativeName: string;
+  };
+};
 
-const languages: ILanguageItemProps[] = [
-  {
-    name: "Čeština",
-    label: "CZ",
-  },
-  {
-    name: "Slovenčina",
-    label: "SK",
-  },
-  {
-    name: "English",
-    label: "EN",
-  },
-];
+const supportedLanguages: SupportedLanguageType = {
+  cz: { nativeName: "Čeština" },
+  sk: { nativeName: "Slovenčina" },
+  en: { nativeName: "English" },
+};
+
+type SupportedLanguageKeys = keyof typeof supportedLanguages;
 
 const languageItemHoverFocus: SxProps<Theme> = {
   color: blue[800],
@@ -41,14 +37,19 @@ const languageItemHoverFocus: SxProps<Theme> = {
 };
 
 export const LanguageMenu = () => {
+  const { i18n } = useTranslation();
   const popupState = usePopupState({
     variant: "popper",
     popupId: "language-menu",
     disableAutoFocus: true,
   });
 
-  // TODO: use localization hook instead
-  const selectedLanguageName = languages[0].name;
+  const selectedLanguageNativeName = supportedLanguages[i18n.resolvedLanguage as SupportedLanguageKeys].nativeName;
+
+  const selectedLanguageOnClick = (language: string) => {
+    i18n.changeLanguage(language);
+    popupState.close();
+  };
 
   return (
     <Grid
@@ -68,7 +69,7 @@ export const LanguageMenu = () => {
           },
         }}
       >
-        {selectedLanguageName}
+        {selectedLanguageNativeName}
       </Button>
       <Popper
         {...bindPopper(popupState)}
@@ -93,17 +94,17 @@ export const LanguageMenu = () => {
                     },
                   }}
                 >
-                  {languages.map((language) => (
+                  {Object.keys(supportedLanguages).map((language) => (
                     <MenuItem
-                      key={language.name}
-                      onClick={popupState.close}
+                      key={language}
+                      onClick={() => selectedLanguageOnClick(language)}
                       sx={{
                         fontSize: "0.9rem",
                         "&:hover": { ...languageItemHoverFocus },
                         "&:focus-visible": { ...languageItemHoverFocus },
                       }}
                     >
-                      {language.name}
+                      {supportedLanguages[language as SupportedLanguageKeys].nativeName}
                     </MenuItem>
                   ))}
                 </MenuList>
