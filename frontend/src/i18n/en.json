@@ -59,6 +59,18 @@
         "yes": "Yes",
         "no": "No",
         "comment": "Comment"
+      },
+      "validation": {
+        "required": "Required field.",
+        "notValid": "The value is not valid.",
+        "positive": "The value must be a positive number.",
+        "birthdateMaxDate": "The maximum allowed date of birth is today.",
+        "birthdateNotCorrespondToPersonalId": "The birthdate does not match the value obtained from the provided Czech or Slovak personal ID.",
+        "genderNotCorrespondToPersonalId": "The gender does not match the value obtained from the provided Czech or Slovak personal ID.",
+        "visualCorrectionValueNotZero": "The value must not be zero.",
+        "visualCorrectionValueTooLow": "The value is too low.",
+        "visualCorrectionValueTooHigh": "The value is too high.",
+        "safetyQuestionsRequired": "All security questions must be answered."
       }
     },
     "homePage": {

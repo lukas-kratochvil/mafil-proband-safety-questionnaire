@@ -59,6 +59,18 @@
         "yes": "Ano",
         "no": "Ne",
         "comment": "Komentář"
+      },
+      "validation": {
+        "required": "Povinné pole.",
+        "notValid": "Hodnota není validní.",
+        "positive": "Hodnota musí být kladné číslo.",
+        "birthdateMaxDate": "Maximální povolená hodnota pro datum narození je dnes.",
+        "birthdateNotCorrespondToPersonalId": "Datum narození není shodné s hodnotou získanou z poskytnutého českého nebo slovenského rodného čísla.",
+        "genderNotCorrespondToPersonalId": "Pohlaví není shodné s hodnotou získanou z poskytnutého českého nebo slovenského rodného čísla.",
+        "visualCorrectionValueNotZero": "Hodnota se nesmí rovnat nule.",
+        "visualCorrectionValueTooLow": "Hodnota je příliš nízká.",
+        "visualCorrectionValueTooHigh": "Hodnota je příliš vysoká.",
+        "safetyQuestionsRequired": "Všechny bezpečnostní otázky musí být zodpovězeny."
       }
     },
     "homePage": {

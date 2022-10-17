@@ -6,32 +6,32 @@ import { QuestionPartNumber } from "../../../data/question_data";
 import { AnswerOption } from "../../../data/visit_data";
 
 export const answersSchema = object({
-  questionId: string().trim().required(),
+  questionId: string().trim().required("form.validation.required"),
   partNumber: number()
     .oneOf(
       Object.values(QuestionPartNumber)
         .filter((val) => typeof val === "number")
         .map((val) => +val)
     )
-    .required(),
-  answer: mixed<AnswerOption>().nullable().oneOf(Object.values(AnswerOption)).required("Pole je povinné."),
+    .required("form.validation.required"),
+  answer: mixed<AnswerOption>().nullable().oneOf(Object.values(AnswerOption)).required("form.validation.required"),
   comment: string().nullable(),
 });
 
 export const defaultFormSchema = object({
   project: string().nullable(),
   device: string().nullable(),
-  measurementDate: date().typeError("Datum není validní.").nullable(),
-  name: string().trim().required("Pole je povinné."),
-  surname: string().trim().required("Pole je povinné."),
-  personalId: string().trim().required("Pole je povinné."),
+  measurementDate: date().typeError("form.validation.notValid").nullable(),
+  name: string().trim().required("form.validation.required"),
+  surname: string().trim().required("form.validation.required"),
+  personalId: string().trim().required("form.validation.required"),
   birthdate: date()
     .nullable()
-    .typeError("Datum není validní.")
-    .max(new Date(), "Maximální povolená hodnota pro datum narození je dnes.")
+    .typeError("form.validation.notValid")
+    .max(new Date(), "form.validation.birthdateMaxDate")
     .test({
       name: "birthdate-corresponds-to-personalId",
-      message: "Datum narození není shodné s hodnotou získanou z poskytnutého českého nebo slovenského rodného čísla.",
+      message: "form.validation.birthdateNotCorrespondToPersonalId",
       test: (birthdate, testContext) => {
         const czechPersonalId = rodnecislo(testContext.parent.personalId);
         return (
@@ -42,13 +42,13 @@ export const defaultFormSchema = object({
         );
       },
     })
-    .required("Pole je povinné."),
+    .required("form.validation.required"),
   gender: mixed<Gender>()
     .nullable()
     .oneOf(Object.values(Gender))
     .test({
       name: "gender-corresponds-to-personalId",
-      message: "Pohlaví není shodné s hodnotou získanou z poskytnutého českého nebo slovenského rodného čísla.",
+      message: "form.validation.genderNotCorrespondToPersonalId",
       test: (gender, testContext) => {
         const czechPersonalId = rodnecislo(testContext.parent.personalId);
         return (
@@ -60,36 +60,39 @@ export const defaultFormSchema = object({
         );
       },
     })
-    .required("Pole je povinné."),
-  nativeLanguage: string().nullable().required("Mateřský jazyk musí být vyplněn."),
+    .required("form.validation.required"),
+  nativeLanguage: string().nullable().required("form.validation.required"),
   height: number()
-    .typeError("Výška musí být kladné číslo.")
-    .positive("Výška musí být kladné číslo.")
-    .required("Pole je povinné."),
+    .typeError("form.validation.notValid")
+    .positive("form.validation.positive")
+    .required("form.validation.required"),
   weight: number()
-    .typeError("Váha musí být kladné číslo.")
-    .positive("Váha musí být kladné číslo.")
-    .required("Pole je povinné."),
-  sideDominance: mixed<SideDominance>().nullable().oneOf(Object.values(SideDominance)).required("Pole je povinné."),
+    .typeError("form.validation.notValid")
+    .positive("form.validation.positive")
+    .required("form.validation.required"),
+  sideDominance: mixed<SideDominance>()
+    .nullable()
+    .oneOf(Object.values(SideDominance))
+    .required("form.validation.required"),
   visualCorrection: mixed<VisualCorrection>()
     .nullable()
     .oneOf(Object.values(VisualCorrection))
-    .required("Pole je povinné."),
+    .required("form.validation.required"),
   visualCorrectionValue: number()
     .default(0)
-    .typeError("Hodnota zrakové korekce není validní.")
+    .typeError("form.validation.notValid")
     .when("visualCorrection", {
       is: VisualCorrection.YES,
       then: number()
-        .typeError("Hodnota zrakové korekce není validní.")
-        .notOneOf([0], "Hodnota zrakové korekce se nesmí rovnat nule.")
-        .min(-200, "Hodnota zrakové korekce není validní - je příliš nízká.")
-        .max(200, "Hodnota zrakové korekce není validní - je příliš vysoká.")
-        .required("Pole je povinné."),
+        .typeError("form.validation.notValid")
+        .notOneOf([0], "form.validation.visualCorrectionValueNotZero")
+        .min(-200, "form.validation.visualCorrectionValueTooHigh")
+        .max(200, "form.validation.visualCorrectionValueTooLow")
+        .required("form.validation.required"),
     }),
-  email: string().trim().email("Email není validní."),
+  email: string().trim().email("form.validation.notValid"),
   phoneNumber: string()
     .trim()
-    .matches(/^$|^(\+|00)?[1-9]{1}[0-9,\s]{3,}$/, "Telefonní číslo není validní."),
-  answers: array().of(answersSchema).required(),
+    .matches(/^$|^(\+|00)?[1-9]{1}[0-9,\s]{3,}$/, "form.validation.notValid"),
+  answers: array().of(answersSchema).required("form.validation.required"),
 });

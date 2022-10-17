@@ -59,6 +59,18 @@
         "yes": "Áno",
         "no": "Nie",
         "comment": "Komentár"
+      },
+      "validation": {
+        "required": "Povinné pole.",
+        "notValid": "Hodnota nie je validná.",
+        "positive": "Hodnota musí byť kladné číslo.",
+        "birthdateMaxDate": "Maximálna povolená hodnota pre dátum narodenia je dnes.",
+        "birthdateNotCorrespondToPersonalId": "Dátum narodenia nie je zhodný s hodnotou získanou z poskytnutého českého alebo slovenského rodného čísla.",
+        "genderNotCorrespondToPersonalId": "Pohlavie nie je zhodné s hodnotou získanou z poskytnutého českého alebo slovenského rodného čísla.",
+        "visualCorrectionValueNotZero": "Hodnota sa nesmie rovnať nule.",
+        "visualCorrectionValueTooLow": "Hodnota je príliš nízka.",
+        "visualCorrectionValueTooHigh": "Hodnota je príliš vysoká.",
+        "safetyQuestionsRequired": "Všetky bezpečnostné otázky musia byť zodpovedané."
       }
     },
     "homePage": {
