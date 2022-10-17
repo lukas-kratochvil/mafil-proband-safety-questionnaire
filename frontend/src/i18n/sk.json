@@ -4,6 +4,10 @@
       "logOutButton": "Odhlásiť sa"
     },
     "form": {
+      "beforeExamination": {
+        "title": "Pred vyšetrením",
+        "text": "Pred vyšetrením si prosím <1>odložte všetky elektricky vodivé/kovové predmety</1> (šperky, hodinky, gumičky, sponky, piercing) a súčasti odevu, ktoré obsahujú <3>elektricky vodivé materiály</3>, napr. podprsenka skovovými kosticami, kovové nášivky, funkčná bielizeň so strihom. Vyšetrenie prebieha za účelom vedeckého výskumu. Účelom vyšetrenia nie je poskytovanie zdravotných služieb alebo zisťovanie Vášho zdravotného stavu. Zozbierané dáta nebude vyhodnocovať lekár, ale vedecký pracovník. V prípade, že by vedecký pracovník pojal podozrenie na možné zdravotné komplikácie, máte právo byť o tomto podozrení informovaný/áa následne podozrenie skonzultovať s lekárom, čo by bolo zaistené výskumným pracovníkom príslušnej štúdie na základe Vášho rozhodnutia vinformovanom súhlase."
+      },
       "entryInfo": {
         "title": "Úvodné informácie",
         "text1": "Vítame Vás na pracovisku magnetickej rezonancie (MR). Ide o modernú zobrazovaciu metódu používanú v medicíne, ktorá na rozdiel od RTG vyšetrenia nepoužíva ionizujúce žiarenie. Princípom metódy je sledovanie správania tkanív a orgánov vo veľmi silnom magnetickom poli. Meranie je sprevádzané zvýšeným hlukom. Vyšetrenie nie je bolestivé, ale elektronika alebo kovový materiál v tele alebo na jeho povrchu môže vplyvom magnetického poľa poškodiť Vaše zdravie. Preto je z hľadiska vašej bezpečnosti veľmi dôležité dbať na pokyny obsluhy MR prístroja a pravdivo vyplniť nasledujúci dotazník. Pokiaľ budete mať nejaké otázky alebo nejasnosti, obráťte sa na obsluhu MR prístroja.",

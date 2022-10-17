@@ -11,4 +11,4 @@ export const FormSafetyInfo = () => {
       <Typography>{t("text")}</Typography>
     </FormCardContainer>
   );
-}
+};
