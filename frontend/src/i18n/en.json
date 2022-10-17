@@ -29,6 +29,22 @@
         "email": "E-mail",
         "phone": "Phone number"
       },
+      "probandInfo": {
+        "title": "Personal data",
+        "name": "Name",
+        "surname": "Surname",
+        "personalId": "Personal ID",
+        "personalIdHint": "If you do not have a Czech personal ID, please enter the number of the insured person.",
+        "birthdate": "Birthdate",
+        "gender": "Gender",
+        "nativeLanguage": "Native language",
+        "height": "Height",
+        "weight": "Weight",
+        "visualCorrection": "Visual correction",
+        "visualCorrectionValue": "Visual correction value",
+        "visualCorrectionValueHint": "Positive diopters indicate farsightedness, which means that you see worse up close. On the contrary, negative diopters indicate myopia, i.e. you see worse at a distance.",
+        "sideDominance": "Side dominance"
+      },
       "safetyInfo": {
         "title": "Safety information",
         "text": "Please read the following questions and tick the correct answer. Answering our questions truthfully is very important for your safety."

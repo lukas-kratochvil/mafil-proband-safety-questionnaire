@@ -29,6 +29,22 @@
         "email": "Email",
         "phone": "Telefonní číslo"
       },
+      "probandInfo": {
+        "title": "Osobní údaje",
+        "name": "Jméno",
+        "surname": "Příjmení",
+        "personalId": "Rodné číslo",
+        "personalIdHint": "V případě, že nemáte české rodné číslo, zadejte, prosím, číslo pojištěnce.",
+        "birthdate": "Datum narození",
+        "gender": "Pohlaví",
+        "nativeLanguage": "Mateřský jazyk",
+        "height": "Výška",
+        "weight": "Váha",
+        "visualCorrection": "Zraková korekce",
+        "visualCorrectionValue": "Hodnota zrakové korekce",
+        "visualCorrectionValueHint": "Kladné dioptrie značí dalekozrakost, což znamená, že vidíte hůře na blízko. Naopak záporné dioptrie značí krátkozrakost, tedy vidíte hůře na dálku.",
+        "sideDominance": "Stranová dominance"
+      },
       "safetyInfo": {
         "title": "Bezpečnostní informace",
         "text": "Přečtěte si, prosím, následující otázky a zatrhněte správnou odpověď. Pravdivé zodpovězení našich dotazů je velmi důležité pro Vaši bezpečnost."

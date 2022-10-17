@@ -2,8 +2,10 @@ import { Divider, Grid, Typography } from "@mui/material";
 import { addYears, differenceInCalendarYears, isValid } from "date-fns";
 import { useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { rodnecislo } from "rodnecislo";
 import { Gender, nativeLanguages, SideDominance, VisualCorrection } from "../../data/form_data";
+import { defaultNS } from "../../i18n";
 import { InfoTooltip } from "../informative/InfoTooltip";
 import { ErrorFeedback } from "./ErrorFeedback";
 import { FormCardContainer } from "./FormCardContainer";
@@ -13,6 +15,7 @@ import { FormTextField } from "./inputs/FormTextField";
 import { FormPropType, IFantomFormInputsProps } from "./types/types";
 
 export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsProps) => {
+  const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandInfo" });
   const { resetField, setValue } = useFormContext();
   const personalIdValue = useWatch<FormPropType, "personalId">({ name: "personalId" });
   const birthdateValue = useWatch<FormPropType, "birthdate">({ name: "birthdate" });
@@ -61,7 +64,7 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
   }, [resetField, visualCorrectionAnswer]);
 
   return (
-    <FormCardContainer title="Osobní údaje">
+    <FormCardContainer title={t("title")}>
       <Grid
         container
         direction="row"
@@ -75,7 +78,7 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
         >
           <FormTextField
             name="name"
-            label="Jméno"
+            label={t("name")}
             disabled={disableInputs}
           />
           <ErrorFeedback name="name" />
@@ -87,7 +90,7 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
         >
           <FormTextField
             name="surname"
-            label="Příjmení"
+            label={t("surname")}
             disabled={disableInputs}
           />
           <ErrorFeedback name="surname" />
@@ -108,10 +111,8 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
         >
           <FormTextField
             name="personalId"
-            label="Rodné číslo"
-            endAdornmentLabel={
-              <InfoTooltip text="V případě, že nemáte české rodné číslo, zadejte, prosím, číslo pojištěnce." />
-            }
+            label={t("personalId")}
+            endAdornmentLabel={<InfoTooltip text={t("personalIdHint")} />}
             disabled={disableInputs}
           />
           <ErrorFeedback name="personalId" />
@@ -124,7 +125,7 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
         >
           <FormDatePicker
             name="birthdate"
-            label="Datum narození"
+            label={t("birthdate")}
             disabled={disableInputs}
             maxDate={new Date()}
           />
@@ -138,7 +139,7 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
         >
           <FormAutocomplete
             name="gender"
-            label="Pohlaví"
+            label={t("gender")}
             options={Object.values(Gender)}
             disabled={disableInputs || isFantom}
           />
@@ -152,7 +153,7 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
         >
           <FormAutocomplete
             name="nativeLanguage"
-            label="Mateřský jazyk"
+            label={t("nativeLanguage")}
             options={nativeLanguages}
             disabled={disableInputs}
           />
@@ -166,7 +167,7 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
         >
           <FormTextField
             name="height"
-            label="Výška"
+            label={t("height")}
             endAdornmentLabel="cm"
             disabled={disableInputs}
           />
@@ -180,7 +181,7 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
         >
           <FormTextField
             name="weight"
-            label="Váha"
+            label={t("weight")}
             endAdornmentLabel="kg"
             disabled={disableInputs}
           />
@@ -194,7 +195,7 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
         >
           <FormAutocomplete
             name="visualCorrection"
-            label="Zraková korekce"
+            label={t("visualCorrection")}
             options={Object.values(VisualCorrection)}
             disabled={disableInputs}
           />
@@ -208,12 +209,12 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
         >
           <FormTextField
             name="visualCorrectionValue"
-            label="Hodnota zrakové korekce"
+            label={t("visualCorrectionValue")}
             disabled={disableInputs || visualCorrectionAnswer !== VisualCorrection.YES}
             endAdornmentLabel={
               <>
                 <Typography sx={{ marginRight: "0.75rem" }}>D</Typography>
-                <InfoTooltip text="Kladné dioptrie značí dalekozrakost, což znamená, že vidíte hůře na blízko. Naopak záporné dioptrie značí krátkozrakost, tedy vidíte hůře na dálku." />
+                <InfoTooltip text={t("visualCorrectionValueHint")} />
               </>
             }
           />
@@ -227,7 +228,7 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
         >
           <FormAutocomplete
             name="sideDominance"
-            label="Stranová dominance"
+            label={t("sideDominance")}
             options={Object.values(SideDominance)}
             disabled={disableInputs}
           />
