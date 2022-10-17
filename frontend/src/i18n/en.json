@@ -5,7 +5,9 @@
     },
     "form": {
       "common": {
-        "optional": "optional"
+        "optional": "optional",
+        "loading": "Loading",
+        "noOptions": "No options"
       },
       "beforeExamination": {
         "title": "Before examination",

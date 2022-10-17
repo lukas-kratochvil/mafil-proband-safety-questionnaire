@@ -1,5 +1,7 @@
 import { Autocomplete, CircularProgress, TextField, Theme, useMediaQuery } from "@mui/material";
 import { Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { defaultNS } from "../../../i18n";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormDefaultInputProps } from "./form_input";
 
@@ -8,6 +10,7 @@ interface IFormAutocompleteProps extends IFormDefaultInputProps {
 }
 
 export const FormAutocomplete = ({ name, label, isOptional, disabled, options }: IFormAutocompleteProps) => {
+  const { t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const loading = options.length === 0;
 
@@ -27,8 +30,8 @@ export const FormAutocomplete = ({ name, label, isOptional, disabled, options }:
             onBlur={field.onBlur}
             disabled={disabled}
             loading={loading}
-            loadingText="Načítá se…"
-            noOptionsText="Žádné možnosti"
+            loadingText={`${t("loading")}…`}
+            noOptionsText={t("noOptions")}
             renderInput={(params) => (
               <TextField
                 {...params}

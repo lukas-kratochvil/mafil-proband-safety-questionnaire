@@ -5,7 +5,9 @@
     },
     "form": {
       "common": {
-        "optional": "nepovinné"
+        "optional": "nepovinné",
+        "loading": "Načíta sa",
+        "noOptions": "Žiadne možnosti"
       },
       "beforeExamination": {
         "title": "Pred vyšetrením",
