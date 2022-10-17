@@ -4,18 +4,13 @@ import { CardContainer } from "../card/CardContainer";
 
 interface IFormCardContainerProps {
   title: string;
-  mainGridPadding?: number;
 }
 
-export const FormCardContainer = ({
-  children,
-  title,
-  mainGridPadding = 2,
-}: PropsWithChildren<IFormCardContainerProps>) => (
+export const FormCardContainer = ({ children, title }: PropsWithChildren<IFormCardContainerProps>) => (
   <CardContainer title={title}>
     <Grid
       container
-      sx={{ padding: mainGridPadding }}
+      sx={{ padding: 2 }}
     >
       {children}
     </Grid>
