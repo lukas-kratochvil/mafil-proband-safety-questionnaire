@@ -1,7 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "../../i18n";
-import { ErrorFeedback } from "./ErrorFeedback";
 import { FormCardContainer } from "./FormCardContainer";
 import { FormTextField } from "./inputs/FormTextField";
 import { IFormInputsProps } from "./types/types";
@@ -34,7 +33,6 @@ export const FormProbandContact = ({ disableInputs }: IFormInputsProps) => {
             isOptional
             disabled={disableInputs}
           />
-          <ErrorFeedback name="email" />
         </Grid>
         <Grid
           item
@@ -48,7 +46,6 @@ export const FormProbandContact = ({ disableInputs }: IFormInputsProps) => {
             isOptional
             disabled={disableInputs}
           />
-          <ErrorFeedback name="phoneNumber" />
         </Grid>
       </Grid>
     </FormCardContainer>

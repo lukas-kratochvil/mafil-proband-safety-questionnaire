@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { defaultNS } from "../../i18n";
 import { fetchDevices, fetchProjects } from "../../util/fetch";
 import { ColoredInfoStripe, ColoredInfoStripeColors } from "../informative/ColoredInfoStripe";
-import { ErrorFeedback } from "./ErrorFeedback";
 import { FormCardContainer } from "./FormCardContainer";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";
@@ -55,7 +54,6 @@ export const FormProjectInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
             options={projects}
             disabled={disableInputs}
           />
-          <ErrorFeedback name="project" />
         </Grid>
         <Grid
           item
@@ -69,7 +67,6 @@ export const FormProjectInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
             options={devices}
             disabled={disableInputs}
           />
-          <ErrorFeedback name="device" />
         </Grid>
         <Grid
           item
@@ -82,7 +79,6 @@ export const FormProjectInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
             label={t("measurementDate")}
             disabled={disableInputs}
           />
-          <ErrorFeedback name="measurementDate" />
         </Grid>
       </Grid>
     </FormCardContainer>

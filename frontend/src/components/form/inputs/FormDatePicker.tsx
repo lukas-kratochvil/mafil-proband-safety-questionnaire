@@ -16,6 +16,7 @@ export const FormDatePicker = ({ name, label, isOptional, disabled, maxDate }: I
   return (
     <FormLabelFieldContainer
       label={label}
+      name={name}
       isOptional={isOptional}
     >
       <Controller

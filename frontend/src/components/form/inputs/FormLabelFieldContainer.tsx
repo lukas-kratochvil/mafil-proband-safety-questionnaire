@@ -1,14 +1,17 @@
 import { Grid, Typography } from "@mui/material";
 import { PropsWithChildren } from "react";
+import { ErrorFeedback } from "../ErrorFeedback";
 
 export interface IFormLabelFieldContainerProps {
   label: string;
+  name: string;
   isOptional?: boolean;
 }
 
 export const FormLabelFieldContainer = ({
   children,
   label,
+  name,
   isOptional,
 }: PropsWithChildren<IFormLabelFieldContainerProps>) => (
   <>
@@ -29,5 +32,6 @@ export const FormLabelFieldContainer = ({
       )}
     </Grid>
     {children}
+    <ErrorFeedback name={name} />
   </>
 );

@@ -7,7 +7,6 @@ import { rodnecislo } from "rodnecislo";
 import { Gender, nativeLanguages, SideDominance, VisualCorrection } from "../../data/form_data";
 import { defaultNS } from "../../i18n";
 import { InfoTooltip } from "../informative/InfoTooltip";
-import { ErrorFeedback } from "./ErrorFeedback";
 import { FormCardContainer } from "./FormCardContainer";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";
@@ -81,7 +80,6 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
             label={t("name")}
             disabled={disableInputs}
           />
-          <ErrorFeedback name="name" />
         </Grid>
         <Grid
           item
@@ -93,7 +91,6 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
             label={t("surname")}
             disabled={disableInputs}
           />
-          <ErrorFeedback name="surname" />
         </Grid>
 
         <Grid
@@ -115,7 +112,6 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
             endAdornmentLabel={<InfoTooltip text={t("personalIdHint")} />}
             disabled={disableInputs}
           />
-          <ErrorFeedback name="personalId" />
         </Grid>
         <Grid
           item
@@ -129,7 +125,6 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
             disabled={disableInputs}
             maxDate={new Date()}
           />
-          <ErrorFeedback name="birthdate" />
         </Grid>
         <Grid
           item
@@ -143,7 +138,6 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
             options={Object.values(Gender)}
             disabled={disableInputs || isFantom}
           />
-          <ErrorFeedback name="gender" />
         </Grid>
         <Grid
           item
@@ -157,7 +151,6 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
             options={nativeLanguages}
             disabled={disableInputs}
           />
-          <ErrorFeedback name="nativeLanguage" />
         </Grid>
         <Grid
           item
@@ -171,7 +164,6 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
             endAdornmentLabel="cm"
             disabled={disableInputs}
           />
-          <ErrorFeedback name="height" />
         </Grid>
         <Grid
           item
@@ -185,7 +177,6 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
             endAdornmentLabel="kg"
             disabled={disableInputs}
           />
-          <ErrorFeedback name="weight" />
         </Grid>
         <Grid
           item
@@ -199,7 +190,6 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
             options={Object.values(VisualCorrection)}
             disabled={disableInputs}
           />
-          <ErrorFeedback name="visualCorrection" />
         </Grid>
         <Grid
           item
@@ -218,7 +208,6 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
               </>
             }
           />
-          <ErrorFeedback name="visualCorrectionValue" />
         </Grid>
         <Grid
           item
@@ -232,7 +221,6 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
             options={Object.values(SideDominance)}
             disabled={disableInputs}
           />
-          <ErrorFeedback name="sideDominance" />
         </Grid>
       </Grid>
     </FormCardContainer>

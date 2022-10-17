@@ -7,7 +7,6 @@ import { AnswerOption } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { defaultNS } from "../../i18n";
 import { fetchQuestion } from "../../util/fetch";
-import { ErrorFeedback } from "./ErrorFeedback";
 import { FormLabelFieldContainer } from "./inputs/FormLabelFieldContainer";
 import { FormRadioGroup } from "./inputs/FormRadioGroup";
 import { FormAnswer, FormPropType, IFormInputsProps } from "./types/types";
@@ -84,14 +83,16 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
           disabled={disableInputs}
           sx={{ justifyContent: matchesUpSmBreakpoint ? "flex-end" : "flex-start" }}
         />
-        <ErrorFeedback name={`answers.${qac.index}.answer`} />
       </Grid>
       {operator !== undefined && questionAnswer === AnswerOption.YES && (
         <Grid
           item
           xs={1}
         >
-          <FormLabelFieldContainer label={t("comment")}>
+          <FormLabelFieldContainer
+            label={t("comment")}
+            name={`answers.${qac.index}.comment`}
+          >
             <Controller
               name={`answers.${qac.index}.comment`}
               render={({ field: { ref, ...rest } }) => (
@@ -104,7 +105,6 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
                 />
               )}
             />
-            <ErrorFeedback name={`answers.${qac.index}.comment`} />
           </FormLabelFieldContainer>
         </Grid>
       )}

@@ -14,6 +14,7 @@ export const FormAutocomplete = ({ name, label, isOptional, disabled, options }:
   return (
     <FormLabelFieldContainer
       label={label}
+      name={name}
       isOptional={isOptional}
     >
       <Controller

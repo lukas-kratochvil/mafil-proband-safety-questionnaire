@@ -15,6 +15,7 @@ export const FormTextField = ({ name, label, isOptional, disabled, type, endAdor
   return (
     <FormLabelFieldContainer
       label={label}
+      name={name}
       isOptional={isOptional}
     >
       <Controller
