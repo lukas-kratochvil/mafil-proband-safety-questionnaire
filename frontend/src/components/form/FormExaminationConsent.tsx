@@ -1,38 +1,30 @@
 import { Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { defaultNS } from "../../i18n";
 import { FormCardContainer } from "./FormCardContainer";
 
-export const FormExaminationConsent = () => (
-  <FormCardContainer title="Souhlas s vyšetřením v Laboratoři multimodálního a funkčního zobrazování">
-    <Typography width="100%">
-      Prohlašuji, že jsem četl/a informace k MR vyšetření (strana 1 až 2 tohoto dokumentu) a porozuměl/a jsem jejich
-      smyslu. Prohlašuji, že jsem pravdivě vyplnil/a tento dotazník. Prohlašuji, že jsem byl/a poučena o výzkumné
-      studii, k níž toto vyšetření náleží, členem výzkumného týmu a prostřednictvím samostatného informovaného souhlasu
-      a souhlasím s realizací vyšetření.
-    </Typography>
-    <Typography
-      width="100%"
-      paddingTop="1rem"
-    >
-      Beru na vědomí, že moje osobní údaje v rozsahu jméno, příjmení, podpis, datum narození, rodné číslo, pohlaví,
-      stranová dominance, výška, váha, zraková korekce, mateřský jazyk, bezpečnostní otázky ke kontraindikacím MR
-      vyšetření z tohoto dotazníku, naměřená data a kontaktní údaje (pro případ náhodného nálezu převzaté z
-      informovaného souhlasu k výzkumné studii) budou na základě oprávněného zájmu správce – Masarykovy univerzity – za
-      účelem zajištění nezbytných bezpečnostních a právních náležitostí souvisejících s vyšetřením v Laboratoři
-      multimodálního a funkčního zobrazování po dobu 5 let uloženy na zabezpečených uložištích Masarykovy univerzity s
-      omezeným přístupem. Po uplynutí této doby budou veškerá data uchovávaná v Laboratoři multimodálního a funkčního
-      zobrazování anonymizována.
-    </Typography>
-    <Typography
-      width="100%"
-      paddingTop="1rem"
-    >
-      Kontaktní údaje:
-    </Typography>
-    <Typography width="100%">
-      Laboratoř multimodálního a funkčního zobrazování, CEITEC MU, Masarykova univerzita, Kamenice 5, 625 00 Brno
-    </Typography>
-    <Typography width="100%">kontaktní osoba: Michal Mikl</Typography>
-    <Typography width="100%">telefon: + 420 54949 6099</Typography>
-    <Typography width="100%">email: mafil@ceitec.muni.cz</Typography>
-  </FormCardContainer>
-);
+export const FormExaminationConsent = () => {
+  const { t } = useTranslation(defaultNS, { keyPrefix: "form.examinationConsent" });
+
+  return (
+    <FormCardContainer title={t("title")}>
+      <Typography width="100%">{t("text1")}</Typography>
+      <Typography
+        width="100%"
+        paddingTop="1rem"
+      >
+        {t("text2")}
+      </Typography>
+      <Typography
+        width="100%"
+        paddingTop="1rem"
+      >
+        {t("contactInfo")}
+      </Typography>
+      <Typography width="100%">{t("address")}</Typography>
+      <Typography width="100%">{t("contactPerson")}: Michal Mikl</Typography>
+      <Typography width="100%">{t("phone")}: + 420 54949 6099</Typography>
+      <Typography width="100%">{t("email")}: mafil@ceitec.muni.cz</Typography>
+    </FormCardContainer>
+  );
+};
