@@ -3,6 +3,13 @@
     "common": {
       "logOutButton": "Odhlásiť sa"
     },
+    "form": {
+      "entryInfo": {
+        "title": "Úvodné informácie",
+        "text1": "Vítame Vás na pracovisku magnetickej rezonancie (MR). Ide o modernú zobrazovaciu metódu používanú v medicíne, ktorá na rozdiel od RTG vyšetrenia nepoužíva ionizujúce žiarenie. Princípom metódy je sledovanie správania tkanív a orgánov vo veľmi silnom magnetickom poli. Meranie je sprevádzané zvýšeným hlukom. Vyšetrenie nie je bolestivé, ale elektronika alebo kovový materiál v tele alebo na jeho povrchu môže vplyvom magnetického poľa poškodiť Vaše zdravie. Preto je z hľadiska vašej bezpečnosti veľmi dôležité dbať na pokyny obsluhy MR prístroja a pravdivo vyplniť nasledujúci dotazník. Pokiaľ budete mať nejaké otázky alebo nejasnosti, obráťte sa na obsluhu MR prístroja.",
+        "text2": "V priebehu vyšetrenia je dôležité dbať na pokyny laboranta. Najmä, snažiť sa minimalizovať akýkoľvek pohyb v priebehu merania."
+      }
+    },
     "homePage": {
       "title": "Váš formulár bol úspešne odoslaný. Počkajte, prosím, na ďalšie pokyny operátora.",
       "openNewFormButton": "Otvoriť nový formulár"
