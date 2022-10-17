@@ -3,7 +3,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import CsLocale from "date-fns/locale/cs";
 import { Controller } from "react-hook-form";
-import { FormLabelFieldContainer } from "./FormLabelFieldContainer";
+import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormDefaultInputProps } from "./form_input";
 
 interface IFormDatePicker extends IFormDefaultInputProps {
@@ -14,7 +14,7 @@ export const FormDatePicker = ({ name, label, isOptional, disabled, maxDate }: I
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
   return (
-    <FormLabelFieldContainer
+    <FormInputFieldContainer
       label={label}
       name={name}
       isOptional={isOptional}
@@ -50,6 +50,6 @@ export const FormDatePicker = ({ name, label, isOptional, disabled, maxDate }: I
           </LocalizationProvider>
         )}
       />
-    </FormLabelFieldContainer>
+    </FormInputFieldContainer>
   );
 };

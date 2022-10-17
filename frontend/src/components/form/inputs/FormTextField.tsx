@@ -1,7 +1,7 @@
 import { InputAdornment, TextField, Theme, useMediaQuery } from "@mui/material";
 import { HTMLInputTypeAttribute, ReactNode } from "react";
 import { Controller } from "react-hook-form";
-import { FormLabelFieldContainer } from "./FormLabelFieldContainer";
+import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormDefaultInputProps } from "./form_input";
 
 interface IFormTextFieldProps extends IFormDefaultInputProps {
@@ -13,7 +13,7 @@ export const FormTextField = ({ name, label, isOptional, disabled, type, endAdor
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
   return (
-    <FormLabelFieldContainer
+    <FormInputFieldContainer
       label={label}
       name={name}
       isOptional={isOptional}
@@ -33,6 +33,6 @@ export const FormTextField = ({ name, label, isOptional, disabled, type, endAdor
           />
         )}
       />
-    </FormLabelFieldContainer>
+    </FormInputFieldContainer>
   );
 };

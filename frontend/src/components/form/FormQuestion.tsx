@@ -7,7 +7,7 @@ import { AnswerOption } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { defaultNS } from "../../i18n";
 import { fetchQuestion } from "../../util/fetch";
-import { FormLabelFieldContainer } from "./inputs/FormLabelFieldContainer";
+import { FormInputFieldContainer } from "./inputs/FormInputFieldContainer";
 import { FormRadioGroup } from "./inputs/FormRadioGroup";
 import { FormAnswer, FormPropType, IFormInputsProps } from "./types/types";
 
@@ -89,7 +89,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
           item
           xs={1}
         >
-          <FormLabelFieldContainer
+          <FormInputFieldContainer
             label={t("comment")}
             name={`answers.${qac.index}.comment`}
           >
@@ -105,7 +105,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
                 />
               )}
             />
-          </FormLabelFieldContainer>
+          </FormInputFieldContainer>
         </Grid>
       )}
     </Grid>

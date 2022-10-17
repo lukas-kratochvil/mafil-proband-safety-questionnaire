@@ -1,6 +1,6 @@
 import { Autocomplete, CircularProgress, TextField, Theme, useMediaQuery } from "@mui/material";
 import { Controller } from "react-hook-form";
-import { FormLabelFieldContainer } from "./FormLabelFieldContainer";
+import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormDefaultInputProps } from "./form_input";
 
 interface IFormAutocompleteProps extends IFormDefaultInputProps {
@@ -12,7 +12,7 @@ export const FormAutocomplete = ({ name, label, isOptional, disabled, options }:
   const loading = options.length === 0;
 
   return (
-    <FormLabelFieldContainer
+    <FormInputFieldContainer
       label={label}
       name={name}
       isOptional={isOptional}
@@ -54,6 +54,6 @@ export const FormAutocomplete = ({ name, label, isOptional, disabled, options }:
           />
         )}
       />
-    </FormLabelFieldContainer>
+    </FormInputFieldContainer>
   );
 };

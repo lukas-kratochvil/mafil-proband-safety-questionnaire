@@ -2,18 +2,18 @@ import { Grid, Typography } from "@mui/material";
 import { PropsWithChildren } from "react";
 import { ErrorFeedback } from "../ErrorFeedback";
 
-export interface IFormLabelFieldContainerProps {
+export interface IFormInputFieldContainerProps {
   label: string;
   name: string;
   isOptional?: boolean;
 }
 
-export const FormLabelFieldContainer = ({
+export const FormInputFieldContainer = ({
   children,
   label,
   name,
   isOptional,
-}: PropsWithChildren<IFormLabelFieldContainerProps>) => (
+}: PropsWithChildren<IFormInputFieldContainerProps>) => (
   <>
     <Grid
       container
