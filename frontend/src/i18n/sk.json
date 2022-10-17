@@ -18,6 +18,10 @@
         "contactPerson": "kontaktná osoba",
         "phone": "telefón",
         "email": "email"
+      },
+      "safetyInfo": {
+        "title": "Bezpečnostné informácie",
+        "text": "Prečítajte si, prosím, nasledujúce otázky a zaškrtnite správnu odpoveď. Pravdivé zodpovedanie našich otázok je veľmi dôležité pre Vašu bezpečnosť."
       }
     },
     "homePage": {

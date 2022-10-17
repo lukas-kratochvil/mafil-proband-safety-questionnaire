@@ -18,6 +18,10 @@
         "contactPerson": "contact person",
         "phone": "phone",
         "email": "e-mail"
+      },
+      "safetyInfo": {
+        "title": "Safety information",
+        "text": "Please read the following questions and tick the correct answer. Answering our questions truthfully is very important for your safety."
       }
     },
     "homePage": {

@@ -1,11 +1,14 @@
 import { Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { defaultNS } from "../../i18n";
 import { FormCardContainer } from "./FormCardContainer";
 
-export const FormSafetyInfo = () => (
-  <FormCardContainer title="Bezpečnostní informace">
-    <Typography>
-      Přečtěte si, prosím, následující otázky a zatrhněte správnou odpověď. Pravdivé zodpovězení našich dotazů je velmi
-      důležité pro Vaši bezpečnost.
-    </Typography>
-  </FormCardContainer>
-);
+export const FormSafetyInfo = () => {
+  const { t } = useTranslation(defaultNS, { keyPrefix: "form.safetyInfo" });
+
+  return (
+    <FormCardContainer title={t("title")}>
+      <Typography>{t("text")}</Typography>
+    </FormCardContainer>
+  );
+}
