@@ -54,6 +54,11 @@
       "safetyInfo": {
         "title": "Safety information",
         "text": "Please read the following questions and tick the correct answer. Answering our questions truthfully is very important for your safety."
+      },
+      "safetyQuestions": {
+        "yes": "Yes",
+        "no": "No",
+        "comment": "Comment"
       }
     },
     "homePage": {

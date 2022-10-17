@@ -1,9 +1,11 @@
 import { Grid, TextField, Theme, Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { IQuestionData } from "../../data/question_data";
 import { AnswerOption } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
+import { defaultNS } from "../../i18n";
 import { fetchQuestion } from "../../util/fetch";
 import { ErrorFeedback } from "./ErrorFeedback";
 import { FormLabelFieldContainer } from "./inputs/FormLabelFieldContainer";
@@ -18,6 +20,7 @@ interface IFormQuestionProps extends IFormInputsProps {
 }
 
 export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuestionProps) => {
+  const { t } = useTranslation(defaultNS, { keyPrefix: "form.safetyQuestions" });
   const matchesUpSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
   const { operator } = useAuth();
   const [question, setQuestion] = useState<IQuestionData>();
@@ -75,7 +78,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
           defaultValue={qac.answer}
           radios={Object.values(AnswerOption).map((answer) => ({
             id: `${answer}-radio[${qac.questionId}]`,
-            label: answer === AnswerOption.YES ? "Ano" : "Ne",
+            label: answer === AnswerOption.YES ? t("yes") : t("no"),
             value: answer,
           }))}
           disabled={disableInputs}
@@ -88,7 +91,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
           item
           xs={1}
         >
-          <FormLabelFieldContainer label="Komentář">
+          <FormLabelFieldContainer label={t("comment")}>
             <Controller
               name={`answers.${qac.index}.comment`}
               render={({ field: { ref, ...rest } }) => (
