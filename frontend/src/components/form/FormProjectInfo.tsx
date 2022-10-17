@@ -1,5 +1,7 @@
 import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { defaultNS } from "../../i18n";
 import { fetchDevices, fetchProjects } from "../../util/fetch";
 import { ColoredInfoStripe, ColoredInfoStripeColors } from "../informative/ColoredInfoStripe";
 import { ErrorFeedback } from "./ErrorFeedback";
@@ -9,6 +11,7 @@ import { FormDatePicker } from "./inputs/FormDatePicker";
 import { IFantomFormInputsProps } from "./types/types";
 
 export const FormProjectInfo = ({ isFantom, disableInputs }: IFantomFormInputsProps) => {
+  const { t } = useTranslation(defaultNS, { keyPrefix: "form.projectInfo" });
   const [projects, setProjects] = useState<string[]>([]);
   const [devices, setDevices] = useState<string[]>([]);
 
@@ -24,7 +27,7 @@ export const FormProjectInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
   }, []);
 
   return (
-    <FormCardContainer title="Informace o projektu">
+    <FormCardContainer title={t("title")}>
       <Grid
         container
         direction="row"
@@ -48,7 +51,7 @@ export const FormProjectInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
         >
           <FormAutocomplete
             name="project"
-            label="Projekt"
+            label={t("project")}
             options={projects}
             disabled={disableInputs}
           />
@@ -62,7 +65,7 @@ export const FormProjectInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
         >
           <FormAutocomplete
             name="device"
-            label="Přístroj"
+            label={t("device")}
             options={devices}
             disabled={disableInputs}
           />
@@ -76,7 +79,7 @@ export const FormProjectInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
         >
           <FormDatePicker
             name="measurementDate"
-            label="Datum měření"
+            label={t("measurementDate")}
             disabled={disableInputs}
           />
           <ErrorFeedback name="measurementDate" />

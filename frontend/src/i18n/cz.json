@@ -45,6 +45,12 @@
         "visualCorrectionValueHint": "Kladné dioptrie značí dalekozrakost, což znamená, že vidíte hůře na blízko. Naopak záporné dioptrie značí krátkozrakost, tedy vidíte hůře na dálku.",
         "sideDominance": "Stranová dominance"
       },
+      "projectInfo": {
+        "title": "Informace o projektu",
+        "project": "Projekt",
+        "device": "Přístroj",
+        "measurementDate": "Datum měření"
+      },
       "safetyInfo": {
         "title": "Bezpečnostní informace",
         "text": "Přečtěte si, prosím, následující otázky a zatrhněte správnou odpověď. Pravdivé zodpovězení našich dotazů je velmi důležité pro Vaši bezpečnost."

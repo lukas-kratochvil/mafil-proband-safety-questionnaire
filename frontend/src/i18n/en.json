@@ -45,6 +45,12 @@
         "visualCorrectionValueHint": "Positive diopters indicate farsightedness, which means that you see worse up close. On the contrary, negative diopters indicate myopia, i.e. you see worse at a distance.",
         "sideDominance": "Side dominance"
       },
+      "projectInfo": {
+        "title": "Project information",
+        "project": "Project",
+        "device": "Device",
+        "measurementDate": "Measurement date"
+      },
       "safetyInfo": {
         "title": "Safety information",
         "text": "Please read the following questions and tick the correct answer. Answering our questions truthfully is very important for your safety."
