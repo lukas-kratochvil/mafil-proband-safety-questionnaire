@@ -4,6 +4,9 @@
       "logOutButton": "Odhlásiť sa"
     },
     "form": {
+      "common": {
+        "optional": "nepovinné"
+      },
       "beforeExamination": {
         "title": "Pred vyšetrením",
         "text": "Pred vyšetrením si prosím <1>odložte všetky elektricky vodivé/kovové predmety</1> (šperky, hodinky, gumičky, sponky, piercing) a súčasti odevu, ktoré obsahujú <3>elektricky vodivé materiály</3>, napr. podprsenka skovovými kosticami, kovové nášivky, funkčná bielizeň so strihom. Vyšetrenie prebieha za účelom vedeckého výskumu. Účelom vyšetrenia nie je poskytovanie zdravotných služieb alebo zisťovanie Vášho zdravotného stavu. Zozbierané dáta nebude vyhodnocovať lekár, ale vedecký pracovník. V prípade, že by vedecký pracovník pojal podozrenie na možné zdravotné komplikácie, máte právo byť o tomto podozrení informovaný/áa následne podozrenie skonzultovať s lekárom, čo by bolo zaistené výskumným pracovníkom príslušnej štúdie na základe Vášho rozhodnutia vinformovanom súhlase."
