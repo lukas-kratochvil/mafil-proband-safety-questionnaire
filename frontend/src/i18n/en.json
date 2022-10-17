@@ -23,6 +23,12 @@
         "phone": "phone",
         "email": "e-mail"
       },
+      "probandContact": {
+        "title": "Contact information",
+        "text": "If you want to send your measured data electronically, fill in the information below:",
+        "email": "E-mail",
+        "phone": "Phone number"
+      },
       "safetyInfo": {
         "title": "Safety information",
         "text": "Please read the following questions and tick the correct answer. Answering our questions truthfully is very important for your safety."

@@ -23,6 +23,12 @@
         "phone": "telefón",
         "email": "email"
       },
+      "probandContact": {
+        "title": "Kontaktné údaje",
+        "text": "V prípade, že budete chcieť odovzdať Vaše namerané dáta elektronickou cestou, vyplňte údaje nižšie:",
+        "email": "Email",
+        "phone": "Telefónne číslo"
+      },
       "safetyInfo": {
         "title": "Bezpečnostné informácie",
         "text": "Prečítajte si, prosím, nasledujúce otázky a zaškrtnite správnu odpoveď. Pravdivé zodpovedanie našich otázok je veľmi dôležité pre Vašu bezpečnosť."
