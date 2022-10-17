@@ -1,14 +1,14 @@
-import { Grid, TextField, Theme, Typography, useMediaQuery } from "@mui/material";
+import { Grid, Theme, Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { IQuestionData } from "../../data/question_data";
 import { AnswerOption } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/Auth";
 import { defaultNS } from "../../i18n";
 import { fetchQuestion } from "../../util/fetch";
-import { FormInputFieldContainer } from "./inputs/FormInputFieldContainer";
 import { FormRadioGroup } from "./inputs/FormRadioGroup";
+import { FormTextField } from "./inputs/FormTextField";
 import { FormAnswer, FormPropType, IFormInputsProps } from "./types/types";
 
 export type FormQac = FormAnswer & { index: number };
@@ -89,23 +89,13 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
           item
           xs={1}
         >
-          <FormInputFieldContainer
+          <FormTextField
             label={t("comment")}
             name={`answers.${qac.index}.comment`}
-          >
-            <Controller
-              name={`answers.${qac.index}.comment`}
-              render={({ field: { ref, ...rest } }) => (
-                <TextField
-                  {...rest}
-                  inputRef={ref}
-                  size="small"
-                  multiline
-                  disabled={disableComment || (questionAnswer !== AnswerOption.YES && disableInputs)}
-                />
-              )}
-            />
-          </FormInputFieldContainer>
+            isSmall
+            isMultiline
+            disabled={disableComment || (questionAnswer !== AnswerOption.YES && disableInputs)}
+          />
         </Grid>
       )}
     </Grid>

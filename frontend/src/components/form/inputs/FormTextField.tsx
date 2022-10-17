@@ -6,10 +6,21 @@ import { IFormDefaultInputProps } from "./form_input";
 
 interface IFormTextFieldProps extends IFormDefaultInputProps {
   type?: HTMLInputTypeAttribute;
+  isSmall?: boolean;
+  isMultiline?: boolean;
   endAdornmentLabel?: ReactNode;
 }
 
-export const FormTextField = ({ name, label, isOptional, disabled, type, endAdornmentLabel }: IFormTextFieldProps) => {
+export const FormTextField = ({
+  name,
+  label,
+  isOptional,
+  disabled,
+  type,
+  isSmall,
+  isMultiline,
+  endAdornmentLabel,
+}: IFormTextFieldProps) => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
   return (
@@ -26,7 +37,8 @@ export const FormTextField = ({ name, label, isOptional, disabled, type, endAdor
             inputRef={ref}
             disabled={disabled}
             type={type ?? "text"}
-            size={matchesDownSmBreakpoint ? "small" : "medium"}
+            size={isSmall || matchesDownSmBreakpoint ? "small" : "medium"}
+            multiline={isMultiline}
             InputProps={{
               endAdornment: <InputAdornment position="end">{endAdornmentLabel}</InputAdornment>,
             }}
