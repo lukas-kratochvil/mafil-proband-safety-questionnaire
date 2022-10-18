@@ -25,7 +25,6 @@ type SupportedLanguageType = {
 
 const supportedLanguages: SupportedLanguageType = {
   cz: { nativeName: "Čeština" },
-  sk: { nativeName: "Slovenčina" },
   en: { nativeName: "English" },
 };
 

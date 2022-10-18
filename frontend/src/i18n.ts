@@ -3,13 +3,11 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 import cz from "./i18n/cz.json";
 import en from "./i18n/en.json";
-import sk from "./i18n/sk.json";
 
 export const defaultNS = "translation";
 export const resources = {
   cz,
   en,
-  sk,
 } as const;
 
 export type LocalizationKeys = keyof typeof resources;
