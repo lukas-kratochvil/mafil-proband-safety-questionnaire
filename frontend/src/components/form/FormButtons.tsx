@@ -38,9 +38,9 @@ export const FormButtons = ({ submitButtonProps, buttonsProps }: IFormButtonsPro
           {submitButtonProps.title}
         </Button>
       )}
-      {buttonsProps.map((buttonProps, index) => (
+      {buttonsProps.map((buttonProps) => (
         <Button
-          key={index}
+          key={buttonProps.title}
           variant="contained"
           color={buttonProps.showErrorColor ? "error" : undefined}
           onClick={buttonProps.onClick}

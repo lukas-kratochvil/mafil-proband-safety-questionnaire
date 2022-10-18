@@ -170,11 +170,11 @@ export const VisitDetailPage = () => {
               justifyContent="center"
               gap="1.5rem"
             >
-              {buttons.map((button, index) => (
+              {buttons.map((button) => (
                 <Button
+                  key={button.title}
                   variant="contained"
                   onClick={button.onClick}
-                  key={index}
                   disabled={button.disabled}
                 >
                   {button.title}
