@@ -75,6 +75,8 @@ export const defaultFormSchema = object({
   visualCorrection: mixed<IOption>().nullable().oneOf(visualCorrectionOptions).required("form.validation.required"),
   visualCorrectionValue: number()
     .default(0)
+    // We are accepting dot and comma as decimal separators
+    .transform((_value, originalValue) => Number(String(originalValue).replace(/,/, ".")))
     .typeError("form.validation.notValid")
     .when("visualCorrection", {
       is: VisualCorrection.YES,
