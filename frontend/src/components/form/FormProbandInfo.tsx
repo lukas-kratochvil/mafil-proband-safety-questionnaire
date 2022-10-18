@@ -13,9 +13,9 @@ import { FormDatePicker } from "./inputs/FormDatePicker";
 import { FormOptionsAutocomplete } from "./inputs/FormOptionsAutocomplete";
 import { FormTextField } from "./inputs/FormTextField";
 import { genderOptions, getOption, sideDominanceOptions, visualCorrectionOptions } from "./types/options";
-import { FormPropType, IFantomFormInputsProps } from "./types/types";
+import { FormPropType, IFantomFormCardProps } from "./types/types";
 
-export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsProps) => {
+export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormCardProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandInfo" });
   const { resetField, setValue } = useFormContext();
   const personalIdValue = useWatch<FormPropType, "personalId">({ name: "personalId" });

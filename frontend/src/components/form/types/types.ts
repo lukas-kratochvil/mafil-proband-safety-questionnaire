@@ -2,11 +2,11 @@ import { AnswerOption, IQac } from "../../../data/visit_data";
 import { Override } from "../../../util/utils";
 import { IOption } from "./options";
 
-export interface IFormInputsProps {
+export interface IFormCardProps {
   disableInputs?: boolean;
 }
 
-export interface IFantomFormInputsProps extends IFormInputsProps {
+export interface IFantomFormCardProps extends IFormCardProps {
   isFantom?: boolean;
 }
 

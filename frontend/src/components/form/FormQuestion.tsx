@@ -9,11 +9,11 @@ import { defaultNS } from "../../i18n";
 import { fetchQuestion } from "../../util/fetch";
 import { FormRadioGroup } from "./inputs/FormRadioGroup";
 import { FormTextField } from "./inputs/FormTextField";
-import { FormAnswer, FormPropType, IFormInputsProps } from "./types/types";
+import { FormAnswer, FormPropType, IFormCardProps } from "./types/types";
 
 export type FormQac = FormAnswer & { index: number };
 
-interface IFormQuestionProps extends IFormInputsProps {
+interface IFormQuestionProps extends IFormCardProps {
   qac: FormQac;
   disableComment?: boolean;
 }

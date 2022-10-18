@@ -7,9 +7,9 @@ import { ColoredInfoStripe, ColoredInfoStripeColors } from "../informative/Color
 import { FormCardContainer } from "./FormCardContainer";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";
-import { IFantomFormInputsProps } from "./types/types";
+import { IFantomFormCardProps } from "./types/types";
 
-export const FormProjectInfo = ({ isFantom, disableInputs }: IFantomFormInputsProps) => {
+export const FormProjectInfo = ({ isFantom, disableInputs }: IFantomFormCardProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.projectInfo" });
   const [projects, setProjects] = useState<string[]>([]);
   const [devices, setDevices] = useState<string[]>([]);

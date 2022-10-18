@@ -3,9 +3,9 @@ import { useTranslation } from "react-i18next";
 import { defaultNS } from "../../i18n";
 import { FormCardContainer } from "./FormCardContainer";
 import { FormTextField } from "./inputs/FormTextField";
-import { IFormInputsProps } from "./types/types";
+import { IFormCardProps } from "./types/types";
 
-export const FormProbandContact = ({ disableInputs }: IFormInputsProps) => {
+export const FormProbandContact = ({ disableInputs }: IFormCardProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandContact" });
 
   return (
