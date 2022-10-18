@@ -1,6 +1,6 @@
-import { Gender, SideDominance, VisualCorrection } from "../../../data/form_data";
 import { AnswerOption, IQac } from "../../../data/visit_data";
 import { Override } from "../../../util/utils";
+import { IOption } from "./options";
 
 export interface IFormInputsProps {
   disableInputs?: boolean;
@@ -23,12 +23,12 @@ export interface FormPropType {
   surname: string;
   personalId: string;
   birthdate: Date | null;
-  gender: Gender | null;
+  gender: IOption | null;
   nativeLanguage: string | null;
   height: TextFieldNumberInput;
   weight: TextFieldNumberInput;
-  sideDominance: SideDominance | null;
-  visualCorrection: VisualCorrection | null;
+  sideDominance: IOption | null;
+  visualCorrection: IOption | null;
   visualCorrectionValue: TextFieldNumberInput;
   email: string;
   phoneNumber: string;

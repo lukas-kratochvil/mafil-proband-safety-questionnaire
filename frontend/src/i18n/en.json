@@ -9,6 +9,23 @@
         "loading": "Loading",
         "noOptions": "No options"
       },
+      "enums": {
+        "gender": {
+          "MAN": "Man",
+          "WOMAN": "Woman",
+          "OTHER": "Other"
+        },
+        "visualCorrection": {
+          "YES": "Yes",
+          "NO": "No"
+        },
+        "sideDominance": {
+          "RIGHT_HANDED": "Right-handed",
+          "LEFT_HANDED": "Left-handed",
+          "LEFT_HANDED_RETRAINED": "Retrained left-handed",
+          "UNDETERMINED": "Undetermined"
+        }
+      },
       "beforeExamination": {
         "title": "Before examination",
         "text": "Before the examination, please <1>put away all electrically conductive/metallic objects</1> (jewellery, watches, rubber bands, clips, piercings) and clothing components that contain <3>electrically conductive materials</3>, e.g. underwired bras, metal patches, functional underwear with silver content. The investigation is conducted for the purpose of scientific research. The purpose of the examination is not to provide health services or to determine your health status. The collected data will not be evaluated by a doctor, but by a scientist. In the event that a researcher suspects possible health complications, you have the right to be informed about this suspicion and subsequently to consult a doctor about the suspicion, which would be ensured by the researcher of the relevant study based on your informed consent decision."

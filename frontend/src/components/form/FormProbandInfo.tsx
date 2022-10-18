@@ -4,13 +4,15 @@ import { useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { rodnecislo } from "rodnecislo";
-import { Gender, nativeLanguages, SideDominance, VisualCorrection } from "../../data/form_data";
+import { Gender, nativeLanguages, VisualCorrection } from "../../data/form_data";
 import { defaultNS } from "../../i18n";
 import { InfoTooltip } from "../informative/InfoTooltip";
 import { FormCardContainer } from "./FormCardContainer";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";
+import { FormOptionsAutocomplete } from "./inputs/FormOptionsAutocomplete";
 import { FormTextField } from "./inputs/FormTextField";
+import { genderOptions, getOption, sideDominanceOptions, visualCorrectionOptions } from "./types/options";
 import { FormPropType, IFantomFormInputsProps } from "./types/types";
 
 export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsProps) => {
@@ -18,8 +20,8 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
   const { resetField, setValue } = useFormContext();
   const personalIdValue = useWatch<FormPropType, "personalId">({ name: "personalId" });
   const birthdateValue = useWatch<FormPropType, "birthdate">({ name: "birthdate" });
-  const genderValue = useWatch<FormPropType, "gender">({ name: "gender" });
-  const visualCorrectionAnswer = useWatch<FormPropType, "visualCorrection">({ name: "visualCorrection" });
+  const genderOption = useWatch<FormPropType, "gender">({ name: "gender" });
+  const visualCorrectionOption = useWatch<FormPropType, "visualCorrection">({ name: "visualCorrection" });
 
   useEffect(() => {
     const czechPersonalId = rodnecislo(personalIdValue);
@@ -36,31 +38,31 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
         setValue("birthdate", newBirthdate);
       }
 
-      if (!isFantom && genderValue === null) {
+      if (!isFantom && genderOption === null) {
         if (czechPersonalId.isMale()) {
-          setValue("gender", Gender.MAN);
+          setValue("gender", getOption(genderOptions, Gender.MAN));
         } else if (czechPersonalId.isFemale()) {
-          setValue("gender", Gender.WOMAN);
+          setValue("gender", getOption(genderOptions, Gender.WOMAN));
         }
       }
     }
-  }, [setValue, personalIdValue, birthdateValue, genderValue, isFantom]);
+  }, [setValue, personalIdValue, birthdateValue, genderOption, isFantom]);
 
   useEffect(() => {
-    if (personalIdValue === "" && birthdateValue !== null && isValid(birthdateValue) && genderValue !== null) {
+    if (personalIdValue === "" && birthdateValue !== null && isValid(birthdateValue) && genderOption !== null) {
       const year = birthdateValue.getFullYear();
       const month = birthdateValue.getMonth() + 1;
-      const day = genderValue === Gender.WOMAN ? birthdateValue.getDate() + 50 : birthdateValue.getDate();
+      const day = genderOption.value === Gender.WOMAN ? birthdateValue.getDate() + 50 : birthdateValue.getDate();
 
       setValue("personalId", `${year % 100}${month < 10 ? `0${month}` : month}${day < 10 ? `0${day}` : day}`);
     }
-  }, [setValue, birthdateValue, genderValue, personalIdValue]);
+  }, [setValue, birthdateValue, genderOption, personalIdValue]);
 
   useEffect(() => {
-    if (visualCorrectionAnswer !== VisualCorrection.YES) {
+    if (visualCorrectionOption?.value !== VisualCorrection.YES) {
       resetField("visualCorrectionValue");
     }
-  }, [resetField, visualCorrectionAnswer]);
+  }, [resetField, visualCorrectionOption]);
 
   return (
     <FormCardContainer title={t("title")}>
@@ -132,10 +134,10 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
           sm={6}
           md={4}
         >
-          <FormAutocomplete
+          <FormOptionsAutocomplete
             name="gender"
             label={t("gender")}
-            options={Object.values(Gender)}
+            options={genderOptions}
             disabled={disableInputs || isFantom}
           />
         </Grid>
@@ -184,10 +186,10 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
           sm={6}
           md={4}
         >
-          <FormAutocomplete
+          <FormOptionsAutocomplete
             name="visualCorrection"
             label={t("visualCorrection")}
-            options={Object.values(VisualCorrection)}
+            options={visualCorrectionOptions}
             disabled={disableInputs}
           />
         </Grid>
@@ -200,7 +202,7 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
           <FormTextField
             name="visualCorrectionValue"
             label={t("visualCorrectionValue")}
-            disabled={disableInputs || visualCorrectionAnswer !== VisualCorrection.YES}
+            disabled={disableInputs || visualCorrectionOption?.value !== VisualCorrection.YES}
             endAdornmentLabel={
               <>
                 <Typography sx={{ marginRight: "0.75rem" }}>D</Typography>
@@ -215,10 +217,10 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormInputsPr
           sm={6}
           md={4}
         >
-          <FormAutocomplete
+          <FormOptionsAutocomplete
             name="sideDominance"
             label={t("sideDominance")}
-            options={Object.values(SideDominance)}
+            options={sideDominanceOptions}
             disabled={disableInputs}
           />
         </Grid>

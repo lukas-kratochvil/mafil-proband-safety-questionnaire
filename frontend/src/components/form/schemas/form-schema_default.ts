@@ -1,9 +1,10 @@
 import { isEqual } from "date-fns";
 import { rodnecislo } from "rodnecislo";
 import { array, date, mixed, number, object, string } from "yup";
-import { Gender, SideDominance, VisualCorrection } from "../../../data/form_data";
+import { Gender, VisualCorrection } from "../../../data/form_data";
 import { QuestionPartNumber } from "../../../data/question_data";
 import { AnswerOption } from "../../../data/visit_data";
+import { genderOptions, IOption, sideDominanceOptions, visualCorrectionOptions } from "../types/options";
 
 export const answersSchema = object({
   questionId: string().trim().required("form.validation.required"),
@@ -43,9 +44,9 @@ export const defaultFormSchema = object({
       },
     })
     .required("form.validation.required"),
-  gender: mixed<Gender>()
+  gender: mixed<IOption>()
     .nullable()
-    .oneOf(Object.values(Gender))
+    .oneOf(genderOptions)
     .test({
       name: "gender-corresponds-to-personalId",
       message: "form.validation.genderNotCorrespondToPersonalId",
@@ -55,8 +56,8 @@ export const defaultFormSchema = object({
           gender === null
           || gender === undefined
           || !czechPersonalId.isValid()
-          || (czechPersonalId.isMale() && [Gender.MAN, Gender.OTHER].includes(gender))
-          || (czechPersonalId.isFemale() && [Gender.WOMAN, Gender.OTHER].includes(gender))
+          || (czechPersonalId.isMale() && [Gender.MAN, Gender.OTHER].includes(gender.value))
+          || (czechPersonalId.isFemale() && [Gender.WOMAN, Gender.OTHER].includes(gender.value))
         );
       },
     })
@@ -70,14 +71,8 @@ export const defaultFormSchema = object({
     .typeError("form.validation.notValid")
     .positive("form.validation.positive")
     .required("form.validation.required"),
-  sideDominance: mixed<SideDominance>()
-    .nullable()
-    .oneOf(Object.values(SideDominance))
-    .required("form.validation.required"),
-  visualCorrection: mixed<VisualCorrection>()
-    .nullable()
-    .oneOf(Object.values(VisualCorrection))
-    .required("form.validation.required"),
+  sideDominance: mixed<IOption>().nullable().oneOf(sideDominanceOptions).required("form.validation.required"),
+  visualCorrection: mixed<IOption>().nullable().oneOf(visualCorrectionOptions).required("form.validation.required"),
   visualCorrectionValue: number()
     .default(0)
     .typeError("form.validation.notValid")
