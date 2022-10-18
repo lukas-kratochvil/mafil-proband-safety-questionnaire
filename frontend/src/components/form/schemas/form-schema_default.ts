@@ -81,8 +81,8 @@ export const defaultFormSchema = object({
       then: number()
         .typeError("form.validation.notValid")
         .notOneOf([0], "form.validation.visualCorrectionValueNotZero")
-        .min(-200, "form.validation.visualCorrectionValueTooHigh")
-        .max(200, "form.validation.visualCorrectionValueTooLow")
+        .min(-50, "form.validation.visualCorrectionValueTooHigh")
+        .max(50, "form.validation.visualCorrectionValueTooLow")
         .required("form.validation.required"),
     }),
   email: string().trim().email("form.validation.notValid"),
