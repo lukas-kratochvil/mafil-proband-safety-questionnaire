@@ -17,46 +17,64 @@ import { FormPropType, IFantomFormCardProps } from "./types/types";
 
 export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormCardProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandInfo" });
-  const { resetField, setValue } = useFormContext();
+  const { getFieldState, resetField, setValue } = useFormContext();
   const personalIdValue = useWatch<FormPropType, "personalId">({ name: "personalId" });
   const birthdateValue = useWatch<FormPropType, "birthdate">({ name: "birthdate" });
   const genderOption = useWatch<FormPropType, "gender">({ name: "gender" });
   const visualCorrectionOption = useWatch<FormPropType, "visualCorrection">({ name: "visualCorrection" });
 
   useEffect(() => {
+    const personalIdState = getFieldState("personalId");
+
+    // Auto-fill in birthdate and gender only when personalId field is being edited for the first time (until it looses focus)
+    if (personalIdState.isTouched) {
+      return;
+    }
+
     const czechPersonalId = rodnecislo(personalIdValue);
 
-    if (czechPersonalId.isValid()) {
-      if (birthdateValue === null) {
-        let newBirthdate = czechPersonalId.birthDate();
+    if (!czechPersonalId.isValid()) {
+      return;
+    }
 
-        // When proband's personal ID starts with '00' and current year is 2022, it's more likely proband was born in the year 2000 than 1900
-        if (Math.abs(differenceInCalendarYears(newBirthdate, Date.now())) >= 100) {
-          newBirthdate = addYears(newBirthdate, 100);
-        }
+    let newBirthdate = czechPersonalId.birthDate();
 
-        setValue("birthdate", newBirthdate);
-      }
+    // When proband's personal ID starts with '00' and current year is 2022, it's more likely proband was born in the year 2000 than 1900
+    if (Math.abs(differenceInCalendarYears(newBirthdate, Date.now())) >= 100) {
+      newBirthdate = addYears(newBirthdate, 100);
+    }
 
-      if (!isFantom && genderOption === null) {
-        if (czechPersonalId.isMale()) {
-          setValue("gender", getOption(genderOptions, Gender.MAN));
-        } else if (czechPersonalId.isFemale()) {
-          setValue("gender", getOption(genderOptions, Gender.WOMAN));
-        }
+    setValue("birthdate", newBirthdate, { shouldTouch: true });
+
+    // Fantom visit has strictly gender 'other'
+    if (!isFantom) {
+      if (czechPersonalId.isMale()) {
+        setValue("gender", getOption(genderOptions, Gender.MAN), { shouldTouch: true });
+      } else if (czechPersonalId.isFemale()) {
+        setValue("gender", getOption(genderOptions, Gender.WOMAN), { shouldTouch: true });
       }
     }
-  }, [setValue, personalIdValue, birthdateValue, genderOption, isFantom]);
+  }, [getFieldState, isFantom, personalIdValue, setValue]);
 
   useEffect(() => {
+    const birthdateState = getFieldState("birthdate");
+    const genderState = getFieldState("gender");
+
+    // Auto-fill in personalId only when birthdate or gender were not yet edited and one of these fields is being edited for the first time (until it looses focus)
+    if (birthdateState.isTouched && genderState.isTouched) {
+      return;
+    }
+
     if (personalIdValue === "" && birthdateValue !== null && isValid(birthdateValue) && genderOption !== null) {
       const year = birthdateValue.getFullYear();
       const month = birthdateValue.getMonth() + 1;
       const day = genderOption.value === Gender.WOMAN ? birthdateValue.getDate() + 50 : birthdateValue.getDate();
 
-      setValue("personalId", `${year % 100}${month < 10 ? `0${month}` : month}${day < 10 ? `0${day}` : day}`);
+      setValue("personalId", `${year % 100}${month < 10 ? `0${month}` : month}${day < 10 ? `0${day}` : day}`, {
+        shouldTouch: true,
+      });
     }
-  }, [setValue, birthdateValue, genderOption, personalIdValue]);
+  }, [birthdateValue, genderOption, getFieldState, personalIdValue, setValue]);
 
   useEffect(() => {
     if (visualCorrectionOption?.value !== VisualCorrection.YES) {
