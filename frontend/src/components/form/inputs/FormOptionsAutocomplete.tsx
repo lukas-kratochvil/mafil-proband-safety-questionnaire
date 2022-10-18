@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { defaultNS } from "../../../i18n";
 import { IOption } from "../types/options";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import { IFormDefaultInputProps } from "./form_input";
+import { IFormDefaultInputProps } from "./types/types";
 
 interface IFormOptionsAutocompleteProps extends IFormDefaultInputProps {
   options: IOption[];
