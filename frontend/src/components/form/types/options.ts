@@ -33,6 +33,8 @@ export const getOption = (options: IOption[], value: number): IOption | null =>
   // Autocomplete excepts option object or null
   options.find((option) => option.value === value) || null;
 
+export const getOptionsValues = (options: IOption[]): number[] => options.map((option) => option.value);
+
 export const genderOptions = createOptions<Gender>(Object.entries(Gender), "gender");
 export const visualCorrectionOptions = createOptions<VisualCorrection>(
   Object.entries(VisualCorrection),

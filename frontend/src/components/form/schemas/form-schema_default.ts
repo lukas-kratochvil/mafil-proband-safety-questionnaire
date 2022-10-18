@@ -2,7 +2,13 @@ import { array, date, mixed, number, object, string } from "yup";
 import { VisualCorrection } from "../../../data/form_data";
 import { QuestionPartNumber } from "../../../data/question_data";
 import { AnswerOption } from "../../../data/visit_data";
-import { genderOptions, IOption, sideDominanceOptions, visualCorrectionOptions } from "../types/options";
+import {
+  genderOptions,
+  getOptionsValues,
+  IOption,
+  sideDominanceOptions,
+  visualCorrectionOptions,
+} from "../types/options";
 
 export const answersSchema = object({
   questionId: string().trim().required("form.validation.required"),
@@ -45,7 +51,15 @@ export const defaultFormSchema = object({
     .required("form.validation.required"),
   gender: mixed<IOption>()
     .nullable()
-    .oneOf(genderOptions)
+    // Does not have to pass object equality when we are loading from default values
+    .test({
+      name: "contained-in-gender-options",
+      message: "form.validation.notValid",
+      test: (genderOption) =>
+        genderOption !== undefined
+        && genderOption !== null
+        && getOptionsValues(genderOptions).includes(genderOption?.value),
+    })
     // TODO: make it a warning not validation error
     // .test({
     //   name: "gender-corresponds-to-personalId",
@@ -71,8 +85,32 @@ export const defaultFormSchema = object({
     .typeError("form.validation.notValid")
     .positive("form.validation.positive")
     .required("form.validation.required"),
-  sideDominance: mixed<IOption>().nullable().oneOf(sideDominanceOptions).required("form.validation.required"),
-  visualCorrection: mixed<IOption>().nullable().oneOf(visualCorrectionOptions).required("form.validation.required"),
+  sideDominance: mixed<IOption>()
+    .nullable()
+    // .oneOf(sideDominanceOptions)
+    // Does not have to pass object equality when we are loading from default values
+    .test({
+      name: "contained-in-side-dominance-options",
+      message: "form.validation.notValid",
+      test: (sideDominanceOption) =>
+        sideDominanceOption !== undefined
+        && sideDominanceOption !== null
+        && getOptionsValues(sideDominanceOptions).includes(sideDominanceOption?.value),
+    })
+    .required("form.validation.required"),
+  visualCorrection: mixed<IOption>()
+    .nullable()
+    // .oneOf(visualCorrectionOptions)
+    // Does not have to pass object equality when we are loading from default values
+    .test({
+      name: "contained-in-visual-correction-options",
+      message: "form.validation.notValid",
+      test: (visualCorrectionOption) =>
+        visualCorrectionOption !== undefined
+        && visualCorrectionOption !== null
+        && getOptionsValues(visualCorrectionOptions).includes(visualCorrectionOption?.value),
+    })
+    .required("form.validation.required"),
   visualCorrectionValue: number()
     .default(0)
     // We are accepting dot and comma as decimal separators
