@@ -4,6 +4,7 @@ import { Gender, SideDominance, VisualCorrection } from "../../../data/form_data
 import { AnswerOption, createVisit, IVisit, VisitState } from "../../../data/visit_data";
 import { updateDummyVisitState } from "../../../util/fetch.dev";
 import { IButtonProps } from "../FormButtons";
+import { genderOptions, getOption, sideDominanceOptions, visualCorrectionOptions } from "../types/options";
 import { FormPropType } from "../types/types";
 
 // Autocomplete component default value must be one of the options provided or null
@@ -31,7 +32,7 @@ export const loadEmptyDefaultValues = (): FormPropType => ({
 export const loadFantomFormDefaultValues = (): FormPropType => ({
   ...loadEmptyDefaultValues(),
   measurementDate: new Date(),
-  gender: Gender.OTHER,
+  gender: getOption(genderOptions, Gender.OTHER),
 });
 
 // Autocomplete component default value must be one of the options provided or null
@@ -40,6 +41,9 @@ export const loadFormDefaultValuesFromVisit = (visit: IVisit): FormPropType => (
   device: visit.projectInfo.device ?? null,
   measurementDate: visit.projectInfo.measurementDate ?? new Date(),
   ...visit.probandInfo,
+  gender: getOption(genderOptions, visit.probandInfo.gender),
+  sideDominance: getOption(sideDominanceOptions, visit.probandInfo.sideDominance),
+  visualCorrection: getOption(visualCorrectionOptions, visit.probandInfo.visualCorrection),
   answers: visit.answers.map((answer) => ({ ...answer })),
 });
 
@@ -71,9 +75,9 @@ export const createNewVisitFromFormData = (data: FormPropType, state: VisitState
         birthdate: data.birthdate ?? new Date(),
         height: typeof data.height === "string" ? +data.height : data.height,
         weight: typeof data.weight === "string" ? +data.weight : data.weight,
-        gender: Gender.OTHER,
+        gender: data.gender?.value ?? Gender.OTHER,
         nativeLanguage: data.nativeLanguage ?? "Angličtina",
-        visualCorrection: data.visualCorrection ?? VisualCorrection.NO,
+        visualCorrection: data.visualCorrection?.value ?? VisualCorrection.NO,
         visualCorrectionValue: typeof data.visualCorrectionValue === "string" ? +data.visualCorrectionValue : 0,
         sideDominance: SideDominance.UNDETERMINED,
       },

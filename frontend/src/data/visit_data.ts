@@ -1,4 +1,3 @@
-import { genderOptions, IOption } from "../components/form/types/options";
 import { getDummyVisitCurrentQuestions } from "../util/fetch.dev";
 import { devicesDev, Gender, projectsDev, SideDominance, VisualCorrection } from "./form_data";
 import { QuestionPartNumber } from "./question_data";
@@ -40,7 +39,7 @@ interface IProbandInfo {
   birthdate: Date;
   height: number;
   weight: number;
-  gender: IOption;
+  gender: Gender;
   nativeLanguage: string; // TODO: object stored in the database
   visualCorrection: VisualCorrection;
   visualCorrectionValue: number;
@@ -161,7 +160,7 @@ export const dummyVisitNew: IVisit = {
     birthdate: new Date(),
     height: 180,
     weight: 85,
-    gender: genderOptions[Gender.MAN],
+    gender: Gender.MAN,
     nativeLanguage: "Čeština",
     visualCorrection: VisualCorrection.NO,
     visualCorrectionValue: 0,
@@ -198,7 +197,7 @@ const dummyFantomVisitNew: IVisit = {
     birthdate: new Date(),
     height: 1,
     weight: 1,
-    gender: genderOptions[Gender.OTHER],
+    gender: Gender.OTHER,
     nativeLanguage: "Čeština",
     visualCorrection: VisualCorrection.NO,
     visualCorrectionValue: 0,
@@ -228,7 +227,7 @@ export const dummyFantomVisit: IVisit = {
     ...dummyVisitNew.probandInfo,
     name: "Fantom",
     surname: "Fantom",
-    gender: genderOptions[Gender.OTHER],
+    gender: Gender.OTHER,
   },
   answers: [...loadAnswers(dummyFantomVisitNew.answers, VisitState.SIGNED)],
 };
