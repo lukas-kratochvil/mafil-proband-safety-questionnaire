@@ -1,5 +1,4 @@
 import { Button, Grid, Theme, useMediaQuery } from "@mui/material";
-import { useFormState } from "react-hook-form";
 import { FormPropType } from "./types/types";
 
 interface ISubmitButtonProps {
@@ -21,13 +20,6 @@ export interface IFormButtonsProps {
 export const FormButtons = ({ submitButtonProps, buttonsProps }: IFormButtonsProps) => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
-  /* 
-    For the submit button disabling to work:
-    - isDirty: default values must be set for all the inputs
-    - isValid: useForm() mode has to be set to one of onChange, onTouched, and onBlur
-  */
-  const { isDirty, isValid } = useFormState();
-
   return (
     <Grid
       container
@@ -42,7 +34,6 @@ export const FormButtons = ({ submitButtonProps, buttonsProps }: IFormButtonsPro
           type="submit"
           variant="contained"
           color="success"
-          disabled={!isDirty || !isValid}
         >
           {submitButtonProps.title}
         </Button>
