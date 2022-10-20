@@ -1,8 +1,11 @@
 import { Grid, ListItem, ListItemButton } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
+import { defaultNS } from "../../../../i18n";
 import { getCommonTabSx, ITabProps } from "../common";
 
-export const NavigationMobileTab = ({ urlPrefix, label, onClick, Icon }: ITabProps) => {
+export const NavigationMobileTab = ({ localizationKey, urlPrefix, onClick, Icon, showCount }: ITabProps) => {
+  const { t } = useTranslation(defaultNS, { keyPrefix: "common.navigation" });
   const location = useLocation();
 
   return (
@@ -26,7 +29,8 @@ export const NavigationMobileTab = ({ urlPrefix, label, onClick, Icon }: ITabPro
             item
             xs
           >
-            {label}
+            {/* TODO: number must be updated */}
+            {`${t(localizationKey as unknown as TemplateStringsArray)}${showCount ? " (?)" : ""}`}
           </Grid>
         </Grid>
       </ListItemButton>

@@ -34,42 +34,43 @@ export const getCommonTabSx = (location: Location, urlPrefix: string): SxProps<T
 };
 
 export interface ITabProps {
+  localizationKey: string;
   urlPrefix: string;
-  label: string;
   onClick: () => void;
   Icon: SvgIconComponent;
+  showCount?: boolean;
 }
 
 export const getTabs = (navigate: NavigateFunction): ITabProps[] => [
   {
+    localizationKey: "waitingRoom",
     urlPrefix: UrlBasePaths.WAITING_ROOM,
-    // TODO: number must be updated
-    label: "Čekárna (?)",
     onClick: () => navigate(UrlBasePaths.WAITING_ROOM),
     Icon: PendingActionsIcon,
+    showCount: true,
   },
   {
+    localizationKey: "approvalRoom",
     urlPrefix: UrlBasePaths.APPROVAL,
-    // TODO: number must be updated
-    label: "Ke schválení (?)",
     onClick: () => navigate(UrlBasePaths.APPROVAL),
     Icon: ApprovalIcon,
+    showCount: true,
   },
   {
+    localizationKey: "recentVisits",
     urlPrefix: UrlBasePaths.RECENT_VISITS,
-    label: "Poslední visity",
     onClick: () => navigate(UrlBasePaths.RECENT_VISITS),
     Icon: RecentActorsIcon,
   },
   {
+    localizationKey: "createNewFantomForm",
     urlPrefix: UrlBasePaths.FANTOM_FORM,
-    label: "Založit měření na Fantomu",
     onClick: () => navigate(UrlBasePaths.FANTOM_FORM),
     Icon: ScienceIcon,
   },
   {
+    localizationKey: "openNewProbandForm",
     urlPrefix: UrlBasePaths.PROBAND_FORM,
-    label: "Otevřít formulář probanda",
     onClick: () => window.open(UrlBasePaths.PROBAND_FORM, "_blank", "noopener,noreferrer"),
     Icon: PersonAddAlt1Icon,
   },

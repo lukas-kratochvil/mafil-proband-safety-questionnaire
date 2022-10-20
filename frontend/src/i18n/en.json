@@ -1,7 +1,14 @@
 {
   "translation": {
     "common": {
-      "logOutButton": "Log out"
+      "logOutButton": "Log out",
+      "navigation": {
+        "waitingRoom": "Waiting room",
+        "approvalRoom": "For approval",
+        "recentVisits": "Recent visits",
+        "createNewFantomForm": "Create new fantom measurement",
+        "openNewProbandForm": "Open new proband form"
+      }
     },
     "form": {
       "common": {
