@@ -2,6 +2,7 @@
   "translation": {
     "common": {
       "logOutButton": "Odhlásit se",
+      "backButton": "Zpět",
       "navigation": {
         "waitingRoom": "Čekárna",
         "approvalRoom": "Ke schválení",
@@ -78,7 +79,8 @@
         "title": "Informace o projektu",
         "project": "Projekt",
         "device": "Přístroj",
-        "measurementDate": "Datum měření"
+        "measurementDate": "Datum měření",
+        "phantomInfoStripe": "Fantom"
       },
       "safetyInfo": {
         "title": "Bezpečnostní informace",
@@ -109,6 +111,22 @@
     "loginPage": {
       "title": "Bezpečnostní dotazník probanda",
       "loginText": "Přihlásit se přes:"
+    },
+    "visitDetailPage": {
+      "title": "Detail visity",
+      "buttons": {
+        "downloadPDFAndPhysicallySign": "Stáhnout PDF a fyzicky podepsat",
+        "signElectronically": "Podepsat elektronicky",
+        "confirmSignature": "Potvrdit podpis",
+        "downloadPDF": "Stáhnout PDF"
+      },
+      "infoStripes": {
+        "signatureChoice": "Výběr způsobu podepsání visity",
+        "disapproved": "Neschváleno",
+        "waitingForSignatureConfirmation": "Čeká se na potvrzení podpisu",
+        "completed": "Dokončeno",
+        "signed": "Podepsáno"
+      }
     }
   }
 }

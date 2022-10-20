@@ -1,5 +1,6 @@
 import { Button, Grid, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { CardContainer } from "../components/card/CardContainer";
 import {
@@ -8,46 +9,44 @@ import {
   IColoredInfoStripeProps,
 } from "../components/informative/ColoredInfoStripe";
 import { IVisit, VisitState } from "../data/visit_data";
+import { defaultNS } from "../i18n";
 import { fetchVisitDetail } from "../util/fetch";
-import { getBackButtonProps } from "../util/utils";
+import { getBackButtonProps, IButton } from "../util/utils";
 import { PageContainer } from "./PageContainer";
 
-interface IButtonProps {
-  title: string;
-  onClick: () => void;
+interface IButtonProps extends IButton {
   disabled?: boolean;
 }
 
 const getColoredInfoStripe = (
   visitState: VisitState | undefined,
   visit: IVisit | undefined
-): IColoredInfoStripeProps => {
+): IColoredInfoStripeProps | undefined => {
   switch (visitState) {
     case VisitState.APPROVED:
       return {
-        text: "Výběr způsobu podepsání visity",
+        textLocalizationKey: "visitDetailPage.infoStripes.signatureChoice",
         color: ColoredInfoStripeColors.BLUE,
       };
     case VisitState.DISAPPROVED:
       return {
-        text: "Neschváleno",
+        textLocalizationKey: "visitDetailPage.infoStripes.disapproved",
         color: ColoredInfoStripeColors.RED,
       };
     case VisitState.FOR_SIGNATURE:
       return {
-        text: "Čeká se na potvrzení podpisu",
+        textLocalizationKey: "visitDetailPage.infoStripes.waitingForSignatureConfirmation",
         color: ColoredInfoStripeColors.ORANGE,
       };
     case VisitState.SIGNED:
       return {
-        text: visit?.projectInfo.isFantom ? "Dokončeno" : "Podepsáno",
+        textLocalizationKey: visit?.projectInfo.isFantom
+          ? "visitDetailPage.infoStripes.completed"
+          : "visitDetailPage.infoStripes.signed",
         color: ColoredInfoStripeColors.GREEN,
       };
     default:
-      return {
-        text: "ERROR - switch case does not exist for this state!",
-        color: ColoredInfoStripeColors.RED,
-      };
+      return undefined;
   }
 };
 
@@ -59,7 +58,7 @@ const getButtons = (
     case VisitState.APPROVED:
       return [
         {
-          title: "Stáhnout PDF a fyzicky podepsat",
+          titleLocalizationKey: "visitDetailPage.buttons.downloadPDFAndPhysicallySign",
           onClick: () => {
             /**
              * TODO:
@@ -71,7 +70,7 @@ const getButtons = (
           },
         },
         {
-          title: "Podepsat elektronicky",
+          titleLocalizationKey: "visitDetailPage.buttons.signElectronically",
           onClick: () => {
             // TODO: PDF will be generated and stored in DB on the server
             setVisitState(VisitState.FOR_SIGNATURE);
@@ -82,7 +81,7 @@ const getButtons = (
     case VisitState.FOR_SIGNATURE:
       return [
         {
-          title: "Potvrdit podpis",
+          titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
           onClick: () => {
             // TODO: store the state in DB
             setVisitState(VisitState.SIGNED);
@@ -92,7 +91,7 @@ const getButtons = (
     case VisitState.SIGNED:
       return [
         {
-          title: "Stáhnout PDF",
+          titleLocalizationKey: "visitDetailPage.buttons.downloadPDF",
           onClick: () => {
             // TODO: open system download window, so the auth user can choose where to store it (or show the print windows instead?)
             alert("Funkcionalita bude brzy naimplementována.");
@@ -105,6 +104,7 @@ const getButtons = (
 };
 
 export const VisitDetailPage = () => {
+  const { t } = useTranslation(defaultNS);
   const { id } = useParams();
   const navigate = useNavigate();
   const [visit, setVisit] = useState<IVisit>();
@@ -148,7 +148,7 @@ export const VisitDetailPage = () => {
 
   return (
     <PageContainer>
-      <CardContainer title={`Detail visity: ${visit?.visitId}`}>
+      <CardContainer title={`${t("visitDetailPage.title")}: ${visit?.visitId}`}>
         <Stack
           spacing="1rem"
           justifyContent="center"
@@ -172,12 +172,12 @@ export const VisitDetailPage = () => {
             >
               {buttons.map((button) => (
                 <Button
-                  key={button.title}
+                  key={button.titleLocalizationKey}
                   variant="contained"
                   onClick={button.onClick}
                   disabled={button.disabled}
                 >
-                  {button.title}
+                  {t(button.titleLocalizationKey as unknown as TemplateStringsArray)}
                 </Button>
               ))}
             </Grid>

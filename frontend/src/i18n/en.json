@@ -2,6 +2,7 @@
   "translation": {
     "common": {
       "logOutButton": "Log out",
+      "backButton": "Back",
       "navigation": {
         "waitingRoom": "Waiting room",
         "approvalRoom": "For approval",
@@ -78,7 +79,8 @@
         "title": "Project information",
         "project": "Project",
         "device": "Device",
-        "measurementDate": "Measurement date"
+        "measurementDate": "Measurement date",
+        "phantomInfoStripe": "Phantom"
       },
       "safetyInfo": {
         "title": "Safety information",
@@ -109,6 +111,22 @@
     "loginPage": {
       "title": "Proband safety questionnaire",
       "loginText": "Log in via:"
+    },
+    "visitDetailPage": {
+      "title": "Detail of visit",
+      "buttons": {
+        "downloadPDFAndPhysicallySign": "Download PDF and physically sign",
+        "signElectronically": "Sign electronically",
+        "confirmSignature": "Confirm signature",
+        "downloadPDF": "Download PDF"
+      },
+      "infoStripes": {
+        "signatureChoice": "Choosing the method of signing the visit",
+        "disapproved": "Disapproved",
+        "waitingForSignatureConfirmation": "Waiting for signature confirmation",
+        "completed": "Completed",
+        "signed": "Signed"
+      }
     }
   }
 }

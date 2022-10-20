@@ -39,7 +39,7 @@ export const FormProjectInfo = ({ isFantom, disableInputs }: IFantomFormCardProp
             xs={12}
           >
             <ColoredInfoStripe
-              text="Fantom"
+              textLocalizationKey="form.projectInfo.phantomInfoStripe"
               color={ColoredInfoStripeColors.BLUE}
             />
           </Grid>

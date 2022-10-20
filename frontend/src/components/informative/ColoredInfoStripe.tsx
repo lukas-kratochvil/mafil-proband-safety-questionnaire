@@ -1,5 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { blue, green, orange, red } from "@mui/material/colors";
+import { useTranslation } from "react-i18next";
+import { defaultNS } from "../../i18n";
 
 export enum ColoredInfoStripeColors {
   BLUE,
@@ -29,28 +31,32 @@ const mapBackgroundColor = (color: ColoredInfoStripeColors): string => {
 };
 
 export interface IColoredInfoStripeProps {
-  text: string;
+  textLocalizationKey: string;
   color: ColoredInfoStripeColors;
 }
 
-export const ColoredInfoStripe = ({ text, color }: IColoredInfoStripeProps) => (
-  <Box
-    sx={{
-      width: "100%",
-      paddingTop: "0.45rem",
-      paddingBottom: "0.5rem",
-      borderRadius: "0.25rem",
-      bgcolor: mapBackgroundColor(color),
-    }}
-  >
-    <Typography
-      width="100%"
-      fontWeight={500}
-      color={({ palette }) => palette.common.white}
-      textAlign="center"
-      textTransform="uppercase"
+export const ColoredInfoStripe = ({ textLocalizationKey, color }: IColoredInfoStripeProps) => {
+  const { t } = useTranslation(defaultNS);
+
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        paddingTop: "0.45rem",
+        paddingBottom: "0.5rem",
+        borderRadius: "0.25rem",
+        bgcolor: mapBackgroundColor(color),
+      }}
     >
-      {text}
-    </Typography>
-  </Box>
-);
+      <Typography
+        width="100%"
+        fontWeight={500}
+        color={({ palette }) => palette.common.white}
+        textAlign="center"
+        textTransform="uppercase"
+      >
+        {t(textLocalizationKey as unknown as TemplateStringsArray)}
+      </Typography>
+    </Box>
+  );
+};
