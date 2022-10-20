@@ -12,10 +12,10 @@ import { UrlBasePaths } from "../../../App";
 export const TAB_DEFAULT_COLOR = amber[700];
 export const TAB_HIGHLIGHT_COLOR = amber[600];
 
-export const isTabSelected = (location: Location, urlPrefix: string): boolean =>
+export const isTabSelected = (location: Location, urlPrefix: UrlBasePaths): boolean =>
   location.pathname.startsWith(urlPrefix);
 
-export const getCommonTabSx = (location: Location, urlPrefix: string): SxProps<Theme> => {
+export const getCommonTabSx = (location: Location, urlPrefix: UrlBasePaths): SxProps<Theme> => {
   const isSelected = isTabSelected(location, urlPrefix);
 
   return {
@@ -35,7 +35,7 @@ export const getCommonTabSx = (location: Location, urlPrefix: string): SxProps<T
 
 export interface ITabProps {
   localizationKey: string;
-  urlPrefix: string;
+  urlPrefix: UrlBasePaths;
   onClick: () => void;
   Icon: SvgIconComponent;
   showCount?: boolean;
