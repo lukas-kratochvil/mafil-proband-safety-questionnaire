@@ -63,9 +63,9 @@ export const getTabs = (navigate: NavigateFunction): ITabProps[] => [
     Icon: RecentActorsIcon,
   },
   {
-    localizationKey: "createNewFantomForm",
-    urlPrefix: UrlBasePaths.FANTOM_FORM,
-    onClick: () => navigate(UrlBasePaths.FANTOM_FORM),
+    localizationKey: "createNewPhantomForm",
+    urlPrefix: UrlBasePaths.PHANTOM_FORM,
+    onClick: () => navigate(UrlBasePaths.PHANTOM_FORM),
     Icon: ScienceIcon,
   },
   {

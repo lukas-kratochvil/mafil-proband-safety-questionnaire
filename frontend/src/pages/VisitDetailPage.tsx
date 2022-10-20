@@ -40,7 +40,7 @@ const getColoredInfoStripe = (
       };
     case VisitState.SIGNED:
       return {
-        textLocalizationKey: visit?.projectInfo.isFantom
+        textLocalizationKey: visit?.projectInfo.isPhantom
           ? "visitDetailPage.infoStripes.completed"
           : "visitDetailPage.infoStripes.signed",
         color: ColoredInfoStripeColors.GREEN,

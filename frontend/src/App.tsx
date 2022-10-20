@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { defaultFormSchema } from "./components/form/schemas/form-schema_default";
 import { operatorFormSchema } from "./components/form/schemas/form-schema_operator";
-import { loadFantomFormDefaultValues } from "./components/form/util/utils";
+import { loadPhantomFormDefaultValues } from "./components/form/util/utils";
 import { Header } from "./components/header/Header";
 import { useAuth } from "./hooks/auth/Auth";
 import { ApprovalTablePage } from "./pages/ApprovalTablePage";
@@ -12,8 +12,8 @@ import { VisitDetailPage } from "./pages/VisitDetailPage";
 import { WaitingRoomTablePage } from "./pages/WaitingRoomTablePage";
 import { ApprovalFormPage } from "./pages/form/ApprovalFormPage";
 import { DuplicationFormPage } from "./pages/form/DuplicationFormPage";
-import { FantomFormPage } from "./pages/form/FantomFormPage";
 import { FormPageContainer } from "./pages/form/FormPageContainer";
+import { PhantomFormPage } from "./pages/form/PhantomFormPage";
 import { ProbandFormPage } from "./pages/form/ProbandFormPage";
 import { WaitingRoomFormPage } from "./pages/form/WaitingRoomFormPage";
 
@@ -21,7 +21,7 @@ export enum UrlBasePaths {
   PROBAND_HOME = "/home",
   PROBAND_FORM = "/form",
   AUTH = "/auth",
-  FANTOM_FORM = "/auth/fantom-form",
+  PHANTOM_FORM = "/auth/phantom-form",
   WAITING_ROOM = "/auth/waiting-room",
   APPROVAL = "/auth/approval",
   RECENT_VISITS = "/auth/recent-visits",
@@ -58,12 +58,12 @@ export const App = () => {
         {operator && (
           <>
             <Route
-              path={UrlBasePaths.FANTOM_FORM}
+              path={UrlBasePaths.PHANTOM_FORM}
               element={
                 <FormPageContainer
-                  FormPage={FantomFormPage}
+                  FormPage={PhantomFormPage}
                   validationSchema={operatorFormSchema}
-                  loadDefaultValues={loadFantomFormDefaultValues}
+                  loadDefaultValues={loadPhantomFormDefaultValues}
                 />
               }
             />

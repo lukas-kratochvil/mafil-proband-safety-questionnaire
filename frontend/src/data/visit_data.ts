@@ -28,7 +28,7 @@ interface IProjectInfo {
   project: string | null;
   magnetDeviceId: string;
   device: string | null;
-  isFantom: boolean;
+  isPhantom: boolean;
   measurementDate: Date;
 }
 
@@ -95,7 +95,7 @@ export const createVisit = (initialVisit: IVisit, state: VisitState): IVisit => 
     ...initialVisit,
     id: newId,
     createdAt: new Date(+`16630${+newId % 10}0000000`),
-    visitId: `${initialVisit.projectInfo.isFantom ? "fantom" : "visit"}${newId}`,
+    visitId: `${initialVisit.projectInfo.isPhantom ? "phantom" : "visit"}${newId}`,
     state,
     projectInfo:
       state === VisitState.NEW
@@ -120,7 +120,7 @@ export const duplicateVisit = (initialVisit: IVisit): IVisit => {
   return {
     ...initialVisit,
     id: newId,
-    visitId: `${initialVisit.projectInfo.isFantom ? "fantom" : "visit"}${newId}`,
+    visitId: `${initialVisit.projectInfo.isPhantom ? "phantom" : "visit"}${newId}`,
     state: VisitState.NEW,
     projectInfo: { ...initialVisit.projectInfo },
     probandInfo: { ...initialVisit.probandInfo },
@@ -150,7 +150,7 @@ export const dummyVisitNew: IVisit = {
     project: projectsDev[0],
     magnetDeviceId: "1",
     device: devicesDev[0],
-    isFantom: false,
+    isPhantom: false,
     measurementDate: new Date(),
   },
   probandInfo: {
@@ -176,10 +176,10 @@ export const dummyVisitNew: IVisit = {
   })),
 };
 
-const dummyFantomVisitNew: IVisit = {
+const dummyPhantomVisitNew: IVisit = {
   id: generateId(),
   createdAt: new Date(1663700000000),
-  visitId: "fantom123",
+  visitId: "phantom123",
   state: VisitState.NEW,
   pdf: "/dummy.pdf",
   projectInfo: {
@@ -187,12 +187,12 @@ const dummyFantomVisitNew: IVisit = {
     project: null,
     magnetDeviceId: "",
     device: null,
-    isFantom: true,
+    isPhantom: true,
     measurementDate: new Date(),
   },
   probandInfo: {
-    name: "Fantom 1",
-    surname: "Fantom 1",
+    name: "Phantom 1",
+    surname: "Phantom 1",
     personalId: "123456789",
     birthdate: new Date(),
     height: 1,
@@ -213,23 +213,23 @@ const dummyFantomVisitNew: IVisit = {
   })),
 };
 
-export const dummyFantomVisit: IVisit = {
+export const dummyPhantomVisit: IVisit = {
   id: generateId(),
   createdAt: new Date(1663000000000),
-  visitId: "fantom2",
+  visitId: "phantom2",
   state: VisitState.SIGNED,
   pdf: "/dummy.pdf",
   projectInfo: {
     ...dummyVisitNew.projectInfo,
-    isFantom: true,
+    isPhantom: true,
   },
   probandInfo: {
     ...dummyVisitNew.probandInfo,
-    name: "Fantom",
-    surname: "Fantom",
+    name: "Phantom",
+    surname: "Phantom",
     gender: Gender.OTHER,
   },
-  answers: [...loadAnswers(dummyFantomVisitNew.answers, VisitState.SIGNED)],
+  answers: [...loadAnswers(dummyPhantomVisitNew.answers, VisitState.SIGNED)],
 };
 
 export const dummyVisits: IVisit[] = [
@@ -239,6 +239,6 @@ export const dummyVisits: IVisit[] = [
   ...createVisits(dummyVisitNew, VisitState.DISAPPROVED, 3),
   ...createVisits(dummyVisitNew, VisitState.APPROVED, 4),
   ...createVisits(dummyVisitNew, VisitState.SIGNED, 2),
-  dummyFantomVisit,
-  ...createVisits(dummyFantomVisit, VisitState.SIGNED, 2),
+  dummyPhantomVisit,
+  ...createVisits(dummyPhantomVisit, VisitState.SIGNED, 2),
 ];

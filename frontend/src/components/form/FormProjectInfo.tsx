@@ -7,9 +7,9 @@ import { ColoredInfoStripe, ColoredInfoStripeColors } from "../informative/Color
 import { FormCardContainer } from "./FormCardContainer";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";
-import { IFantomFormCardProps } from "./types/types";
+import { IPhantomFormCardProps } from "./types/types";
 
-export const FormProjectInfo = ({ isFantom, disableInputs }: IFantomFormCardProps) => {
+export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.projectInfo" });
   const [projects, setProjects] = useState<string[]>([]);
   const [devices, setDevices] = useState<string[]>([]);
@@ -33,7 +33,7 @@ export const FormProjectInfo = ({ isFantom, disableInputs }: IFantomFormCardProp
         spacing="1rem"
         columns={12}
       >
-        {isFantom && (
+        {isPhantom && (
           <Grid
             item
             xs={12}

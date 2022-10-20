@@ -6,8 +6,8 @@ export interface IFormCardProps {
   disableInputs?: boolean;
 }
 
-export interface IFantomFormCardProps extends IFormCardProps {
-  isFantom?: boolean;
+export interface IPhantomFormCardProps extends IFormCardProps {
+  isPhantom?: boolean;
 }
 
 // Form fields having this data type are validated as numbers

@@ -27,7 +27,7 @@ export const DuplicationFormPage = () => {
   const { operator } = useAuth();
   const { reset, setValue } = useFormContext();
 
-  const [isFantom, setIsFantom] = useState<boolean>(false);
+  const [isPhantom, setIsPhantom] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [qacs, setQacs] = useState<FormQac[]>([]);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
@@ -70,7 +70,7 @@ export const DuplicationFormPage = () => {
           );
         });
 
-        setIsFantom(fetchedVisit.projectInfo.isFantom);
+        setIsPhantom(fetchedVisit.projectInfo.isPhantom);
         setIsLoading(false);
       } catch (e) {
         setIsError(true);
@@ -81,15 +81,15 @@ export const DuplicationFormPage = () => {
   }, [id, operator, setValue]);
 
   useEffect(() => {
-    if (isFantom) {
+    if (isPhantom) {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.finalize",
           onClick: (data: FormPropType) => {
-            // TODO: create fantom visit in DB
-            const newFantomVisit = createNewVisitFromFormData(data, VisitState.SIGNED);
-            dummyVisits.push(newFantomVisit);
-            navigate(`${UrlBasePaths.RECENT_VISITS}/visit/${newFantomVisit.id}`);
+            // TODO: create phantom visit in DB
+            const newPhantomVisit = createNewVisitFromFormData(data, VisitState.SIGNED);
+            dummyVisits.push(newPhantomVisit);
+            navigate(`${UrlBasePaths.RECENT_VISITS}/visit/${newPhantomVisit.id}`);
           },
         },
         buttonsProps: [getBackButtonProps(navigate, "form.common.buttons.cancel")],
@@ -148,19 +148,19 @@ export const DuplicationFormPage = () => {
         ],
       });
     }
-  }, [id, isEditing, isFantom, navigate, operator?.hasHigherPermission, reset]);
+  }, [id, isEditing, isPhantom, navigate, operator?.hasHigherPermission, reset]);
 
   return (
     <FormContainer
       isError={isError}
       buttons={formButtons}
     >
-      <FormProjectInfo isFantom={isFantom} />
+      <FormProjectInfo isPhantom={isPhantom} />
       <FormProbandInfo
-        isFantom={isFantom}
+        isPhantom={isPhantom}
         disableInputs={!isEditing}
       />
-      {!isFantom && (
+      {!isPhantom && (
         <>
           <FormProbandContact disableInputs={!isEditing} />
           <FormQuestions

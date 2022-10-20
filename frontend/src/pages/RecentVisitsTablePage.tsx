@@ -46,7 +46,7 @@ const header: MRTColumnDef<IVisit>[] = [
     header: "Zpracoval",
   },
   {
-    accessorFn: (visit) => (visit.projectInfo.isFantom ? "Dokončeno" : visit.state),
+    accessorFn: (visit) => (visit.projectInfo.isPhantom ? "Dokončeno" : visit.state),
     id: "state",
     header: "Stav",
   },

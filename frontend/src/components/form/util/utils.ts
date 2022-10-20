@@ -29,7 +29,7 @@ export const loadEmptyDefaultValues = (): FormPropType => ({
 });
 
 // Autocomplete component default value must be one of the options provided or null
-export const loadFantomFormDefaultValues = (): FormPropType => ({
+export const loadPhantomFormDefaultValues = (): FormPropType => ({
   ...loadEmptyDefaultValues(),
   measurementDate: new Date(),
   gender: getOption(genderOptions, Gender.OTHER),
@@ -67,7 +67,7 @@ export const createNewVisitFromFormData = (data: FormPropType, state: VisitState
         ...data,
         projectId: "1",
         magnetDeviceId: "1",
-        isFantom: true,
+        isPhantom: true,
         measurementDate: data.measurementDate ?? new Date(),
       },
       probandInfo: {

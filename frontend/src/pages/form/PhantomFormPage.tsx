@@ -13,7 +13,7 @@ import { fetchCurrentQuestions } from "../../util/fetch";
 import { getBackButtonProps } from "../../util/utils";
 import { FormContainer } from "./FormContainer";
 
-export const FantomFormPage = () => {
+export const PhantomFormPage = () => {
   const navigate = useNavigate();
   const { setValue } = useFormContext();
 
@@ -27,10 +27,10 @@ export const FantomFormPage = () => {
     submitButtonProps: {
       titleLocalizationKey: "form.common.buttons.finalize",
       onClick: (data: FormPropType) => {
-        // TODO: create fantom visit in DB
-        const newFantomVisit = createNewVisitFromFormData(data, VisitState.SIGNED);
-        dummyVisits.push(newFantomVisit);
-        navigate(`${UrlBasePaths.RECENT_VISITS}/visit/${newFantomVisit.id}`);
+        // TODO: create phantom visit in DB
+        const newPhantomVisit = createNewVisitFromFormData(data, VisitState.SIGNED);
+        dummyVisits.push(newPhantomVisit);
+        navigate(`${UrlBasePaths.RECENT_VISITS}/visit/${newPhantomVisit.id}`);
       },
     },
     buttonsProps: [getBackButtonProps(navigate, "form.common.buttons.cancel")],
@@ -69,8 +69,8 @@ export const FantomFormPage = () => {
       isError={isError}
       buttons={formButtons}
     >
-      <FormProjectInfo isFantom />
-      <FormProbandInfo isFantom />
+      <FormProjectInfo isPhantom />
+      <FormProbandInfo isPhantom />
     </FormContainer>
   );
 };

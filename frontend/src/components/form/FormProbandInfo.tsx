@@ -13,9 +13,9 @@ import { FormDatePicker } from "./inputs/FormDatePicker";
 import { FormOptionsAutocomplete } from "./inputs/FormOptionsAutocomplete";
 import { FormTextField } from "./inputs/FormTextField";
 import { genderOptions, getOption, sideDominanceOptions, visualCorrectionOptions } from "./types/options";
-import { FormPropType, IFantomFormCardProps } from "./types/types";
+import { FormPropType, IPhantomFormCardProps } from "./types/types";
 
-export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormCardProps) => {
+export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandInfo" });
   const { getFieldState, resetField, setValue } = useFormContext();
   const personalIdValue = useWatch<FormPropType, "personalId">({ name: "personalId" });
@@ -46,15 +46,15 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormCardProp
 
     setValue("birthdate", newBirthdate, { shouldTouch: true });
 
-    // Fantom visit has strictly gender 'other'
-    if (!isFantom) {
+    // Phantom visit has strictly gender 'other'
+    if (!isPhantom) {
       if (czechPersonalId.isMale()) {
         setValue("gender", getOption(genderOptions, Gender.MALE), { shouldTouch: true });
       } else if (czechPersonalId.isFemale()) {
         setValue("gender", getOption(genderOptions, Gender.FEMALE), { shouldTouch: true });
       }
     }
-  }, [getFieldState, isFantom, personalIdValue, setValue]);
+  }, [getFieldState, isPhantom, personalIdValue, setValue]);
 
   useEffect(() => {
     const birthdateState = getFieldState("birthdate");
@@ -156,7 +156,7 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormCardProp
             name="gender"
             label={t("gender")}
             options={genderOptions}
-            disabled={disableInputs || isFantom}
+            disabled={disableInputs || isPhantom}
           />
         </Grid>
         <Grid
