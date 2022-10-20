@@ -87,7 +87,7 @@ export const createNewVisitFromFormData = (data: FormPropType, state: VisitState
   );
 
 export const getDisapproveButtonProps = (id: string | undefined, navigate: NavigateFunction): IButtonProps => ({
-  title: "Neschválit",
+  titleLocalizationKey: "form.common.buttons.disapprove",
   onClick: () => {
     // TODO: store changes in DB if made
     updateDummyVisitState(id, VisitState.DISAPPROVED);

@@ -27,7 +27,7 @@ export const ProbandFormPage = () => {
 
   const formButtons: IFormButtonsProps = {
     submitButtonProps: {
-      title: "Souhlasím",
+      titleLocalizationKey: "form.common.buttons.agree",
       onClick: (data: FormPropType) => {
         // TODO: create visit in DB
         navigate(UrlBasePaths.PROBAND_HOME);

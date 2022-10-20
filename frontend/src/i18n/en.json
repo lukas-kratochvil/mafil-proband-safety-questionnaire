@@ -15,7 +15,16 @@
       "common": {
         "optional": "optional",
         "loading": "Loading",
-        "noOptions": "No options"
+        "noOptions": "No options",
+        "buttons": {
+          "agree": "Agree",
+          "finalize": "Finalize",
+          "approve": "Approve",
+          "disapprove": "Disapprove",
+          "edit": "Edit",
+          "cancel": "Cancel",
+          "saveChanges": "Save changes"
+        }
       },
       "enums": {
         "gender": {

@@ -1,4 +1,5 @@
 import { NavigateFunction } from "react-router-dom";
+import { FormPropType } from "../components/form/types/types";
 
 export type Override<T, U> = Omit<T, keyof U> & U;
 
@@ -7,7 +8,11 @@ export interface IButton {
   onClick: () => void;
 }
 
-export const getBackButtonProps = (navigate: NavigateFunction, titleLocalizationKey?: string): IButton => ({
-  titleLocalizationKey: titleLocalizationKey ?? "common.backButton",
+export interface ISubmitButtonProps extends Omit<IButton, "onClick"> {
+  onClick: (data: FormPropType) => void;
+}
+
+export const getBackButtonProps = (navigate: NavigateFunction, customTitleLocalizationKey?: string): IButton => ({
+  titleLocalizationKey: customTitleLocalizationKey ?? "common.backButton",
   onClick: () => navigate(-1),
 });

@@ -80,7 +80,7 @@ export const ApprovalFormPage = () => {
       if (isEditing) {
         setFormButtons({
           submitButtonProps: {
-            title: "Uložit změny",
+            titleLocalizationKey: "form.common.buttons.saveChanges",
             onClick: (data: FormPropType) => {
               // TODO: save the changes in DB
               setIsEditing(false);
@@ -88,7 +88,7 @@ export const ApprovalFormPage = () => {
           },
           buttonsProps: [
             {
-              title: "Zrušit",
+              titleLocalizationKey: "form.common.buttons.cancel",
               onClick: () => {
                 // TODO: reset to previously saved data
                 reset();
@@ -100,7 +100,7 @@ export const ApprovalFormPage = () => {
       } else {
         setFormButtons({
           submitButtonProps: {
-            title: "Schválit",
+            titleLocalizationKey: "form.common.buttons.approve",
             onClick: () => {
               // TODO: store changes in DB if made
               updateDummyVisitState(id, VisitState.APPROVED);
@@ -110,7 +110,7 @@ export const ApprovalFormPage = () => {
           buttonsProps: [
             getDisapproveButtonProps(id, navigate),
             {
-              title: "Editovat",
+              titleLocalizationKey: "form.common.buttons.edit",
               onClick: () => setIsEditing(true),
             },
             getBackButtonProps(navigate),

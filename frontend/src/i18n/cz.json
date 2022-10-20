@@ -15,7 +15,16 @@
       "common": {
         "optional": "nepovinné",
         "loading": "Načítá se",
-        "noOptions": "Žádné možnosti"
+        "noOptions": "Žádné možnosti",
+        "buttons": {
+          "agree": "Souhlasím",
+          "finalize": "Finalizovat",
+          "approve": "Schválit",
+          "disapprove": "Neschválit",
+          "edit": "Editovat",
+          "cancel": "Zrušit",
+          "saveChanges": "Uložit změny"
+        }
       },
       "enums": {
         "gender": {

@@ -25,7 +25,7 @@ export const FantomFormPage = () => {
 
   const formButtons: IFormButtonsProps = {
     submitButtonProps: {
-      title: "Finalizovat",
+      titleLocalizationKey: "form.common.buttons.finalize",
       onClick: (data: FormPropType) => {
         // TODO: create fantom visit in DB
         const newFantomVisit = createNewVisitFromFormData(data, VisitState.SIGNED);
@@ -33,7 +33,7 @@ export const FantomFormPage = () => {
         navigate(`${UrlBasePaths.RECENT_VISITS}/visit/${newFantomVisit.id}`);
       },
     },
-    buttonsProps: [getBackButtonProps(navigate, "Zrušit")],
+    buttonsProps: [getBackButtonProps(navigate, "form.common.buttons.cancel")],
   };
 
   useEffect(() => {

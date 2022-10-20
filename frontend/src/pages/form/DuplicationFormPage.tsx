@@ -84,7 +84,7 @@ export const DuplicationFormPage = () => {
     if (isFantom) {
       setFormButtons({
         submitButtonProps: {
-          title: "Finalizovat",
+          titleLocalizationKey: "form.common.buttons.finalize",
           onClick: (data: FormPropType) => {
             // TODO: create fantom visit in DB
             const newFantomVisit = createNewVisitFromFormData(data, VisitState.SIGNED);
@@ -92,12 +92,12 @@ export const DuplicationFormPage = () => {
             navigate(`${UrlBasePaths.RECENT_VISITS}/visit/${newFantomVisit.id}`);
           },
         },
-        buttonsProps: [getBackButtonProps(navigate, "Zrušit")],
+        buttonsProps: [getBackButtonProps(navigate, "form.common.buttons.cancel")],
       });
     } else if (isEditing) {
       setFormButtons({
         submitButtonProps: {
-          title: "Uložit změny",
+          titleLocalizationKey: "form.common.buttons.saveChanges",
           onClick: (data: FormPropType) => {
             // TODO: save the changes in DB
             setIsEditing(false);
@@ -105,7 +105,7 @@ export const DuplicationFormPage = () => {
         },
         buttonsProps: [
           {
-            title: "Zrušit",
+            titleLocalizationKey: "form.common.buttons.cancel",
             onClick: () => {
               // TODO: reset to previously saved data
               reset();
@@ -117,7 +117,7 @@ export const DuplicationFormPage = () => {
     } else {
       setFormButtons({
         submitButtonProps: {
-          title: "Finalizovat",
+          titleLocalizationKey: "form.common.buttons.finalize",
           onClick: (data: FormPropType) => {
             // TODO: store changes in DB if made
             const isApproved
@@ -141,7 +141,7 @@ export const DuplicationFormPage = () => {
         buttonsProps: [
           getDisapproveButtonProps(id, navigate),
           {
-            title: "Editovat",
+            titleLocalizationKey: "form.common.buttons.edit",
             onClick: () => setIsEditing(true),
           },
           getBackButtonProps(navigate, "Zrušit"),

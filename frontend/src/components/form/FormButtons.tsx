@@ -1,14 +1,9 @@
 import { Button, Grid, Theme, useMediaQuery } from "@mui/material";
-import { FormPropType } from "./types/types";
+import { useTranslation } from "react-i18next";
+import { defaultNS } from "../../i18n";
+import { IButton, ISubmitButtonProps } from "../../util/utils";
 
-interface ISubmitButtonProps {
-  title: string;
-  onClick: (data: FormPropType) => void;
-}
-
-export interface IButtonProps {
-  title: string;
-  onClick: () => void;
+export interface IButtonProps extends IButton {
   showErrorColor?: boolean;
 }
 
@@ -18,6 +13,7 @@ export interface IFormButtonsProps {
 }
 
 export const FormButtons = ({ submitButtonProps, buttonsProps }: IFormButtonsProps) => {
+  const { t } = useTranslation(defaultNS);
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
   return (
@@ -35,17 +31,17 @@ export const FormButtons = ({ submitButtonProps, buttonsProps }: IFormButtonsPro
           variant="contained"
           color="success"
         >
-          {submitButtonProps.title}
+          {t(submitButtonProps.titleLocalizationKey as unknown as TemplateStringsArray)}
         </Button>
       )}
       {buttonsProps.map((buttonProps) => (
         <Button
-          key={buttonProps.title}
+          key={buttonProps.titleLocalizationKey}
           variant="contained"
           color={buttonProps.showErrorColor ? "error" : undefined}
           onClick={buttonProps.onClick}
         >
-          {buttonProps.title}
+          {t(buttonProps.titleLocalizationKey as unknown as TemplateStringsArray)}
         </Button>
       ))}
     </Grid>

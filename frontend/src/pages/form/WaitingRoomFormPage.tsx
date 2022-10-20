@@ -79,7 +79,7 @@ export const WaitingRoomFormPage = () => {
     if (isEditing) {
       setFormButtons({
         submitButtonProps: {
-          title: "Uložit změny",
+          titleLocalizationKey: "form.common.buttons.saveChanges",
           onClick: (data: FormPropType) => {
             // TODO: save the changes in DB
             setIsEditing(false);
@@ -87,7 +87,7 @@ export const WaitingRoomFormPage = () => {
         },
         buttonsProps: [
           {
-            title: "Zrušit",
+            titleLocalizationKey: "form.common.buttons.cancel",
             onClick: () => {
               // TODO: reset to previously saved data
               reset();
@@ -99,7 +99,7 @@ export const WaitingRoomFormPage = () => {
     } else {
       setFormButtons({
         submitButtonProps: {
-          title: "Finalizovat",
+          titleLocalizationKey: "form.common.buttons.finalize",
           onClick: (data: FormPropType) => {
             // TODO: store changes in DB if made
             if (
@@ -119,10 +119,10 @@ export const WaitingRoomFormPage = () => {
         buttonsProps: [
           getDisapproveButtonProps(id, navigate),
           {
-            title: "Editovat",
+            titleLocalizationKey: "form.common.buttons.edit",
             onClick: () => setIsEditing(true),
           },
-          getBackButtonProps(navigate, "Zrušit"),
+          getBackButtonProps(navigate, "form.common.buttons.cancel"),
         ],
       });
     }

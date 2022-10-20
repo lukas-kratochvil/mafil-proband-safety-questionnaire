@@ -1,3 +1,4 @@
+import { DevTool } from "@hookform/devtools";
 import { Stack, Theme, Typography, useMediaQuery } from "@mui/material";
 import { PropsWithChildren } from "react";
 import { useFormContext } from "react-hook-form";
@@ -12,7 +13,7 @@ interface IFormContainerProps {
 export const FormContainer = ({ children, isError, buttons }: PropsWithChildren<IFormContainerProps>) => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
-  const { handleSubmit } = useFormContext<FormPropType>();
+  const { control, handleSubmit } = useFormContext<FormPropType>();
 
   const onSubmit = (data: FormPropType) => {
     // TODO: submit data
@@ -41,6 +42,7 @@ export const FormContainer = ({ children, isError, buttons }: PropsWithChildren<
         {children}
         {buttons !== undefined && <FormButtons {...buttons} />}
       </Stack>
+      <DevTool control={control} />
     </form>
   );
 };
