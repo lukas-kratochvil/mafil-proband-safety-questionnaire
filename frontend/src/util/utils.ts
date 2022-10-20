@@ -16,3 +16,6 @@ export const getBackButtonProps = (navigate: NavigateFunction, customTitleLocali
   titleLocalizationKey: customTitleLocalizationKey ?? "common.backButton",
   onClick: () => navigate(-1),
 });
+
+export const convertStringToLocalizationKey = (str: string): TemplateStringsArray =>
+  str as unknown as TemplateStringsArray;

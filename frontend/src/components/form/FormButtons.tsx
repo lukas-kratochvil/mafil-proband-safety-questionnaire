@@ -1,7 +1,7 @@
 import { Button, Grid, Theme, useMediaQuery } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "../../i18n";
-import { IButton, ISubmitButtonProps } from "../../util/utils";
+import { convertStringToLocalizationKey, IButton, ISubmitButtonProps } from "../../util/utils";
 
 export interface IButtonProps extends IButton {
   showErrorColor?: boolean;
@@ -31,7 +31,7 @@ export const FormButtons = ({ submitButtonProps, buttonsProps }: IFormButtonsPro
           variant="contained"
           color="success"
         >
-          {t(submitButtonProps.titleLocalizationKey as unknown as TemplateStringsArray)}
+          {t(convertStringToLocalizationKey(submitButtonProps.titleLocalizationKey))}
         </Button>
       )}
       {buttonsProps.map((buttonProps) => (
@@ -41,7 +41,7 @@ export const FormButtons = ({ submitButtonProps, buttonsProps }: IFormButtonsPro
           color={buttonProps.showErrorColor ? "error" : undefined}
           onClick={buttonProps.onClick}
         >
-          {t(buttonProps.titleLocalizationKey as unknown as TemplateStringsArray)}
+          {t(convertStringToLocalizationKey(buttonProps.titleLocalizationKey))}
         </Button>
       ))}
     </Grid>

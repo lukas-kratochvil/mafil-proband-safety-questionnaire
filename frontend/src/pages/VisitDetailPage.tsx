@@ -11,7 +11,7 @@ import {
 import { IVisit, VisitState } from "../data/visit_data";
 import { defaultNS } from "../i18n";
 import { fetchVisitDetail } from "../util/fetch";
-import { getBackButtonProps, IButton } from "../util/utils";
+import { convertStringToLocalizationKey, getBackButtonProps, IButton } from "../util/utils";
 import { PageContainer } from "./PageContainer";
 
 interface IButtonProps extends IButton {
@@ -177,7 +177,7 @@ export const VisitDetailPage = () => {
                   onClick={button.onClick}
                   disabled={button.disabled}
                 >
-                  {t(button.titleLocalizationKey as unknown as TemplateStringsArray)}
+                  {t(convertStringToLocalizationKey(button.titleLocalizationKey))}
                 </Button>
               ))}
             </Grid>

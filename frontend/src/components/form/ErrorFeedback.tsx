@@ -1,6 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { convertStringToLocalizationKey } from "../../util/utils";
 
 interface IErrorFeedbackProps {
   name: string;
@@ -18,7 +19,7 @@ export const ErrorFeedback = ({ name }: IErrorFeedbackProps) => {
           fontSize="1rem"
           paddingX="0.5rem"
         >
-          {t(message as unknown as TemplateStringsArray)}
+          {t(convertStringToLocalizationKey(message))}
         </Typography>
       )}
     />

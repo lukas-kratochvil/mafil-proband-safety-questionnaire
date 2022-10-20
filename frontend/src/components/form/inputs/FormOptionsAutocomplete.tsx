@@ -2,6 +2,7 @@ import { Autocomplete, CircularProgress, TextField, Theme, useMediaQuery } from 
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "../../../i18n";
+import { convertStringToLocalizationKey } from "../../../util/utils";
 import { IOption } from "../types/options";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormDefaultInputProps } from "./types/types";
@@ -32,9 +33,7 @@ export const FormOptionsAutocomplete = ({
         render={({ field }) => (
           <Autocomplete
             options={options}
-            getOptionLabel={(option: IOption) =>
-              t(`enums.${option.localizationKey}` as unknown as TemplateStringsArray)
-            }
+            getOptionLabel={(option: IOption) => t(convertStringToLocalizationKey(`enums.${option.localizationKey}`))}
             isOptionEqualToValue={(option, value) => option.value === value.value}
             value={field.value}
             onChange={(_event, val) => field.onChange(val)}

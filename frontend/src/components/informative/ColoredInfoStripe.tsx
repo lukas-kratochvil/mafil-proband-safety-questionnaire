@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { blue, green, orange, red } from "@mui/material/colors";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "../../i18n";
+import { convertStringToLocalizationKey } from "../../util/utils";
 
 export enum ColoredInfoStripeColors {
   BLUE,
@@ -55,7 +56,7 @@ export const ColoredInfoStripe = ({ textLocalizationKey, color }: IColoredInfoSt
         textAlign="center"
         textTransform="uppercase"
       >
-        {t(textLocalizationKey as unknown as TemplateStringsArray)}
+        {t(convertStringToLocalizationKey(textLocalizationKey))}
       </Typography>
     </Box>
   );
