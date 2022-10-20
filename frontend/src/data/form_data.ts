@@ -5,8 +5,8 @@ export const devicesDev: string[] = ["Magnet 1", "Magnet 2"];
 export const nativeLanguages: string[] = ["Čeština", "Slovenština", "Angličtina", "Němčina", "Polština"];
 
 export enum Gender {
-  MAN,
-  WOMAN,
+  MALE,
+  FEMALE,
   OTHER,
 }
 

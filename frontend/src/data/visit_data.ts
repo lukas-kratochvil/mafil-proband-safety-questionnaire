@@ -160,7 +160,7 @@ export const dummyVisitNew: IVisit = {
     birthdate: new Date(),
     height: 180,
     weight: 85,
-    gender: Gender.MAN,
+    gender: Gender.MALE,
     nativeLanguage: "Čeština",
     visualCorrection: VisualCorrection.NO,
     visualCorrectionValue: 0,

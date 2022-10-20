@@ -69,8 +69,8 @@ export const defaultFormSchema = object({
     //       gender === null
     //       || gender === undefined
     //       || !czechPersonalId.isValid()
-    //       || (czechPersonalId.isMale() && [Gender.MAN, Gender.OTHER].includes(gender.value))
-    //       || (czechPersonalId.isFemale() && [Gender.WOMAN, Gender.OTHER].includes(gender.value))
+    //       || (czechPersonalId.isMale() && [Gender.MALE, Gender.OTHER].includes(gender.value))
+    //       || (czechPersonalId.isFemale() && [Gender.FEMALE, Gender.OTHER].includes(gender.value))
     //     );
     //   },
     // })

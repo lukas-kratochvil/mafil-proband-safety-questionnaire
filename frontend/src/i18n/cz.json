@@ -18,8 +18,8 @@
       },
       "enums": {
         "gender": {
-          "MAN": "Muž",
-          "WOMAN": "Žena",
+          "MALE": "Muž",
+          "FEMALE": "Žena",
           "OTHER": "Jiné"
         },
         "visualCorrection": {

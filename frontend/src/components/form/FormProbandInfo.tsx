@@ -49,9 +49,9 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormCardProp
     // Fantom visit has strictly gender 'other'
     if (!isFantom) {
       if (czechPersonalId.isMale()) {
-        setValue("gender", getOption(genderOptions, Gender.MAN), { shouldTouch: true });
+        setValue("gender", getOption(genderOptions, Gender.MALE), { shouldTouch: true });
       } else if (czechPersonalId.isFemale()) {
-        setValue("gender", getOption(genderOptions, Gender.WOMAN), { shouldTouch: true });
+        setValue("gender", getOption(genderOptions, Gender.FEMALE), { shouldTouch: true });
       }
     }
   }, [getFieldState, isFantom, personalIdValue, setValue]);
@@ -68,7 +68,7 @@ export const FormProbandInfo = ({ isFantom, disableInputs }: IFantomFormCardProp
     if (personalIdValue === "" && birthdateValue !== null && isValid(birthdateValue) && genderOption !== null) {
       const year = birthdateValue.getFullYear();
       const month = birthdateValue.getMonth() + 1;
-      const day = genderOption.value === Gender.WOMAN ? birthdateValue.getDate() + 50 : birthdateValue.getDate();
+      const day = genderOption.value === Gender.FEMALE ? birthdateValue.getDate() + 50 : birthdateValue.getDate();
 
       setValue("personalId", `${year % 100}${month < 10 ? `0${month}` : month}${day < 10 ? `0${day}` : day}`, {
         shouldTouch: true,

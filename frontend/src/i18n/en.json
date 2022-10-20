@@ -18,8 +18,8 @@
       },
       "enums": {
         "gender": {
-          "MAN": "Man",
-          "WOMAN": "Woman",
+          "MALE": "Male",
+          "FEMALE": "Female",
           "OTHER": "Other"
         },
         "visualCorrection": {
