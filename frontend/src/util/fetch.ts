@@ -23,7 +23,7 @@ export const fetchWaitingRoomVisits = async (): Promise<IVisit[]> =>
   dummyVisits.filter((visit) => visit.state === VisitState.NEW);
 
 // TODO: get visits from DB
-export const fetchApprovalVisits = async (): Promise<IVisit[]> =>
+export const fetchApprovalRoomVisits = async (): Promise<IVisit[]> =>
   dummyVisits.filter((visit) => visit.state === VisitState.IN_APPROVAL);
 
 // TODO: get visits from MAFIL DB – all the visits with assigned visitId and generated PDF are fetched from MAFIL DB

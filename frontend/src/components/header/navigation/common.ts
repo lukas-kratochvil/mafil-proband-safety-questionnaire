@@ -51,8 +51,8 @@ export const getTabs = (navigate: NavigateFunction): ITabProps[] => [
   },
   {
     localizationKey: "approvalRoom",
-    urlPrefix: UrlBasePaths.APPROVAL,
-    onClick: () => navigate(UrlBasePaths.APPROVAL),
+    urlPrefix: UrlBasePaths.APPROVAL_ROOM,
+    onClick: () => navigate(UrlBasePaths.APPROVAL_ROOM),
     Icon: ApprovalIcon,
     showCount: true,
   },

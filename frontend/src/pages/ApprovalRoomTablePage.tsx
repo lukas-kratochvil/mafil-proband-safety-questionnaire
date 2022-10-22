@@ -7,9 +7,9 @@ import { UrlBasePaths } from "../App";
 import { IActionButtonsProps, InteractingTable } from "../components/table/InteractingTable";
 import { IVisit } from "../data/visit_data";
 import { defaultNS } from "../i18n";
-import { fetchApprovalVisits } from "../util/fetch";
+import { fetchApprovalRoomVisits } from "../util/fetch";
 
-const ApprovalActionButtons = ({ visitId }: IActionButtonsProps) => {
+const ApprovalRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "approvalRoomTablePage.actions" });
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ const ApprovalActionButtons = ({ visitId }: IActionButtonsProps) => {
     <Button
       size="small"
       variant="contained"
-      onClick={() => navigate(`${UrlBasePaths.APPROVAL}/form/${visitId}`)}
+      onClick={() => navigate(`${UrlBasePaths.APPROVAL_ROOM}/form/${visitId}`)}
     >
       {t("showButton")}
     </Button>
@@ -27,7 +27,7 @@ const ApprovalActionButtons = ({ visitId }: IActionButtonsProps) => {
 const createdAtFormat = "d.M.yyyy H:mm";
 const probandBirthdateFormat = "d.M.yyyy";
 
-export const ApprovalTablePage = () => {
+export const ApprovalRoomTablePage = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "approvalRoomTablePage.header" });
 
   const header: MRTColumnDef<IVisit>[] = [
@@ -77,8 +77,8 @@ export const ApprovalTablePage = () => {
   return (
     <InteractingTable
       header={header}
-      fetchVisits={fetchApprovalVisits}
-      ActionButtons={ApprovalActionButtons}
+      fetchVisits={fetchApprovalRoomVisits}
+      ActionButtons={ApprovalRoomActionButtons}
       actionButtonsSize={100}
     />
   );

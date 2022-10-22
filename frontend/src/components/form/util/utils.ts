@@ -91,7 +91,7 @@ export const getDisapproveButtonProps = (id: string | undefined, navigate: Navig
   onClick: () => {
     // TODO: store changes in DB if made
     updateDummyVisitState(id, VisitState.DISAPPROVED);
-    navigate(UrlBasePaths.APPROVAL);
+    navigate(UrlBasePaths.APPROVAL_ROOM);
   },
   showErrorColor: true,
 });

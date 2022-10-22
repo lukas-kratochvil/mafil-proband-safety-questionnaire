@@ -4,7 +4,7 @@ import { operatorFormSchema } from "./components/form/schemas/form-schema_operat
 import { loadPhantomFormDefaultValues } from "./components/form/util/utils";
 import { Header } from "./components/header/Header";
 import { useAuth } from "./hooks/auth/Auth";
-import { ApprovalTablePage } from "./pages/ApprovalTablePage";
+import { ApprovalRoomTablePage } from "./pages/ApprovalRoomTablePage";
 import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
 import { RecentVisitsTablePage } from "./pages/RecentVisitsTablePage";
@@ -23,7 +23,7 @@ export enum UrlBasePaths {
   AUTH = "/auth",
   PHANTOM_FORM = "/auth/phantom-form",
   WAITING_ROOM = "/auth/waiting-room",
-  APPROVAL = "/auth/approval",
+  APPROVAL_ROOM = "/auth/approval-room",
   RECENT_VISITS = "/auth/recent-visits",
 }
 
@@ -81,11 +81,11 @@ export const App = () => {
               }
             />
             <Route
-              path={UrlBasePaths.APPROVAL}
-              element={<ApprovalTablePage />}
+              path={UrlBasePaths.APPROVAL_ROOM}
+              element={<ApprovalRoomTablePage />}
             />
             <Route
-              path={`${UrlBasePaths.APPROVAL}/form/:id`}
+              path={`${UrlBasePaths.APPROVAL_ROOM}/form/:id`}
               element={
                 <FormPageContainer
                   FormPage={ApprovalFormPage}
