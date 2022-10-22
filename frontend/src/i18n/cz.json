@@ -136,6 +136,23 @@
         "completed": "Dokončeno",
         "signed": "Podepsáno"
       }
+    },
+    "waitingRoomTablePage": {
+      "actions": {
+        "processButton": "Zpracovat",
+        "clearIconDialogTitle": "Odstranění formuláře z Čekárny",
+        "clearIconDialogContent": "Opravdu si přejete odstranit záznam XY z Čekárny?",
+        "clearIconDialogDelete": "Odstranit",
+        "clearIconDialogCancel": "Zrušit"
+      },
+      "header": {
+        "registrationDate": "Datum registrace",
+        "proband": "Proband",
+        "personalId": "Rodné číslo",
+        "birthdate": "Datum narození",
+        "gender": "Pohlaví",
+        "nativeLanguage": "Mateřský jazyk"
+      }
     }
   }
 }

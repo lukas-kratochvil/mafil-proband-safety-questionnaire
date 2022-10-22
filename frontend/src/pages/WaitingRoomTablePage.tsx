@@ -4,54 +4,13 @@ import { red } from "@mui/material/colors";
 import { compareAsc, format, parse } from "date-fns";
 import { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { UrlBasePaths } from "../App";
 import { IActionButtonsProps, InteractingTable } from "../components/table/InteractingTable";
 import { IVisit } from "../data/visit_data";
+import { defaultNS } from "../i18n";
 import { fetchWaitingRoomVisits } from "../util/fetch";
-
-const createdAtFormat = "d.M.yyyy H:mm";
-const probandBirthdateFormat = "d.M.yyyy";
-
-const header: MRTColumnDef<IVisit>[] = [
-  {
-    accessorFn: (visit) => format(visit.createdAt, createdAtFormat),
-    id: "createdAt",
-    header: "Datum registrace",
-    sortingFn: (rowA, rowB, columnId) =>
-      compareAsc(
-        parse(`${rowA.getValue(columnId)}`, createdAtFormat, new Date()),
-        parse(`${rowB.getValue(columnId)}`, createdAtFormat, new Date())
-      ),
-  },
-  {
-    accessorFn: (visit) => `${visit.probandInfo.surname}, ${visit.probandInfo.name}`,
-    id: "proband",
-    header: "Proband",
-  },
-  {
-    accessorKey: "probandInfo.personalId",
-    header: "Rodné číslo",
-  },
-  {
-    accessorFn: (visit) => format(visit.probandInfo.birthdate, probandBirthdateFormat),
-    id: "probandInfo.birthdate",
-    header: "Datum narození",
-    sortingFn: (rowA, rowB, columnId) =>
-      compareAsc(
-        parse(`${rowA.getValue(columnId)}`, probandBirthdateFormat, new Date()),
-        parse(`${rowB.getValue(columnId)}`, probandBirthdateFormat, new Date())
-      ),
-  },
-  {
-    accessorKey: "probandInfo.gender",
-    header: "Pohlaví",
-  },
-  {
-    accessorKey: "probandInfo.nativeLanguage",
-    header: "Mateřský jazyk",
-  },
-];
 
 const deleteButtonMainColor = red[600];
 const deleteButtonBgcolor = red[100];
@@ -59,6 +18,7 @@ const deleteButtonHoverMainColor = red[700];
 const deleteButtonHoverBgcolor = red[200];
 
 const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
+  const { t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomTablePage.actions" });
   const navigate = useNavigate();
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
 
@@ -78,7 +38,7 @@ const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
         variant="contained"
         onClick={() => navigate(`${UrlBasePaths.WAITING_ROOM}/form/${visitId}`)}
       >
-        Zpracovat
+        {t("processButton")}
       </Button>
       <IconButton
         onClick={() => setOpenDeleteDialog(true)}
@@ -105,24 +65,71 @@ const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
         />
       </IconButton>
       <Dialog open={openDeleteDialog}>
-        <DialogTitle>Odstranění záznamu z Čekárny</DialogTitle>
+        <DialogTitle>{t("clearIconDialogTitle")}</DialogTitle>
         <DialogContent>
-          <Typography>Opravdu si přejete odstranit záznam XY z Čekárny?</Typography>
+          <Typography>{t("clearIconDialogContent")}</Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onDelete}>Odstranit</Button>
-          <Button onClick={onCancel}>Zrušit</Button>
+          <Button onClick={onDelete}>{t("clearIconDialogDelete")}</Button>
+          <Button onClick={onCancel}>{t("clearIconDialogCancel")}</Button>
         </DialogActions>
       </Dialog>
     </>
   );
 };
 
-export const WaitingRoomTablePage = () => (
-  <InteractingTable
-    header={header}
-    fetchVisits={fetchWaitingRoomVisits}
-    ActionButtons={WaitingRoomActionButtons}
-    actionButtonsSize={100}
-  />
-);
+const createdAtFormat = "d.M.yyyy H:mm";
+const probandBirthdateFormat = "d.M.yyyy";
+
+export const WaitingRoomTablePage = () => {
+  const { t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomTablePage" });
+
+  const header: MRTColumnDef<IVisit>[] = [
+    {
+      accessorFn: (visit) => format(visit.createdAt, createdAtFormat),
+      id: "createdAt",
+      header: t("header.registrationDate"),
+      sortingFn: (rowA, rowB, columnId) =>
+        compareAsc(
+          parse(`${rowA.getValue(columnId)}`, createdAtFormat, new Date()),
+          parse(`${rowB.getValue(columnId)}`, createdAtFormat, new Date())
+        ),
+    },
+    {
+      accessorFn: (visit) => `${visit.probandInfo.surname}, ${visit.probandInfo.name}`,
+      id: "proband",
+      header: t("header.proband"),
+    },
+    {
+      accessorKey: "probandInfo.personalId",
+      header: t("header.personalId"),
+    },
+    {
+      accessorFn: (visit) => format(visit.probandInfo.birthdate, probandBirthdateFormat),
+      id: "probandInfo.birthdate",
+      header: t("header.birthdate"),
+      sortingFn: (rowA, rowB, columnId) =>
+        compareAsc(
+          parse(`${rowA.getValue(columnId)}`, probandBirthdateFormat, new Date()),
+          parse(`${rowB.getValue(columnId)}`, probandBirthdateFormat, new Date())
+        ),
+    },
+    {
+      accessorKey: "probandInfo.gender",
+      header: t("header.gender"),
+    },
+    {
+      accessorKey: "probandInfo.nativeLanguage",
+      header: t("header.nativeLanguage"),
+    },
+  ];
+
+  return (
+    <InteractingTable
+      header={header}
+      fetchVisits={fetchWaitingRoomVisits}
+      ActionButtons={WaitingRoomActionButtons}
+      actionButtonsSize={100}
+    />
+  );
+};
