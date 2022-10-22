@@ -151,7 +151,8 @@
         "personalId": "Personal ID",
         "birthdate": "Birthdate",
         "gender": "Gender",
-        "nativeLanguage": "Native language"
+        "nativeLanguage": "Native language",
+        "actions": "Actions"
       }
     },
     "approvalRoomTablePage": {
@@ -165,7 +166,8 @@
         "personalId": "Personal ID",
         "birthdate": "Birthdate",
         "gender": "Gender",
-        "nativeLanguage": "Native language"
+        "nativeLanguage": "Native language",
+        "actions": "Actions"
       }
     },
     "recentVisitsTablePage": {
@@ -179,7 +181,8 @@
         "device": "Device",
         "processedDate": "Processed date",
         "operatorProcessed": "Operator processed",
-        "state": "State"
+        "state": "State",
+        "actions": "Actions"
       }
     }
   }

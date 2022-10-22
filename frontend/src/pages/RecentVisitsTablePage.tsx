@@ -1,53 +1,16 @@
-import { Button } from "@mui/material";
 import { compareAsc, format, parse } from "date-fns";
-import { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
+import { MRT_ColumnDef as MRTColumnDef, MRT_Row as MRTRow } from "material-react-table";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import { UrlBasePaths } from "../App";
-import { IActionButtonsProps, InteractingTable } from "../components/table/InteractingTable";
+import { InteractingTable } from "../components/table/InteractingTable";
+import { RecentVisitsActionButtons } from "../components/table/actions/RecentVisitsActionButtons";
 import { IVisit } from "../data/visit_data";
 import { defaultNS } from "../i18n";
 import { fetchRecentVisits } from "../util/fetch";
-import { getDummyVisit } from "../util/fetch.dev";
-
-const RecentVisitsActionButtons = ({ visitId }: IActionButtonsProps) => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "recentVisitsTablePage.actions" })
-  const navigate = useNavigate();
-
-  return (
-    <>
-      <Button
-        size="small"
-        variant="contained"
-        onClick={() => navigate(`${UrlBasePaths.RECENT_VISITS}/visit/${visitId}`)}
-      >
-        {t("showDetailButton")}
-      </Button>
-      <Button
-        size="small"
-        variant="contained"
-        onClick={() => {
-          // TODO: create new form (not in DB!) with the same data as the original form
-          const initialVisit = getDummyVisit(visitId);
-
-          if (initialVisit === undefined) {
-            // TODO: show some error instead!
-            navigate(`${UrlBasePaths.RECENT_VISITS}/duplicate/${1}`);
-          } else {
-            navigate(`${UrlBasePaths.RECENT_VISITS}/duplicate/${initialVisit.id}`);
-          }
-        }}
-      >
-        {t("duplicateButton")}
-      </Button>
-    </>
-  );
-};
 
 const processedDateFormat = "d.M.yyyy H:mm";
 
 export const RecentVisitsTablePage = () => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "recentVisitsTablePage.header" })
+  const { t } = useTranslation(defaultNS, { keyPrefix: "recentVisitsTablePage.header" });
 
   const header: MRTColumnDef<IVisit>[] = [
     {
@@ -89,14 +52,19 @@ export const RecentVisitsTablePage = () => {
       id: "state",
       header: t("state"),
     },
+    {
+      id: "actionButtons",
+      header: t("actions"),
+      columnDefType: "display", // turns off data column features like sorting, filtering, etc.
+      // eslint-disable-next-line react/no-unstable-nested-components
+      Cell: ({ row }: { row: MRTRow<IVisit> }) => <RecentVisitsActionButtons visitId={row.original.id} />,
+    },
   ];
 
   return (
     <InteractingTable
       header={header}
       fetchVisits={fetchRecentVisits}
-      ActionButtons={RecentVisitsActionButtons}
-      actionButtonsSize={320}
     />
   );
-}
+};

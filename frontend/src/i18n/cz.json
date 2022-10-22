@@ -151,7 +151,8 @@
         "personalId": "Rodné číslo",
         "birthdate": "Datum narození",
         "gender": "Pohlaví",
-        "nativeLanguage": "Mateřský jazyk"
+        "nativeLanguage": "Mateřský jazyk",
+        "actions": "Akce"
       }
     },
     "approvalRoomTablePage": {
@@ -165,7 +166,8 @@
         "personalId": "Rodné číslo",
         "birthdate": "Datum narození",
         "gender": "Pohlaví",
-        "nativeLanguage": "Mateřský jazyk"
+        "nativeLanguage": "Mateřský jazyk",
+        "actions": "Akce"
       }
     },
     "recentVisitsTablePage": {
@@ -179,7 +181,8 @@
         "device": "Přístroj",
         "processedDate": "Zpracováno",
         "operatorProcessed": "Zpracoval",
-        "state": "Stav"
+        "state": "Stav",
+        "actions": "Akce"
       }
     }
   }

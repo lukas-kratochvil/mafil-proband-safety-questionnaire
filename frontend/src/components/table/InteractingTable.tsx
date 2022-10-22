@@ -1,21 +1,14 @@
-import { Box } from "@mui/material";
 import MaterialReactTable, { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
-import { FunctionComponent, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { IVisit } from "../../data/visit_data";
 import { PageContainer } from "../../pages/PageContainer";
-
-export interface IActionButtonsProps {
-  visitId: string;
-}
 
 interface IInteractingTableProps {
   header: MRTColumnDef<IVisit>[];
   fetchVisits: () => Promise<IVisit[]>;
-  ActionButtons: FunctionComponent<IActionButtonsProps>;
-  actionButtonsSize: number;
 }
 
-export const InteractingTable = ({ header, fetchVisits, ActionButtons, actionButtonsSize }: IInteractingTableProps) => {
+export const InteractingTable = ({ header, fetchVisits }: IInteractingTableProps) => {
   const [visits, setVisits] = useState<IVisit[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isRefetching, setIsRefetching] = useState<boolean>(false);
@@ -56,24 +49,7 @@ export const InteractingTable = ({ header, fetchVisits, ActionButtons, actionBut
         enableColumnFilters={false}
         enableHiding={false}
         enableBottomToolbar={false}
-        enableRowActions
         memoMode="rows" // breaks some dynamic rendering features (read: https://www.material-react-table.com/docs/guides/memoize-components)
-        displayColumnDefOptions={{
-          "mrt-row-actions": {
-            size: actionButtonsSize, // change width of actions
-          },
-        }}
-        positionActionsColumn="last"
-        renderRowActions={({ row }) => (
-          <Box
-            sx={{
-              display: "flex",
-              gap: "1rem",
-            }}
-          >
-            <ActionButtons visitId={row.original.id} />
-          </Box>
-        )}
         muiToolbarAlertBannerProps={
           isError
             ? {

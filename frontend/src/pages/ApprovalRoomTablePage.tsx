@@ -1,28 +1,11 @@
-import { Button } from "@mui/material";
 import { compareAsc, format, parse } from "date-fns";
-import { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
+import { MRT_ColumnDef as MRTColumnDef, MRT_Row as MRTRow } from "material-react-table";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import { UrlBasePaths } from "../App";
-import { IActionButtonsProps, InteractingTable } from "../components/table/InteractingTable";
+import { InteractingTable } from "../components/table/InteractingTable";
+import { ApprovalRoomActionButtons } from "../components/table/actions/ApprovalRoomActionButtons";
 import { IVisit } from "../data/visit_data";
 import { defaultNS } from "../i18n";
 import { fetchApprovalRoomVisits } from "../util/fetch";
-
-const ApprovalRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "approvalRoomTablePage.actions" });
-  const navigate = useNavigate();
-
-  return (
-    <Button
-      size="small"
-      variant="contained"
-      onClick={() => navigate(`${UrlBasePaths.APPROVAL_ROOM}/form/${visitId}`)}
-    >
-      {t("showButton")}
-    </Button>
-  );
-};
 
 const createdAtFormat = "d.M.yyyy H:mm";
 const probandBirthdateFormat = "d.M.yyyy";
@@ -72,14 +55,19 @@ export const ApprovalRoomTablePage = () => {
       accessorKey: "probandInfo.nativeLanguage",
       header: t("nativeLanguage"),
     },
+    {
+      id: "actionButtons",
+      header: t("actions"),
+      columnDefType: "display", // turns off data column features like sorting, filtering, etc.
+      // eslint-disable-next-line react/no-unstable-nested-components
+      Cell: ({ row }: { row: MRTRow<IVisit> }) => <ApprovalRoomActionButtons visitId={row.original.id} />,
+    },
   ];
 
   return (
     <InteractingTable
       header={header}
       fetchVisits={fetchApprovalRoomVisits}
-      ActionButtons={ApprovalRoomActionButtons}
-      actionButtonsSize={100}
     />
   );
 };
