@@ -141,7 +141,7 @@
       "actions": {
         "processButton": "Process",
         "clearIconDialogTitle": "Deleting the form from the Waiting Room",
-        "clearIconDialogContent": "Are you sure you want to remove the XY form from the Waiting Room?",
+        "clearIconDialogContent": "Do you really want to delete this form from the Waiting Room?",
         "clearIconDialogDelete": "Delete",
         "clearIconDialogCancel": "Cancel"
       },

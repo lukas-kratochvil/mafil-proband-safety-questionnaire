@@ -141,7 +141,7 @@
       "actions": {
         "processButton": "Zpracovat",
         "clearIconDialogTitle": "Odstranění formuláře z Čekárny",
-        "clearIconDialogContent": "Opravdu si přejete odstranit záznam XY z Čekárny?",
+        "clearIconDialogContent": "Opravdu si přejete odstranit tento formulář z Čekárny?",
         "clearIconDialogDelete": "Odstranit",
         "clearIconDialogCancel": "Zrušit"
       },
