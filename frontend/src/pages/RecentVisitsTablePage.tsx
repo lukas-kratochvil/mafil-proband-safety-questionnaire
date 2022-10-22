@@ -22,14 +22,17 @@ export const RecentVisitsTablePage = () => {
       accessorFn: (visit) => `${visit.probandInfo.surname}, ${visit.probandInfo.name}`,
       id: "proband",
       header: t("proband"),
+      minSize: 150,
     },
     {
       accessorKey: "projectInfo.project",
       header: t("project"),
+      minSize: 300,
     },
     {
       accessorKey: "projectInfo.device",
       header: t("device"),
+      maxSize: 0,
     },
     {
       // TODO: change 'visit.createdAt' for some other attribute - firstly, we need to solve which attribute should be created for this purpose
@@ -41,16 +44,19 @@ export const RecentVisitsTablePage = () => {
           parse(`${rowA.getValue(columnId)}`, processedDateFormat, new Date()),
           parse(`${rowB.getValue(columnId)}`, processedDateFormat, new Date())
         ),
+      maxSize: 0,
     },
     {
       accessorFn: () => "MUNI_operator",
       id: "processUser",
       header: t("operatorProcessed"),
+      maxSize: 0,
     },
     {
       accessorFn: (visit) => (visit.projectInfo.isPhantom ? "Dokončeno" : visit.state),
       id: "state",
       header: t("state"),
+      maxSize: 0,
     },
     {
       id: "actionButtons",
@@ -58,6 +64,7 @@ export const RecentVisitsTablePage = () => {
       columnDefType: "display", // turns off data column features like sorting, filtering, etc.
       // eslint-disable-next-line react/no-unstable-nested-components
       Cell: ({ row }: { row: MRTRow<IVisit> }) => <RecentVisitsActionButtons visitId={row.original.id} />,
+      minSize: 300,
     },
   ];
 

@@ -23,19 +23,23 @@ export const ApprovalRoomTablePage = () => {
           parse(`${rowA.getValue(columnId)}`, createdAtFormat, new Date()),
           parse(`${rowB.getValue(columnId)}`, createdAtFormat, new Date())
         ),
+      maxSize: 0,
     },
     {
       accessorKey: "projectInfo.project",
       header: t("project"),
+      minSize: 300,
     },
     {
       accessorFn: (visit) => `${visit.probandInfo.surname}, ${visit.probandInfo.name}`,
       id: "proband",
       header: t("proband"),
+      minSize: 150,
     },
     {
       accessorKey: "probandInfo.personalId",
       header: t("personalId"),
+      maxSize: 0,
     },
     {
       accessorFn: (visit) => format(visit.probandInfo.birthdate, probandBirthdateFormat),
@@ -46,14 +50,17 @@ export const ApprovalRoomTablePage = () => {
           parse(`${rowA.getValue(columnId)}`, probandBirthdateFormat, new Date()),
           parse(`${rowB.getValue(columnId)}`, probandBirthdateFormat, new Date())
         ),
+      maxSize: 0,
     },
     {
       accessorKey: "probandInfo.gender",
       header: t("gender"),
+      maxSize: 0,
     },
     {
       accessorKey: "probandInfo.nativeLanguage",
       header: t("nativeLanguage"),
+      maxSize: 0,
     },
     {
       id: "actionButtons",
@@ -61,6 +68,7 @@ export const ApprovalRoomTablePage = () => {
       columnDefType: "display", // turns off data column features like sorting, filtering, etc.
       // eslint-disable-next-line react/no-unstable-nested-components
       Cell: ({ row }: { row: MRTRow<IVisit> }) => <ApprovalRoomActionButtons visitId={row.original.id} />,
+      maxSize: 0,
     },
   ];
 
