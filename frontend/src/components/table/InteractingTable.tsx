@@ -57,6 +57,7 @@ export const InteractingTable = ({ header, fetchVisits, ActionButtons, actionBut
         enableHiding={false}
         enableBottomToolbar={false}
         enableRowActions
+        memoMode="rows" // breaks some dynamic rendering features (read: https://www.material-react-table.com/docs/guides/memoize-components)
         displayColumnDefOptions={{
           "mrt-row-actions": {
             size: actionButtonsSize, // change width of actions
