@@ -1,17 +1,11 @@
-import ClearIcon from "@mui/icons-material/Clear";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material";
-import { red } from "@mui/material/colors";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { UrlBasePaths } from "../../../App";
 import { defaultNS } from "../../../i18n";
 import { ActionButtonsContainer, IActionButtonsProps } from "./ActionButtonsContainer";
-
-const deleteButtonMainColor = red[600];
-const deleteButtonBgcolor = red[100];
-const deleteButtonHoverMainColor = red[700];
-const deleteButtonHoverBgcolor = red[200];
 
 export const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomTablePage.actions" });
@@ -38,27 +32,15 @@ export const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
       </Button>
       <IconButton
         onClick={() => setOpenDeleteDialog(true)}
+        color="error"
+        size="large"
         sx={{
           padding: "0.21rem",
           height: "fit-content",
           width: "fit-content",
         }}
       >
-        <ClearIcon
-          sx={{
-            height: "1.5rem",
-            width: "1.5rem",
-            color: deleteButtonMainColor,
-            bgcolor: deleteButtonBgcolor,
-            border: 1,
-            borderColor: deleteButtonMainColor,
-            borderRadius: "50%",
-            "&:hover": {
-              color: deleteButtonHoverMainColor,
-              bgcolor: deleteButtonHoverBgcolor,
-            },
-          }}
-        />
+        <DeleteIcon />
       </IconButton>
       <Dialog open={openDeleteDialog}>
         <DialogTitle>{t("clearIconDialogTitle")}</DialogTitle>
