@@ -138,6 +138,7 @@
       }
     },
     "waitingRoomTablePage": {
+      "title": "Waiting room",
       "actions": {
         "processButton": "Process",
         "clearIconDialogTitle": "Deleting the form from the Waiting Room",
@@ -156,6 +157,7 @@
       }
     },
     "approvalRoomTablePage": {
+      "title": "For approval",
       "actions": {
         "showButton": "Show"
       },
@@ -171,6 +173,7 @@
       }
     },
     "recentVisitsTablePage": {
+      "title": "Recent visits",
       "actions": {
         "showDetailButton": "Show detail",
         "duplicateButton": "Duplicate"

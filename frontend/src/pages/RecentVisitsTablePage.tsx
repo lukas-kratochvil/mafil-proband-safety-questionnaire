@@ -70,6 +70,7 @@ export const RecentVisitsTablePage = () => {
 
   return (
     <InteractingTable
+      titleLocalizationKey="recentVisitsTablePage.title"
       header={header}
       fetchVisits={fetchRecentVisits}
     />

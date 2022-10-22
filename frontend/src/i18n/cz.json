@@ -138,6 +138,7 @@
       }
     },
     "waitingRoomTablePage": {
+      "title": "Čekárna",
       "actions": {
         "processButton": "Zpracovat",
         "clearIconDialogTitle": "Odstranění formuláře z Čekárny",
@@ -156,6 +157,7 @@
       }
     },
     "approvalRoomTablePage": {
+      "title": "Ke schválení",
       "actions": {
         "showButton": "Zobrazit"
       },
@@ -171,6 +173,7 @@
       }
     },
     "recentVisitsTablePage": {
+      "title": "Poslední visity",
       "actions": {
         "showDetailButton": "Zobrazit detail",
         "duplicateButton": "Duplikovat"

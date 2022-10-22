@@ -1,14 +1,20 @@
+import { Typography } from "@mui/material";
 import MaterialReactTable, { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { IVisit } from "../../data/visit_data";
+import { defaultNS } from "../../i18n";
 import { PageContainer } from "../../pages/PageContainer";
+import { convertStringToLocalizationKey } from "../../util/utils";
 
 interface IInteractingTableProps {
+  titleLocalizationKey: string;
   header: MRTColumnDef<IVisit>[];
   fetchVisits: () => Promise<IVisit[]>;
 }
 
-export const InteractingTable = ({ header, fetchVisits }: IInteractingTableProps) => {
+export const InteractingTable = ({ titleLocalizationKey, header, fetchVisits }: IInteractingTableProps) => {
+  const { t } = useTranslation(defaultNS);
   const [visits, setVisits] = useState<IVisit[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isRefetching, setIsRefetching] = useState<boolean>(false);
@@ -64,6 +70,15 @@ export const InteractingTable = ({ header, fetchVisits }: IInteractingTableProps
           showProgressBars: isRefetching,
           showSkeletons: showSkeleton,
         }}
+        renderTopToolbarCustomActions={() => (
+          <Typography
+            paddingLeft="0.5rem"
+            fontSize="1.5rem"
+            textTransform="uppercase"
+          >
+            {t(convertStringToLocalizationKey(titleLocalizationKey))}
+          </Typography>
+        )}
       />
     </PageContainer>
   );

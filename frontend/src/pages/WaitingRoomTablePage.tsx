@@ -69,6 +69,7 @@ export const WaitingRoomTablePage = () => {
 
   return (
     <InteractingTable
+      titleLocalizationKey="waitingRoomTablePage.title"
       header={header}
       fetchVisits={fetchWaitingRoomVisits}
     />

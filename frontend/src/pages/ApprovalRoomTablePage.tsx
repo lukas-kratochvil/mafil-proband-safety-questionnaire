@@ -74,6 +74,7 @@ export const ApprovalRoomTablePage = () => {
 
   return (
     <InteractingTable
+      titleLocalizationKey="approvalRoomTablePage.title"
       header={header}
       fetchVisits={fetchApprovalRoomVisits}
     />
