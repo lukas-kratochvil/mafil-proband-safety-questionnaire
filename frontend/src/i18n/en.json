@@ -153,6 +153,20 @@
         "gender": "Gender",
         "nativeLanguage": "Native language"
       }
+    },
+    "approvalRoomTablePage": {
+      "actions": {
+        "showButton": "Show"
+      },
+      "header": {
+        "registrationDate": "Registration date",
+        "project": "Project",
+        "proband": "Proband",
+        "personalId": "Personal ID",
+        "birthdate": "Birthdate",
+        "gender": "Gender",
+        "nativeLanguage": "Native language"
+      }
     }
   }
 }

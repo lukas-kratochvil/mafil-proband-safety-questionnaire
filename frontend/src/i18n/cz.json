@@ -153,6 +153,20 @@
         "gender": "Pohlaví",
         "nativeLanguage": "Mateřský jazyk"
       }
+    },
+    "approvalRoomTablePage": {
+      "actions": {
+        "showButton": "Zobrazit"
+      },
+      "header": {
+        "registrationDate": "Datum registrace",
+        "project": "Projekt",
+        "proband": "Proband",
+        "personalId": "Rodné číslo",
+        "birthdate": "Datum narození",
+        "gender": "Pohlaví",
+        "nativeLanguage": "Mateřský jazyk"
+      }
     }
   }
 }
