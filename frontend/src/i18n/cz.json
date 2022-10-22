@@ -167,6 +167,20 @@
         "gender": "Pohlaví",
         "nativeLanguage": "Mateřský jazyk"
       }
+    },
+    "recentVisitsTablePage": {
+      "actions": {
+        "showDetailButton": "Zobrazit detail",
+        "duplicateButton": "Duplikovat"
+      },
+      "header": {
+        "proband": "Proband",
+        "project": "Projekt",
+        "device": "Přístroj",
+        "processedDate": "Zpracováno",
+        "operatorProcessed": "Zpracoval",
+        "state": "Stav"
+      }
     }
   }
 }

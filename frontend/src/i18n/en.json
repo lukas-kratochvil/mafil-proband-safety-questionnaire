@@ -167,6 +167,20 @@
         "gender": "Gender",
         "nativeLanguage": "Native language"
       }
+    },
+    "recentVisitsTablePage": {
+      "actions": {
+        "showDetailButton": "Show detail",
+        "duplicateButton": "Duplicate"
+      },
+      "header": {
+        "proband": "Proband",
+        "project": "Project",
+        "device": "Device",
+        "processedDate": "Processed date",
+        "operatorProcessed": "Operator processed",
+        "state": "State"
+      }
     }
   }
 }
