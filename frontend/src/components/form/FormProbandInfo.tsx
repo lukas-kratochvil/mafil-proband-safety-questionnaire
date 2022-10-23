@@ -1,200 +1,248 @@
-import { Autocomplete, Divider, Grid, InputAdornment, Stack, TextField } from "@mui/material";
-import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { useState } from "react";
-import { genders, nativeLanguages, sideDominance, visualCorrection } from "./data";
-import { FormCard } from "./FormCard";
+import { Divider, Grid, Typography } from "@mui/material";
+import { addYears, differenceInCalendarYears, isValid } from "date-fns";
+import { useEffect } from "react";
+import { useFormContext, useWatch } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { rodnecislo } from "rodnecislo";
+import { Gender, nativeLanguages, VisualCorrection } from "../../data/form_data";
+import { defaultNS } from "../../i18n";
+import { InfoTooltip } from "../informative/InfoTooltip";
+import { FormCardContainer } from "./FormCardContainer";
+import { FormAutocomplete } from "./inputs/FormAutocomplete";
+import { FormDatePicker } from "./inputs/FormDatePicker";
+import { FormOptionsAutocomplete } from "./inputs/FormOptionsAutocomplete";
+import { FormTextField } from "./inputs/FormTextField";
+import { genderOptions, getOption, sideDominanceOptions, visualCorrectionOptions } from "./types/options";
+import { FormPropType, IPhantomFormCardProps } from "./types/types";
 
-interface IFormTextFieldProps {
-  label: string;
-  endAdornment?: React.ReactNode;
-  disabled: boolean;
-}
+export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardProps) => {
+  const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandInfo" });
+  const { getFieldState, resetField, setValue } = useFormContext();
+  const personalIdValue = useWatch<FormPropType, "personalId">({ name: "personalId" });
+  const birthdateValue = useWatch<FormPropType, "birthdate">({ name: "birthdate" });
+  const genderOption = useWatch<FormPropType, "gender">({ name: "gender" });
+  const visualCorrectionOption = useWatch<FormPropType, "visualCorrection">({ name: "visualCorrection" });
 
-const FormTextField = ({ label, endAdornment, disabled }: IFormTextFieldProps) => {
-  return (
-    <TextField
-      label={label}
-      variant="outlined"
-      disabled={disabled}
-      InputProps={{
-        endAdornment: endAdornment
-      }}
-      sx={{
-        minWidth: '100%',
-      }}
-    />
-  );
-}
+  useEffect(() => {
+    const personalIdState = getFieldState("personalId");
 
-interface IFormAutocompleteProps {
-  label: string;
-  options: string[];
-  disabled: boolean;
-}
+    // Auto-fill in birthdate and gender only when personalId field is being edited for the first time (until it looses focus)
+    if (personalIdState.isTouched) {
+      return;
+    }
 
-const FormAutocomplete = ({ label, options, disabled }: IFormAutocompleteProps) => {
-  return (
-    <Autocomplete
-      options={options}
-      renderInput={(params) => <TextField {...params} label={label} />}
-      disabled={disabled}
-    />
-  );
-}
+    const czechPersonalId = rodnecislo(personalIdValue);
 
-// TODO: use only Autocomplete or Select either? OnChange event on this select component does not work!
-/*
-interface IFormSelectProps {
-  label: string;
-  options: string[];
-}
+    if (!czechPersonalId.isValid()) {
+      return;
+    }
 
-const FormSelect = ({ label, options }: IFormSelectProps) => {
-  const [value, setValue] = useState<string>('');
+    let newBirthdate = czechPersonalId.birthDate();
 
-  const handleChange = (event: SelectChangeEvent) => setValue(event.target.value as string);
+    // When proband's personal ID starts with '00' and current year is 2022, it's more likely proband was born in the year 2000 than 1900
+    if (Math.abs(differenceInCalendarYears(newBirthdate, Date.now())) >= 100) {
+      newBirthdate = addYears(newBirthdate, 100);
+    }
 
-  return (
-    <FormControl fullWidth>
-      <InputLabel id={`select-${label}`}>
-        {label}
-      </InputLabel>
-      <Select
-        labelId={`select-${label}`}
-        id="demo-simple-select"
-        value={value}
-        label={label}
-        onChange={handleChange}
-      >
-        {options.map((option, index) =>
-          <MenuItem key={index}>
-            {option}
-          </MenuItem>
-        )}
-      </Select>
-    </FormControl>
-  );
-}
-*/
+    setValue("birthdate", newBirthdate, { shouldTouch: true });
 
-interface IFormProbandInfoProps {
-  isAuthEditing: boolean;
-}
+    // Phantom visit has strictly gender 'other'
+    if (!isPhantom) {
+      if (czechPersonalId.isMale()) {
+        setValue("gender", getOption(genderOptions, Gender.MALE), { shouldTouch: true });
+      } else if (czechPersonalId.isFemale()) {
+        setValue("gender", getOption(genderOptions, Gender.FEMALE), { shouldTouch: true });
+      }
+    }
+  }, [getFieldState, isPhantom, personalIdValue, setValue]);
 
-export const FormProbandInfo = ({ isAuthEditing }: IFormProbandInfoProps) => {
-  const [birthdate, setBirthdate] = useState<Date | null>(null);
+  useEffect(() => {
+    const birthdateState = getFieldState("birthdate");
+    const genderState = getFieldState("gender");
 
-  const handleBirthdateChange = (newValue: Date | null) => setBirthdate(newValue);
+    // Auto-fill in personalId only when birthdate or gender were not yet edited and one of these fields is being edited for the first time (until it looses focus)
+    if (birthdateState.isTouched && genderState.isTouched) {
+      return;
+    }
+
+    if (personalIdValue === "" && birthdateValue !== null && isValid(birthdateValue) && genderOption !== null) {
+      const year = birthdateValue.getFullYear();
+      const month = birthdateValue.getMonth() + 1;
+      const day = genderOption.value === Gender.FEMALE ? birthdateValue.getDate() + 50 : birthdateValue.getDate();
+
+      setValue("personalId", `${year % 100}${month < 10 ? `0${month}` : month}${day < 10 ? `0${day}` : day}`, {
+        shouldTouch: true,
+      });
+    }
+  }, [birthdateValue, genderOption, getFieldState, personalIdValue, setValue]);
+
+  useEffect(() => {
+    if (visualCorrectionOption?.value !== VisualCorrection.YES) {
+      resetField("visualCorrectionValue");
+    }
+  }, [resetField, visualCorrectionOption]);
 
   return (
-    <FormCard title={'Osobní údaje'}>
-      <Stack
-        spacing={1}
-        minWidth="100%"
+    <FormCardContainer title={t("title")}>
+      <Grid
+        container
+        direction="row"
+        spacing="1rem"
+        columns={12}
       >
         <Grid
-          container
-          direction="row"
-          spacing={2}
-          columns={4}
+          item
+          xs={12}
+          sm={6}
         >
-          {/* 1. row */}
-          <Grid item xs={2}>
-            <FormTextField
-              label="Jméno"
-              disabled={!isAuthEditing}
-            />
-          </Grid>
-          <Grid item xs={2}>
-            <FormTextField
-              label="Příjmení"
-              disabled={!isAuthEditing}
-            />
-          </Grid>
-
-          {/* 2. row */}
-          <Grid item xs={2}>
-            <FormTextField
-              label="Email"
-              disabled={!isAuthEditing}
-            />
-          </Grid>
-          <Grid item xs={2}>
-            <FormTextField
-              label="Telefonní číslo"
-              disabled={!isAuthEditing}
-            />
-          </Grid>
-
-          <Grid item xs={4}>
-            <Divider flexItem />
-          </Grid>
-
-          {/* 3. row */}
-          <Grid item xs={1}>
-            <FormTextField
-              label="Rodné číslo"
-              disabled={!isAuthEditing}
-            />
-          </Grid>
-          <Grid item xs={1}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DesktopDatePicker
-                label="Datum narození"
-                inputFormat="dd/MM/yyyy"
-                value={birthdate}
-                onChange={handleBirthdateChange}
-                renderInput={(params) => <TextField {...params} />}
-                disabled={!isAuthEditing}
-              />
-            </LocalizationProvider>
-          </Grid>
-          <Grid item xs={1}>
-            <FormTextField
-              label="Výška"
-              endAdornment={<InputAdornment position="end">cm</InputAdornment>}
-              disabled={!isAuthEditing}
-            />
-          </Grid>
-          <Grid item xs={1}>
-            <FormTextField
-              label="Váha"
-              endAdornment={<InputAdornment position="end">kg</InputAdornment>}
-              disabled={!isAuthEditing}
-            />
-          </Grid>
-
-          {/* 4. row */}
-          <Grid item xs={1}>
-            <FormAutocomplete
-              label="Pohlaví" options={genders}
-              disabled={!isAuthEditing}
-            />
-          </Grid>
-          <Grid item xs={1}>
-            <FormAutocomplete
-              label="Mateřský jazyk"
-              options={nativeLanguages}
-              disabled={!isAuthEditing}
-            />
-          </Grid>
-          <Grid item xs={1}>
-            <FormAutocomplete
-              label="Zraková korekce"
-              options={visualCorrection}
-              disabled={!isAuthEditing}
-            />
-          </Grid>
-          <Grid item xs={1}>
-            <FormAutocomplete
-              label="Stranová dominance"
-              options={sideDominance}
-              disabled={!isAuthEditing}
-            />
-          </Grid>
+          <FormTextField
+            name="name"
+            label={t("name")}
+            disabled={disableInputs}
+          />
         </Grid>
-      </Stack>
-    </FormCard>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+        >
+          <FormTextField
+            name="surname"
+            label={t("surname")}
+            disabled={disableInputs}
+          />
+        </Grid>
+
+        <Grid
+          item
+          xs={12}
+        >
+          <Divider flexItem />
+        </Grid>
+
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={4}
+        >
+          <FormTextField
+            name="personalId"
+            label={t("personalId")}
+            endAdornmentLabel={<InfoTooltip text={t("personalIdHint")} />}
+            disabled={disableInputs}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={4}
+        >
+          <FormDatePicker
+            name="birthdate"
+            label={t("birthdate")}
+            disabled={disableInputs}
+            maxDate={new Date()}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={4}
+        >
+          <FormOptionsAutocomplete
+            name="gender"
+            label={t("gender")}
+            options={genderOptions}
+            disabled={disableInputs || isPhantom}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={4}
+        >
+          <FormAutocomplete
+            name="nativeLanguage"
+            label={t("nativeLanguage")}
+            options={nativeLanguages}
+            disabled={disableInputs}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={4}
+        >
+          <FormTextField
+            name="height"
+            label={t("height")}
+            endAdornmentLabel="cm"
+            disabled={disableInputs}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={4}
+        >
+          <FormTextField
+            name="weight"
+            label={t("weight")}
+            endAdornmentLabel="kg"
+            disabled={disableInputs}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={4}
+        >
+          <FormOptionsAutocomplete
+            name="visualCorrection"
+            label={t("visualCorrection")}
+            options={visualCorrectionOptions}
+            disabled={disableInputs}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={4}
+        >
+          <FormTextField
+            name="visualCorrectionValue"
+            label={t("visualCorrectionValue")}
+            disabled={disableInputs || visualCorrectionOption?.value !== VisualCorrection.YES}
+            endAdornmentLabel={
+              <>
+                <Typography sx={{ marginRight: "0.75rem" }}>D</Typography>
+                <InfoTooltip text={t("visualCorrectionValueHint")} />
+              </>
+            }
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={4}
+        >
+          <FormOptionsAutocomplete
+            name="sideDominance"
+            label={t("sideDominance")}
+            options={sideDominanceOptions}
+            disabled={disableInputs}
+          />
+        </Grid>
+      </Grid>
+    </FormCardContainer>
   );
-}
+};

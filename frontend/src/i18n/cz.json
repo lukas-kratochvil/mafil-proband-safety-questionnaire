@@ -1,0 +1,192 @@
+{
+  "translation": {
+    "common": {
+      "logOutButton": "Odhlásit se",
+      "backButton": "Zpět",
+      "navigation": {
+        "waitingRoom": "Čekárna",
+        "approvalRoom": "Ke schválení",
+        "recentVisits": "Poslední visity",
+        "createNewPhantomForm": "Založit měření na Fantomu",
+        "openNewProbandForm": "Otevřít formulář probanda"
+      }
+    },
+    "form": {
+      "common": {
+        "optional": "nepovinné",
+        "loading": "Načítá se",
+        "noOptions": "Žádné možnosti",
+        "buttons": {
+          "agree": "Souhlasím",
+          "finalize": "Finalizovat",
+          "approve": "Schválit",
+          "disapprove": "Neschválit",
+          "edit": "Editovat",
+          "cancel": "Zrušit",
+          "saveChanges": "Uložit změny"
+        }
+      },
+      "enums": {
+        "gender": {
+          "MALE": "Muž",
+          "FEMALE": "Žena",
+          "OTHER": "Jiné"
+        },
+        "visualCorrection": {
+          "YES": "Ano",
+          "NO": "Ne"
+        },
+        "sideDominance": {
+          "RIGHT_HANDED": "Pravák",
+          "LEFT_HANDED": "Levák",
+          "LEFT_HANDED_RETRAINED": "Přeučený levák",
+          "UNDETERMINED": "Neurčeno"
+        }
+      },
+      "beforeExamination": {
+        "title": "Před vyšetřením",
+        "text": "Před vyšetřením si prosím <1>odložte všechny elektricky vodivé/kovové předměty</1> (šperky, hodinky, gumičky, sponky, piercing) a součásti oděvu, které obsahují <3>elektricky vodivé materiály</3>, např. podprsenka skovovými kosticemi, kovové nášivky, funkční prádlo sobsahem stříbra. Vyšetření probíhá za účelem vědeckého výzkumu. Účelem vyšetření není poskytování zdravotních služeb nebo zjišťování Vašeho zdravotního stavu. Sesbíraná data nebude vyhodnocovat lékař, ale vědecký pracovník. Vpřípadě, že by vědecký pracovník pojal podezření na možné zdravotní komplikace, máte právo být o tomto podezření informován/aa následně podezření zkonzultovat slékařem, což by bylo zajištěno výzkumným pracovníkem příslušné studie na základě Vašeho rozhodnutí vinformovaném souhlasu."
+      },
+      "entryInfo": {
+        "title": "Úvodní informace",
+        "text1": "Vítáme Vás na pracovišti magnetické rezonance (MR). Jde o moderní zobrazovací metodu používanou v medicíně, která na rozdíl od RTG vyšetření nepoužívá ionizující záření. Principem metody je sledování chování tkání a orgánů ve velmi silném magnetickém poli. Měření je doprovázeno zvýšeným hlukem. Vyšetření není bolestivé, ale elektronika nebo kovový materiál v těle či na jeho povrchu může vlivem magnetického pole poškodit Vaše zdraví. Proto je z hlediska vaší bezpečnosti velmi důležité dbát pokynů obsluhy MR přístroje a pravdivě vyplnit následující dotazník. Pokud budete mít nějaké dotazy nebo nejasnosti, obraťte se na obsluhu MR přístroje.",
+        "text2": "V průběhu vyšetření je důležité dbát pokynů laboranta. Zejména, snažit se minimalizovat jakýkoliv pohyb v průběhu měření."
+      },
+      "examinationConsent": {
+        "title": "Souhlas s vyšetřením v Laboratoři multimodálního a funkčního zobrazování",
+        "text1": "Prohlašuji, že jsem četl/a informace k MR vyšetření a porozuměl/a jsem jejich smyslu. Prohlašuji, že jsem pravdivě vyplnil/a tento dotazník. Prohlašuji, že jsem byl/a poučena o výzkumné studii, k níž toto vyšetření náleží, členem výzkumného týmu a prostřednictvím samostatného informovaného souhlasu a souhlasím s realizací vyšetření.",
+        "text2": "Beru na vědomí, že moje osobní údaje v rozsahu jméno, příjmení, podpis, datum narození, rodné číslo, pohlaví, stranová dominance, výška, váha, zraková korekce, mateřský jazyk, bezpečnostní otázky ke kontraindikacím MR vyšetření z tohoto dotazníku, naměřená data a kontaktní údaje (pro případ náhodného nálezu převzaté z informovaného souhlasu k výzkumné studii) budou na základě oprávněného zájmu správce – Masarykovy univerzity – za účelem zajištění nezbytných bezpečnostních a právních náležitostí souvisejících s vyšetřením v Laboratoři multimodálního a funkčního zobrazování po dobu 5 let uloženy na zabezpečených uložištích Masarykovy univerzity s omezeným přístupem. Po uplynutí této doby budou veškerá data uchovávaná v Laboratoři multimodálního a funkčního zobrazování anonymizována.",
+        "contactInfo": "Kontaktní údaje:",
+        "address": "Laboratoř multimodálního a funkčního zobrazování, CEITEC MU, Masarykova univerzita, Kamenice 5, 625 00 Brno",
+        "contactPerson": "kontaktní osoba",
+        "phone": "telefon",
+        "email": "email"
+      },
+      "probandContact": {
+        "title": "Kontaktní údaje",
+        "text": "V případě, že budete chtít předat Vaše naměřená data elektronickou cestou, vyplňte údaje níže:",
+        "email": "Email",
+        "phone": "Telefonní číslo"
+      },
+      "probandInfo": {
+        "title": "Osobní údaje",
+        "name": "Jméno",
+        "surname": "Příjmení",
+        "personalId": "Rodné číslo",
+        "personalIdHint": "V případě, že nemáte české rodné číslo, zadejte, prosím, číslo pojištěnce.",
+        "birthdate": "Datum narození",
+        "gender": "Pohlaví",
+        "nativeLanguage": "Mateřský jazyk",
+        "height": "Výška",
+        "weight": "Váha",
+        "visualCorrection": "Zraková korekce",
+        "visualCorrectionValue": "Hodnota zrakové korekce",
+        "visualCorrectionValueHint": "Kladné dioptrie značí dalekozrakost, což znamená, že vidíte hůře na blízko. Naopak záporné dioptrie značí krátkozrakost, tedy vidíte hůře na dálku.",
+        "sideDominance": "Stranová dominance"
+      },
+      "projectInfo": {
+        "title": "Informace o projektu",
+        "project": "Projekt",
+        "device": "Přístroj",
+        "measurementDate": "Datum měření",
+        "phantomInfoStripe": "Fantom"
+      },
+      "safetyInfo": {
+        "title": "Bezpečnostní informace",
+        "text": "Přečtěte si, prosím, následující otázky a zatrhněte správnou odpověď. Pravdivé zodpovězení našich dotazů je velmi důležité pro Vaši bezpečnost."
+      },
+      "safetyQuestions": {
+        "yes": "Ano",
+        "no": "Ne",
+        "comment": "Komentář"
+      },
+      "validation": {
+        "required": "Povinné pole.",
+        "notValid": "Hodnota není validní.",
+        "positive": "Hodnota musí být kladné číslo.",
+        "birthdateMaxDate": "Maximální povolená hodnota pro datum narození je dnes.",
+        "birthdateNotCorrespondToPersonalId": "Datum narození není shodné s hodnotou získanou z poskytnutého českého nebo slovenského rodného čísla.",
+        "genderNotCorrespondToPersonalId": "Pohlaví není shodné s hodnotou získanou z poskytnutého českého nebo slovenského rodného čísla.",
+        "visualCorrectionValueNotZero": "Hodnota se nesmí rovnat nule.",
+        "visualCorrectionValueTooLow": "Hodnota je příliš nízká.",
+        "visualCorrectionValueTooHigh": "Hodnota je příliš vysoká.",
+        "safetyQuestionsRequired": "Všechny bezpečnostní otázky musí být zodpovězeny."
+      }
+    },
+    "homePage": {
+      "title": "Váš formulář byl úspěšně odeslán. Vyčkejte, prosím, na další pokyny operátora.",
+      "openNewFormButton": "Otevřít nový formulář"
+    },
+    "loginPage": {
+      "title": "Bezpečnostní dotazník probanda",
+      "loginText": "Přihlásit se přes:"
+    },
+    "visitDetailPage": {
+      "title": "Detail visity",
+      "buttons": {
+        "downloadPDFAndPhysicallySign": "Stáhnout PDF a fyzicky podepsat",
+        "signElectronically": "Podepsat elektronicky",
+        "confirmSignature": "Potvrdit podpis",
+        "downloadPDF": "Stáhnout PDF"
+      },
+      "infoStripes": {
+        "signatureChoice": "Výběr způsobu podepsání visity",
+        "disapproved": "Neschváleno",
+        "waitingForSignatureConfirmation": "Čeká se na potvrzení podpisu",
+        "completed": "Dokončeno",
+        "signed": "Podepsáno"
+      }
+    },
+    "waitingRoomTablePage": {
+      "title": "Čekárna",
+      "actions": {
+        "processButton": "Zpracovat",
+        "clearIconDialogTitle": "Odstranění formuláře z Čekárny",
+        "clearIconDialogContent": "Opravdu si přejete odstranit tento formulář z Čekárny?",
+        "clearIconDialogDelete": "Odstranit",
+        "clearIconDialogCancel": "Zrušit"
+      },
+      "header": {
+        "registrationDate": "Datum registrace",
+        "proband": "Proband",
+        "personalId": "Rodné číslo",
+        "birthdate": "Datum narození",
+        "gender": "Pohlaví",
+        "nativeLanguage": "Mateřský jazyk",
+        "actions": "Akce"
+      }
+    },
+    "approvalRoomTablePage": {
+      "title": "Ke schválení",
+      "actions": {
+        "showButton": "Zobrazit"
+      },
+      "header": {
+        "registrationDate": "Datum registrace",
+        "project": "Projekt",
+        "proband": "Proband",
+        "personalId": "Rodné číslo",
+        "birthdate": "Datum narození",
+        "gender": "Pohlaví",
+        "nativeLanguage": "Mateřský jazyk",
+        "actions": "Akce"
+      }
+    },
+    "recentVisitsTablePage": {
+      "title": "Poslední visity",
+      "actions": {
+        "showDetailButton": "Zobrazit detail",
+        "duplicateButton": "Duplikovat"
+      },
+      "header": {
+        "proband": "Proband",
+        "project": "Projekt",
+        "device": "Přístroj",
+        "processedDate": "Zpracováno",
+        "operatorProcessed": "Zpracoval",
+        "state": "Stav",
+        "actions": "Akce"
+      }
+    }
+  }
+}

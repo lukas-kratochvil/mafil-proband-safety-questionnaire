@@ -1,104 +1,117 @@
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import LanguageIcon from "@mui/icons-material/Language";
-import { Avatar, Button, IconButton, Menu, Tooltip } from "@mui/material";
-import { FlagComponent } from "country-flag-icons/react/3x2";
-import { useState } from "react";
-import { languages } from "./data"
+import {
+  Button,
+  ClickAwayListener,
+  Grid,
+  Grow,
+  MenuItem,
+  MenuList,
+  Paper,
+  Popper,
+  SxProps,
+  Theme,
+} from "@mui/material";
+import { blue } from "@mui/material/colors";
+import { bindPopper, bindToggle, usePopupState } from "material-ui-popup-state/hooks";
+import { useTranslation } from "react-i18next";
+import { LocalizationKeys } from "../../i18n";
 
-export interface ILanguageItemProps {
-  name: string;
-  label: string;
-  Flag: FlagComponent;
-}
+type SupportedLanguageType = {
+  [key in LocalizationKeys]: {
+    nativeName: string;
+  };
+};
 
-const LanguageItem = ({ name, label, Flag }: ILanguageItemProps) => {
-  return (
-    <Tooltip title={name}>
-      <Button size="small">
-        <Avatar
-          alt={label}
-          variant="rounded"
-          sx={{
-            width: 30,
-            height: 25,
-            backgroundColor: "inherit"
-          }}
-        >
-          <Flag />
-        </Avatar>
-      </Button>
-    </Tooltip>
-  );
+const supportedLanguages: SupportedLanguageType = {
+  cz: { nativeName: "Čeština" },
+  en: { nativeName: "English" },
+};
+
+type SupportedLanguageKeys = keyof typeof supportedLanguages;
+
+const languageItemHoverFocus: SxProps<Theme> = {
+  color: blue[800],
+  bgcolor: blue[50],
 };
 
 export const LanguageMenu = () => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const isOpen = Boolean(anchorEl);
+  const { i18n } = useTranslation();
+  const popupState = usePopupState({
+    variant: "popper",
+    popupId: "language-menu",
+    disableAutoFocus: true,
+  });
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
-  const handleClose = () => setAnchorEl(null);
+  const selectedLanguageNativeName = supportedLanguages[i18n.resolvedLanguage as SupportedLanguageKeys].nativeName;
+
+  const selectedLanguageOnClick = (language: string) => {
+    i18n.changeLanguage(language);
+    popupState.close();
+  };
 
   return (
-    <>
-      <Tooltip title="Choose language">
-        <IconButton
-          onClick={handleClick}
-          size="small"
-          aria-controls={isOpen ? 'language-menu' : undefined}
-          aria-haspopup="true"
-          aria-expanded={isOpen ? 'true' : undefined}
-        >
-          <LanguageIcon
-            style={{
-              color: 'white',
-              width: 30,
-              height: 30
-            }}
-          />
-        </IconButton>
-      </Tooltip>
-      <Menu
-        id="language-menu"
-        aria-labelledby="language-menu"
-        anchorEl={anchorEl}
-        open={isOpen}
-        onClose={handleClose}
-        onClick={handleClose}
-        disableScrollLock
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            overflow: 'visible',
-            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-            mt: 1.5,
-            backgroundColor: 'pink',
-            '&:before': {
-              content: '""',
-              display: 'block',
-              position: 'absolute',
-              top: 0,
-              right: 15,
-              width: 10,
-              height: 10,
-              bgcolor: 'pink',
-              transform: 'translateY(-50%) rotate(45deg)',
-              zIndex: 0,
-            },
+    <Grid
+      container
+      justifyContent="flex-end"
+    >
+      <Button
+        {...bindToggle(popupState)}
+        variant="contained"
+        startIcon={<LanguageIcon />}
+        endIcon={<ArrowDropDownIcon />}
+        sx={{
+          textTransform: "unset",
+          bgcolor: blue[600],
+          "&:hover": {
+            bgcolor: blue[800],
           },
         }}
-        transformOrigin={{
-          horizontal: 'right',
-          vertical: 'top'
-        }}
-        anchorOrigin={{
-          horizontal: 'right',
-          vertical: 'bottom'
-        }}
+      >
+        {selectedLanguageNativeName}
+      </Button>
+      <Popper
+        {...bindPopper(popupState)}
+        placement="bottom-end"
+        transition
+        disablePortal
         sx={{
-          position: "absolute"
+          zIndex: 1000,
+          minWidth: "8rem",
         }}
       >
-        {languages.map((language, index) => <LanguageItem key={index} {...language} />)}
-      </Menu>
-    </>
+        {({ TransitionProps }) => (
+          <Grow {...TransitionProps}>
+            <Paper elevation={2}>
+              <ClickAwayListener onClickAway={popupState.close}>
+                <MenuList
+                  autoFocus
+                  sx={{
+                    padding: 0,
+                    "&:focus": {
+                      outline: "none",
+                    },
+                  }}
+                >
+                  {Object.keys(supportedLanguages).map((language) => (
+                    <MenuItem
+                      key={language}
+                      onClick={() => selectedLanguageOnClick(language)}
+                      sx={{
+                        fontSize: "0.9rem",
+                        "&:hover": { ...languageItemHoverFocus },
+                        "&:focus-visible": { ...languageItemHoverFocus },
+                      }}
+                    >
+                      {supportedLanguages[language as SupportedLanguageKeys].nativeName}
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+    </Grid>
   );
-}
+};

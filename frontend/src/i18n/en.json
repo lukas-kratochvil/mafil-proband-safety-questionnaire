@@ -1,0 +1,192 @@
+{
+  "translation": {
+    "common": {
+      "logOutButton": "Log out",
+      "backButton": "Back",
+      "navigation": {
+        "waitingRoom": "Waiting room",
+        "approvalRoom": "For approval",
+        "recentVisits": "Recent visits",
+        "createNewPhantomForm": "Create new phantom measurement",
+        "openNewProbandForm": "Open new proband form"
+      }
+    },
+    "form": {
+      "common": {
+        "optional": "optional",
+        "loading": "Loading",
+        "noOptions": "No options",
+        "buttons": {
+          "agree": "Agree",
+          "finalize": "Finalize",
+          "approve": "Approve",
+          "disapprove": "Disapprove",
+          "edit": "Edit",
+          "cancel": "Cancel",
+          "saveChanges": "Save changes"
+        }
+      },
+      "enums": {
+        "gender": {
+          "MALE": "Male",
+          "FEMALE": "Female",
+          "OTHER": "Other"
+        },
+        "visualCorrection": {
+          "YES": "Yes",
+          "NO": "No"
+        },
+        "sideDominance": {
+          "RIGHT_HANDED": "Right-handed",
+          "LEFT_HANDED": "Left-handed",
+          "LEFT_HANDED_RETRAINED": "Retrained left-handed",
+          "UNDETERMINED": "Undetermined"
+        }
+      },
+      "beforeExamination": {
+        "title": "Before examination",
+        "text": "Before the examination, please <1>put away all electrically conductive/metallic objects</1> (jewellery, watches, rubber bands, clips, piercings) and clothing components that contain <3>electrically conductive materials</3>, e.g. underwired bras, metal patches, functional underwear with silver content. The investigation is conducted for the purpose of scientific research. The purpose of the examination is not to provide health services or to determine your health status. The collected data will not be evaluated by a doctor, but by a scientist. In the event that a researcher suspects possible health complications, you have the right to be informed about this suspicion and subsequently to consult a doctor about the suspicion, which would be ensured by the researcher of the relevant study based on your informed consent decision."
+      },
+      "entryInfo": {
+        "title": "Introductory information",
+        "text1": "Welcome to the magnetic resonance (MR) workplace. It is a modern imaging method used in medicine, which, unlike X-ray examination, does not use ionizing radiation. The principle of the method is to monitor the behavior of tissues and organs in a very strong magnetic field. The measurement is accompanied by increased noise. The examination is not painful, but electronics or metal material in the body or on its surface can damage your health due to the magnetic field. Therefore, from the safety point of view, it is very important to follow the instructions of the MR device operator and to fill out the following questionnaire truthfully. If you have any questions or ambiguities, please contact the operator of the MR device.",
+        "text2": "During the examination, it is important to follow the laboratory technician's instructions. In particular, try to minimize any movement during the measurement."
+      },
+      "examinationConsent": {
+        "title": "Consent to examination in the Multimodal and Functional Imaging Laboratory",
+        "text1": "I declare that I have read the information on the MR examination and understand its meaning. I declare that I have filled out this questionnaire truthfully. I declare that I have been informed about the research study to which this examination belongs by a member of the research team and through separate informed consent and I agree to the implementation of the examination.",
+        "text2": "I acknowledge that my personal data in the scope of name, surname, signature, birthdate, personal ID, gender, side dominance, height, weight, visual correction, native language, security questions on MR examination contraindications from this questionnaire, measured data and contact data (in case of an accidental finding taken from the informed consent to the research study) will be stored in secure storage for 5 years based on the legitimate interest of the administrator - Masaryk University - in order to ensure the necessary security and legal requirements related to the examination in the Laboratory of Multimodal and Functional Imaging Masaryk University with limited access. After this period, all data stored in the Laboratory of Multimodal and Functional Imaging will be anonymized.",
+        "contactInfo": "Contact information:",
+        "address": "Laboratory of multimodal and functional imaging, CEITEC MU, Masaryk University, Kamenice 5, 625 00 Brno",
+        "contactPerson": "contact person",
+        "phone": "phone",
+        "email": "e-mail"
+      },
+      "probandContact": {
+        "title": "Contact information",
+        "text": "If you want to send your measured data electronically, fill in the information below:",
+        "email": "E-mail",
+        "phone": "Phone number"
+      },
+      "probandInfo": {
+        "title": "Personal data",
+        "name": "Name",
+        "surname": "Surname",
+        "personalId": "Personal ID",
+        "personalIdHint": "If you do not have a Czech personal ID, please enter the number of the insured person.",
+        "birthdate": "Birthdate",
+        "gender": "Gender",
+        "nativeLanguage": "Native language",
+        "height": "Height",
+        "weight": "Weight",
+        "visualCorrection": "Visual correction",
+        "visualCorrectionValue": "Visual correction value",
+        "visualCorrectionValueHint": "Positive diopters indicate farsightedness, which means that you see worse up close. On the contrary, negative diopters indicate myopia, i.e. you see worse at a distance.",
+        "sideDominance": "Side dominance"
+      },
+      "projectInfo": {
+        "title": "Project information",
+        "project": "Project",
+        "device": "Device",
+        "measurementDate": "Measurement date",
+        "phantomInfoStripe": "Phantom"
+      },
+      "safetyInfo": {
+        "title": "Safety information",
+        "text": "Please read the following questions and tick the correct answer. Answering our questions truthfully is very important for your safety."
+      },
+      "safetyQuestions": {
+        "yes": "Yes",
+        "no": "No",
+        "comment": "Comment"
+      },
+      "validation": {
+        "required": "Required field.",
+        "notValid": "The value is not valid.",
+        "positive": "The value must be a positive number.",
+        "birthdateMaxDate": "The maximum allowed date of birth is today.",
+        "birthdateNotCorrespondToPersonalId": "The birthdate does not match the value obtained from the provided Czech or Slovak personal ID.",
+        "genderNotCorrespondToPersonalId": "The gender does not match the value obtained from the provided Czech or Slovak personal ID.",
+        "visualCorrectionValueNotZero": "The value must not be zero.",
+        "visualCorrectionValueTooLow": "The value is too low.",
+        "visualCorrectionValueTooHigh": "The value is too high.",
+        "safetyQuestionsRequired": "All security questions must be answered."
+      }
+    },
+    "homePage": {
+      "title": "Your form has been successfully submitted. Please wait for further instructions from the operator.",
+      "openNewFormButton": "Open new form"
+    },
+    "loginPage": {
+      "title": "Proband safety questionnaire",
+      "loginText": "Log in via:"
+    },
+    "visitDetailPage": {
+      "title": "Detail of visit",
+      "buttons": {
+        "downloadPDFAndPhysicallySign": "Download PDF and physically sign",
+        "signElectronically": "Sign electronically",
+        "confirmSignature": "Confirm signature",
+        "downloadPDF": "Download PDF"
+      },
+      "infoStripes": {
+        "signatureChoice": "Choosing the method of signing the visit",
+        "disapproved": "Disapproved",
+        "waitingForSignatureConfirmation": "Waiting for signature confirmation",
+        "completed": "Completed",
+        "signed": "Signed"
+      }
+    },
+    "waitingRoomTablePage": {
+      "title": "Waiting room",
+      "actions": {
+        "processButton": "Process",
+        "clearIconDialogTitle": "Deleting the form from the Waiting Room",
+        "clearIconDialogContent": "Do you really want to delete this form from the Waiting Room?",
+        "clearIconDialogDelete": "Delete",
+        "clearIconDialogCancel": "Cancel"
+      },
+      "header": {
+        "registrationDate": "Registration date",
+        "proband": "Proband",
+        "personalId": "Personal ID",
+        "birthdate": "Birthdate",
+        "gender": "Gender",
+        "nativeLanguage": "Native language",
+        "actions": "Actions"
+      }
+    },
+    "approvalRoomTablePage": {
+      "title": "For approval",
+      "actions": {
+        "showButton": "Show"
+      },
+      "header": {
+        "registrationDate": "Registration date",
+        "project": "Project",
+        "proband": "Proband",
+        "personalId": "Personal ID",
+        "birthdate": "Birthdate",
+        "gender": "Gender",
+        "nativeLanguage": "Native language",
+        "actions": "Actions"
+      }
+    },
+    "recentVisitsTablePage": {
+      "title": "Recent visits",
+      "actions": {
+        "showDetailButton": "Show detail",
+        "duplicateButton": "Duplicate"
+      },
+      "header": {
+        "proband": "Proband",
+        "project": "Project",
+        "device": "Device",
+        "processedDate": "Processed date",
+        "operatorProcessed": "Operator processed",
+        "state": "State",
+        "actions": "Actions"
+      }
+    }
+  }
+}

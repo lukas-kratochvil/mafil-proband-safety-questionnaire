@@ -1,34 +1,57 @@
-import { AppBar, Box, Stack, Toolbar } from "@mui/material";
-import { IAuth } from "../../App";
+import { AppBar, Grid, Theme, Toolbar, useMediaQuery } from "@mui/material";
+import { useAuth } from "../../hooks/auth/Auth";
+import { CeitecMafilLogo } from "./CeitecMafilLogo";
 import { LanguageMenu } from "./LanguageMenu";
 import { LoginOperator } from "./LoginOperator";
+import { Navigation } from "./navigation/Navigation";
+import { NavigationMobile } from "./navigation/mobile/NavigationMobile";
 
-interface IHeaderProps {
-  auth?: IAuth;
-}
+export const Header = () => {
+  const { operator } = useAuth();
+  const matchesDownMdBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
 
-export const Header = ({ auth }: IHeaderProps) => {
   return (
     <AppBar position="static">
-      <Toolbar>
-        <Stack
+      <Toolbar variant="dense">
+        <Grid
+          container
           direction="row"
-          alignItems="center"
           justifyContent="space-between"
-          width={"100%"}
+          alignItems="center"
+          wrap="nowrap"
         >
-          <Box
-            component="img"
-            alt="CEITEC-MAFIL logo"
-            src="/logo_mafil.png"
-            sx={{
-              height: 40,
-            }}
-          />
-          {auth !== undefined && <LoginOperator username={auth.username} />}
-          <LanguageMenu />
-        </Stack>
+          {operator === undefined ? (
+            <Grid
+              item
+              xs
+            >
+              <CeitecMafilLogo />
+            </Grid>
+          ) : (
+            <>
+              <Grid
+                item
+                xs
+              >
+                {matchesDownMdBreakpoint ? <NavigationMobile /> : <CeitecMafilLogo />}
+              </Grid>
+              <Grid
+                item
+                xs="auto"
+              >
+                {matchesDownMdBreakpoint ? <CeitecMafilLogo /> : <LoginOperator />}
+              </Grid>
+            </>
+          )}
+          <Grid
+            item
+            xs
+          >
+            <LanguageMenu />
+          </Grid>
+        </Grid>
       </Toolbar>
+      {!matchesDownMdBreakpoint && operator !== undefined && <Navigation />}
     </AppBar>
   );
 };

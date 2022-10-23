@@ -1,63 +1,28 @@
-import { FormControl, FormControlLabel, Grid, Radio, RadioGroup, Stack, TextField, Typography } from "@mui/material";
-import { IAuth } from "../../App";
-import { FormCard } from "./FormCard";
+import { Stack } from "@mui/material";
+import { FormCardContainer } from "./FormCardContainer";
+import { FormQac, FormQuestion } from "./FormQuestion";
+import { IFormCardProps } from "./types/types";
 
-interface IFormQuestionsProps {
+interface IFormQuestionsProps extends IFormCardProps {
   title: string;
-  questions: string[];
-  auth?: IAuth;
-  isAuthEditing: boolean;
+  qacs: FormQac[];
+  disableComment?: boolean;
 }
 
-export const FormQuestions = ({ title, questions, auth, isAuthEditing }: IFormQuestionsProps) => {
-  return (
-    <FormCard title={title}>
-      <Stack
-        spacing={auth === undefined ? 1 : 2}
-        minWidth="100%"
-      >
-        {questions.map((question, index) =>
-          <Stack
-            key={index}
-            sx={{
-              "&:hover": {
-                borderRadius: 1,
-                backgroundColor: "#f4f4f4",
-              },
-            }}
-          >
-            <Grid
-              container
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Typography width="80%">
-                {question}
-              </Typography>
-              <FormControl>
-                <RadioGroup
-                  row
-                  name="question-radio-buttons-group"
-                >
-                  <FormControlLabel value="yes" control={<Radio required={true} disabled={!isAuthEditing} />} label="Ano" />
-                  <FormControlLabel value="no" control={<Radio required={true} disabled={!isAuthEditing} />} label="Ne" />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
-            {auth !== undefined &&
-              <TextField
-                label="Komentář"
-                variant="standard"
-                size="small"
-                multiline
-                disabled={!isAuthEditing}
-                key={index}
-              />
-            }
-          </Stack>
-        )}
-      </Stack>
-    </FormCard>
-  );
-}
+export const FormQuestions = ({ title, qacs, disableInputs, disableComment }: IFormQuestionsProps) => (
+  <FormCardContainer title={title}>
+    <Stack
+      spacing="0.5rem"
+      width="100%"
+    >
+      {qacs.map((qac) => (
+        <FormQuestion
+          key={qac.questionId}
+          qac={qac}
+          disableInputs={disableInputs}
+          disableComment={disableComment}
+        />
+      ))}
+    </Stack>
+  </FormCardContainer>
+);

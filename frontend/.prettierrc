@@ -1,0 +1,6 @@
+{
+  "bracketSameLine": false,
+  "printWidth": 120,
+  "singleAttributePerLine": true,
+  "trailingComma": "es5"
+}
