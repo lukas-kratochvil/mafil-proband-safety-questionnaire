@@ -15,6 +15,7 @@ export const NavigationTab = ({ localizationKey, urlPrefix, onClick, showCount }
       label={`${t(convertStringToLocalizationKey(localizationKey))}${showCount ? " (?)" : ""}`}
       onClick={onClick}
       sx={{ ...getCommonTabSx(location, urlPrefix) }}
+      data-testid="navTab"
     />
   );
 };

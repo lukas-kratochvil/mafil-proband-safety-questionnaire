@@ -54,6 +54,7 @@ export const LanguageMenu = () => {
     <Grid
       container
       justifyContent="flex-end"
+      data-testid="language-menu"
     >
       <Button
         {...bindToggle(popupState)}
