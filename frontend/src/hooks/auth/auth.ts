@@ -1,39 +1,14 @@
-import { createContext, PropsWithChildren, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UrlBasePaths } from "../../App";
 import { operatorMR, operatorSpecial } from "../../data/operator_data";
 import { authenticateOperator } from "../../util/fetch";
-
-export enum IAuthMethod {
-  MUNI,
-  MUNI_HIGHER_PERMISSION, // TODO: delete - only for test purposes
-}
-
-export interface IOperator {
-  name: string;
-  surname: string;
-  uco: string;
-  email: string;
-  hasHigherPermission: boolean;
-}
-
-export interface IAuthGateOperator {
-  name: string;
-  surname: string;
-  uco: string;
-  email: string;
-}
-
-interface IAuth {
-  operator: IOperator | undefined;
-  logIn: (authMethod: IAuthMethod) => Promise<boolean>;
-  logOut: () => void;
-}
+import { IAuth, IAuthGateOperator, IAuthMethod, IOperator } from "./interfaces";
 
 // defaultValue argument is only used when a component does not have a matching Provider above it in the tree – helpful for testing components in isolation
-const authContext = createContext<IAuth>({} as IAuth);
+export const authContext = createContext<IAuth>({} as IAuth);
 
-const useAuthProvider = (): IAuth => {
+export const useAuthProvider = (): IAuth => {
   const navigate = useNavigate();
   const [operator, setOperator] = useState<IOperator | undefined>(() => {
     const storedOperator = window.sessionStorage.getItem("operator");
@@ -85,8 +60,3 @@ const useAuthProvider = (): IAuth => {
 };
 
 export const useAuth = () => useContext(authContext);
-
-export const AuthProvider = ({ children }: PropsWithChildren) => {
-  const auth = useAuthProvider();
-  return <authContext.Provider value={auth}>{children}</authContext.Provider>;
-};

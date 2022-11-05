@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { red } from "@mui/material/colors";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../../hooks/auth/Auth";
+import { useAuth } from "../../hooks/auth/auth";
 import { defaultNS } from "../../i18n";
 
 export const LogOutButton = () => {

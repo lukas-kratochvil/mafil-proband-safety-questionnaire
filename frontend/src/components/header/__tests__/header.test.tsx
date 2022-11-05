@@ -18,7 +18,7 @@ vi.mock("react-router-dom", () => ({
 //----------------------------------------------------------------------
 let mockOperator: string | undefined;
 
-vi.mock("../../../hooks/auth/Auth", () => ({
+vi.mock("../../../hooks/auth/auth", () => ({
   useAuth: () => ({
     operator: mockOperator,
   }),

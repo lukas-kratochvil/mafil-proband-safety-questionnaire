@@ -1,6 +1,6 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Card, Typography } from "@mui/material";
-import { useAuth } from "../../hooks/auth/Auth";
+import { useAuth } from "../../hooks/auth/auth";
 
 export const OperatorCard = () => {
   const { operator } = useAuth();

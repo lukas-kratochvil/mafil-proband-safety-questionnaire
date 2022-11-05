@@ -4,7 +4,7 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { IQuestionData } from "../../data/question_data";
 import { AnswerOption } from "../../data/visit_data";
-import { useAuth } from "../../hooks/auth/Auth";
+import { useAuth } from "../../hooks/auth/auth";
 import { defaultNS } from "../../i18n";
 import { fetchQuestion } from "../../util/fetch";
 import { FormRadioGroup } from "./inputs/FormRadioGroup";

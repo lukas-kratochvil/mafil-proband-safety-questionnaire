@@ -1,7 +1,8 @@
 import { Avatar, Button, Stack, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { CardContainer } from "../components/card/CardContainer";
-import { IAuthMethod, useAuth } from "../hooks/auth/Auth";
+import { useAuth } from "../hooks/auth/auth";
+import { IAuthMethod } from "../hooks/auth/interfaces";
 import { defaultNS } from "../i18n";
 import { PageContainer } from "./PageContainer";
 

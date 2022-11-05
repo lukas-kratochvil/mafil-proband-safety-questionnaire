@@ -139,7 +139,7 @@ const createVisits = (initialVisit: IVisit, state: VisitState, count: number): I
   return visits;
 };
 
-export const dummyVisitNew: IVisit = {
+const dummyVisitNew: IVisit = {
   id: generateId(),
   createdAt: new Date(1663390000000),
   visitId: "visit1",
@@ -213,7 +213,7 @@ const dummyPhantomVisitNew: IVisit = {
   })),
 };
 
-export const dummyPhantomVisit: IVisit = {
+const dummyPhantomVisit: IVisit = {
   id: generateId(),
   createdAt: new Date(1663000000000),
   visitId: "phantom2",

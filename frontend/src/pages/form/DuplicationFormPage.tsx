@@ -16,7 +16,7 @@ import {
 } from "../../components/form/util/utils";
 import { QuestionPartNumber } from "../../data/question_data";
 import { AnswerOption, dummyVisits, VisitState } from "../../data/visit_data";
-import { useAuth } from "../../hooks/auth/Auth";
+import { useAuth } from "../../hooks/auth/auth";
 import { fetchVisit } from "../../util/fetch";
 import { getBackButtonProps } from "../../util/utils";
 import { FormContainer } from "./FormContainer";
