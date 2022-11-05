@@ -10,8 +10,14 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [react()],
   test: {
+    alias: [
+      {
+        find: "test-utils",
+        replacement: "./src/__tests__/utils.ts",
+      },
+    ],
     environment: "jsdom",
     globals: true,
-    setupFiles: ["./src/tests-setup.ts"],
+    setupFiles: ["./src/__tests__/setup.ts"],
   },
 })
