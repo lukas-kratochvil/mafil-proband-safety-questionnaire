@@ -4,6 +4,9 @@ dist
 dist-ssr
 *.local
 
+# Test coverage
+coverage
+
 # Logs
 logs
 *.log
