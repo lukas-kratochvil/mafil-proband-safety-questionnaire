@@ -31,3 +31,5 @@ i18n
     // TODO: try to get {locale}.json files from the backend (https://www.i18next.com/overview/configuration-options#languages-namespaces-resources)
     resources,
   });
+
+export default i18n;

@@ -14,8 +14,7 @@ import {
 } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import { bindPopper, bindToggle, usePopupState } from "material-ui-popup-state/hooks";
-import { useTranslation } from "react-i18next";
-import { LocalizationKeys } from "../../i18n";
+import i18n, { LocalizationKeys } from "../../i18n";
 
 type SupportedLanguageType = {
   [key in LocalizationKeys]: {
@@ -36,7 +35,6 @@ const languageItemHoverFocus: SxProps<Theme> = {
 };
 
 export const LanguageMenu = () => {
-  const { i18n } = useTranslation();
   const popupState = usePopupState({
     variant: "popper",
     popupId: "language-menu",
