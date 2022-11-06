@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from "vitest";
-import { render, within } from "../../../__tests__/utils";
+import { render, screen, within } from "../../../__tests__/utils";
 import { Header } from "../Header";
 
 //----------------------------------------------------------------------
@@ -50,17 +50,17 @@ describe("header", () => {
   test("auth user isn't logged in - contains CEITEC logo", () => {
     mockOperator = undefined;
 
-    const { getByAltText } = render(<Header />);
+    render(<Header />);
 
-    expect(getByAltText("CEITEC-MAFIL logo")).toBeInTheDocument();
+    expect(screen.getByAltText("CEITEC-MAFIL logo")).toBeInTheDocument();
   });
 
   test("auth user isn't logged in - contains language menu", () => {
     mockOperator = undefined;
 
-    const { getByTestId } = render(<Header />);
+    render(<Header />);
 
-    expect(getByTestId("language-menu")).toBeInTheDocument();
+    expect(screen.getByTestId("language-menu")).toBeInTheDocument();
   });
 
   test("auth user isn't logged in - contains no tabs", () => {

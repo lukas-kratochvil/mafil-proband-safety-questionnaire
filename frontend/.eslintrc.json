@@ -6,8 +6,15 @@
     "extends": [
         "airbnb",
         "plugin:react/recommended",
+        "plugin:testing-library/react",
         "plugin:@typescript-eslint/recommended",
         "prettier"
+    ],
+    "overrides": [
+      {
+        "files": ["**/__tests__/**/*.ts?(x)", "**/?(*.)+(spec|test).ts?(x)"],
+        "extends": ["plugin:testing-library/react"]
+      }
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -21,6 +28,7 @@
         "react",
         "react-hooks",
         "react-hooks-addons",
+        "testing-library",
         "@typescript-eslint",
         "prettier"
     ],
