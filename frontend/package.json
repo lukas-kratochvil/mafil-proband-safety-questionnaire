@@ -8,9 +8,11 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "format": "prettier --write \"src/**/*.{ts,tsx}\" && eslint \"src/**/*.{ts,tsx}\" --fix",
-    "test": "vitest",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
     "test:ui": "vitest --ui",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "prepare": "cd .. && husky install frontend/.husky"
   },
   "dependencies": {
     "@date-io/date-fns": "^2.14.0",
