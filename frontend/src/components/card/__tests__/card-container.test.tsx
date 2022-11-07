@@ -1,4 +1,3 @@
-import { describe, expect, test } from "vitest";
 import { render, screen } from "../../../__tests__/utils";
 import { CardContainer } from "../CardContainer";
 

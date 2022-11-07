@@ -1,5 +1,4 @@
 import userEvent from "@testing-library/user-event";
-import { describe, expect, vi } from "vitest";
 import { render, within } from "../../../__tests__/utils";
 import { LanguageMenu } from "../LanguageMenu";
 

@@ -1,4 +1,3 @@
-import { describe, expect, test, vi } from "vitest";
 import { render, screen, within } from "../../../__tests__/utils";
 import { Header } from "../Header";
 
