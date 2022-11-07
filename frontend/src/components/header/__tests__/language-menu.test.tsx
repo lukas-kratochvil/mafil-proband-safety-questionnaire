@@ -1,18 +1,17 @@
 import userEvent from "@testing-library/user-event";
 import { render, within } from "../../../__tests__/utils";
+import i18n from "../../../i18n";
 import { LanguageMenu } from "../LanguageMenu";
 
-const supportedLanguages = ["Čeština", "English"];
-
 describe("language-menu", () => {
-  // TODO: REPAIR - returns 'English' only because of the i18n langauge detector - can be different on other machines
-  // test("language name is visible on the language button", () => {
-  //   const { container } = render(<LanguageMenu />);
+  test("language name is visible on the language button", async () => {
+    await i18n.changeLanguage("en");
+    const { container } = render(<LanguageMenu />);
 
-  //   const button = within(container).getByRole("button");
+    const button = within(container).getByRole("button");
 
-  //   expect(button).toHaveTextContent(/^English$/);
-  // });
+    expect(button).toHaveTextContent(/^English$/);
+  });
 
   test("language menu is visible after clicking the language button", async () => {
     const { container } = render(<LanguageMenu />);
@@ -25,6 +24,7 @@ describe("language-menu", () => {
   });
 
   test("contains all supported languages", async () => {
+    const supportedLanguages = ["Čeština", "English"];
     const { container } = render(<LanguageMenu />);
 
     const button = within(container).getByRole("button");
@@ -32,8 +32,7 @@ describe("language-menu", () => {
     const menu = within(container).getByRole("menu");
     const menuItems = within(menu).getAllByRole("menuitem");
 
-    // supported languages: czech and english
-    expect(menuItems.length).toBe(2);
+    expect(menuItems.map((menuItem) => menuItem.textContent)).toEqual(expect.arrayContaining(supportedLanguages));
   });
 
   test("language menu isn't visible after selecting one of the supported languages", async () => {
@@ -43,7 +42,7 @@ describe("language-menu", () => {
     await userEvent.click(button);
     const menu = within(container).getByRole("menu");
     // click on one of the menutitems
-    const menuItem = within(menu).getByText(supportedLanguages[0]);
+    const menuItem = within(menu).getByText("English");
     await userEvent.click(menuItem);
 
     expect(menu).not.toBeInTheDocument();
