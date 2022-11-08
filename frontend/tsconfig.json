@@ -21,10 +21,7 @@
       "test-utils": ["src/__tests__/utils.ts"]
     }
   },
-  "exclude": [
-    "src/**/*.spec.ts",
-    "src/**/*.test.ts",
-  ],
   "include": ["src"],
+  "exclude": ["src/**/__tests__/**/*", "src/**/__mocks__/**/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
