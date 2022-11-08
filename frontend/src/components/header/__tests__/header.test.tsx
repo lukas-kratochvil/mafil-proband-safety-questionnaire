@@ -46,32 +46,34 @@ vi.mock("../navigation/common", () => ({
 // Tests
 //----------------------------------------------------------------------
 describe("header", () => {
-  test("auth user isn't logged in - contains CEITEC logo", () => {
-    mockOperator = undefined;
+  describe("auth user isn't logged in", () => {
+    test("contains CEITEC logo", () => {
+      mockOperator = undefined;
 
-    render(<Header />);
+      render(<Header />);
 
-    expect(screen.getByAltText("CEITEC-MAFIL logo")).toBeInTheDocument();
+      expect(screen.getByAltText("CEITEC-MAFIL logo")).toBeInTheDocument();
+    });
+
+    test("contains language menu", () => {
+      mockOperator = undefined;
+
+      render(<Header />);
+
+      expect(screen.getByTestId("language-menu")).toBeInTheDocument();
+    });
+
+    test("contains no tabs", () => {
+      mockOperator = undefined;
+
+      const { container } = render(<Header />);
+      const tabsInHeader = within(container).queryByTestId("navTab");
+
+      expect(tabsInHeader).toBeNull();
+    });
   });
 
-  test("auth user isn't logged in - contains language menu", () => {
-    mockOperator = undefined;
-
-    render(<Header />);
-
-    expect(screen.getByTestId("language-menu")).toBeInTheDocument();
-  });
-
-  test("auth user isn't logged in - contains no tabs", () => {
-    mockOperator = undefined;
-
-    const { container } = render(<Header />);
-    const tabsInHeader = within(container).queryByTestId("navTab");
-
-    expect(tabsInHeader).toBeNull();
-  });
-
-  // TODO: test which components should appear in the Header for auth user
+  describe.todo("auth user is logged in");
 
   // TODO: correct the test
   // test("auth user is logged in - contains all tabs", () => {

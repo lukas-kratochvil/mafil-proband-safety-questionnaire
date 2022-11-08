@@ -3,7 +3,7 @@ import i18n from "src/i18n";
 import { FormInputFieldContainer } from "../FormInputFieldContainer";
 
 vi.mock("../../ErrorFeedback", () => ({
-  ErrorFeedback: () => <></>,
+  ErrorFeedback: () => <div />,
 }));
 
 describe("form-input-field-container", () => {

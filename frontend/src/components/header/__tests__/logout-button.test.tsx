@@ -16,7 +16,7 @@ describe("logout-button", () => {
     await i18n.changeLanguage("cimode");
   });
 
-  test("logOut button has title", async () => {
+  test("has title", async () => {
     render(<LogOutButton />);
 
     const logOutButton = screen.getByRole("button");
@@ -24,7 +24,7 @@ describe("logout-button", () => {
     expect(logOutButton).toHaveTextContent(/^common.logOutButton$/);
   });
 
-  test("log out if logOut button is clicked", async () => {
+  test("log out if is clicked", async () => {
     render(<LogOutButton />);
 
     const logOutButton = screen.getByRole("button");

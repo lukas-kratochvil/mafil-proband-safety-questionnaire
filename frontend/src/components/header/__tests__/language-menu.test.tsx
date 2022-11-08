@@ -13,7 +13,7 @@ describe("language-menu", () => {
     expect(button).toHaveTextContent(/^English$/);
   });
 
-  test("language menu is visible after clicking the language button", async () => {
+  test("is visible after clicking the language button", async () => {
     const { container } = render(<LanguageMenu />);
 
     const button = within(container).getByRole("button");
@@ -35,7 +35,7 @@ describe("language-menu", () => {
     expect(menuItems.map((menuItem) => menuItem.textContent)).toEqual(expect.arrayContaining(supportedLanguages));
   });
 
-  test("language menu isn't visible after selecting one of the supported languages", async () => {
+  test("isn't visible after selecting one of the supported languages", async () => {
     const { container } = render(<LanguageMenu />);
 
     const button = within(container).getByRole("button");
