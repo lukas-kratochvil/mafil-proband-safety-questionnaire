@@ -1,5 +1,5 @@
+import { render } from "@test-utils";
 import { IOperator } from "../../../hooks/auth/interfaces";
-import { render } from "../../../__tests__/utils";
 import { OperatorCard } from "../OperatorCard";
 
 const operatorName = "Name";

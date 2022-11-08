@@ -1,4 +1,4 @@
-import { render, screen } from "../../../__tests__/utils";
+import { render, screen } from "@test-utils";
 import { CardContainer } from "../CardContainer";
 
 describe("card-container", () => {

@@ -4,6 +4,7 @@ import { cleanup } from "@testing-library/react";
 // Extends Vitest's expect() method with methods from react-testing-library
 declare global {
   namespace Vi {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     interface JestAssertion<T = any> extends jest.Matchers<void, T>, TestingLibraryMatchers<T, void> {}
   }
 }

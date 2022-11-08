@@ -2,7 +2,11 @@
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": false,
@@ -15,13 +19,26 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["vitest/globals"],
-    "baseUrl": "frontend",
+    "types": [
+      "vitest/globals" // enable using vitest globals without importing them
+    ],
+    "baseUrl": ".",
     "paths": {
-      "test-utils": ["src/__tests__/utils.ts"]
+      "@test-utils": [
+        "src/__tests__/utils.ts"
+      ]
     }
   },
-  "include": ["src"],
-  "exclude": ["src/**/__tests__/**/*", "src/**/__mocks__/**/*"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "src/**/__tests__/**/*.[ts, tsx]",
+    "src/**/__mocks__/**/*.[ts, tsx]"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }

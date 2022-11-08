@@ -2,6 +2,7 @@
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import react from "@vitejs/plugin-react";
+import path from "path";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { defineConfig } from "vite";
 
@@ -12,8 +13,8 @@ export default defineConfig({
   test: {
     alias: [
       {
-        find: "test-utils",
-        replacement: "./src/__tests__/utils.ts",
+        find: "@test-utils",
+        replacement: path.resolve(__dirname, "./src/__tests__/utils.ts"),
       },
     ],
     environment: "jsdom",
