@@ -6,7 +6,7 @@ vi.mock("../../ErrorFeedback", () => ({
   ErrorFeedback: () => <div />,
 }));
 
-describe("form-input-field-container", () => {
+describe("form input field container", () => {
   beforeEach(() => {
     i18n.changeLanguage("cimode");
   });

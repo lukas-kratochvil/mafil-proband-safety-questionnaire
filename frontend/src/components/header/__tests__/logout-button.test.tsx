@@ -11,7 +11,7 @@ vi.mock("../../../hooks/auth/auth", () => ({
   }),
 }));
 
-describe("logout-button", () => {
+describe("logout button", () => {
   beforeEach(async () => {
     await i18n.changeLanguage("cimode");
   });

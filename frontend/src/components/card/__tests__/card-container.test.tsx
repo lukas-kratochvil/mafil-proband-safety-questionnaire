@@ -1,7 +1,7 @@
 import { render, screen } from "@test-utils";
 import { CardContainer } from "../CardContainer";
 
-describe("card-container", () => {
+describe("card container", () => {
   test("has title", () => {
     const title = "Title";
 

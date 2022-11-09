@@ -19,7 +19,7 @@ vi.mock("../../../hooks/auth/auth", () => ({
   }),
 }));
 
-describe("operator-card", () => {
+describe("operator card", () => {
   test("shows operator fullname", () => {
     const { container } = render(<OperatorCard />);
 

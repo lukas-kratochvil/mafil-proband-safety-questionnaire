@@ -3,7 +3,7 @@ import { render, within } from "@test-utils";
 import i18n from "../../../i18n";
 import { LanguageMenu } from "../LanguageMenu";
 
-describe("language-menu", () => {
+describe("language menu", () => {
   test("language name is visible on the language button", async () => {
     await i18n.changeLanguage("en");
     const { container } = render(<LanguageMenu />);
