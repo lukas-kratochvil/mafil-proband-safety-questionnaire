@@ -27,7 +27,7 @@ interface IProjectInfo {
   deviceId: string;
   device: string | null;
   isPhantom: boolean;
-  measurementDate: Date;
+  measurementDate: Date | null;
 }
 
 export enum Gender {
