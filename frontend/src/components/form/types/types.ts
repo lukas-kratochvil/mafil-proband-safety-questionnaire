@@ -1,4 +1,4 @@
-import { AnswerOption, IQac } from "../../../data/visit_data";
+import { AnswerOption, IQac } from "../../../interfaces/visit";
 import { Override } from "../../../util/utils";
 import { IOption } from "./options";
 

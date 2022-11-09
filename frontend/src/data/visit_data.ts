@@ -1,64 +1,7 @@
+import { QuestionPartNumber } from "../interfaces/question";
+import { AnswerOption, Gender, IQac, IVisit, SideDominance, VisitState, VisualCorrection } from "../interfaces/visit";
 import { getDummyVisitCurrentQuestions } from "../util/fetch.dev";
-import { devicesDev, Gender, projectsDev, SideDominance, VisualCorrection } from "./form_data";
-import { QuestionPartNumber } from "./question_data";
-
-export enum VisitState {
-  NEW = "Nové",
-  IN_APPROVAL = "Ve schvalování",
-  APPROVED = "Schváleno",
-  DISAPPROVED = "Neschváleno",
-  FOR_SIGNATURE = "K podpisu",
-  SIGNED = "Podepsáno",
-  DELETED = "Smazáno",
-}
-
-export interface IVisit {
-  id: string;
-  createdAt: Date;
-  visitId: string;
-  state: VisitState;
-  pdf: string;
-  projectInfo: IProjectInfo;
-  probandInfo: IProbandInfo;
-  answers: IQac[];
-}
-
-interface IProjectInfo {
-  projectId: string;
-  project: string | null;
-  magnetDeviceId: string;
-  device: string | null;
-  isPhantom: boolean;
-  measurementDate: Date;
-}
-
-interface IProbandInfo {
-  name: string;
-  surname: string;
-  personalId: string;
-  birthdate: Date;
-  height: number;
-  weight: number;
-  gender: Gender;
-  nativeLanguage: string; // TODO: object stored in the database
-  visualCorrection: VisualCorrection;
-  visualCorrectionValue: number;
-  sideDominance: SideDominance;
-  email: string;
-  phoneNumber: string;
-}
-
-export enum AnswerOption {
-  YES = "yes",
-  NO = "no",
-}
-
-export interface IQac {
-  questionId: string;
-  partNumber: QuestionPartNumber;
-  answer: AnswerOption;
-  comment: string;
-}
+import { devicesDev, projectsDev } from "./form_data";
 
 const idCounter = {
   freeId: "1",
@@ -148,7 +91,7 @@ const dummyVisitNew: IVisit = {
   projectInfo: {
     projectId: "1",
     project: projectsDev[0],
-    magnetDeviceId: "1",
+    deviceId: "1",
     device: devicesDev[0],
     isPhantom: false,
     measurementDate: new Date(),
@@ -185,7 +128,7 @@ const dummyPhantomVisitNew: IVisit = {
   projectInfo: {
     projectId: "",
     project: null,
-    magnetDeviceId: "",
+    deviceId: "",
     device: null,
     isPhantom: true,
     measurementDate: new Date(),

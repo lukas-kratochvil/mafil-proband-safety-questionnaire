@@ -8,8 +8,8 @@ import {
   ColoredInfoStripeColors,
   IColoredInfoStripeProps,
 } from "../components/informative/ColoredInfoStripe";
-import { IVisit, VisitState } from "../data/visit_data";
 import { defaultNS } from "../i18n";
+import { IVisit, VisitState } from "../interfaces/visit";
 import { fetchVisitDetail } from "../util/fetch";
 import { convertStringToLocalizationKey, getBackButtonProps, IButton } from "../util/utils";
 import { PageContainer } from "./PageContainer";

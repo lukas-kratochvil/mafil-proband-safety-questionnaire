@@ -1,7 +1,7 @@
 import { NavigateFunction } from "react-router-dom";
 import { UrlBasePaths } from "../../../App";
-import { Gender, SideDominance, VisualCorrection } from "../../../data/form_data";
-import { AnswerOption, createVisit, IVisit, VisitState } from "../../../data/visit_data";
+import { createVisit } from "../../../data/visit_data";
+import { AnswerOption, Gender, IVisit, SideDominance, VisitState, VisualCorrection } from "../../../interfaces/visit";
 import { updateDummyVisitState } from "../../../util/fetch.dev";
 import { IButtonProps } from "../FormButtons";
 import { genderOptions, getOption, sideDominanceOptions, visualCorrectionOptions } from "../types/options";
@@ -66,7 +66,7 @@ export const createNewVisitFromFormData = (data: FormPropType, state: VisitState
       projectInfo: {
         ...data,
         projectId: "1",
-        magnetDeviceId: "1",
+        deviceId: "1",
         isPhantom: true,
         measurementDate: data.measurementDate ?? new Date(),
       },

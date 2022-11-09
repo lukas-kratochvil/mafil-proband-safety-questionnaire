@@ -3,8 +3,8 @@ import { MRT_ColumnDef as MRTColumnDef, MRT_Row as MRTRow } from "material-react
 import { useTranslation } from "react-i18next";
 import { InteractingTable } from "../components/table/InteractingTable";
 import { RecentVisitsActionButtons } from "../components/table/actions/RecentVisitsActionButtons";
-import { IVisit } from "../data/visit_data";
 import { defaultNS } from "../i18n";
+import { IVisit } from "../interfaces/visit";
 import { fetchRecentVisits } from "../util/fetch";
 
 const processedDateFormat = "d.M.yyyy H:mm";

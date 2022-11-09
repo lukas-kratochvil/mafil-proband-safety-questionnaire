@@ -1,7 +1,6 @@
 import { array, date, mixed, number, object, string } from "yup";
-import { VisualCorrection } from "../../../data/form_data";
-import { QuestionPartNumber } from "../../../data/question_data";
-import { AnswerOption } from "../../../data/visit_data";
+import { QuestionPartNumber } from "../../../interfaces/question";
+import { AnswerOption, VisualCorrection } from "../../../interfaces/visit";
 import {
   genderOptions,
   getOptionsValues,

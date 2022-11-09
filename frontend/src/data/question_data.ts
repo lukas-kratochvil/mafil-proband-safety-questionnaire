@@ -1,13 +1,4 @@
-export enum QuestionPartNumber {
-  ONE = 1,
-  TWO = 2,
-}
-
-export interface IQuestionData {
-  id: string;
-  text: string;
-  partNumber: QuestionPartNumber;
-}
+import { IQuestionData, QuestionPartNumber } from "../interfaces/question";
 
 const questions1 = [
   "Prodělal(a) jste operaci hlavy (mozku)?",
