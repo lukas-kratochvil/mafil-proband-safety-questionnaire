@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { rodnecislo } from "rodnecislo";
 import { nativeLanguages } from "../../data/form_data";
 import { defaultNS } from "../../i18n";
+import { FormPropType } from "../../interfaces/form";
 import { Gender, VisualCorrection } from "../../interfaces/visit";
 import { InfoTooltip } from "../informative/InfoTooltip";
 import { FormCardContainer } from "./FormCardContainer";
@@ -13,8 +14,8 @@ import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";
 import { FormOptionsAutocomplete } from "./inputs/FormOptionsAutocomplete";
 import { FormTextField } from "./inputs/FormTextField";
-import { genderOptions, getOption, sideDominanceOptions, visualCorrectionOptions } from "./types/options";
-import { FormPropType, IPhantomFormCardProps } from "./types/types";
+import { IPhantomFormCardProps } from "./interfaces/form-card";
+import { genderOptions, getOption, sideDominanceOptions, visualCorrectionOptions } from "./util/options";
 
 export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandInfo" });

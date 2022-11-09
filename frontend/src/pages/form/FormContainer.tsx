@@ -2,7 +2,7 @@ import { Stack, Theme, Typography, useMediaQuery } from "@mui/material";
 import { PropsWithChildren } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormButtons, IFormButtonsProps } from "../../components/form/FormButtons";
-import { FormPropType } from "../../components/form/types/types";
+import { FormPropType } from "../../interfaces/form";
 
 interface IFormContainerProps {
   isError: boolean;

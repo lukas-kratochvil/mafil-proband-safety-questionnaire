@@ -7,7 +7,7 @@ import { ColoredInfoStripe, ColoredInfoStripeColors } from "../informative/Color
 import { FormCardContainer } from "./FormCardContainer";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";
-import { IPhantomFormCardProps } from "./types/types";
+import { IPhantomFormCardProps } from "./interfaces/form-card";
 
 export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.projectInfo" });

@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import { FormCardContainer } from "./FormCardContainer";
 import { FormQac, FormQuestion } from "./FormQuestion";
-import { IFormCardProps } from "./types/types";
+import { IFormCardProps } from "./interfaces/form-card";
 
 interface IFormQuestionsProps extends IFormCardProps {
   title: string;

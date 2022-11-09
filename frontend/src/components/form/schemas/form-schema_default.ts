@@ -7,7 +7,7 @@ import {
   IOption,
   sideDominanceOptions,
   visualCorrectionOptions,
-} from "../types/options";
+} from "../util/options";
 
 export const answersSchema = object({
   questionId: string().trim().required("form.validation.required"),

@@ -5,7 +5,7 @@ import {
   loadFormDefaultValuesFromVisit,
   loadFormDefaultValuesVisitDuplication,
   loadPhantomFormDefaultValues,
-} from "../utils";
+} from "../loaders";
 
 const visit: IVisit = {
   id: "1",
@@ -71,7 +71,7 @@ const visitNotCompleted: IVisit = {
   answers: [{ questionId: "1", partNumber: QuestionPartNumber.ONE, answer: AnswerOption.NO, comment: "" }],
 };
 
-describe("form-utils", () => {
+describe("form loaders", () => {
   test("empty form default values", () => {
     const emptyFormDefaultValues = loadEmptyDefaultValues();
 

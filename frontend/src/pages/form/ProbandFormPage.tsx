@@ -11,7 +11,7 @@ import { FormProbandInfo } from "../../components/form/FormProbandInfo";
 import { FormQac } from "../../components/form/FormQuestion";
 import { FormQuestions } from "../../components/form/FormQuestions";
 import { FormSafetyInfo } from "../../components/form/FormSafetyInfo";
-import { FormPropType } from "../../components/form/types/types";
+import { FormPropType } from "../../interfaces/form";
 import { fetchCurrentQuestions } from "../../util/fetch";
 import { FormContainer } from "./FormContainer";
 

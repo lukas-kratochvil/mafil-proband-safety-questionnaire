@@ -1,5 +1,5 @@
 import { NavigateFunction } from "react-router-dom";
-import { FormPropType } from "../components/form/types/types";
+import { FormPropType } from "../interfaces/form";
 
 export type Override<T, U> = Omit<T, keyof U> & U;
 

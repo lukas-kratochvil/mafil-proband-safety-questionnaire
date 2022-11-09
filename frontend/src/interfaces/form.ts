@@ -1,14 +1,6 @@
-import { AnswerOption, IQac } from "../../../interfaces/visit";
-import { Override } from "../../../util/utils";
-import { IOption } from "./options";
-
-export interface IFormCardProps {
-  disableInputs?: boolean;
-}
-
-export interface IPhantomFormCardProps extends IFormCardProps {
-  isPhantom?: boolean;
-}
+import { IOption } from "../components/form/util/options";
+import { Override } from "../util/utils";
+import { AnswerOption, IQac } from "./visit";
 
 // Form fields having this data type are validated as numbers
 type TextFieldNumberInput = string | number;

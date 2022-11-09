@@ -8,14 +8,12 @@ import { FormProbandInfo } from "../../components/form/FormProbandInfo";
 import { FormProjectInfo } from "../../components/form/FormProjectInfo";
 import { FormQac } from "../../components/form/FormQuestion";
 import { FormQuestions } from "../../components/form/FormQuestions";
-import { FormPropType } from "../../components/form/types/types";
-import {
-  createNewVisitFromFormData,
-  getDisapproveButtonProps,
-  loadFormDefaultValuesVisitDuplication,
-} from "../../components/form/util/utils";
+import { loadFormDefaultValuesVisitDuplication } from "../../components/form/util/loaders";
+import { getDisapproveButtonProps } from "../../components/form/util/utils";
+import { createNewVisitFromFormData } from "../../components/form/util/utils.dev";
 import { dummyVisits } from "../../data/visit_data";
 import { useAuth } from "../../hooks/auth/auth";
+import { FormPropType } from "../../interfaces/form";
 import { QuestionPartNumber } from "../../interfaces/question";
 import { AnswerOption, VisitState } from "../../interfaces/visit";
 import { fetchVisit } from "../../util/fetch";
