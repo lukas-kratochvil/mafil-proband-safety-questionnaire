@@ -163,12 +163,12 @@ export const DuplicationFormPage = () => {
         <>
           <FormProbandContact disableInputs={!isEditing} />
           <FormQuestions
-            title="Část 1"
+            titleLocalizationKey="titlePart1"
             qacs={qacs.filter((qac) => qac.partNumber === QuestionPartNumber.ONE)}
             disableInputs={!isEditing}
           />
           <FormQuestions
-            title="Část 2"
+            titleLocalizationKey="titlePart2"
             qacs={qacs.filter((qac) => qac.partNumber === QuestionPartNumber.TWO)}
             disableInputs={!isEditing}
           />

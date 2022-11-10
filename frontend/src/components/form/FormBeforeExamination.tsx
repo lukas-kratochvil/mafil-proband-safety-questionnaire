@@ -7,7 +7,7 @@ export const FormBeforeExamination = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.beforeExamination" });
 
   return (
-    <FormCardContainer title="Před vyšetřením">
+    <FormCardContainer title={t("title")}>
       <Typography width="100%">
         <Trans
           t={t}

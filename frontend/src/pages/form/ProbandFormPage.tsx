@@ -74,7 +74,7 @@ export const ProbandFormPage = () => {
       <FormProbandContact />
       <FormSafetyInfo />
       <FormQuestions
-        title="Bezpečnostní otázky"
+        titleLocalizationKey="title"
         qacs={qacs}
         disableInputs={false}
       />

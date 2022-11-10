@@ -96,6 +96,9 @@
         "text": "Přečtěte si, prosím, následující otázky a zatrhněte správnou odpověď. Pravdivé zodpovězení našich dotazů je velmi důležité pro Vaši bezpečnost."
       },
       "safetyQuestions": {
+        "title": "Bezpečnostní otázky",
+        "titlePart1": "Bezpečnostní otázky - část 1",
+        "titlePart2": "Bezpečnostní otázky - část 2",
         "yes": "Ano",
         "no": "Ne",
         "comment": "Komentář"
