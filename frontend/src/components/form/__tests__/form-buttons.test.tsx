@@ -57,11 +57,11 @@ describe("form buttons", () => {
       const buttonsProps: IButtonProps[] = [
         {
           onClick: vi.fn(),
-          titleLocalizationKey: "",
+          titleLocalizationKey: "title1",
         },
         {
           onClick: vi.fn(),
-          titleLocalizationKey: "",
+          titleLocalizationKey: "title2",
         },
       ];
 
