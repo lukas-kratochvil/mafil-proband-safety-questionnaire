@@ -16,19 +16,20 @@ export const FormQuestions = ({ titleLocalizationKey, qacs, disableInputs, disab
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.safetyQuestions" });
 
   return (
-  <FormCardContainer title={t(convertStringToLocalizationKey(titleLocalizationKey))}>
-    <Stack
-      spacing="0.5rem"
-      width="100%"
-    >
-      {qacs.map((qac) => (
-        <FormQuestion
-          key={qac.questionId}
-          qac={qac}
-          disableInputs={disableInputs}
-          disableComment={disableComment}
-        />
-      ))}
-    </Stack>
-  </FormCardContainer>
-)};
+    <FormCardContainer title={t(convertStringToLocalizationKey(titleLocalizationKey))}>
+      <Stack
+        spacing="0.5rem"
+        width="100%"
+      >
+        {qacs.map((qac) => (
+          <FormQuestion
+            key={qac.questionId}
+            qac={qac}
+            disableInputs={disableInputs}
+            disableComment={disableComment}
+          />
+        ))}
+      </Stack>
+    </FormCardContainer>
+  );
+};

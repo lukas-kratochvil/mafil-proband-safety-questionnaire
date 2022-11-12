@@ -2,7 +2,6 @@ import { render } from "@test-utils";
 import i18n from "src/i18n";
 import { FormExaminationConsent } from "../FormExaminationConsent";
 
-
 describe("form examination consent", () => {
   beforeEach(async () => {
     await i18n.changeLanguage("cimode");

@@ -2,7 +2,6 @@ import { render } from "@test-utils";
 import i18n from "src/i18n";
 import { FormEntryInfo } from "../FormEntryInfo";
 
-
 describe("form entry info", () => {
   beforeEach(async () => {
     await i18n.changeLanguage("cimode");

@@ -4,7 +4,12 @@ import { FormButtons, IButtonProps } from "../FormButtons";
 
 describe("form buttons", () => {
   test("no buttons visible", () => {
-    render(<FormButtons submitButtonProps={undefined} buttonsProps={[]} />);
+    render(
+      <FormButtons
+        submitButtonProps={undefined}
+        buttonsProps={[]}
+      />
+    );
 
     expect(screen.queryAllByRole("button").length).toEqual(0);
   });
@@ -16,7 +21,12 @@ describe("form buttons", () => {
         titleLocalizationKey: "",
       };
 
-      render(<FormButtons submitButtonProps={submitButtonProps} buttonsProps={[]} />);
+      render(
+        <FormButtons
+          submitButtonProps={submitButtonProps}
+          buttonsProps={[]}
+        />
+      );
       const buttons = screen.queryAllByRole("button");
 
       expect(buttons.length).toEqual(1);
@@ -30,7 +40,12 @@ describe("form buttons", () => {
         titleLocalizationKey,
       };
 
-      render(<FormButtons submitButtonProps={submitButtonProps} buttonsProps={[]} />);
+      render(
+        <FormButtons
+          submitButtonProps={submitButtonProps}
+          buttonsProps={[]}
+        />
+      );
       const submitButton = screen.getByRole("button");
 
       expect(submitButton).toHaveTextContent(titleLocalizationKey);
@@ -50,7 +65,12 @@ describe("form buttons", () => {
         },
       ];
 
-      render(<FormButtons submitButtonProps={undefined} buttonsProps={buttonsProps} />);
+      render(
+        <FormButtons
+          submitButtonProps={undefined}
+          buttonsProps={buttonsProps}
+        />
+      );
       const buttons = screen.queryAllByRole("button");
 
       expect(buttons.length).toEqual(buttonsProps.length);
@@ -74,7 +94,12 @@ describe("form buttons", () => {
         },
       ];
 
-      render(<FormButtons submitButtonProps={undefined} buttonsProps={buttonsProps} />);
+      render(
+        <FormButtons
+          submitButtonProps={undefined}
+          buttonsProps={buttonsProps}
+        />
+      );
       const buttons = screen.queryAllByRole("button");
 
       expect(buttons[0]).toHaveTextContent(titleLocalizationKey1);
@@ -101,7 +126,12 @@ describe("form buttons", () => {
       },
     ];
 
-    render(<FormButtons submitButtonProps={submitButtonProps} buttonsProps={buttonsProps} />);
+    render(
+      <FormButtons
+        submitButtonProps={submitButtonProps}
+        buttonsProps={buttonsProps}
+      />
+    );
     const buttons = screen.queryAllByRole("button");
 
     expect(buttons.length).toEqual(3);
