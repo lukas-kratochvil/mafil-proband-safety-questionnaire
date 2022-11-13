@@ -16,7 +16,7 @@ describe("logout button", () => {
     await i18n.changeLanguage("cimode");
   });
 
-  test("has title", async () => {
+  test("has title", () => {
     render(<LogOutButton />);
 
     const logOutButton = screen.getByRole("button");

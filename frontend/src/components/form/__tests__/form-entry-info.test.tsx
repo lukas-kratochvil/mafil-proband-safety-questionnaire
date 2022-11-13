@@ -7,7 +7,7 @@ describe("form entry info", () => {
     await i18n.changeLanguage("cimode");
   });
 
-  test("contains translations", async () => {
+  test("contains translations", () => {
     const { container } = render(<FormEntryInfo />);
 
     expect(container).toHaveTextContent(/form.entryInfo.title/);

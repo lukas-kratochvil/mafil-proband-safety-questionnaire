@@ -7,7 +7,7 @@ describe("form examination consent", () => {
     await i18n.changeLanguage("cimode");
   });
 
-  test("contains translations", async () => {
+  test("contains translations", () => {
     const { container } = render(<FormExaminationConsent />);
 
     expect(container).toHaveTextContent(/form.examinationConsent.title/);

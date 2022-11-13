@@ -7,7 +7,7 @@ describe("form before examination", () => {
     await i18n.changeLanguage("cimode");
   });
 
-  test("contains translations", async () => {
+  test("contains translations", () => {
     const { container } = render(<FormSafetyInfo />);
 
     expect(container).toHaveTextContent(/form.safetyInfo.title/);
