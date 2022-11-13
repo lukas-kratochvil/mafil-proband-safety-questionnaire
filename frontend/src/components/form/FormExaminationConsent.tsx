@@ -19,7 +19,7 @@ export const FormExaminationConsent = () => {
         width="100%"
         paddingTop="1rem"
       >
-        {t("contactInfo")}
+        {t("contactInfo")}:
       </Typography>
       <Typography width="100%">{t("address")}</Typography>
       <Typography width="100%">{t("contactPerson")}: Michal Mikl</Typography>
