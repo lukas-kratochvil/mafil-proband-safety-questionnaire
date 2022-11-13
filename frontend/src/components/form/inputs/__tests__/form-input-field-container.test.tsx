@@ -22,7 +22,6 @@ describe("form input field container", () => {
     );
 
     expect(container).toHaveTextContent(new RegExp(`^${label}$`));
-    expect(container).not.toHaveTextContent("(form.common.optional)");
   });
 
   test("optional field contains label with 'optional' text", () => {
