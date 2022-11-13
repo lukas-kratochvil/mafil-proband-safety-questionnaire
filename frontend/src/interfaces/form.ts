@@ -7,6 +7,8 @@ type TextFieldNumberInput = string | number;
 
 export type FormAnswer = Override<IQac, { answer: AnswerOption | null }>;
 
+export type FormQac = FormAnswer & { index: number };
+
 export interface FormPropType {
   project: string | null;
   device: string | null;

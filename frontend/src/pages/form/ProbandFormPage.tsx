@@ -8,10 +8,9 @@ import { FormEntryInfo } from "../../components/form/FormEntryInfo";
 import { FormExaminationConsent } from "../../components/form/FormExaminationConsent";
 import { FormProbandContact } from "../../components/form/FormProbandContact";
 import { FormProbandInfo } from "../../components/form/FormProbandInfo";
-import { FormQac } from "../../components/form/FormQuestion";
 import { FormQuestions } from "../../components/form/FormQuestions";
 import { FormSafetyInfo } from "../../components/form/FormSafetyInfo";
-import { FormPropType } from "../../interfaces/form";
+import { FormPropType, FormQac } from "../../interfaces/form";
 import { fetchCurrentQuestions } from "../../util/fetch";
 import { FormContainer } from "./FormContainer";
 
