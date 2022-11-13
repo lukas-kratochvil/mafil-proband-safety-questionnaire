@@ -7,10 +7,10 @@ describe("form before examination", () => {
     await i18n.changeLanguage("cimode");
   });
 
-  test("has title and text", async () => {
+  test("contains translations", async () => {
     const { container } = render(<FormBeforeExamination />);
 
-    expect(container).toHaveTextContent(/^form.beforeExamination.title/);
-    expect(container).toHaveTextContent(/form.beforeExamination.text$/);
+    expect(container).toHaveTextContent(/form.beforeExamination.title/);
+    expect(container).toHaveTextContent(/form.beforeExamination.text/);
   });
 });

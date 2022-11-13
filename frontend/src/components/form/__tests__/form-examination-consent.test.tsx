@@ -7,16 +7,16 @@ describe("form examination consent", () => {
     await i18n.changeLanguage("cimode");
   });
 
-  test("has title and text", async () => {
+  test("contains translations", async () => {
     const { container } = render(<FormExaminationConsent />);
 
-    expect(container).toHaveTextContent(/^form.examinationConsent.title/);
+    expect(container).toHaveTextContent(/form.examinationConsent.title/);
     expect(container).toHaveTextContent(/form.examinationConsent.text1/);
     expect(container).toHaveTextContent(/form.examinationConsent.text2/);
     expect(container).toHaveTextContent(/form.examinationConsent.contactInfo/);
     expect(container).toHaveTextContent(/form.examinationConsent.address/);
-    expect(container).toHaveTextContent(/form.examinationConsent.contactPerson: Michal Mikl/);
-    expect(container).toHaveTextContent(/form.examinationConsent.phone: \+ 420 54949 6099/);
-    expect(container).toHaveTextContent(/form.examinationConsent.email: mafil@ceitec.muni.cz$/);
+    expect(container).toHaveTextContent(/form.examinationConsent.contactPerson/);
+    expect(container).toHaveTextContent(/form.examinationConsent.phone/);
+    expect(container).toHaveTextContent(/form.examinationConsent.email/);
   });
 });
