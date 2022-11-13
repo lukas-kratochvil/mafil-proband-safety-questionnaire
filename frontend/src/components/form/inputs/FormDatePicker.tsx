@@ -40,6 +40,7 @@ export const FormDatePicker = ({ name, label, isOptional, disabled, maxDate }: I
               renderInput={(params) => (
                 <TextField
                   {...params}
+                  id={name}
                   onBlur={field.onBlur}
                   name={field.name}
                   size={matchesDownSmBreakpoint ? "small" : "medium"}

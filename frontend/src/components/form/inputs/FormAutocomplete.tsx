@@ -24,6 +24,7 @@ export const FormAutocomplete = ({ name, label, isOptional, disabled, options }:
         name={name}
         render={({ field }) => (
           <Autocomplete
+            id={name}
             options={options}
             value={field.value}
             onChange={(_event, val) => field.onChange(val)}

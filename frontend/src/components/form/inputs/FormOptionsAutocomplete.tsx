@@ -32,6 +32,7 @@ export const FormOptionsAutocomplete = ({
         name={name}
         render={({ field }) => (
           <Autocomplete
+            id={name}
             options={options}
             getOptionLabel={(option: IOption) => t(convertStringToLocalizationKey(`enums.${option.localizationKey}`))}
             isOptionEqualToValue={(option, value) => option.value === value.value}

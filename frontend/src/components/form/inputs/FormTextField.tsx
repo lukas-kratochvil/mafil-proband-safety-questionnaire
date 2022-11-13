@@ -34,6 +34,7 @@ export const FormTextField = ({
         render={({ field: { ref, ...rest } }) => (
           <TextField
             {...rest}
+            id={name}
             inputRef={ref}
             disabled={disabled}
             type={type ?? "text"}

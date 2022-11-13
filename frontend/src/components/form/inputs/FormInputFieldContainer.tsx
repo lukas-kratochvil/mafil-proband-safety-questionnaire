@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid, InputLabel, Typography } from "@mui/material";
 import { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "../../../i18n";
@@ -26,7 +26,7 @@ export const FormInputFieldContainer = ({
         justifyContent="space-between"
         alignItems="center"
       >
-        <Typography>{label}</Typography>
+        <InputLabel htmlFor={name}>{label}</InputLabel>
         {isOptional && (
           <Typography
             fontSize="0.85rem"
