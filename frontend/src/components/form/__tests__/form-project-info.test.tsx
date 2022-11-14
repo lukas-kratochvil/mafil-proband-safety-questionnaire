@@ -1,4 +1,4 @@
-import { act, render, screen } from "@test-utils";
+import { render, screen, waitFor } from "@test-utils";
 import i18n from "src/i18n";
 import { FormProjectInfo } from "../FormProjectInfo";
 
@@ -16,23 +16,23 @@ describe("form project info", () => {
   });
 
   test("contains translations", async () => {
-    await act(async () => {
-      render(<FormProjectInfo />);
-    });
+    render(<FormProjectInfo />);
 
-    expect(screen.getByText("form.projectInfo.title")).toBeInTheDocument();
+    await waitFor(async () => {
+      expect(screen.getByText("form.projectInfo.title")).toBeInTheDocument();
+    });
     expect(screen.getByText("form.projectInfo.project")).toBeInTheDocument();
     expect(screen.getByText("form.projectInfo.device")).toBeInTheDocument();
     expect(screen.getByText("form.projectInfo.measurementDate")).toBeInTheDocument();
   });
 
   test("has all input fields", async () => {
-    await act(async () => {
-      render(<FormProjectInfo />);
-    });
+    render(<FormProjectInfo />);
 
     const inputs = screen.getAllByTestId("input");
 
-    expect(inputs.length).toEqual(3);
+    await waitFor(async () => {
+      expect(inputs.length).toEqual(3);
+    });
   });
 });
