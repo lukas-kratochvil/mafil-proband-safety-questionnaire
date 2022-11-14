@@ -9,7 +9,7 @@ import { defineConfig } from "vite";
 // Vite: https://vitejs.dev/config/
 // Vitest: https://vitest.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react({ fastRefresh: false })],
   test: {
     alias: [
       {
