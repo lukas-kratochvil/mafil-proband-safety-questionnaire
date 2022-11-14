@@ -3,7 +3,7 @@ import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "../../../i18n";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import { IFormDefaultInputProps } from "./types/types";
+import { IFormDefaultInputProps } from "./interfaces/input-props";
 
 interface IFormAutocompleteProps extends IFormDefaultInputProps {
   options: string[];

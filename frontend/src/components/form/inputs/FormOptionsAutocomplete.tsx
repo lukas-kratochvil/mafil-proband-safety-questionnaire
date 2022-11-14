@@ -5,7 +5,7 @@ import { defaultNS } from "../../../i18n";
 import { convertStringToLocalizationKey } from "../../../util/utils";
 import { IOption } from "../util/options";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import { IFormDefaultInputProps } from "./types/types";
+import { IFormDefaultInputProps } from "./interfaces/input-props";
 
 interface IFormOptionsAutocompleteProps extends IFormDefaultInputProps {
   options: IOption[];

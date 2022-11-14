@@ -4,7 +4,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import CsLocale from "date-fns/locale/cs";
 import { Controller } from "react-hook-form";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import { IFormDefaultInputProps } from "./types/types";
+import { IFormDefaultInputProps } from "./interfaces/input-props";
 
 interface IFormDatePicker extends IFormDefaultInputProps {
   maxDate?: Date;

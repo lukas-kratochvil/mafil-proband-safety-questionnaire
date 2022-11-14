@@ -1,6 +1,6 @@
 import { FormControlLabel, Radio, RadioGroup, SxProps, Theme } from "@mui/material";
 import { Controller } from "react-hook-form";
-import { IFormDefaultInputProps } from "./types/types";
+import { IFormDefaultInputProps } from "./interfaces/input-props";
 
 export interface IRadioProps {
   id: string;
