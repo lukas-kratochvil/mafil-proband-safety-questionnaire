@@ -14,21 +14,23 @@ describe("language menu", () => {
   });
 
   test("is visible after clicking the language button", async () => {
+    const user = userEvent.setup();
     const { container } = render(<LanguageMenu />);
 
     const button = within(container).getByRole("button");
-    await userEvent.click(button);
+    await user.click(button);
     const menu = within(container).getByRole("menu");
 
     expect(menu).toBeInTheDocument();
   });
 
   test("contains all supported languages", async () => {
+    const user = userEvent.setup();
     const supportedLanguages = ["Čeština", "English"];
     const { container } = render(<LanguageMenu />);
 
     const button = within(container).getByRole("button");
-    await userEvent.click(button);
+    await user.click(button);
     const menu = within(container).getByRole("menu");
     const menuItems = within(menu).getAllByRole("menuitem");
 
@@ -36,38 +38,40 @@ describe("language menu", () => {
   });
 
   test("isn't visible after selecting one of the supported languages", async () => {
+    const user = userEvent.setup();
     const { container } = render(<LanguageMenu />);
 
     const button = within(container).getByRole("button");
-    await userEvent.click(button);
+    await user.click(button);
     const menu = within(container).getByRole("menu");
     // click on one of the menutitems
     const menuItem = within(menu).getByText("English");
-    await userEvent.click(menuItem);
+    await user.click(menuItem);
 
     expect(menu).not.toBeInTheDocument();
   });
 
   test("switches between languages", async () => {
+    const user = userEvent.setup();
     const { container } = render(<LanguageMenu />);
     const button = within(container).getByRole("button");
 
     // click on the language button
-    await userEvent.click(button);
+    await user.click(button);
     let menu = within(container).getByRole("menu");
     // click on menutitem
     let menuItem = within(menu).getByText("English");
-    await userEvent.click(menuItem);
+    await user.click(menuItem);
 
     // selected language is visible on the button
     expect(container).toHaveTextContent(/^English$/);
 
     // click on the language button
-    await userEvent.click(button);
+    await user.click(button);
     menu = within(container).getByRole("menu");
     // click on menutitem
     menuItem = within(menu).getByText("Čeština");
-    await userEvent.click(menuItem);
+    await user.click(menuItem);
 
     // selected language is visible on the button
     expect(button).toHaveTextContent(/^Čeština$/);

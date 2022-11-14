@@ -25,10 +25,11 @@ describe("logout button", () => {
   });
 
   test("log out if is clicked", async () => {
+    const user = userEvent.setup();
     render(<LogOutButton />);
 
     const logOutButton = screen.getByRole("button");
-    await userEvent.click(logOutButton);
+    await user.click(logOutButton);
 
     expect(logOutSpy).toHaveBeenCalledTimes(1);
   });
