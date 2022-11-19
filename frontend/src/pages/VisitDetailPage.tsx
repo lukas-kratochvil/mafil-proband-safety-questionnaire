@@ -14,7 +14,7 @@ import { fetchVisitDetail } from "../util/fetch";
 import { convertStringToLocalizationKey, getBackButtonProps, IButton } from "../util/utils";
 import { PageContainer } from "./PageContainer";
 
-interface IButtonProps extends IButton {
+interface IVisitDetailButtonProps extends IButton {
   disabled?: boolean;
 }
 
@@ -134,7 +134,7 @@ export const VisitDetailPage = () => {
   }, [id]);
 
   const [coloredInfoStripe, setColoredInfoStripe] = useState<IColoredInfoStripeProps>();
-  const [buttons, setButtons] = useState<IButtonProps[]>();
+  const [buttons, setButtons] = useState<IVisitDetailButtonProps[]>();
 
   useEffect(() => {
     if (visit !== undefined && visitState !== undefined) {
