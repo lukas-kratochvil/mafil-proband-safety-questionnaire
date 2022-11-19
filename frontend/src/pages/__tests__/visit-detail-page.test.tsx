@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@test-utils";
 import userEvent from "@testing-library/user-event";
 import i18n from "src/i18n";
 import { Gender, IVisit, SideDominance, VisitState, VisualCorrection } from "src/interfaces/visit";

@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen } from "@test-utils";
 import userEvent from "@testing-library/user-event";
 import { UrlBasePaths } from "src/App";
 import i18n from "src/i18n";
@@ -6,7 +6,8 @@ import { HomePage } from "../HomePage";
 
 const mockedUseNavigate = vi.fn();
 
-vi.mock("react-router-dom", () => ({
+vi.mock("react-router-dom", async () => ({
+  ...((await vi.importActual("react-router-dom")) as Record<string, unknown>),
   useNavigate: () => mockedUseNavigate,
 }));
 

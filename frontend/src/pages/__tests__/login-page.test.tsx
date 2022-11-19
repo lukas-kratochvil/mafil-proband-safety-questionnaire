@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render } from "@test-utils";
 import i18n from "src/i18n";
 import { LoginPage } from "../LoginPage";
 
