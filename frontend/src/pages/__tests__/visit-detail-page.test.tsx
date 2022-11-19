@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import i18n from "src/i18n";
 import { Gender, IVisit, SideDominance, VisitState, VisualCorrection } from "src/interfaces/visit";
 import * as fetchers from "../../util/fetch";
@@ -193,5 +194,59 @@ describe("visit detail page", () => {
     });
     expect(downloadPDFButton).toBeInTheDocument();
     expect(backButton).toBeInTheDocument();
+  });
+
+  test("switches from approved to for-signature state", async () => {
+    const approvedVisit: IVisit = {
+      ...defaultVisit,
+      state: VisitState.APPROVED,
+    };
+    vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => approvedVisit);
+
+    render(<VisitDetailPage />);
+    const downloadPDFAndPhysicallySignButton = await screen.findByText(
+      /visitDetailPage.buttons.downloadPDFAndPhysicallySign/
+    );
+    await userEvent.click(downloadPDFAndPhysicallySignButton);
+
+    expect(await screen.findByText(/visitDetailPage.infoStripes.waitingForSignatureConfirmation/)).toBeInTheDocument();
+    expect(await screen.findByText(/visitDetailPage.buttons.confirmSignature/)).toBeInTheDocument();
+    expect(await screen.findByText(/common.backButton/)).toBeInTheDocument();
+  });
+
+  test("switches from for-signature to signed state", async () => {
+    const forSignatureVisit: IVisit = {
+      ...defaultVisit,
+      state: VisitState.FOR_SIGNATURE,
+    };
+    vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => forSignatureVisit);
+
+    render(<VisitDetailPage />);
+    const confirmSignatureButton = await screen.findByText(/visitDetailPage.buttons.confirmSignature/);
+    await userEvent.click(confirmSignatureButton);
+
+    expect(await screen.findByText(/visitDetailPage.infoStripes.signed/)).toBeInTheDocument();
+    expect(await screen.findByText(/visitDetailPage.buttons.downloadPDF/)).toBeInTheDocument();
+    expect(await screen.findByText(/common.backButton/)).toBeInTheDocument();
+  });
+
+  test("switches phantom from for-signature to signed state", async () => {
+    const forSignaturePhantomVisit: IVisit = {
+      ...defaultVisit,
+      state: VisitState.FOR_SIGNATURE,
+      projectInfo: {
+        ...defaultVisit.projectInfo,
+        isPhantom: true,
+      },
+    };
+    vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => forSignaturePhantomVisit);
+
+    render(<VisitDetailPage />);
+    const confirmSignatureButton = await screen.findByText(/visitDetailPage.buttons.confirmSignature/);
+    await userEvent.click(confirmSignatureButton);
+
+    expect(await screen.findByText(/visitDetailPage.infoStripes.completed/)).toBeInTheDocument();
+    expect(await screen.findByText(/visitDetailPage.buttons.downloadPDF/)).toBeInTheDocument();
+    expect(await screen.findByText(/common.backButton/)).toBeInTheDocument();
   });
 });
