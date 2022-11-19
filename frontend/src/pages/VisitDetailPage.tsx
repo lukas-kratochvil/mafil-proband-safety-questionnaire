@@ -53,7 +53,7 @@ const getColoredInfoStripe = (
 const getButtons = (
   visitState: VisitState | undefined,
   setVisitState: React.Dispatch<React.SetStateAction<VisitState | undefined>>
-): IButtonProps[] | undefined => {
+): IVisitDetailButtonProps[] => {
   switch (visitState) {
     case VisitState.APPROVED:
       return [
@@ -99,7 +99,7 @@ const getButtons = (
         },
       ];
     default:
-      return undefined;
+      return [];
   }
 };
 
@@ -142,7 +142,8 @@ export const VisitDetailPage = () => {
     }
 
     setColoredInfoStripe(getColoredInfoStripe(visitState, visit));
-    const stateButtons: IButtonProps[] = getButtons(visitState, setVisitState) || [getBackButtonProps(navigate)];
+    const stateButtons = getButtons(visitState, setVisitState);
+    stateButtons.push(getBackButtonProps(navigate));
     setButtons(stateButtons);
   }, [navigate, visit, visitState]);
 
