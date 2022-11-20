@@ -18,7 +18,7 @@ describe("form project info", () => {
   test("contains translations", async () => {
     render(<FormProjectInfo />);
 
-    await screen.findByText("form.projectInfo.title");
+    await waitFor(async () => expect(screen.getByText("form.projectInfo.title")).toBeInTheDocument());
     expect(screen.getByText("form.projectInfo.project")).toBeInTheDocument();
     expect(screen.getByText("form.projectInfo.device")).toBeInTheDocument();
     expect(screen.getByText("form.projectInfo.measurementDate")).toBeInTheDocument();
