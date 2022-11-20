@@ -18,9 +18,7 @@ describe("form project info", () => {
   test("contains translations", async () => {
     render(<FormProjectInfo />);
 
-    await waitFor(async () => {
-      expect(screen.getByText("form.projectInfo.title")).toBeInTheDocument();
-    });
+    await screen.findByText("form.projectInfo.title");
     expect(screen.getByText("form.projectInfo.project")).toBeInTheDocument();
     expect(screen.getByText("form.projectInfo.device")).toBeInTheDocument();
     expect(screen.getByText("form.projectInfo.measurementDate")).toBeInTheDocument();
@@ -31,8 +29,6 @@ describe("form project info", () => {
 
     const inputs = screen.getAllByTestId("input");
 
-    await waitFor(async () => {
-      expect(inputs.length).toEqual(3);
-    });
+    await waitFor(async () => expect(inputs.length).toEqual(3));
   });
 });

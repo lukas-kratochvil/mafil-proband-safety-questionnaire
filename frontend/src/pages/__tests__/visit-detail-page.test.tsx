@@ -1,5 +1,5 @@
-import { render, screen, waitFor } from "@test-utils";
 import userEvent from "@testing-library/user-event";
+import { render, screen, waitFor } from "@test-utils";
 import i18n from "src/i18n";
 import { Gender, IVisit, SideDominance, VisitState, VisualCorrection } from "src/interfaces/visit";
 import * as fetchers from "../../util/fetch";
@@ -65,9 +65,7 @@ describe("visit detail page", () => {
   test("contains translations", async () => {
     const { container } = render(<VisitDetailPage />);
 
-    await waitFor(() => {
-      expect(container).toHaveTextContent(/visitDetailPage.title: /);
-    });
+    await waitFor(() => expect(container).toHaveTextContent(/visitDetailPage.title: /));
   });
 
   test("is disapproved", async () => {
@@ -83,12 +81,8 @@ describe("visit detail page", () => {
 
     expect(iframe).toBeInTheDocument();
     expect(container).toHaveTextContent(/visitDetailPage.title: /);
-    await waitFor(() => {
-      expect(container).toHaveTextContent(disapprovedVisit.visitId);
-    });
-    await waitFor(() => {
-      expect(container).toHaveTextContent(/visitDetailPage.infoStripes.disapproved/);
-    });
+    await waitFor(() => expect(container).toHaveTextContent(disapprovedVisit.visitId));
+    await waitFor(() => expect(container).toHaveTextContent(/visitDetailPage.infoStripes.disapproved/));
     expect(backButton).toBeInTheDocument();
   });
 
@@ -109,12 +103,8 @@ describe("visit detail page", () => {
 
     expect(iframe).toBeInTheDocument();
     expect(container).toHaveTextContent(/visitDetailPage.title: /);
-    await waitFor(() => {
-      expect(container).toHaveTextContent(approvedVisit.visitId);
-    });
-    await waitFor(() => {
-      expect(container).toHaveTextContent(/visitDetailPage.infoStripes.signatureChoice/);
-    });
+    await waitFor(() => expect(container).toHaveTextContent(approvedVisit.visitId));
+    await waitFor(() => expect(container).toHaveTextContent(/visitDetailPage.infoStripes.signatureChoice/));
     expect(downloadPDFAndPhysicallySignButton).toBeInTheDocument();
     expect(signElectronicallyButton).toBeDisabled();
     expect(backButton).toBeInTheDocument();
@@ -134,12 +124,10 @@ describe("visit detail page", () => {
 
     expect(iframe).toBeInTheDocument();
     expect(container).toHaveTextContent(/visitDetailPage.title: /);
-    await waitFor(() => {
-      expect(container).toHaveTextContent(forSignatureVisit.visitId);
-    });
-    await waitFor(() => {
-      expect(container).toHaveTextContent(/visitDetailPage.infoStripes.waitingForSignatureConfirmation/);
-    });
+    await waitFor(() => expect(container).toHaveTextContent(forSignatureVisit.visitId));
+    await waitFor(() =>
+      expect(container).toHaveTextContent(/visitDetailPage.infoStripes.waitingForSignatureConfirmation/)
+    );
     expect(confirmSignatureButton).toBeInTheDocument();
     expect(backButton).toBeInTheDocument();
   });
@@ -158,12 +146,8 @@ describe("visit detail page", () => {
 
     expect(iframe).toBeInTheDocument();
     expect(container).toHaveTextContent(/visitDetailPage.title: /);
-    await waitFor(() => {
-      expect(container).toHaveTextContent(signedVisit.visitId);
-    });
-    await waitFor(() => {
-      expect(container).toHaveTextContent(/visitDetailPage.infoStripes.signed/);
-    });
+    await waitFor(() => expect(container).toHaveTextContent(signedVisit.visitId));
+    await waitFor(() => expect(container).toHaveTextContent(/visitDetailPage.infoStripes.signed/));
     expect(downloadPDFButton).toBeInTheDocument();
     expect(backButton).toBeInTheDocument();
   });
@@ -186,12 +170,8 @@ describe("visit detail page", () => {
 
     expect(iframe).toBeInTheDocument();
     expect(container).toHaveTextContent(/visitDetailPage.title: /);
-    await waitFor(() => {
-      expect(container).toHaveTextContent(signedPhantomVisit.visitId);
-    });
-    await waitFor(() => {
-      expect(container).toHaveTextContent(/visitDetailPage.infoStripes.completed/);
-    });
+    await waitFor(() => expect(container).toHaveTextContent(signedPhantomVisit.visitId));
+    await waitFor(() => expect(container).toHaveTextContent(/visitDetailPage.infoStripes.completed/));
     expect(downloadPDFButton).toBeInTheDocument();
     expect(backButton).toBeInTheDocument();
   });
