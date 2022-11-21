@@ -63,6 +63,10 @@ export const FormOptionsAutocomplete = ({
                     </>
                   ),
                 }}
+                inputProps={{
+                  ...params.inputProps,
+                  "aria-label": name,
+                }}
               />
             )}
           />

@@ -44,6 +44,10 @@ export const FormDatePicker = ({ name, label, isOptional, disabled, maxDate }: I
                   onBlur={field.onBlur}
                   name={field.name}
                   size={matchesDownSmBreakpoint ? "small" : "medium"}
+                  inputProps={{
+                    ...params.inputProps,
+                    "aria-label": name,
+                  }}
                 />
               )}
               disabled={disabled}

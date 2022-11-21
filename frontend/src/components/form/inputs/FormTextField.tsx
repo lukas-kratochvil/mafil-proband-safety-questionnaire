@@ -43,6 +43,9 @@ export const FormTextField = ({
             InputProps={{
               endAdornment: <InputAdornment position="end">{endAdornmentLabel}</InputAdornment>,
             }}
+            inputProps={{
+              "aria-label": name,
+            }}
           />
         )}
       />
