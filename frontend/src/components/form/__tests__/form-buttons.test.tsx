@@ -27,7 +27,7 @@ describe("form buttons", () => {
           buttonsProps={[]}
         />
       );
-      const buttons = screen.queryAllByRole("button");
+      const buttons = screen.getAllByRole("button");
 
       expect(buttons.length).toEqual(1);
       expect(buttons[0]).toHaveProperty("type", "submit");
@@ -71,7 +71,7 @@ describe("form buttons", () => {
           buttonsProps={buttonsProps}
         />
       );
-      const buttons = screen.queryAllByRole("button");
+      const buttons = screen.getAllByRole("button");
 
       expect(buttons.length).toEqual(buttonsProps.length);
       buttons.forEach((button) => {
@@ -100,7 +100,7 @@ describe("form buttons", () => {
           buttonsProps={buttonsProps}
         />
       );
-      const buttons = screen.queryAllByRole("button");
+      const buttons = screen.getAllByRole("button");
 
       expect(buttons[0]).toHaveTextContent(titleLocalizationKey1);
       expect(buttons[1]).toHaveTextContent(titleLocalizationKey2);
@@ -132,7 +132,7 @@ describe("form buttons", () => {
         buttonsProps={buttonsProps}
       />
     );
-    const buttons = screen.queryAllByRole("button");
+    const buttons = screen.getAllByRole("button");
 
     expect(buttons.length).toEqual(3);
     expect(buttons[0]).toHaveTextContent(submitButtonTitle);

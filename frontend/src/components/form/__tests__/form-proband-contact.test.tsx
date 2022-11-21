@@ -29,7 +29,7 @@ describe("form proband contact", () => {
   test("has all input fields", () => {
     render(<FormProbandContact />);
 
-    const inputs = screen.queryAllByTestId("input");
+    const inputs = screen.getAllByTestId("input");
 
     expect(inputs.length).toEqual(2);
   });

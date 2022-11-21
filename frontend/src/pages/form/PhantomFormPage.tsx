@@ -50,7 +50,6 @@ export const PhantomFormPage = () => {
             comment: "",
           }))
         );
-
         setIsLoading(false);
       } catch (e) {
         setIsError(true);

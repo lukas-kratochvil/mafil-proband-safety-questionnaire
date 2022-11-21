@@ -177,6 +177,7 @@ describe("visit detail page", () => {
   });
 
   test("switches from approved to for-signature state", async () => {
+    const user = userEvent.setup();
     const approvedVisit: IVisit = {
       ...defaultVisit,
       state: VisitState.APPROVED,
@@ -187,7 +188,7 @@ describe("visit detail page", () => {
     const downloadPDFAndPhysicallySignButton = await screen.findByText(
       /visitDetailPage.buttons.downloadPDFAndPhysicallySign/
     );
-    await userEvent.click(downloadPDFAndPhysicallySignButton);
+    await user.click(downloadPDFAndPhysicallySignButton);
 
     expect(await screen.findByText(/visitDetailPage.infoStripes.waitingForSignatureConfirmation/)).toBeInTheDocument();
     expect(await screen.findByText(/visitDetailPage.buttons.confirmSignature/)).toBeInTheDocument();
@@ -211,6 +212,7 @@ describe("visit detail page", () => {
   });
 
   test("switches phantom from for-signature to signed state", async () => {
+    const user = userEvent.setup();
     const forSignaturePhantomVisit: IVisit = {
       ...defaultVisit,
       state: VisitState.FOR_SIGNATURE,
@@ -223,7 +225,7 @@ describe("visit detail page", () => {
 
     render(<VisitDetailPage />);
     const confirmSignatureButton = await screen.findByText(/visitDetailPage.buttons.confirmSignature/);
-    await userEvent.click(confirmSignatureButton);
+    await user.click(confirmSignatureButton);
 
     expect(await screen.findByText(/visitDetailPage.infoStripes.completed/)).toBeInTheDocument();
     expect(await screen.findByText(/visitDetailPage.buttons.downloadPDF/)).toBeInTheDocument();
