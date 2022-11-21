@@ -17,6 +17,7 @@ export default defineConfig({
         replacement: path.resolve(__dirname, "./src/__tests__/utils.ts"),
       },
     ],
+    clearMocks: true,
     environment: "jsdom",
     globals: true,
     setupFiles: ["./src/__tests__/setup.ts"],
