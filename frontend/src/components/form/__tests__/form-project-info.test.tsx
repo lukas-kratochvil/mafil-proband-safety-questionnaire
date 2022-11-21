@@ -16,12 +16,12 @@ describe("form project info", () => {
   });
 
   test("contains translations", async () => {
-    render(<FormProjectInfo />);
+    const { container } = render(<FormProjectInfo />);
 
-    await waitFor(async () => expect(screen.getByText("form.projectInfo.title")).toBeInTheDocument());
-    expect(screen.getByText("form.projectInfo.project")).toBeInTheDocument();
-    expect(screen.getByText("form.projectInfo.device")).toBeInTheDocument();
-    expect(screen.getByText("form.projectInfo.measurementDate")).toBeInTheDocument();
+    await waitFor(async () => expect(container).toHaveTextContent(/form.projectInfo.title/));
+    expect(container).toHaveTextContent(/form.projectInfo.project/);
+    expect(container).toHaveTextContent(/form.projectInfo.device/);
+    expect(container).toHaveTextContent(/form.projectInfo.measurementDate/);
   });
 
   test("has all input fields", async () => {
