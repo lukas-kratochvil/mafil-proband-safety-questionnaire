@@ -3,6 +3,7 @@ import { QuestionPartNumber } from "../../../interfaces/question";
 import { AnswerOption, VisualCorrection } from "../../../interfaces/visit";
 import {
   genderOptions,
+  getOption,
   getOptionsValues,
   IOption,
   sideDominanceOptions,
@@ -111,14 +112,15 @@ export const defaultFormSchema = object({
     .transform((_value, originalValue) => Number(String(originalValue).replace(/,/, ".")))
     .typeError("form.validation.notValid")
     .when("visualCorrection", {
-      is: VisualCorrection.YES,
+      is: getOption(visualCorrectionOptions, VisualCorrection.YES),
       then: number()
         .typeError("form.validation.notValid")
         .notOneOf([0], "form.validation.visualCorrectionValueNotZero")
         .min(-50, "form.validation.visualCorrectionValueTooLow")
         .max(50, "form.validation.visualCorrectionValueTooHigh")
         .required("form.validation.required"),
-    }),
+    })
+    .required("form.validation.required"),
   email: string().trim().email("form.validation.notValid"),
   phoneNumber: string()
     .trim()
