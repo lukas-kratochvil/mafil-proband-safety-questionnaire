@@ -33,7 +33,10 @@ export const FormContainer = ({ children, isError, buttons }: PropsWithChildren<
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit, onValidationError)}>
+    <form
+      onSubmit={handleSubmit(onSubmit, onValidationError)}
+      aria-label="Visit form"
+    >
       <Stack
         spacing={matchesDownSmBreakpoint ? "1rem" : "1.5rem"}
         alignItems="stretch"
