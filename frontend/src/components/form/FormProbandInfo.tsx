@@ -1,5 +1,5 @@
 import { Divider, Grid, Typography } from "@mui/material";
-import { addYears, differenceInCalendarYears, isValid } from "date-fns";
+import { addYears, differenceInCalendarYears, getYear, isValid } from "date-fns";
 import { useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -25,6 +25,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
   const genderOption = useWatch<FormPropType, "gender">({ name: "gender" });
   const visualCorrectionOption = useWatch<FormPropType, "visualCorrection">({ name: "visualCorrection" });
 
+  // Auto-fill birthdate and gender from the personalId value
   useEffect(() => {
     const personalIdState = getFieldState("personalId");
 
@@ -58,6 +59,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
     }
   }, [getFieldState, isPhantom, personalIdValue, setValue]);
 
+  // Auto-fill part of personalId from the birthdate and gender values
   useEffect(() => {
     const birthdateState = getFieldState("birthdate");
     const genderState = getFieldState("gender");
@@ -67,7 +69,13 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
       return;
     }
 
-    if (personalIdValue === "" && birthdateValue !== null && isValid(birthdateValue) && genderOption !== null) {
+    if (
+      personalIdValue === ""
+      && birthdateValue !== null
+      && isValid(birthdateValue)
+      && getYear(birthdateValue) > 1900
+      && genderOption !== null
+    ) {
       const year = birthdateValue.getFullYear();
       const month = birthdateValue.getMonth() + 1;
       const day = genderOption.value === Gender.FEMALE ? birthdateValue.getDate() + 50 : birthdateValue.getDate();
