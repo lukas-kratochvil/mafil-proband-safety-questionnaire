@@ -1,9 +1,8 @@
 import { Divider, Grid, Typography } from "@mui/material";
-import { addYears, differenceInCalendarYears, getYear, isValid } from "date-fns";
+import { differenceInCalendarYears, isValid } from "date-fns";
 import { useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { rodnecislo } from "rodnecislo";
 import { nativeLanguages } from "../../data/form_data";
 import { defaultNS } from "../../i18n";
 import { FormPropType } from "../../interfaces/form";
@@ -16,6 +15,7 @@ import { FormOptionsAutocomplete } from "./inputs/FormOptionsAutocomplete";
 import { FormTextField } from "./inputs/FormTextField";
 import { IPhantomFormCardProps } from "./interfaces/form-card";
 import { genderOptions, getOption, sideDominanceOptions, visualCorrectionOptions } from "./util/options";
+import { CzechPersonalId, getPersonalIdFromBirthdateAndGender } from "./util/personal-id";
 
 export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandInfo" });
@@ -34,28 +34,18 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
       return;
     }
 
-    const czechPersonalId = rodnecislo(personalIdValue);
+    const czechPersonalId = new CzechPersonalId(personalIdValue);
 
     if (!czechPersonalId.isValid()) {
       return;
     }
 
-    let newBirthdate = czechPersonalId.birthDate();
-
-    // When proband's personal ID starts with '00' and current year is 2022, it's more likely proband was born in the year 2000 than 1900
-    if (Math.abs(differenceInCalendarYears(newBirthdate, Date.now())) >= 100) {
-      newBirthdate = addYears(newBirthdate, 100);
-    }
-
-    setValue("birthdate", newBirthdate, { shouldTouch: true });
+    setValue("birthdate", czechPersonalId.getBirthdate(), { shouldTouch: true });
 
     // Phantom visit has strictly gender 'other'
     if (!isPhantom) {
-      if (czechPersonalId.isMale()) {
-        setValue("gender", getOption(genderOptions, Gender.MALE), { shouldTouch: true });
-      } else if (czechPersonalId.isFemale()) {
-        setValue("gender", getOption(genderOptions, Gender.FEMALE), { shouldTouch: true });
-      }
+      const gender = czechPersonalId.isMale() ? Gender.MALE : Gender.FEMALE;
+      setValue("gender", getOption(genderOptions, gender), { shouldTouch: true });
     }
   }, [getFieldState, isPhantom, personalIdValue, setValue]);
 
@@ -73,14 +63,10 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
       personalIdValue === ""
       && birthdateValue !== null
       && isValid(birthdateValue)
-      && getYear(birthdateValue) > 1900
+      && Math.abs(differenceInCalendarYears(birthdateValue, Date.now())) < 200
       && genderOption !== null
     ) {
-      const year = birthdateValue.getFullYear();
-      const month = birthdateValue.getMonth() + 1;
-      const day = genderOption.value === Gender.FEMALE ? birthdateValue.getDate() + 50 : birthdateValue.getDate();
-
-      setValue("personalId", `${year % 100}${month < 10 ? `0${month}` : month}${day < 10 ? `0${day}` : day}`, {
+      setValue("personalId", getPersonalIdFromBirthdateAndGender(birthdateValue, genderOption.value), {
         shouldTouch: true,
       });
     }
