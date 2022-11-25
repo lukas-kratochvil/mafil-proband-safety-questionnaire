@@ -7,7 +7,7 @@ export class CzechPersonalId {
   private readonly personalId: string;
 
   constructor(personalId: string) {
-    let personalIdNumeric: number = NaN;
+    let personalIdNumeric = NaN;
 
     if (personalId.length === 10) {
       // format is: yyMMddnnnn

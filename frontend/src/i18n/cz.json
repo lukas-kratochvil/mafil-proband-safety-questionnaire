@@ -113,7 +113,8 @@
         "visualCorrectionValueNotZero": "Hodnota se nesmí rovnat nule.",
         "visualCorrectionValueTooLow": "Hodnota je příliš nízká.",
         "visualCorrectionValueTooHigh": "Hodnota je příliš vysoká.",
-        "safetyQuestionsRequired": "Všechny bezpečnostní otázky musí být zodpovězeny."
+        "safetyQuestionsRequired": "Všechny bezpečnostní otázky musí být zodpovězeny.",
+        "probandContacts": "Pokud jste se rozhodli vyplnit kontaktní údaje, vyplňte prosím všechny možné."
       }
     },
     "homePage": {
