@@ -38,7 +38,6 @@ export const ProbandFormPage = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        console.log("FETCHING DEFAULT QUESTIONS");
         const questions = await fetchCurrentQuestions();
         setQacs(
           questions.map((qac, index) => ({

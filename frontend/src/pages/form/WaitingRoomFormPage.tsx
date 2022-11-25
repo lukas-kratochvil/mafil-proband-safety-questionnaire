@@ -37,33 +37,25 @@ export const WaitingRoomFormPage = () => {
       try {
         const fetchedVisit = id === undefined ? undefined : await fetchVisit(id);
 
+        // visit not found
         if (fetchedVisit === undefined) {
-          console.log("VISIT NOT FOUND!");
           setIsError(true);
           return;
         }
 
+        // unauthorized access
         if (operator === undefined) {
           // TODO
-          console.log("UNAUTHORIZED ACCESS!");
           setIsError(true);
           return;
         }
 
-        console.log("FETCHING QUESTIONS FROM THE VISIT");
         setQacs(fetchedVisit.answers.map((answer, index) => ({ index, ...answer })));
 
-        console.log("SETTING DEFAULT VALUES");
         const defaultValues = loadFormDefaultValuesFromVisit(fetchedVisit);
         type DefaultValuesPropertyType = keyof typeof defaultValues;
         Object.keys(defaultValues).forEach((propertyName) => {
           setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
-          console.log(
-            "-->",
-            propertyName as DefaultValuesPropertyType,
-            ":",
-            defaultValues[propertyName as DefaultValuesPropertyType]
-          );
         });
 
         setIsLoading(false);

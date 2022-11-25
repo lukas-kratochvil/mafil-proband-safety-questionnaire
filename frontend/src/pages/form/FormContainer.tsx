@@ -16,15 +16,7 @@ export const FormContainer = ({ children, isError, buttons }: PropsWithChildren<
 
   const onSubmit = (data: FormPropType) => {
     // TODO: submit data
-    console.log("Submitted data:");
-    console.log(data);
     buttons?.submitButtonProps?.onClick(data);
-  };
-
-  // TODO: DELETE - only for development purposes
-  const onValidationError = (errors: unknown) => {
-    console.log("Error:");
-    console.log(errors);
   };
 
   if (isError) {
@@ -34,7 +26,7 @@ export const FormContainer = ({ children, isError, buttons }: PropsWithChildren<
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit, onValidationError)}
+      onSubmit={handleSubmit(onSubmit)}
       aria-label="Visit form"
     >
       <Stack

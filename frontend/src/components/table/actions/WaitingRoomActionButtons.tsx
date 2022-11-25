@@ -13,6 +13,7 @@ export const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
 
   const onDelete = () => {
+    // TODO
     alert("Funkcionalita bude brzy naimplementována.");
     setOpenDeleteDialog(false);
   };

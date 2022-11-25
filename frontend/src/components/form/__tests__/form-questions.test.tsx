@@ -12,7 +12,7 @@ vi.mock("react-hook-form", () => ({
 }));
 
 vi.mock("src/util/fetch", () => ({
-  fetchQuestion: async (questionId: string): Promise<IQuestionData> => ({
+  fetchQuestion: async (): Promise<IQuestionData> => ({
     id: "1",
     partNumber: 1,
     text: "Question text",
