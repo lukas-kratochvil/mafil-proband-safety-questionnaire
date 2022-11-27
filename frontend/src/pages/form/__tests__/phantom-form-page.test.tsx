@@ -12,7 +12,7 @@ import { PhantomFormPage } from "../PhantomFormPage";
 //----------------------------------------------------------------------
 const mockedUsedNavigate = vi.fn();
 vi.mock("react-router-dom", async () => ({
-  ...(await vi.importActual("react-router-dom") as Record<string, unknown>),
+  ...((await vi.importActual("react-router-dom")) as Record<string, unknown>),
   useNavigate: () => mockedUsedNavigate,
 }));
 
@@ -27,7 +27,7 @@ vi.mock("../../../components/form/ErrorFeedback", () => ({
 // Mocking custom fetch methods
 //----------------------------------------------------------------------
 vi.mock("../../../util/fetch", async () => ({
-  ...(await vi.importActual("../../../util/fetch") as Record<string, unknown>),
+  ...((await vi.importActual("../../../util/fetch")) as Record<string, unknown>),
   fetchProjects: async (): Promise<string[]> => ["project1", "project2", "project3"],
   fetchDevices: async (): Promise<string[]> => ["device1", "device2", "device3"],
 }));

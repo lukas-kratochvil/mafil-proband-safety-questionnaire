@@ -8,7 +8,7 @@ const mockUseLocation = vi.fn();
 const mockUseNavigate = vi.fn();
 
 vi.mock("react-router-dom", async () => ({
-  ...(await vi.importActual("react-router-dom") as Record<string, unknown>),
+  ...((await vi.importActual("react-router-dom")) as Record<string, unknown>),
   useLocation: () => mockUseLocation,
   useNavigate: () => mockUseNavigate,
 }));
