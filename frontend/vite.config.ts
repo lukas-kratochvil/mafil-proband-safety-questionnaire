@@ -9,7 +9,12 @@ import { defineConfig } from "vite";
 // Vite: https://vitejs.dev/config/
 // Vitest: https://vitest.dev/config/
 export default defineConfig({
-  plugins: [react({ fastRefresh: false })],
+  plugins: [
+    react({
+      // must set this to false because of the error occuring while testing: "@vitejs/plugin-react can't detect preamble. Something is wrong. See https://github.com/vitejs/vite-plugin-react/pull/11#discussion_r430879201"
+      fastRefresh: false,
+    }),
+  ],
   test: {
     alias: [
       {
@@ -22,4 +27,4 @@ export default defineConfig({
     globals: true,
     setupFiles: ["./src/__tests__/setup.ts"],
   },
-})
+});
