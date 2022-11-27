@@ -9,6 +9,8 @@ on:
     branches: [ "main" ]
     paths:
       - 'frontend/**'
+  # We can manually trigger this workflow
+  workflow_dispatch:
 
 jobs:
   build:
@@ -32,7 +34,7 @@ jobs:
         cache-dependency-path: frontend/package-lock.json
 
     - name: Install dependencies
-      run: cd frontend && npm ci
+      run: npm ci && cd frontend && npm ci
 
     - name: Lint the code
       run: cd frontend && npm run lint
