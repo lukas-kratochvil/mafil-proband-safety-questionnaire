@@ -47,7 +47,7 @@ const defaultVisit: IVisit = {
 const mockedUseNavigate = vi.fn();
 
 vi.mock("react-router-dom", async () => ({
-  ...((await vi.importActual("react-router-dom")) as Record<string, unknown>),
+  ...(await vi.importActual("react-router-dom") as Record<string, unknown>),
   useNavigate: () => mockedUseNavigate,
   useParams: () => ({
     id,

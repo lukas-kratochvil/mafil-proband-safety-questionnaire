@@ -36,7 +36,14 @@ const visit: IVisit = {
     email: "name.surname@email.com",
     phoneNumber: "123456789",
   },
-  answers: [{ questionId: "1", partNumber: QuestionPartNumber.ONE, answer: AnswerOption.NO, comment: "" }],
+  answers: [
+    {
+      questionId: "1",
+      partNumber: QuestionPartNumber.ONE,
+      answer: AnswerOption.NO,
+      comment: "",
+    },
+  ],
 };
 
 const visitNotCompleted: IVisit = {
@@ -68,7 +75,14 @@ const visitNotCompleted: IVisit = {
     email: "",
     phoneNumber: "",
   },
-  answers: [{ questionId: "1", partNumber: QuestionPartNumber.ONE, answer: AnswerOption.NO, comment: "" }],
+  answers: [
+    {
+      questionId: "1",
+      partNumber: QuestionPartNumber.ONE,
+      answer: AnswerOption.NO,
+      comment: "",
+    },
+  ],
 };
 
 describe("form loaders", () => {
