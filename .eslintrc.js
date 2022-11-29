@@ -4,7 +4,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "prettier", // this has to be the last extension!!
   ],
-  plugins: ["@typescript-eslint", "prettier"],
+  plugins: ["import", "@typescript-eslint", "prettier"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: "latest",

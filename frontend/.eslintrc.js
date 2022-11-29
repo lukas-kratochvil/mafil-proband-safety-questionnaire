@@ -7,7 +7,7 @@ module.exports = {
     "airbnb",
     "plugin:react/recommended",
     "plugin:testing-library/react",
-    "../.eslintrc.cjs", // this has to be the last extension!!
+    "../.eslintrc.js", // this has to be the last extension!!
   ],
   overrides: [
     {
