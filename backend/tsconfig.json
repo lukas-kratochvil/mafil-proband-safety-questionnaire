@@ -11,6 +11,11 @@
     // others
     "outDir": "./dist",
     "baseUrl": "./",
+    "paths": {
+      "@*": [
+        "src/*"
+      ],
+    },
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
