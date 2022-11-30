@@ -1,8 +1,8 @@
 import userEvent from "@testing-library/user-event";
+import i18n from "@i18n";
+import { IVisit, VisitState, Gender, SideDominance, VisualCorrection } from "@interfaces/visit";
 import { render, screen, waitFor } from "@test-utils";
-import i18n from "src/i18n";
-import { Gender, IVisit, SideDominance, VisitState, VisualCorrection } from "src/interfaces/visit";
-import * as fetchers from "../../util/fetch";
+import * as fetchers from "@util/fetch"
 import { VisitDetailPage } from "../VisitDetailPage";
 
 //----------------------------------------------------------------------

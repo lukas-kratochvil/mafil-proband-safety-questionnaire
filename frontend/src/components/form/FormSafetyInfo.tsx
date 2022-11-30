@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { defaultNS } from "../../i18n";
+import { defaultNS } from "@i18n";
 import { FormCardContainer } from "./FormCardContainer";
 
 export const FormSafetyInfo = () => {

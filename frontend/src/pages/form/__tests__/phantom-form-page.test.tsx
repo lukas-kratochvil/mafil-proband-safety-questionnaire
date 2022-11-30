@@ -1,9 +1,9 @@
 import userEvent from "@testing-library/user-event";
 import { format } from "date-fns";
+import { operatorFormSchema } from "@components/form/schemas/form-schema_operator";
+import { loadPhantomFormDefaultValues } from "@components/form/util/loaders";
+import i18n from "@i18n";
 import { render, screen, waitFor } from "@test-utils";
-import { operatorFormSchema } from "src/components/form/schemas/form-schema_operator";
-import { loadPhantomFormDefaultValues } from "src/components/form/util/loaders";
-import i18n from "src/i18n";
 import { FormPageContainer } from "../FormPageContainer";
 import { PhantomFormPage } from "../PhantomFormPage";
 

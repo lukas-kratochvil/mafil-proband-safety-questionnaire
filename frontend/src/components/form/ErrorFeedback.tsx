@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { convertStringToLocalizationKey } from "../../util/utils";
+import { convertStringToLocalizationKey } from "@util/utils";
 
 interface IErrorFeedbackProps {
   name: string;

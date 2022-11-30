@@ -1,31 +1,22 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { defaultFormSchema } from "./components/form/schemas/form-schema_default";
-import { operatorFormSchema } from "./components/form/schemas/form-schema_operator";
-import { loadPhantomFormDefaultValues } from "./components/form/util/loaders";
-import { Header } from "./components/header/Header";
-import { useAuth } from "./hooks/auth/auth";
-import { ApprovalRoomTablePage } from "./pages/ApprovalRoomTablePage";
-import { HomePage } from "./pages/HomePage";
-import { LoginPage } from "./pages/LoginPage";
-import { RecentVisitsTablePage } from "./pages/RecentVisitsTablePage";
-import { VisitDetailPage } from "./pages/VisitDetailPage";
-import { WaitingRoomTablePage } from "./pages/WaitingRoomTablePage";
-import { ApprovalFormPage } from "./pages/form/ApprovalFormPage";
-import { DuplicationFormPage } from "./pages/form/DuplicationFormPage";
-import { FormPageContainer } from "./pages/form/FormPageContainer";
-import { PhantomFormPage } from "./pages/form/PhantomFormPage";
-import { ProbandFormPage } from "./pages/form/ProbandFormPage";
-import { WaitingRoomFormPage } from "./pages/form/WaitingRoomFormPage";
-
-export enum UrlBasePaths {
-  PROBAND_HOME = "/home",
-  PROBAND_FORM = "/form",
-  AUTH = "/auth",
-  PHANTOM_FORM = "/auth/phantom-form",
-  WAITING_ROOM = "/auth/waiting-room",
-  APPROVAL_ROOM = "/auth/approval-room",
-  RECENT_VISITS = "/auth/recent-visits",
-}
+import { defaultFormSchema } from "@components/form/schemas/form-schema_default";
+import { operatorFormSchema } from "@components/form/schemas/form-schema_operator";
+import { loadPhantomFormDefaultValues } from "@components/form/util/loaders";
+import { Header } from "@components/header/Header";
+import { useAuth } from "@hooks/auth/auth";
+import { ApprovalRoomTablePage } from "@pages/ApprovalRoomTablePage";
+import { HomePage } from "@pages/HomePage";
+import { LoginPage } from "@pages/LoginPage";
+import { RecentVisitsTablePage } from "@pages/RecentVisitsTablePage";
+import { VisitDetailPage } from "@pages/VisitDetailPage";
+import { WaitingRoomTablePage } from "@pages/WaitingRoomTablePage";
+import { ApprovalFormPage } from "@pages/form/ApprovalFormPage";
+import { DuplicationFormPage } from "@pages/form/DuplicationFormPage";
+import { FormPageContainer } from "@pages/form/FormPageContainer";
+import { PhantomFormPage } from "@pages/form/PhantomFormPage";
+import { ProbandFormPage } from "@pages/form/ProbandFormPage";
+import { WaitingRoomFormPage } from "@pages/form/WaitingRoomFormPage";
+import { RoutingPaths } from "./routing-paths";
 
 export const App = () => {
   const { operator } = useAuth();
@@ -36,14 +27,14 @@ export const App = () => {
       <Routes>
         <Route
           path="/"
-          element={<Navigate to={UrlBasePaths.PROBAND_FORM} />}
+          element={<Navigate to={RoutingPaths.PROBAND_FORM} />}
         />
         <Route
-          path={UrlBasePaths.PROBAND_HOME}
+          path={RoutingPaths.PROBAND_HOME}
           element={<HomePage />}
         />
         <Route
-          path={UrlBasePaths.PROBAND_FORM}
+          path={RoutingPaths.PROBAND_FORM}
           element={
             <FormPageContainer
               FormPage={ProbandFormPage}
@@ -52,13 +43,13 @@ export const App = () => {
           }
         />
         <Route
-          path={UrlBasePaths.AUTH}
+          path={RoutingPaths.AUTH}
           element={<LoginPage />}
         />
         {operator && (
           <>
             <Route
-              path={UrlBasePaths.PHANTOM_FORM}
+              path={RoutingPaths.PHANTOM_FORM}
               element={
                 <FormPageContainer
                   FormPage={PhantomFormPage}
@@ -68,11 +59,11 @@ export const App = () => {
               }
             />
             <Route
-              path={UrlBasePaths.WAITING_ROOM}
+              path={RoutingPaths.WAITING_ROOM}
               element={<WaitingRoomTablePage />}
             />
             <Route
-              path={`${UrlBasePaths.WAITING_ROOM}/form/:id`}
+              path={`${RoutingPaths.WAITING_ROOM}/form/:id`}
               element={
                 <FormPageContainer
                   FormPage={WaitingRoomFormPage}
@@ -81,11 +72,11 @@ export const App = () => {
               }
             />
             <Route
-              path={UrlBasePaths.APPROVAL_ROOM}
+              path={RoutingPaths.APPROVAL_ROOM}
               element={<ApprovalRoomTablePage />}
             />
             <Route
-              path={`${UrlBasePaths.APPROVAL_ROOM}/form/:id`}
+              path={`${RoutingPaths.APPROVAL_ROOM}/form/:id`}
               element={
                 <FormPageContainer
                   FormPage={ApprovalFormPage}
@@ -94,7 +85,7 @@ export const App = () => {
               }
             />
             <Route
-              path={`${UrlBasePaths.RECENT_VISITS}/duplicate/:id`}
+              path={`${RoutingPaths.RECENT_VISITS}/duplicate/:id`}
               element={
                 <FormPageContainer
                   FormPage={DuplicationFormPage}
@@ -103,11 +94,11 @@ export const App = () => {
               }
             />
             <Route
-              path={UrlBasePaths.RECENT_VISITS}
+              path={RoutingPaths.RECENT_VISITS}
               element={<RecentVisitsTablePage />}
             />
             <Route
-              path={`${UrlBasePaths.RECENT_VISITS}/visit/:id`}
+              path={`${RoutingPaths.RECENT_VISITS}/visit/:id`}
               element={<VisitDetailPage />}
             />
           </>

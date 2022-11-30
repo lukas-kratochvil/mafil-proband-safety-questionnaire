@@ -3,9 +3,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Drawer, Grid, IconButton, List, Tooltip } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LogOutButton } from "../../LogOutButton";
-import { OperatorCard } from "../../OperatorCard";
-import { getTabs, TAB_DEFAULT_COLOR } from "../common";
+import { LogOutButton } from "@components/header/LogOutButton";
+import { OperatorCard } from "@components/header/OperatorCard";
+import { TAB_DEFAULT_COLOR, getTabs } from "../common";
 import { NavigationMobileTab } from "./NavigationMobileTab";
 
 export const NavigationMobile = () => {

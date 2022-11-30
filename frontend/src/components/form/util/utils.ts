@@ -1,7 +1,7 @@
 import { NavigateFunction } from "react-router-dom";
-import { UrlBasePaths } from "../../../App";
-import { VisitState } from "../../../interfaces/visit";
-import { updateDummyVisitState } from "../../../util/fetch.dev";
+import { VisitState } from "@interfaces/visit";
+import { RoutingPaths } from "@routing-paths";
+import { updateDummyVisitState } from "@util/fetch.dev";
 import { IButtonProps } from "../FormButtons";
 
 export const getDisapproveButtonProps = (id: string | undefined, navigate: NavigateFunction): IButtonProps => ({
@@ -9,7 +9,7 @@ export const getDisapproveButtonProps = (id: string | undefined, navigate: Navig
   onClick: () => {
     // TODO: store changes in DB if made
     updateDummyVisitState(id, VisitState.DISAPPROVED);
-    navigate(UrlBasePaths.APPROVAL_ROOM);
+    navigate(RoutingPaths.APPROVAL_ROOM);
   },
   showErrorColor: true,
 });

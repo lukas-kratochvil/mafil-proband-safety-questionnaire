@@ -1,9 +1,9 @@
 import userEvent from "@testing-library/user-event";
+import { defaultFormSchema } from "@components/form/schemas/form-schema_default";
+import { loadEmptyDefaultValues } from "@components/form/util/loaders";
+import i18n from "@i18n";
+import { IQuestionData, QuestionPartNumber } from "@interfaces/question";
 import { render, screen, waitFor, within } from "@test-utils";
-import { defaultFormSchema } from "src/components/form/schemas/form-schema_default";
-import { loadEmptyDefaultValues } from "src/components/form/util/loaders";
-import i18n from "src/i18n";
-import { IQuestionData, QuestionPartNumber } from "src/interfaces/question";
 import { FormPageContainer } from "../FormPageContainer";
 import { ProbandFormPage } from "../ProbandFormPage";
 

@@ -1,5 +1,5 @@
 import { AppBar, Grid, Theme, Toolbar, useMediaQuery } from "@mui/material";
-import { useAuth } from "../../hooks/auth/auth";
+import { useAuth } from "@hooks/auth/auth";
 import { CeitecMafilLogo } from "./CeitecMafilLogo";
 import { LanguageMenu } from "./LanguageMenu";
 import { LoginOperator } from "./LoginOperator";

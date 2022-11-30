@@ -1,5 +1,5 @@
-import { QuestionPartNumber } from "src/interfaces/question";
-import { AnswerOption, Gender, IVisit, SideDominance, VisitState, VisualCorrection } from "src/interfaces/visit";
+import { QuestionPartNumber } from "@interfaces/question";
+import { IVisit, VisitState, Gender, VisualCorrection, SideDominance, AnswerOption } from "@interfaces/visit";
 import {
   loadEmptyDefaultValues,
   loadFormDefaultValuesFromVisit,

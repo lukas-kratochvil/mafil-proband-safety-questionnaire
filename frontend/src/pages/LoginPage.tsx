@@ -1,9 +1,9 @@
 import { Avatar, Button, Stack, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { CardContainer } from "../components/card/CardContainer";
-import { useAuth } from "../hooks/auth/auth";
-import { defaultNS } from "../i18n";
-import { IAuthMethod } from "../interfaces/auth";
+import { CardContainer } from "@components/card/CardContainer";
+import { useAuth } from "@hooks/auth/auth";
+import { defaultNS } from "@i18n";
+import { IAuthMethod } from "@interfaces/auth";
 import { PageContainer } from "./PageContainer";
 
 export const LoginPage = () => {

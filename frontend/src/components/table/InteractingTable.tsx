@@ -2,10 +2,10 @@ import { Typography } from "@mui/material";
 import MaterialReactTable, { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { defaultNS } from "../../i18n";
-import { IVisit } from "../../interfaces/visit";
-import { PageContainer } from "../../pages/PageContainer";
-import { convertStringToLocalizationKey } from "../../util/utils";
+import { defaultNS } from "@i18n";
+import { IVisit } from "@interfaces/visit";
+import { PageContainer } from "@pages/PageContainer";
+import { convertStringToLocalizationKey } from "@util/utils";
 
 interface IInteractingTableProps {
   titleLocalizationKey: string;

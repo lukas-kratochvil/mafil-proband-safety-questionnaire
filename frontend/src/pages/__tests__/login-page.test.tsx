@@ -1,6 +1,6 @@
+import i18n from "@i18n";
+import { LoginPage } from "@pages/LoginPage";
 import { render } from "@test-utils";
-import i18n from "src/i18n";
-import { LoginPage } from "../LoginPage";
 
 describe("login page", () => {
   beforeEach(async () => {

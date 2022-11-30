@@ -1,7 +1,7 @@
 import userEvent from "@testing-library/user-event";
+import i18n from "@i18n";
+import { RoutingPaths } from "@routing-paths";
 import { render, screen } from "@test-utils";
-import { UrlBasePaths } from "src/App";
-import i18n from "src/i18n";
 import { HomePage } from "../HomePage";
 
 const mockedUseNavigate = vi.fn();
@@ -32,6 +32,6 @@ describe("home page", () => {
     await user.click(openNewForButton);
 
     expect(mockedUseNavigate).toHaveBeenCalledOnce();
-    expect(mockedUseNavigate).toHaveBeenLastCalledWith(UrlBasePaths.PROBAND_FORM);
+    expect(mockedUseNavigate).toHaveBeenLastCalledWith(RoutingPaths.PROBAND_FORM);
   });
 });

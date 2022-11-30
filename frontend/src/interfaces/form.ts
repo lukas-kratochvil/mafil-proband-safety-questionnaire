@@ -1,5 +1,5 @@
-import { IOption } from "../components/form/util/options";
-import { Override } from "../util/utils";
+import { IOption } from "@components/form/util/options";
+import { Override } from "@util/utils";
 import { AnswerOption, IQac } from "./visit";
 
 // Form fields having this data type are validated as numbers
