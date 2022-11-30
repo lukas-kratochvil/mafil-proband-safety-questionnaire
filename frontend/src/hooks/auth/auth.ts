@@ -1,8 +1,8 @@
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UrlBasePaths } from "@App";
 import { operatorMR, operatorSpecial } from "@data/operator_data";
 import { IAuth, IOperator, IAuthMethod, IAuthGateOperator } from "@interfaces/auth";
+import { RoutingPaths } from "@routing-paths";
 import { authenticateOperator } from "@util/fetch";
 
 // defaultValue argument is only used when a component does not have a matching Provider above it in the tree – helpful for testing components in isolation
@@ -42,14 +42,14 @@ export const useAuthProvider = (): IAuth => {
       window.sessionStorage.setItem("operator", JSON.stringify(fetchedOperator));
     }
 
-    navigate(UrlBasePaths.WAITING_ROOM);
+    navigate(RoutingPaths.WAITING_ROOM);
     return true;
   };
 
   const logOut = () => {
     setOperator(undefined);
     window.sessionStorage.removeItem("operator");
-    navigate(UrlBasePaths.AUTH);
+    navigate(RoutingPaths.AUTH);
   };
 
   return {

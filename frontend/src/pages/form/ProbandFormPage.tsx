@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { UrlBasePaths } from "@App";
 import { FormBeforeExamination } from "@components/form/FormBeforeExamination";
 import { IFormButtonsProps } from "@components/form/FormButtons";
 import { FormEntryInfo } from "@components/form/FormEntryInfo";
@@ -11,6 +10,7 @@ import { FormProbandInfo } from "@components/form/FormProbandInfo";
 import { FormQuestions } from "@components/form/FormQuestions";
 import { FormSafetyInfo } from "@components/form/FormSafetyInfo";
 import { FormQac, FormPropType } from "@interfaces/form";
+import { RoutingPaths } from "@routing-paths";
 import { fetchCurrentQuestions } from "@util/fetch";
 import { FormContainer } from "./FormContainer";
 
@@ -29,7 +29,7 @@ export const ProbandFormPage = () => {
       titleLocalizationKey: "form.common.buttons.agree",
       onClick: (data: FormPropType) => {
         // TODO: create visit in DB
-        navigate(UrlBasePaths.PROBAND_HOME);
+        navigate(RoutingPaths.PROBAND_HOME);
       },
     },
     buttonsProps: [],

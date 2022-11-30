@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { UrlBasePaths } from "@App";
 import { IFormButtonsProps } from "@components/form/FormButtons";
 import { FormProbandContact } from "@components/form/FormProbandContact";
 import { FormProbandInfo } from "@components/form/FormProbandInfo";
@@ -13,6 +12,7 @@ import { useAuth } from "@hooks/auth/auth";
 import { FormPropType, FormQac } from "@interfaces/form";
 import { QuestionPartNumber } from "@interfaces/question";
 import { VisitState } from "@interfaces/visit";
+import { RoutingPaths } from "@routing-paths";
 import { fetchVisit } from "@util/fetch";
 import { updateDummyVisitState } from "@util/fetch.dev";
 import { getBackButtonProps } from "@util/utils";
@@ -96,7 +96,7 @@ export const ApprovalFormPage = () => {
             onClick: () => {
               // TODO: store changes in DB if made
               updateDummyVisitState(id, VisitState.APPROVED);
-              navigate(`${UrlBasePaths.RECENT_VISITS}/visit/${id}`);
+              navigate(`${RoutingPaths.RECENT_VISITS}/visit/${id}`);
             },
           },
           buttonsProps: [

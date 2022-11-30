@@ -7,15 +7,15 @@ import ScienceIcon from "@mui/icons-material/Science";
 import { SxProps, Theme } from "@mui/material";
 import { amber } from "@mui/material/colors";
 import { Location, NavigateFunction } from "react-router-dom";
-import { UrlBasePaths } from "@App";
+import { RoutingPaths } from "@routing-paths";
 
 export const TAB_DEFAULT_COLOR = amber[700];
 export const TAB_HIGHLIGHT_COLOR = amber[600];
 
-export const isTabSelected = (location: Location, urlPrefix: UrlBasePaths): boolean =>
+export const isTabSelected = (location: Location, urlPrefix: RoutingPaths): boolean =>
   location.pathname.startsWith(urlPrefix);
 
-export const getCommonTabSx = (location: Location, urlPrefix: UrlBasePaths): SxProps<Theme> => {
+export const getCommonTabSx = (location: Location, urlPrefix: RoutingPaths): SxProps<Theme> => {
   const isSelected = isTabSelected(location, urlPrefix);
 
   return {
@@ -35,7 +35,7 @@ export const getCommonTabSx = (location: Location, urlPrefix: UrlBasePaths): SxP
 
 export interface ITabProps {
   localizationKey: string;
-  urlPrefix: UrlBasePaths;
+  urlPrefix: RoutingPaths;
   onClick: () => void;
   Icon: SvgIconComponent;
   showCount?: boolean;
@@ -44,34 +44,34 @@ export interface ITabProps {
 export const getTabs = (navigate: NavigateFunction): ITabProps[] => [
   {
     localizationKey: "waitingRoom",
-    urlPrefix: UrlBasePaths.WAITING_ROOM,
-    onClick: () => navigate(UrlBasePaths.WAITING_ROOM),
+    urlPrefix: RoutingPaths.WAITING_ROOM,
+    onClick: () => navigate(RoutingPaths.WAITING_ROOM),
     Icon: PendingActionsIcon,
     showCount: true,
   },
   {
     localizationKey: "approvalRoom",
-    urlPrefix: UrlBasePaths.APPROVAL_ROOM,
-    onClick: () => navigate(UrlBasePaths.APPROVAL_ROOM),
+    urlPrefix: RoutingPaths.APPROVAL_ROOM,
+    onClick: () => navigate(RoutingPaths.APPROVAL_ROOM),
     Icon: ApprovalIcon,
     showCount: true,
   },
   {
     localizationKey: "recentVisits",
-    urlPrefix: UrlBasePaths.RECENT_VISITS,
-    onClick: () => navigate(UrlBasePaths.RECENT_VISITS),
+    urlPrefix: RoutingPaths.RECENT_VISITS,
+    onClick: () => navigate(RoutingPaths.RECENT_VISITS),
     Icon: RecentActorsIcon,
   },
   {
     localizationKey: "createNewPhantomForm",
-    urlPrefix: UrlBasePaths.PHANTOM_FORM,
-    onClick: () => navigate(UrlBasePaths.PHANTOM_FORM),
+    urlPrefix: RoutingPaths.PHANTOM_FORM,
+    onClick: () => navigate(RoutingPaths.PHANTOM_FORM),
     Icon: ScienceIcon,
   },
   {
     localizationKey: "openNewProbandForm",
-    urlPrefix: UrlBasePaths.PROBAND_FORM,
-    onClick: () => window.open(UrlBasePaths.PROBAND_FORM, "_blank", "noopener,noreferrer"),
+    urlPrefix: RoutingPaths.PROBAND_FORM,
+    onClick: () => window.open(RoutingPaths.PROBAND_FORM, "_blank", "noopener,noreferrer"),
     Icon: PersonAddAlt1Icon,
   },
 ];
