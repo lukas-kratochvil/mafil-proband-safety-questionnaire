@@ -1,7 +1,7 @@
 import { Autocomplete, CircularProgress, TextField, Theme, useMediaQuery } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { defaultNS } from "../../../i18n";
+import { defaultNS } from "@i18n";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormDefaultInputProps } from "./interfaces/input-props";
 

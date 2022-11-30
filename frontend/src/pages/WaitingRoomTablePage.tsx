@@ -1,11 +1,11 @@
 import { compareAsc, format, parse } from "date-fns";
 import { MRT_ColumnDef as MRTColumnDef, MRT_Row as MRTRow } from "material-react-table";
 import { useTranslation } from "react-i18next";
-import { InteractingTable } from "../components/table/InteractingTable";
-import { WaitingRoomActionButtons } from "../components/table/actions/WaitingRoomActionButtons";
-import { defaultNS } from "../i18n";
-import { IVisit } from "../interfaces/visit";
-import { fetchWaitingRoomVisits } from "../util/fetch";
+import { InteractingTable } from "@components/table/InteractingTable";
+import { WaitingRoomActionButtons } from "@components/table/actions/WaitingRoomActionButtons";
+import { defaultNS } from "@i18n";
+import { IVisit } from "@interfaces/visit";
+import { fetchWaitingRoomVisits } from "@util/fetch";
 
 const createdAtFormat = "d.M.yyyy H:mm";
 const probandBirthdateFormat = "d.M.yyyy";

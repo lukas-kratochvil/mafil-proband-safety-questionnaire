@@ -1,21 +1,21 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { defaultFormSchema } from "./components/form/schemas/form-schema_default";
-import { operatorFormSchema } from "./components/form/schemas/form-schema_operator";
-import { loadPhantomFormDefaultValues } from "./components/form/util/loaders";
-import { Header } from "./components/header/Header";
-import { useAuth } from "./hooks/auth/auth";
-import { ApprovalRoomTablePage } from "./pages/ApprovalRoomTablePage";
-import { HomePage } from "./pages/HomePage";
-import { LoginPage } from "./pages/LoginPage";
-import { RecentVisitsTablePage } from "./pages/RecentVisitsTablePage";
-import { VisitDetailPage } from "./pages/VisitDetailPage";
-import { WaitingRoomTablePage } from "./pages/WaitingRoomTablePage";
-import { ApprovalFormPage } from "./pages/form/ApprovalFormPage";
-import { DuplicationFormPage } from "./pages/form/DuplicationFormPage";
-import { FormPageContainer } from "./pages/form/FormPageContainer";
-import { PhantomFormPage } from "./pages/form/PhantomFormPage";
-import { ProbandFormPage } from "./pages/form/ProbandFormPage";
-import { WaitingRoomFormPage } from "./pages/form/WaitingRoomFormPage";
+import { defaultFormSchema } from "@components/form/schemas/form-schema_default";
+import { operatorFormSchema } from "@components/form/schemas/form-schema_operator";
+import { loadPhantomFormDefaultValues } from "@components/form/util/loaders";
+import { Header } from "@components/header/Header";
+import { useAuth } from "@hooks/auth/auth";
+import { ApprovalRoomTablePage } from "@pages/ApprovalRoomTablePage";
+import { HomePage } from "@pages/HomePage";
+import { LoginPage } from "@pages/LoginPage";
+import { RecentVisitsTablePage } from "@pages/RecentVisitsTablePage";
+import { VisitDetailPage } from "@pages/VisitDetailPage";
+import { WaitingRoomTablePage } from "@pages/WaitingRoomTablePage";
+import { ApprovalFormPage } from "@pages/form/ApprovalFormPage";
+import { DuplicationFormPage } from "@pages/form/DuplicationFormPage";
+import { FormPageContainer } from "@pages/form/FormPageContainer";
+import { PhantomFormPage } from "@pages/form/PhantomFormPage";
+import { ProbandFormPage } from "@pages/form/ProbandFormPage";
+import { WaitingRoomFormPage } from "@pages/form/WaitingRoomFormPage";
 
 export enum UrlBasePaths {
   PROBAND_HOME = "/home",

@@ -1,5 +1,5 @@
+import i18n from "@i18n";
 import { render } from "@test-utils";
-import i18n from "src/i18n";
 import { FormSafetyInfo } from "../FormSafetyInfo";
 
 describe("form before examination", () => {

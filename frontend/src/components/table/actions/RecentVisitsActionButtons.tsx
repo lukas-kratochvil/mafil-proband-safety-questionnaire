@@ -1,9 +1,9 @@
 import { Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { UrlBasePaths } from "../../../App";
-import { defaultNS } from "../../../i18n";
-import { getDummyVisit } from "../../../util/fetch.dev";
+import { UrlBasePaths } from "@App";
+import { defaultNS } from "@i18n";
+import { getDummyVisit } from "@util/fetch.dev";
 import { ActionButtonsContainer, IActionButtonsProps } from "./ActionButtonsContainer";
 
 export const RecentVisitsActionButtons = ({ visitId }: IActionButtonsProps) => {

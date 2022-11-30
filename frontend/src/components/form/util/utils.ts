@@ -1,7 +1,7 @@
 import { NavigateFunction } from "react-router-dom";
-import { UrlBasePaths } from "../../../App";
-import { VisitState } from "../../../interfaces/visit";
-import { updateDummyVisitState } from "../../../util/fetch.dev";
+import { UrlBasePaths } from "@App";
+import { VisitState } from "@interfaces/visit";
+import { updateDummyVisitState } from "@util/fetch.dev";
 import { IButtonProps } from "../FormButtons";
 
 export const getDisapproveButtonProps = (id: string | undefined, navigate: NavigateFunction): IButtonProps => ({

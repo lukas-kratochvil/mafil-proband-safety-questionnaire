@@ -3,8 +3,8 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, 
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { UrlBasePaths } from "../../../App";
-import { defaultNS } from "../../../i18n";
+import { UrlBasePaths } from "@App";
+import { defaultNS } from "@i18n";
 import { ActionButtonsContainer, IActionButtonsProps } from "./ActionButtonsContainer";
 
 export const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {

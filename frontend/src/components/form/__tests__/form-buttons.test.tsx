@@ -1,5 +1,5 @@
 import { render, screen } from "@test-utils";
-import { ISubmitButtonProps } from "src/util/utils";
+import { ISubmitButtonProps } from "@util/utils";
 import { FormButtons, IButtonProps } from "../FormButtons";
 
 describe("form buttons", () => {

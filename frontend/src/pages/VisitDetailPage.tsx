@@ -2,16 +2,12 @@ import { Button, Grid, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
-import { CardContainer } from "../components/card/CardContainer";
-import {
-  ColoredInfoStripe,
-  ColoredInfoStripeColors,
-  IColoredInfoStripeProps,
-} from "../components/informative/ColoredInfoStripe";
-import { defaultNS } from "../i18n";
-import { IVisit, VisitState } from "../interfaces/visit";
-import { fetchVisitDetail } from "../util/fetch";
-import { convertStringToLocalizationKey, getBackButtonProps, IButton } from "../util/utils";
+import { CardContainer } from "@components/card/CardContainer";
+import { IColoredInfoStripeProps, ColoredInfoStripeColors, ColoredInfoStripe } from "@components/informative/ColoredInfoStripe";
+import { defaultNS } from "@i18n";
+import { VisitState, IVisit } from "@interfaces/visit";
+import { fetchVisitDetail } from "@util/fetch";
+import { IButton, getBackButtonProps, convertStringToLocalizationKey } from "@util/utils";
 import { PageContainer } from "./PageContainer";
 
 interface IVisitDetailButtonProps extends IButton {

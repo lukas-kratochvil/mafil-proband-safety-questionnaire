@@ -1,7 +1,6 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    // project specific
     "target": "ES2022",
     "module": "ES2022",
     "moduleResolution": "Node",
@@ -10,11 +9,12 @@
       "DOM.Iterable",
       "ES2022",
     ],
-
-    // others
     "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
+      "@*": [
+        "src/*"
+      ],
       "@test-utils": [
         "src/__tests__/utils.ts",
       ],

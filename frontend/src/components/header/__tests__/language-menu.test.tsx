@@ -1,6 +1,6 @@
 import userEvent from "@testing-library/user-event";
+import i18n from "@i18n";
 import { render, within } from "@test-utils";
-import i18n from "../../../i18n";
 import { LanguageMenu } from "../LanguageMenu";
 
 describe("language menu", () => {

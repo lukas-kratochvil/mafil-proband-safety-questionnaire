@@ -1,9 +1,9 @@
 import { Button, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { UrlBasePaths } from "../App";
-import { CardContainer } from "../components/card/CardContainer";
-import { defaultNS } from "../i18n";
+import { UrlBasePaths } from "@App";
+import { CardContainer } from "@components/card/CardContainer";
+import { defaultNS } from "@i18n";
 import { PageContainer } from "./PageContainer";
 
 export const HomePage = () => {

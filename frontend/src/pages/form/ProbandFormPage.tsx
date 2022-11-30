@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { UrlBasePaths } from "../../App";
-import { FormBeforeExamination } from "../../components/form/FormBeforeExamination";
-import { IFormButtonsProps } from "../../components/form/FormButtons";
-import { FormEntryInfo } from "../../components/form/FormEntryInfo";
-import { FormExaminationConsent } from "../../components/form/FormExaminationConsent";
-import { FormProbandContact } from "../../components/form/FormProbandContact";
-import { FormProbandInfo } from "../../components/form/FormProbandInfo";
-import { FormQuestions } from "../../components/form/FormQuestions";
-import { FormSafetyInfo } from "../../components/form/FormSafetyInfo";
-import { FormPropType, FormQac } from "../../interfaces/form";
-import { fetchCurrentQuestions } from "../../util/fetch";
+import { UrlBasePaths } from "@App";
+import { FormBeforeExamination } from "@components/form/FormBeforeExamination";
+import { IFormButtonsProps } from "@components/form/FormButtons";
+import { FormEntryInfo } from "@components/form/FormEntryInfo";
+import { FormExaminationConsent } from "@components/form/FormExaminationConsent";
+import { FormProbandContact } from "@components/form/FormProbandContact";
+import { FormProbandInfo } from "@components/form/FormProbandInfo";
+import { FormQuestions } from "@components/form/FormQuestions";
+import { FormSafetyInfo } from "@components/form/FormSafetyInfo";
+import { FormQac, FormPropType } from "@interfaces/form";
+import { fetchCurrentQuestions } from "@util/fetch";
 import { FormContainer } from "./FormContainer";
 
 export const ProbandFormPage = () => {

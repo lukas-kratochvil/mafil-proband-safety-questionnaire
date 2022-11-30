@@ -1,6 +1,6 @@
 import userEvent from "@testing-library/user-event";
+import i18n from "@i18n";
 import { render, screen } from "@test-utils";
-import i18n from "../../../i18n";
 import { LogOutButton } from "../LogOutButton";
 
 const logOutSpy = vi.fn();

@@ -1,5 +1,5 @@
+import i18n from "@i18n";
 import { render, screen } from "@test-utils";
-import i18n from "src/i18n";
 import { FormProbandContact } from "../FormProbandContact";
 
 vi.mock("react-hook-form", () => ({

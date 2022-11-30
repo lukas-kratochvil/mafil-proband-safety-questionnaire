@@ -1,5 +1,5 @@
+import i18n from "@i18n";
 import { render, screen, waitFor } from "@test-utils";
-import i18n from "src/i18n";
 import { FormProjectInfo } from "../FormProjectInfo";
 
 vi.mock("react-hook-form", () => ({

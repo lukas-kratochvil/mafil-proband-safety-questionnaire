@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { UrlBasePaths } from "../../App";
-import { IFormButtonsProps } from "../../components/form/FormButtons";
-import { FormProbandContact } from "../../components/form/FormProbandContact";
-import { FormProbandInfo } from "../../components/form/FormProbandInfo";
-import { FormProjectInfo } from "../../components/form/FormProjectInfo";
-import { FormQuestions } from "../../components/form/FormQuestions";
-import { loadFormDefaultValuesFromVisit } from "../../components/form/util/loaders";
-import { getDisapproveButtonProps } from "../../components/form/util/utils";
-import { useAuth } from "../../hooks/auth/auth";
-import { FormPropType, FormQac } from "../../interfaces/form";
-import { QuestionPartNumber } from "../../interfaces/question";
-import { VisitState } from "../../interfaces/visit";
-import { fetchVisit } from "../../util/fetch";
-import { updateDummyVisitState } from "../../util/fetch.dev";
-import { getBackButtonProps } from "../../util/utils";
+import { UrlBasePaths } from "@App";
+import { IFormButtonsProps } from "@components/form/FormButtons";
+import { FormProbandContact } from "@components/form/FormProbandContact";
+import { FormProbandInfo } from "@components/form/FormProbandInfo";
+import { FormProjectInfo } from "@components/form/FormProjectInfo";
+import { FormQuestions } from "@components/form/FormQuestions";
+import { loadFormDefaultValuesFromVisit } from "@components/form/util/loaders";
+import { getDisapproveButtonProps } from "@components/form/util/utils";
+import { useAuth } from "@hooks/auth/auth";
+import { FormPropType, FormQac } from "@interfaces/form";
+import { QuestionPartNumber } from "@interfaces/question";
+import { VisitState } from "@interfaces/visit";
+import { fetchVisit } from "@util/fetch";
+import { updateDummyVisitState } from "@util/fetch.dev";
+import { getBackButtonProps } from "@util/utils";
 import { FormContainer } from "./FormContainer";
 
 export const ApprovalFormPage = () => {
