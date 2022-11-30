@@ -5,7 +5,9 @@
     "target": "ES2022",
     "module": "CommonJS",
     "moduleResolution": "Node",
-
+    "lib": [
+      "ESNext"
+    ],
     // others
     "outDir": "./dist",
     "baseUrl": "./",
