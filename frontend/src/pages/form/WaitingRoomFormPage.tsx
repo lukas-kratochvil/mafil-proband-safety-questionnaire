@@ -9,7 +9,7 @@ import { FormQuestions } from "@components/form/FormQuestions";
 import { loadFormDefaultValuesFromVisit } from "@components/form/util/loaders";
 import { getDisapproveButtonProps } from "@components/form/util/utils";
 import { useAuth } from "@hooks/auth/auth";
-import { FormQac, FormPropType } from "@interfaces/form";
+import { FormPropType, FormQac } from "@interfaces/form";
 import { QuestionPartNumber } from "@interfaces/question";
 import { AnswerOption, VisitState } from "@interfaces/visit";
 import { RoutingPaths } from "@routing-paths";

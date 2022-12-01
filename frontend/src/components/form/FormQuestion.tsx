@@ -4,7 +4,7 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@hooks/auth/auth";
 import { defaultNS } from "@i18n";
-import { FormQac, FormPropType } from "@interfaces/form";
+import { FormPropType, FormQac } from "@interfaces/form";
 import { IQuestionData } from "@interfaces/question";
 import { AnswerOption } from "@interfaces/visit";
 import { fetchQuestion } from "@util/fetch";

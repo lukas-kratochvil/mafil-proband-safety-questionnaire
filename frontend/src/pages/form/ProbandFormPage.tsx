@@ -9,7 +9,7 @@ import { FormProbandContact } from "@components/form/FormProbandContact";
 import { FormProbandInfo } from "@components/form/FormProbandInfo";
 import { FormQuestions } from "@components/form/FormQuestions";
 import { FormSafetyInfo } from "@components/form/FormSafetyInfo";
-import { FormQac, FormPropType } from "@interfaces/form";
+import { FormPropType, FormQac } from "@interfaces/form";
 import { RoutingPaths } from "@routing-paths";
 import { fetchCurrentQuestions } from "@util/fetch";
 import { FormContainer } from "./FormContainer";

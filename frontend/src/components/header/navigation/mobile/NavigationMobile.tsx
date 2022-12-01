@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LogOutButton } from "@components/header/LogOutButton";
 import { OperatorCard } from "@components/header/OperatorCard";
-import { TAB_DEFAULT_COLOR, getTabs } from "../common";
+import { getTabs, TAB_DEFAULT_COLOR } from "../common";
 import { NavigationMobileTab } from "./NavigationMobileTab";
 
 export const NavigationMobile = () => {

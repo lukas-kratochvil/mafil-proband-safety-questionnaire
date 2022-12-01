@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ColoredInfoStripe, ColoredInfoStripeColors } from "@components/informative/ColoredInfoStripe";
 import { defaultNS } from "@i18n";
-import { fetchProjects, fetchDevices } from "@util/fetch";
+import { fetchDevices, fetchProjects } from "@util/fetch";
 import { FormCardContainer } from "./FormCardContainer";
 import { FormAutocomplete } from "./inputs/FormAutocomplete";
 import { FormDatePicker } from "./inputs/FormDatePicker";

@@ -1,4 +1,4 @@
-import { Gender, VisualCorrection, SideDominance } from "@interfaces/visit";
+import { Gender, SideDominance, VisualCorrection } from "@interfaces/visit";
 
 export interface IOption {
   value: number;
