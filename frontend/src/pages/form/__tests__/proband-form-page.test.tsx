@@ -10,10 +10,10 @@ import { ProbandFormPage } from "../ProbandFormPage";
 //----------------------------------------------------------------------
 // Mocking react-router-dom hooks
 //----------------------------------------------------------------------
-const mockedUsedNavigate = vi.fn();
+const mockedUseNavigate = vi.fn();
 vi.mock("react-router-dom", async () => ({
   ...((await vi.importActual("react-router-dom")) as Record<string, unknown>),
-  useNavigate: () => mockedUsedNavigate,
+  useNavigate: () => mockedUseNavigate,
 }));
 
 //----------------------------------------------------------------------
@@ -225,7 +225,7 @@ describe("proband form page", () => {
 
       await user.click(agreeButton);
       // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUsedNavigate).toHaveBeenCalledTimes(0);
+      expect(mockedUseNavigate).toHaveBeenCalledTimes(0);
 
       const questions = screen.getAllByRole("radiogroup");
       questions.forEach(async (question, index) => {
@@ -235,7 +235,7 @@ describe("proband form page", () => {
 
       await user.click(agreeButton);
       // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUsedNavigate).toHaveBeenCalledOnce();
+      expect(mockedUseNavigate).toHaveBeenCalledOnce();
     },
     {
       timeout: 10000,
@@ -309,7 +309,7 @@ describe("proband form page", () => {
       const agreeButton = screen.getByRole("button", { name: "form.common.buttons.agree" });
       await user.click(agreeButton);
       // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUsedNavigate).toHaveBeenCalledOnce();
+      expect(mockedUseNavigate).toHaveBeenCalledOnce();
     },
     {
       timeout: 10000,
@@ -386,7 +386,7 @@ describe("proband form page", () => {
       const agreeButton = screen.getByRole("button", { name: "form.common.buttons.agree" });
       await user.click(agreeButton);
       // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUsedNavigate).toHaveBeenCalledTimes(0);
+      expect(mockedUseNavigate).toHaveBeenCalledTimes(0);
     },
     {
       timeout: 10000,
@@ -463,7 +463,7 @@ describe("proband form page", () => {
       const agreeButton = screen.getByRole("button", { name: "form.common.buttons.agree" });
       await user.click(agreeButton);
       // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUsedNavigate).toHaveBeenCalledTimes(0);
+      expect(mockedUseNavigate).toHaveBeenCalledTimes(0);
     },
     {
       timeout: 10000,
