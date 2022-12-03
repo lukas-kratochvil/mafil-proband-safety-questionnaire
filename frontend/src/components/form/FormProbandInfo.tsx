@@ -27,15 +27,13 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
 
   // Auto-fill birthdate and gender from the personalId value
   useEffect(() => {
-    const personalIdState = getFieldState("personalId");
-
     // Auto-fill in birthdate and gender only when personalId field is being edited for the first time (until it looses focus)
+    const personalIdState = getFieldState("personalId");
     if (personalIdState.isTouched) {
       return;
     }
 
     const czechPersonalId = new CzechPersonalId(personalIdValue);
-
     if (!czechPersonalId.isValid()) {
       return;
     }
@@ -73,10 +71,12 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
   }, [birthdateValue, genderOption, getFieldState, personalIdValue, setValue]);
 
   useEffect(() => {
-    if (visualCorrectionOption?.value !== VisualCorrection.YES) {
+    if (visualCorrectionOption?.value === VisualCorrection.YES) {
+      setValue("visualCorrectionValue", "");
+    } else {
       resetField("visualCorrectionValue");
     }
-  }, [resetField, visualCorrectionOption]);
+  }, [resetField, setValue, visualCorrectionOption]);
 
   return (
     <FormCardContainer title={t("title")}>

@@ -116,10 +116,9 @@ export const defaultFormSchema = object().shape(
         is: getOption(visualCorrectionOptions, VisualCorrection.YES),
         then: number()
           .typeError("form.validation.notValid")
-          .notOneOf([0], "form.validation.visualCorrectionValueNotZero")
+          .notOneOf([0], "form.validation.visualCorrectionValueNotEmptyNotZero")
           .min(-50, "form.validation.visualCorrectionValueTooLow")
-          .max(50, "form.validation.visualCorrectionValueTooHigh")
-          .required("form.validation.required"),
+          .max(50, "form.validation.visualCorrectionValueTooHigh"),
       })
       .required("form.validation.required"),
     email: string()

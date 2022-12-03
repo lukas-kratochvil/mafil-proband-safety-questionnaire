@@ -49,9 +49,9 @@ export class CzechPersonalId {
 
   static isValidPersonalIdDate = (personalId: string): boolean => {
     const monthIndex = CzechPersonalId.getMonthIndexFromPersonalId(personalId);
+    // 'isExists()' needs 'year' as a number - we have only last 2 digits of the year in the personal ID
     return Number.isNaN(monthIndex)
       ? false
-      // 'isExists()' needs 'year' as a number - we have only last 2 digits of the year in the personal ID
       : isExists(1900 + +personalId.substring(0, 2), monthIndex, +personalId.substring(4, 6));
   };
 
@@ -95,7 +95,7 @@ export class CzechPersonalId {
 export const getPersonalIdFromBirthdateAndGender = (birthdate: Date, gender: Gender): string => {
   const year = getYear(birthdate);
   // month can be plus extra 20, but it's really a rare case when all the IDs are used up on the given day
-  const month = getMonth(birthdate) + (gender === Gender.FEMALE ? FEMALE_CONST + 1 : 1);
+  const month = getMonth(birthdate) + 1 + (gender === Gender.FEMALE ? FEMALE_CONST : 0);
   const day = getDate(birthdate);
 
   const yearStr = year % 100;
