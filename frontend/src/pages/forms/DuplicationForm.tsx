@@ -19,7 +19,7 @@ import { fetchVisit } from "@util/fetch";
 import { getBackButtonProps } from "@util/utils";
 import { FormContainer } from "./FormContainer";
 
-export const DuplicationFormPage = () => {
+export const DuplicationForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { operator } = useAuth();

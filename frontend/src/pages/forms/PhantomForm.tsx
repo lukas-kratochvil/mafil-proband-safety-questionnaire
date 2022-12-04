@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { FormBeforeExamination } from "@components/form/components/FormBeforeExamination";
 import { IFormButtonsProps } from "@components/form/components/FormButtons";
-import { FormEntryInfo } from "@components/form/components/FormEntryInfo";
-import { FormExaminationConsent } from "@components/form/components/FormExaminationConsent";
-import { FormProbandContact } from "@components/form/components/FormProbandContact";
 import { FormProbandInfo } from "@components/form/components/FormProbandInfo";
-import { FormQuestions } from "@components/form/components/FormQuestions";
-import { FormSafetyInfo } from "@components/form/components/FormSafetyInfo";
+import { FormProjectInfo } from "@components/form/components/FormProjectInfo";
+import { createNewVisitFromFormData } from "@components/form/util/utils.dev";
+import { dummyVisits } from "@data/visit_data";
 import { FormPropType, FormQac } from "@interfaces/form";
+import { AnswerOption, VisitState } from "@interfaces/visit";
 import { RoutingPaths } from "@routing-paths";
 import { fetchCurrentQuestions } from "@util/fetch";
+import { getBackButtonProps } from "@util/utils";
 import { FormContainer } from "./FormContainer";
 
-export const ProbandFormPage = () => {
+export const PhantomForm = () => {
   const navigate = useNavigate();
   const { setValue } = useFormContext();
 
@@ -26,13 +25,15 @@ export const ProbandFormPage = () => {
 
   const formButtons: IFormButtonsProps = {
     submitButtonProps: {
-      titleLocalizationKey: "form.common.buttons.agree",
+      titleLocalizationKey: "form.common.buttons.finalize",
       onClick: (data: FormPropType) => {
-        // TODO: create visit in DB
-        navigate(RoutingPaths.PROBAND_HOME);
+        // TODO: create phantom visit in DB
+        const newPhantomVisit = createNewVisitFromFormData(data, VisitState.SIGNED);
+        dummyVisits.push(newPhantomVisit);
+        navigate(`${RoutingPaths.RECENT_VISITS}/visit/${newPhantomVisit.id}`);
       },
     },
-    buttonsProps: [],
+    buttonsProps: [getBackButtonProps(navigate, "form.common.buttons.cancel")],
   };
 
   useEffect(() => {
@@ -44,11 +45,10 @@ export const ProbandFormPage = () => {
             index,
             questionId: qac.id,
             partNumber: qac.partNumber,
-            answer: null,
+            answer: AnswerOption.NO,
             comment: "",
           }))
         );
-
         setIsLoading(false);
       } catch (e) {
         setIsError(true);
@@ -67,17 +67,8 @@ export const ProbandFormPage = () => {
       isError={isError}
       buttons={formButtons}
     >
-      <FormEntryInfo />
-      <FormProbandInfo />
-      <FormProbandContact />
-      <FormSafetyInfo />
-      <FormQuestions
-        titleLocalizationKey="title"
-        qacs={qacs}
-        disableInputs={false}
-      />
-      <FormBeforeExamination />
-      <FormExaminationConsent />
+      <FormProjectInfo isPhantom />
+      <FormProbandInfo isPhantom />
     </FormContainer>
   );
 };

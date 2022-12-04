@@ -5,7 +5,7 @@ import { loadPhantomFormDefaultValues } from "@components/form/util/loaders";
 import i18n from "@i18n";
 import { render, screen, waitFor } from "@test-utils";
 import { FormPageContainer } from "../FormPageContainer";
-import { PhantomFormPage } from "../PhantomFormPage";
+import { PhantomForm } from "../PhantomForm";
 
 //----------------------------------------------------------------------
 // Mocking react-router-dom hooks
@@ -39,7 +39,7 @@ describe("phantom form page", () => {
   const setup = () => {
     render(
       <FormPageContainer
-        FormPage={PhantomFormPage}
+        FormPage={PhantomForm}
         validationSchema={operatorFormSchema}
         loadDefaultValues={loadPhantomFormDefaultValues}
       />

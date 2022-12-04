@@ -5,7 +5,7 @@ import i18n from "@i18n";
 import { IQuestionData, QuestionPartNumber } from "@interfaces/question";
 import { render, screen, waitFor, within } from "@test-utils";
 import { FormPageContainer } from "../FormPageContainer";
-import { ProbandFormPage } from "../ProbandFormPage";
+import { ProbandForm } from "../ProbandForm";
 
 //----------------------------------------------------------------------
 // Mocking react-router-dom hooks
@@ -63,7 +63,7 @@ describe("proband form page", () => {
   const setup = () => {
     render(
       <FormPageContainer
-        FormPage={ProbandFormPage}
+        FormPage={ProbandForm}
         validationSchema={defaultFormSchema}
         loadDefaultValues={loadEmptyDefaultValues}
       />
