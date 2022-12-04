@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { AnyObjectSchema } from "yup";
 import { loadEmptyDefaultValues } from "@components/form/util/loaders";
 import { FormPropType } from "@interfaces/form";
-import { PageContainer } from "../PageContainer";
+import { PageContainer } from "@pages/PageContainer";
 
 interface IFormPageContainerProps {
   FormPage: () => JSX.Element;

@@ -6,8 +6,8 @@ import { IOperator } from "@interfaces/auth";
 import { IQuestionData, QuestionPartNumber } from "@interfaces/question";
 import { AnswerOption, Gender, IVisit, SideDominance, VisitState, VisualCorrection } from "@interfaces/visit";
 import { render, screen, waitFor, within } from "@test-utils";
-import { DuplicationForm } from "../DuplicationForm";
-import { FormPageContainer } from "../FormPageContainer";
+import { DuplicationForm } from "../../components/form/forms/DuplicationForm";
+import { FormPageContainer } from "../../components/form/forms/FormPageContainer";
 
 //----------------------------------------------------------------------
 // Default data

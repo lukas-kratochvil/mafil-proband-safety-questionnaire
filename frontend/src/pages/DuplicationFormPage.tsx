@@ -1,6 +1,6 @@
+import { DuplicationForm } from "@components/form/forms/DuplicationForm";
+import { FormPageContainer } from "@components/form/forms/FormPageContainer";
 import { operatorFormSchema } from "@components/form/schemas/form-schema_operator";
-import { DuplicationForm } from "./forms/DuplicationForm";
-import { FormPageContainer } from "./forms/FormPageContainer";
 
 export const DuplicationFormPage = () => (
   <FormPageContainer

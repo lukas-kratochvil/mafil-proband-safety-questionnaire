@@ -4,8 +4,8 @@ import { loadEmptyDefaultValues } from "@components/form/util/loaders";
 import i18n from "@i18n";
 import { IQuestionData, QuestionPartNumber } from "@interfaces/question";
 import { render, screen, waitFor, within } from "@test-utils";
-import { FormPageContainer } from "../FormPageContainer";
-import { ProbandForm } from "../ProbandForm";
+import { FormPageContainer } from "../../components/form/forms/FormPageContainer";
+import { ProbandForm } from "../../components/form/forms/ProbandForm";
 
 //----------------------------------------------------------------------
 // Mocking react-router-dom hooks

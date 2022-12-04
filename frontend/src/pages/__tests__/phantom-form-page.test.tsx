@@ -4,8 +4,8 @@ import { operatorFormSchema } from "@components/form/schemas/form-schema_operato
 import { loadPhantomFormDefaultValues } from "@components/form/util/loaders";
 import i18n from "@i18n";
 import { render, screen, waitFor } from "@test-utils";
-import { FormPageContainer } from "../FormPageContainer";
-import { PhantomForm } from "../PhantomForm";
+import { FormPageContainer } from "../../components/form/forms/FormPageContainer";
+import { PhantomForm } from "../../components/form/forms/PhantomForm";
 
 //----------------------------------------------------------------------
 // Mocking react-router-dom hooks

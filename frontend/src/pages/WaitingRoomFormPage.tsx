@@ -1,6 +1,6 @@
+import { FormPageContainer } from "@components/form/forms/FormPageContainer";
+import { WaitingRoomForm } from "@components/form/forms/WaitingRoomForm";
 import { operatorFormSchema } from "@components/form/schemas/form-schema_operator";
-import { FormPageContainer } from "./forms/FormPageContainer";
-import { WaitingRoomForm } from "./forms/WaitingRoomForm";
 
 export const WaitingRoomFormPage = () => (
   <FormPageContainer
