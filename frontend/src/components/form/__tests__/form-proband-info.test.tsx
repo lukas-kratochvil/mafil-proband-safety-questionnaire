@@ -1,6 +1,6 @@
 import i18n from "@i18n";
 import { render, screen } from "@test-utils";
-import { FormProbandInfo } from "../FormProbandInfo";
+import { FormProbandInfo } from "../components/FormProbandInfo";
 
 vi.mock("react", () => ({
   useEffect: vi.fn(),

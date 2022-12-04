@@ -8,9 +8,9 @@ import { FormPropType, FormQac } from "@interfaces/form";
 import { IQuestionData } from "@interfaces/question";
 import { AnswerOption } from "@interfaces/visit";
 import { fetchQuestion } from "@util/fetch";
-import { FormRadioGroup } from "./inputs/FormRadioGroup";
-import { FormTextField } from "./inputs/FormTextField";
-import { IFormCardProps } from "./interfaces/form-card";
+import { FormRadioGroup } from "../inputs/FormRadioGroup";
+import { FormTextField } from "../inputs/FormTextField";
+import { IFormCardProps } from "../interfaces/form-card";
 
 interface IFormQuestionProps extends IFormCardProps {
   qac: FormQac;

@@ -2,7 +2,7 @@ import { Grid, InputLabel, Typography } from "@mui/material";
 import { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@i18n";
-import { ErrorFeedback } from "../ErrorFeedback";
+import { ErrorFeedback } from "./ErrorFeedback";
 
 export interface IFormInputFieldContainerProps {
   label: string;

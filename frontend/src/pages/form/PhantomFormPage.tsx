@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { IFormButtonsProps } from "@components/form/FormButtons";
-import { FormProbandInfo } from "@components/form/FormProbandInfo";
-import { FormProjectInfo } from "@components/form/FormProjectInfo";
+import { IFormButtonsProps } from "@components/form/components/FormButtons";
+import { FormProbandInfo } from "@components/form/components/FormProbandInfo";
+import { FormProjectInfo } from "@components/form/components/FormProjectInfo";
 import { createNewVisitFromFormData } from "@components/form/util/utils.dev";
 import { dummyVisits } from "@data/visit_data";
 import { FormPropType, FormQac } from "@interfaces/form";

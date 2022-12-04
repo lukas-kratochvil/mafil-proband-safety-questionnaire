@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { IFormButtonsProps } from "@components/form/FormButtons";
-import { FormProbandContact } from "@components/form/FormProbandContact";
-import { FormProbandInfo } from "@components/form/FormProbandInfo";
-import { FormProjectInfo } from "@components/form/FormProjectInfo";
-import { FormQuestions } from "@components/form/FormQuestions";
+import { IFormButtonsProps } from "@components/form/components/FormButtons";
+import { FormProbandContact } from "@components/form/components/FormProbandContact";
+import { FormProbandInfo } from "@components/form/components/FormProbandInfo";
+import { FormProjectInfo } from "@components/form/components/FormProjectInfo";
+import { FormQuestions } from "@components/form/components/FormQuestions";
 import { loadFormDefaultValuesFromVisit } from "@components/form/util/loaders";
 import { getDisapproveButtonProps } from "@components/form/util/utils";
 import { useAuth } from "@hooks/auth/auth";

@@ -8,14 +8,14 @@ import { nativeLanguages } from "@data/form_data";
 import { defaultNS } from "@i18n";
 import { FormPropType } from "@interfaces/form";
 import { Gender, VisualCorrection } from "@interfaces/visit";
+import { FormAutocomplete } from "../inputs/FormAutocomplete";
+import { FormDatePicker } from "../inputs/FormDatePicker";
+import { FormOptionsAutocomplete } from "../inputs/FormOptionsAutocomplete";
+import { FormTextField } from "../inputs/FormTextField";
+import { IPhantomFormCardProps } from "../interfaces/form-card";
+import { genderOptions, getOption, sideDominanceOptions, visualCorrectionOptions } from "../util/options";
+import { CzechPersonalId, getPersonalIdFromBirthdateAndGender } from "../util/personal-id";
 import { FormCardContainer } from "./FormCardContainer";
-import { FormAutocomplete } from "./inputs/FormAutocomplete";
-import { FormDatePicker } from "./inputs/FormDatePicker";
-import { FormOptionsAutocomplete } from "./inputs/FormOptionsAutocomplete";
-import { FormTextField } from "./inputs/FormTextField";
-import { IPhantomFormCardProps } from "./interfaces/form-card";
-import { genderOptions, getOption, sideDominanceOptions, visualCorrectionOptions } from "./util/options";
-import { CzechPersonalId, getPersonalIdFromBirthdateAndGender } from "./util/personal-id";
 
 export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandInfo" });
