@@ -1,5 +1,5 @@
 import { render, screen } from "@test-utils";
-import { FormCardContainer } from "../components/FormCardContainer";
+import { FormCardContainer } from "../FormCardContainer";
 
 describe("form card container", () => {
   test("has title", () => {

@@ -1,7 +1,7 @@
 import i18n from "@i18n";
 import { IQuestionData } from "@interfaces/question";
 import { render } from "@test-utils";
-import { FormQuestions } from "../components/FormQuestions";
+import { FormQuestions } from "../FormQuestions";
 
 vi.mock("react-hook-form", () => ({
   Controller: () => <div data-testid="input" />,

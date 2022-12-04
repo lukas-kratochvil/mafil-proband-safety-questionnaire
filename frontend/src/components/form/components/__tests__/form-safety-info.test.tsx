@@ -1,6 +1,6 @@
 import i18n from "@i18n";
 import { render } from "@test-utils";
-import { FormSafetyInfo } from "../components/FormSafetyInfo";
+import { FormSafetyInfo } from "../FormSafetyInfo";
 
 describe("form before examination", () => {
   beforeEach(async () => {

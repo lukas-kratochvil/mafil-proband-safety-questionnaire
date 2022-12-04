@@ -1,6 +1,6 @@
 import i18n from "@i18n";
 import { render } from "@test-utils";
-import { FormExaminationConsent } from "../components/FormExaminationConsent";
+import { FormExaminationConsent } from "../FormExaminationConsent";
 
 describe("form examination consent", () => {
   beforeEach(async () => {

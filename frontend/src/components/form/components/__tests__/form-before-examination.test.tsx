@@ -1,6 +1,6 @@
 import i18n from "@i18n";
 import { render } from "@test-utils";
-import { FormBeforeExamination } from "../components/FormBeforeExamination";
+import { FormBeforeExamination } from "../FormBeforeExamination";
 
 describe("form before examination", () => {
   beforeEach(async () => {

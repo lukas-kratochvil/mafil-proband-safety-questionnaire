@@ -1,6 +1,6 @@
 import i18n from "@i18n";
 import { render } from "@test-utils";
-import { FormEntryInfo } from "../components/FormEntryInfo";
+import { FormEntryInfo } from "../FormEntryInfo";
 
 describe("form entry info", () => {
   beforeEach(async () => {

@@ -1,6 +1,6 @@
 import i18n from "@i18n";
 import { render, screen } from "@test-utils";
-import { FormProbandContact } from "../components/FormProbandContact";
+import { FormProbandContact } from "../FormProbandContact";
 
 vi.mock("react-hook-form", () => ({
   Controller: () => <div data-testid="input" />,
