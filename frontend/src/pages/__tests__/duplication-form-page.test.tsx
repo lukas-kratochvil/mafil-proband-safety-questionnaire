@@ -1,13 +1,10 @@
 import { format } from "date-fns";
-import { operatorFormSchema } from "@components/form/schemas/form-schema_operator";
-import { loadEmptyDefaultValues } from "@components/form/util/loaders";
 import i18n from "@i18n";
 import { IOperator } from "@interfaces/auth";
 import { IQuestionData, QuestionPartNumber } from "@interfaces/question";
 import { AnswerOption, Gender, IVisit, SideDominance, VisitState, VisualCorrection } from "@interfaces/visit";
+import DuplicationFormPage from "@pages/DuplicationFormPage";
 import { render, screen, waitFor, within } from "@test-utils";
-import { DuplicationForm } from "../../components/form/forms/DuplicationForm";
-import { FormPageContainer } from "../../components/form/forms/FormPageContainer";
 
 //----------------------------------------------------------------------
 // Default data
@@ -127,13 +124,7 @@ vi.mock("../../../util/fetch", async () => ({
 //----------------------------------------------------------------------
 describe("proband form page", () => {
   const setup = () => {
-    render(
-      <FormPageContainer
-        FormPage={DuplicationForm}
-        validationSchema={operatorFormSchema}
-        loadDefaultValues={loadEmptyDefaultValues}
-      />
-    );
+    render(<DuplicationFormPage />);
   };
 
   beforeEach(async () => {

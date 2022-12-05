@@ -103,7 +103,7 @@ const getButtons = (
   }
 };
 
-export const VisitDetailPage = () => {
+const VisitDetailPage = () => {
   const { t } = useTranslation(defaultNS);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -188,3 +188,5 @@ export const VisitDetailPage = () => {
     </PageContainer>
   );
 };
+
+export default VisitDetailPage;

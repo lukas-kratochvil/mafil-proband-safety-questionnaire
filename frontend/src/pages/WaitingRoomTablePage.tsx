@@ -10,7 +10,7 @@ import { fetchWaitingRoomVisits } from "@util/fetch";
 const createdAtFormat = "d.M.yyyy H:mm";
 const probandBirthdateFormat = "d.M.yyyy";
 
-export const WaitingRoomTablePage = () => {
+const WaitingRoomTablePage = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomTablePage.header" });
 
   const header: MRTColumnDef<IVisit>[] = [
@@ -75,3 +75,5 @@ export const WaitingRoomTablePage = () => {
     />
   );
 };
+
+export default WaitingRoomTablePage;

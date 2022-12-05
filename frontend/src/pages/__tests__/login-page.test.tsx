@@ -1,5 +1,5 @@
 import i18n from "@i18n";
-import { LoginPage } from "@pages/LoginPage";
+import LoginPage from "@pages/LoginPage";
 import { render } from "@test-utils";
 
 describe("login page", () => {

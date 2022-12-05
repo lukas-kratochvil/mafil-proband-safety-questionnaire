@@ -1,11 +1,8 @@
 import userEvent from "@testing-library/user-event";
-import { defaultFormSchema } from "@components/form/schemas/form-schema_default";
-import { loadEmptyDefaultValues } from "@components/form/util/loaders";
 import i18n from "@i18n";
 import { IQuestionData, QuestionPartNumber } from "@interfaces/question";
+import ProbandFormPage from "@pages/ProbandFormPage";
 import { render, screen, waitFor, within } from "@test-utils";
-import { FormPageContainer } from "../../components/form/forms/FormPageContainer";
-import { ProbandForm } from "../../components/form/forms/ProbandForm";
 
 //----------------------------------------------------------------------
 // Mocking react-router-dom hooks
@@ -61,13 +58,7 @@ vi.mock("../../../util/fetch", async () => ({
 //----------------------------------------------------------------------
 describe("proband form page", () => {
   const setup = () => {
-    render(
-      <FormPageContainer
-        FormPage={ProbandForm}
-        validationSchema={defaultFormSchema}
-        loadDefaultValues={loadEmptyDefaultValues}
-      />
-    );
+    render(<ProbandFormPage />);
   };
 
   beforeEach(async () => {

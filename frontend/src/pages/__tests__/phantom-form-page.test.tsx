@@ -1,11 +1,8 @@
 import userEvent from "@testing-library/user-event";
 import { format } from "date-fns";
-import { operatorFormSchema } from "@components/form/schemas/form-schema_operator";
-import { loadPhantomFormDefaultValues } from "@components/form/util/loaders";
 import i18n from "@i18n";
+import PhantomFormPage from "@pages/PhantomFormPage";
 import { render, screen, waitFor } from "@test-utils";
-import { FormPageContainer } from "../../components/form/forms/FormPageContainer";
-import { PhantomForm } from "../../components/form/forms/PhantomForm";
 
 //----------------------------------------------------------------------
 // Mocking react-router-dom hooks
@@ -37,13 +34,7 @@ vi.mock("../../../util/fetch", async () => ({
 //----------------------------------------------------------------------
 describe("phantom form page", () => {
   const setup = () => {
-    render(
-      <FormPageContainer
-        FormPage={PhantomForm}
-        validationSchema={operatorFormSchema}
-        loadDefaultValues={loadPhantomFormDefaultValues}
-      />
-    );
+    render(<PhantomFormPage />);
   };
 
   beforeEach(async () => {

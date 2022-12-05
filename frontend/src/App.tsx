@@ -1,24 +1,27 @@
+import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Header } from "@components/header/Header";
 import { useAuth } from "@hooks/auth/auth";
-import { ApprovalFormPage } from "@pages/ApprovalFormPage";
-import { ApprovalRoomTablePage } from "@pages/ApprovalRoomTablePage";
-import { DuplicationFormPage } from "@pages/DuplicationFormPage";
-import { HomePage } from "@pages/HomePage";
-import { LoginPage } from "@pages/LoginPage";
-import { PhantomFormPage } from "@pages/PhantomFormPage";
-import { ProbandFormPage } from "@pages/ProbandFormPage";
-import { RecentVisitsTablePage } from "@pages/RecentVisitsTablePage";
-import { VisitDetailPage } from "@pages/VisitDetailPage";
-import { WaitingRoomFormPage } from "@pages/WaitingRoomFormPage";
-import { WaitingRoomTablePage } from "@pages/WaitingRoomTablePage";
 import { RoutingPaths } from "./routing-paths";
+
+const HomePage = lazy(() => import("@pages/HomePage"));
+const LoginPage = lazy(() => import("@pages/LoginPage"));
+const ApprovalFormPage = lazy(() => import("@pages/ApprovalFormPage"));
+const DuplicationFormPage = lazy(() => import("@pages/DuplicationFormPage"));
+const PhantomFormPage = lazy(() => import("@pages/PhantomFormPage"));
+const ProbandFormPage = lazy(() => import("@pages/ProbandFormPage"));
+const WaitingRoomFormPage = lazy(() => import("@pages/WaitingRoomFormPage"));
+const ApprovalRoomTablePage = lazy(() => import("@pages/ApprovalRoomTablePage"));
+const RecentVisitsTablePage = lazy(() => import("@pages/RecentVisitsTablePage"));
+const WaitingRoomTablePage = lazy(() => import("@pages/WaitingRoomTablePage"));
+const VisitDetailPage = lazy(() => import("@pages/VisitDetailPage"));
 
 export const App = () => {
   const { operator } = useAuth();
 
   return (
-    <>
+    // TODO: make better error boundary (Suspense component)
+    <Suspense fallback={<div>Loading…</div>}>
       <Header />
       <Routes>
         <Route
@@ -74,6 +77,6 @@ export const App = () => {
           </>
         )}
       </Routes>
-    </>
+    </Suspense>
   );
 };

@@ -9,7 +9,7 @@ import { fetchRecentVisits } from "@util/fetch";
 
 const processedDateFormat = "d.M.yyyy H:mm";
 
-export const RecentVisitsTablePage = () => {
+const RecentVisitsTablePage = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "recentVisitsTablePage.header" });
 
   const header: MRTColumnDef<IVisit>[] = [
@@ -76,3 +76,5 @@ export const RecentVisitsTablePage = () => {
     />
   );
 };
+
+export default RecentVisitsTablePage;

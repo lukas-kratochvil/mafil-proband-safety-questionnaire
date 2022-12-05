@@ -6,7 +6,7 @@ import { defaultNS } from "@i18n";
 import { RoutingPaths } from "@routing-paths";
 import { PageContainer } from "./PageContainer";
 
-export const HomePage = () => {
+const HomePage = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "homePage" });
   const navigate = useNavigate();
 
@@ -30,3 +30,5 @@ export const HomePage = () => {
     </PageContainer>
   );
 };
+
+export default HomePage;
