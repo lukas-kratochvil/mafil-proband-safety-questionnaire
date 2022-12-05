@@ -71,12 +71,10 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
   }, [birthdateValue, genderOption, getFieldState, personalIdValue, setValue]);
 
   useEffect(() => {
-    if (visualCorrectionOption?.value === VisualCorrection.YES) {
-      setValue("visualCorrectionValue", "");
-    } else {
+    if (visualCorrectionOption?.value !== VisualCorrection.YES) {
       resetField("visualCorrectionValue");
     }
-  }, [resetField, setValue, visualCorrectionOption]);
+  }, [resetField, visualCorrectionOption]);
 
   return (
     <FormCardContainer title={t("title")}>
