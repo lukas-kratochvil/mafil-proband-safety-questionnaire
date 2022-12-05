@@ -16,15 +16,15 @@ vi.mock("react-router-dom", async () => ({
 //----------------------------------------------------------------------
 // Mocking custom ErrorFeedback component
 //----------------------------------------------------------------------
-vi.mock("../../../components/form/ErrorFeedback", () => ({
+vi.mock("../../components/form/inputs/ErrorFeedback", () => ({
   ErrorFeedback: () => <div />,
 }));
 
 //----------------------------------------------------------------------
 // Mocking custom fetch methods
 //----------------------------------------------------------------------
-vi.mock("../../../util/fetch", async () => ({
-  ...((await vi.importActual("../../../util/fetch")) as Record<string, unknown>),
+vi.mock("../../util/fetch", async () => ({
+  ...((await vi.importActual("../../util/fetch")) as Record<string, unknown>),
   fetchProjects: async (): Promise<string[]> => ["project1", "project2", "project3"],
   fetchDevices: async (): Promise<string[]> => ["device1", "device2", "device3"],
 }));

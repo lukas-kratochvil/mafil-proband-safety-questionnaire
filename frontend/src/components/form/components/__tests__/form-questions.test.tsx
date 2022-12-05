@@ -19,7 +19,7 @@ vi.mock("src/util/fetch", () => ({
   }),
 }));
 
-describe("form project info", () => {
+describe("form questions", () => {
   beforeEach(async () => {
     await i18n.changeLanguage("cimode");
   });

@@ -2,7 +2,7 @@ import i18n from "@i18n";
 import { render } from "@test-utils";
 import { FormSafetyInfo } from "../FormSafetyInfo";
 
-describe("form before examination", () => {
+describe("form safety info", () => {
   beforeEach(async () => {
     await i18n.changeLanguage("cimode");
   });

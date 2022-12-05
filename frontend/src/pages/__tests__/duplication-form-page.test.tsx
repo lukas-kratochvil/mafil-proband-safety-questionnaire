@@ -87,7 +87,7 @@ vi.mock("react-router-dom", async () => ({
 //----------------------------------------------------------------------
 // Mocking custom ErrorFeedback component
 //----------------------------------------------------------------------
-vi.mock("../../../components/form/ErrorFeedback", () => ({
+vi.mock("../../components/form/inputs/ErrorFeedback", () => ({
   ErrorFeedback: () => <div />,
 }));
 
@@ -102,7 +102,7 @@ const operator: IOperator = {
   hasHigherPermission: true,
 };
 
-vi.mock("../../../hooks/auth/auth", () => ({
+vi.mock("../../hooks/auth/auth", () => ({
   useAuth: () => ({
     operator,
   }),
@@ -111,8 +111,8 @@ vi.mock("../../../hooks/auth/auth", () => ({
 //----------------------------------------------------------------------
 // Mocking custom fetch methods
 //----------------------------------------------------------------------
-vi.mock("../../../util/fetch", async () => ({
-  ...((await vi.importActual("../../../util/fetch")) as Record<string, unknown>),
+vi.mock("../../util/fetch", async () => ({
+  ...((await vi.importActual("../../util/fetch")) as Record<string, unknown>),
   fetchVisit: async (): Promise<IVisit> => visit,
   fetchProjects: async (): Promise<string[]> => ["project1", "project2", "project3"],
   fetchDevices: async (): Promise<string[]> => ["device1", "device2", "device3"],
@@ -122,7 +122,7 @@ vi.mock("../../../util/fetch", async () => ({
 //----------------------------------------------------------------------
 // Tests
 //----------------------------------------------------------------------
-describe("proband form page", () => {
+describe("duplication form page", () => {
   const setup = () => {
     render(<DuplicationFormPage />);
   };
