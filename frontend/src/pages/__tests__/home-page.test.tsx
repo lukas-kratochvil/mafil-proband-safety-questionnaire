@@ -1,8 +1,8 @@
 import userEvent from "@testing-library/user-event";
 import i18n from "@i18n";
+import HomePage from "@pages/HomePage";
 import { RoutingPaths } from "@routing-paths";
 import { render, screen } from "@test-utils";
-import { HomePage } from "../HomePage";
 
 const mockedUseNavigate = vi.fn();
 

@@ -10,7 +10,7 @@ import { fetchApprovalRoomVisits } from "@util/fetch";
 const createdAtFormat = "d.M.yyyy H:mm";
 const probandBirthdateFormat = "d.M.yyyy";
 
-export const ApprovalRoomTablePage = () => {
+const ApprovalRoomTablePage = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "approvalRoomTablePage.header" });
 
   const header: MRTColumnDef<IVisit>[] = [
@@ -80,3 +80,5 @@ export const ApprovalRoomTablePage = () => {
     />
   );
 };
+
+export default ApprovalRoomTablePage;

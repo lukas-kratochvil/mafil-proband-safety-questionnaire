@@ -2,7 +2,7 @@ import { NavigateFunction } from "react-router-dom";
 import { VisitState } from "@interfaces/visit";
 import { RoutingPaths } from "@routing-paths";
 import { updateDummyVisitState } from "@util/fetch.dev";
-import { IButtonProps } from "../FormButtons";
+import { IButtonProps } from "../components/FormButtons";
 
 export const getDisapproveButtonProps = (id: string | undefined, navigate: NavigateFunction): IButtonProps => ({
   titleLocalizationKey: "form.common.buttons.disapprove",

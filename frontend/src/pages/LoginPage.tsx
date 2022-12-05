@@ -6,7 +6,7 @@ import { defaultNS } from "@i18n";
 import { IAuthMethod } from "@interfaces/auth";
 import { PageContainer } from "./PageContainer";
 
-export const LoginPage = () => {
+const LoginPage = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "loginPage" });
   const { logIn } = useAuth();
 
@@ -76,3 +76,5 @@ export const LoginPage = () => {
     </PageContainer>
   );
 };
+
+export default LoginPage;

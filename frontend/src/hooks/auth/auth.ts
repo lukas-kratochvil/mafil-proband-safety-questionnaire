@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { operatorMR, operatorSpecial } from "@data/operator_data";
-import { IAuth, IOperator, IAuthMethod, IAuthGateOperator } from "@interfaces/auth";
+import { IAuth, IAuthGateOperator, IAuthMethod, IOperator } from "@interfaces/auth";
 import { RoutingPaths } from "@routing-paths";
 import { authenticateOperator } from "@util/fetch";
 

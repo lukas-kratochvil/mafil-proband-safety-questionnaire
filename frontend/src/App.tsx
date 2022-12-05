@@ -1,28 +1,27 @@
+import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { defaultFormSchema } from "@components/form/schemas/form-schema_default";
-import { operatorFormSchema } from "@components/form/schemas/form-schema_operator";
-import { loadPhantomFormDefaultValues } from "@components/form/util/loaders";
 import { Header } from "@components/header/Header";
 import { useAuth } from "@hooks/auth/auth";
-import { ApprovalRoomTablePage } from "@pages/ApprovalRoomTablePage";
-import { HomePage } from "@pages/HomePage";
-import { LoginPage } from "@pages/LoginPage";
-import { RecentVisitsTablePage } from "@pages/RecentVisitsTablePage";
-import { VisitDetailPage } from "@pages/VisitDetailPage";
-import { WaitingRoomTablePage } from "@pages/WaitingRoomTablePage";
-import { ApprovalFormPage } from "@pages/form/ApprovalFormPage";
-import { DuplicationFormPage } from "@pages/form/DuplicationFormPage";
-import { FormPageContainer } from "@pages/form/FormPageContainer";
-import { PhantomFormPage } from "@pages/form/PhantomFormPage";
-import { ProbandFormPage } from "@pages/form/ProbandFormPage";
-import { WaitingRoomFormPage } from "@pages/form/WaitingRoomFormPage";
 import { RoutingPaths } from "./routing-paths";
+
+const HomePage = lazy(() => import("@pages/HomePage"));
+const LoginPage = lazy(() => import("@pages/LoginPage"));
+const ApprovalFormPage = lazy(() => import("@pages/ApprovalFormPage"));
+const DuplicationFormPage = lazy(() => import("@pages/DuplicationFormPage"));
+const PhantomFormPage = lazy(() => import("@pages/PhantomFormPage"));
+const ProbandFormPage = lazy(() => import("@pages/ProbandFormPage"));
+const WaitingRoomFormPage = lazy(() => import("@pages/WaitingRoomFormPage"));
+const ApprovalRoomTablePage = lazy(() => import("@pages/ApprovalRoomTablePage"));
+const RecentVisitsTablePage = lazy(() => import("@pages/RecentVisitsTablePage"));
+const WaitingRoomTablePage = lazy(() => import("@pages/WaitingRoomTablePage"));
+const VisitDetailPage = lazy(() => import("@pages/VisitDetailPage"));
 
 export const App = () => {
   const { operator } = useAuth();
 
   return (
-    <>
+    // TODO: make better error boundary (Suspense component)
+    <Suspense fallback={<div>Loading…</div>}>
       <Header />
       <Routes>
         <Route
@@ -35,12 +34,7 @@ export const App = () => {
         />
         <Route
           path={RoutingPaths.PROBAND_FORM}
-          element={
-            <FormPageContainer
-              FormPage={ProbandFormPage}
-              validationSchema={defaultFormSchema}
-            />
-          }
+          element={<ProbandFormPage />}
         />
         <Route
           path={RoutingPaths.AUTH}
@@ -50,13 +44,7 @@ export const App = () => {
           <>
             <Route
               path={RoutingPaths.PHANTOM_FORM}
-              element={
-                <FormPageContainer
-                  FormPage={PhantomFormPage}
-                  validationSchema={operatorFormSchema}
-                  loadDefaultValues={loadPhantomFormDefaultValues}
-                />
-              }
+              element={<PhantomFormPage />}
             />
             <Route
               path={RoutingPaths.WAITING_ROOM}
@@ -64,12 +52,7 @@ export const App = () => {
             />
             <Route
               path={`${RoutingPaths.WAITING_ROOM}/form/:id`}
-              element={
-                <FormPageContainer
-                  FormPage={WaitingRoomFormPage}
-                  validationSchema={operatorFormSchema}
-                />
-              }
+              element={<WaitingRoomFormPage />}
             />
             <Route
               path={RoutingPaths.APPROVAL_ROOM}
@@ -77,21 +60,11 @@ export const App = () => {
             />
             <Route
               path={`${RoutingPaths.APPROVAL_ROOM}/form/:id`}
-              element={
-                <FormPageContainer
-                  FormPage={ApprovalFormPage}
-                  validationSchema={operatorFormSchema}
-                />
-              }
+              element={<ApprovalFormPage />}
             />
             <Route
               path={`${RoutingPaths.RECENT_VISITS}/duplicate/:id`}
-              element={
-                <FormPageContainer
-                  FormPage={DuplicationFormPage}
-                  validationSchema={operatorFormSchema}
-                />
-              }
+              element={<DuplicationFormPage />}
             />
             <Route
               path={RoutingPaths.RECENT_VISITS}
@@ -104,6 +77,6 @@ export const App = () => {
           </>
         )}
       </Routes>
-    </>
+    </Suspense>
   );
 };

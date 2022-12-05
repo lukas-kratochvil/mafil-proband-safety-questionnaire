@@ -3,9 +3,9 @@ import { useTranslation } from "react-i18next";
 import { defaultNS } from "@i18n";
 import { FormQac } from "@interfaces/form";
 import { convertStringToLocalizationKey } from "@util/utils";
+import { IFormCardProps } from "../interfaces/form-card";
 import { FormCardContainer } from "./FormCardContainer";
 import { FormQuestion } from "./FormQuestion";
-import { IFormCardProps } from "./interfaces/form-card";
 
 interface IFormQuestionsProps extends IFormCardProps {
   titleLocalizationKey: string;

@@ -1,19 +1,16 @@
 import userEvent from "@testing-library/user-event";
 import { format } from "date-fns";
-import { operatorFormSchema } from "@components/form/schemas/form-schema_operator";
-import { loadPhantomFormDefaultValues } from "@components/form/util/loaders";
 import i18n from "@i18n";
+import PhantomFormPage from "@pages/PhantomFormPage";
 import { render, screen, waitFor } from "@test-utils";
-import { FormPageContainer } from "../FormPageContainer";
-import { PhantomFormPage } from "../PhantomFormPage";
 
 //----------------------------------------------------------------------
 // Mocking react-router-dom hooks
 //----------------------------------------------------------------------
-const mockedUsedNavigate = vi.fn();
+const mockedUseNavigate = vi.fn();
 vi.mock("react-router-dom", async () => ({
   ...((await vi.importActual("react-router-dom")) as Record<string, unknown>),
-  useNavigate: () => mockedUsedNavigate,
+  useNavigate: () => mockedUseNavigate,
 }));
 
 //----------------------------------------------------------------------
@@ -37,13 +34,7 @@ vi.mock("../../../util/fetch", async () => ({
 //----------------------------------------------------------------------
 describe("phantom form page", () => {
   const setup = () => {
-    render(
-      <FormPageContainer
-        FormPage={PhantomFormPage}
-        validationSchema={operatorFormSchema}
-        loadDefaultValues={loadPhantomFormDefaultValues}
-      />
-    );
+    render(<PhantomFormPage />);
   };
 
   beforeEach(async () => {
@@ -177,7 +168,7 @@ describe("phantom form page", () => {
       const finalizeButton = screen.getByRole("button", { name: "form.common.buttons.finalize" });
       await user.click(finalizeButton);
       // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUsedNavigate).toHaveBeenCalledOnce();
+      expect(mockedUseNavigate).toHaveBeenCalledOnce();
     },
     {
       timeout: 10000,
@@ -223,8 +214,8 @@ describe("phantom form page", () => {
       await user.click(screen.getByRole("option", { name: "form.enums.visualCorrection.YES" }));
       await user.click(finalizeButton);
       // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUsedNavigate).toHaveBeenCalledTimes(0);
-      mockedUsedNavigate.mockClear();
+      expect(mockedUseNavigate).toHaveBeenCalledTimes(0);
+      mockedUseNavigate.mockClear();
 
       /**
        * Test case: visualCorrection = YES and visualCorrectionValue != 0
@@ -234,8 +225,8 @@ describe("phantom form page", () => {
       await user.type(screen.getByLabelText("visualCorrectionValue"), "-1,5");
       await user.click(finalizeButton);
       // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUsedNavigate).toHaveBeenCalledOnce();
-      mockedUsedNavigate.mockClear();
+      expect(mockedUseNavigate).toHaveBeenCalledOnce();
+      mockedUseNavigate.mockClear();
     },
     {
       timeout: 10000,

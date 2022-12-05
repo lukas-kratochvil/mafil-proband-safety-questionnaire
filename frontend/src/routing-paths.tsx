@@ -5,5 +5,5 @@ export enum RoutingPaths {
   PHANTOM_FORM = "/auth/phantom-form",
   WAITING_ROOM = "/auth/waiting-room",
   APPROVAL_ROOM = "/auth/approval-room",
-  RECENT_VISITS = "/auth/recent-visits"
+  RECENT_VISITS = "/auth/recent-visits",
 }

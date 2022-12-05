@@ -1,19 +1,16 @@
 import userEvent from "@testing-library/user-event";
-import { defaultFormSchema } from "@components/form/schemas/form-schema_default";
-import { loadEmptyDefaultValues } from "@components/form/util/loaders";
 import i18n from "@i18n";
 import { IQuestionData, QuestionPartNumber } from "@interfaces/question";
+import ProbandFormPage from "@pages/ProbandFormPage";
 import { render, screen, waitFor, within } from "@test-utils";
-import { FormPageContainer } from "../FormPageContainer";
-import { ProbandFormPage } from "../ProbandFormPage";
 
 //----------------------------------------------------------------------
 // Mocking react-router-dom hooks
 //----------------------------------------------------------------------
-const mockedUsedNavigate = vi.fn();
+const mockedUseNavigate = vi.fn();
 vi.mock("react-router-dom", async () => ({
   ...((await vi.importActual("react-router-dom")) as Record<string, unknown>),
-  useNavigate: () => mockedUsedNavigate,
+  useNavigate: () => mockedUseNavigate,
 }));
 
 //----------------------------------------------------------------------
@@ -61,13 +58,7 @@ vi.mock("../../../util/fetch", async () => ({
 //----------------------------------------------------------------------
 describe("proband form page", () => {
   const setup = () => {
-    render(
-      <FormPageContainer
-        FormPage={ProbandFormPage}
-        validationSchema={defaultFormSchema}
-        loadDefaultValues={loadEmptyDefaultValues}
-      />
-    );
+    render(<ProbandFormPage />);
   };
 
   beforeEach(async () => {
@@ -225,7 +216,7 @@ describe("proband form page", () => {
 
       await user.click(agreeButton);
       // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUsedNavigate).toHaveBeenCalledTimes(0);
+      expect(mockedUseNavigate).toHaveBeenCalledTimes(0);
 
       const questions = screen.getAllByRole("radiogroup");
       questions.forEach(async (question, index) => {
@@ -235,7 +226,7 @@ describe("proband form page", () => {
 
       await user.click(agreeButton);
       // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUsedNavigate).toHaveBeenCalledOnce();
+      expect(mockedUseNavigate).toHaveBeenCalledOnce();
     },
     {
       timeout: 10000,
@@ -309,7 +300,7 @@ describe("proband form page", () => {
       const agreeButton = screen.getByRole("button", { name: "form.common.buttons.agree" });
       await user.click(agreeButton);
       // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUsedNavigate).toHaveBeenCalledOnce();
+      expect(mockedUseNavigate).toHaveBeenCalledOnce();
     },
     {
       timeout: 10000,
@@ -386,7 +377,7 @@ describe("proband form page", () => {
       const agreeButton = screen.getByRole("button", { name: "form.common.buttons.agree" });
       await user.click(agreeButton);
       // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUsedNavigate).toHaveBeenCalledTimes(0);
+      expect(mockedUseNavigate).toHaveBeenCalledTimes(0);
     },
     {
       timeout: 10000,
@@ -463,7 +454,7 @@ describe("proband form page", () => {
       const agreeButton = screen.getByRole("button", { name: "form.common.buttons.agree" });
       await user.click(agreeButton);
       // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUsedNavigate).toHaveBeenCalledTimes(0);
+      expect(mockedUseNavigate).toHaveBeenCalledTimes(0);
     },
     {
       timeout: 10000,

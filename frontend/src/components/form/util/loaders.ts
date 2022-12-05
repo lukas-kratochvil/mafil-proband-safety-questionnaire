@@ -1,6 +1,6 @@
 import { FormPropType } from "@interfaces/form";
 import { Gender, IVisit } from "@interfaces/visit";
-import { getOption, genderOptions, sideDominanceOptions, visualCorrectionOptions } from "./options";
+import { genderOptions, getOption, sideDominanceOptions, visualCorrectionOptions } from "./options";
 
 // Autocomplete component default value must be one of the options provided or null
 export const loadEmptyDefaultValues = (): FormPropType => ({

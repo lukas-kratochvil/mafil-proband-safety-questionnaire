@@ -1,10 +1,10 @@
-import { projectsDev, devicesDev } from "@data/form_data";
+import { devicesDev, projectsDev } from "@data/form_data";
 import { trustedOperators } from "@data/operator_data";
 import { questions } from "@data/question_data";
 import { dummyVisits } from "@data/visit_data";
 import { IAuthGateOperator, IOperator } from "@interfaces/auth";
 import { IQuestionData } from "@interfaces/question";
-import { IVisit, VisitState, IQac } from "@interfaces/visit";
+import { IQac, IVisit, VisitState } from "@interfaces/visit";
 
 // TODO: authorize against DB
 export const authenticateOperator = async (loggingOperator: IAuthGateOperator): Promise<IOperator | undefined> =>

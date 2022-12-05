@@ -1,7 +1,7 @@
 import { Button, Grid, Theme, useMediaQuery } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@i18n";
-import { IButton, ISubmitButtonProps, convertStringToLocalizationKey } from "@util/utils";
+import { convertStringToLocalizationKey, IButton, ISubmitButtonProps } from "@util/utils";
 
 export interface IButtonProps extends IButton {
   showErrorColor?: boolean;

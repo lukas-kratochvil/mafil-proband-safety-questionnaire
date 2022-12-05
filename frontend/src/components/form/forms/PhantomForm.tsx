@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { IFormButtonsProps } from "@components/form/FormButtons";
-import { FormProbandInfo } from "@components/form/FormProbandInfo";
-import { FormProjectInfo } from "@components/form/FormProjectInfo";
+import { IFormButtonsProps } from "@components/form/components/FormButtons";
+import { FormProbandInfo } from "@components/form/components/FormProbandInfo";
+import { FormProjectInfo } from "@components/form/components/FormProjectInfo";
 import { createNewVisitFromFormData } from "@components/form/util/utils.dev";
 import { dummyVisits } from "@data/visit_data";
-import { FormQac, FormPropType } from "@interfaces/form";
-import { VisitState, AnswerOption } from "@interfaces/visit";
+import { FormPropType, FormQac } from "@interfaces/form";
+import { AnswerOption, VisitState } from "@interfaces/visit";
 import { RoutingPaths } from "@routing-paths";
 import { fetchCurrentQuestions } from "@util/fetch";
 import { getBackButtonProps } from "@util/utils";
 import { FormContainer } from "./FormContainer";
 
-export const PhantomFormPage = () => {
+export const PhantomForm = () => {
   const navigate = useNavigate();
   const { setValue } = useFormContext();
 

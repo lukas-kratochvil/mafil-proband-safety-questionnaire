@@ -1,7 +1,14 @@
 import { array, date, mixed, number, object, string } from "yup";
 import { QuestionPartNumber } from "@interfaces/question";
 import { AnswerOption, VisualCorrection } from "@interfaces/visit";
-import { IOption, getOptionsValues, genderOptions, sideDominanceOptions, visualCorrectionOptions, getOption } from "../util/options";
+import {
+  genderOptions,
+  getOption,
+  getOptionsValues,
+  IOption,
+  sideDominanceOptions,
+  visualCorrectionOptions,
+} from "../util/options";
 
 export const answersSchema = object({
   questionId: string().trim().required("form.validation.required"),
@@ -109,10 +116,9 @@ export const defaultFormSchema = object().shape(
         is: getOption(visualCorrectionOptions, VisualCorrection.YES),
         then: number()
           .typeError("form.validation.notValid")
-          .notOneOf([0], "form.validation.visualCorrectionValueNotZero")
+          .notOneOf([0], "form.validation.visualCorrectionValueNotEmptyNotZero")
           .min(-50, "form.validation.visualCorrectionValueTooLow")
-          .max(50, "form.validation.visualCorrectionValueTooHigh")
-          .required("form.validation.required"),
+          .max(50, "form.validation.visualCorrectionValueTooHigh"),
       })
       .required("form.validation.required"),
     email: string()
