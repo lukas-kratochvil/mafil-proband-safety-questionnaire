@@ -1,0 +1,27 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    // project specific
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "lib": [
+      "ESNext"
+    ],
+    // others
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "@*": [
+        "src/*"
+      ],
+    },
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+  },
+  "include": [
+    "src",
+    "test",
+  ],
+}
