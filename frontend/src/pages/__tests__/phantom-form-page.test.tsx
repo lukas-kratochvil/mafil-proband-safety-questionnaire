@@ -100,136 +100,124 @@ describe("phantom form page", () => {
   //   expect(visualCorrectionValueInput).toHaveValue("0");
   // });
 
-  test(
-    "submits form",
-    async () => {
-      setup();
-      const user = userEvent.setup();
+  test("submits form", async () => {
+    setup();
+    const user = userEvent.setup();
 
-      await user.click(screen.getByRole("combobox", { name: "project" }));
-      const selectedProject = "project1";
-      await user.click(screen.getByRole("option", { name: selectedProject }));
+    await user.click(screen.getByRole("combobox", { name: "project" }));
+    const selectedProject = "project1";
+    await user.click(screen.getByRole("option", { name: selectedProject }));
 
-      await user.click(screen.getByLabelText("device"));
-      const selectedDevice = "device3";
-      await user.click(screen.getByRole("option", { name: selectedDevice }));
+    await user.click(screen.getByLabelText("device"));
+    const selectedDevice = "device3";
+    await user.click(screen.getByRole("option", { name: selectedDevice }));
 
-      const typedName = "John";
-      await user.type(screen.getByLabelText("name"), typedName);
+    const typedName = "John";
+    await user.type(screen.getByLabelText("name"), typedName);
 
-      const typedSurname = "Wick";
-      await user.type(screen.getByLabelText("surname"), typedSurname);
+    const typedSurname = "Wick";
+    await user.type(screen.getByLabelText("surname"), typedSurname);
 
-      const typedPersonalId = "9606301232";
-      await user.type(screen.getByLabelText("personalId"), typedPersonalId);
-      // birthdate is filled automatically and gender stays the same
-      const expectedBirthdate = "30.06.1996";
+    const typedPersonalId = "9606301232";
+    await user.type(screen.getByLabelText("personalId"), typedPersonalId);
+    // birthdate is filled automatically and gender stays the same
+    const expectedBirthdate = "30.06.1996";
 
-      await user.click(screen.getByLabelText("nativeLanguage"));
-      const selectedNativeLanguage = "Čeština";
-      await user.click(screen.getByRole("option", { name: selectedNativeLanguage }));
+    await user.click(screen.getByLabelText("nativeLanguage"));
+    const selectedNativeLanguage = "Čeština";
+    await user.click(screen.getByRole("option", { name: selectedNativeLanguage }));
 
-      const typedHeight = "173";
-      await user.type(screen.getByLabelText("height"), typedHeight);
+    const typedHeight = "173";
+    await user.type(screen.getByLabelText("height"), typedHeight);
 
-      const typedWeight = "70";
-      await user.type(screen.getByLabelText("weight"), typedWeight);
+    const typedWeight = "70";
+    await user.type(screen.getByLabelText("weight"), typedWeight);
 
-      await user.click(screen.getByLabelText("visualCorrection"));
-      const selectedVisualCorrection = "form.enums.visualCorrection.YES";
-      await user.click(screen.getByRole("option", { name: selectedVisualCorrection }));
+    await user.click(screen.getByLabelText("visualCorrection"));
+    const selectedVisualCorrection = "form.enums.visualCorrection.YES";
+    await user.click(screen.getByRole("option", { name: selectedVisualCorrection }));
 
-      const typedVisualCorrectionValue = "-1,5";
-      await user.clear(screen.getByLabelText("visualCorrectionValue"));
-      await user.type(screen.getByLabelText("visualCorrectionValue"), typedVisualCorrectionValue);
+    const typedVisualCorrectionValue = "-1,5";
+    await user.clear(screen.getByLabelText("visualCorrectionValue"));
+    await user.type(screen.getByLabelText("visualCorrectionValue"), typedVisualCorrectionValue);
 
-      await user.click(screen.getByLabelText("sideDominance"));
-      const selectedSideDominance = "form.enums.sideDominance.UNDETERMINED";
-      await user.click(screen.getByRole("option", { name: selectedSideDominance }));
+    await user.click(screen.getByLabelText("sideDominance"));
+    const selectedSideDominance = "form.enums.sideDominance.UNDETERMINED";
+    await user.click(screen.getByRole("option", { name: selectedSideDominance }));
 
-      const expectedFormValues = {
-        project: selectedProject,
-        device: selectedDevice,
-        measurementDate: format(new Date(), "dd.MM.yyyy"),
-        name: typedName,
-        surname: typedSurname,
-        personalId: typedPersonalId,
-        birthdate: expectedBirthdate,
-        gender: "form.enums.gender.OTHER",
-        nativeLanguage: selectedNativeLanguage,
-        height: typedHeight,
-        weight: typedWeight,
-        sideDominance: selectedSideDominance,
-        visualCorrection: selectedVisualCorrection,
-        visualCorrectionValue: typedVisualCorrectionValue,
-      };
-      expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);
+    const expectedFormValues = {
+      project: selectedProject,
+      device: selectedDevice,
+      measurementDate: format(new Date(), "dd.MM.yyyy"),
+      name: typedName,
+      surname: typedSurname,
+      personalId: typedPersonalId,
+      birthdate: expectedBirthdate,
+      gender: "form.enums.gender.OTHER",
+      nativeLanguage: selectedNativeLanguage,
+      height: typedHeight,
+      weight: typedWeight,
+      sideDominance: selectedSideDominance,
+      visualCorrection: selectedVisualCorrection,
+      visualCorrectionValue: typedVisualCorrectionValue,
+    };
+    expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);
 
-      const finalizeButton = screen.getByRole("button", { name: "form.common.buttons.finalize" });
-      await user.click(finalizeButton);
-      // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUseNavigate).toHaveBeenCalledOnce();
-    },
-    {
-      timeout: 10000,
-    }
-  );
+    const finalizeButton = screen.getByRole("button", { name: "form.common.buttons.finalize" });
+    await user.click(finalizeButton);
+    // TODO: change this to check calling POST method that will create a visit
+    expect(mockedUseNavigate).toHaveBeenCalledOnce();
+  });
 
-  test(
-    "invalid visual correction value",
-    async () => {
-      setup();
-      const user = userEvent.setup();
+  test("invalid visual correction value", async () => {
+    setup();
+    const user = userEvent.setup();
 
-      await user.click(screen.getByLabelText("project"));
-      await user.click(screen.getByRole("option", { name: "project1" }));
+    await user.click(screen.getByLabelText("project"));
+    await user.click(screen.getByRole("option", { name: "project1" }));
 
-      await user.click(screen.getByLabelText("device"));
-      await user.click(screen.getByRole("option", { name: "device3" }));
+    await user.click(screen.getByLabelText("device"));
+    await user.click(screen.getByRole("option", { name: "device3" }));
 
-      await user.type(screen.getByLabelText("name"), "John");
+    await user.type(screen.getByLabelText("name"), "John");
 
-      await user.type(screen.getByLabelText("surname"), "Wick");
+    await user.type(screen.getByLabelText("surname"), "Wick");
 
-      // birthdate is filled automatically and gender stays the same
-      await user.type(screen.getByLabelText("personalId"), "9606301232");
+    // birthdate is filled automatically and gender stays the same
+    await user.type(screen.getByLabelText("personalId"), "9606301232");
 
-      await user.click(screen.getByLabelText("nativeLanguage"));
-      await user.click(screen.getByRole("option", { name: "Čeština" }));
+    await user.click(screen.getByLabelText("nativeLanguage"));
+    await user.click(screen.getByRole("option", { name: "Čeština" }));
 
-      await user.type(screen.getByLabelText("height"), "173");
+    await user.type(screen.getByLabelText("height"), "173");
 
-      await user.type(screen.getByLabelText("weight"), "70");
+    await user.type(screen.getByLabelText("weight"), "70");
 
-      await user.click(screen.getByLabelText("sideDominance"));
-      await user.click(screen.getByRole("option", { name: "form.enums.sideDominance.UNDETERMINED" }));
+    await user.click(screen.getByLabelText("sideDominance"));
+    await user.click(screen.getByRole("option", { name: "form.enums.sideDominance.UNDETERMINED" }));
 
-      const finalizeButton = screen.getByRole("button", { name: "form.common.buttons.finalize" });
+    const finalizeButton = screen.getByRole("button", { name: "form.common.buttons.finalize" });
 
-      /**
-       * Test case: visualCorrection = YES and visualCorrectionValue = 0
-       * Expected result: does not submit the form
-       */
-      await user.click(screen.getByLabelText("visualCorrection"));
-      await user.click(screen.getByRole("option", { name: "form.enums.visualCorrection.YES" }));
-      await user.click(finalizeButton);
-      // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUseNavigate).toHaveBeenCalledTimes(0);
-      mockedUseNavigate.mockClear();
+    /**
+     * Test case: visualCorrection = YES and visualCorrectionValue = 0
+     * Expected result: does not submit the form
+     */
+    await user.click(screen.getByLabelText("visualCorrection"));
+    await user.click(screen.getByRole("option", { name: "form.enums.visualCorrection.YES" }));
+    await user.click(finalizeButton);
+    // TODO: change this to check calling POST method that will create a visit
+    expect(mockedUseNavigate).toHaveBeenCalledTimes(0);
+    mockedUseNavigate.mockClear();
 
-      /**
-       * Test case: visualCorrection = YES and visualCorrectionValue != 0
-       * Expected result: submits the form
-       */
-      await user.clear(screen.getByLabelText("visualCorrectionValue"));
-      await user.type(screen.getByLabelText("visualCorrectionValue"), "-1,5");
-      await user.click(finalizeButton);
-      // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUseNavigate).toHaveBeenCalledOnce();
-      mockedUseNavigate.mockClear();
-    },
-    {
-      timeout: 10000,
-    }
-  );
+    /**
+     * Test case: visualCorrection = YES and visualCorrectionValue != 0
+     * Expected result: submits the form
+     */
+    await user.clear(screen.getByLabelText("visualCorrectionValue"));
+    await user.type(screen.getByLabelText("visualCorrectionValue"), "-1,5");
+    await user.click(finalizeButton);
+    // TODO: change this to check calling POST method that will create a visit
+    expect(mockedUseNavigate).toHaveBeenCalledOnce();
+    mockedUseNavigate.mockClear();
+  });
 });
