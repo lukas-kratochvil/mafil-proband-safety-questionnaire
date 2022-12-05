@@ -2,7 +2,7 @@ import i18n from "@i18n";
 import { render } from "@test-utils";
 import { FormInputFieldContainer } from "../FormInputFieldContainer";
 
-vi.mock("../ErrorFeedback", () => ({
+vi.mock("@components/form/inputs/ErrorFeedback", () => ({
   ErrorFeedback: () => <div />,
 }));
 

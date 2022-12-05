@@ -13,7 +13,7 @@ const mockOperator: IOperator = {
   uco: "",
 };
 
-vi.mock("../../../hooks/auth/auth", () => ({
+vi.mock("@hooks/auth/auth", () => ({
   useAuth: () => ({
     operator: mockOperator,
   }),

@@ -16,7 +16,7 @@ vi.mock("react-hook-form", () => ({
   useWatch: vi.fn(),
 }));
 
-vi.mock("../../inputs/ErrorFeedback", () => ({
+vi.mock("@components/form/inputs/ErrorFeedback", () => ({
   ErrorFeedback: () => <div />,
 }));
 

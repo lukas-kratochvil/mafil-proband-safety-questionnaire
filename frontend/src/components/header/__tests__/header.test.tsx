@@ -18,7 +18,7 @@ vi.mock("react-router-dom", async () => ({
 //----------------------------------------------------------------------
 let mockOperator: string | undefined;
 
-vi.mock("../../../hooks/auth/auth", () => ({
+vi.mock("@hooks/auth/auth", () => ({
   useAuth: () => ({
     operator: mockOperator,
   }),
@@ -38,7 +38,7 @@ const mockGetTabs = vi.fn().mockImplementation(() => [
   },
 ]);
 
-vi.mock("../navigation/common", () => ({
+vi.mock("@components/header/navigation/common", () => ({
   isTabSelected: () => mockIsTabSelected,
   getTabs: () => mockGetTabs,
 }));
