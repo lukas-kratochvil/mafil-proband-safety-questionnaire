@@ -1,0 +1,165 @@
+@startuml ProbandSafetyQuestionnaire
+
+entity Operator {
+  * id: <<UUID>>
+  ---
+  * createdAt: Date
+  * modifiedAt: Date
+  deletedAt: Date
+  ---
+  * name: String
+  * surname: String
+  * uco: String
+  * email: String
+  * role: OperatorRole
+  * isValid: Boolean
+}
+
+enum OperatorRole {
+  MR
+  MR_HIGH_PERM
+}
+
+entity VisitForm {
+  * id: <<UUID>>
+  * probandInfoId: <<FK>>
+  * probandLanguageId: <<FK>>
+  ---
+  * createdAt: Date
+  * modifiedAt: Date
+  deletedAt: Date
+  ---
+  * state: String
+  note: String
+  visitId: String
+  pdf: Bytes
+}
+
+entity AdditionalVisitFormInfo {
+  * id: <<UUID>>
+  * visitFormId: <<FK>>
+  * operatorId: <<FK>>
+  approverId: <<FK>>
+  ---
+  * createdAt: Date
+  * modifiedAt: Date
+  deletedAt: Date
+  ---
+  * projectId: <<UUID>>
+  * project: String
+  * deviceId: <<UUID>>
+  * device: String
+  * isPhantom: Boolean
+  * measurementDate: Date
+  * finalizedAt: Date
+  approvalDate: Date
+}
+
+entity ProbandInfo {
+  * id: <<UUID>>
+  * nativeLanguageId: <<FK>>
+  ---
+  * createdAt: Date
+  * modifiedAt: Date
+  deletedAt: Date
+  ---
+  * name: String
+  * surname: String
+  * personalId: String
+  * birthdate: Date
+  * heightCm: Float
+  * weightKg: Float
+  * gender: String
+  * visualCorrectionDioptre: Float
+  * handedness: String
+  email: String
+  phone: String
+}
+
+entity NativeLanguage {
+  * id: <<UUID>>
+  ---
+  * createdAt: Date
+  * modifiedAt: Date
+  deletedAt: Date
+  ---
+  order: Int
+}
+
+entity NativeLanguageTranslation {
+  * id: <<UUID>>
+  * nativeLanguageId: <<FK>>
+  * languageId: <<FK>>
+  ---
+  * createdAt: Date
+  * modifiedAt: Date
+  deletedAt: Date
+  ---
+  * text: String
+}
+
+entity Answer {
+  * id: <<UUID>>
+  * visitFormId: <<FK>>
+  * questionId: <<FK>>
+  ---
+  * createdAt: Date
+  * modifiedAt: Date
+  deletedAt: Date
+  ---
+  * answer: String
+  comment: String
+}
+
+entity Question {
+  * id: <<UUID>>
+  parentQuestionId: <<FK>>
+  ---
+  * createdAt: Date
+  * modifiedAt: Date
+  deletedAt: Date
+  ---
+  * partNumber: Int
+  * mustBeApproved: Boolean
+  * isValid: Boolean
+}
+
+entity QuestionTranslation {
+  * id: <<UUID>>
+  * questionId: <<FK>>
+  * languageId: <<FK>>
+  ---
+  * createdAt: Date
+  * modifiedAt: Date
+  deletedAt: Date
+  ---
+  * text: String
+}
+
+entity Language {
+  * id: <<UUID>>
+  ---
+  * createdAt: Date
+  * modifiedAt: Date
+  deletedAt: Date
+  ---
+  * name: String
+  * locale: String
+}
+
+Operator }o..|| OperatorRole
+Operator ||..o{ AdditionalVisitFormInfo : finalized by
+Operator |o..o{ AdditionalVisitFormInfo : approved by
+VisitForm ||..o| AdditionalVisitFormInfo
+VisitForm }|..|| ProbandInfo
+VisitForm ||..|{ Answer
+VisitForm }o..|| Language
+ProbandInfo }o..|| NativeLanguage
+NativeLanguage ||..|{ NativeLanguageTranslation
+NativeLanguageTranslation }o..|| Language
+Answer }o..|| Question
+Question |o..|| Question
+Question ||..|{ QuestionTranslation
+QuestionTranslation }o..|| Language
+
+@enduml
