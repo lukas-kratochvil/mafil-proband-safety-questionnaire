@@ -1,0 +1,35 @@
+version: '3.1'
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:alpine3.17
+    ports:
+      - 127.0.0.1:${DB_PORT}:${DB_PORT}
+    networks:
+      - backend-network
+    volumes:
+      - ./database-storage:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      PGPORT: ${DB_PORT}
+    restart: always
+
+  adminer:
+    container_name: adminer
+    image: adminer:4.8.1
+    ports:
+      - 127.0.0.1:${ADMINER_PORT}:${ADMINER_PORT}
+    networks:
+      - backend-network
+    environment:
+      ADMINER_DESIGN: nette
+    restart: always
+    depends_on:
+      - postgres
+
+networks:
+  backend-network:
+    driver: bridge
