@@ -3,6 +3,7 @@ import { ApolloDriverConfig } from "@nestjs/apollo";
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { GqlOptionsFactory } from "@nestjs/graphql";
+import { UuidScalar } from "./uuid-scalar";
 
 @Injectable()
 export class GraphQLConfigService implements GqlOptionsFactory {
@@ -11,6 +12,9 @@ export class GraphQLConfigService implements GqlOptionsFactory {
   createGqlOptions(): ApolloDriverConfig {
     return {
       autoSchemaFile: path.join(process.cwd(), "src/graphql/generated-schema.gql"),
+      resolvers: {
+        UUID: UuidScalar,
+      },
       debug: this.configService.get<string>("NODE_ENV") === "development",
       playground: this.configService.get<string>("NODE_ENV") === "development",
     };

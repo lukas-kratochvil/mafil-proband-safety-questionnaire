@@ -1,3 +1,4 @@
+import { UuidScalar } from "@graphql/uuid-scalar";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { CreateOperatorInput } from "./dto/create-operator.input";
 import { UpdateOperatorInput } from "./dto/update-operator.input";
@@ -19,7 +20,7 @@ export class OperatorResolver {
   }
 
   @Query(() => Operator, { name: "findOperator", nullable: true })
-  findOne(@Args("id", { type: () => String }) id: string): Promise<Operator | null> {
+  findOne(@Args("id", { type: () => UuidScalar }) id: string): Promise<Operator | null> {
     return this.operatorService.findOne(id);
   }
 
@@ -29,7 +30,7 @@ export class OperatorResolver {
   }
 
   @Mutation(() => Operator, { nullable: true })
-  removeOperator(@Args("id", { type: () => String }) id: string): Promise<Operator | null> {
+  removeOperator(@Args("id", { type: () => UuidScalar }) id: string): Promise<Operator | null> {
     return this.operatorService.remove(id);
   }
 }

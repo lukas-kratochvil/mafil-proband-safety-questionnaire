@@ -1,9 +1,23 @@
 import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { OperatorRole } from "@prisma/client";
+import { UuidScalar } from "@graphql/uuid-scalar";
+
+registerEnumType(OperatorRole, {
+  name: "OperatorRole",
+  description: "Indicates operator permissions.",
+  valuesMap: {
+    MR: {
+      description: "Default operator role.",
+    },
+    MR_HIGH_PERM: {
+      description: "Operator having higher permissions.",
+    },
+  },
+});
 
 @ObjectType()
 export class Operator {
-  @Field(() => String)
+  @Field(() => UuidScalar)
   id: string;
 
   @Field(() => Date)
@@ -33,16 +47,3 @@ export class Operator {
   @Field(() => Boolean, { defaultValue: true })
   isValid: boolean;
 }
-
-registerEnumType(OperatorRole, {
-  name: "OperatorRole",
-  description: "Indicates operator permissions",
-  valuesMap: {
-    MR: {
-      description: "Default operator role.",
-    },
-    MR_HIGH_PERM: {
-      description: "Operator having higher permissions.",
-    },
-  },
-});
