@@ -6,19 +6,20 @@
     "module": "CommonJS",
     "moduleResolution": "Node",
     "lib": [
-      "ESNext"
+      "ESNext",
     ],
     // others
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
       "@*": [
-        "src/*"
+        "src/*",
       ],
     },
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
+    "strictPropertyInitialization": false,
   },
   "include": [
     "src",

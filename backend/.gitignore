@@ -1,2 +1,5 @@
 # Database
 database-storage
+
+# Generated files (for example GraphQL schema)
+generated*
