@@ -15,6 +15,7 @@ import { OperatorModule } from "./operator/operator.module";
       imports: [ConfigModule],
       useClass: GraphQLConfigService,
     }),
+    OperatorModule,
   ],
   controllers: [AppController],
   providers: [AppService],
