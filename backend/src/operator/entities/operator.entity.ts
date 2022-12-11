@@ -41,9 +41,9 @@ export class Operator {
   @Field(() => String)
   email: string;
 
-  @Field(() => OperatorRole, { defaultValue: OperatorRole.MR })
+  @Field(() => OperatorRole)
   role: OperatorRole;
 
-  @Field(() => Boolean, { defaultValue: true })
+  @Field(() => Boolean)
   isValid: boolean;
 }
