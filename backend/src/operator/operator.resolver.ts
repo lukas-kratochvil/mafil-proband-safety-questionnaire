@@ -1,36 +1,36 @@
-import { UuidScalar } from "@graphql/uuid-scalar";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { UuidScalar } from "@graphql/uuid-scalar";
 import { CreateOperatorInput } from "./dto/create-operator.input";
 import { UpdateOperatorInput } from "./dto/update-operator.input";
-import { Operator } from "./entities/operator.entity";
+import { OperatorEntity } from "./entities/operator.entity";
 import { OperatorService } from "./operator.service";
 
-@Resolver(() => Operator)
+@Resolver(() => OperatorEntity)
 export class OperatorResolver {
   constructor(private readonly operatorService: OperatorService) {}
 
-  @Mutation(() => Operator)
-  async createOperator(@Args("createOperatorInput") createOperatorInput: CreateOperatorInput): Promise<Operator> {
+  @Mutation(() => OperatorEntity)
+  async createOperator(@Args("createOperatorInput") createOperatorInput: CreateOperatorInput) {
     return await this.operatorService.create(createOperatorInput);
   }
 
-  @Query(() => [Operator], { name: "findOperators" })
-  findAll(): Promise<Operator[]> {
+  @Query(() => [OperatorEntity], { name: "operators" })
+  findAll() {
     return this.operatorService.findAll();
   }
 
-  @Query(() => Operator, { name: "findOperator", nullable: true })
-  findOne(@Args("id", { type: () => UuidScalar }) id: string): Promise<Operator | null> {
+  @Query(() => OperatorEntity, { name: "operator", nullable: true })
+  findOne(@Args("id", { type: () => UuidScalar }) id: string) {
     return this.operatorService.findOne(id);
   }
 
-  @Mutation(() => Operator, { nullable: true })
-  updateOperator(@Args("updateOperatorInput") updateOperatorInput: UpdateOperatorInput): Promise<Operator | null> {
+  @Mutation(() => OperatorEntity)
+  updateOperator(@Args("updateOperatorInput") updateOperatorInput: UpdateOperatorInput) {
     return this.operatorService.update(updateOperatorInput.id, updateOperatorInput);
   }
 
-  @Mutation(() => Operator, { nullable: true })
-  removeOperator(@Args("id", { type: () => UuidScalar }) id: string): Promise<Operator | null> {
+  @Mutation(() => OperatorEntity)
+  removeOperator(@Args("id", { type: () => UuidScalar }) id: string) {
     return this.operatorService.remove(id);
   }
 }

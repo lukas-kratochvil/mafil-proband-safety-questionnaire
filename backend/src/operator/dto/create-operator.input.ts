@@ -3,16 +3,16 @@ import { OperatorRole } from "@prisma/client";
 
 @InputType()
 export class CreateOperatorInput {
-  @Field(() => String)
+  @Field()
   name: string;
 
-  @Field(() => String)
+  @Field()
   surname: string;
 
-  @Field(() => String)
+  @Field()
   uco: string;
 
-  @Field(() => String)
+  @Field()
   email: string;
 
   @Field(() => OperatorRole, { nullable: true })

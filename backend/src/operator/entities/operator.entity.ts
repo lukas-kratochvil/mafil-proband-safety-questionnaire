@@ -1,6 +1,6 @@
 import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
-import { OperatorRole } from "@prisma/client";
-import { UuidScalar } from "@graphql/uuid-scalar";
+import { Operator, OperatorRole } from "@prisma/client";
+import { BaseEntity } from "@graphql/base.entity";
 
 registerEnumType(OperatorRole, {
   name: "OperatorRole",
@@ -16,34 +16,22 @@ registerEnumType(OperatorRole, {
 });
 
 @ObjectType()
-export class Operator {
-  @Field(() => UuidScalar)
-  id: string;
-
-  @Field(() => Date)
-  createdAt: Date;
-
-  @Field(() => Date)
-  updatedAt: Date;
-
-  @Field(() => Date, { nullable: true })
-  deletedAt: Date | null;
-
-  @Field(() => String)
+export class OperatorEntity extends BaseEntity implements Operator {
+  @Field()
   name: string;
 
-  @Field(() => String)
+  @Field()
   surname: string;
 
-  @Field(() => String)
+  @Field()
   uco: string;
 
-  @Field(() => String)
+  @Field()
   email: string;
 
   @Field(() => OperatorRole)
   role: OperatorRole;
 
-  @Field(() => Boolean)
+  @Field()
   isValid: boolean;
 }
