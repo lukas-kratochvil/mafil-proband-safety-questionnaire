@@ -46,9 +46,10 @@ entity AdditionalVisitFormInfo {
   deletedAt: Date
   ---
   * projectId: <<UUID>>
-  * project: String
+  * projectName: String
+  * projectAcronym: String
   * deviceId: <<UUID>>
-  * device: String
+  * deviceName: String
   * isPhantom: Boolean
   * measurementDate: Date
   * finalizedAt: Date

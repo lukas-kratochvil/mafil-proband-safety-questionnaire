@@ -34,24 +34,24 @@ enum OperatorRole {
 }
 
 model VisitForm {
-  id                          String                    @id @default(uuid()) @db.Uuid
+  id                  String                    @id @default(uuid()) @db.Uuid
 
-  probandInfo                 ProbandInfo               @relation(fields: [probandInfoId], references: [id])
-  probandInfoId               String                    @db.Uuid
-  probandLanguage             Language                  @relation(fields: [probandLanguageId], references: [id])
-  probandLanguageId           String                    @db.Uuid
-  answers                     Answer[]
-  additionalVisitFormInfo     AdditionalVisitFormInfo?
-  additionalVisitFormInfoId   String?                   @db.Uuid
+  probandInfo         ProbandInfo               @relation(fields: [probandInfoId], references: [id])
+  probandInfoId       String                    @db.Uuid
+  probandLanguage     Language                  @relation(fields: [probandLanguageId], references: [id])
+  probandLanguageId   String                    @db.Uuid
+  answers             Answer[]
+  additionalInfo      AdditionalVisitFormInfo?
+  additionalInfoId    String?                   @db.Uuid
 
-  createdAt                   DateTime                  @default(now())
-  updatedAt                   DateTime                  @updatedAt
-  deletedAt                   DateTime?
+  createdAt           DateTime                  @default(now())
+  updatedAt           DateTime                  @updatedAt
+  deletedAt           DateTime?
 
-  state                       String                    @db.VarChar(20)
-  note                        String?
-  visitId                     String?                   @db.VarChar(50)
-  pdf                         Bytes?
+  state               String                    @db.VarChar(20)
+  note                String?
+  visitId             String?                   @db.VarChar(50)
+  pdf                 Bytes?
 }
 
 model AdditionalVisitFormInfo {
@@ -69,9 +69,10 @@ model AdditionalVisitFormInfo {
   deletedAt       DateTime?
 
   projectId       String      @db.VarChar(35)
-  project         String      @db.VarChar(200)
+  projectName     String      @db.VarChar(200)
+  projectAcronym  String      @db.VarChar(30)
   deviceId        String      @db.VarChar(35)
-  device          String      @db.VarChar(200)
+  deviceName      String      @db.VarChar(200)
   isPhantom       Boolean     @default(false)
   measuredAt      DateTime
   finalizedAt     DateTime
