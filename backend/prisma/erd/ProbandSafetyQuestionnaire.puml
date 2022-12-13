@@ -51,9 +51,9 @@ entity AdditionalVisitFormInfo {
   * deviceId: <<UUID>>
   * deviceName: String
   * isPhantom: Boolean
-  * measurementDate: Date
+  * measuredAt: Date
   * finalizedAt: Date
-  approvalDate: Date
+  approvedAt: Date
 }
 
 entity ProbandInfo {
@@ -114,7 +114,7 @@ entity Answer {
 
 entity Question {
   * id: <<UUID>>
-  parentQuestionId: <<FK>>
+  preaviousQuestionId: <<FK>>
   ---
   * createdAt: Date
   * modifiedAt: Date
