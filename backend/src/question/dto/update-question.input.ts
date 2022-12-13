@@ -5,5 +5,5 @@ import { CreateQuestionInput } from "./create-question.input";
 @InputType()
 export class UpdateQuestionInput extends IntersectionType(
   PickType(QuestionEntity, ["id"], InputType),
-  PartialType(CreateQuestionInput)
+  IntersectionType(PartialType(CreateQuestionInput), PickType(CreateQuestionInput, ["translations"]))
 ) {}
