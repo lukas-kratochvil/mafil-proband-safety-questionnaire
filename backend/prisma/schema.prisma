@@ -153,8 +153,8 @@ model Question {
   answers             Answer[]
   translations        QuestionTranslation[]
   updatedQuestion     Question?               @relation(name: "QuestionHistory")
-  previosQuestion     Question                @relation(name: "QuestionHistory", fields: [previosQuestionId], references: [id])
-  previosQuestionId   String                  @unique @db.Uuid
+  previousQuestion    Question                @relation(name: "QuestionHistory", fields: [previousQuestionId], references: [id])
+  previousQuestionId  String                  @unique @db.Uuid
 
   createdAt           DateTime                @default(now())
   updatedAt           DateTime                @updatedAt
