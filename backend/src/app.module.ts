@@ -7,6 +7,7 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { LanguageModule } from "./language/language.module";
 import { OperatorModule } from "./operator/operator.module";
+import { QuestionModule } from "./question/question.module";
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { OperatorModule } from "./operator/operator.module";
       useClass: GraphQLConfigService,
     }),
     OperatorModule,
+    QuestionModule,
     LanguageModule,
   ],
   controllers: [AppController],

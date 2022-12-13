@@ -1,0 +1,36 @@
+import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { UuidScalar } from "@graphql/uuid-scalar";
+import { CreateQuestionInput } from "./dto/create-question.input";
+import { UpdateQuestionInput } from "./dto/update-question.input";
+import { QuestionEntity } from "./entities/question.entity";
+import { QuestionService } from "./question.service";
+
+@Resolver(() => QuestionEntity)
+export class QuestionResolver {
+  constructor(private readonly questionService: QuestionService) {}
+
+  @Mutation(() => QuestionEntity)
+  createQuestion(@Args("createQuestionInput") createQuestionInput: CreateQuestionInput): Promise<QuestionEntity> {
+    return this.questionService.create(createQuestionInput);
+  }
+
+  @Query(() => [QuestionEntity], { name: "questions" })
+  findAll(): Promise<QuestionEntity[]> {
+    return this.questionService.findAll();
+  }
+
+  @Query(() => QuestionEntity, { name: "question" })
+  findOne(@Args("id", { type: () => UuidScalar }) id: string): Promise<QuestionEntity> {
+    return this.questionService.findOne(id);
+  }
+
+  @Mutation(() => QuestionEntity)
+  updateQuestion(@Args("updateQuestionInput") updateQuestionInput: UpdateQuestionInput): Promise<QuestionEntity> {
+    return this.questionService.update(updateQuestionInput.id, updateQuestionInput);
+  }
+
+  @Mutation(() => QuestionEntity)
+  removeQuestion(@Args("id", { type: () => UuidScalar }) id: string): Promise<QuestionEntity> {
+    return this.questionService.remove(id);
+  }
+}
