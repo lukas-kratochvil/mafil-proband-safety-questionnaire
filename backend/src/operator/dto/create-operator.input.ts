@@ -1,20 +1,8 @@
-import { Field, InputType } from "@nestjs/graphql";
-import { OperatorRole } from "@prisma/client";
+import { InputType, IntersectionType, PartialType, PickType } from "@nestjs/graphql";
+import { OperatorEntity } from "@operator/entities/operator.entity";
 
 @InputType()
-export class CreateOperatorInput {
-  @Field()
-  name: string;
-
-  @Field()
-  surname: string;
-
-  @Field()
-  uco: string;
-
-  @Field()
-  email: string;
-
-  @Field(() => OperatorRole, { nullable: true })
-  role: OperatorRole | null;
-}
+export class CreateOperatorInput extends IntersectionType(
+  PickType(OperatorEntity, ["name", "surname", "uco", "email"], InputType),
+  PartialType(PickType(OperatorEntity, ["role"], InputType))
+) {}
