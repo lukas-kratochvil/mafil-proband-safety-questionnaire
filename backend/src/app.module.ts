@@ -5,6 +5,7 @@ import { GraphQLModule } from "@nestjs/graphql";
 import { GraphQLConfigService } from "@graphql/graphql-config.service";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
+import { LanguageModule } from "./language/language.module";
 import { OperatorModule } from "./operator/operator.module";
 
 @Module({
@@ -16,6 +17,7 @@ import { OperatorModule } from "./operator/operator.module";
       useClass: GraphQLConfigService,
     }),
     OperatorModule,
+    LanguageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
