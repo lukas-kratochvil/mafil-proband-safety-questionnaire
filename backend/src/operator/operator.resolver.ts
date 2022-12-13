@@ -10,27 +10,27 @@ export class OperatorResolver {
   constructor(private readonly operatorService: OperatorService) {}
 
   @Mutation(() => OperatorEntity)
-  async createOperator(@Args("createOperatorInput") createOperatorInput: CreateOperatorInput) {
-    return await this.operatorService.create(createOperatorInput);
+  createOperator(@Args("createOperatorInput") createOperatorInput: CreateOperatorInput): Promise<OperatorEntity> {
+    return this.operatorService.create(createOperatorInput);
   }
 
   @Query(() => [OperatorEntity], { name: "operators" })
-  findAll() {
+  findAll(): Promise<OperatorEntity[]> {
     return this.operatorService.findAll();
   }
 
   @Query(() => OperatorEntity, { name: "operator", nullable: true })
-  findOne(@Args("id", { type: () => UuidScalar }) id: string) {
+  findOne(@Args("id", { type: () => UuidScalar }) id: string): Promise<OperatorEntity> {
     return this.operatorService.findOne(id);
   }
 
   @Mutation(() => OperatorEntity)
-  updateOperator(@Args("updateOperatorInput") updateOperatorInput: UpdateOperatorInput) {
+  updateOperator(@Args("updateOperatorInput") updateOperatorInput: UpdateOperatorInput): Promise<OperatorEntity> {
     return this.operatorService.update(updateOperatorInput.id, updateOperatorInput);
   }
 
   @Mutation(() => OperatorEntity)
-  removeOperator(@Args("id", { type: () => UuidScalar }) id: string) {
+  removeOperator(@Args("id", { type: () => UuidScalar }) id: string): Promise<OperatorEntity> {
     return this.operatorService.remove(id);
   }
 }
