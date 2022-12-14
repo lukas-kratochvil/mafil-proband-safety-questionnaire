@@ -1,25 +1,15 @@
-import { Field, HideField, Int, ObjectType, PickType } from "@nestjs/graphql";
+import { Field, HideField, Int, ObjectType } from "@nestjs/graphql";
 import { Question } from "@prisma/client";
 import { BaseEntity } from "@graphql/base.entity";
-import { LanguageEntity } from "@language/entities/language.entity";
-import { QuestionTranslationEntity } from "@question-translation/entities/question-translation.entity";
-
-@ObjectType({ isAbstract: true })
-export abstract class TranslationLanguageEntity extends PickType(LanguageEntity, ["locale", "name"]) {}
-
-@ObjectType({ isAbstract: true })
-export abstract class TranslationEntity extends PickType(QuestionTranslationEntity, ["text"]) {
-  @Field(() => TranslationLanguageEntity)
-  language: TranslationLanguageEntity;
-}
+import { AbstractTranslationEntity } from "@language/entities/translation-language.entity";
 
 @ObjectType()
 export class QuestionEntity extends BaseEntity implements Question {
   @HideField()
   previousQuestionId: string | null;
 
-  @Field(() => [TranslationEntity])
-  translations: TranslationEntity[];
+  @Field(() => [AbstractTranslationEntity])
+  translations: AbstractTranslationEntity[];
 
   @Field(() => Int)
   partNumber: number;
