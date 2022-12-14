@@ -7,6 +7,7 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { LanguageModule } from "./language/language.module";
 import { OperatorModule } from "./operator/operator.module";
+import { QuestionTranslationModule } from "./question-translation/question-translation.module";
 import { QuestionModule } from "./question/question.module";
 
 @Module({
@@ -19,6 +20,7 @@ import { QuestionModule } from "./question/question.module";
     }),
     OperatorModule,
     QuestionModule,
+    QuestionTranslationModule,
     LanguageModule,
   ],
   controllers: [AppController],
