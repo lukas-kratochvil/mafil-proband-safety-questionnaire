@@ -1,4 +1,4 @@
-import { Field, ObjectType } from "@nestjs/graphql";
+import { Field, HideField, ObjectType } from "@nestjs/graphql";
 import { UuidScalar } from "./uuid-scalar";
 
 @ObjectType()
@@ -9,9 +9,9 @@ export class BaseEntity {
   @Field(() => Date)
   createdAt: Date;
 
-  @Field(() => Date)
+  @HideField()
   updatedAt: Date;
 
-  @Field(() => Date, { nullable: true })
+  @HideField()
   deletedAt: Date | null;
 }
