@@ -1,6 +1,7 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { UuidScalar } from "@graphql/uuid-scalar";
 import { CreateQuestionInput } from "./dto/create-question.input";
+import { UpdateQuestionTextsInput } from "./dto/update-question-texts.input";
 import { UpdateQuestionInput } from "./dto/update-question.input";
 import { QuestionEntity } from "./entities/question.entity";
 import { QuestionService } from "./question.service";
@@ -27,6 +28,13 @@ export class QuestionResolver {
   @Mutation(() => QuestionEntity)
   updateQuestion(@Args("updateQuestionInput") updateQuestionInput: UpdateQuestionInput): Promise<QuestionEntity> {
     return this.questionService.update(updateQuestionInput.id, updateQuestionInput);
+  }
+
+  @Mutation(() => QuestionEntity)
+  updateQuestionTexts(
+    @Args("updateQuestionTextsInput") updateQuestionTextsInput: UpdateQuestionTextsInput
+  ): Promise<QuestionEntity> {
+    return this.questionService.updateTexts(updateQuestionTextsInput.id, updateQuestionTextsInput);
   }
 
   @Mutation(() => QuestionEntity)

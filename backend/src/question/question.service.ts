@@ -3,6 +3,7 @@ import { Language, Prisma } from "@prisma/client";
 import { LanguageService } from "@language/language.service";
 import { PrismaService } from "@prisma/prisma.service";
 import { CreateQuestionInput, CreateQuestionTranslationsInput } from "./dto/create-question.input";
+import { UpdateQuestionTextsInput } from "./dto/update-question-texts.input";
 import { UpdateQuestionInput } from "./dto/update-question.input";
 
 const areTranslationsComplete = (languages: Language[], translations: CreateQuestionTranslationsInput[]): boolean => {
@@ -78,6 +79,19 @@ export class QuestionService {
   }
 
   async update(id: string, updateQuestionInput: UpdateQuestionInput): Promise<QuestionIncludingTranslations> {
+    return this.prismaService.question.update({
+      where: {
+        id,
+      },
+      data: updateQuestionInput,
+      include: questionTranslations,
+    });
+  }
+
+  async updateTexts(
+    id: string,
+    updateQuestionTextsInput: UpdateQuestionTextsInput
+  ): Promise<QuestionIncludingTranslations> {
     const previousQuestion = await this.prismaService.question.update({
       where: {
         id,
@@ -88,12 +102,14 @@ export class QuestionService {
     });
     const languages = await this.languageService.findAll();
 
-    if (areTranslationsComplete(languages, updateQuestionInput.translations)) {
+    if (areTranslationsComplete(languages, updateQuestionTextsInput.translations)) {
       return this.prismaService.question.create({
         data: {
           isValid: true,
-          partNumber: updateQuestionInput.partNumber ? updateQuestionInput.partNumber : previousQuestion.partNumber,
-          mustBeApproved: updateQuestionInput.partNumber === 2 ? true : previousQuestion.mustBeApproved,
+          partNumber: updateQuestionTextsInput.partNumber
+            ? updateQuestionTextsInput.partNumber
+            : previousQuestion.partNumber,
+          mustBeApproved: updateQuestionTextsInput.partNumber === 2 ? true : previousQuestion.mustBeApproved,
           previousQuestion: {
             connect: {
               id: previousQuestion.id,
@@ -101,7 +117,7 @@ export class QuestionService {
           },
           translations: {
             createMany: {
-              data: updateQuestionInput.translations.map((translation) => ({
+              data: updateQuestionTextsInput.translations.map((translation) => ({
                 languageId: languages.find((language) => language.locale === translation.locale)?.id as string,
                 text: translation.text,
               })),
