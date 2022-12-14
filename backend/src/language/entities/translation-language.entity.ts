@@ -2,13 +2,13 @@ import { Field, ObjectType, PickType } from "@nestjs/graphql";
 import { LanguageEntity } from "@language/entities/language.entity";
 
 @ObjectType({ isAbstract: true })
-abstract class AbstractTranslationLanguageEntity extends PickType(LanguageEntity, ["locale", "name"]) {}
+class TranslationLanguageEntity extends PickType(LanguageEntity, ["locale", "name"]) {}
 
 @ObjectType({ isAbstract: true })
-export abstract class AbstractTranslationEntity {
+export class TranslationEntity {
   @Field()
   text: string;
 
-  @Field(() => AbstractTranslationLanguageEntity)
-  language: AbstractTranslationLanguageEntity;
+  @Field(() => TranslationLanguageEntity)
+  language: TranslationLanguageEntity;
 }

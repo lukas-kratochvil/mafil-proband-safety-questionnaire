@@ -1,12 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { Language, Prisma } from "@prisma/client";
+import { CreateTranslationInput } from "@language/dto/create-translation.input";
 import { LanguageService } from "@language/language.service";
 import { PrismaService } from "@prisma/prisma.service";
-import { CreateQuestionInput, CreateQuestionTranslationsInput } from "./dto/create-question.input";
+import { CreateQuestionInput } from "./dto/create-question.input";
 import { UpdateQuestionTextsInput } from "./dto/update-question-texts.input";
 import { UpdateQuestionInput } from "./dto/update-question.input";
 
-const areTranslationsComplete = (languages: Language[], translations: CreateQuestionTranslationsInput[]): boolean => {
+const areTranslationsComplete = (languages: Language[], translations: CreateTranslationInput[]): boolean => {
   const translationLocales = translations.map((translation) => translation.locale);
   return languages.map((language) => language.locale).every((locale) => translationLocales.includes(locale));
 };
