@@ -23,7 +23,7 @@ enum ProbandFormStep {
 
 export const ProbandForm = () => {
   const navigate = useNavigate();
-  const { setValue } = useFormContext();
+  const { setError, setValue } = useFormContext();
 
   const [step, setStep] = useState<ProbandFormStep>(ProbandFormStep.EXAMINATION);
   const [qacs, setQacs] = useState<FormQac[]>([]);
@@ -44,8 +44,21 @@ export const ProbandForm = () => {
     submitButtonProps: {
       titleLocalizationKey: "form.common.buttons.agree",
       onClick: (data: FormPropType) => {
-        // TODO: create visit in DB
-        navigate(RoutingPaths.PROBAND_HOME);
+        let isError = false;
+
+        if (data.email === "") {
+          setError("email", { message: "form.validation.probandContacts" });
+          isError = true;
+        }
+        if (data.phone === "") {
+          setError("phone", { message: "form.validation.probandContacts" });
+          isError = true;
+        }
+
+        if (!isError) {
+          // TODO: create visit in DB
+          navigate(RoutingPaths.PROBAND_HOME);
+        }
       },
     },
     buttonsProps: [],
@@ -54,7 +67,7 @@ export const ProbandForm = () => {
   const examinationButtons: IFormButtonsProps = {
     submitButtonProps: {
       titleLocalizationKey: "form.common.buttons.agree",
-      onClick: (data: FormPropType) => {
+      onClick: () => {
         setStep(ProbandFormStep.CONTACTS);
         setFormButtons(contactsButtons);
       },
