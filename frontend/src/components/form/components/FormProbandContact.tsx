@@ -1,11 +1,10 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@i18n";
 import { FormTextField } from "../inputs/FormTextField";
-import { IFormCardProps } from "../interfaces/form-card";
 import { FormCardContainer } from "./FormCardContainer";
 
-export const FormProbandContact = ({ disableInputs }: IFormCardProps) => {
+export const FormProbandContact = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandContact" });
 
   return (
@@ -19,19 +18,11 @@ export const FormProbandContact = ({ disableInputs }: IFormCardProps) => {
         <Grid
           item
           xs={2}
-        >
-          <Typography>{t("text")}</Typography>
-        </Grid>
-        <Grid
-          item
-          xs={2}
           sm={1}
         >
           <FormTextField
             name="email"
             label={t("email")}
-            isOptional
-            disabled={disableInputs}
           />
         </Grid>
         <Grid
@@ -43,8 +34,6 @@ export const FormProbandContact = ({ disableInputs }: IFormCardProps) => {
             name="phoneNumber"
             label={t("phone")}
             type="tel"
-            isOptional
-            disabled={disableInputs}
           />
         </Grid>
       </Grid>

@@ -65,7 +65,6 @@
       },
       "probandContact": {
         "title": "Contact information",
-        "text": "If you want to send your measured data electronically, fill in the information below:",
         "email": "E-mail",
         "phone": "Phone number"
       },
