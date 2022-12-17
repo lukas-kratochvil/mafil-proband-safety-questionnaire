@@ -61,7 +61,7 @@ interface IProbandInfo {
   visualCorrectionValue: number;
   sideDominance: SideDominance;
   email: string;
-  phoneNumber: string;
+  phone: string;
 }
 
 export enum AnswerOption {

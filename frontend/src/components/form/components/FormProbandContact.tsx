@@ -31,7 +31,7 @@ export const FormProbandContact = () => {
           sm={1}
         >
           <FormTextField
-            name="phoneNumber"
+            name="phone"
             label={t("phone")}
             type="tel"
           />

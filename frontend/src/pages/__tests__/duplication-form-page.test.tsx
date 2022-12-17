@@ -62,7 +62,7 @@ const visit: IVisit = {
     visualCorrection: VisualCorrection.NO,
     visualCorrectionValue: 0,
     email: "",
-    phoneNumber: "",
+    phone: "",
   },
   answers: questionData.map((question, index) => ({
     questionId: question.id,
@@ -151,7 +151,7 @@ describe("duplication form page", () => {
         visualCorrectionValue: visit.probandInfo.visualCorrectionValue.toString(),
         sideDominance: "form.enums.sideDominance.RIGHT_HANDED",
         email: visit.probandInfo.email,
-        phoneNumber: visit.probandInfo.phoneNumber,
+        phone: visit.probandInfo.phone,
       })
     );
 

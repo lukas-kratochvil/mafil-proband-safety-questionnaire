@@ -34,7 +34,7 @@ const visit: IVisit = {
     visualCorrectionValue: 1,
     sideDominance: SideDominance.UNDETERMINED,
     email: "name.surname@email.com",
-    phoneNumber: "123456789",
+    phone: "123456789",
   },
   answers: [
     {
@@ -73,7 +73,7 @@ const visitNotCompleted: IVisit = {
     visualCorrectionValue: 0,
     sideDominance: SideDominance.UNDETERMINED,
     email: "",
-    phoneNumber: "",
+    phone: "",
   },
   answers: [
     {
@@ -104,7 +104,7 @@ describe("form loaders", () => {
     expect(emptyFormDefaultValues.visualCorrection).toBeNull();
     expect(emptyFormDefaultValues.visualCorrectionValue).toEqual(0);
     expect(emptyFormDefaultValues.email).toBe("");
-    expect(emptyFormDefaultValues.phoneNumber).toBe("");
+    expect(emptyFormDefaultValues.phone).toBe("");
     expect(emptyFormDefaultValues.answers).toEqual([]);
   });
 
@@ -129,7 +129,7 @@ describe("form loaders", () => {
     expect(phantomFormDefaultValues.visualCorrection).toBeNull();
     expect(phantomFormDefaultValues.visualCorrectionValue).toEqual(0);
     expect(phantomFormDefaultValues.email).toBe("");
-    expect(phantomFormDefaultValues.phoneNumber).toBe("");
+    expect(phantomFormDefaultValues.phone).toBe("");
     expect(phantomFormDefaultValues.answers).toEqual([]);
   });
 
@@ -152,7 +152,7 @@ describe("form loaders", () => {
       expect(formDefaultValuesFromVisit.visualCorrection?.value).toEqual(visit.probandInfo.visualCorrection);
       expect(formDefaultValuesFromVisit.visualCorrectionValue).toEqual(visit.probandInfo.visualCorrectionValue);
       expect(formDefaultValuesFromVisit.email).toEqual(visit.probandInfo.email);
-      expect(formDefaultValuesFromVisit.phoneNumber).toEqual(visit.probandInfo.phoneNumber);
+      expect(formDefaultValuesFromVisit.phone).toEqual(visit.probandInfo.phone);
       expect(formDefaultValuesFromVisit.answers).toEqual(visit.answers);
     });
 
@@ -181,7 +181,7 @@ describe("form loaders", () => {
         visitNotCompleted.probandInfo.visualCorrectionValue
       );
       expect(formDefaultValuesFromVisit.email).toEqual(visitNotCompleted.probandInfo.email);
-      expect(formDefaultValuesFromVisit.phoneNumber).toEqual(visitNotCompleted.probandInfo.phoneNumber);
+      expect(formDefaultValuesFromVisit.phone).toEqual(visitNotCompleted.probandInfo.phone);
       expect(formDefaultValuesFromVisit.answers).toEqual(visitNotCompleted.answers);
     });
   });
@@ -205,7 +205,7 @@ describe("form loaders", () => {
       expect(formDefaultValuesVisitDuplication.visualCorrection?.value).toEqual(visit.probandInfo.visualCorrection);
       expect(formDefaultValuesVisitDuplication.visualCorrectionValue).toEqual(visit.probandInfo.visualCorrectionValue);
       expect(formDefaultValuesVisitDuplication.email).toEqual(visit.probandInfo.email);
-      expect(formDefaultValuesVisitDuplication.phoneNumber).toEqual(visit.probandInfo.phoneNumber);
+      expect(formDefaultValuesVisitDuplication.phone).toEqual(visit.probandInfo.phone);
       expect(formDefaultValuesVisitDuplication.answers).toEqual(visit.answers);
     });
 
@@ -236,7 +236,7 @@ describe("form loaders", () => {
         visitNotCompleted.probandInfo.visualCorrectionValue
       );
       expect(formDefaultValuesVisitDuplication.email).toEqual(visitNotCompleted.probandInfo.email);
-      expect(formDefaultValuesVisitDuplication.phoneNumber).toEqual(visitNotCompleted.probandInfo.phoneNumber);
+      expect(formDefaultValuesVisitDuplication.phone).toEqual(visitNotCompleted.probandInfo.phone);
       expect(formDefaultValuesVisitDuplication.answers).toEqual(visitNotCompleted.answers);
     });
   });

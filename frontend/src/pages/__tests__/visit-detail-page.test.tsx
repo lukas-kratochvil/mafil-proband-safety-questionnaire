@@ -36,7 +36,7 @@ const defaultVisit: IVisit = {
     visualCorrection: VisualCorrection.NO,
     visualCorrectionValue: 0,
     email: "",
-    phoneNumber: "",
+    phone: "",
   },
   answers: [],
 };

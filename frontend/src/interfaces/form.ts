@@ -25,6 +25,6 @@ export interface FormPropType {
   visualCorrection: IOption | null;
   visualCorrectionValue: TextFieldNumberInput;
   email: string;
-  phoneNumber: string;
+  phone: string;
   answers: FormAnswer[];
 }
