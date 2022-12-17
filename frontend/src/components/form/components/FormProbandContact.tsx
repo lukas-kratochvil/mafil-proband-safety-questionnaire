@@ -3,8 +3,9 @@ import { useTranslation } from "react-i18next";
 import { defaultNS } from "@i18n";
 import { FormTextField } from "../inputs/FormTextField";
 import { FormCardContainer } from "./FormCardContainer";
+import { IFormCardProps } from "../interfaces/form-card";
 
-export const FormProbandContact = () => {
+export const FormProbandContact = ({ disableInputs }: IFormCardProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandContact" });
 
   return (
@@ -23,6 +24,7 @@ export const FormProbandContact = () => {
           <FormTextField
             name="email"
             label={t("email")}
+            disabled={disableInputs}
           />
         </Grid>
         <Grid
@@ -34,6 +36,7 @@ export const FormProbandContact = () => {
             name="phone"
             label={t("phone")}
             type="tel"
+            disabled={disableInputs}
           />
         </Grid>
       </Grid>

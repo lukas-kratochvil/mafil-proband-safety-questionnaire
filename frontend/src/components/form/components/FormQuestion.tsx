@@ -22,7 +22,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
   const matchesUpSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
   const { operator } = useAuth();
   const [question, setQuestion] = useState<IQuestionData>();
-  const { setValue } = useFormContext();
+  const { setValue } = useFormContext<FormPropType>();
   const questionAnswer = useWatch<FormPropType, `answers.${number}.answer`>({
     name: `answers.${qac.index}.answer`,
     defaultValue: qac.answer,

@@ -19,7 +19,7 @@ import { FormCardContainer } from "./FormCardContainer";
 
 export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandInfo" });
-  const { getFieldState, resetField, setValue } = useFormContext();
+  const { getFieldState, resetField, setValue } = useFormContext<FormPropType>();
   const personalIdValue = useWatch<FormPropType, "personalId">({ name: "personalId" });
   const birthdateValue = useWatch<FormPropType, "birthdate">({ name: "birthdate" });
   const genderOption = useWatch<FormPropType, "gender">({ name: "gender" });

@@ -23,7 +23,7 @@ export const DuplicationForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { operator } = useAuth();
-  const { reset, setValue } = useFormContext();
+  const { reset, setValue } = useFormContext<FormPropType>();
 
   const [isPhantom, setIsPhantom] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
