@@ -5,26 +5,42 @@ import { FormBeforeExamination } from "@components/form/components/FormBeforeExa
 import { IFormButtonsProps } from "@components/form/components/FormButtons";
 import { FormEntryInfo } from "@components/form/components/FormEntryInfo";
 import { FormExaminationConsent } from "@components/form/components/FormExaminationConsent";
-import { FormProbandContact } from "@components/form/components/FormProbandContact";
 import { FormProbandInfo } from "@components/form/components/FormProbandInfo";
 import { FormQuestions } from "@components/form/components/FormQuestions";
 import { FormSafetyInfo } from "@components/form/components/FormSafetyInfo";
 import { FormPropType, FormQac } from "@interfaces/form";
 import { RoutingPaths } from "@routing-paths";
 import { fetchCurrentQuestions } from "@util/fetch";
+import { FormProbandContactAgreement } from "../components/FormProbandContactAgreement";
+import { FormProbandContactCheckbox } from "../components/FormProbandContactCheckbox";
+import { FormProbandContactRequest } from "../components/FormProbandContactRequest";
 import { FormContainer } from "./FormContainer";
+
+enum ProbandFormStep {
+  EXAMINATION,
+  CONTACTS,
+}
 
 export const ProbandForm = () => {
   const navigate = useNavigate();
   const { setValue } = useFormContext();
 
+  const [step, setStep] = useState<ProbandFormStep>(ProbandFormStep.EXAMINATION);
   const [qacs, setQacs] = useState<FormQac[]>([]);
+  const [isContactsRequestShown, setIsContactsRequestShown] = useState<boolean>(false);
 
-  // TODO: use MUI Skeleton while data is fetching/loading
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isError, setIsError] = useState<boolean>(false);
+  const contactsButtons: IFormButtonsProps = {
+    submitButtonProps: {
+      titleLocalizationKey: "form.common.buttons.complete",
+      onClick: (data: FormPropType) => {
+        // TODO: create visit in DB
+        navigate(RoutingPaths.PROBAND_HOME);
+      },
+    },
+    buttonsProps: [],
+  };
 
-  const formButtons: IFormButtonsProps = {
+  const contactsRequestButtons: IFormButtonsProps = {
     submitButtonProps: {
       titleLocalizationKey: "form.common.buttons.agree",
       onClick: (data: FormPropType) => {
@@ -34,6 +50,23 @@ export const ProbandForm = () => {
     },
     buttonsProps: [],
   };
+
+  const examinationButtons: IFormButtonsProps = {
+    submitButtonProps: {
+      titleLocalizationKey: "form.common.buttons.agree",
+      onClick: (data: FormPropType) => {
+        setStep(ProbandFormStep.CONTACTS);
+        setFormButtons(contactsButtons);
+      },
+    },
+    buttonsProps: [],
+  };
+
+  const [formButtons, setFormButtons] = useState<IFormButtonsProps>(examinationButtons);
+
+  // TODO: use MUI Skeleton while data is fetching/loading
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -55,29 +88,53 @@ export const ProbandForm = () => {
       }
     };
 
-    fetchQuestions();
-  }, []);
+    if (step === ProbandFormStep.EXAMINATION) {
+      fetchQuestions();
+    }
+  }, [step]);
 
   useEffect(() => {
-    setValue("answers", qacs);
-  }, [qacs, setValue]);
+    if (step === ProbandFormStep.EXAMINATION) {
+      setValue("answers", qacs);
+    }
+  }, [qacs, setValue, step]);
+
+  useEffect(() => {
+    if (step === ProbandFormStep.CONTACTS) {
+      setFormButtons(isContactsRequestShown ? contactsRequestButtons : contactsButtons);
+    }
+  }, [isContactsRequestShown, step]);
 
   return (
     <FormContainer
       isError={isError}
       buttons={formButtons}
     >
-      <FormEntryInfo />
-      <FormProbandInfo />
-      <FormProbandContact />
-      <FormSafetyInfo />
-      <FormQuestions
-        titleLocalizationKey="title"
-        qacs={qacs}
-        disableInputs={false}
-      />
-      <FormBeforeExamination />
-      <FormExaminationConsent />
+      {step === ProbandFormStep.EXAMINATION && (
+        <>
+          <FormEntryInfo />
+          <FormProbandInfo />
+          <FormSafetyInfo />
+          <FormQuestions
+            titleLocalizationKey="title"
+            qacs={qacs}
+            disableInputs={false}
+          />
+          <FormBeforeExamination />
+          <FormExaminationConsent />
+        </>
+      )}
+      {step === ProbandFormStep.CONTACTS && (
+        <>
+          <FormProbandContactCheckbox setIsContactsRequestShown={setIsContactsRequestShown} />
+          {isContactsRequestShown && (
+            <>
+              <FormProbandContactRequest />
+              <FormProbandContactAgreement />
+            </>
+          )}
+        </>
+      )}
     </FormContainer>
   );
 };

@@ -18,6 +18,7 @@
         "noOptions": "No options",
         "buttons": {
           "agree": "Agree",
+          "complete": "Complete",
           "finalize": "Finalize",
           "approve": "Approve",
           "disapprove": "Disapprove",
@@ -67,6 +68,20 @@
         "text": "If you want to send your measured data electronically, fill in the information below:",
         "email": "E-mail",
         "phone": "Phone number"
+      },
+      "probandContactCheckbox": {
+        "title": "Measured data transfer",
+        "label": "I request the transfer of my measured data electronically."
+      },
+      "probandContactRequest": {
+        "title": "Request for transfer of measured data",
+        "text": "I, {{name}} {{surname}} {{birthdate}}, hereby request the transfer of the measured data in the MAFIL-CEITEC laboratory, dated {{currentDate}} electronically to:",
+        "email": "E-mail",
+        "phone": "Phone number"
+      },
+      "probandContactAgreement": {
+        "title": "Consent to the processing of personal data",
+        "text": "TODO"
       },
       "probandInfo": {
         "title": "Personal data",

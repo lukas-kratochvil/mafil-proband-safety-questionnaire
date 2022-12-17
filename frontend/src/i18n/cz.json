@@ -18,6 +18,7 @@
         "noOptions": "Žádné možnosti",
         "buttons": {
           "agree": "Souhlasím",
+          "complete": "Dokončit",
           "finalize": "Finalizovat",
           "approve": "Schválit",
           "disapprove": "Neschválit",
@@ -67,6 +68,20 @@
         "text": "V případě, že budete chtít předat Vaše naměřená data elektronickou cestou, vyplňte údaje níže:",
         "email": "Email",
         "phone": "Telefonní číslo"
+      },
+      "probandContactCheckbox": {
+        "title": "Předání naměřených dat",
+        "label": "Žádám o předání mých naměřených dat elektronickou cestou."
+      },
+      "probandContactRequest": {
+        "title": "Žádost o předání naměřených dat",
+        "text": "Já, {{name}} {{surname}} {{birthdate}}, tímto žádám o předání naměřených dat v laboratoři MAFIL-CEITEC, ze dne {{currentDate}} elektronickou cestou na:",
+        "email": "Email",
+        "phone": "Telefonní číslo"
+      },
+      "probandContactAgreement": {
+        "title": "Souhlas se zpracováním osobních údajů",
+        "text": "TODO"
       },
       "probandInfo": {
         "title": "Osobní údaje",
