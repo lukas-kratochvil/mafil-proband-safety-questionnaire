@@ -76,7 +76,9 @@
         "title": "Žádost o předání naměřených dat",
         "text": "Já, {{name}} {{surname}} {{birthdate}}, tímto žádám o předání naměřených dat v laboratoři MAFIL-CEITEC, ze dne {{currentDate}} elektronickou cestou na:",
         "email": "Email",
-        "phone": "Telefonní číslo"
+        "phone": "Telefonní číslo",
+        "emailNote": "Na email bude zaslán odkaz pro stažení dat.",
+        "phoneNote": "Na telefonní číslo bude zaslán bezpečnostní kód pro přihlášení."
       },
       "probandContactConsent": {
         "title": "Souhlas se zpracováním osobních údajů",

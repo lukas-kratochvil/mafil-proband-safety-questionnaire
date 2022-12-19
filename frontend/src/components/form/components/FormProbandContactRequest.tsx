@@ -53,6 +53,13 @@ export const FormProbandContactRequest = () => {
             type="tel"
           />
         </Grid>
+        <Grid
+          item
+          xs={2}
+        >
+          <Typography>{t("emailNote")}</Typography>
+          <Typography>{t("phoneNote")}</Typography>
+        </Grid>
       </Grid>
     </FormCardContainer>
   );

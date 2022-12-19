@@ -76,7 +76,9 @@
         "title": "Request for transfer of measured data",
         "text": "I, {{name}} {{surname}} {{birthdate}}, hereby request the transfer of the measured data in the MAFIL-CEITEC laboratory, dated {{currentDate}} electronically to:",
         "email": "E-mail",
-        "phone": "Phone number"
+        "phone": "Phone number",
+        "emailNote": "A link to download the data will be sent to the email.",
+        "phoneNote": "A login security code will be sent to the phone number."
       },
       "probandContactConsent": {
         "title": "Consent to the processing of personal data",
