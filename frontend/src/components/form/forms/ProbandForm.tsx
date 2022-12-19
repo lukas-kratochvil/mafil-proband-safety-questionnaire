@@ -11,8 +11,8 @@ import { FormSafetyInfo } from "@components/form/components/FormSafetyInfo";
 import { FormPropType, FormQac } from "@interfaces/form";
 import { RoutingPaths } from "@routing-paths";
 import { fetchCurrentQuestions } from "@util/fetch";
-import { FormProbandContactAgreement } from "../components/FormProbandContactAgreement";
 import { FormProbandContactCheckbox } from "../components/FormProbandContactCheckbox";
+import { FormProbandContactConsent } from "../components/FormProbandContactConsent";
 import { FormProbandContactRequest } from "../components/FormProbandContactRequest";
 import { FormContainer } from "./FormContainer";
 
@@ -143,7 +143,7 @@ export const ProbandForm = () => {
           {isContactsRequestShown && (
             <>
               <FormProbandContactRequest />
-              <FormProbandContactAgreement />
+              <FormProbandContactConsent />
             </>
           )}
         </>

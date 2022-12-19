@@ -26,7 +26,8 @@ i18n
       escapeValue: false, // not needed for React as it escapes by default
     },
     react: {
-      transEmptyNodeValue: "", // what to return for empty Trans component
+      transEmptyNodeValue: "",
+      transSupportBasicHtmlNodes: true,
     },
     // TODO: try to get {locale}.json files from the backend (https://www.i18next.com/overview/configuration-options#languages-namespaces-resources)
     resources,
