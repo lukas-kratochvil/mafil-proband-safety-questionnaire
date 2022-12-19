@@ -8,19 +8,9 @@ export const FormExaminationConsent = () => {
 
   return (
     <FormCardContainer title={t("title")}>
-      <Typography width="100%">{t("text1")}</Typography>
-      <Typography
-        width="100%"
-        paddingTop="1rem"
-      >
-        {t("text2")}
-      </Typography>
-      <Typography
-        width="100%"
-        paddingTop="1rem"
-      >
-        {t("contactInfo")}:
-      </Typography>
+      <Typography>{t("text1")}</Typography>
+      <Typography marginTop="1rem">{t("text2")}</Typography>
+      <Typography marginTop="1rem">{t("contactInfo")}:</Typography>
       <Typography width="100%">{t("address")}</Typography>
       <Typography width="100%">{t("contactPerson")}: Michal Mikl</Typography>
       <Typography width="100%">{t("phone")}: + 420 54949 6099</Typography>

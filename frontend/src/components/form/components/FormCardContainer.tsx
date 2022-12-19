@@ -10,7 +10,10 @@ export const FormCardContainer = ({ children, title }: PropsWithChildren<IFormCa
   <CardContainer title={title}>
     <Grid
       container
-      sx={{ padding: 2 }}
+      sx={{
+        padding: 2,
+        textAlign: "justify",
+      }}
     >
       {children}
     </Grid>

@@ -8,45 +8,12 @@ export const FormProbandContactConsent = () => {
 
   return (
     <FormCardContainer title={t("title")}>
-      <Typography
-        width="100%"
-        textAlign="justify"
-      >
-        {t("text1")}
-      </Typography>
-      <Typography
-        width="100%"
-        textAlign="justify"
-        paddingTop="1rem"
-      >
-        {t("text2")}
-      </Typography>
-      <Typography
-        width="100%"
-        textAlign="justify"
-      >
-        {t("text3")}
-      </Typography>
-      <Typography
-        width="100%"
-        textAlign="justify"
-        paddingTop="1rem"
-      >
-        {t("text4")}
-      </Typography>
-      <Typography
-        width="100%"
-        textAlign="justify"
-        paddingTop="1rem"
-      >
-        {t("list")}
-      </Typography>
-      <ul
-        style={{
-          margin: 0,
-          textAlign: "justify",
-        }}
-      >
+      <Typography>{t("text1")}</Typography>
+      <Typography marginTop="1rem">{t("text2")}</Typography>
+      <Typography>{t("text3")}</Typography>
+      <Typography marginTop="1rem">{t("text4")}</Typography>
+      <Typography marginTop="1rem">{t("list")}</Typography>
+      <ul style={{ margin: 0 }}>
         <li>
           <Trans
             t={t}
@@ -71,11 +38,7 @@ export const FormProbandContactConsent = () => {
           </Trans>
         </li>
       </ul>
-      <Typography
-        width="100%"
-        textAlign="justify"
-        paddingTop="1rem"
-      >
+      <Typography marginTop="1rem">
         <Trans
           t={t}
           i18nKey="text5"
