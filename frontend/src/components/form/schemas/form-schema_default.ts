@@ -27,7 +27,7 @@ export const defaultFormSchema = object().shape(
   {
     project: string().nullable(),
     device: string().nullable(),
-    measurementDate: date().typeError("form.validation.notValid").nullable(),
+    measurementDate: date().nullable().typeError("form.validation.notValid"),
     name: string().trim().required("form.validation.required"),
     surname: string().trim().required("form.validation.required"),
     personalId: string().trim().required("form.validation.required"),

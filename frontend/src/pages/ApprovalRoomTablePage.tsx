@@ -7,8 +7,8 @@ import { defaultNS } from "@i18n";
 import { IVisit } from "@interfaces/visit";
 import { fetchApprovalRoomVisits } from "@util/fetch";
 
-const createdAtFormat = "d.M.yyyy H:mm";
-const probandBirthdateFormat = "d.M.yyyy";
+const createdAtFormat = "d.M.y H:mm";
+const probandBirthdateFormat = "d.M.y";
 
 const ApprovalRoomTablePage = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "approvalRoomTablePage.header" });

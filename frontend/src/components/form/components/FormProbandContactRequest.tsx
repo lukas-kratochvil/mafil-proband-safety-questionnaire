@@ -27,8 +27,8 @@ export const FormProbandContactRequest = () => {
             {t("text", {
               name: getValues("name"),
               surname: getValues("surname"),
-              birthdate: format(getValues("birthdate") as Date, "dd.MM.yyyy"),
-              currentDate: format(new Date(), "dd.MM.yyyy"),
+              birthdate: format(getValues("birthdate") as Date, "d.M.y"),
+              currentDate: format(new Date(), "d.M.y"),
             })}
           </Typography>
         </Grid>
