@@ -69,6 +69,7 @@ export const ProbandForm = () => {
       titleLocalizationKey: "form.common.buttons.agree",
       onClick: () => {
         setStep(ProbandFormStep.CONTACTS);
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         setFormButtons(contactsButtons);
       },
     },

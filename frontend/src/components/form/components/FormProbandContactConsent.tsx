@@ -1,10 +1,10 @@
 import { Typography } from "@mui/material";
+import { PropsWithChildren } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { defaultNS } from "@i18n";
 import { FormCardContainer } from "./FormCardContainer";
-import { PropsWithChildren } from "react";
 
-const Underline = ({ children }: PropsWithChildren) => (<span style={{ textDecoration: "underline" }}>{children}</span>);
+const Underline = ({ children }: PropsWithChildren) => <span style={{ textDecoration: "underline" }}>{children}</span>;
 
 export const FormProbandContactConsent = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandContactConsent" });
