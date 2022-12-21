@@ -19,11 +19,8 @@ describe("form proband contact", () => {
     const { container } = render(<FormProbandContact />);
 
     expect(container).toHaveTextContent(/form.probandContact.title/);
-    expect(container).toHaveTextContent(/form.probandContact.text/);
     expect(container).toHaveTextContent(/form.probandContact.email/);
-    expect(container).toHaveTextContent(/form.common.optional/);
     expect(container).toHaveTextContent(/form.probandContact.phone/);
-    expect(container).toHaveTextContent(/form.common.optional/);
   });
 
   test("has all input fields", () => {

@@ -81,8 +81,6 @@ describe("proband form page", () => {
         visualCorrection: "",
         visualCorrectionValue: "0",
         sideDominance: "",
-        email: "",
-        phone: "",
       })
     );
     const questions = await screen.findAllByRole("radiogroup");
@@ -187,12 +185,6 @@ describe("proband form page", () => {
     const selectedSideDominance = "form.enums.sideDominance.UNDETERMINED";
     await user.click(screen.getByRole("option", { name: selectedSideDominance }));
 
-    const typedEmail = "name.surname@mail.com";
-    await user.type(screen.getByLabelText("email"), typedEmail);
-
-    const typedPhone = "123456789";
-    await user.type(screen.getByLabelText("phone"), typedPhone);
-
     const expectedFormValues = {
       name: typedName,
       surname: typedSurname,
@@ -205,16 +197,12 @@ describe("proband form page", () => {
       visualCorrection: selectedVisualCorrection,
       visualCorrectionValue: typedVisualCorrectionValue,
       sideDominance: selectedSideDominance,
-      email: typedEmail,
-      phone: typedPhone,
     };
     expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);
 
     const agreeButton = screen.getByRole("button", { name: "form.common.buttons.agree" });
-
+    // error - questions aren't filled yet
     await user.click(agreeButton);
-    // TODO: change this to check calling POST method that will create a visit
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(0);
 
     const questions = screen.getAllByRole("radiogroup");
     questions.forEach(async (question, index) => {
@@ -222,7 +210,25 @@ describe("proband form page", () => {
       await user.click(within(question).getByRole("radio", { name: answerLabel }));
     });
 
+    // should get to the second form page
     await user.click(agreeButton);
+
+    // click on the checkbox to show contacts form
+    await user.click(screen.getByRole("checkbox"));
+
+    const typedEmail = "name.surname@mail.com";
+    await user.type(screen.getByLabelText("email"), typedEmail);
+
+    const typedPhone = "123456789";
+    await user.type(screen.getByLabelText("phone"), typedPhone);
+
+    expect(screen.getByRole("form")).toHaveFormValues({
+      email: typedEmail,
+      phone: typedPhone,
+    });
+
+    const agreeButton2 = screen.getByRole("button", { name: "form.common.buttons.agree" });
+    await user.click(agreeButton2);
     // TODO: change this to check calling POST method that will create a visit
     expect(mockedUseNavigate).toHaveBeenCalledOnce();
   });
@@ -284,13 +290,14 @@ describe("proband form page", () => {
       visualCorrection: selectedVisualCorrection,
       visualCorrectionValue: typedVisualCorrectionValue,
       sideDominance: selectedSideDominance,
-      email: "",
-      phone: "",
     };
     expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);
 
     const agreeButton = screen.getByRole("button", { name: "form.common.buttons.agree" });
     await user.click(agreeButton);
+
+    const completeButton = screen.getByRole("button", { name: "form.common.buttons.complete" });
+    await user.click(completeButton);
     // TODO: change this to check calling POST method that will create a visit
     expect(mockedUseNavigate).toHaveBeenCalledOnce();
   });
@@ -334,9 +341,6 @@ describe("proband form page", () => {
     const selectedSideDominance = "form.enums.sideDominance.UNDETERMINED";
     await user.click(screen.getByRole("option", { name: selectedSideDominance }));
 
-    const typedEmail = "name.surname@mail.com";
-    await user.type(screen.getByLabelText("email"), typedEmail);
-
     const questions = screen.getAllByRole("radiogroup");
     questions.forEach(async (question, index) => {
       const answerLabel = index % 2 === 0 ? "form.safetyQuestions.yes" : "form.safetyQuestions.no";
@@ -355,13 +359,25 @@ describe("proband form page", () => {
       visualCorrection: selectedVisualCorrection,
       visualCorrectionValue: typedVisualCorrectionValue,
       sideDominance: selectedSideDominance,
-      email: typedEmail,
-      phone: "",
     };
     expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);
 
     const agreeButton = screen.getByRole("button", { name: "form.common.buttons.agree" });
     await user.click(agreeButton);
+
+    // click on the checkbox to show contacts form
+    await user.click(screen.getByRole("checkbox"));
+
+    const typedEmail = "name.surname@mail.com";
+    await user.type(screen.getByLabelText("email"), typedEmail);
+
+    expect(screen.getByRole("form")).toHaveFormValues({
+      email: typedEmail,
+      phone: "",
+    });
+
+    const agreeButton2 = screen.getByRole("button", { name: "form.common.buttons.agree" });
+    await user.click(agreeButton2);
     // TODO: change this to check calling POST method that will create a visit
     expect(mockedUseNavigate).toHaveBeenCalledTimes(0);
   });
@@ -405,9 +421,6 @@ describe("proband form page", () => {
     const selectedSideDominance = "form.enums.sideDominance.UNDETERMINED";
     await user.click(screen.getByRole("option", { name: selectedSideDominance }));
 
-    const typedPhone = "123456789";
-    await user.type(screen.getByLabelText("phone"), typedPhone);
-
     const questions = screen.getAllByRole("radiogroup");
     questions.forEach(async (question, index) => {
       const answerLabel = index % 2 === 0 ? "form.safetyQuestions.yes" : "form.safetyQuestions.no";
@@ -426,13 +439,25 @@ describe("proband form page", () => {
       visualCorrection: selectedVisualCorrection,
       visualCorrectionValue: typedVisualCorrectionValue,
       sideDominance: selectedSideDominance,
-      email: "",
-      phone: typedPhone,
     };
     expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);
 
     const agreeButton = screen.getByRole("button", { name: "form.common.buttons.agree" });
     await user.click(agreeButton);
+
+    // click on the checkbox to show contacts form
+    await user.click(screen.getByRole("checkbox"));
+
+    const typedPhone = "123456789";
+    await user.type(screen.getByLabelText("phone"), typedPhone);
+
+    expect(screen.getByRole("form")).toHaveFormValues({
+      email: "",
+      phone: typedPhone,
+    });
+
+    const agreeButton2 = screen.getByRole("button", { name: "form.common.buttons.agree" });
+    await user.click(agreeButton2);
     // TODO: change this to check calling POST method that will create a visit
     expect(mockedUseNavigate).toHaveBeenCalledTimes(0);
   });
