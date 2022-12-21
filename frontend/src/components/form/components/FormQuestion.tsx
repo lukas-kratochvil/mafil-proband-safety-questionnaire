@@ -93,6 +93,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
             name={`answers.${qac.index}.comment`}
             isSmall
             isMultiline
+            hasAutocomplete
             disabled={disableComment || (questionAnswer !== AnswerOption.YES && disableInputs)}
           />
         </Grid>
