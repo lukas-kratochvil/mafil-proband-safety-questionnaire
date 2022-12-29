@@ -129,6 +129,8 @@ model NativeLanguageTranslation {
   deletedAt         DateTime?
 
   text              String
+
+  @@unique([nativeLanguageId, languageId])
 }
 
 model Answer {
