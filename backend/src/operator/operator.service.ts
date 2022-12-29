@@ -32,7 +32,7 @@ export class OperatorService {
         ...createOperatorInput,
         isValid: true,
       },
-    })
+    });
   }
 
   async findAll(): Promise<Operator[]> {

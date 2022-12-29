@@ -16,7 +16,7 @@ export class QuestionTranslationResolver {
   }
 
   @Mutation(() => QuestionTranslationEntity)
-  updateQuestion(
+  updateQuestionTranslation(
     @Args("updateQuestionTranslationInput") updateQuestionTranslationInput: UpdateQuestionTranslationInput
   ): Promise<QuestionTranslationEntity> {
     return this.questionTranslationService.update(updateQuestionTranslationInput.id, updateQuestionTranslationInput);
