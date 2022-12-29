@@ -9,12 +9,30 @@ export class OperatorService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(createOperatorInput: CreateOperatorInput): Promise<Operator> {
-    return this.prismaService.operator.create({
-      data: {
-        ...createOperatorInput,
-        role: createOperatorInput.role ?? OperatorRole.MR,
+    const operator = this.prismaService.operator.findUnique({
+      where: {
+        uco: createOperatorInput.uco,
       },
     });
+
+    if (operator === undefined) {
+      return this.prismaService.operator.create({
+        data: {
+          ...createOperatorInput,
+          role: createOperatorInput.role ?? OperatorRole.MR,
+        },
+      });
+    }
+
+    return this.prismaService.operator.update({
+      where: {
+        uco: createOperatorInput.uco,
+      },
+      data: {
+        ...createOperatorInput,
+        isValid: true,
+      },
+    })
   }
 
   async findAll(): Promise<Operator[]> {
