@@ -27,7 +27,7 @@ export const defaultFormSchema = object().shape(
   {
     project: string().nullable(),
     device: string().nullable(),
-    measurementDate: date().typeError("form.validation.notValid").nullable(),
+    measurementDate: date().nullable().typeError("form.validation.notValid"),
     name: string().trim().required("form.validation.required"),
     surname: string().trim().required("form.validation.required"),
     personalId: string().trim().required("form.validation.required"),
@@ -123,12 +123,12 @@ export const defaultFormSchema = object().shape(
       .required("form.validation.required"),
     email: string()
       .trim()
-      .when("phoneNumber", {
+      .when("phone", {
         is: "",
         then: string().email("form.validation.notValid"),
         otherwise: string().email("form.validation.notValid").required("form.validation.probandContacts"),
       }),
-    phoneNumber: string()
+    phone: string()
       .trim()
       .when("email", {
         is: "",
@@ -139,5 +139,5 @@ export const defaultFormSchema = object().shape(
       }),
     answers: array().of(answersSchema).required("form.validation.required"),
   },
-  [["email", "phoneNumber"]]
+  [["email", "phone"]]
 );

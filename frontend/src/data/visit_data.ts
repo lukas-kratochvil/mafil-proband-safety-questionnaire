@@ -109,7 +109,7 @@ const dummyVisitNew: IVisit = {
     visualCorrectionValue: 0,
     sideDominance: SideDominance.RIGHT_HANDED,
     email: "karel.novak@email.cz",
-    phoneNumber: "",
+    phone: "",
   },
   answers: getDummyVisitCurrentQuestions().map((question, i) => ({
     questionId: question.id,
@@ -146,7 +146,7 @@ const dummyPhantomVisitNew: IVisit = {
     visualCorrectionValue: 0,
     sideDominance: SideDominance.UNDETERMINED,
     email: "",
-    phoneNumber: "",
+    phone: "",
   },
   answers: getDummyVisitCurrentQuestions().map((question) => ({
     questionId: question.id,

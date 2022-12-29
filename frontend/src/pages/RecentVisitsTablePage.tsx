@@ -7,7 +7,7 @@ import { defaultNS } from "@i18n";
 import { IVisit } from "@interfaces/visit";
 import { fetchRecentVisits } from "@util/fetch";
 
-const processedDateFormat = "d.M.yyyy H:mm";
+const processedDateFormat = "d.M.y H:mm";
 
 const RecentVisitsTablePage = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "recentVisitsTablePage.header" });

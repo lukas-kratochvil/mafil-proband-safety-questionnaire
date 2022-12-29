@@ -7,8 +7,8 @@ import { defaultNS } from "@i18n";
 import { IVisit } from "@interfaces/visit";
 import { fetchWaitingRoomVisits } from "@util/fetch";
 
-const createdAtFormat = "d.M.yyyy H:mm";
-const probandBirthdateFormat = "d.M.yyyy";
+const createdAtFormat = "d.M.y H:mm";
+const probandBirthdateFormat = "d.M.y";
 
 const WaitingRoomTablePage = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomTablePage.header" });

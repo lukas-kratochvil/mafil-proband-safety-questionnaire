@@ -20,63 +20,65 @@ export const App = () => {
   const { operator } = useAuth();
 
   return (
-    // TODO: make better error boundary (Suspense component)
-    <Suspense fallback={<div>Loading…</div>}>
+    <>
       <Header />
-      <Routes>
-        <Route
-          path="/"
-          element={<Navigate to={RoutingPaths.PROBAND_FORM} />}
-        />
-        <Route
-          path={RoutingPaths.PROBAND_HOME}
-          element={<HomePage />}
-        />
-        <Route
-          path={RoutingPaths.PROBAND_FORM}
-          element={<ProbandFormPage />}
-        />
-        <Route
-          path={RoutingPaths.AUTH}
-          element={<LoginPage />}
-        />
-        {operator && (
-          <>
-            <Route
-              path={RoutingPaths.PHANTOM_FORM}
-              element={<PhantomFormPage />}
-            />
-            <Route
-              path={RoutingPaths.WAITING_ROOM}
-              element={<WaitingRoomTablePage />}
-            />
-            <Route
-              path={`${RoutingPaths.WAITING_ROOM}/form/:id`}
-              element={<WaitingRoomFormPage />}
-            />
-            <Route
-              path={RoutingPaths.APPROVAL_ROOM}
-              element={<ApprovalRoomTablePage />}
-            />
-            <Route
-              path={`${RoutingPaths.APPROVAL_ROOM}/form/:id`}
-              element={<ApprovalFormPage />}
-            />
-            <Route
-              path={`${RoutingPaths.RECENT_VISITS}/duplicate/:id`}
-              element={<DuplicationFormPage />}
-            />
-            <Route
-              path={RoutingPaths.RECENT_VISITS}
-              element={<RecentVisitsTablePage />}
-            />
-            <Route
-              path={`${RoutingPaths.RECENT_VISITS}/visit/:id`}
-              element={<VisitDetailPage />}
-            />
-          </>
-        )}
-      </Routes>
-    </Suspense>
+      {/* TODO: make better error boundary (Suspense component) */}
+      <Suspense fallback={<div>Loading…</div>}>
+        <Routes>
+          <Route
+            path="/"
+            element={<Navigate to={RoutingPaths.PROBAND_FORM} />}
+          />
+          <Route
+            path={RoutingPaths.PROBAND_HOME}
+            element={<HomePage />}
+          />
+          <Route
+            path={RoutingPaths.PROBAND_FORM}
+            element={<ProbandFormPage />}
+          />
+          <Route
+            path={RoutingPaths.AUTH}
+            element={<LoginPage />}
+          />
+          {operator && (
+            <>
+              <Route
+                path={RoutingPaths.PHANTOM_FORM}
+                element={<PhantomFormPage />}
+              />
+              <Route
+                path={RoutingPaths.WAITING_ROOM}
+                element={<WaitingRoomTablePage />}
+              />
+              <Route
+                path={`${RoutingPaths.WAITING_ROOM}/form/:id`}
+                element={<WaitingRoomFormPage />}
+              />
+              <Route
+                path={RoutingPaths.APPROVAL_ROOM}
+                element={<ApprovalRoomTablePage />}
+              />
+              <Route
+                path={`${RoutingPaths.APPROVAL_ROOM}/form/:id`}
+                element={<ApprovalFormPage />}
+              />
+              <Route
+                path={`${RoutingPaths.RECENT_VISITS}/duplicate/:id`}
+                element={<DuplicationFormPage />}
+              />
+              <Route
+                path={RoutingPaths.RECENT_VISITS}
+                element={<RecentVisitsTablePage />}
+              />
+              <Route
+                path={`${RoutingPaths.RECENT_VISITS}/visit/:id`}
+                element={<VisitDetailPage />}
+              />
+            </>
+          )}
+        </Routes>
+      </Suspense>
+    </>
   );
 };

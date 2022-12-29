@@ -19,7 +19,7 @@ export const loadEmptyDefaultValues = (): FormPropType => ({
   visualCorrection: null,
   visualCorrectionValue: 0,
   email: "",
-  phoneNumber: "",
+  phone: "",
   answers: [],
 });
 

@@ -8,7 +8,7 @@ export const FormBeforeExamination = () => {
 
   return (
     <FormCardContainer title={t("title")}>
-      <Typography width="100%">
+      <Typography>
         <Trans
           t={t}
           i18nKey="text"

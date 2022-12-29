@@ -18,6 +18,7 @@
         "noOptions": "No options",
         "buttons": {
           "agree": "Agree",
+          "complete": "Complete",
           "finalize": "Finalize",
           "approve": "Approve",
           "disapprove": "Disapprove",
@@ -64,9 +65,34 @@
       },
       "probandContact": {
         "title": "Contact information",
-        "text": "If you want to send your measured data electronically, fill in the information below:",
         "email": "E-mail",
         "phone": "Phone number"
+      },
+      "probandContactCheckbox": {
+        "title": "Measured data transfer",
+        "label": "I request the transfer of my measured data electronically."
+      },
+      "probandContactRequest": {
+        "title": "Request for transfer of measured data",
+        "text": "I, {{name}} {{surname}} {{birthdate}}, hereby request the transfer of the measured data in the MAFIL-CEITEC laboratory, dated {{currentDate}} electronically to:",
+        "email": "E-mail",
+        "phone": "Phone number",
+        "emailNote": "A link to download the data will be sent to the email.",
+        "phoneNote": "A login security code will be sent to the phone number."
+      },
+      "probandContactConsent": {
+        "title": "Consent to the processing of personal data",
+        "text1": "In accordance with the wording of Regulation (EU) 2016/679 of April 27, 2016 on the protection of natural persons in connection with the processing of personal data and on the free movement of such data and on the repeal of Directive 95/46/EC (General Data Protection Regulation) I grant",
+        "text2": "Masaryk University, Žerotínovo nám. 617/9, 601 77 Brno, as the administrator of personal data, for a period of five years, consent to the processing of personal data to the extent of:",
+        "text3": "first name, last name, date of birth, e-mail address and telephone number",
+        "text4": "for the purpose of sending the measured data electronically.",
+        "list": "I understand that according to the General Data Protection Regulation I have the right to:",
+        "list-item1": "revoke the consent given at any time, without being threatened with any sanction, by sending an e-mail to the electronic address <underline>{{email}}</underline>,",
+        "list-item2": "request information from the administrator about what kind of personal data it processes and request a copy of this data,",
+        "list-item3": "request access to this data from the administrator, have it updated or corrected, or request restriction of processing,",
+        "list-item4": "request the deletion of processed personal data from the administrator,",
+        "list-item5": "file a complaint with the Office for the Protection of Personal Data Lt. Col. Sochora 27, 170 00 Prague 7, mailbox ID: qkbaa2n, phone number +420 234 665 111, website <underline>www.uoou.cz</underline>, email address <underline>posta@uoou.cz</underline>.",
+        "text5": "Contact for the personal data protection officer: Iva Zlatušková, telephone 54949 1030, e-mail <underline>{{email}}</underline>.<br/>Information on the processing of personal data at Masaryk University is available on the official board at <underline>{{link1}}</underline>.<br/>Information for data subjects to exercise their rights is available on the official board at <underline>{{link2}}</underline>."
       },
       "probandInfo": {
         "title": "Personal data",
