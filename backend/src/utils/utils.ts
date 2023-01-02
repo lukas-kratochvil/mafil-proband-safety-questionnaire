@@ -9,4 +9,4 @@ export const areTranslationsComplete = (languages: Language[], translations: Cre
 export const areLocalesValid = (languages: Language[], translations: CreateTranslationInput[]): boolean => {
   const languageLocales = languages.map((language) => language.locale);
   return translations.map((translation) => translation.locale).every((locale) => languageLocales.includes(locale));
-}
+};
