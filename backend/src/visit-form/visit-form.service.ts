@@ -17,10 +17,10 @@ type VisitFormInclude = Prisma.VisitFormGetPayload<typeof visitFormArgs>;
 
 @Injectable()
 export class VisitFormService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(createVisitFormInput: CreateVisitFormInput): Promise<VisitFormInclude> {
-    const visitForm = await this.prismaService.visitForm.create({
+    const visitForm = await this.prisma.visitForm.create({
       data: {
         state: createVisitFormInput.state,
         probandLanguage: {
@@ -46,7 +46,7 @@ export class VisitFormService {
       return visitForm;
     }
 
-    return this.prismaService.visitForm.update({
+    return this.prisma.visitForm.update({
       where: {
         id: visitForm.id,
       },
@@ -62,7 +62,7 @@ export class VisitFormService {
   }
 
   async findAll(): Promise<VisitFormInclude[]> {
-    return this.prismaService.visitForm.findMany({
+    return this.prisma.visitForm.findMany({
       where: {
         deletedAt: null,
       },
@@ -71,7 +71,7 @@ export class VisitFormService {
   }
 
   async findOne(id: string): Promise<VisitFormInclude> {
-    return this.prismaService.visitForm.findUniqueOrThrow({
+    return this.prisma.visitForm.findUniqueOrThrow({
       where: {
         id,
       },
@@ -81,7 +81,7 @@ export class VisitFormService {
 
   async update(id: string, updateVisitFormInput: UpdateVisitFormInput): Promise<VisitFormInclude> {
     updateVisitFormInput.answers?.forEach((answer) =>
-      this.prismaService.answer.update({
+      this.prisma.answer.update({
         where: {
           id: answer.id,
         },
@@ -90,7 +90,7 @@ export class VisitFormService {
         },
       })
     );
-    return this.prismaService.visitForm.update({
+    return this.prisma.visitForm.update({
       where: {
         id,
       },
@@ -112,7 +112,7 @@ export class VisitFormService {
   }
 
   async remove(id: string): Promise<VisitFormInclude> {
-    return this.prismaService.visitForm.update({
+    return this.prisma.visitForm.update({
       where: {
         id,
       },

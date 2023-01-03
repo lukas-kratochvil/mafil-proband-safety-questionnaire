@@ -28,13 +28,13 @@ type QuestionTranslationsInclude = Prisma.QuestionGetPayload<typeof questionTran
 
 @Injectable()
 export class QuestionService {
-  constructor(private readonly prismaService: PrismaService, private readonly languageService: LanguageService) {}
+  constructor(private readonly prisma: PrismaService, private readonly languageService: LanguageService) {}
 
   async create(createQuestionInput: CreateQuestionInput): Promise<QuestionTranslationsInclude> {
     const languages = await this.languageService.findAll();
 
     if (areTranslationsComplete(languages, createQuestionInput.translations)) {
-      return this.prismaService.question.create({
+      return this.prisma.question.create({
         data: {
           ...createQuestionInput,
           isValid: true,
@@ -56,7 +56,7 @@ export class QuestionService {
   }
 
   async findAll(): Promise<QuestionTranslationsInclude[]> {
-    return this.prismaService.question.findMany({
+    return this.prisma.question.findMany({
       where: {
         isValid: true,
         deletedAt: null,
@@ -66,7 +66,7 @@ export class QuestionService {
   }
 
   async findOne(id: string): Promise<QuestionTranslationsInclude> {
-    return this.prismaService.question.findUniqueOrThrow({
+    return this.prisma.question.findUniqueOrThrow({
       where: {
         id,
       },
@@ -75,7 +75,7 @@ export class QuestionService {
   }
 
   async update(id: string, updateQuestionInput: UpdateQuestionInput): Promise<QuestionTranslationsInclude> {
-    return this.prismaService.question.update({
+    return this.prisma.question.update({
       where: {
         id,
       },
@@ -88,7 +88,7 @@ export class QuestionService {
     id: string,
     updateQuestionTextsInput: UpdateQuestionTextsInput
   ): Promise<QuestionTranslationsInclude> {
-    const previousQuestion = await this.prismaService.question.update({
+    const previousQuestion = await this.prisma.question.update({
       where: {
         id,
       },
@@ -99,7 +99,7 @@ export class QuestionService {
     const languages = await this.languageService.findAll();
 
     if (areTranslationsComplete(languages, updateQuestionTextsInput.translations)) {
-      return this.prismaService.question.create({
+      return this.prisma.question.create({
         data: {
           isValid: true,
           partNumber: updateQuestionTextsInput.partNumber
@@ -128,7 +128,7 @@ export class QuestionService {
   }
 
   async remove(id: string): Promise<QuestionTranslationsInclude> {
-    return this.prismaService.question.update({
+    return this.prisma.question.update({
       where: {
         id,
       },

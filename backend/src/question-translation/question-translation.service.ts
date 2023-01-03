@@ -6,10 +6,10 @@ import { UpdateQuestionTranslationInput } from "./dto/update-question-translatio
 
 @Injectable()
 export class QuestionTranslationService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(createQuestionTranslationInput: CreateQuestionTranslationInput): Promise<QuestionTranslation> {
-    return this.prismaService.questionTranslation.create({
+    return this.prisma.questionTranslation.create({
       data: createQuestionTranslationInput,
     });
   }
@@ -18,7 +18,7 @@ export class QuestionTranslationService {
     id: string,
     updateQuestionTranslationInput: UpdateQuestionTranslationInput
   ): Promise<QuestionTranslation> {
-    return this.prismaService.questionTranslation.update({
+    return this.prisma.questionTranslation.update({
       where: {
         id,
       },

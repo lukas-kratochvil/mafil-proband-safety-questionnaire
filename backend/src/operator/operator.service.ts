@@ -6,17 +6,17 @@ import { UpdateOperatorInput } from "./dto/update-operator.input";
 
 @Injectable()
 export class OperatorService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(createOperatorInput: CreateOperatorInput): Promise<Operator> {
-    const operator = this.prismaService.operator.findUnique({
+    const operator = this.prisma.operator.findUnique({
       where: {
         uco: createOperatorInput.uco,
       },
     });
 
     if (operator === undefined) {
-      return this.prismaService.operator.create({
+      return this.prisma.operator.create({
         data: {
           ...createOperatorInput,
           role: createOperatorInput.role ?? OperatorRole.MR,
@@ -24,7 +24,7 @@ export class OperatorService {
       });
     }
 
-    return this.prismaService.operator.update({
+    return this.prisma.operator.update({
       where: {
         uco: createOperatorInput.uco,
       },
@@ -36,11 +36,11 @@ export class OperatorService {
   }
 
   async findAll(): Promise<Operator[]> {
-    return this.prismaService.operator.findMany();
+    return this.prisma.operator.findMany();
   }
 
   async findOne(id: string): Promise<Operator> {
-    return this.prismaService.operator.findUniqueOrThrow({
+    return this.prisma.operator.findUniqueOrThrow({
       where: {
         id,
       },
@@ -48,13 +48,13 @@ export class OperatorService {
   }
 
   async update(id: string, updateOperatorInput: UpdateOperatorInput): Promise<Operator> {
-    const operator = await this.prismaService.operator.findUniqueOrThrow({
+    const operator = await this.prisma.operator.findUniqueOrThrow({
       where: {
         id,
       },
     });
 
-    return this.prismaService.operator.update({
+    return this.prisma.operator.update({
       where: {
         id,
       },
@@ -66,7 +66,7 @@ export class OperatorService {
   }
 
   async remove(id: string): Promise<Operator> {
-    return this.prismaService.operator.update({
+    return this.prisma.operator.update({
       where: {
         id,
       },

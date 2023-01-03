@@ -6,16 +6,16 @@ import { UpdateLanguageInput } from "./dto/update-language.input";
 
 @Injectable()
 export class LanguageService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(createLanguageInput: CreateLanguageInput): Promise<Language> {
-    return this.prismaService.language.create({
+    return this.prisma.language.create({
       data: createLanguageInput,
     });
   }
 
   async findAll(): Promise<Language[]> {
-    return this.prismaService.language.findMany({
+    return this.prisma.language.findMany({
       where: {
         deletedAt: null,
       },
@@ -23,7 +23,7 @@ export class LanguageService {
   }
 
   async findOne(id: string): Promise<Language> {
-    return this.prismaService.language.findUniqueOrThrow({
+    return this.prisma.language.findUniqueOrThrow({
       where: {
         id,
       },
@@ -31,7 +31,7 @@ export class LanguageService {
   }
 
   async update(id: string, updateLanguageInput: UpdateLanguageInput): Promise<Language> {
-    return this.prismaService.language.update({
+    return this.prisma.language.update({
       data: updateLanguageInput,
       where: {
         id,
@@ -40,7 +40,7 @@ export class LanguageService {
   }
 
   async remove(id: string): Promise<Language> {
-    return this.prismaService.language.update({
+    return this.prisma.language.update({
       data: {
         deletedAt: new Date(),
       },

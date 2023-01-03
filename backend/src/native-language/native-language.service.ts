@@ -28,13 +28,13 @@ type NativeLanguageIncludingTranslations = Prisma.NativeLanguageGetPayload<typeo
 
 @Injectable()
 export class NativeLanguageService {
-  constructor(private readonly prismaService: PrismaService, private readonly languageService: LanguageService) {}
+  constructor(private readonly prisma: PrismaService, private readonly languageService: LanguageService) {}
 
   async create(createNativeLanguageInput: CreateNativeLanguageInput): Promise<NativeLanguageIncludingTranslations> {
     const languages = await this.languageService.findAll();
 
     if (areTranslationsComplete(languages, createNativeLanguageInput.translations)) {
-      return this.prismaService.nativeLanguage.create({
+      return this.prisma.nativeLanguage.create({
         data: {
           ...createNativeLanguageInput,
           translations: {
@@ -54,7 +54,7 @@ export class NativeLanguageService {
   }
 
   async findAll(): Promise<NativeLanguageIncludingTranslations[]> {
-    return this.prismaService.nativeLanguage.findMany({
+    return this.prisma.nativeLanguage.findMany({
       where: {
         deletedAt: null,
       },
@@ -66,7 +66,7 @@ export class NativeLanguageService {
   }
 
   async findOne(id: string): Promise<NativeLanguageIncludingTranslations> {
-    return this.prismaService.nativeLanguage.findUniqueOrThrow({
+    return this.prisma.nativeLanguage.findUniqueOrThrow({
       where: {
         id,
       },
@@ -78,7 +78,7 @@ export class NativeLanguageService {
     id: string,
     updateNativeLanguageInput: UpdateNativeLanguageInput
   ): Promise<NativeLanguageIncludingTranslations> {
-    return this.prismaService.nativeLanguage.update({
+    return this.prisma.nativeLanguage.update({
       where: {
         id,
       },
@@ -93,7 +93,7 @@ export class NativeLanguageService {
   ): Promise<NativeLanguageIncludingTranslations> {
     const languages = await this.languageService.findAll();
     if (areLocalesValid(languages, updateNativeLanguageTextsInput.translations)) {
-      return this.prismaService.nativeLanguage.update({
+      return this.prisma.nativeLanguage.update({
         where: {
           id,
         },
@@ -119,7 +119,7 @@ export class NativeLanguageService {
   }
 
   async remove(id: string): Promise<NativeLanguageIncludingTranslations> {
-    return this.prismaService.nativeLanguage.update({
+    return this.prisma.nativeLanguage.update({
       where: {
         id,
       },
