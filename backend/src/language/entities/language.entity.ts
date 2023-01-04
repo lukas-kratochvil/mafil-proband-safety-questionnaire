@@ -5,8 +5,8 @@ import { BaseEntity } from "@graphql/base.entity";
 @ObjectType()
 export class LanguageEntity extends BaseEntity implements Language {
   @Field()
-  name: string;
+  code: string;
 
   @Field()
-  locale: string;
+  name: string;
 }

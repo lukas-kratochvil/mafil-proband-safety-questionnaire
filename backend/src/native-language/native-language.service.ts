@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 import { LanguageService } from "@language/language.service";
 import { PrismaService } from "@prisma/prisma.service";
-import { areLocalesValid, areTranslationsComplete } from "@utils/utils";
+import { areCodesValid, areTranslationsComplete } from "@utils/utils";
 import { CreateNativeLanguageInput } from "./dto/create-native-language.input";
 import { UpdateNativeLanguageTextsInput } from "./dto/update-native-language-texts.input";
 import { UpdateNativeLanguageInput } from "./dto/update-native-language.input";
@@ -14,7 +14,7 @@ const nativeLanguageTranslations = Prisma.validator<Prisma.NativeLanguageInclude
       language: {
         select: {
           name: true,
-          locale: true,
+          code: true,
         },
       },
     },
@@ -40,7 +40,7 @@ export class NativeLanguageService {
           translations: {
             createMany: {
               data: createNativeLanguageInput.translations.map((translation) => ({
-                languageId: languages.find((language) => language.locale === translation.locale)?.id as string,
+                languageId: languages.find((language) => language.code === translation.code)?.id as string,
                 text: translation.text,
               })),
             },
@@ -92,7 +92,7 @@ export class NativeLanguageService {
     updateNativeLanguageTextsInput: UpdateNativeLanguageTextsInput
   ): Promise<NativeLanguageIncludingTranslations> {
     const languages = await this.languageService.findAll();
-    if (areLocalesValid(languages, updateNativeLanguageTextsInput.translations)) {
+    if (areCodesValid(languages, updateNativeLanguageTextsInput.translations)) {
       return this.prisma.nativeLanguage.update({
         where: {
           id,
@@ -105,7 +105,7 @@ export class NativeLanguageService {
                 nativeLanguageId: id,
               },
               data: updateNativeLanguageTextsInput.translations.map((translation) => ({
-                languageId: languages.find((language) => language.locale === translation.locale)?.id as string,
+                languageId: languages.find((language) => language.code === translation.code)?.id as string,
                 text: translation.text,
               })),
             },
@@ -115,7 +115,7 @@ export class NativeLanguageService {
       });
     }
 
-    throw new Error("Native language contains invalid translation locales!");
+    throw new Error("Native language invalid contains invalid locales!");
   }
 
   async remove(id: string): Promise<NativeLanguageIncludingTranslations> {

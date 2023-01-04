@@ -193,6 +193,6 @@ model Language {
   updatedAt                   DateTime                      @updatedAt
   deletedAt                   DateTime?
 
+  code                        String                        @unique @db.VarChar(5)
   name                        String                        @db.VarChar(25)
-  locale                      String                        @unique @db.VarChar(5)
 }

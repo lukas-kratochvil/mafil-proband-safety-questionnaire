@@ -144,8 +144,8 @@ entity Language {
   * modifiedAt: Date
   deletedAt: Date
   ---
+  * code: String
   * name: String
-  * locale: String
 }
 
 Operator }o..|| OperatorRole

@@ -14,7 +14,7 @@ const questionTranslationsInclude = Prisma.validator<Prisma.QuestionInclude>()({
       language: {
         select: {
           name: true,
-          locale: true,
+          code: true,
         },
       },
     },
@@ -42,7 +42,7 @@ export class QuestionService {
           translations: {
             createMany: {
               data: createQuestionInput.translations.map((translation) => ({
-                languageId: languages.find((language) => language.locale === translation.locale)?.id as string,
+                languageId: languages.find((language) => language.code === translation.code)?.id as string,
                 text: translation.text,
               })),
             },
@@ -114,7 +114,7 @@ export class QuestionService {
           translations: {
             createMany: {
               data: updateQuestionTextsInput.translations.map((translation) => ({
-                languageId: languages.find((language) => language.locale === translation.locale)?.id as string,
+                languageId: languages.find((language) => language.code === translation.code)?.id as string,
                 text: translation.text,
               })),
             },
