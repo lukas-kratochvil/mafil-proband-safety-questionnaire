@@ -85,21 +85,22 @@ export class QuestionService {
     });
   }
 
+
   async updateTexts(
     id: string,
     updateQuestionTextsInput: UpdateQuestionTextsInput
   ): Promise<QuestionTranslationsInclude> {
-    const previousQuestion = await this.prisma.question.update({
-      where: {
-        id,
-      },
-      data: {
-        isValid: false,
-      },
-    });
     const languages = await this.languageService.findAll();
 
     if (areTranslationsComplete(languages, updateQuestionTextsInput.translations)) {
+      const previousQuestion = await this.prisma.question.update({
+        where: {
+          id,
+        },
+        data: {
+          isValid: false,
+        },
+      });
       return this.prisma.question.create({
         data: {
           isValid: true,
