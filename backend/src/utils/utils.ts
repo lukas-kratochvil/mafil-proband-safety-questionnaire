@@ -6,7 +6,14 @@ export const areTranslationsComplete = (languages: Language[], translations: Cre
   return languages.map((language) => language.code).every((code) => translationCodes.includes(code));
 };
 
-export const areCodesValid = (languages: Language[], translations: CreateTranslationInput[]): boolean => {
+export const areUpdateCodesValid = (
+  languages: Language[],
+  translations: CreateTranslationInput[] | undefined
+): boolean => {
+  if (translations === undefined) {
+    return true;
+  }
+
   const languageCodes = languages.map((language) => language.code);
   return translations.map((translation) => translation.code).every((code) => languageCodes.includes(code));
 };

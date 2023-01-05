@@ -1,7 +1,6 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { UuidScalar } from "@graphql/uuid-scalar";
 import { CreateNativeLanguageInput } from "./dto/create-native-language.input";
-import { UpdateNativeLanguageTextsInput } from "./dto/update-native-language-texts.input";
 import { UpdateNativeLanguageInput } from "./dto/update-native-language.input";
 import { NativeLanguageEntity } from "./entities/native-language.entity";
 import { NativeLanguageService } from "./native-language.service";
@@ -32,13 +31,6 @@ export class NativeLanguageResolver {
     @Args("updateNativeLanguageInput") updateNativeLanguageInput: UpdateNativeLanguageInput
   ): Promise<NativeLanguageEntity> {
     return this.nativeLanguageService.update(updateNativeLanguageInput.id, updateNativeLanguageInput);
-  }
-
-  @Mutation(() => NativeLanguageEntity)
-  updateNativeLanguageTexts(
-    @Args("updateNativeLanguageTextsInput") updateNativeLanguageTextsInput: UpdateNativeLanguageTextsInput
-  ): Promise<NativeLanguageEntity> {
-    return this.nativeLanguageService.updateTexts(updateNativeLanguageTextsInput.id, updateNativeLanguageTextsInput);
   }
 
   @Mutation(() => NativeLanguageEntity)

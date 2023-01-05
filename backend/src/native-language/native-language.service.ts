@@ -2,9 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 import { LanguageService } from "@language/language.service";
 import { PrismaService } from "@prisma/prisma.service";
-import { areCodesValid, areTranslationsComplete } from "@utils/utils";
+import { areUpdateCodesValid, areTranslationsComplete } from "@utils/utils";
 import { CreateNativeLanguageInput } from "./dto/create-native-language.input";
-import { UpdateNativeLanguageTextsInput } from "./dto/update-native-language-texts.input";
 import { UpdateNativeLanguageInput } from "./dto/update-native-language.input";
 
 const nativeLanguageTranslations = Prisma.validator<Prisma.NativeLanguageInclude>()({
@@ -78,38 +77,29 @@ export class NativeLanguageService {
     id: string,
     updateNativeLanguageInput: UpdateNativeLanguageInput
   ): Promise<NativeLanguageIncludingTranslations> {
-    return this.prisma.nativeLanguage.update({
-      where: {
-        id,
-      },
-      data: updateNativeLanguageInput,
-      include: nativeLanguageTranslations,
-    });
-  }
-
-  async updateTexts(
-    id: string,
-    updateNativeLanguageTextsInput: UpdateNativeLanguageTextsInput
-  ): Promise<NativeLanguageIncludingTranslations> {
     const languages = await this.languageService.findAll();
-    if (areCodesValid(languages, updateNativeLanguageTextsInput.translations)) {
+
+    if (areUpdateCodesValid(languages, updateNativeLanguageInput.translations)) {
       return this.prisma.nativeLanguage.update({
         where: {
           id,
         },
         data: {
-          ...updateNativeLanguageTextsInput,
-          translations: {
-            updateMany: {
-              where: {
-                nativeLanguageId: id,
-              },
-              data: updateNativeLanguageTextsInput.translations.map((translation) => ({
-                languageId: languages.find((language) => language.code === translation.code)?.id as string,
-                text: translation.text,
-              })),
-            },
-          },
+          ...updateNativeLanguageInput,
+          translations:
+            updateNativeLanguageInput.translations === undefined
+              ? undefined
+              : {
+                  updateMany: {
+                    where: {
+                      nativeLanguageId: id,
+                    },
+                    data: updateNativeLanguageInput.translations.map((translation) => ({
+                      languageId: languages.find((language) => language.code === translation.code)?.id as string,
+                      text: translation.text,
+                    })),
+                  },
+                },
         },
         include: nativeLanguageTranslations,
       });
