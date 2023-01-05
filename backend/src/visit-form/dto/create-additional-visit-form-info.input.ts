@@ -5,7 +5,6 @@ import { AdditionalVisitFormInfoEntity } from "@visit-form/entities/additional-v
 export class CreateAdditionalVisitFormInfoInput extends IntersectionType(
   PickType(AdditionalVisitFormInfoEntity, [
     "projectId",
-    "projectName",
     "projectAcronym",
     "deviceId",
     "deviceName",

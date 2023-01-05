@@ -29,9 +29,6 @@ export class AdditionalVisitFormInfoEntity extends BaseEntity implements Additio
   projectId: string;
 
   @Field()
-  projectName: string;
-
-  @Field()
   projectAcronym: string;
 
   @Field()

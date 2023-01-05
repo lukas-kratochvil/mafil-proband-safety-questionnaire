@@ -46,7 +46,6 @@ entity AdditionalVisitFormInfo {
   deletedAt: Date
   ---
   * projectId: <<UUID>>
-  * projectName: String
   * projectAcronym: String
   * deviceId: <<UUID>>
   * deviceName: String
@@ -75,28 +74,6 @@ entity ProbandInfo {
   * handedness: String
   email: String
   phone: String
-}
-
-entity NativeLanguage {
-  * id: <<UUID>>
-  ---
-  * createdAt: Date
-  * modifiedAt: Date
-  deletedAt: Date
-  ---
-  order: Int
-}
-
-entity NativeLanguageTranslation {
-  * id: <<UUID>>
-  * nativeLanguageId: <<FK>>
-  * languageId: <<FK>>
-  ---
-  * createdAt: Date
-  * modifiedAt: Date
-  deletedAt: Date
-  ---
-  * text: String
 }
 
 entity Answer {
@@ -137,6 +114,28 @@ entity QuestionTranslation {
   * text: String
 }
 
+entity NativeLanguage {
+  * id: <<UUID>>
+  ---
+  * createdAt: Date
+  * modifiedAt: Date
+  deletedAt: Date
+  ---
+  order: Int
+}
+
+entity NativeLanguageTranslation {
+  * id: <<UUID>>
+  * nativeLanguageId: <<FK>>
+  * languageId: <<FK>>
+  ---
+  * createdAt: Date
+  * modifiedAt: Date
+  deletedAt: Date
+  ---
+  * text: String
+}
+
 entity Language {
   * id: <<UUID>>
   ---
@@ -155,12 +154,12 @@ VisitForm ||..o| AdditionalVisitFormInfo
 VisitForm }|..|| ProbandInfo
 VisitForm ||..|{ Answer
 VisitForm }o..|| Language
-ProbandInfo }o..|| NativeLanguage
-NativeLanguage ||..|{ NativeLanguageTranslation
-NativeLanguageTranslation }o..|| Language
 Answer }o..|| Question
 Question |o..|| Question
 Question ||..|{ QuestionTranslation
 QuestionTranslation }o..|| Language
+ProbandInfo }o..|| NativeLanguage
+NativeLanguage ||..|{ NativeLanguageTranslation
+NativeLanguageTranslation }o..|| Language
 
 @enduml
