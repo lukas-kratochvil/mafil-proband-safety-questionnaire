@@ -1,5 +1,22 @@
-import { InputType, OmitType } from "@nestjs/graphql";
+import { InputType, PickType } from "@nestjs/graphql";
 import { ProbandInfoEntity } from "@visit-form/entities/proband-info.entity";
 
 @InputType()
-export class CreateProbandInfoInput extends OmitType(ProbandInfoEntity, ["id", "createdAt", "visitForms"], InputType) {}
+export class CreateProbandInfoInput extends PickType(
+  ProbandInfoEntity,
+  [
+    "name",
+    "surname",
+    "personalId",
+    "birthdate",
+    "gender",
+    "nativeLanguageId",
+    "heightCm",
+    "weightKg",
+    "visualCorrectionDioptre",
+    "handedness",
+    "email",
+    "phone",
+  ],
+  InputType
+) {}

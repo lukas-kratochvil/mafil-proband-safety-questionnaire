@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
+import { Prisma } from "@prisma/client";
 import { PrismaService } from "@prisma/prisma.service";
 import { CreateVisitFormInput } from "./dto/create-visit-form.input";
 import { UpdateVisitFormInput } from "./dto/update-visit-form.input";
-import { Prisma } from "@prisma/client";
 
 const visitFormInclude = Prisma.validator<Prisma.VisitFormInclude>()({
   additionalInfo: true,
@@ -21,9 +21,16 @@ export class VisitFormService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createVisitFormInput: CreateVisitFormInput): Promise<VisitFormInclude> {
-    const visitForm = await this.prisma.visitForm.create({
+    return await this.prisma.visitForm.create({
       data: {
         state: createVisitFormInput.state,
+        additionalInfo: createVisitFormInput.additionalInfo
+          ? {
+              create: {
+                ...createVisitFormInput.additionalInfo,
+              },
+            }
+          : undefined,
         probandLanguage: {
           connect: {
             id: createVisitFormInput.probandLanguageId,
@@ -37,24 +44,6 @@ export class VisitFormService {
         answers: {
           createMany: {
             data: createVisitFormInput.answers.map((answer) => ({ ...answer })),
-          },
-        },
-      },
-      include: visitFormInclude,
-    });
-
-    if (createVisitFormInput.additionalInfo === null) {
-      return visitForm;
-    }
-
-    return this.prisma.visitForm.update({
-      where: {
-        id: visitForm.id,
-      },
-      data: {
-        additionalInfo: {
-          create: {
-            ...createVisitFormInput.additionalInfo,
           },
         },
       },
@@ -81,16 +70,6 @@ export class VisitFormService {
   }
 
   async update(id: string, updateVisitFormInput: UpdateVisitFormInput): Promise<VisitFormInclude> {
-    updateVisitFormInput.answers?.forEach((answer) =>
-      this.prisma.answer.update({
-        where: {
-          id: answer.id,
-        },
-        data: {
-          ...answer,
-        },
-      })
-    );
     return this.prisma.visitForm.update({
       where: {
         id,
@@ -106,6 +85,19 @@ export class VisitFormService {
           update: {
             ...updateVisitFormInput.probandInfo,
           },
+        },
+        answers: {
+          updateMany:
+            updateVisitFormInput.answers === null
+              ? undefined
+              : updateVisitFormInput.answers.map((answer) => ({
+                  where: {
+                    id: answer.id,
+                  },
+                  data: {
+                    ...answer,
+                  },
+                })),
         },
       },
       include: visitFormInclude,
