@@ -9,28 +9,17 @@ export class OperatorService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createOperatorInput: CreateOperatorInput): Promise<Operator> {
-    const operator = this.prisma.operator.findUnique({
+    return this.prisma.operator.upsert({
       where: {
         uco: createOperatorInput.uco,
       },
-    });
-
-    if (operator === undefined) {
-      return this.prisma.operator.create({
-        data: {
-          ...createOperatorInput,
-          role: createOperatorInput.role ?? OperatorRole.MR,
-        },
-      });
-    }
-
-    return this.prisma.operator.update({
-      where: {
-        uco: createOperatorInput.uco,
-      },
-      data: {
+      update: {
         ...createOperatorInput,
         isValid: true,
+      },
+      create: {
+        ...createOperatorInput,
+        role: createOperatorInput.role ?? OperatorRole.MR,
       },
     });
   }
@@ -41,35 +30,20 @@ export class OperatorService {
 
   async findOne(id: string): Promise<Operator> {
     return this.prisma.operator.findUniqueOrThrow({
-      where: {
-        id,
-      },
+      where: { id },
     });
   }
 
   async update(id: string, updateOperatorInput: UpdateOperatorInput): Promise<Operator> {
-    const operator = await this.prisma.operator.findUniqueOrThrow({
-      where: {
-        id,
-      },
-    });
-
     return this.prisma.operator.update({
-      where: {
-        id,
-      },
-      data: {
-        ...updateOperatorInput,
-        role: updateOperatorInput.role ?? operator.role,
-      },
+      where: { id },
+      data: updateOperatorInput,
     });
   }
 
   async remove(id: string): Promise<Operator> {
     return this.prisma.operator.update({
-      where: {
-        id,
-      },
+      where: { id },
       data: {
         deletedAt: new Date(),
         isValid: false,
