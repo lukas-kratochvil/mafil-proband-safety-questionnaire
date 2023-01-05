@@ -91,7 +91,7 @@ entity Answer {
 
 entity Question {
   * id: <<UUID>>
-  preaviousQuestionId: <<FK>>
+  previousQuestionId: <<FK>>
   ---
   * createdAt: Date
   * modifiedAt: Date
