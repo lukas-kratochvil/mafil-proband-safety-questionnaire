@@ -23,6 +23,7 @@ const nativeLanguageTranslations = Prisma.validator<Prisma.NativeLanguageInclude
 const nativeLanguageIncludingTranslations = Prisma.validator<Prisma.NativeLanguageArgs>()({
   include: nativeLanguageTranslations,
 });
+
 type NativeLanguageIncludingTranslations = Prisma.NativeLanguageGetPayload<typeof nativeLanguageIncludingTranslations>;
 
 @Injectable()

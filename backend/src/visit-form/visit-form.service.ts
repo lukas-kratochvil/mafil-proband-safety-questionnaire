@@ -13,6 +13,7 @@ const visitFormInclude = Prisma.validator<Prisma.VisitFormInclude>()({
 const visitFormArgs = Prisma.validator<Prisma.VisitFormArgs>()({
   include: visitFormInclude,
 });
+
 type VisitFormInclude = Prisma.VisitFormGetPayload<typeof visitFormArgs>;
 
 @Injectable()

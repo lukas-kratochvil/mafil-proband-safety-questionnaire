@@ -24,6 +24,7 @@ const questionTranslationsInclude = Prisma.validator<Prisma.QuestionInclude>()({
 const questionTranslationsArgs = Prisma.validator<Prisma.QuestionArgs>()({
   include: questionTranslationsInclude,
 });
+
 type QuestionTranslationsInclude = Prisma.QuestionGetPayload<typeof questionTranslationsArgs>;
 
 @Injectable()

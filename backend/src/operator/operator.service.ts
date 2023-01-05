@@ -30,20 +30,26 @@ export class OperatorService {
 
   async findOne(id: string): Promise<Operator> {
     return this.prisma.operator.findUniqueOrThrow({
-      where: { id },
+      where: {
+        id,
+      },
     });
   }
 
   async update(id: string, updateOperatorInput: UpdateOperatorInput): Promise<Operator> {
     return this.prisma.operator.update({
-      where: { id },
+      where: {
+        id,
+      },
       data: updateOperatorInput,
     });
   }
 
   async remove(id: string): Promise<Operator> {
     return this.prisma.operator.update({
-      where: { id },
+      where: {
+        id,
+      },
       data: {
         deletedAt: new Date(),
         isValid: false,

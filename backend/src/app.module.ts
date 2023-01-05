@@ -2,8 +2,6 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
-import { AppController } from "@app.controller";
-import { AppService } from "@app.service";
 import { GraphQLConfigService } from "@graphql/graphql-config.service";
 import { LanguageModule } from "@language/language.module";
 import { NativeLanguageModule } from "@native-language/native-language.module";
@@ -27,7 +25,5 @@ import { VisitFormModule } from "@visit-form/visit-form.module";
     NativeLanguageModule,
     VisitFormModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
