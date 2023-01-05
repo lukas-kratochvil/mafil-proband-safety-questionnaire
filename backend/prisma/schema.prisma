@@ -11,21 +11,21 @@ datasource db {
 }
 
 model Operator {
-  id                String                      @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
-  finalizedVisits   AdditionalVisitFormInfo[]   @relation(name: "FinalizedBy")
-  approvedVisits    AdditionalVisitFormInfo[]   @relation(name: "ApprovedBy")
+  finalizedVisits AdditionalVisitFormInfo[] @relation(name: "FinalizedBy")
+  approvedVisits  AdditionalVisitFormInfo[] @relation(name: "ApprovedBy")
 
-  createdAt         DateTime                    @default(now())
-  updatedAt         DateTime                    @updatedAt
-  deletedAt         DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
-  name              String                      @db.VarChar(200)
-  surname           String                      @db.VarChar(200)
-  uco               String                      @unique @db.VarChar(8)
-  email             String                      @unique
-  role              OperatorRole                @default(MR)
-  isValid           Boolean                     @default(true)
+  name    String       @db.VarChar(200)
+  surname String       @db.VarChar(200)
+  uco     String       @unique @db.VarChar(8)
+  email   String       @unique
+  role    OperatorRole @default(MR)
+  isValid Boolean      @default(true)
 }
 
 enum OperatorRole {
@@ -34,165 +34,165 @@ enum OperatorRole {
 }
 
 model VisitForm {
-  id                  String                    @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
-  probandInfo         ProbandInfo               @relation(fields: [probandInfoId], references: [id])
-  probandInfoId       String                    @db.Uuid
-  probandLanguage     Language                  @relation(fields: [probandLanguageId], references: [id])
-  probandLanguageId   String                    @db.Uuid
-  answers             Answer[]
-  additionalInfo      AdditionalVisitFormInfo?
-  additionalInfoId    String?                   @db.Uuid
+  probandInfo       ProbandInfo              @relation(fields: [probandInfoId], references: [id])
+  probandInfoId     String                   @db.Uuid
+  probandLanguage   Language                 @relation(fields: [probandLanguageId], references: [id])
+  probandLanguageId String                   @db.Uuid
+  answers           Answer[]
+  additionalInfo    AdditionalVisitFormInfo?
+  additionalInfoId  String?                  @db.Uuid
 
-  createdAt           DateTime                  @default(now())
-  updatedAt           DateTime                  @updatedAt
-  deletedAt           DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
-  state               String                    @db.VarChar(20)
-  note                String?
-  visitId             String?                   @db.VarChar(50)
-  pdf                 Bytes?
+  state   String  @db.VarChar(20)
+  note    String?
+  visitId String? @db.VarChar(50)
+  pdf     Bytes?
 }
 
 model AdditionalVisitFormInfo {
-  id              String      @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
-  visitForm       VisitForm   @relation(fields: [visitFormId], references: [id])
-  visitFormId     String      @unique @db.Uuid
-  finalizer       Operator    @relation(name: "FinalizedBy", fields: [finalizerId], references: [id])
-  finalizerId     String      @db.Uuid
-  approver        Operator?   @relation(name: "ApprovedBy", fields: [approverId], references: [id])
-  approverId      String?     @db.Uuid
+  visitForm   VisitForm @relation(fields: [visitFormId], references: [id])
+  visitFormId String    @unique @db.Uuid
+  finalizer   Operator  @relation(name: "FinalizedBy", fields: [finalizerId], references: [id])
+  finalizerId String    @db.Uuid
+  approver    Operator? @relation(name: "ApprovedBy", fields: [approverId], references: [id])
+  approverId  String?   @db.Uuid
 
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
-  deletedAt       DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
-  projectId       String      @db.VarChar(35)
-  projectName     String      @db.VarChar(200)
-  projectAcronym  String      @db.VarChar(30)
-  deviceId        String      @db.VarChar(35)
-  deviceName      String      @db.VarChar(200)
-  isPhantom       Boolean     @default(false)
-  measuredAt      DateTime
-  finalizedAt     DateTime
-  approvedAt      DateTime?
+  projectId      String    @db.VarChar(35)
+  projectName    String    @db.VarChar(200)
+  projectAcronym String    @db.VarChar(30)
+  deviceId       String    @db.VarChar(35)
+  deviceName     String    @db.VarChar(200)
+  isPhantom      Boolean   @default(false)
+  measuredAt     DateTime
+  finalizedAt    DateTime
+  approvedAt     DateTime?
 }
 
 model ProbandInfo {
-  id                        String          @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
-  visitForms                VisitForm[]
-  nativeLanguage            NativeLanguage  @relation(fields: [nativeLanguageId], references: [id])
-  nativeLanguageId          String          @db.Uuid
+  visitForms       VisitForm[]
+  nativeLanguage   NativeLanguage @relation(fields: [nativeLanguageId], references: [id])
+  nativeLanguageId String         @db.Uuid
 
-  createdAt                 DateTime        @default(now())
-  updatedAt                 DateTime        @updatedAt
-  deletedAt                 DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
-  name                      String          @db.VarChar(200)
-  surname                   String          @db.VarChar(200)
-  personalId                String          @db.VarChar(50)
-  birthdate                 DateTime
-  heightCm                  Float
-  weightKg                  Float
-  gender                    String          @db.VarChar(10)
-  visualCorrectionDioptre   Float
-  handedness                String          @db.VarChar(20)
-  email                     String?
-  phone                     String?
+  name                    String   @db.VarChar(200)
+  surname                 String   @db.VarChar(200)
+  personalId              String   @db.VarChar(50)
+  birthdate               DateTime
+  heightCm                Float
+  weightKg                Float
+  gender                  String   @db.VarChar(10)
+  visualCorrectionDioptre Float
+  handedness              String   @db.VarChar(20)
+  email                   String?
+  phone                   String?
 }
 
 model NativeLanguage {
-  id            String                        @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
-  probandInfos  ProbandInfo[]
-  translations  NativeLanguageTranslation[]
+  probandInfos ProbandInfo[]
+  translations NativeLanguageTranslation[]
 
-  createdAt     DateTime                      @default(now())
-  updatedAt     DateTime                      @updatedAt
-  deletedAt     DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
-  order         Int?                          @unique @db.SmallInt
+  order Int? @unique @db.SmallInt
 }
 
 model NativeLanguageTranslation {
-  id                String          @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
-  nativeLanguage    NativeLanguage  @relation(fields: [nativeLanguageId], references: [id])
-  nativeLanguageId  String          @db.Uuid
-  language          Language        @relation(fields: [languageId], references: [id])
-  languageId        String          @db.Uuid
+  nativeLanguage   NativeLanguage @relation(fields: [nativeLanguageId], references: [id])
+  nativeLanguageId String         @db.Uuid
+  language         Language       @relation(fields: [languageId], references: [id])
+  languageId       String         @db.Uuid
 
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
-  deletedAt         DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
-  text              String
+  text String
 
   @@unique([nativeLanguageId, languageId])
 }
 
 model Answer {
-  id            String      @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
-  visitForm     VisitForm   @relation(fields: [visitFormId], references: [id])
-  visitFormId   String      @db.Uuid
-  question      Question    @relation(fields: [questionId], references: [id])
-  questionId    String      @db.Uuid
+  visitForm   VisitForm @relation(fields: [visitFormId], references: [id])
+  visitFormId String    @db.Uuid
+  question    Question  @relation(fields: [questionId], references: [id])
+  questionId  String    @db.Uuid
 
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  deletedAt     DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
-  answer        String      @db.VarChar(3)
-  comment       String?
+  answer  String  @db.VarChar(3)
+  comment String?
 }
 
 model Question {
-  id                  String                  @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
-  answers             Answer[]
-  translations        QuestionTranslation[]
-  updatedQuestion     Question?               @relation(name: "QuestionHistory")
-  previousQuestion    Question?               @relation(name: "QuestionHistory", fields: [previousQuestionId], references: [id])
-  previousQuestionId  String?                 @unique @db.Uuid
+  answers            Answer[]
+  translations       QuestionTranslation[]
+  updatedQuestion    Question?             @relation(name: "QuestionHistory")
+  previousQuestion   Question?             @relation(name: "QuestionHistory", fields: [previousQuestionId], references: [id])
+  previousQuestionId String?               @unique @db.Uuid
 
-  createdAt           DateTime                @default(now())
-  updatedAt           DateTime                @updatedAt
-  deletedAt           DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
-  partNumber          Int                     @db.SmallInt
-  mustBeApproved      Boolean
-  isValid             Boolean
+  partNumber     Int     @db.SmallInt
+  mustBeApproved Boolean
+  isValid        Boolean
 }
 
 model QuestionTranslation {
-  id          String      @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
-  question    Question    @relation(fields: [questionId], references: [id])
-  questionId  String      @db.Uuid
-  language    Language    @relation(fields: [languageId], references: [id])
-  languageId  String      @db.Uuid
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId String   @db.Uuid
+  language   Language @relation(fields: [languageId], references: [id])
+  languageId String   @db.Uuid
 
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  deletedAt   DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
-  text        String
+  text String
 }
 
 model Language {
-  id                          String                        @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
-  visitForms                  VisitForm[]
-  nativeLanguageTranslations  NativeLanguageTranslation[]
-  questionTranslations        QuestionTranslation[]
+  visitForms                 VisitForm[]
+  nativeLanguageTranslations NativeLanguageTranslation[]
+  questionTranslations       QuestionTranslation[]
 
-  createdAt                   DateTime                      @default(now())
-  updatedAt                   DateTime                      @updatedAt
-  deletedAt                   DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
-  code                        String                        @unique @db.VarChar(5)
-  name                        String                        @db.VarChar(25)
+  code String @unique @db.VarChar(5)
+  name String @db.VarChar(25)
 }
