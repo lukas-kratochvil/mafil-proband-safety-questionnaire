@@ -85,7 +85,6 @@ export class QuestionService {
     });
   }
 
-
   async updateTexts(
     id: string,
     updateQuestionTextsInput: UpdateQuestionTextsInput

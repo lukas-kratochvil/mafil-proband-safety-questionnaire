@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 import { LanguageService } from "@language/language.service";
 import { PrismaService } from "@prisma/prisma.service";
-import { areUpdateCodesValid, areTranslationsComplete } from "@utils/utils";
+import { areTranslationsComplete, areUpdateCodesValid } from "@utils/utils";
 import { CreateNativeLanguageInput } from "./dto/create-native-language.input";
 import { UpdateNativeLanguageInput } from "./dto/update-native-language.input";
 
