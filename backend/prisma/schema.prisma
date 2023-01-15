@@ -156,10 +156,12 @@ model QuestionTranslation {
 model GenderHiddenQuestion {
   id String @id @default(uuid()) @db.Uuid
 
-  gender     Gender   @relation(fields: [genderId], references: [id])
-  genderId   String   @db.Uuid
+  gender     Gender   @relation(fields: [genderCode], references: [code])
+  genderCode String   @db.VarChar(1)
   question   Question @relation(fields: [questionId], references: [id])
   questionId String   @db.Uuid
+
+  @@unique([genderCode, questionId])
 }
 
 model Gender {
@@ -172,6 +174,8 @@ model Gender {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+
+  code String @unique @db.VarChar(1)
 }
 
 model GenderTranslation {
