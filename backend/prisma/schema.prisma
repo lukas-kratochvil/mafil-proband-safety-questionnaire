@@ -82,6 +82,8 @@ model ProbandInfo {
   id String @id @default(uuid()) @db.Uuid
 
   visitForms       VisitForm[]
+  gender           Gender         @relation(fields: [genderId], references: [id])
+  genderId         String         @db.Uuid
   nativeLanguage   NativeLanguage @relation(fields: [nativeLanguageId], references: [id])
   nativeLanguageId String         @db.Uuid
 
@@ -95,7 +97,6 @@ model ProbandInfo {
   birthdate               DateTime
   heightCm                Float
   weightKg                Float
-  gender                  String   @db.VarChar(10)
   visualCorrectionDioptre Float
   handedness              String   @db.VarChar(20)
   email                   String?
@@ -126,6 +127,7 @@ model Question {
   updatedQuestion    Question?             @relation(name: "QuestionHistory")
   previousQuestion   Question?             @relation(name: "QuestionHistory", fields: [previousQuestionId], references: [id])
   previousQuestionId String?               @unique @db.Uuid
+  hiddenByGenders   GenderHiddenQuestion[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -149,6 +151,44 @@ model QuestionTranslation {
   deletedAt DateTime?
 
   text String
+}
+
+model GenderHiddenQuestion {
+  id String @id @default(uuid()) @db.Uuid
+
+  gender     Gender   @relation(fields: [genderId], references: [id])
+  genderId   String   @db.Uuid
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId String   @db.Uuid
+}
+
+model Gender {
+  id String @id @default(uuid()) @db.Uuid
+
+  probandInfos    ProbandInfo[]
+  translations    GenderTranslation[]
+  hiddenQuestions GenderHiddenQuestion[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model GenderTranslation {
+  id String @id @default(uuid()) @db.Uuid
+
+  gender     Gender   @relation(fields: [genderId], references: [id])
+  genderId   String   @db.Uuid
+  language   Language @relation(fields: [languageId], references: [id])
+  languageId String   @db.Uuid
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  text String
+
+  @@unique([genderId, languageId])
 }
 
 model NativeLanguage {
@@ -185,6 +225,7 @@ model Language {
   id String @id @default(uuid()) @db.Uuid
 
   visitForms                 VisitForm[]
+  genderTranslations         GenderTranslation[]
   nativeLanguageTranslations NativeLanguageTranslation[]
   questionTranslations       QuestionTranslation[]
 
