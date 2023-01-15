@@ -58,6 +58,7 @@ entity AdditionalVisitFormInfo {
 entity ProbandInfo {
   * id: <<UUID>>
   * genderId: <<FK>>
+  * handednessId: <<FK>>
   * nativeLanguageId: <<FK>>
   ---
   * createdAt: Date
@@ -71,7 +72,6 @@ entity ProbandInfo {
   * heightCm: Float
   * weightKg: Float
   * visualCorrectionDioptre: Float
-  * handedness: String
   email: String
   phone: String
 }
@@ -146,6 +146,26 @@ entity GenderTranslation {
   * text: String
 }
 
+entity Handedness {
+  * id: <<UUID>>
+  ---
+  * createdAt: Date
+  * modifiedAt: Date
+  deletedAt: Date
+}
+
+entity HandednessTranslation {
+  * id: <<UUID>>
+  * handednessId: <<FK>>
+  * languageId: <<FK>>
+  ---
+  * createdAt: Date
+  * modifiedAt: Date
+  deletedAt: Date
+  ---
+  * text: String
+}
+
 entity NativeLanguage {
   * id: <<UUID>>
   ---
@@ -191,11 +211,14 @@ Question |o..|| Question
 Question ||..|{ QuestionTranslation
 QuestionTranslation }o..|| Language
 ProbandInfo }o..|| Gender
+ProbandInfo }o..|| Handedness
 ProbandInfo }o..|| NativeLanguage
 GenderHiddenQuestion }o..|| Gender
 GenderHiddenQuestion }o..|| Question
 Gender ||..|{ GenderTranslation
 GenderTranslation }o..|| Language
+Handedness ||..|{ HandednessTranslation
+HandednessTranslation }o..|| Language
 NativeLanguage ||..|{ NativeLanguageTranslation
 NativeLanguageTranslation }o..|| Language
 

@@ -84,6 +84,8 @@ model ProbandInfo {
   visitForms       VisitForm[]
   gender           Gender         @relation(fields: [genderId], references: [id])
   genderId         String         @db.Uuid
+  handedness       Handedness     @relation(fields: [handednessId], references: [id])
+  handednessId     String         @db.Uuid
   nativeLanguage   NativeLanguage @relation(fields: [nativeLanguageId], references: [id])
   nativeLanguageId String         @db.Uuid
 
@@ -98,7 +100,6 @@ model ProbandInfo {
   heightCm                Float
   weightKg                Float
   visualCorrectionDioptre Float
-  handedness              String   @db.VarChar(20)
   email                   String?
   phone                   String?
 }
@@ -195,6 +196,34 @@ model GenderTranslation {
   @@unique([genderId, languageId])
 }
 
+model Handedness {
+  id String @id @default(uuid()) @db.Uuid
+
+  probandInfos ProbandInfo[]
+  translations HandednessTranslation[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model HandednessTranslation {
+  id String @id @default(uuid()) @db.Uuid
+
+  handedness   Handedness @relation(fields: [handednessId], references: [id])
+  handednessId String     @db.Uuid
+  language     Language   @relation(fields: [languageId], references: [id])
+  languageId   String     @db.Uuid
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  text String
+
+  @@unique([handednessId, languageId])
+}
+
 model NativeLanguage {
   id String @id @default(uuid()) @db.Uuid
 
@@ -230,6 +259,7 @@ model Language {
 
   visitForms                 VisitForm[]
   genderTranslations         GenderTranslation[]
+  handednessTranslations     HandednessTranslation[]
   nativeLanguageTranslations NativeLanguageTranslation[]
   questionTranslations       QuestionTranslation[]
 
