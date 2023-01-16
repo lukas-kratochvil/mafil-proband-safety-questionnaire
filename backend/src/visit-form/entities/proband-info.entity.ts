@@ -11,6 +11,9 @@ export class ProbandInfoEntity extends BaseEntity implements ProbandInfo {
   @HideField()
   genderId: string;
 
+  @HideField()
+  handednessId: string;
+
   @Field(() => [VisitFormEntity])
   visitForms: VisitFormEntity[];
 
@@ -34,9 +37,6 @@ export class ProbandInfoEntity extends BaseEntity implements ProbandInfo {
 
   @Field(() => Float)
   visualCorrectionDioptre: number;
-
-  @Field()
-  handedness: string;
 
   @Field(() => String, { nullable: true })
   email: string | null;

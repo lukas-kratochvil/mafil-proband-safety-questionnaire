@@ -14,7 +14,7 @@ export class CreateProbandInfoInput extends PickType(
     "heightCm",
     "weightKg",
     "visualCorrectionDioptre",
-    "handedness",
+    "handednessId",
     "email",
     "phone",
   ],
