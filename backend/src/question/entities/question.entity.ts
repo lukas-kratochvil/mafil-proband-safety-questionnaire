@@ -1,15 +1,11 @@
+import { TranslationBaseEntity } from "@graphql/translation-base.entity";
 import { Field, HideField, Int, ObjectType } from "@nestjs/graphql";
 import { Question } from "@prisma/client";
-import { BaseEntity } from "@graphql/base.entity";
-import { TranslationEntity } from "@language/entities/translation-language.entity";
 
 @ObjectType()
-export class QuestionEntity extends BaseEntity implements Question {
+export class QuestionEntity extends TranslationBaseEntity implements Question {
   @HideField()
   previousQuestionId: string | null;
-
-  @Field(() => [TranslationEntity])
-  translations: TranslationEntity[];
 
   @Field(() => Int)
   partNumber: number;
