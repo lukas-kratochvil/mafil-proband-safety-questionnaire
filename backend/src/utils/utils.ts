@@ -1,15 +1,12 @@
 import { Language } from "@prisma/client";
-import { CreateTranslationInput } from "@language/dto/create-translation.input";
+import { TranslationInput } from "@graphql/create-translation.input";
 
-export const areTranslationsComplete = (languages: Language[], translations: CreateTranslationInput[]): boolean => {
+export const areTranslationsComplete = (languages: Language[], translations: TranslationInput[]): boolean => {
   const translationCodes = translations.map((translation) => translation.code);
   return languages.map((language) => language.code).every((code) => translationCodes.includes(code));
 };
 
-export const areUpdateCodesValid = (
-  languages: Language[],
-  translations: CreateTranslationInput[] | undefined
-): boolean => {
+export const areUpdateCodesValid = (languages: Language[], translations: TranslationInput[] | undefined): boolean => {
   if (translations === undefined) {
     return true;
   }
