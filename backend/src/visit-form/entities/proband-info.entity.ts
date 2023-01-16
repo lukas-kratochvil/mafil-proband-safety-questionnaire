@@ -8,6 +8,9 @@ export class ProbandInfoEntity extends BaseEntity implements ProbandInfo {
   @HideField()
   nativeLanguageId: string;
 
+  @HideField()
+  genderId: string;
+
   @Field(() => [VisitFormEntity])
   visitForms: VisitFormEntity[];
 
@@ -28,9 +31,6 @@ export class ProbandInfoEntity extends BaseEntity implements ProbandInfo {
 
   @Field(() => Float)
   weightKg: number;
-
-  @Field()
-  gender: string;
 
   @Field(() => Float)
   visualCorrectionDioptre: number;

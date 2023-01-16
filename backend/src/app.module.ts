@@ -9,6 +9,7 @@ import { OperatorModule } from "@operator/operator.module";
 import { QuestionTranslationModule } from "@question-translation/question-translation.module";
 import { QuestionModule } from "@question/question.module";
 import { VisitFormModule } from "@visit-form/visit-form.module";
+import { GenderModule } from "./gender/gender.module";
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { VisitFormModule } from "@visit-form/visit-form.module";
     LanguageModule,
     NativeLanguageModule,
     VisitFormModule,
+    GenderModule,
   ],
 })
 export class AppModule {}

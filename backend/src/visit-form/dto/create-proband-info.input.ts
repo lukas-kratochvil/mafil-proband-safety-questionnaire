@@ -9,7 +9,7 @@ export class CreateProbandInfoInput extends PickType(
     "surname",
     "personalId",
     "birthdate",
-    "gender",
+    "genderId",
     "nativeLanguageId",
     "heightCm",
     "weightKg",
