@@ -1,4 +1,4 @@
-import { TranslationBaseEntity } from "@graphql/translation-base.entity";
+import { TranslationBaseEntity } from "@graphql/entities/translation-base.entity";
 import { Field, Int, ObjectType } from "@nestjs/graphql";
 import { NativeLanguage } from "@prisma/client";
 

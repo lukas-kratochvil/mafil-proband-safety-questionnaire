@@ -1,5 +1,5 @@
 import { Field, InputType, PickType } from "@nestjs/graphql";
-import { UuidScalar } from "@graphql/uuid-scalar";
+import { UuidScalar } from "@graphql/scalars/uuid-scalar";
 import { CreateAdditionalVisitFormInfoInput } from "@visit-form/dto/create-additional-visit-form-info.input";
 import { CreateAnswerInput } from "@visit-form/dto/create-answer.input";
 import { CreateProbandInfoInput } from "@visit-form/dto/create-proband-info.input";

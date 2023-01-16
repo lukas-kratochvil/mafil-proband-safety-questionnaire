@@ -3,7 +3,7 @@ import { ApolloDriverConfig } from "@nestjs/apollo";
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { GqlOptionsFactory } from "@nestjs/graphql";
-import { UuidScalar } from "./uuid-scalar";
+import { UuidScalar } from "./scalars/uuid-scalar";
 
 @Injectable()
 export class GraphQLConfigService implements GqlOptionsFactory {

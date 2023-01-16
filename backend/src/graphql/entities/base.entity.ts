@@ -1,5 +1,5 @@
 import { Field, HideField, ObjectType } from "@nestjs/graphql";
-import { UuidScalar } from "./uuid-scalar";
+import { UuidScalar } from "../scalars/uuid-scalar";
 
 @ObjectType()
 export class BaseEntity {

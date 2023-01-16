@@ -1,4 +1,4 @@
-import { BaseEntity } from "@graphql/base.entity";
+import { BaseEntity } from "@graphql/entities/base.entity";
 import { LanguageEntity } from "@language/entities/language.entity";
 import { Field, ObjectType, PickType } from "@nestjs/graphql";
 

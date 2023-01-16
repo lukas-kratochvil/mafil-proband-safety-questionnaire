@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { UuidScalar } from "@graphql/uuid-scalar";
+import { UuidScalar } from "@graphql/scalars/uuid-scalar";
 import { CreateLanguageInput } from "./dto/create-language.input";
 import { UpdateLanguageInput } from "./dto/update-language.input";
 import { LanguageEntity } from "./entities/language.entity";

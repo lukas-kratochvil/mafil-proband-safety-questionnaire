@@ -1,4 +1,4 @@
-import { TranslationBaseEntity } from "@graphql/translation-base.entity";
+import { TranslationBaseEntity } from "@graphql/entities/translation-base.entity";
 import { ObjectType } from "@nestjs/graphql";
 import { Handedness } from "@prisma/client";
 
