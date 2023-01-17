@@ -1,9 +1,14 @@
-import { Field, HideField, ObjectType } from "@nestjs/graphql";
+import { Field, HideField, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { VisitForm, VisitFormState } from "@prisma/client";
 import { BaseEntity } from "@graphql/entities/base.entity";
 import { LanguageEntity } from "@language/entities/language.entity";
 import { AdditionalVisitFormInfoEntity } from "./additional-visit-form-info.entity";
 import { ProbandInfoEntity } from "./proband-info.entity";
+
+registerEnumType(VisitFormState, {
+  name: "VisitFormState",
+  description: "The visit form states.",
+});
 
 @ObjectType()
 export class VisitFormEntity extends BaseEntity implements VisitForm {
@@ -25,7 +30,7 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   @HideField()
   additionalInfoId: string | null;
 
-  @Field()
+  @Field(() => VisitFormState)
   state: VisitFormState;
 
   @Field(() => String, { nullable: true })
