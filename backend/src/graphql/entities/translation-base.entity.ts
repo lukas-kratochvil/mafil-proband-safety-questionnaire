@@ -1,6 +1,6 @@
+import { Field, ObjectType, PickType } from "@nestjs/graphql";
 import { BaseEntity } from "@graphql/entities/base.entity";
 import { LanguageEntity } from "@language/entities/language.entity";
-import { Field, ObjectType, PickType } from "@nestjs/graphql";
 
 @ObjectType({ isAbstract: true })
 export class TranslationLanguageEntity extends PickType(LanguageEntity, ["code", "name"]) {}
