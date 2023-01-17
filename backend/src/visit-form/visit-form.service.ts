@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Prisma } from "@prisma/client";
+import { Prisma, VisitFormState } from "@prisma/client";
 import { PrismaService } from "@prisma/prisma.service";
 import { CreateVisitFormInput } from "./dto/create-visit-form.input";
 import { UpdateVisitFormInput } from "./dto/update-visit-form.input";
@@ -23,7 +23,7 @@ export class VisitFormService {
   async create(createVisitFormInput: CreateVisitFormInput): Promise<VisitFormInclude> {
     return await this.prisma.visitForm.create({
       data: {
-        state: createVisitFormInput.state,
+        state: VisitFormState.NEW,
         additionalInfo: createVisitFormInput.additionalInfo
           ? {
               create: {
@@ -75,7 +75,7 @@ export class VisitFormService {
         id,
       },
       data: {
-        state: updateVisitFormInput.state,
+        state: VisitFormState[updateVisitFormInput.state as keyof typeof VisitFormState],
         additionalInfo: {
           update: {
             ...updateVisitFormInput.additionalInfo,

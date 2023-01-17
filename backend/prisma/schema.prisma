@@ -48,10 +48,20 @@ model VisitForm {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  state   String  @db.VarChar(20)
+  state   VisitFormState @default(NEW)
   note    String?
-  visitId String? @db.VarChar(50)
+  visitId String?        @db.VarChar(50)
   pdf     Bytes?
+}
+
+enum VisitFormState {
+  NEW
+  IN_APPROVAL
+  APPROVED
+  DISAPPROVED
+  FOR_SIGNATURE
+  SIGNED
+  DELETED
 }
 
 model AdditionalVisitFormInfo {

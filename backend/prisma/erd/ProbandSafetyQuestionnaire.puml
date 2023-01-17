@@ -29,10 +29,20 @@ entity VisitForm {
   * modifiedAt: Date
   deletedAt: Date
   ---
-  * state: String
+  * state: VisitFormState
   note: String
   visitId: String
   pdf: Bytes
+}
+
+enum VisitFormState {
+  NEW
+  IN_APPROVAL
+  APPROVED
+  DISAPPROVED
+  FOR_SIGNATURE
+  SIGNED
+  DELETED
 }
 
 entity AdditionalVisitFormInfo {
@@ -202,6 +212,7 @@ entity Language {
 Operator }o..|| OperatorRole
 Operator ||..o{ AdditionalVisitFormInfo : finalized by
 Operator |o..o{ AdditionalVisitFormInfo : approved by
+VisitForm }o..|| VisitFormState
 VisitForm ||..o| AdditionalVisitFormInfo
 VisitForm }|..|| ProbandInfo
 VisitForm ||..|{ Answer
