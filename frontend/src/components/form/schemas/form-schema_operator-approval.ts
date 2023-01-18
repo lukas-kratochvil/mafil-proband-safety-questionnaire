@@ -7,6 +7,6 @@ export const operatorApprovalFormSchema = operatorFormSchema.shape({
     .test({
       name: "disapproval-reason-min-length",
       message: "form.validation.disapprovalReasonMinLength",
-      test: (noteValue) => noteValue === null || noteValue === undefined || noteValue.length > 0,
+      test: (reasonValue) => reasonValue === null || reasonValue === undefined || reasonValue.length > 0,
     }),
 });
