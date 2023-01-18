@@ -20,6 +20,7 @@ const visit: IVisit = {
     deviceId: "1",
     isPhantom: true,
     measurementDate: new Date(),
+    disapprovalReason: null,
   },
   probandInfo: {
     name: "Name",
@@ -59,6 +60,7 @@ const visitNotCompleted: IVisit = {
     deviceId: "",
     isPhantom: true,
     measurementDate: null,
+    disapprovalReason: null,
   },
   probandInfo: {
     name: "Name",

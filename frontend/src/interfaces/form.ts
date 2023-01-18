@@ -10,9 +10,12 @@ export type FormAnswer = Override<IQac, { answer: AnswerOption | null }>;
 export type FormQac = FormAnswer & { index: number };
 
 export interface FormPropType {
+  // Project info
   project: string | null;
   device: string | null;
   measurementDate: Date | null;
+
+  // Proband info
   name: string;
   surname: string;
   personalId: string;
@@ -24,7 +27,14 @@ export interface FormPropType {
   sideDominance: IOption | null;
   visualCorrection: IOption | null;
   visualCorrectionValue: TextFieldNumberInput;
+
+  // Safety questions
+  answers: FormAnswer[];
+
+  // Proband contacts
   email: string;
   phone: string;
-  answers: FormAnswer[];
+
+  // Visit-form approval
+  disapprovalReason: string | null;
 }

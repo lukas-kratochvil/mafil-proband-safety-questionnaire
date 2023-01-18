@@ -48,6 +48,7 @@ const visit: IVisit = {
     deviceId: "deviceId1",
     isPhantom: false,
     measurementDate: new Date(),
+    disapprovalReason: null,
   },
   probandInfo: {
     name: "Jong",

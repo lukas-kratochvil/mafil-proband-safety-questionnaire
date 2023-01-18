@@ -95,6 +95,7 @@ const dummyVisitNew: IVisit = {
     device: devicesDev[0],
     isPhantom: false,
     measurementDate: new Date(),
+    disapprovalReason: null,
   },
   probandInfo: {
     name: "Karel",
@@ -109,7 +110,7 @@ const dummyVisitNew: IVisit = {
     visualCorrectionValue: 0,
     sideDominance: SideDominance.RIGHT_HANDED,
     email: "karel.novak@email.cz",
-    phone: "",
+    phone: "123456789",
   },
   answers: getDummyVisitCurrentQuestions().map((question, i) => ({
     questionId: question.id,
@@ -132,6 +133,7 @@ const dummyPhantomVisitNew: IVisit = {
     device: null,
     isPhantom: true,
     measurementDate: new Date(),
+    disapprovalReason: null,
   },
   probandInfo: {
     name: "Phantom 1",

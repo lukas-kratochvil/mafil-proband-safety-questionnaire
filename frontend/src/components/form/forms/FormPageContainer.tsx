@@ -11,7 +11,7 @@ interface IFormPageContainerProps {
   loadDefaultValues?: () => FormPropType;
 }
 
-export const FormPageContainer = ({ FormPage, loadDefaultValues, validationSchema }: IFormPageContainerProps) => {
+export const FormPageContainer = ({ FormPage, validationSchema, loadDefaultValues }: IFormPageContainerProps) => {
   const formMethods = useForm<FormPropType>({
     mode: "onChange",
     defaultValues: loadDefaultValues === undefined ? loadEmptyDefaultValues() : loadDefaultValues(),

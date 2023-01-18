@@ -22,6 +22,7 @@
           "finalize": "Finalizovat",
           "approve": "Schválit",
           "disapprove": "Neschválit",
+          "confirmDisapproval": "Potvrdit neschválení",
           "edit": "Editovat",
           "cancel": "Zrušit",
           "saveChanges": "Uložit změny"
@@ -47,6 +48,10 @@
       "beforeExamination": {
         "title": "Před vyšetřením",
         "text": "Před vyšetřením si prosím <1>odložte všechny elektricky vodivé/kovové předměty</1> (šperky, hodinky, gumičky, sponky, piercing) a součásti oděvu, které obsahují <3>elektricky vodivé materiály</3>, např. podprsenka skovovými kosticemi, kovové nášivky, funkční prádlo sobsahem stříbra. Vyšetření probíhá za účelem vědeckého výzkumu. Účelem vyšetření není poskytování zdravotních služeb nebo zjišťování Vašeho zdravotního stavu. Sesbíraná data nebude vyhodnocovat lékař, ale vědecký pracovník. Vpřípadě, že by vědecký pracovník pojal podezření na možné zdravotní komplikace, máte právo být o tomto podezření informován/aa následně podezření zkonzultovat slékařem, což by bylo zajištěno výzkumným pracovníkem příslušné studie na základě Vašeho rozhodnutí vinformovaném souhlasu."
+      },
+      "disapprovalReason": {
+        "title": "Neschválení",
+        "reason": "Důvod"
       },
       "entryInfo": {
         "title": "Úvodní informace",
@@ -140,7 +145,8 @@
         "visualCorrectionValueTooLow": "Hodnota je příliš nízká.",
         "visualCorrectionValueTooHigh": "Hodnota je příliš vysoká.",
         "safetyQuestionsRequired": "Všechny bezpečnostní otázky musí být zodpovězeny.",
-        "probandContacts": "Pokud jste se rozhodli vyplnit kontaktní údaje, vyplňte prosím všechny možné."
+        "probandContacts": "Pokud jste se rozhodli vyplnit kontaktní údaje, vyplňte prosím všechny možné.",
+        "disapprovalReasonMinLength": "Důvod neschválení musí být vyplněný."
       }
     },
     "homePage": {

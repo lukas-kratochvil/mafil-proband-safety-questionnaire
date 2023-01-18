@@ -11,10 +11,10 @@ import {
 import { defaultNS } from "@i18n";
 import { IVisit, VisitState } from "@interfaces/visit";
 import { fetchVisitDetail } from "@util/fetch";
-import { convertStringToLocalizationKey, getBackButtonProps, IButton } from "@util/utils";
+import { convertStringToLocalizationKey, getBackButtonProps, IButtonProps } from "@util/utils";
 import { PageContainer } from "./PageContainer";
 
-interface IVisitDetailButtonProps extends IButton {
+interface IVisitDetailButtonProps extends IButtonProps {
   disabled?: boolean;
 }
 

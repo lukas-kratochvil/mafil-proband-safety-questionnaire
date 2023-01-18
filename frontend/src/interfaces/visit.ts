@@ -28,6 +28,7 @@ interface IProjectInfo {
   device: string | null;
   isPhantom: boolean;
   measurementDate: Date | null;
+  disapprovalReason: string | null;
 }
 
 export enum Gender {
