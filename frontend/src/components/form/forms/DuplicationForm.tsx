@@ -7,7 +7,6 @@ import { FormProbandInfo } from "@components/form/components/FormProbandInfo";
 import { FormProjectInfo } from "@components/form/components/FormProjectInfo";
 import { FormQuestions } from "@components/form/components/FormQuestions";
 import { loadFormDefaultValuesVisitDuplication } from "@components/form/util/loaders";
-import { getDisapproveButtonProps } from "@components/form/util/utils";
 import { createNewVisitFromFormData } from "@components/form/util/utils.dev";
 import { dummyVisits } from "@data/visit_data";
 import { useAuth } from "@hooks/auth/auth";
@@ -16,6 +15,7 @@ import { QuestionPartNumber } from "@interfaces/question";
 import { AnswerOption, VisitState } from "@interfaces/visit";
 import { RoutingPaths } from "@routing-paths";
 import { fetchVisit } from "@util/fetch";
+import { updateDummyVisitState } from "@util/fetch.dev";
 import { getBackButtonProps } from "@util/utils";
 import { FormContainer } from "./FormContainer";
 
@@ -129,7 +129,15 @@ export const DuplicationForm = () => {
           },
         },
         buttonsProps: [
-          getDisapproveButtonProps(id, navigate),
+          {
+            titleLocalizationKey: "form.common.buttons.disapprove",
+            onClick: () => {
+              // TODO: store changes in DB if made
+              updateDummyVisitState(id, VisitState.DISAPPROVED);
+              navigate(RoutingPaths.APPROVAL_ROOM);
+            },
+            showErrorColor: true,
+          },
           {
             titleLocalizationKey: "form.common.buttons.edit",
             onClick: () => setIsEditing(true),
