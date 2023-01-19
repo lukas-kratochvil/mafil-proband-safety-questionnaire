@@ -134,7 +134,7 @@ export const DuplicationForm = () => {
             titleLocalizationKey: "form.common.buttons.edit",
             onClick: () => setIsEditing(true),
           },
-          getBackButtonProps(navigate, "Zrušit"),
+          getBackButtonProps(navigate, "form.common.buttons.cancel"),
         ],
       });
     }
