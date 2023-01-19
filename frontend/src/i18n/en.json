@@ -145,8 +145,7 @@
         "visualCorrectionValueTooLow": "The value is too low.",
         "visualCorrectionValueTooHigh": "The value is too high.",
         "safetyQuestionsRequired": "All security questions must be answered.",
-        "probandContacts": "If you chose to fill in contact information, please fill in all possible ones.",
-        "disapprovalReasonMinLength": "Disapproval reason must be filled."
+        "probandContacts": "If you chose to fill in contact information, please fill in all possible ones."
       }
     },
     "homePage": {
