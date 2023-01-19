@@ -96,7 +96,7 @@ export const WaitingRoomForm = () => {
           onClick: () => {
             // TODO: store changes in DB if made
             updateDummyVisitState(id, VisitState.DISAPPROVED);
-            navigate(RoutingPaths.APPROVAL_ROOM);
+            navigate(RoutingPaths.WAITING_ROOM);
           },
           showErrorColor: true,
         },
