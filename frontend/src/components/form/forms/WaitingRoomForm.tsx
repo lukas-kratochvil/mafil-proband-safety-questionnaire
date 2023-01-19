@@ -7,7 +7,6 @@ import { FormProbandInfo } from "@components/form/components/FormProbandInfo";
 import { FormProjectInfo } from "@components/form/components/FormProjectInfo";
 import { FormQuestions } from "@components/form/components/FormQuestions";
 import { loadFormDefaultValuesFromVisit } from "@components/form/util/loaders";
-import { getDisapproveButtonProps } from "@components/form/util/utils";
 import { useAuth } from "@hooks/auth/auth";
 import { FormPropType, FormQac } from "@interfaces/form";
 import { QuestionPartNumber } from "@interfaces/question";
@@ -16,15 +15,17 @@ import { RoutingPaths } from "@routing-paths";
 import { fetchVisit } from "@util/fetch";
 import { updateDummyVisitState } from "@util/fetch.dev";
 import { getBackButtonProps } from "@util/utils";
+import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormContainer } from "./FormContainer";
 
 export const WaitingRoomForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { operator } = useAuth();
-  const { reset, setValue } = useFormContext();
+  const { reset, setValue, trigger } = useFormContext();
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isDisapproved, setIsDisapproved] = useState<boolean>(false);
   const [qacs, setQacs] = useState<FormQac[]>([]);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
 
@@ -88,6 +89,27 @@ export const WaitingRoomForm = () => {
           },
         ],
       });
+    } else if (isDisapproved) {
+      setFormButtons({
+        submitButtonProps: {
+          titleLocalizationKey: "form.common.buttons.confirmDisapprove",
+          onClick: () => {
+            // TODO: store changes in DB if made
+            updateDummyVisitState(id, VisitState.DISAPPROVED);
+            navigate(RoutingPaths.APPROVAL_ROOM);
+          },
+          showErrorColor: true,
+        },
+        buttonsProps: [
+          {
+            titleLocalizationKey: "form.common.buttons.cancel",
+            onClick: () => {
+              setValue("disapprovalReason", null);
+              setIsDisapproved(false);
+            },
+          },
+        ],
+      });
     } else {
       setFormButtons({
         submitButtonProps: {
@@ -109,7 +131,16 @@ export const WaitingRoomForm = () => {
           },
         },
         buttonsProps: [
-          getDisapproveButtonProps(id, navigate),
+          {
+            titleLocalizationKey: "form.common.buttons.disapprove",
+            onClick: async () => {
+              if (await trigger(undefined, { shouldFocus: true })) {
+                setValue("disapprovalReason", "");
+                setIsDisapproved(true);
+              }
+            },
+            showErrorColor: true,
+          },
           {
             titleLocalizationKey: "form.common.buttons.edit",
             onClick: () => setIsEditing(true),
@@ -118,7 +149,7 @@ export const WaitingRoomForm = () => {
         ],
       });
     }
-  }, [id, isEditing, navigate, operator?.hasHigherPermission, reset]);
+  }, [id, isDisapproved, isEditing, navigate, operator?.hasHigherPermission, reset, setValue, trigger]);
 
   return (
     <FormContainer
@@ -138,6 +169,7 @@ export const WaitingRoomForm = () => {
         qacs={qacs.filter((qac) => qac.partNumber === QuestionPartNumber.TWO)}
         disableInputs={!isEditing}
       />
+      {isDisapproved && <FormDisapprovalReason />}
     </FormContainer>
   );
 };
