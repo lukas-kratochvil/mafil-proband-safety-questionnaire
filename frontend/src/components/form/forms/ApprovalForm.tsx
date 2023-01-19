@@ -22,7 +22,7 @@ export const ApprovalForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { operator } = useAuth();
-  const { reset, setValue } = useFormContext<FormPropType>();
+  const { reset, setValue, trigger } = useFormContext<FormPropType>();
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isDisapproved, setIsDisapproved] = useState<boolean>(false);
@@ -124,9 +124,11 @@ export const ApprovalForm = () => {
           buttonsProps: [
             {
               titleLocalizationKey: "form.common.buttons.disapprove",
-              onClick: () => {
-                setValue("disapprovalReason", "");
-                setIsDisapproved(true);
+              onClick: async () => {
+                if (await trigger(undefined, { shouldFocus: true })) {
+                  setValue("disapprovalReason", "");
+                  setIsDisapproved(true);
+                }
               },
               showErrorColor: true,
             },
