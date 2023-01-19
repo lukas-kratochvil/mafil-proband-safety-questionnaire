@@ -92,7 +92,7 @@ export const WaitingRoomForm = () => {
     } else if (isDisapproved) {
       setFormButtons({
         submitButtonProps: {
-          titleLocalizationKey: "form.common.buttons.confirmDisapprove",
+          titleLocalizationKey: "form.common.buttons.confirmDisapproval",
           onClick: () => {
             // TODO: store changes in DB if made
             updateDummyVisitState(id, VisitState.DISAPPROVED);
