@@ -65,6 +65,15 @@ describe("proband form page", () => {
     await i18n.changeLanguage("cimode");
   });
 
+  test("contains correct form buttons", async () => {
+    setup();
+    const buttonNames: string[] = ["form.common.buttons.agree"];
+
+    const buttons = await screen.findAllByRole("button", { name: /^form\.common\.buttons/ });
+    expect(buttons.length).toBe(buttonNames.length);
+    buttonNames.forEach(async (buttonName, index) => expect(buttons[index].textContent).toBe(buttonName));
+  });
+
   test("renders new form default values", async () => {
     setup();
 
