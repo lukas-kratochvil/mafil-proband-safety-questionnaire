@@ -17,16 +17,18 @@ import { RoutingPaths } from "@routing-paths";
 import { fetchVisit } from "@util/fetch";
 import { updateDummyVisitState } from "@util/fetch.dev";
 import { getBackButtonProps } from "@util/utils";
+import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormContainer } from "./FormContainer";
 
 export const DuplicationForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { operator } = useAuth();
-  const { reset, setValue } = useFormContext<FormPropType>();
+  const { reset, setValue, trigger } = useFormContext<FormPropType>();
 
   const [isPhantom, setIsPhantom] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isDisapproved, setIsDisapproved] = useState<boolean>(false);
   const [qacs, setQacs] = useState<FormQac[]>([]);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
 
@@ -104,6 +106,27 @@ export const DuplicationForm = () => {
           },
         ],
       });
+    } else if (isDisapproved) {
+      setFormButtons({
+        submitButtonProps: {
+          titleLocalizationKey: "form.common.buttons.confirmDisapproval",
+          onClick: () => {
+            // TODO: store changes in DB if made
+            updateDummyVisitState(id, VisitState.DISAPPROVED);
+            navigate(RoutingPaths.RECENT_VISITS);
+          },
+          showErrorColor: true,
+        },
+        buttonsProps: [
+          {
+            titleLocalizationKey: "form.common.buttons.cancel",
+            onClick: () => {
+              setValue("disapprovalReason", null);
+              setIsDisapproved(false);
+            },
+          },
+        ],
+      });
     } else {
       setFormButtons({
         submitButtonProps: {
@@ -131,10 +154,11 @@ export const DuplicationForm = () => {
         buttonsProps: [
           {
             titleLocalizationKey: "form.common.buttons.disapprove",
-            onClick: () => {
-              // TODO: store changes in DB if made
-              updateDummyVisitState(id, VisitState.DISAPPROVED);
-              navigate(RoutingPaths.APPROVAL_ROOM);
+            onClick: async () => {
+              if (await trigger(undefined, { shouldFocus: true })) {
+                setValue("disapprovalReason", "");
+                setIsDisapproved(true);
+              }
             },
             showErrorColor: true,
           },
@@ -146,7 +170,7 @@ export const DuplicationForm = () => {
         ],
       });
     }
-  }, [id, isEditing, isPhantom, navigate, operator?.hasHigherPermission, reset]);
+  }, [id, isDisapproved, isEditing, isPhantom, navigate, operator?.hasHigherPermission, reset, setValue, trigger]);
 
   return (
     <FormContainer
@@ -171,6 +195,7 @@ export const DuplicationForm = () => {
             qacs={qacs.filter((qac) => qac.partNumber === QuestionPartNumber.TWO)}
             disableInputs={!isEditing}
           />
+          {isDisapproved && <FormDisapprovalReason />}
         </>
       )}
     </FormContainer>
