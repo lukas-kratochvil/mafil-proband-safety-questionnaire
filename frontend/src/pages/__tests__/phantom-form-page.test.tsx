@@ -43,10 +43,7 @@ describe("phantom form page", () => {
 
   test("contains correct form buttons", async () => {
     setup();
-    const buttonNames: string[] = [
-      "form.common.buttons.finalize",
-      "form.common.buttons.cancel",
-    ];
+    const buttonNames: string[] = ["form.common.buttons.finalize", "form.common.buttons.cancel"];
 
     const buttons = await screen.findAllByRole("button", { name: /^form\.common\.buttons/ });
     expect(buttons.length).toBe(buttonNames.length);

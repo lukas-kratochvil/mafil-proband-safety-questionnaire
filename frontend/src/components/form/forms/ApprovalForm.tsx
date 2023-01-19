@@ -147,7 +147,7 @@ export const ApprovalForm = () => {
         buttonsProps: [getBackButtonProps(navigate)],
       });
     }
-  }, [id, isDisapproved, isEditing, navigate, operator?.hasHigherPermission, reset, setValue]);
+  }, [id, isDisapproved, isEditing, navigate, operator?.hasHigherPermission, reset, setValue, trigger]);
 
   return (
     <FormContainer
