@@ -18,15 +18,15 @@ describe("home page", () => {
 
   test("contains translations", () => {
     const { container } = render(<HomePage />);
-    const openNewForButton = screen.getByRole("button");
 
     expect(container).toHaveTextContent(/homePage.title/);
-    expect(openNewForButton).toHaveTextContent(/homePage.openNewFormButton/);
+    const openNewFormButton = screen.getByRole("button", { name: "homePage.openNewFormButton" });
+    expect(openNewFormButton).toBeInTheDocument();
   });
 
   test("clicks open new form button", async () => {
-    const user = userEvent.setup();
     render(<HomePage />);
+    const user = userEvent.setup();
 
     const openNewForButton = screen.getByRole("button");
     await user.click(openNewForButton);
