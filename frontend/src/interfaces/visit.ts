@@ -3,7 +3,7 @@ import { QuestionPartNumber } from "./question";
 export enum VisitState {
   NEW = "Nové",
   IN_APPROVAL = "Ve schvalování",
-  APPROVED = "Schváleno",
+  APPROVED = "Schváleno, nepodepsáno",
   DISAPPROVED = "Neschváleno",
   FOR_SIGNATURE = "K podpisu",
   SIGNED = "Podepsáno",
