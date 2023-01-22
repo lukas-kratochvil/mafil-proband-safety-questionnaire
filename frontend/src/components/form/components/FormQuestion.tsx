@@ -29,8 +29,8 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
   });
 
   useEffect(() => {
-    // TODO: fetch question from DB
     const fetchData = async () => {
+      // TODO: fetch question from DB
       setQuestion(await fetchQuestion(qac.questionId));
     };
 

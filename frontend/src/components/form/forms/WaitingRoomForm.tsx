@@ -110,7 +110,7 @@ export const WaitingRoomForm = () => {
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
           onClick: () => {
-            // TODO: store changes in DB if made
+            // TODO: store changes in DB
             updateDummyVisitState(id, VisitState.DISAPPROVED);
             navigate(RoutingPaths.WAITING_ROOM);
           },
@@ -167,7 +167,7 @@ export const WaitingRoomForm = () => {
   }, [id, isDisapproved, isEditing, navigate, operator?.hasHigherPermission, reset, setValue, trigger]);
 
   const onSubmit = (data: FormPropType) => {
-    // TODO: store changes in DB - how to do it?
+    // TODO: store changes in DB
     updateDummyVisitState(id, VisitState.IN_APPROVAL);
     setOpenFinalizeDialog(false);
     navigate(RoutingPaths.WAITING_ROOM);
