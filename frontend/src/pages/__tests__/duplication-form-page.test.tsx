@@ -86,10 +86,10 @@ vi.mock("react-router-dom", async () => ({
 }));
 
 //----------------------------------------------------------------------
-// Mocking custom ErrorFeedback component
+// Mocking custom ErrorMessage component
 //----------------------------------------------------------------------
-vi.mock("@components/form/inputs/ErrorFeedback", () => ({
-  ErrorFeedback: () => <div />,
+vi.mock("@components/form/inputs/ErrorMessage", () => ({
+  ErrorMessage: () => <div />,
 }));
 
 //----------------------------------------------------------------------

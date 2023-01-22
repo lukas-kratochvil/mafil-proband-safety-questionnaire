@@ -6,8 +6,8 @@ vi.mock("react-hook-form", () => ({
   Controller: () => <div data-testid="input" />,
 }));
 
-vi.mock("@components/form/inputs/ErrorFeedback", () => ({
-  ErrorFeedback: () => <div />,
+vi.mock("@components/form/inputs/ErrorMessage", () => ({
+  ErrorMessage: () => <div />,
 }));
 
 describe("form project info", () => {

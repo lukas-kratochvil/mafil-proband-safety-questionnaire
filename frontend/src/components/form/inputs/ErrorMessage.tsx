@@ -1,4 +1,4 @@
-import { ErrorMessage } from "@hookform/error-message";
+import { ErrorMessage as HookFormErrorMessage } from "@hookform/error-message";
 import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { convertStringToLocalizationKey } from "@util/utils";
@@ -7,11 +7,11 @@ interface IErrorFeedbackProps {
   name: string;
 }
 
-export const ErrorFeedback = ({ name }: IErrorFeedbackProps) => {
+export const ErrorMessage = ({ name }: IErrorFeedbackProps) => {
   const { t } = useTranslation();
 
   return (
-    <ErrorMessage
+    <HookFormErrorMessage
       name={name}
       render={({ message }) => (
         <Typography
