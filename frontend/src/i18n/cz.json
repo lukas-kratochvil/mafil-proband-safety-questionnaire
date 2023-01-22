@@ -172,6 +172,16 @@
         "signed": "Podepsáno"
       }
     },
+    "waitingRoomFormPage": {
+      "finalizeDialog": {
+        "title": "Schválení formuláře visity",
+        "text": "Formulář visity bude odeslán ke schválení MR operátorem s vyšším oprávněním.",
+        "buttons": {
+          "continue": "Pokračovat",
+          "cancel": "Zrušit"
+        }
+      }
+    },
     "waitingRoomTablePage": {
       "title": "Čekárna",
       "actions": {

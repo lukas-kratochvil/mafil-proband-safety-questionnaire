@@ -172,6 +172,16 @@
         "signed": "Signed"
       }
     },
+    "waitingRoomFormPage": {
+      "finalizeDialog": {
+        "title": "Approval of the visit form",
+        "text": "The visit form will be sent for approval by the MR operator with a higher authority.",
+        "buttons": {
+          "continue": "Continue",
+          "cancel": "Cancel"
+        }
+      }
+    },
     "waitingRoomTablePage": {
       "title": "Waiting room",
       "actions": {

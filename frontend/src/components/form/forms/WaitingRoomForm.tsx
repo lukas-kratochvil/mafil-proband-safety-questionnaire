@@ -1,5 +1,16 @@
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Theme,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { IFormButtonsProps } from "@components/form/components/FormButtons";
 import { FormProbandContact } from "@components/form/components/FormProbandContact";
@@ -8,6 +19,7 @@ import { FormProjectInfo } from "@components/form/components/FormProjectInfo";
 import { FormQuestions } from "@components/form/components/FormQuestions";
 import { loadFormDefaultValuesFromVisit } from "@components/form/util/loaders";
 import { useAuth } from "@hooks/auth/auth";
+import { defaultNS } from "@i18n";
 import { FormPropType, FormQac } from "@interfaces/form";
 import { QuestionPartNumber } from "@interfaces/question";
 import { AnswerOption, VisitState } from "@interfaces/visit";
@@ -19,13 +31,17 @@ import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormContainer } from "./FormContainer";
 
 export const WaitingRoomForm = () => {
+  const { t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomFormPage.finalizeDialog" });
+  const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
+
   const { id } = useParams();
   const navigate = useNavigate();
   const { operator } = useAuth();
-  const { reset, setValue, trigger } = useFormContext();
+  const { handleSubmit, reset, setValue, trigger } = useFormContext<FormPropType>();
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isDisapproved, setIsDisapproved] = useState<boolean>(false);
+  const [openFinalizeDialog, setOpenFinalizeDialog] = useState<boolean>(false);
   const [qacs, setQacs] = useState<FormQac[]>([]);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
 
@@ -115,18 +131,17 @@ export const WaitingRoomForm = () => {
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.finalize",
           onClick: (data: FormPropType) => {
-            // TODO: store changes in DB if made
             if (
               operator?.hasHigherPermission
               || data.answers.find(
                 (answer) => answer.partNumber === QuestionPartNumber.TWO && answer.answer === AnswerOption.YES
               ) === undefined
             ) {
+              // TODO: store changes in DB
               updateDummyVisitState(id, VisitState.APPROVED);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${id}`);
             } else {
-              updateDummyVisitState(id, VisitState.IN_APPROVAL);
-              navigate(RoutingPaths.WAITING_ROOM);
+              setOpenFinalizeDialog(true);
             }
           },
         },
@@ -151,6 +166,13 @@ export const WaitingRoomForm = () => {
     }
   }, [id, isDisapproved, isEditing, navigate, operator?.hasHigherPermission, reset, setValue, trigger]);
 
+  const onSubmit = (data: FormPropType) => {
+    // TODO: store changes in DB - how to do it?
+    updateDummyVisitState(id, VisitState.IN_APPROVAL);
+    setOpenFinalizeDialog(false);
+    navigate(RoutingPaths.WAITING_ROOM);
+  };
+
   return (
     <FormContainer
       isError={isError}
@@ -170,6 +192,19 @@ export const WaitingRoomForm = () => {
         disableInputs={!isEditing}
       />
       {isDisapproved && <FormDisapprovalReason />}
+      <Dialog
+        open={openFinalizeDialog}
+        fullScreen={matchesDownSmBreakpoint}
+      >
+        <DialogTitle>{t("title")}</DialogTitle>
+        <DialogContent>
+          <Typography>{t("text")}</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => handleSubmit(onSubmit)()}>{t("buttons.continue")}</Button>
+          <Button onClick={() => setOpenFinalizeDialog(false)}>{t("buttons.cancel")}</Button>
+        </DialogActions>
+      </Dialog>
     </FormContainer>
   );
 };
