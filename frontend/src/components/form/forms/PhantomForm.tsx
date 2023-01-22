@@ -15,7 +15,7 @@ import { FormContainer } from "./FormContainer";
 
 export const PhantomForm = () => {
   const navigate = useNavigate();
-  const { setValue } = useFormContext();
+  const { setValue } = useFormContext<FormPropType>();
 
   const [qacs, setQacs] = useState<FormQac[]>([]);
 

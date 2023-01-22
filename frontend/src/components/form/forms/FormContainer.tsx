@@ -11,13 +11,9 @@ interface IFormContainerProps {
 
 export const FormContainer = ({ children, isError, buttons }: PropsWithChildren<IFormContainerProps>) => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
-
   const { handleSubmit } = useFormContext<FormPropType>();
 
-  const onSubmit = (data: FormPropType) => {
-    // TODO: submit data
-    buttons?.submitButtonProps?.onClick(data);
-  };
+  const onValid = (data: FormPropType) => buttons?.submitButtonProps?.onClick(data);
 
   if (isError) {
     // TODO: create nice error content
@@ -26,7 +22,7 @@ export const FormContainer = ({ children, isError, buttons }: PropsWithChildren<
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onValid)}
       aria-label="Visit form"
     >
       <Stack

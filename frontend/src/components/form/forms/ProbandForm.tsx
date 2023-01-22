@@ -23,7 +23,7 @@ enum ProbandFormStep {
 
 export const ProbandForm = () => {
   const navigate = useNavigate();
-  const { setError, setValue } = useFormContext();
+  const { setError, setValue } = useFormContext<FormPropType>();
 
   const [step, setStep] = useState<ProbandFormStep>(ProbandFormStep.EXAMINATION);
   const [qacs, setQacs] = useState<FormQac[]>([]);
