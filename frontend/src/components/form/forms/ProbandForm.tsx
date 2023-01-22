@@ -47,11 +47,11 @@ export const ProbandForm = () => {
         let isError = false;
 
         if (data.email === "") {
-          setError("email", { message: "form.validation.probandContacts" });
+          setError("email", { message: "form.validation.probandContacts" }, { shouldFocus: true });
           isError = true;
         }
         if (data.phone === "") {
-          setError("phone", { message: "form.validation.probandContacts" });
+          setError("phone", { message: "form.validation.probandContacts" }, { shouldFocus: !isError });
           isError = true;
         }
 
