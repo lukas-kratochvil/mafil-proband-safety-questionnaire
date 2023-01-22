@@ -1,5 +1,15 @@
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Theme,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +19,7 @@ import { ActionButtonsContainer, IActionButtonsProps } from "./ActionButtonsCont
 
 export const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomTablePage.actions" });
+  const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const navigate = useNavigate();
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
 
@@ -43,7 +54,10 @@ export const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
       >
         <DeleteIcon />
       </IconButton>
-      <Dialog open={openDeleteDialog}>
+      <Dialog
+        open={openDeleteDialog}
+        fullScreen={matchesDownSmBreakpoint}
+      >
         <DialogTitle>{t("clearIconDialogTitle")}</DialogTitle>
         <DialogContent>
           <Typography>{t("clearIconDialogContent")}</Typography>
