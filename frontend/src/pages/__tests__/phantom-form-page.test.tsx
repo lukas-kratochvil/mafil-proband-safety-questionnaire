@@ -66,7 +66,7 @@ describe("phantom form page", () => {
         nativeLanguage: "",
         height: "",
         weight: "",
-        sideDominance: "",
+        handedness: "",
         visualCorrection: "",
         visualCorrectionValue: "0",
       })
@@ -150,9 +150,9 @@ describe("phantom form page", () => {
     await user.clear(screen.getByLabelText("visualCorrectionValue"));
     await user.type(screen.getByLabelText("visualCorrectionValue"), typedVisualCorrectionValue);
 
-    await user.click(screen.getByLabelText("sideDominance"));
-    const selectedSideDominance = "form.enums.sideDominance.UNDETERMINED";
-    await user.click(screen.getByRole("option", { name: selectedSideDominance }));
+    await user.click(screen.getByLabelText("handedness"));
+    const selectedHandedness = "form.enums.handedness.UNDETERMINED";
+    await user.click(screen.getByRole("option", { name: selectedHandedness }));
 
     const expectedFormValues = {
       project: selectedProject,
@@ -166,7 +166,7 @@ describe("phantom form page", () => {
       nativeLanguage: selectedNativeLanguage,
       height: typedHeight,
       weight: typedWeight,
-      sideDominance: selectedSideDominance,
+      handedness: selectedHandedness,
       visualCorrection: selectedVisualCorrection,
       visualCorrectionValue: typedVisualCorrectionValue,
     };
@@ -202,8 +202,8 @@ describe("phantom form page", () => {
 
     await user.type(screen.getByLabelText("weight"), "70");
 
-    await user.click(screen.getByLabelText("sideDominance"));
-    await user.click(screen.getByRole("option", { name: "form.enums.sideDominance.UNDETERMINED" }));
+    await user.click(screen.getByLabelText("handedness"));
+    await user.click(screen.getByRole("option", { name: "form.enums.handedness.UNDETERMINED" }));
 
     const finalizeButton = screen.getByRole("button", { name: "form.common.buttons.finalize" });
 

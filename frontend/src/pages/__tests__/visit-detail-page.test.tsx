@@ -1,6 +1,6 @@
 import userEvent from "@testing-library/user-event";
 import i18n from "@i18n";
-import { Gender, IVisit, SideDominance, VisitState, VisualCorrection } from "@interfaces/visit";
+import { Gender, Handedness, IVisit, VisitState, VisualCorrection } from "@interfaces/visit";
 import VisitDetailPage from "@pages/VisitDetailPage";
 import { render, screen, waitFor } from "@test-utils";
 import * as fetchers from "@util/fetch";
@@ -33,7 +33,7 @@ const defaultVisit: IVisit = {
     height: 179,
     weight: 81,
     nativeLanguage: "English",
-    sideDominance: SideDominance.UNDETERMINED,
+    handedness: Handedness.UNDETERMINED,
     visualCorrection: VisualCorrection.NO,
     visualCorrectionValue: 0,
     email: "",

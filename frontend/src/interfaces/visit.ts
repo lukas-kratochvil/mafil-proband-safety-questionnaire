@@ -42,7 +42,7 @@ export enum VisualCorrection {
   NO,
 }
 
-export enum SideDominance {
+export enum Handedness {
   RIGHT_HANDED,
   LEFT_HANDED,
   LEFT_HANDED_RETRAINED,
@@ -60,7 +60,7 @@ interface IProbandInfo {
   nativeLanguage: string; // TODO: object stored in the database
   visualCorrection: VisualCorrection;
   visualCorrectionValue: number;
-  sideDominance: SideDominance;
+  handedness: Handedness;
   email: string;
   phone: string;
 }

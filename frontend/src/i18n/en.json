@@ -38,7 +38,7 @@
           "YES": "Yes",
           "NO": "No"
         },
-        "sideDominance": {
+        "handedness": {
           "RIGHT_HANDED": "Right-handed",
           "LEFT_HANDED": "Left-handed",
           "LEFT_HANDED_RETRAINED": "Retrained left-handed",
@@ -61,7 +61,7 @@
       "examinationConsent": {
         "title": "Consent to examination in the Multimodal and Functional Imaging Laboratory",
         "text1": "I declare that I have read the information on the MR examination and understand its meaning. I declare that I have filled out this questionnaire truthfully. I declare that I have been informed about the research study to which this examination belongs by a member of the research team and through separate informed consent and I agree to the implementation of the examination.",
-        "text2": "I acknowledge that my personal data in the scope of name, surname, signature, birthdate, personal ID, gender, side dominance, height, weight, visual correction, native language, security questions on MR examination contraindications from this questionnaire, measured data and contact data (in case of an accidental finding taken from the informed consent to the research study) will be stored in secure storage for 5 years based on the legitimate interest of the administrator - Masaryk University - in order to ensure the necessary security and legal requirements related to the examination in the Laboratory of Multimodal and Functional Imaging Masaryk University with limited access. After this period, all data stored in the Laboratory of Multimodal and Functional Imaging will be anonymized.",
+        "text2": "I acknowledge that my personal data in the scope of name, surname, signature, birthdate, personal ID, gender, handedness, height, weight, visual correction, native language, security questions on MR examination contraindications from this questionnaire, measured data and contact data (in case of an accidental finding taken from the informed consent to the research study) will be stored in secure storage for 5 years based on the legitimate interest of the administrator - Masaryk University - in order to ensure the necessary security and legal requirements related to the examination in the Laboratory of Multimodal and Functional Imaging Masaryk University with limited access. After this period, all data stored in the Laboratory of Multimodal and Functional Imaging will be anonymized.",
         "contactInfo": "Contact information",
         "address": "Laboratory of multimodal and functional imaging, CEITEC MU, Masaryk University, Kamenice 5, 625 00 Brno",
         "contactPerson": "contact person",
@@ -113,7 +113,7 @@
         "visualCorrection": "Visual correction",
         "visualCorrectionValue": "Visual correction value",
         "visualCorrectionValueHint": "Positive diopters indicate farsightedness, which means that you see worse up close. On the contrary, negative diopters indicate myopia, i.e. you see worse at a distance.",
-        "sideDominance": "Side dominance"
+        "handedness": "Handedness"
       },
       "projectInfo": {
         "title": "Project information",

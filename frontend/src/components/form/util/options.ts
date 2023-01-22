@@ -1,4 +1,4 @@
-import { Gender, SideDominance, VisualCorrection } from "@interfaces/visit";
+import { Gender, Handedness, VisualCorrection } from "@interfaces/visit";
 
 export interface IOption {
   value: number;
@@ -40,4 +40,4 @@ export const visualCorrectionOptions = createOptions<VisualCorrection>(
   Object.entries(VisualCorrection),
   "visualCorrection"
 );
-export const sideDominanceOptions = createOptions<SideDominance>(Object.entries(SideDominance), "sideDominance");
+export const handednessOptions = createOptions<Handedness>(Object.entries(Handedness), "handedness");

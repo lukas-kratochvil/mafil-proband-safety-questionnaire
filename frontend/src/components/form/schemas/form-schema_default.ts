@@ -5,8 +5,8 @@ import {
   genderOptions,
   getOption,
   getOptionsValues,
+  handednessOptions,
   IOption,
-  sideDominanceOptions,
   visualCorrectionOptions,
 } from "../util/options";
 
@@ -85,15 +85,15 @@ export const defaultFormSchema = object().shape(
       .typeError("form.validation.notValid")
       .positive("form.validation.positive")
       .required("form.validation.required"),
-    sideDominance: mixed<IOption>()
+    handedness: mixed<IOption>()
       .nullable()
       .test({
-        name: "contained-in-side-dominance-options",
+        name: "contained-in-handedness-options",
         message: "form.validation.notValid",
-        test: (sideDominanceOption) =>
-          sideDominanceOption !== undefined
-          && sideDominanceOption !== null
-          && getOptionsValues(sideDominanceOptions).includes(sideDominanceOption.value),
+        test: (handednessOption) =>
+          handednessOption !== undefined
+          && handednessOption !== null
+          && getOptionsValues(handednessOptions).includes(handednessOption.value),
       })
       .required("form.validation.required"),
     visualCorrection: mixed<IOption>()

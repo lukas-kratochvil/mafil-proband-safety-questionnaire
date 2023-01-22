@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import i18n from "@i18n";
 import { IOperator } from "@interfaces/auth";
 import { IQuestionData, QuestionPartNumber } from "@interfaces/question";
-import { AnswerOption, Gender, IVisit, SideDominance, VisitState, VisualCorrection } from "@interfaces/visit";
+import { AnswerOption, Gender, Handedness, IVisit, VisitState, VisualCorrection } from "@interfaces/visit";
 import DuplicationFormPage from "@pages/DuplicationFormPage";
 import { render, screen, waitFor, within } from "@test-utils";
 
@@ -59,7 +59,7 @@ const visit: IVisit = {
     height: 179,
     weight: 75,
     nativeLanguage: "Čeština",
-    sideDominance: SideDominance.RIGHT_HANDED,
+    handedness: Handedness.RIGHT_HANDED,
     visualCorrection: VisualCorrection.NO,
     visualCorrectionValue: 0,
     email: "",
@@ -164,7 +164,7 @@ describe("duplication form page", () => {
         weight: visit.probandInfo.weight.toString(),
         visualCorrection: "form.enums.visualCorrection.NO",
         visualCorrectionValue: visit.probandInfo.visualCorrectionValue.toString(),
-        sideDominance: "form.enums.sideDominance.RIGHT_HANDED",
+        handedness: "form.enums.handedness.RIGHT_HANDED",
         email: visit.probandInfo.email,
         phone: visit.probandInfo.phone,
       })

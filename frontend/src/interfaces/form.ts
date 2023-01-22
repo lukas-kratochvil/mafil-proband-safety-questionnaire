@@ -24,7 +24,7 @@ export interface FormPropType {
   nativeLanguage: string | null;
   height: TextFieldNumberInput;
   weight: TextFieldNumberInput;
-  sideDominance: IOption | null;
+  handedness: IOption | null;
   visualCorrection: IOption | null;
   visualCorrectionValue: TextFieldNumberInput;
 

@@ -89,7 +89,7 @@ describe("proband form page", () => {
         weight: "",
         visualCorrection: "",
         visualCorrectionValue: "0",
-        sideDominance: "",
+        handedness: "",
       })
     );
     const questions = await screen.findAllByRole("radiogroup");
@@ -190,9 +190,9 @@ describe("proband form page", () => {
     await user.clear(screen.getByLabelText("visualCorrectionValue"));
     await user.type(screen.getByLabelText("visualCorrectionValue"), typedVisualCorrectionValue);
 
-    await user.click(screen.getByLabelText("sideDominance"));
-    const selectedSideDominance = "form.enums.sideDominance.UNDETERMINED";
-    await user.click(screen.getByRole("option", { name: selectedSideDominance }));
+    await user.click(screen.getByLabelText("handedness"));
+    const selectedHandedness = "form.enums.handedness.UNDETERMINED";
+    await user.click(screen.getByRole("option", { name: selectedHandedness }));
 
     const expectedFormValues = {
       name: typedName,
@@ -205,7 +205,7 @@ describe("proband form page", () => {
       weight: typedWeight,
       visualCorrection: selectedVisualCorrection,
       visualCorrectionValue: typedVisualCorrectionValue,
-      sideDominance: selectedSideDominance,
+      handedness: selectedHandedness,
     };
     expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);
 
@@ -277,9 +277,9 @@ describe("proband form page", () => {
     await user.clear(screen.getByLabelText("visualCorrectionValue"));
     await user.type(screen.getByLabelText("visualCorrectionValue"), typedVisualCorrectionValue);
 
-    await user.click(screen.getByLabelText("sideDominance"));
-    const selectedSideDominance = "form.enums.sideDominance.UNDETERMINED";
-    await user.click(screen.getByRole("option", { name: selectedSideDominance }));
+    await user.click(screen.getByLabelText("handedness"));
+    const selectedHandedness = "form.enums.handedness.UNDETERMINED";
+    await user.click(screen.getByRole("option", { name: selectedHandedness }));
 
     const questions = screen.getAllByRole("radiogroup");
     questions.forEach(async (question, index) => {
@@ -298,7 +298,7 @@ describe("proband form page", () => {
       weight: typedWeight,
       visualCorrection: selectedVisualCorrection,
       visualCorrectionValue: typedVisualCorrectionValue,
-      sideDominance: selectedSideDominance,
+      handedness: selectedHandedness,
     };
     expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);
 
@@ -346,9 +346,9 @@ describe("proband form page", () => {
     await user.clear(screen.getByLabelText("visualCorrectionValue"));
     await user.type(screen.getByLabelText("visualCorrectionValue"), typedVisualCorrectionValue);
 
-    await user.click(screen.getByLabelText("sideDominance"));
-    const selectedSideDominance = "form.enums.sideDominance.UNDETERMINED";
-    await user.click(screen.getByRole("option", { name: selectedSideDominance }));
+    await user.click(screen.getByLabelText("handedness"));
+    const selectedHandedness = "form.enums.handedness.UNDETERMINED";
+    await user.click(screen.getByRole("option", { name: selectedHandedness }));
 
     const questions = screen.getAllByRole("radiogroup");
     questions.forEach(async (question, index) => {
@@ -367,7 +367,7 @@ describe("proband form page", () => {
       weight: typedWeight,
       visualCorrection: selectedVisualCorrection,
       visualCorrectionValue: typedVisualCorrectionValue,
-      sideDominance: selectedSideDominance,
+      handedness: selectedHandedness,
     };
     expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);
 
@@ -426,9 +426,9 @@ describe("proband form page", () => {
     await user.clear(screen.getByLabelText("visualCorrectionValue"));
     await user.type(screen.getByLabelText("visualCorrectionValue"), typedVisualCorrectionValue);
 
-    await user.click(screen.getByLabelText("sideDominance"));
-    const selectedSideDominance = "form.enums.sideDominance.UNDETERMINED";
-    await user.click(screen.getByRole("option", { name: selectedSideDominance }));
+    await user.click(screen.getByLabelText("handedness"));
+    const selectedHandedness = "form.enums.handedness.UNDETERMINED";
+    await user.click(screen.getByRole("option", { name: selectedHandedness }));
 
     const questions = screen.getAllByRole("radiogroup");
     questions.forEach(async (question, index) => {
@@ -447,7 +447,7 @@ describe("proband form page", () => {
       weight: typedWeight,
       visualCorrection: selectedVisualCorrection,
       visualCorrectionValue: typedVisualCorrectionValue,
-      sideDominance: selectedSideDominance,
+      handedness: selectedHandedness,
     };
     expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);
 

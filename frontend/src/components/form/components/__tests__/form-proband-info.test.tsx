@@ -39,7 +39,7 @@ describe("form proband info", () => {
     expect(container).toHaveTextContent(/form.probandInfo.weight/);
     expect(container).toHaveTextContent(/form.probandInfo.visualCorrection/);
     expect(container).toHaveTextContent(/form.probandInfo.visualCorrectionValue/);
-    expect(container).toHaveTextContent(/form.probandInfo.sideDominance/);
+    expect(container).toHaveTextContent(/form.probandInfo.handedness/);
   });
 
   test("has all input fields", () => {
