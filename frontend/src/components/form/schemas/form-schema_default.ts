@@ -1,14 +1,7 @@
 import { array, date, mixed, number, object, string } from "yup";
 import { QuestionPartNumber } from "@interfaces/question";
 import { AnswerOption, VisualCorrection } from "@interfaces/visit";
-import {
-  genderOptions,
-  getOption,
-  getOptionsValues,
-  handednessOptions,
-  IOption,
-  visualCorrectionOptions,
-} from "../util/options";
+import { getOption, IOption, visualCorrectionOptions } from "../util/options";
 
 export const answersSchema = object({
   questionId: string().trim().required("form.validation.required"),
@@ -50,32 +43,22 @@ export const defaultFormSchema = object().shape(
       //   },
       // })
       .required("form.validation.required"),
-    gender: mixed<IOption>()
-      .nullable()
-      .test({
-        name: "contained-in-gender-options",
-        message: "form.validation.notValid",
-        test: (genderOption) =>
-          genderOption !== undefined
-          && genderOption !== null
-          && getOptionsValues(genderOptions).includes(genderOption.value),
-      })
-      // TODO: make it a warning not validation error
-      // .test({
-      //   name: "gender-corresponds-to-personalId",
-      //   message: "form.validation.genderNotCorrespondToPersonalId",
-      //   test: (gender, testContext) => {
-      //     const czechPersonalId = rodnecislo(testContext.parent.personalId);
-      //     return (
-      //       gender === null
-      //       || gender === undefined
-      //       || !czechPersonalId.isValid()
-      //       || (czechPersonalId.isMale() && [Gender.MALE, Gender.OTHER].includes(gender.value))
-      //       || (czechPersonalId.isFemale() && [Gender.FEMALE, Gender.OTHER].includes(gender.value))
-      //     );
-      //   },
-      // })
-      .required("form.validation.required"),
+    gender: mixed<IOption>().nullable().required("form.validation.required"),
+    // TODO: make it a warning not validation error
+    // .test({
+    //   name: "gender-corresponds-to-personalId",
+    //   message: "form.validation.genderNotCorrespondToPersonalId",
+    //   test: (gender, testContext) => {
+    //     const czechPersonalId = rodnecislo(testContext.parent.personalId);
+    //     return (
+    //       gender === null
+    //       || gender === undefined
+    //       || !czechPersonalId.isValid()
+    //       || (czechPersonalId.isMale() && [Gender.MALE, Gender.OTHER].includes(gender.value))
+    //       || (czechPersonalId.isFemale() && [Gender.FEMALE, Gender.OTHER].includes(gender.value))
+    //     );
+    //   },
+    // })
     nativeLanguage: string().nullable().required("form.validation.required"),
     height: number()
       .typeError("form.validation.notValid")
@@ -85,28 +68,8 @@ export const defaultFormSchema = object().shape(
       .typeError("form.validation.notValid")
       .positive("form.validation.positive")
       .required("form.validation.required"),
-    handedness: mixed<IOption>()
-      .nullable()
-      .test({
-        name: "contained-in-handedness-options",
-        message: "form.validation.notValid",
-        test: (handednessOption) =>
-          handednessOption !== undefined
-          && handednessOption !== null
-          && getOptionsValues(handednessOptions).includes(handednessOption.value),
-      })
-      .required("form.validation.required"),
-    visualCorrection: mixed<IOption>()
-      .nullable()
-      .test({
-        name: "contained-in-visual-correction-options",
-        message: "form.validation.notValid",
-        test: (visualCorrectionOption) =>
-          visualCorrectionOption !== undefined
-          && visualCorrectionOption !== null
-          && getOptionsValues(visualCorrectionOptions).includes(visualCorrectionOption.value),
-      })
-      .required("form.validation.required"),
+    handedness: mixed<IOption>().nullable().required("form.validation.required"),
+    visualCorrection: mixed<IOption>().nullable().required("form.validation.required"),
     visualCorrectionValue: number()
       .default(0)
       // We are accepting dot and comma as decimal separators
