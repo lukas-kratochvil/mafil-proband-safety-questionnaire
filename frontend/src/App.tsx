@@ -1,7 +1,9 @@
+import { CircularProgress } from "@mui/material";
 import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Header } from "@components/header/Header";
 import { useAuth } from "@hooks/auth/auth";
+import { PageContainer } from "@pages/PageContainer";
 import { RoutingPaths } from "./routing-paths";
 
 const HomePage = lazy(() => import("@pages/HomePage"));
@@ -22,8 +24,13 @@ export const App = () => {
   return (
     <>
       <Header />
-      {/* TODO: make better error boundary (Suspense component) */}
-      <Suspense fallback={<div>Loading…</div>}>
+      <Suspense
+        fallback={
+          <PageContainer centerize>
+            <CircularProgress />
+          </PageContainer>
+        }
+      >
         <Routes>
           <Route
             path="/"
