@@ -3,6 +3,7 @@ import { PropsWithChildren } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormButtons, IFormButtonsProps } from "@components/form/components/FormButtons";
 import { FormPropType } from "@interfaces/form";
+import { FormSkeleton } from "./FormSkeleton";
 
 interface IFormContainerProps {
   isLoading: boolean;
@@ -22,8 +23,7 @@ export const FormContainer = ({ children, isLoading, isError, buttons }: PropsWi
   }
 
   if (isLoading) {
-    // TODO: use MUI Skeleton while form data is fetching/loading
-    return <Typography>Loading…</Typography>;
+    return <FormSkeleton />;
   }
 
   return (
