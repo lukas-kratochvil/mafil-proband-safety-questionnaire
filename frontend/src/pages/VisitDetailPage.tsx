@@ -1,4 +1,4 @@
-import { Button, Grid, Stack } from "@mui/material";
+import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
@@ -108,8 +108,8 @@ const VisitDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [visit, setVisit] = useState<IVisit>();
-  const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
-  const [isError, setIsError] = useState<boolean>(false); // TODO: create ErrorPage
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isError, setIsError] = useState<boolean>(false);
 
   const [visitState, setVisitState] = useState<VisitState>();
 
@@ -146,6 +146,24 @@ const VisitDetailPage = () => {
     stateButtons.push(getBackButtonProps(navigate));
     setButtons(stateButtons);
   }, [navigate, visit, visitState]);
+
+  if (isError) {
+    // TODO: create nice error content
+    return <Typography variant="h1">Error occured!</Typography>;
+  }
+
+  if (isLoading) {
+    return (
+      <PageContainer>
+        <Skeleton
+          variant="rounded"
+          animation="wave"
+          height="950px"
+          width="100%"
+        />
+      </PageContainer>
+    );
+  }
 
   return (
     <PageContainer>

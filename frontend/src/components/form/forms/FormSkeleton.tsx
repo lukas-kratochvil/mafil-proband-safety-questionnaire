@@ -17,13 +17,13 @@ export const FormSkeleton = () => {
         animation="wave"
         width="100%"
         height="70%"
-       />
+      />
       <Skeleton
         variant="rounded"
         animation="wave"
         width="100%"
         height="100%"
-       />
+      />
     </Stack>
   );
 };
