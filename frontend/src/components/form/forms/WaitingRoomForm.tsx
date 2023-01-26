@@ -45,7 +45,6 @@ export const WaitingRoomForm = () => {
   const [qacs, setQacs] = useState<FormQac[]>([]);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
 
-  // TODO: use MUI Skeleton while data is fetching/loading
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
 
@@ -175,6 +174,7 @@ export const WaitingRoomForm = () => {
 
   return (
     <FormContainer
+      isLoading={isLoading}
       isError={isError}
       buttons={formButtons}
     >

@@ -5,11 +5,12 @@ import { FormButtons, IFormButtonsProps } from "@components/form/components/Form
 import { FormPropType } from "@interfaces/form";
 
 interface IFormContainerProps {
+  isLoading: boolean;
   isError: boolean;
   buttons: IFormButtonsProps | undefined;
 }
 
-export const FormContainer = ({ children, isError, buttons }: PropsWithChildren<IFormContainerProps>) => {
+export const FormContainer = ({ children, isLoading, isError, buttons }: PropsWithChildren<IFormContainerProps>) => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const { handleSubmit } = useFormContext<FormPropType>();
 
@@ -18,6 +19,11 @@ export const FormContainer = ({ children, isError, buttons }: PropsWithChildren<
   if (isError) {
     // TODO: create nice error content
     return <Typography variant="h1">Error occured!</Typography>;
+  }
+
+  if (isLoading) {
+    // TODO: use MUI Skeleton while form data is fetching/loading
+    return <Typography>Loading…</Typography>;
   }
 
   return (
