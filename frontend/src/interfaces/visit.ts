@@ -56,11 +56,11 @@ interface IProbandInfo {
   birthdate: Date;
   height: number;
   weight: number;
-  gender: Gender;
+  gender: Gender; // TODO: object stored in the database
   nativeLanguage: string; // TODO: object stored in the database
   visualCorrection: VisualCorrection;
   visualCorrectionValue: number;
-  handedness: Handedness;
+  handedness: Handedness; // TODO: object stored in the database
   email: string;
   phone: string;
 }

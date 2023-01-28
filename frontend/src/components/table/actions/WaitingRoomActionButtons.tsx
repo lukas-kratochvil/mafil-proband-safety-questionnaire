@@ -24,7 +24,7 @@ export const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
 
   const onDelete = () => {
-    // TODO
+    // TODO: mark visit form as deleted
     alert("Funkcionalita bude brzy naimplementována.");
     setOpenDeleteDialog(false);
   };
