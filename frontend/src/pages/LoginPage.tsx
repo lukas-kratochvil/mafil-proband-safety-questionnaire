@@ -1,4 +1,5 @@
-import { Avatar, Button, Stack, Typography } from "@mui/material";
+import { Alert, Avatar, Button, Stack, Typography } from "@mui/material";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CardContainer } from "@components/card/CardContainer";
 import { useAuth } from "@hooks/auth/auth";
@@ -9,12 +10,10 @@ import { PageContainer } from "./PageContainer";
 const LoginPage = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "loginPage" });
   const { logIn } = useAuth();
+  const [isLoginSuccessful, setIsLoginSuccessful] = useState<boolean>(true);
 
   const handleLogIn = async (authMethod: IAuthMethod) => {
-    if (!(await logIn(authMethod))) {
-      // TODO: show some Alert that operator does not have access to the app authenticated version
-      Error("Login was unsuccessful!");
-    }
+    setIsLoginSuccessful(await logIn(authMethod));
   };
 
   return (
@@ -27,6 +26,14 @@ const LoginPage = () => {
             paddingX: "2rem",
           }}
         >
+          {!isLoginSuccessful && (
+            <Alert
+              severity="error"
+              variant="outlined"
+            >
+              {t("alert")}
+            </Alert>
+          )}
           <Typography>{t("loginText")}</Typography>
           <Stack spacing="0.5rem">
             <Button

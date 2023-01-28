@@ -154,7 +154,8 @@
     },
     "loginPage": {
       "title": "Proband safety questionnaire",
-      "loginText": "Log in via:"
+      "loginText": "Log in via:",
+      "alert": "Login failed!"
     },
     "visitDetailPage": {
       "title": "Detail of visit",

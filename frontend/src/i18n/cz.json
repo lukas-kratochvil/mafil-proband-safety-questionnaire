@@ -154,7 +154,8 @@
     },
     "loginPage": {
       "title": "Bezpečnostní dotazník probanda",
-      "loginText": "Přihlásit se přes:"
+      "loginText": "Přihlásit se přes:",
+      "alert": "Přihlášení se nezdařilo!"
     },
     "visitDetailPage": {
       "title": "Detail visity",
