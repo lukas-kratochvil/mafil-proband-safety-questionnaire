@@ -232,6 +232,9 @@
         "state": "Stav",
         "actions": "Akce"
       }
+    },
+    "notFoundPage": {
+      "text": "Stránka nebyla nalezena."
     }
   }
 }

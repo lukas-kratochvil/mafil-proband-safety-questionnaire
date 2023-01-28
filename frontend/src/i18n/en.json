@@ -232,6 +232,9 @@
         "state": "State",
         "actions": "Actions"
       }
+    },
+    "notFoundPage": {
+      "text": "Page not found."
     }
   }
 }

@@ -16,6 +16,7 @@ const ApprovalRoomTablePage = lazy(() => import("@pages/ApprovalRoomTablePage"))
 const RecentVisitsTablePage = lazy(() => import("@pages/RecentVisitsTablePage"));
 const WaitingRoomTablePage = lazy(() => import("@pages/WaitingRoomTablePage"));
 const VisitDetailPage = lazy(() => import("@pages/VisitDetailPage"));
+const NotFoundPage = lazy(() => import("@pages/NotFoundPage"));
 
 export const App = () => {
   const { operator } = useAuth();
@@ -81,6 +82,10 @@ export const App = () => {
             />
           </>
         )}
+        <Route
+          path="*"
+          element={<NotFoundPage />}
+        />
       </Routes>
     </Suspense>
   );
