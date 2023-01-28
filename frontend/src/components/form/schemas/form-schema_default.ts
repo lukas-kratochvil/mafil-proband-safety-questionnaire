@@ -28,37 +28,8 @@ export const defaultFormSchema = object().shape(
       .nullable()
       .typeError("form.validation.notValid")
       .max(new Date(), "form.validation.birthdateMaxDate")
-      // TODO: make it a warning not validation error
-      // .test({
-      //   name: "birthdate-corresponds-to-personalId",
-      //   message: "form.validation.birthdateNotCorrespondToPersonalId",
-      //   test: (birthdate, testContext) => {
-      //     const czechPersonalId = rodnecislo(testContext.parent.personalId);
-      //     return (
-      //       birthdate === undefined
-      //       || birthdate === null
-      //       || !czechPersonalId.isValid()
-      //       || isEqual(czechPersonalId.birthDate(), birthdate)
-      //     );
-      //   },
-      // })
       .required("form.validation.required"),
     gender: mixed<IOption>().nullable().required("form.validation.required"),
-    // TODO: make it a warning not validation error
-    // .test({
-    //   name: "gender-corresponds-to-personalId",
-    //   message: "form.validation.genderNotCorrespondToPersonalId",
-    //   test: (gender, testContext) => {
-    //     const czechPersonalId = rodnecislo(testContext.parent.personalId);
-    //     return (
-    //       gender === null
-    //       || gender === undefined
-    //       || !czechPersonalId.isValid()
-    //       || (czechPersonalId.isMale() && [Gender.MALE, Gender.OTHER].includes(gender.value))
-    //       || (czechPersonalId.isFemale() && [Gender.FEMALE, Gender.OTHER].includes(gender.value))
-    //     );
-    //   },
-    // })
     nativeLanguage: string().nullable().required("form.validation.required"),
     height: number()
       .typeError("form.validation.notValid")
