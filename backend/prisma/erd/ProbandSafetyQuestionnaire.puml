@@ -30,7 +30,6 @@ entity VisitForm {
   deletedAt: Date
   ---
   * state: VisitFormState
-  note: String
   visitId: String
   pdf: Bytes
 }

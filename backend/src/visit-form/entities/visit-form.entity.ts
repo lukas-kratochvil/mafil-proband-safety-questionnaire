@@ -34,9 +34,6 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   state: VisitFormState;
 
   @Field(() => String, { nullable: true })
-  note: string | null;
-
-  @Field(() => String, { nullable: true })
   visitId: string | null;
 
   // TODO: What is the correct GraphQL type for a PDF?
