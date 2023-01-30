@@ -56,6 +56,13 @@ vi.mock("react-router-dom", async () => ({
 }));
 
 //----------------------------------------------------------------------
+// Mocking LanguageMenu due to undefined i18n instance that is used inside this component
+//----------------------------------------------------------------------
+vi.mock("@components/header/LanguageMenu", () => ({
+  LanguageMenu: () => <div />,
+}));
+
+//----------------------------------------------------------------------
 // Tests
 //----------------------------------------------------------------------
 describe("visit detail page", () => {

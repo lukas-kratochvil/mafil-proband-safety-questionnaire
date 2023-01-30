@@ -4,13 +4,25 @@ import HomePage from "@pages/HomePage";
 import { RoutingPaths } from "@routing-paths";
 import { render, screen } from "@test-utils";
 
-const mockedUseNavigate = vi.fn();
+//----------------------------------------------------------------------
+// Mocking LanguageMenu due to undefined i18n instance that is used inside this component
+//----------------------------------------------------------------------
+vi.mock("@components/header/LanguageMenu", () => ({
+  LanguageMenu: () => <div />,
+}));
 
+//----------------------------------------------------------------------
+// Mocking react-router-dom hooks
+//----------------------------------------------------------------------
+const mockedUseNavigate = vi.fn();
 vi.mock("react-router-dom", async () => ({
   ...((await vi.importActual("react-router-dom")) as Record<string, unknown>),
   useNavigate: () => mockedUseNavigate,
 }));
 
+//----------------------------------------------------------------------
+// Tests
+//----------------------------------------------------------------------
 describe("home page", () => {
   beforeEach(async () => {
     await i18n.changeLanguage("cimode");
