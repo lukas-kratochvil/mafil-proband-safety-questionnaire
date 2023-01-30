@@ -108,10 +108,10 @@ const VisitDetailPage = () => {
   const { t } = useTranslation(defaultNS);
   const { id } = useParams();
   const navigate = useNavigate();
+
   const [visit, setVisit] = useState<IVisit>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
-
   const [visitState, setVisitState] = useState<VisitState>();
 
   useEffect(() => {

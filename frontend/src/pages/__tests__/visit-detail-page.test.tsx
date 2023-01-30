@@ -2,7 +2,7 @@ import userEvent from "@testing-library/user-event";
 import i18n from "@i18n";
 import { Gender, Handedness, IVisit, VisitState, VisualCorrection } from "@interfaces/visit";
 import VisitDetailPage from "@pages/VisitDetailPage";
-import { render, screen, waitFor } from "@test-utils";
+import { render, screen } from "@test-utils";
 import * as fetchers from "@util/fetch";
 
 //----------------------------------------------------------------------
@@ -66,14 +66,19 @@ vi.mock("@components/header/LanguageMenu", () => ({
 // Tests
 //----------------------------------------------------------------------
 describe("visit detail page", () => {
+  const setup = () => {
+    render(<VisitDetailPage />);
+  };
+
   beforeEach(async () => {
     await i18n.changeLanguage("cimode");
   });
 
   test("contains translations", async () => {
-    const { container } = render(<VisitDetailPage />);
+    vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => defaultVisit);
+    setup();
 
-    await waitFor(() => expect(container).toHaveTextContent(/visitDetailPage.title: /));
+    await screen.findByText(/visitDetailPage.title: /);
   });
 
   test("is disapproved", async () => {
@@ -82,15 +87,13 @@ describe("visit detail page", () => {
       state: VisitState.DISAPPROVED,
     };
     vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => disapprovedVisit);
+    setup();
 
-    const { container } = render(<VisitDetailPage />);
-    const iframe = screen.getByTitle("Visit detail");
-    const backButton = await screen.findByText(/common.backButton/);
-
+    expect(await screen.findByText(`visitDetailPage.title: ${  disapprovedVisit.visitId}`)).toBeDefined();
+    await screen.findByText(/visitDetailPage.infoStripes.disapproved/);
+    const iframe = await screen.findByTitle("Visit detail");
     expect(iframe).toBeInTheDocument();
-    expect(container).toHaveTextContent(/visitDetailPage.title: /);
-    await waitFor(() => expect(container).toHaveTextContent(disapprovedVisit.visitId));
-    await waitFor(() => expect(container).toHaveTextContent(/visitDetailPage.infoStripes.disapproved/));
+    const backButton = await screen.findByText(/common.backButton/);
     expect(backButton).toBeInTheDocument();
   });
 
@@ -100,21 +103,19 @@ describe("visit detail page", () => {
       state: VisitState.APPROVED,
     };
     vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => approvedVisit);
+    setup();
 
-    const { container } = render(<VisitDetailPage />);
+    expect(await screen.findByText(`visitDetailPage.title: ${  approvedVisit.visitId}`)).toBeDefined();
+    await screen.findByText(/visitDetailPage.infoStripes.signatureChoice/);
     const iframe = screen.getByTitle("Visit detail");
+    expect(iframe).toBeInTheDocument();
     const downloadPDFAndPhysicallySignButton = await screen.findByText(
       /visitDetailPage.buttons.downloadPDFAndPhysicallySign/
     );
-    const signElectronicallyButton = await screen.findByText(/visitDetailPage.buttons.signElectronically/);
-    const backButton = await screen.findByText(/common.backButton/);
-
-    expect(iframe).toBeInTheDocument();
-    expect(container).toHaveTextContent(/visitDetailPage.title: /);
-    await waitFor(() => expect(container).toHaveTextContent(approvedVisit.visitId));
-    await waitFor(() => expect(container).toHaveTextContent(/visitDetailPage.infoStripes.signatureChoice/));
     expect(downloadPDFAndPhysicallySignButton).toBeInTheDocument();
+    const signElectronicallyButton = await screen.findByText(/visitDetailPage.buttons.signElectronically/);
     expect(signElectronicallyButton).toBeDisabled();
+    const backButton = await screen.findByText(/common.backButton/);
     expect(backButton).toBeInTheDocument();
   });
 
@@ -124,19 +125,15 @@ describe("visit detail page", () => {
       state: VisitState.FOR_SIGNATURE,
     };
     vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => forSignatureVisit);
+    setup();
 
-    const { container } = render(<VisitDetailPage />);
+    expect(await screen.findByText(`visitDetailPage.title: ${  forSignatureVisit.visitId}`)).toBeDefined();
+    await screen.findByText(/visitDetailPage.infoStripes.waitingForSignatureConfirmation/);
     const iframe = screen.getByTitle("Visit detail");
-    const confirmSignatureButton = await screen.findByText(/visitDetailPage.buttons.confirmSignature/);
-    const backButton = await screen.findByText(/common.backButton/);
-
     expect(iframe).toBeInTheDocument();
-    expect(container).toHaveTextContent(/visitDetailPage.title: /);
-    await waitFor(() => expect(container).toHaveTextContent(forSignatureVisit.visitId));
-    await waitFor(() =>
-      expect(container).toHaveTextContent(/visitDetailPage.infoStripes.waitingForSignatureConfirmation/)
-    );
+    const confirmSignatureButton = await screen.findByText(/visitDetailPage.buttons.confirmSignature/);
     expect(confirmSignatureButton).toBeInTheDocument();
+    const backButton = await screen.findByText(/common.backButton/);
     expect(backButton).toBeInTheDocument();
   });
 
@@ -146,17 +143,15 @@ describe("visit detail page", () => {
       state: VisitState.SIGNED,
     };
     vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => signedVisit);
+    setup();
 
-    const { container } = render(<VisitDetailPage />);
+    expect(await screen.findByText(`visitDetailPage.title: ${  signedVisit.visitId}`)).toBeDefined();
+    await screen.findByText(/visitDetailPage.infoStripes.signed/);
     const iframe = screen.getByTitle("Visit detail");
-    const downloadPDFButton = await screen.findByText(/visitDetailPage.buttons.downloadPDF/);
-    const backButton = await screen.findByText(/common.backButton/);
-
     expect(iframe).toBeInTheDocument();
-    expect(container).toHaveTextContent(/visitDetailPage.title: /);
-    await waitFor(() => expect(container).toHaveTextContent(signedVisit.visitId));
-    await waitFor(() => expect(container).toHaveTextContent(/visitDetailPage.infoStripes.signed/));
+    const downloadPDFButton = await screen.findByText(/visitDetailPage.buttons.downloadPDF/);
     expect(downloadPDFButton).toBeInTheDocument();
+    const backButton = await screen.findByText(/common.backButton/);
     expect(backButton).toBeInTheDocument();
   });
 
@@ -170,29 +165,27 @@ describe("visit detail page", () => {
       },
     };
     vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => signedPhantomVisit);
+    setup();
 
-    const { container } = render(<VisitDetailPage />);
+    expect(await screen.findByText(`visitDetailPage.title: ${  signedPhantomVisit.visitId}`)).toBeDefined();
+    await screen.findByText(/visitDetailPage.infoStripes.completed/);
     const iframe = screen.getByTitle("Visit detail");
-    const downloadPDFButton = await screen.findByText(/visitDetailPage.buttons.downloadPDF/);
-    const backButton = await screen.findByText(/common.backButton/);
-
     expect(iframe).toBeInTheDocument();
-    expect(container).toHaveTextContent(/visitDetailPage.title: /);
-    await waitFor(() => expect(container).toHaveTextContent(signedPhantomVisit.visitId));
-    await waitFor(() => expect(container).toHaveTextContent(/visitDetailPage.infoStripes.completed/));
+    const downloadPDFButton = await screen.findByText(/visitDetailPage.buttons.downloadPDF/);
     expect(downloadPDFButton).toBeInTheDocument();
+    const backButton = await screen.findByText(/common.backButton/);
     expect(backButton).toBeInTheDocument();
   });
 
   test("switches from approved to for-signature state", async () => {
-    const user = userEvent.setup();
     const approvedVisit: IVisit = {
       ...defaultVisit,
       state: VisitState.APPROVED,
     };
     vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => approvedVisit);
+    setup();
+    const user = userEvent.setup();
 
-    render(<VisitDetailPage />);
     const downloadPDFAndPhysicallySignButton = await screen.findByText(
       /visitDetailPage.buttons.downloadPDFAndPhysicallySign/
     );
@@ -209,8 +202,8 @@ describe("visit detail page", () => {
       state: VisitState.FOR_SIGNATURE,
     };
     vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => forSignatureVisit);
+    setup();
 
-    render(<VisitDetailPage />);
     const confirmSignatureButton = await screen.findByText(/visitDetailPage.buttons.confirmSignature/);
     await userEvent.click(confirmSignatureButton);
 
@@ -220,7 +213,6 @@ describe("visit detail page", () => {
   });
 
   test("switches phantom from for-signature to signed state", async () => {
-    const user = userEvent.setup();
     const forSignaturePhantomVisit: IVisit = {
       ...defaultVisit,
       state: VisitState.FOR_SIGNATURE,
@@ -230,8 +222,9 @@ describe("visit detail page", () => {
       },
     };
     vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => forSignaturePhantomVisit);
+    setup();
+    const user = userEvent.setup();
 
-    render(<VisitDetailPage />);
     const confirmSignatureButton = await screen.findByText(/visitDetailPage.buttons.confirmSignature/);
     await user.click(confirmSignatureButton);
 
