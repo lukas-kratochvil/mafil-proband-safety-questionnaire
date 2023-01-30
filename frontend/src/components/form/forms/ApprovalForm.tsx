@@ -22,9 +22,10 @@ export const ApprovalForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { operator } = useAuth();
-  const { reset, setValue, trigger } = useFormContext<FormPropType>();
+  const { getValues, setValue, trigger } = useFormContext<FormPropType>();
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [valuesBeforeEditing, setValuesBeforeEditing] = useState<FormPropType>();
   const [isDisapproved, setIsDisapproved] = useState<boolean>(false);
   const [qacs, setQacs] = useState<FormQac[]>([]);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
@@ -73,18 +74,22 @@ export const ApprovalForm = () => {
         setFormButtons({
           submitButtonProps: {
             titleLocalizationKey: "form.common.buttons.saveChanges",
-            onClick: (data: FormPropType) => {
-              // TODO: save the changes in DB
-              setIsEditing(false);
-            },
+            onClick: (_data: FormPropType) => setIsEditing(false),
           },
           buttonsProps: [
             {
               titleLocalizationKey: "form.common.buttons.cancel",
               onClick: () => {
-                // TODO: reset to previously saved data
-                reset();
-                setIsEditing(false);
+                if (valuesBeforeEditing !== undefined) {
+                  type ValuesBeforeEditingType = keyof typeof valuesBeforeEditing;
+                  Object.keys(valuesBeforeEditing).forEach((propertyName) => {
+                    setValue(
+                      propertyName as ValuesBeforeEditingType,
+                      valuesBeforeEditing[propertyName as ValuesBeforeEditingType]
+                    );
+                  });
+                  setIsEditing(false);
+                }
               },
             },
           ],
@@ -93,7 +98,7 @@ export const ApprovalForm = () => {
         setFormButtons({
           submitButtonProps: {
             titleLocalizationKey: "form.common.buttons.confirmDisapproval",
-            onClick: () => {
+            onClick: (data: FormPropType) => {
               // TODO: store changes in DB if made
               updateDummyVisitState(id, VisitState.DISAPPROVED);
               navigate(RoutingPaths.APPROVAL_ROOM);
@@ -114,7 +119,7 @@ export const ApprovalForm = () => {
         setFormButtons({
           submitButtonProps: {
             titleLocalizationKey: "form.common.buttons.approve",
-            onClick: () => {
+            onClick: (data: FormPropType) => {
               // TODO: store changes in DB if made
               updateDummyVisitState(id, VisitState.APPROVED);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${id}`);
@@ -133,7 +138,10 @@ export const ApprovalForm = () => {
             },
             {
               titleLocalizationKey: "form.common.buttons.edit",
-              onClick: () => setIsEditing(true),
+              onClick: () => {
+                setValuesBeforeEditing(getValues());
+                setIsEditing(true);
+              },
             },
             getBackButtonProps(navigate),
           ],
@@ -146,7 +154,17 @@ export const ApprovalForm = () => {
         buttonsProps: [getBackButtonProps(navigate)],
       });
     }
-  }, [id, isDisapproved, isEditing, navigate, operator?.hasHigherPermission, reset, setValue, trigger]);
+  }, [
+    getValues,
+    id,
+    isDisapproved,
+    isEditing,
+    navigate,
+    operator?.hasHigherPermission,
+    setValue,
+    trigger,
+    valuesBeforeEditing,
+  ]);
 
   return (
     <FormContainer
