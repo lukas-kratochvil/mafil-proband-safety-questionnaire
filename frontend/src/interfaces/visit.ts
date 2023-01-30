@@ -3,7 +3,7 @@ import { QuestionPartNumber } from "./question";
 export enum VisitState {
   NEW = "Nové",
   IN_APPROVAL = "Ve schvalování",
-  APPROVED = "Schváleno",
+  APPROVED = "Schváleno, nepodepsáno",
   DISAPPROVED = "Neschváleno",
   FOR_SIGNATURE = "K podpisu",
   SIGNED = "Podepsáno",
@@ -28,6 +28,7 @@ interface IProjectInfo {
   device: string | null;
   isPhantom: boolean;
   measurementDate: Date | null;
+  disapprovalReason: string | null;
 }
 
 export enum Gender {
@@ -41,7 +42,7 @@ export enum VisualCorrection {
   NO,
 }
 
-export enum SideDominance {
+export enum Handedness {
   RIGHT_HANDED,
   LEFT_HANDED,
   LEFT_HANDED_RETRAINED,
@@ -55,11 +56,11 @@ interface IProbandInfo {
   birthdate: Date;
   height: number;
   weight: number;
-  gender: Gender;
+  gender: Gender; // TODO: object stored in the database
   nativeLanguage: string; // TODO: object stored in the database
   visualCorrection: VisualCorrection;
   visualCorrectionValue: number;
-  sideDominance: SideDominance;
+  handedness: Handedness; // TODO: object stored in the database
   email: string;
   phone: string;
 }

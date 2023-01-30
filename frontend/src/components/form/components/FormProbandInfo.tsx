@@ -13,7 +13,7 @@ import { FormDatePicker } from "../inputs/FormDatePicker";
 import { FormOptionsAutocomplete } from "../inputs/FormOptionsAutocomplete";
 import { FormTextField } from "../inputs/FormTextField";
 import { IPhantomFormCardProps } from "../interfaces/form-card";
-import { genderOptions, getOption, sideDominanceOptions, visualCorrectionOptions } from "../util/options";
+import { genderOptions, getOption, handednessOptions, visualCorrectionOptions } from "../util/options";
 import { CzechPersonalId, getPersonalIdFromBirthdateAndGender } from "../util/personal-id";
 import { FormCardContainer } from "./FormCardContainer";
 
@@ -230,9 +230,9 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           md={4}
         >
           <FormOptionsAutocomplete
-            name="sideDominance"
-            label={t("sideDominance")}
-            options={sideDominanceOptions}
+            name="handedness"
+            label={t("handedness")}
+            options={handednessOptions}
             disabled={disableInputs}
           />
         </Grid>

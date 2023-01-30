@@ -1,5 +1,16 @@
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Theme,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { IFormButtonsProps } from "@components/form/components/FormButtons";
 import { FormProbandContact } from "@components/form/components/FormProbandContact";
@@ -7,8 +18,8 @@ import { FormProbandInfo } from "@components/form/components/FormProbandInfo";
 import { FormProjectInfo } from "@components/form/components/FormProjectInfo";
 import { FormQuestions } from "@components/form/components/FormQuestions";
 import { loadFormDefaultValuesFromVisit } from "@components/form/util/loaders";
-import { getDisapproveButtonProps } from "@components/form/util/utils";
 import { useAuth } from "@hooks/auth/auth";
+import { defaultNS } from "@i18n";
 import { FormPropType, FormQac } from "@interfaces/form";
 import { QuestionPartNumber } from "@interfaces/question";
 import { AnswerOption, VisitState } from "@interfaces/visit";
@@ -16,19 +27,25 @@ import { RoutingPaths } from "@routing-paths";
 import { fetchVisit } from "@util/fetch";
 import { updateDummyVisitState } from "@util/fetch.dev";
 import { getBackButtonProps } from "@util/utils";
+import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormContainer } from "./FormContainer";
 
 export const WaitingRoomForm = () => {
+  const { t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomFormPage.finalizeDialog" });
+  const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
+
   const { id } = useParams();
   const navigate = useNavigate();
   const { operator } = useAuth();
-  const { reset, setValue } = useFormContext();
+  const { getValues, handleSubmit, setValue, trigger } = useFormContext<FormPropType>();
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [valuesBeforeEditing, setValuesBeforeEditing] = useState<FormPropType>();
+  const [isDisapproved, setIsDisapproved] = useState<boolean>(false);
+  const [openFinalizeDialog, setOpenFinalizeDialog] = useState<boolean>(false);
   const [qacs, setQacs] = useState<FormQac[]>([]);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
 
-  // TODO: use MUI Skeleton while data is fetching/loading
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
 
@@ -72,18 +89,43 @@ export const WaitingRoomForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.saveChanges",
-          onClick: (data: FormPropType) => {
-            // TODO: save the changes in DB
-            setIsEditing(false);
-          },
+          onClick: (_data: FormPropType) => setIsEditing(false),
         },
         buttonsProps: [
           {
             titleLocalizationKey: "form.common.buttons.cancel",
             onClick: () => {
-              // TODO: reset to previously saved data
-              reset();
-              setIsEditing(false);
+              if (valuesBeforeEditing !== undefined) {
+                type ValuesBeforeEditingType = keyof typeof valuesBeforeEditing;
+                Object.keys(valuesBeforeEditing).forEach((propertyName) => {
+                  setValue(
+                    propertyName as ValuesBeforeEditingType,
+                    valuesBeforeEditing[propertyName as ValuesBeforeEditingType]
+                  );
+                });
+                setIsEditing(false);
+              }
+            },
+          },
+        ],
+      });
+    } else if (isDisapproved) {
+      setFormButtons({
+        submitButtonProps: {
+          titleLocalizationKey: "form.common.buttons.confirmDisapproval",
+          onClick: (data: FormPropType) => {
+            // TODO: store changes in DB
+            updateDummyVisitState(id, VisitState.DISAPPROVED);
+            navigate(RoutingPaths.WAITING_ROOM);
+          },
+          showErrorColor: true,
+        },
+        buttonsProps: [
+          {
+            titleLocalizationKey: "form.common.buttons.cancel",
+            onClick: () => {
+              setValue("disapprovalReason", null);
+              setIsDisapproved(false);
             },
           },
         ],
@@ -93,35 +135,64 @@ export const WaitingRoomForm = () => {
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.finalize",
           onClick: (data: FormPropType) => {
-            // TODO: store changes in DB if made
             if (
               operator?.hasHigherPermission
               || data.answers.find(
                 (answer) => answer.partNumber === QuestionPartNumber.TWO && answer.answer === AnswerOption.YES
               ) === undefined
             ) {
+              // TODO: store changes in DB
               updateDummyVisitState(id, VisitState.APPROVED);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${id}`);
             } else {
-              updateDummyVisitState(id, VisitState.IN_APPROVAL);
-              navigate(RoutingPaths.WAITING_ROOM);
+              setOpenFinalizeDialog(true);
             }
           },
         },
         buttonsProps: [
-          getDisapproveButtonProps(id, navigate),
+          {
+            titleLocalizationKey: "form.common.buttons.disapprove",
+            onClick: async () => {
+              if (await trigger(undefined, { shouldFocus: true })) {
+                setValue("disapprovalReason", "");
+                setIsDisapproved(true);
+              }
+            },
+            showErrorColor: true,
+          },
           {
             titleLocalizationKey: "form.common.buttons.edit",
-            onClick: () => setIsEditing(true),
+            onClick: () => {
+              setValuesBeforeEditing(getValues());
+              setIsEditing(true);
+            },
           },
           getBackButtonProps(navigate, "form.common.buttons.cancel"),
         ],
       });
     }
-  }, [id, isEditing, navigate, operator?.hasHigherPermission, reset]);
+  }, [
+    getValues,
+    id,
+    isDisapproved,
+    isEditing,
+    navigate,
+    operator?.hasHigherPermission,
+    setValue,
+    trigger,
+    valuesBeforeEditing,
+  ]);
+
+  const onSubmit = (data: FormPropType) => {
+    // TODO: store changes in DB
+    updateDummyVisitState(id, VisitState.IN_APPROVAL);
+    setOpenFinalizeDialog(false);
+    navigate(RoutingPaths.WAITING_ROOM);
+  };
 
   return (
     <FormContainer
+      isLoading={isLoading}
       isError={isError}
       buttons={formButtons}
     >
@@ -138,6 +209,20 @@ export const WaitingRoomForm = () => {
         qacs={qacs.filter((qac) => qac.partNumber === QuestionPartNumber.TWO)}
         disableInputs={!isEditing}
       />
+      {isDisapproved && <FormDisapprovalReason />}
+      <Dialog
+        open={openFinalizeDialog}
+        fullScreen={matchesDownSmBreakpoint}
+      >
+        <DialogTitle>{t("title")}</DialogTitle>
+        <DialogContent>
+          <Typography>{t("text")}</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => handleSubmit(onSubmit)()}>{t("buttons.continue")}</Button>
+          <Button onClick={() => setOpenFinalizeDialog(false)}>{t("buttons.cancel")}</Button>
+        </DialogActions>
+      </Dialog>
     </FormContainer>
   );
 };

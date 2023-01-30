@@ -1,4 +1,4 @@
-import { Button, Grid, Stack } from "@mui/material";
+import { Button, Grid, Skeleton, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
@@ -8,13 +8,14 @@ import {
   ColoredInfoStripeColors,
   IColoredInfoStripeProps,
 } from "@components/informative/ColoredInfoStripe";
+import { ErrorAlert } from "@components/informative/ErrorAlert";
 import { defaultNS } from "@i18n";
 import { IVisit, VisitState } from "@interfaces/visit";
 import { fetchVisitDetail } from "@util/fetch";
-import { convertStringToLocalizationKey, getBackButtonProps, IButton } from "@util/utils";
+import { convertStringToLocalizationKey, getBackButtonProps, IButtonProps } from "@util/utils";
 import { PageContainer } from "./PageContainer";
 
-interface IVisitDetailButtonProps extends IButton {
+interface IVisitDetailButtonProps extends IButtonProps {
   disabled?: boolean;
 }
 
@@ -107,10 +108,10 @@ const VisitDetailPage = () => {
   const { t } = useTranslation(defaultNS);
   const { id } = useParams();
   const navigate = useNavigate();
-  const [visit, setVisit] = useState<IVisit>();
-  const [isLoading, setIsLoading] = useState<boolean>(true); // TODO: use MUI Skeleton while data is fetching
-  const [isError, setIsError] = useState<boolean>(false); // TODO: create ErrorPage
 
+  const [visit, setVisit] = useState<IVisit>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isError, setIsError] = useState<boolean>(false);
   const [visitState, setVisitState] = useState<VisitState>();
 
   useEffect(() => {
@@ -146,6 +147,27 @@ const VisitDetailPage = () => {
     stateButtons.push(getBackButtonProps(navigate));
     setButtons(stateButtons);
   }, [navigate, visit, visitState]);
+
+  if (isError) {
+    return (
+      <PageContainer>
+        <ErrorAlert />
+      </PageContainer>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <PageContainer>
+        <Skeleton
+          variant="rounded"
+          animation="wave"
+          height="950px"
+          width="100%"
+        />
+      </PageContainer>
+    );
+  }
 
   return (
     <PageContainer>

@@ -7,7 +7,6 @@ import { FormProbandInfo } from "@components/form/components/FormProbandInfo";
 import { FormProjectInfo } from "@components/form/components/FormProjectInfo";
 import { FormQuestions } from "@components/form/components/FormQuestions";
 import { loadFormDefaultValuesVisitDuplication } from "@components/form/util/loaders";
-import { getDisapproveButtonProps } from "@components/form/util/utils";
 import { createNewVisitFromFormData } from "@components/form/util/utils.dev";
 import { dummyVisits } from "@data/visit_data";
 import { useAuth } from "@hooks/auth/auth";
@@ -16,21 +15,24 @@ import { QuestionPartNumber } from "@interfaces/question";
 import { AnswerOption, VisitState } from "@interfaces/visit";
 import { RoutingPaths } from "@routing-paths";
 import { fetchVisit } from "@util/fetch";
+import { updateDummyVisitState } from "@util/fetch.dev";
 import { getBackButtonProps } from "@util/utils";
+import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormContainer } from "./FormContainer";
 
 export const DuplicationForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { operator } = useAuth();
-  const { reset, setValue } = useFormContext<FormPropType>();
+  const { getValues, setValue, trigger } = useFormContext<FormPropType>();
 
   const [isPhantom, setIsPhantom] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [valuesBeforeEditing, setValuesBeforeEditing] = useState<FormPropType>();
+  const [isDisapproved, setIsDisapproved] = useState<boolean>(false);
   const [qacs, setQacs] = useState<FormQac[]>([]);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
 
-  // TODO: use MUI Skeleton while data is fetching/loading
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
 
@@ -88,18 +90,43 @@ export const DuplicationForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.saveChanges",
-          onClick: (data: FormPropType) => {
-            // TODO: save the changes in DB
-            setIsEditing(false);
-          },
+          onClick: (_data: FormPropType) => setIsEditing(false),
         },
         buttonsProps: [
           {
             titleLocalizationKey: "form.common.buttons.cancel",
             onClick: () => {
-              // TODO: reset to previously saved data
-              reset();
-              setIsEditing(false);
+              if (valuesBeforeEditing !== undefined) {
+                type ValuesBeforeEditingType = keyof typeof valuesBeforeEditing;
+                Object.keys(valuesBeforeEditing).forEach((propertyName) => {
+                  setValue(
+                    propertyName as ValuesBeforeEditingType,
+                    valuesBeforeEditing[propertyName as ValuesBeforeEditingType]
+                  );
+                });
+                setIsEditing(false);
+              }
+            },
+          },
+        ],
+      });
+    } else if (isDisapproved) {
+      setFormButtons({
+        submitButtonProps: {
+          titleLocalizationKey: "form.common.buttons.confirmDisapproval",
+          onClick: (data: FormPropType) => {
+            // TODO: store changes in DB if made
+            updateDummyVisitState(id, VisitState.DISAPPROVED);
+            navigate(RoutingPaths.RECENT_VISITS);
+          },
+          showErrorColor: true,
+        },
+        buttonsProps: [
+          {
+            titleLocalizationKey: "form.common.buttons.cancel",
+            onClick: () => {
+              setValue("disapprovalReason", null);
+              setIsDisapproved(false);
             },
           },
         ],
@@ -129,19 +156,43 @@ export const DuplicationForm = () => {
           },
         },
         buttonsProps: [
-          getDisapproveButtonProps(id, navigate),
+          {
+            titleLocalizationKey: "form.common.buttons.disapprove",
+            onClick: async () => {
+              if (await trigger(undefined, { shouldFocus: true })) {
+                setValue("disapprovalReason", "");
+                setIsDisapproved(true);
+              }
+            },
+            showErrorColor: true,
+          },
           {
             titleLocalizationKey: "form.common.buttons.edit",
-            onClick: () => setIsEditing(true),
+            onClick: () => {
+              setValuesBeforeEditing(getValues());
+              setIsEditing(true);
+            },
           },
-          getBackButtonProps(navigate, "Zrušit"),
+          getBackButtonProps(navigate, "form.common.buttons.cancel"),
         ],
       });
     }
-  }, [id, isEditing, isPhantom, navigate, operator?.hasHigherPermission, reset]);
+  }, [
+    getValues,
+    id,
+    isDisapproved,
+    isEditing,
+    isPhantom,
+    navigate,
+    operator?.hasHigherPermission,
+    setValue,
+    trigger,
+    valuesBeforeEditing,
+  ]);
 
   return (
     <FormContainer
+      isLoading={isLoading}
       isError={isError}
       buttons={formButtons}
     >
@@ -163,6 +214,7 @@ export const DuplicationForm = () => {
             qacs={qacs.filter((qac) => qac.partNumber === QuestionPartNumber.TWO)}
             disableInputs={!isEditing}
           />
+          {isDisapproved && <FormDisapprovalReason />}
         </>
       )}
     </FormContainer>

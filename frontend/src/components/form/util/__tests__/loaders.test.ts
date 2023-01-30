@@ -1,5 +1,5 @@
 import { QuestionPartNumber } from "@interfaces/question";
-import { AnswerOption, Gender, IVisit, SideDominance, VisitState, VisualCorrection } from "@interfaces/visit";
+import { AnswerOption, Gender, Handedness, IVisit, VisitState, VisualCorrection } from "@interfaces/visit";
 import {
   loadEmptyDefaultValues,
   loadFormDefaultValuesFromVisit,
@@ -20,6 +20,7 @@ const visit: IVisit = {
     deviceId: "1",
     isPhantom: true,
     measurementDate: new Date(),
+    disapprovalReason: null,
   },
   probandInfo: {
     name: "Name",
@@ -32,7 +33,7 @@ const visit: IVisit = {
     weight: 80,
     visualCorrection: VisualCorrection.YES,
     visualCorrectionValue: 1,
-    sideDominance: SideDominance.UNDETERMINED,
+    handedness: Handedness.UNDETERMINED,
     email: "name.surname@email.com",
     phone: "123456789",
   },
@@ -59,6 +60,7 @@ const visitNotCompleted: IVisit = {
     deviceId: "",
     isPhantom: true,
     measurementDate: null,
+    disapprovalReason: null,
   },
   probandInfo: {
     name: "Name",
@@ -71,7 +73,7 @@ const visitNotCompleted: IVisit = {
     weight: 80,
     visualCorrection: VisualCorrection.NO,
     visualCorrectionValue: 0,
-    sideDominance: SideDominance.UNDETERMINED,
+    handedness: Handedness.UNDETERMINED,
     email: "",
     phone: "",
   },
@@ -100,7 +102,7 @@ describe("form loaders", () => {
     expect(emptyFormDefaultValues.nativeLanguage).toBeNull();
     expect(emptyFormDefaultValues.height).toBe("");
     expect(emptyFormDefaultValues.weight).toBe("");
-    expect(emptyFormDefaultValues.sideDominance).toBeNull();
+    expect(emptyFormDefaultValues.handedness).toBeNull();
     expect(emptyFormDefaultValues.visualCorrection).toBeNull();
     expect(emptyFormDefaultValues.visualCorrectionValue).toEqual(0);
     expect(emptyFormDefaultValues.email).toBe("");
@@ -125,7 +127,7 @@ describe("form loaders", () => {
     expect(phantomFormDefaultValues.nativeLanguage).toBeNull();
     expect(phantomFormDefaultValues.height).toBe("");
     expect(phantomFormDefaultValues.weight).toBe("");
-    expect(phantomFormDefaultValues.sideDominance).toBeNull();
+    expect(phantomFormDefaultValues.handedness).toBeNull();
     expect(phantomFormDefaultValues.visualCorrection).toBeNull();
     expect(phantomFormDefaultValues.visualCorrectionValue).toEqual(0);
     expect(phantomFormDefaultValues.email).toBe("");
@@ -148,7 +150,7 @@ describe("form loaders", () => {
       expect(formDefaultValuesFromVisit.nativeLanguage).toEqual(visit.probandInfo.nativeLanguage);
       expect(formDefaultValuesFromVisit.height).toEqual(visit.probandInfo.height);
       expect(formDefaultValuesFromVisit.weight).toEqual(visit.probandInfo.weight);
-      expect(formDefaultValuesFromVisit.sideDominance?.value).toEqual(visit.probandInfo.sideDominance);
+      expect(formDefaultValuesFromVisit.handedness?.value).toEqual(visit.probandInfo.handedness);
       expect(formDefaultValuesFromVisit.visualCorrection?.value).toEqual(visit.probandInfo.visualCorrection);
       expect(formDefaultValuesFromVisit.visualCorrectionValue).toEqual(visit.probandInfo.visualCorrectionValue);
       expect(formDefaultValuesFromVisit.email).toEqual(visit.probandInfo.email);
@@ -173,7 +175,7 @@ describe("form loaders", () => {
       expect(formDefaultValuesFromVisit.nativeLanguage).toEqual(visitNotCompleted.probandInfo.nativeLanguage);
       expect(formDefaultValuesFromVisit.height).toEqual(visitNotCompleted.probandInfo.height);
       expect(formDefaultValuesFromVisit.weight).toEqual(visitNotCompleted.probandInfo.weight);
-      expect(formDefaultValuesFromVisit.sideDominance?.value).toEqual(visitNotCompleted.probandInfo.sideDominance);
+      expect(formDefaultValuesFromVisit.handedness?.value).toEqual(visitNotCompleted.probandInfo.handedness);
       expect(formDefaultValuesFromVisit.visualCorrection?.value).toEqual(
         visitNotCompleted.probandInfo.visualCorrection
       );
@@ -201,7 +203,7 @@ describe("form loaders", () => {
       expect(formDefaultValuesVisitDuplication.nativeLanguage).toEqual(visit.probandInfo.nativeLanguage);
       expect(formDefaultValuesVisitDuplication.height).toEqual(visit.probandInfo.height);
       expect(formDefaultValuesVisitDuplication.weight).toEqual(visit.probandInfo.weight);
-      expect(formDefaultValuesVisitDuplication.sideDominance?.value).toEqual(visit.probandInfo.sideDominance);
+      expect(formDefaultValuesVisitDuplication.handedness?.value).toEqual(visit.probandInfo.handedness);
       expect(formDefaultValuesVisitDuplication.visualCorrection?.value).toEqual(visit.probandInfo.visualCorrection);
       expect(formDefaultValuesVisitDuplication.visualCorrectionValue).toEqual(visit.probandInfo.visualCorrectionValue);
       expect(formDefaultValuesVisitDuplication.email).toEqual(visit.probandInfo.email);
@@ -226,9 +228,7 @@ describe("form loaders", () => {
       expect(formDefaultValuesVisitDuplication.nativeLanguage).toEqual(visitNotCompleted.probandInfo.nativeLanguage);
       expect(formDefaultValuesVisitDuplication.height).toEqual(visitNotCompleted.probandInfo.height);
       expect(formDefaultValuesVisitDuplication.weight).toEqual(visitNotCompleted.probandInfo.weight);
-      expect(formDefaultValuesVisitDuplication.sideDominance?.value).toEqual(
-        visitNotCompleted.probandInfo.sideDominance
-      );
+      expect(formDefaultValuesVisitDuplication.handedness?.value).toEqual(visitNotCompleted.probandInfo.handedness);
       expect(formDefaultValuesVisitDuplication.visualCorrection?.value).toEqual(
         visitNotCompleted.probandInfo.visualCorrection
       );

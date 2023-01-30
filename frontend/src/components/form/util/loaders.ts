@@ -1,12 +1,13 @@
 import { FormPropType } from "@interfaces/form";
 import { Gender, IVisit } from "@interfaces/visit";
-import { genderOptions, getOption, sideDominanceOptions, visualCorrectionOptions } from "./options";
+import { genderOptions, getOption, handednessOptions, visualCorrectionOptions } from "./options";
 
 // Autocomplete component default value must be one of the options provided or null
 export const loadEmptyDefaultValues = (): FormPropType => ({
   project: null,
   device: null,
   measurementDate: null,
+  disapprovalReason: null,
   name: "",
   surname: "",
   personalId: "",
@@ -15,7 +16,7 @@ export const loadEmptyDefaultValues = (): FormPropType => ({
   nativeLanguage: null,
   height: "",
   weight: "",
-  sideDominance: null,
+  handedness: null,
   visualCorrection: null,
   visualCorrectionValue: 0,
   email: "",
@@ -35,9 +36,10 @@ export const loadFormDefaultValuesFromVisit = (visit: IVisit): FormPropType => (
   project: visit.projectInfo.project ?? null,
   device: visit.projectInfo.device ?? null,
   measurementDate: visit.projectInfo.measurementDate ?? new Date(),
+  disapprovalReason: visit.projectInfo.disapprovalReason,
   ...visit.probandInfo,
   gender: getOption(genderOptions, visit.probandInfo.gender),
-  sideDominance: getOption(sideDominanceOptions, visit.probandInfo.sideDominance),
+  handedness: getOption(handednessOptions, visit.probandInfo.handedness),
   visualCorrection: getOption(visualCorrectionOptions, visit.probandInfo.visualCorrection),
   answers: visit.answers.map((answer) => ({ ...answer })),
 });

@@ -9,7 +9,8 @@
         "recentVisits": "Recent visits",
         "createNewPhantomForm": "Create new phantom measurement",
         "openNewProbandForm": "Open new proband form"
-      }
+      },
+      "errorAlert": "Error occurred! Please, contact a system administrator."
     },
     "form": {
       "common": {
@@ -22,6 +23,7 @@
           "finalize": "Finalize",
           "approve": "Approve",
           "disapprove": "Disapprove",
+          "confirmDisapproval": "Confirm disapproval",
           "edit": "Edit",
           "cancel": "Cancel",
           "saveChanges": "Save changes"
@@ -37,7 +39,7 @@
           "YES": "Yes",
           "NO": "No"
         },
-        "sideDominance": {
+        "handedness": {
           "RIGHT_HANDED": "Right-handed",
           "LEFT_HANDED": "Left-handed",
           "LEFT_HANDED_RETRAINED": "Retrained left-handed",
@@ -48,6 +50,10 @@
         "title": "Before examination",
         "text": "Before the examination, please <1>put away all electrically conductive/metallic objects</1> (jewellery, watches, rubber bands, clips, piercings) and clothing components that contain <3>electrically conductive materials</3>, e.g. underwired bras, metal patches, functional underwear with silver content. The investigation is conducted for the purpose of scientific research. The purpose of the examination is not to provide health services or to determine your health status. The collected data will not be evaluated by a doctor, but by a scientist. In the event that a researcher suspects possible health complications, you have the right to be informed about this suspicion and subsequently to consult a doctor about the suspicion, which would be ensured by the researcher of the relevant study based on your informed consent decision."
       },
+      "disapprovalReason": {
+        "title": "Disapproval",
+        "reason": "Reason"
+      },
       "entryInfo": {
         "title": "Introductory information",
         "text1": "Welcome to the magnetic resonance (MR) workplace. It is a modern imaging method used in medicine, which, unlike X-ray examination, does not use ionizing radiation. The principle of the method is to monitor the behavior of tissues and organs in a very strong magnetic field. The measurement is accompanied by increased noise. The examination is not painful, but electronics or metal material in the body or on its surface can damage your health due to the magnetic field. Therefore, from the safety point of view, it is very important to follow the instructions of the MR device operator and to fill out the following questionnaire truthfully. If you have any questions or ambiguities, please contact the operator of the MR device.",
@@ -56,7 +62,7 @@
       "examinationConsent": {
         "title": "Consent to examination in the Multimodal and Functional Imaging Laboratory",
         "text1": "I declare that I have read the information on the MR examination and understand its meaning. I declare that I have filled out this questionnaire truthfully. I declare that I have been informed about the research study to which this examination belongs by a member of the research team and through separate informed consent and I agree to the implementation of the examination.",
-        "text2": "I acknowledge that my personal data in the scope of name, surname, signature, birthdate, personal ID, gender, side dominance, height, weight, visual correction, native language, security questions on MR examination contraindications from this questionnaire, measured data and contact data (in case of an accidental finding taken from the informed consent to the research study) will be stored in secure storage for 5 years based on the legitimate interest of the administrator - Masaryk University - in order to ensure the necessary security and legal requirements related to the examination in the Laboratory of Multimodal and Functional Imaging Masaryk University with limited access. After this period, all data stored in the Laboratory of Multimodal and Functional Imaging will be anonymized.",
+        "text2": "I acknowledge that my personal data in the scope of name, surname, signature, birthdate, personal ID, gender, handedness, height, weight, visual correction, native language, security questions on MR examination contraindications from this questionnaire, measured data and contact data (in case of an accidental finding taken from the informed consent to the research study) will be stored in secure storage for 5 years based on the legitimate interest of the administrator - Masaryk University - in order to ensure the necessary security and legal requirements related to the examination in the Laboratory of Multimodal and Functional Imaging Masaryk University with limited access. After this period, all data stored in the Laboratory of Multimodal and Functional Imaging will be anonymized.",
         "contactInfo": "Contact information",
         "address": "Laboratory of multimodal and functional imaging, CEITEC MU, Masaryk University, Kamenice 5, 625 00 Brno",
         "contactPerson": "contact person",
@@ -99,7 +105,7 @@
         "name": "Name",
         "surname": "Surname",
         "personalId": "Personal ID",
-        "personalIdHint": "If you do not have a Czech personal ID, please enter the number of the insured person.",
+        "personalIdHint": "If you do not have a Czech personal ID, please enter your insurance number.",
         "birthdate": "Birthdate",
         "gender": "Gender",
         "nativeLanguage": "Native language",
@@ -108,7 +114,7 @@
         "visualCorrection": "Visual correction",
         "visualCorrectionValue": "Visual correction value",
         "visualCorrectionValueHint": "Positive diopters indicate farsightedness, which means that you see worse up close. On the contrary, negative diopters indicate myopia, i.e. you see worse at a distance.",
-        "sideDominance": "Side dominance"
+        "handedness": "Handedness"
       },
       "projectInfo": {
         "title": "Project information",
@@ -149,7 +155,8 @@
     },
     "loginPage": {
       "title": "Proband safety questionnaire",
-      "loginText": "Log in via:"
+      "loginText": "Log in via:",
+      "alert": "Login failed!"
     },
     "visitDetailPage": {
       "title": "Detail of visit",
@@ -165,6 +172,16 @@
         "waitingForSignatureConfirmation": "Waiting for signature confirmation",
         "completed": "Completed",
         "signed": "Signed"
+      }
+    },
+    "waitingRoomFormPage": {
+      "finalizeDialog": {
+        "title": "Approval of the visit form",
+        "text": "The visit form will be sent for approval by the MR operator with a higher authority.",
+        "buttons": {
+          "continue": "Continue",
+          "cancel": "Cancel"
+        }
       }
     },
     "waitingRoomTablePage": {
@@ -217,6 +234,9 @@
         "state": "State",
         "actions": "Actions"
       }
+    },
+    "notFoundPage": {
+      "text": "Page not found."
     }
   }
 }

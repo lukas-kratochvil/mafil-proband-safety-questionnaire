@@ -16,8 +16,8 @@ vi.mock("react-hook-form", () => ({
   useWatch: vi.fn(),
 }));
 
-vi.mock("@components/form/inputs/ErrorFeedback", () => ({
-  ErrorFeedback: () => <div />,
+vi.mock("@components/form/inputs/ErrorMessage", () => ({
+  ErrorMessage: () => <div />,
 }));
 
 describe("form proband info", () => {
@@ -39,7 +39,7 @@ describe("form proband info", () => {
     expect(container).toHaveTextContent(/form.probandInfo.weight/);
     expect(container).toHaveTextContent(/form.probandInfo.visualCorrection/);
     expect(container).toHaveTextContent(/form.probandInfo.visualCorrectionValue/);
-    expect(container).toHaveTextContent(/form.probandInfo.sideDominance/);
+    expect(container).toHaveTextContent(/form.probandInfo.handedness/);
   });
 
   test("has all input fields", () => {

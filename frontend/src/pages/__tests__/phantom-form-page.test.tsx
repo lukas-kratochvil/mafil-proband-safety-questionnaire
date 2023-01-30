@@ -14,10 +14,17 @@ vi.mock("react-router-dom", async () => ({
 }));
 
 //----------------------------------------------------------------------
-// Mocking custom ErrorFeedback component
+// Mocking LanguageMenu due to undefined i18n instance that is used inside this component
 //----------------------------------------------------------------------
-vi.mock("@components/form/inputs/ErrorFeedback", () => ({
-  ErrorFeedback: () => <div />,
+vi.mock("@components/header/LanguageMenu", () => ({
+  LanguageMenu: () => <div />,
+}));
+
+//----------------------------------------------------------------------
+// Mocking custom ErrorMessage component
+//----------------------------------------------------------------------
+vi.mock("@components/form/inputs/ErrorMessage", () => ({
+  ErrorMessage: () => <div />,
 }));
 
 //----------------------------------------------------------------------
@@ -41,6 +48,15 @@ describe("phantom form page", () => {
     await i18n.changeLanguage("cimode");
   });
 
+  test("contains correct form buttons", async () => {
+    setup();
+    const buttonNames: string[] = ["form.common.buttons.finalize", "form.common.buttons.cancel"];
+
+    const buttons = await screen.findAllByRole("button", { name: /^form\.common\.buttons/ });
+    expect(buttons.length).toBe(buttonNames.length);
+    buttonNames.forEach(async (buttonName, index) => expect(buttons[index].textContent).toBe(buttonName));
+  });
+
   test("renders new form default values", async () => {
     setup();
 
@@ -57,7 +73,7 @@ describe("phantom form page", () => {
         nativeLanguage: "",
         height: "",
         weight: "",
-        sideDominance: "",
+        handedness: "",
         visualCorrection: "",
         visualCorrectionValue: "0",
       })
@@ -68,7 +84,7 @@ describe("phantom form page", () => {
     setup();
     const user = userEvent.setup();
 
-    await user.type(screen.getByLabelText("personalId"), "9606301232");
+    await user.type(await screen.findByLabelText("personalId"), "9606301232");
 
     expect(screen.getByLabelText("birthdate")).toHaveValue("30.06.1996");
     expect(screen.getByLabelText("gender")).toHaveValue("form.enums.gender.OTHER");
@@ -78,7 +94,7 @@ describe("phantom form page", () => {
     setup();
     const user = userEvent.setup();
 
-    await user.type(screen.getByLabelText("birthdate"), "30.06.1996");
+    await user.type(await screen.findByLabelText("birthdate"), "30.06.1996");
 
     expect(screen.getByLabelText("personalId")).toHaveValue("960630");
   });
@@ -104,7 +120,7 @@ describe("phantom form page", () => {
     setup();
     const user = userEvent.setup();
 
-    await user.click(screen.getByRole("combobox", { name: "project" }));
+    await user.click(await screen.findByRole("combobox", { name: "project" }));
     const selectedProject = "project1";
     await user.click(screen.getByRole("option", { name: selectedProject }));
 
@@ -141,9 +157,9 @@ describe("phantom form page", () => {
     await user.clear(screen.getByLabelText("visualCorrectionValue"));
     await user.type(screen.getByLabelText("visualCorrectionValue"), typedVisualCorrectionValue);
 
-    await user.click(screen.getByLabelText("sideDominance"));
-    const selectedSideDominance = "form.enums.sideDominance.UNDETERMINED";
-    await user.click(screen.getByRole("option", { name: selectedSideDominance }));
+    await user.click(screen.getByLabelText("handedness"));
+    const selectedHandedness = "form.enums.handedness.UNDETERMINED";
+    await user.click(screen.getByRole("option", { name: selectedHandedness }));
 
     const expectedFormValues = {
       project: selectedProject,
@@ -157,7 +173,7 @@ describe("phantom form page", () => {
       nativeLanguage: selectedNativeLanguage,
       height: typedHeight,
       weight: typedWeight,
-      sideDominance: selectedSideDominance,
+      handedness: selectedHandedness,
       visualCorrection: selectedVisualCorrection,
       visualCorrectionValue: typedVisualCorrectionValue,
     };
@@ -173,7 +189,7 @@ describe("phantom form page", () => {
     setup();
     const user = userEvent.setup();
 
-    await user.click(screen.getByLabelText("project"));
+    await user.click(await screen.findByLabelText("project"));
     await user.click(screen.getByRole("option", { name: "project1" }));
 
     await user.click(screen.getByLabelText("device"));
@@ -193,8 +209,8 @@ describe("phantom form page", () => {
 
     await user.type(screen.getByLabelText("weight"), "70");
 
-    await user.click(screen.getByLabelText("sideDominance"));
-    await user.click(screen.getByRole("option", { name: "form.enums.sideDominance.UNDETERMINED" }));
+    await user.click(screen.getByLabelText("handedness"));
+    await user.click(screen.getByRole("option", { name: "form.enums.handedness.UNDETERMINED" }));
 
     const finalizeButton = screen.getByRole("button", { name: "form.common.buttons.finalize" });
 

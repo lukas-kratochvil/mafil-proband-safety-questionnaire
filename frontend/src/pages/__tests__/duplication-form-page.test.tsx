@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import i18n from "@i18n";
 import { IOperator } from "@interfaces/auth";
 import { IQuestionData, QuestionPartNumber } from "@interfaces/question";
-import { AnswerOption, Gender, IVisit, SideDominance, VisitState, VisualCorrection } from "@interfaces/visit";
+import { AnswerOption, Gender, Handedness, IVisit, VisitState, VisualCorrection } from "@interfaces/visit";
 import DuplicationFormPage from "@pages/DuplicationFormPage";
 import { render, screen, waitFor, within } from "@test-utils";
 
@@ -48,6 +48,7 @@ const visit: IVisit = {
     deviceId: "deviceId1",
     isPhantom: false,
     measurementDate: new Date(),
+    disapprovalReason: null,
   },
   probandInfo: {
     name: "Jong",
@@ -58,7 +59,7 @@ const visit: IVisit = {
     height: 179,
     weight: 75,
     nativeLanguage: "Čeština",
-    sideDominance: SideDominance.RIGHT_HANDED,
+    handedness: Handedness.RIGHT_HANDED,
     visualCorrection: VisualCorrection.NO,
     visualCorrectionValue: 0,
     email: "",
@@ -85,10 +86,17 @@ vi.mock("react-router-dom", async () => ({
 }));
 
 //----------------------------------------------------------------------
-// Mocking custom ErrorFeedback component
+// Mocking LanguageMenu due to undefined i18n instance that is used inside this component
 //----------------------------------------------------------------------
-vi.mock("@components/form/inputs/ErrorFeedback", () => ({
-  ErrorFeedback: () => <div />,
+vi.mock("@components/header/LanguageMenu", () => ({
+  LanguageMenu: () => <div />,
+}));
+
+//----------------------------------------------------------------------
+// Mocking custom ErrorMessage component
+//----------------------------------------------------------------------
+vi.mock("@components/form/inputs/ErrorMessage", () => ({
+  ErrorMessage: () => <div />,
 }));
 
 //----------------------------------------------------------------------
@@ -131,6 +139,20 @@ describe("duplication form page", () => {
     await i18n.changeLanguage("cimode");
   });
 
+  test("contains correct form buttons", async () => {
+    setup();
+    const buttonNames: string[] = [
+      "form.common.buttons.finalize",
+      "form.common.buttons.disapprove",
+      "form.common.buttons.edit",
+      "form.common.buttons.cancel",
+    ];
+
+    const buttons = await screen.findAllByRole("button", { name: /^form\.common\.buttons/ });
+    expect(buttons.length).toBe(buttonNames.length);
+    buttonNames.forEach(async (buttonName, index) => expect(buttons[index].textContent).toBe(buttonName));
+  });
+
   test("renders values from the visit being duplicated", async () => {
     setup();
 
@@ -149,7 +171,7 @@ describe("duplication form page", () => {
         weight: visit.probandInfo.weight.toString(),
         visualCorrection: "form.enums.visualCorrection.NO",
         visualCorrectionValue: visit.probandInfo.visualCorrectionValue.toString(),
-        sideDominance: "form.enums.sideDominance.RIGHT_HANDED",
+        handedness: "form.enums.handedness.RIGHT_HANDED",
         email: visit.probandInfo.email,
         phone: visit.probandInfo.phone,
       })
@@ -164,11 +186,12 @@ describe("duplication form page", () => {
 
       if (index % 2 === 0) {
         expect(yesRadio).toBeChecked();
-        expect(screen.getByLabelText(`answers.${index}.comment`)).toHaveTextContent(comment);
         expect(noRadio).not.toBeChecked();
+        expect(screen.getByLabelText(`answers.${index}.comment`)).toHaveTextContent(comment);
       } else {
         expect(yesRadio).not.toBeChecked();
         expect(noRadio).toBeChecked();
+        expect(screen.queryByLabelText(`answers.${index}.comment`)).toBeNull();
       }
     });
   });

@@ -2,7 +2,7 @@ import { Grid, InputLabel, Typography } from "@mui/material";
 import { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@i18n";
-import { ErrorFeedback } from "./ErrorFeedback";
+import { ErrorMessage } from "./ErrorMessage";
 
 export interface IFormInputFieldContainerProps {
   label: string;
@@ -37,7 +37,7 @@ export const FormInputFieldContainer = ({
         )}
       </Grid>
       {children}
-      <ErrorFeedback name={name} />
+      <ErrorMessage name={name} />
     </>
   );
 };

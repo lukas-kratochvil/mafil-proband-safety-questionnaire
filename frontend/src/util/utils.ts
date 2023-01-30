@@ -3,16 +3,17 @@ import { FormPropType } from "@interfaces/form";
 
 export type Override<T, U> = Omit<T, keyof U> & U;
 
-export interface IButton {
+export interface IButtonProps {
   titleLocalizationKey: string;
   onClick: () => void;
+  showErrorColor?: boolean;
 }
 
-export interface ISubmitButtonProps extends Omit<IButton, "onClick"> {
+export interface ISubmitButtonProps extends Omit<IButtonProps, "onClick"> {
   onClick: (data: FormPropType) => void;
 }
 
-export const getBackButtonProps = (navigate: NavigateFunction, customTitleLocalizationKey?: string): IButton => ({
+export const getBackButtonProps = (navigate: NavigateFunction, customTitleLocalizationKey?: string): IButtonProps => ({
   titleLocalizationKey: customTitleLocalizationKey ?? "common.backButton",
   onClick: () => navigate(-1),
 });

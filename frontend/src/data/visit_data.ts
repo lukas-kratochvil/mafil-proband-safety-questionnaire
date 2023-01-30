@@ -1,5 +1,5 @@
 import { QuestionPartNumber } from "@interfaces/question";
-import { AnswerOption, Gender, IQac, IVisit, SideDominance, VisitState, VisualCorrection } from "@interfaces/visit";
+import { AnswerOption, Gender, Handedness, IQac, IVisit, VisitState, VisualCorrection } from "@interfaces/visit";
 import { getDummyVisitCurrentQuestions } from "@util/fetch.dev";
 import { devicesDev, projectsDev } from "./form_data";
 
@@ -95,6 +95,7 @@ const dummyVisitNew: IVisit = {
     device: devicesDev[0],
     isPhantom: false,
     measurementDate: new Date(),
+    disapprovalReason: null,
   },
   probandInfo: {
     name: "Karel",
@@ -107,9 +108,9 @@ const dummyVisitNew: IVisit = {
     nativeLanguage: "Čeština",
     visualCorrection: VisualCorrection.NO,
     visualCorrectionValue: 0,
-    sideDominance: SideDominance.RIGHT_HANDED,
+    handedness: Handedness.RIGHT_HANDED,
     email: "karel.novak@email.cz",
-    phone: "",
+    phone: "123456789",
   },
   answers: getDummyVisitCurrentQuestions().map((question, i) => ({
     questionId: question.id,
@@ -132,6 +133,7 @@ const dummyPhantomVisitNew: IVisit = {
     device: null,
     isPhantom: true,
     measurementDate: new Date(),
+    disapprovalReason: null,
   },
   probandInfo: {
     name: "Phantom 1",
@@ -144,7 +146,7 @@ const dummyPhantomVisitNew: IVisit = {
     nativeLanguage: "Čeština",
     visualCorrection: VisualCorrection.NO,
     visualCorrectionValue: 0,
-    sideDominance: SideDominance.UNDETERMINED,
+    handedness: Handedness.UNDETERMINED,
     email: "",
     phone: "",
   },

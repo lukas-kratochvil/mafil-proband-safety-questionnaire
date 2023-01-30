@@ -15,11 +15,10 @@ import { FormContainer } from "./FormContainer";
 
 export const PhantomForm = () => {
   const navigate = useNavigate();
-  const { setValue } = useFormContext();
+  const { setValue } = useFormContext<FormPropType>();
 
   const [qacs, setQacs] = useState<FormQac[]>([]);
 
-  // TODO: use MUI Skeleton while data is fetching/loading
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
 
@@ -64,6 +63,7 @@ export const PhantomForm = () => {
 
   return (
     <FormContainer
+      isLoading={isLoading}
       isError={isError}
       buttons={formButtons}
     >

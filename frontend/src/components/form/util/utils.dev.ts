@@ -1,8 +1,8 @@
+// TODO: delete this file - only for DEV purposes
 import { createVisit } from "@data/visit_data";
 import { FormPropType } from "@interfaces/form";
-import { AnswerOption, Gender, IVisit, SideDominance, VisitState, VisualCorrection } from "@interfaces/visit";
+import { AnswerOption, Gender, Handedness, IVisit, VisitState, VisualCorrection } from "@interfaces/visit";
 
-// TODO: delete this - only for DEV purposes
 export const createNewVisitFromFormData = (data: FormPropType, state: VisitState): IVisit =>
   createVisit(
     {
@@ -28,7 +28,7 @@ export const createNewVisitFromFormData = (data: FormPropType, state: VisitState
         nativeLanguage: data.nativeLanguage ?? "Angličtina",
         visualCorrection: data.visualCorrection?.value ?? VisualCorrection.NO,
         visualCorrectionValue: typeof data.visualCorrectionValue === "string" ? +data.visualCorrectionValue : 0,
-        sideDominance: SideDominance.UNDETERMINED,
+        handedness: Handedness.UNDETERMINED,
       },
       answers: data.answers.map((answer) => ({ ...answer, answer: answer.answer ?? AnswerOption.NO })),
     },

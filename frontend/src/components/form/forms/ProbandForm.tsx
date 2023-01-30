@@ -23,7 +23,7 @@ enum ProbandFormStep {
 
 export const ProbandForm = () => {
   const navigate = useNavigate();
-  const { setError, setValue } = useFormContext();
+  const { setError, setValue } = useFormContext<FormPropType>();
 
   const [step, setStep] = useState<ProbandFormStep>(ProbandFormStep.EXAMINATION);
   const [qacs, setQacs] = useState<FormQac[]>([]);
@@ -47,11 +47,11 @@ export const ProbandForm = () => {
         let isError = false;
 
         if (data.email === "") {
-          setError("email", { message: "form.validation.probandContacts" });
+          setError("email", { message: "form.validation.probandContacts" }, { shouldFocus: true });
           isError = true;
         }
         if (data.phone === "") {
-          setError("phone", { message: "form.validation.probandContacts" });
+          setError("phone", { message: "form.validation.probandContacts" }, { shouldFocus: !isError });
           isError = true;
         }
 
@@ -78,7 +78,6 @@ export const ProbandForm = () => {
 
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>(examinationButtons);
 
-  // TODO: use MUI Skeleton while data is fetching/loading
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
 
@@ -121,6 +120,7 @@ export const ProbandForm = () => {
 
   return (
     <FormContainer
+      isLoading={isLoading}
       isError={isError}
       buttons={formButtons}
     >
