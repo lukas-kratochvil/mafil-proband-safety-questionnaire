@@ -16,8 +16,6 @@ export const FormPageContainer = ({ FormPage, validationSchema, loadDefaultValue
     mode: "onChange",
     defaultValues: loadDefaultValues === undefined ? loadEmptyDefaultValues() : loadDefaultValues(),
     resolver: yupResolver(validationSchema),
-    // Uncomment the line below if the validation on onChange event is too slow:
-    // reValidateMode: "onSubmit",
   });
 
   return (

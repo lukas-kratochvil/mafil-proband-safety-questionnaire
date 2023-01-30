@@ -1,4 +1,4 @@
-import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
+import { Button, Grid, Skeleton, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
@@ -8,6 +8,7 @@ import {
   ColoredInfoStripeColors,
   IColoredInfoStripeProps,
 } from "@components/informative/ColoredInfoStripe";
+import { ErrorAlert } from "@components/informative/ErrorAlert";
 import { defaultNS } from "@i18n";
 import { IVisit, VisitState } from "@interfaces/visit";
 import { fetchVisitDetail } from "@util/fetch";
@@ -148,8 +149,11 @@ const VisitDetailPage = () => {
   }, [navigate, visit, visitState]);
 
   if (isError) {
-    // TODO: create nice error content
-    return <Typography variant="h1">Error occured!</Typography>;
+    return (
+      <PageContainer>
+        <ErrorAlert />
+      </PageContainer>
+    );
   }
 
   if (isLoading) {

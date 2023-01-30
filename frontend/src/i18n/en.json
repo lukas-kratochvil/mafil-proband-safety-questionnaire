@@ -9,7 +9,8 @@
         "recentVisits": "Recent visits",
         "createNewPhantomForm": "Create new phantom measurement",
         "openNewProbandForm": "Open new proband form"
-      }
+      },
+      "errorAlert": "Error occurred! Please, contact a system administrator."
     },
     "form": {
       "common": {
