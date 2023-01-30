@@ -84,7 +84,7 @@ describe("phantom form page", () => {
     setup();
     const user = userEvent.setup();
 
-    await user.type(screen.getByLabelText("personalId"), "9606301232");
+    await user.type(await screen.findByLabelText("personalId"), "9606301232");
 
     expect(screen.getByLabelText("birthdate")).toHaveValue("30.06.1996");
     expect(screen.getByLabelText("gender")).toHaveValue("form.enums.gender.OTHER");
@@ -94,7 +94,7 @@ describe("phantom form page", () => {
     setup();
     const user = userEvent.setup();
 
-    await user.type(screen.getByLabelText("birthdate"), "30.06.1996");
+    await user.type(await screen.findByLabelText("birthdate"), "30.06.1996");
 
     expect(screen.getByLabelText("personalId")).toHaveValue("960630");
   });
@@ -120,7 +120,7 @@ describe("phantom form page", () => {
     setup();
     const user = userEvent.setup();
 
-    await user.click(screen.getByRole("combobox", { name: "project" }));
+    await user.click(await screen.findByRole("combobox", { name: "project" }));
     const selectedProject = "project1";
     await user.click(screen.getByRole("option", { name: selectedProject }));
 
@@ -189,7 +189,7 @@ describe("phantom form page", () => {
     setup();
     const user = userEvent.setup();
 
-    await user.click(screen.getByLabelText("project"));
+    await user.click(await screen.findByLabelText("project"));
     await user.click(screen.getByRole("option", { name: "project1" }));
 
     await user.click(screen.getByLabelText("device"));

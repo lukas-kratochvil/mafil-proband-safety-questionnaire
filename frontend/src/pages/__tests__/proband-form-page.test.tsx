@@ -107,7 +107,7 @@ describe("proband form page", () => {
     setup();
     const user = userEvent.setup();
 
-    await user.type(screen.getByLabelText("personalId"), "9606301232");
+    await user.type(await screen.findByLabelText("personalId"), "9606301232");
 
     expect(screen.getByLabelText("birthdate")).toHaveValue("30.06.1996");
     expect(screen.getByLabelText("gender")).toHaveValue("form.enums.gender.MALE");
@@ -117,7 +117,7 @@ describe("proband form page", () => {
     setup();
     const user = userEvent.setup();
 
-    await user.type(screen.getByLabelText("personalId"), "9656301237");
+    await user.type(await screen.findByLabelText("personalId"), "9656301237");
 
     expect(screen.getByLabelText("birthdate")).toHaveValue("30.06.1996");
     expect(screen.getByLabelText("gender")).toHaveValue("form.enums.gender.FEMALE");
@@ -127,7 +127,7 @@ describe("proband form page", () => {
     setup();
     const user = userEvent.setup();
 
-    await user.type(screen.getByLabelText("birthdate"), "30.06.1996");
+    await user.type(await screen.findByLabelText("birthdate"), "30.06.1996");
     await user.click(screen.getByRole("combobox", { name: "gender" }));
     await user.click(screen.getByRole("option", { name: "form.enums.gender.MALE" }));
 
@@ -138,7 +138,7 @@ describe("proband form page", () => {
     setup();
     const user = userEvent.setup();
 
-    await user.type(screen.getByLabelText("birthdate"), "30.06.1996");
+    await user.type(await screen.findByLabelText("birthdate"), "30.06.1996");
     await user.click(screen.getByRole("combobox", { name: "gender" }));
     await user.click(screen.getByRole("option", { name: "form.enums.gender.FEMALE" }));
 
@@ -167,7 +167,7 @@ describe("proband form page", () => {
     const user = userEvent.setup();
 
     const typedName = "John";
-    await user.type(screen.getByLabelText("name"), typedName);
+    await user.type(await screen.findByLabelText("name"), typedName);
 
     const typedSurname = "Wick";
     await user.type(screen.getByLabelText("surname"), typedSurname);
@@ -254,7 +254,7 @@ describe("proband form page", () => {
     const user = userEvent.setup();
 
     const typedName = "John";
-    await user.type(screen.getByLabelText("name"), typedName);
+    await user.type(await screen.findByLabelText("name"), typedName);
 
     const typedSurname = "Wick";
     await user.type(screen.getByLabelText("surname"), typedSurname);
@@ -323,7 +323,7 @@ describe("proband form page", () => {
     const user = userEvent.setup();
 
     const typedName = "John";
-    await user.type(screen.getByLabelText("name"), typedName);
+    await user.type(await screen.findByLabelText("name"), typedName);
 
     const typedSurname = "Wick";
     await user.type(screen.getByLabelText("surname"), typedSurname);
@@ -403,7 +403,7 @@ describe("proband form page", () => {
     const user = userEvent.setup();
 
     const typedName = "John";
-    await user.type(screen.getByLabelText("name"), typedName);
+    await user.type(await screen.findByLabelText("name"), typedName);
 
     const typedSurname = "Wick";
     await user.type(screen.getByLabelText("surname"), typedSurname);
