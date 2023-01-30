@@ -37,9 +37,10 @@ export const WaitingRoomForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { operator } = useAuth();
-  const { handleSubmit, reset, setValue, trigger } = useFormContext<FormPropType>();
+  const { getValues, handleSubmit, setValue, trigger } = useFormContext<FormPropType>();
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [valuesBeforeEditing, setValuesBeforeEditing] = useState<FormPropType>();
   const [isDisapproved, setIsDisapproved] = useState<boolean>(false);
   const [openFinalizeDialog, setOpenFinalizeDialog] = useState<boolean>(false);
   const [qacs, setQacs] = useState<FormQac[]>([]);
@@ -88,18 +89,22 @@ export const WaitingRoomForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.saveChanges",
-          onClick: (data: FormPropType) => {
-            // TODO: save the changes in DB
-            setIsEditing(false);
-          },
+          onClick: (_data: FormPropType) => setIsEditing(false),
         },
         buttonsProps: [
           {
             titleLocalizationKey: "form.common.buttons.cancel",
             onClick: () => {
-              // TODO: reset to previously saved data
-              reset();
-              setIsEditing(false);
+              if (valuesBeforeEditing !== undefined) {
+                type ValuesBeforeEditingType = keyof typeof valuesBeforeEditing;
+                Object.keys(valuesBeforeEditing).forEach((propertyName) => {
+                  setValue(
+                    propertyName as ValuesBeforeEditingType,
+                    valuesBeforeEditing[propertyName as ValuesBeforeEditingType]
+                  );
+                });
+                setIsEditing(false);
+              }
             },
           },
         ],
@@ -108,7 +113,7 @@ export const WaitingRoomForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
-          onClick: () => {
+          onClick: (data: FormPropType) => {
             // TODO: store changes in DB
             updateDummyVisitState(id, VisitState.DISAPPROVED);
             navigate(RoutingPaths.WAITING_ROOM);
@@ -157,13 +162,26 @@ export const WaitingRoomForm = () => {
           },
           {
             titleLocalizationKey: "form.common.buttons.edit",
-            onClick: () => setIsEditing(true),
+            onClick: () => {
+              setValuesBeforeEditing(getValues());
+              setIsEditing(true);
+            },
           },
           getBackButtonProps(navigate, "form.common.buttons.cancel"),
         ],
       });
     }
-  }, [id, isDisapproved, isEditing, navigate, operator?.hasHigherPermission, reset, setValue, trigger]);
+  }, [
+    getValues,
+    id,
+    isDisapproved,
+    isEditing,
+    navigate,
+    operator?.hasHigherPermission,
+    setValue,
+    trigger,
+    valuesBeforeEditing,
+  ]);
 
   const onSubmit = (data: FormPropType) => {
     // TODO: store changes in DB
