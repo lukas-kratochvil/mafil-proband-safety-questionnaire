@@ -12,6 +12,12 @@ interface IQuestion {
 const questions: IQuestion[] = [
   {
     partNumber: 1,
+    csText: "Jste těhotná?",
+    enText: "Are you pregnant?",
+    hiddenByGender: ["M"],
+  },
+  {
+    partNumber: 1,
     csText: "Prodělal(a) jste operaci hlavy (mozku)?",
     enText: "Have you had head (brain) surgery?",
   },
