@@ -1,7 +1,7 @@
 version: '3.1'
 
 services:
-  db:
+  postgres:
     container_name: postgres
     image: postgres:alpine3.17
     ports:
