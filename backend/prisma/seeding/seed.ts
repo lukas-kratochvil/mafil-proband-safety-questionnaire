@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
-import genders from "./seeding/genders";
-import handedness from "./seeding/handedness";
-import nativeLanguages from "./seeding/native-languages";
-import questions from "./seeding/questions";
+import genders from "./data/genders";
+import handedness from "./data/handedness";
+import nativeLanguages from "./data/native-languages";
+import questions from "./data/questions";
 
 const prisma = new PrismaClient();
 
