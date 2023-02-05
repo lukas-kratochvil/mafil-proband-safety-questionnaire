@@ -9,13 +9,13 @@ services:
     networks:
       - backend-network
     volumes:
-      - ./database-storage:/var/lib/postgresql/data
+      - ./backend/database-storage:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
       PGPORT: ${DB_PORT}
-    restart: always
+    restart: unless-stopped
 
   adminer:
     container_name: adminer
@@ -26,13 +26,12 @@ services:
       - backend-network
     environment:
       ADMINER_DESIGN: nette
-    restart: always
+    restart: unless-stopped
     depends_on:
       - postgres
 
 networks:
   backend-network:
-    driver: bridge
 
 volumes:
   database-storage:
