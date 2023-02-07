@@ -30,6 +30,25 @@ services:
     depends_on:
       - postgres
 
+  server:
+    container_name: server
+    image: server:1.0.0
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+      # change target in order to run specific image build stage
+      target: production
+    ports:
+      - 127.0.0.1:${SERVER_PORT}:${SERVER_PORT}
+    networks:
+      - backend-network
+    environment:
+      - PORT=${SERVER_PORT}
+      - DATABASE_URL=${DATABASE_URL}
+    restart: unless-stopped
+    depends_on:
+      - postgres
+
 networks:
   backend-network:
 
