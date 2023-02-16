@@ -2,9 +2,12 @@ import { CssBaseline } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
 import { App } from "@App";
 import { AuthProvider } from "@hooks/auth/AuthProvider";
+
+const queryClient = new QueryClient();
 
 const theme = createTheme({
   components: {
@@ -53,13 +56,15 @@ const theme = createTheme({
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <ThemeProvider theme={theme}>
-          <CssBaseline enableColorScheme />
-          <App />
-        </ThemeProvider>
-      </AuthProvider>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <AuthProvider>
+          <ThemeProvider theme={theme}>
+            <CssBaseline enableColorScheme />
+            <App />
+          </ThemeProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </QueryClientProvider>
   </React.StrictMode>
 );

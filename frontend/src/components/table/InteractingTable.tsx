@@ -1,7 +1,8 @@
 import { Typography } from "@mui/material";
 import MaterialReactTable, { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "react-query";
 import { defaultNS } from "@i18n";
 import { IVisit } from "@interfaces/visit";
 import { PageContainer } from "@pages/PageContainer";
@@ -10,38 +11,13 @@ import { convertStringToLocalizationKey } from "@util/utils";
 interface IInteractingTableProps {
   titleLocalizationKey: string;
   header: MRTColumnDef<IVisit>[];
+  queryKey: string;
   fetchVisits: () => Promise<IVisit[]>;
 }
 
-export const InteractingTable = ({ titleLocalizationKey, header, fetchVisits }: IInteractingTableProps) => {
+export const InteractingTable = ({ titleLocalizationKey, header, queryKey, fetchVisits }: IInteractingTableProps) => {
+  const { data: visits, isFetching, isLoading, isError } = useQuery(queryKey, async () => fetchVisits());
   const { t } = useTranslation(defaultNS);
-  const [visits, setVisits] = useState<IVisit[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isRefetching, setIsRefetching] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
-  const [showSkeleton, setShowSkeleton] = useState<boolean>(true);
-
-  useEffect(() => {
-    const fetchTableVisits = async () => {
-      if (visits.length === 0) {
-        setIsLoading(true);
-      } else {
-        setIsRefetching(true);
-      }
-
-      try {
-        const fetchedVisits = await fetchVisits();
-        setVisits(fetchedVisits);
-        setShowSkeleton(false);
-        setIsLoading(false);
-        setIsRefetching(false);
-      } catch (e) {
-        setIsError(true);
-      }
-    };
-
-    fetchTableVisits();
-  }, [fetchVisits, visits.length]);
 
   const columns = useMemo<MRTColumnDef<IVisit>[]>(() => header, [header]);
 
@@ -49,7 +25,7 @@ export const InteractingTable = ({ titleLocalizationKey, header, fetchVisits }: 
     <PageContainer isTablePage>
       <MaterialReactTable
         columns={columns}
-        data={visits}
+        data={visits || []}
         enableDensityToggle={false}
         enableEditing={false}
         enableColumnFilters={false}
@@ -67,8 +43,7 @@ export const InteractingTable = ({ titleLocalizationKey, header, fetchVisits }: 
         state={{
           isLoading,
           showAlertBanner: isError,
-          showProgressBars: isRefetching,
-          showSkeletons: showSkeleton,
+          showProgressBars: isFetching,
         }}
         renderTopToolbarCustomActions={() => (
           <Typography

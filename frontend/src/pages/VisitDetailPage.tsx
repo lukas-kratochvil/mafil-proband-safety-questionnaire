@@ -1,6 +1,7 @@
 import { Button, Grid, Skeleton, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { CardContainer } from "@components/card/CardContainer";
 import {
@@ -107,33 +108,10 @@ const getButtons = (
 const VisitDetailPage = () => {
   const { t } = useTranslation(defaultNS);
   const { id } = useParams();
+  const { data: visit, isLoading, isError } = useQuery("visitDetail", async () => fetchVisitDetail(id));
   const navigate = useNavigate();
 
-  const [visit, setVisit] = useState<IVisit>();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isError, setIsError] = useState<boolean>(false);
   const [visitState, setVisitState] = useState<VisitState>();
-
-  useEffect(() => {
-    const fetch = async () => {
-      try {
-        const fetchedVisit = await fetchVisitDetail(id);
-
-        if (fetchedVisit === undefined) {
-          setIsError(true);
-        } else {
-          setVisit(fetchedVisit);
-          setVisitState(fetchedVisit.state);
-          setIsLoading(false);
-        }
-      } catch (e) {
-        setIsError(true);
-      }
-    };
-
-    fetch();
-  }, [id]);
-
   const [coloredInfoStripe, setColoredInfoStripe] = useState<IColoredInfoStripeProps>();
   const [buttons, setButtons] = useState<IVisitDetailButtonProps[]>();
 

@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { IFormButtonsProps } from "@components/form/components/FormButtons";
 import { FormProbandInfo } from "@components/form/components/FormProbandInfo";
 import { FormProjectInfo } from "@components/form/components/FormProjectInfo";
 import { createNewVisitFromFormData } from "@components/form/util/utils.dev";
 import { dummyVisits } from "@data/visit_data";
-import { FormPropType, FormQac } from "@interfaces/form";
+import { FormPropType } from "@interfaces/form";
 import { AnswerOption, VisitState } from "@interfaces/visit";
 import { RoutingPaths } from "@routing-paths";
 import { fetchCurrentQuestions } from "@util/fetch";
@@ -14,13 +15,13 @@ import { getBackButtonProps } from "@util/utils";
 import { FormContainer } from "./FormContainer";
 
 export const PhantomForm = () => {
+  const {
+    data: questions,
+    isLoading,
+    isError,
+  } = useQuery("currentQuestions", async () => fetchCurrentQuestions());
   const navigate = useNavigate();
   const { setValue } = useFormContext<FormPropType>();
-
-  const [qacs, setQacs] = useState<FormQac[]>([]);
-
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isError, setIsError] = useState<boolean>(false);
 
   const formButtons: IFormButtonsProps = {
     submitButtonProps: {
@@ -36,30 +37,19 @@ export const PhantomForm = () => {
   };
 
   useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const questions = await fetchCurrentQuestions();
-        setQacs(
-          questions.map((qac, index) => ({
-            index,
-            questionId: qac.id,
-            partNumber: qac.partNumber,
-            answer: AnswerOption.NO,
-            comment: "",
-          }))
-        );
-        setIsLoading(false);
-      } catch (e) {
-        setIsError(true);
-      }
-    };
-
-    fetchQuestions();
-  }, []);
-
-  useEffect(() => {
-    setValue("answers", qacs);
-  }, [qacs, setValue]);
+    if (questions !== undefined) {
+      setValue(
+        "answers",
+        questions.map((qac, index) => ({
+          index,
+          questionId: qac.id,
+          partNumber: qac.partNumber,
+          answer: AnswerOption.NO,
+          comment: "",
+        }))
+      );
+    }
+  }, [questions, setValue]);
 
   return (
     <FormContainer

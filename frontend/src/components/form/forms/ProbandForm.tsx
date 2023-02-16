@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { FormBeforeExamination } from "@components/form/components/FormBeforeExamination";
 import { IFormButtonsProps } from "@components/form/components/FormButtons";
@@ -22,6 +23,11 @@ enum ProbandFormStep {
 }
 
 export const ProbandForm = () => {
+  const {
+    data: questions,
+    isLoading,
+    isError,
+  } = useQuery("currentQuestions", async () => fetchCurrentQuestions());
   const navigate = useNavigate();
   const { setError, setValue } = useFormContext<FormPropType>();
 
@@ -44,18 +50,18 @@ export const ProbandForm = () => {
     submitButtonProps: {
       titleLocalizationKey: "form.common.buttons.agree",
       onClick: (data: FormPropType) => {
-        let isError = false;
+        let isValidationError = false;
 
         if (data.email === "") {
           setError("email", { message: "form.validation.probandContacts" }, { shouldFocus: true });
-          isError = true;
+          isValidationError = true;
         }
         if (data.phone === "") {
-          setError("phone", { message: "form.validation.probandContacts" }, { shouldFocus: !isError });
-          isError = true;
+          setError("phone", { message: "form.validation.probandContacts" }, { shouldFocus: !isValidationError });
+          isValidationError = true;
         }
 
-        if (!isError) {
+        if (!isValidationError) {
           // TODO: create visit in DB
           navigate(RoutingPaths.PROBAND_HOME);
         }
@@ -78,33 +84,19 @@ export const ProbandForm = () => {
 
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>(examinationButtons);
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isError, setIsError] = useState<boolean>(false);
-
   useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const questions = await fetchCurrentQuestions();
-        setQacs(
-          questions.map((qac, index) => ({
-            index,
-            questionId: qac.id,
-            partNumber: qac.partNumber,
-            answer: null,
-            comment: "",
-          }))
-        );
-
-        setIsLoading(false);
-      } catch (e) {
-        setIsError(true);
-      }
-    };
-
-    if (step === ProbandFormStep.EXAMINATION) {
-      fetchQuestions();
+    if (questions !== undefined && step === ProbandFormStep.EXAMINATION) {
+      setQacs(
+        questions.map((qac, index) => ({
+          index,
+          questionId: qac.id,
+          partNumber: qac.partNumber,
+          answer: null,
+          comment: "",
+        }))
+      );
     }
-  }, [step]);
+  }, [questions, step]);
 
   useEffect(() => {
     if (step === ProbandFormStep.EXAMINATION) {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { IFormButtonsProps } from "@components/form/components/FormButtons";
 import { FormProbandContact } from "@components/form/components/FormProbandContact";
@@ -22,6 +23,7 @@ import { FormContainer } from "./FormContainer";
 
 export const DuplicationForm = () => {
   const { id } = useParams();
+  const { data: visit, isLoading, isError } = useQuery("visitForm", async () => fetchVisit(id));
   const navigate = useNavigate();
   const { operator } = useAuth();
   const { getValues, setValue, trigger } = useFormContext<FormPropType>();
@@ -33,44 +35,20 @@ export const DuplicationForm = () => {
   const [qacs, setQacs] = useState<FormQac[]>([]);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isError, setIsError] = useState<boolean>(false);
-
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const fetchedVisit = id === undefined ? undefined : await fetchVisit(id);
+    if (visit !== undefined) {
+      setQacs(visit.answers.map((answer, index) => ({ index, ...answer })));
 
-        // visit not found
-        if (fetchedVisit === undefined) {
-          setIsError(true);
-          return;
-        }
+      // TODO: try if there's a need for isLoading flag due to the slow form initialization
+      const defaultValues = loadFormDefaultValuesVisitDuplication(visit);
+      type DefaultValuesPropertyType = keyof typeof defaultValues;
+      Object.keys(defaultValues).forEach((propertyName) => {
+        setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
+      });
 
-        // unauthorized access
-        if (operator === undefined) {
-          // TODO
-          setIsError(true);
-          return;
-        }
-
-        setQacs(fetchedVisit.answers.map((answer, index) => ({ index, ...answer })));
-
-        const defaultValues = loadFormDefaultValuesVisitDuplication(fetchedVisit);
-        type DefaultValuesPropertyType = keyof typeof defaultValues;
-        Object.keys(defaultValues).forEach((propertyName) => {
-          setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
-        });
-
-        setIsPhantom(fetchedVisit.projectInfo.isPhantom);
-        setIsLoading(false);
-      } catch (e) {
-        setIsError(true);
-      }
-    };
-
-    fetchData();
-  }, [id, operator, setValue]);
+      setIsPhantom(visit.projectInfo.isPhantom);
+    }
+  }, [visit, setValue]);
 
   useEffect(() => {
     if (isPhantom) {

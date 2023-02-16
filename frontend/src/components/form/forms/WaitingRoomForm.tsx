@@ -11,6 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { IFormButtonsProps } from "@components/form/components/FormButtons";
 import { FormProbandContact } from "@components/form/components/FormProbandContact";
@@ -35,6 +36,7 @@ export const WaitingRoomForm = () => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
   const { id } = useParams();
+  const { data: visit, isLoading, isError } = useQuery("visitForm", async () => fetchVisit(id));
   const navigate = useNavigate();
   const { operator } = useAuth();
   const { getValues, handleSubmit, setValue, trigger } = useFormContext<FormPropType>();
@@ -46,43 +48,18 @@ export const WaitingRoomForm = () => {
   const [qacs, setQacs] = useState<FormQac[]>([]);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isError, setIsError] = useState<boolean>(false);
-
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const fetchedVisit = id === undefined ? undefined : await fetchVisit(id);
+    if (visit !== undefined) {
+      setQacs(visit.answers.map((answer, index) => ({ index, ...answer })));
 
-        // visit not found
-        if (fetchedVisit === undefined) {
-          setIsError(true);
-          return;
-        }
-
-        // unauthorized access
-        if (operator === undefined) {
-          // TODO
-          setIsError(true);
-          return;
-        }
-
-        setQacs(fetchedVisit.answers.map((answer, index) => ({ index, ...answer })));
-
-        const defaultValues = loadFormDefaultValuesFromVisit(fetchedVisit);
-        type DefaultValuesPropertyType = keyof typeof defaultValues;
-        Object.keys(defaultValues).forEach((propertyName) => {
-          setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
-        });
-
-        setIsLoading(false);
-      } catch (e) {
-        setIsError(true);
-      }
-    };
-
-    fetchData();
-  }, [id, operator, setValue]);
+      // TODO: try if there's a need for isLoading flag due to the slow form initialization
+      const defaultValues = loadFormDefaultValuesFromVisit(visit);
+      type DefaultValuesPropertyType = keyof typeof defaultValues;
+      Object.keys(defaultValues).forEach((propertyName) => {
+        setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
+      });
+    }
+  }, [visit, setValue]);
 
   useEffect(() => {
     if (isEditing) {

@@ -72,6 +72,7 @@ const RecentVisitsTablePage = () => {
     <InteractingTable
       titleLocalizationKey="recentVisitsTablePage.title"
       header={header}
+      queryKey="recentVisits"
       fetchVisits={fetchRecentVisits}
     />
   );

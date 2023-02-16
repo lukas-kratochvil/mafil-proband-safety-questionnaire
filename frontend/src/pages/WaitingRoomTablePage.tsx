@@ -71,6 +71,7 @@ const WaitingRoomTablePage = () => {
     <InteractingTable
       titleLocalizationKey="waitingRoomTablePage.title"
       header={header}
+      queryKey="waitingRoomVisitForms"
       fetchVisits={fetchWaitingRoomVisits}
     />
   );

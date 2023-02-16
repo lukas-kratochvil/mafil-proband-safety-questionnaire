@@ -76,6 +76,7 @@ const ApprovalRoomTablePage = () => {
     <InteractingTable
       titleLocalizationKey="approvalRoomTablePage.title"
       header={header}
+      queryKey="approvalRoomVisitForms"
       fetchVisits={fetchApprovalRoomVisits}
     />
   );
