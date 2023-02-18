@@ -1,0 +1,24 @@
+# Git
+.gitignore
+
+# Docker files
+Dockerfile
+.dockerignore
+
+# Node modules folder
+node_modules
+
+# Database storage folder
+database-storage
+
+# Compiled output
+dist
+
+# Environment variables
+.env*
+
+# Generated files (for example GraphQL schema)
+generated*
+
+# IDEs and editors
+.vscode
