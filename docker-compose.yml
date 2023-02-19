@@ -81,6 +81,7 @@ services:
       - frontend-network
     environment:
       - NGINX_PORT=${NGINX_PORT}
+      - VITE_SERVER_PORT=${SERVER_PORT}
     restart: unless-stopped
 
   web-dev:
