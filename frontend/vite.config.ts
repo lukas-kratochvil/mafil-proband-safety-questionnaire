@@ -17,6 +17,11 @@ export default defineConfig({
     }),
     tsconfigPaths(), // gives Vite the ability to resolve imports using TypeScript's path mapping from tsconfig
   ],
+  server: {
+    host: true, // it's a must for Docker container port mapping to work
+    strictPort: true,
+    port: +process.env.PORT,
+  },
   test: {
     alias: [
       {

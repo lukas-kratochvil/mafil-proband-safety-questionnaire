@@ -67,8 +67,43 @@ services:
     depends_on:
       - postgres
 
+  web:
+    container_name: web
+    image: web:1.0.0
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+      target: production
+    ports:
+      - 127.0.0.1:${CLIENT_PORT}:${NGINX_PORT}
+    networks:
+      - backend-network
+      - frontend-network
+    environment:
+      - NGINX_PORT=${NGINX_PORT}
+    restart: unless-stopped
+
+  web-dev:
+    container_name: web-dev
+    image: web-dev:1.0.0
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+      target: development
+    command: npm run dev
+    ports:
+      - 127.0.0.1:${DEV_CLIENT_PORT}:${DEV_CLIENT_PORT}
+    networks:
+      - backend-network
+      - frontend-network
+    environment:
+      - PORT=${DEV_CLIENT_PORT}
+      - VITE_SERVER_PORT=${DEV_SERVER_PORT}
+    restart: unless-stopped
+
 networks:
   backend-network:
+  frontend-network:
 
 volumes:
   database-storage:

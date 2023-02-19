@@ -1,0 +1,18 @@
+# Git
+.gitignore
+
+# Docker files
+Dockerfile
+.dockerignore
+
+# Node modules folder
+node_modules
+
+# Compiled output
+dist
+
+# Environment variables
+.env*
+
+# IDEs and editors
+.vscode
