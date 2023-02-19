@@ -69,7 +69,7 @@ jobs:
       - name: Build and push the image to the GitHub Container registry
         uses: docker/build-push-action@v4
         with:
-          context: ./backend
-          file: ./Dockerfile
+          context: .
+          file: ./backend/Dockerfile
           push: true
           tags: mafil-psq-server:${{ github.ref_name == 'main' && 'latest' || 'devel' }}
