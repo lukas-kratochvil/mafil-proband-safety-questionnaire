@@ -116,8 +116,8 @@ const VisitDetailPage = () => {
   const [buttons, setButtons] = useState<IVisitDetailButtonProps[]>();
 
   useEffect(() => {
-    if (visit !== undefined && visitState !== undefined) {
-      visit.state = visitState;
+    if (visit !== undefined && visitState === undefined) {
+      setVisitState(visit.state);
     }
 
     setColoredInfoStripe(getColoredInfoStripe(visitState, visit));
