@@ -14,6 +14,7 @@ on:
 
 env:
   DOCKER_REGISTRY: ghcr.io
+  DOCKER_IMAGE_NAME: mafil-psq-server
 
 jobs:
   build:
@@ -69,10 +70,20 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest,enable=${{ github.ref_name == 'main' }}
+            type=raw,value=devel,enable=${{ github.ref_name == 'backend' }}
+
       - name: Build and push the image to the GitHub Container registry
         uses: docker/build-push-action@v4
         with:
           context: .
           file: ./backend/Dockerfile
           push: true
-          tags: ${{ env.DOCKER_REGISTRY }}/lukas-kratochvil/mafil-psq-server:${{ github.ref_name == 'main' && 'latest' || 'devel' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
