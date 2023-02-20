@@ -4,6 +4,7 @@ on:
   push:
     branches: [ "frontend", "main" ]
     paths:
+      - '.github/workflows/ci-frontend.yml'
       - 'frontend/**'
   pull_request:
     branches: [ "frontend", "main" ]
