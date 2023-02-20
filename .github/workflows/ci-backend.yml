@@ -52,7 +52,7 @@ jobs:
 
   push_to_docker_registry:
     name: Build and push Docker image to Docker Hub
-    if: ${{ github.event_type == 'push' }}
+    if: ${{ github.event_name == 'push' }}
     needs: build
     runs-on: ubuntu-latest
     steps:
