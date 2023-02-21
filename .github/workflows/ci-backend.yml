@@ -15,7 +15,7 @@ on:
 
 env:
   DOCKER_REGISTRY: ghcr.io
-  DOCKER_IMAGE_NAME: mafil-psq-server
+  DOCKER_IMAGE_NAME: ${{ github.repository_owner }}/mafil-psq-server
 
 jobs:
   build:
@@ -69,7 +69,7 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ${{ env.DOCKER_REGISTRY }}
-          username: ${{ github.repository_owner }}
+          username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
@@ -80,6 +80,8 @@ jobs:
           tags: |
             type=raw,value=latest,enable=${{ github.ref_name == 'main' }}
             type=raw,value=devel,enable=${{ github.ref_name == 'backend' }}
+          labels: |
+            org.opencontainers.image.title=MAFIL - Proband Safety Questionnaire - server
 
       - name: Build and push the image to the GitHub Container registry
         uses: docker/build-push-action@v4
