@@ -6,6 +6,7 @@ import { GqlOptionsFactory } from "@nestjs/graphql";
 import { UuidScalar } from "./scalars/uuid-scalar";
 
 @Injectable()
+// eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
 export class GraphQLConfigService implements GqlOptionsFactory {
   constructor(private readonly configService: ConfigService) {}
 

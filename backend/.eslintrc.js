@@ -18,7 +18,7 @@ module.exports = {
       "warn",
       {
           src: ["src/**/*.ts"],
-          filterFromPaths: ["graphql-config", ".spec."],
+          filterFromPaths: [".spec."],
       },
     ],
   }
