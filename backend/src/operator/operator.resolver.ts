@@ -1,5 +1,6 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { UuidScalar } from "@app/graphql/scalars/uuid-scalar";
+import { AuthenticateOperatorArgs } from "./dto/authenticate-operator.args";
 import { CreateOperatorInput } from "./dto/create-operator.input";
 import { UpdateOperatorInput } from "./dto/update-operator.input";
 import { OperatorEntity } from "./entities/operator.entity";
@@ -8,6 +9,11 @@ import { OperatorService } from "./operator.service";
 @Resolver(() => OperatorEntity)
 export class OperatorResolver {
   constructor(private readonly operatorService: OperatorService) {}
+
+  @Query(() => OperatorEntity, { nullable: true })
+  authenticateOperator(@Args() authenticateOperatorArgs: AuthenticateOperatorArgs): Promise<OperatorEntity | null> {
+    return this.operatorService.authenticate(authenticateOperatorArgs);
+  }
 
   @Mutation(() => OperatorEntity)
   createOperator(@Args("createOperatorInput") createOperatorInput: CreateOperatorInput): Promise<OperatorEntity> {

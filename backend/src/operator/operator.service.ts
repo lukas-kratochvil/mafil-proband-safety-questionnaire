@@ -1,12 +1,25 @@
 import { Injectable } from "@nestjs/common";
 import { Operator, OperatorRole } from "@prisma/client";
 import { PrismaService } from "@app/prisma/prisma.service";
+import { AuthenticateOperatorArgs } from "./dto/authenticate-operator.args";
 import { CreateOperatorInput } from "./dto/create-operator.input";
 import { UpdateOperatorInput } from "./dto/update-operator.input";
 
 @Injectable()
 export class OperatorService {
   constructor(private readonly prisma: PrismaService) {}
+
+  async authenticate(authenticateOperatorArgs: AuthenticateOperatorArgs): Promise<Operator | never> {
+    const operator = await this.prisma.operator.findUniqueOrThrow({
+      where: authenticateOperatorArgs,
+    });
+
+    if (!operator.isValid) {
+      throw new Error("Operator cannot be authenticated!");
+    }
+
+    return operator;
+  }
 
   async create(createOperatorInput: CreateOperatorInput): Promise<Operator> {
     return this.prisma.operator.upsert({
