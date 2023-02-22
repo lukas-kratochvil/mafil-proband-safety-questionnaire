@@ -1,18 +1,26 @@
 import { Test, TestingModule } from "@nestjs/testing";
+import { PrismaClient } from "@prisma/client";
+import { DeepMockProxy, mockDeep } from "jest-mock-extended";
+import { PrismaService } from "@app/prisma/prisma.service";
 import { VisitFormService } from "./visit-form.service";
 
 describe("VisitFormService", () => {
-  let service: VisitFormService;
+  let visitFormService: VisitFormService;
+  let prisma: DeepMockProxy<PrismaClient>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [VisitFormService],
-    }).compile();
+      providers: [VisitFormService, PrismaService],
+    })
+      .overrideProvider(PrismaService)
+      .useValue(mockDeep<PrismaClient>())
+      .compile();
 
-    service = module.get<VisitFormService>(VisitFormService);
+    visitFormService = module.get<VisitFormService>(VisitFormService);
+    prisma = module.get<PrismaService, DeepMockProxy<PrismaClient>>(PrismaService);
   });
 
   it("should be defined", () => {
-    expect(service).toBeDefined();
+    expect(visitFormService).toBeDefined();
   });
 });

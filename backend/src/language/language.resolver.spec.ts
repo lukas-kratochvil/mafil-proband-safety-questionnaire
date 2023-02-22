@@ -1,19 +1,27 @@
 import { Test, TestingModule } from "@nestjs/testing";
+import { PrismaClient } from "@prisma/client";
+import { DeepMockProxy, mockDeep } from "jest-mock-extended";
+import { PrismaService } from "@app/prisma/prisma.service";
 import { LanguageResolver } from "./language.resolver";
 import { LanguageService } from "./language.service";
 
 describe("LanguageResolver", () => {
-  let resolver: LanguageResolver;
+  let languageResolver: LanguageResolver;
+  let prisma: DeepMockProxy<PrismaClient>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [LanguageResolver, LanguageService],
-    }).compile();
+      providers: [LanguageResolver, LanguageService, PrismaService],
+    })
+      .overrideProvider(PrismaService)
+      .useValue(mockDeep<PrismaClient>())
+      .compile();
 
-    resolver = module.get<LanguageResolver>(LanguageResolver);
+    languageResolver = module.get<LanguageResolver>(LanguageResolver);
+    prisma = module.get<PrismaService, DeepMockProxy<PrismaClient>>(PrismaService);
   });
 
   it("should be defined", () => {
-    expect(resolver).toBeDefined();
+    expect(languageResolver).toBeDefined();
   });
 });
