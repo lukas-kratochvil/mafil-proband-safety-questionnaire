@@ -52,9 +52,8 @@ jobs:
     - name: Build
       run: npm run build
 
-    # TODO: uncomment when Jest testing gets repaired
-    # - name: Run the tests
-    #   run: npm test
+    - name: Run the tests
+      run: npm test
 
   push_to_docker_registry:
     name: Build and push Docker image to Docker Hub
