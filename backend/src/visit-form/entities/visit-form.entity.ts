@@ -1,7 +1,7 @@
 import { Field, HideField, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { VisitForm, VisitFormState } from "@prisma/client";
-import { BaseEntity } from "@graphql/entities/base.entity";
-import { LanguageEntity } from "@language/entities/language.entity";
+import { BaseEntity } from "@app/graphql/entities/base.entity";
+import { LanguageEntity } from "@app/language/entities/language.entity";
 import { AdditionalVisitFormInfoEntity } from "./additional-visit-form-info.entity";
 import { ProbandInfoEntity } from "./proband-info.entity";
 

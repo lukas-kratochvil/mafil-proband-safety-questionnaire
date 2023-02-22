@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
-import { LanguageService } from "@language/language.service";
-import { PrismaService } from "@prisma/prisma.service";
+import { LanguageService } from "@app/language/language.service";
+import { PrismaService } from "@app/prisma/prisma.service";
 import { NativeLanguageResolver } from "./native-language.resolver";
 import { NativeLanguageService } from "./native-language.service";
 

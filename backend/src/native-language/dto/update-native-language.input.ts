@@ -1,5 +1,5 @@
 import { InputType, IntersectionType, PartialType, PickType } from "@nestjs/graphql";
-import { NativeLanguageEntity } from "@native-language/entities/native-language.entity";
+import { NativeLanguageEntity } from "@app/native-language/entities/native-language.entity";
 import { CreateNativeLanguageInput } from "./create-native-language.input";
 
 @InputType()

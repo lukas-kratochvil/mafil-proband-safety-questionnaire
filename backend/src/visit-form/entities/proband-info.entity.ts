@@ -1,7 +1,7 @@
 import { Field, Float, HideField, ObjectType } from "@nestjs/graphql";
 import { ProbandInfo } from "@prisma/client";
-import { BaseEntity } from "@graphql/entities/base.entity";
-import { VisitFormEntity } from "@visit-form/entities/visit-form.entity";
+import { BaseEntity } from "@app/graphql/entities/base.entity";
+import { VisitFormEntity } from "@app/visit-form/entities/visit-form.entity";
 
 @ObjectType()
 export class ProbandInfoEntity extends BaseEntity implements ProbandInfo {

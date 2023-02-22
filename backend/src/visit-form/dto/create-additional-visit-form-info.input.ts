@@ -1,5 +1,5 @@
 import { InputType, IntersectionType, PartialType, PickType } from "@nestjs/graphql";
-import { AdditionalVisitFormInfoEntity } from "@visit-form/entities/additional-visit-form-info.entity";
+import { AdditionalVisitFormInfoEntity } from "@app/visit-form/entities/additional-visit-form-info.entity";
 
 @InputType()
 export class CreateAdditionalVisitFormInfoInput extends IntersectionType(

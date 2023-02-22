@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { HandednessTranslation } from "@prisma/client";
-import { PrismaService } from "@prisma/prisma.service";
+import { PrismaService } from "@app/prisma/prisma.service";
 import { CreateHandednessTranslationInput } from "./dto/create-handedness-translation.input";
 import { UpdateHandednessTranslationInput } from "./dto/update-handedness-translation.input";
 

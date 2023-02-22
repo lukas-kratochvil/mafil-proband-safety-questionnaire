@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { UuidScalar } from "@graphql/scalars/uuid-scalar";
+import { UuidScalar } from "@app/graphql/scalars/uuid-scalar";
 import { CreateVisitFormInput } from "./dto/create-visit-form.input";
 import { UpdateVisitFormInput } from "./dto/update-visit-form.input";
 import { VisitFormEntity } from "./entities/visit-form.entity";

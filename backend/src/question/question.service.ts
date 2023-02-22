@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
-import { LanguageService } from "@language/language.service";
-import { PrismaService } from "@prisma/prisma.service";
-import { areTranslationsComplete } from "@utils/utils";
+import { LanguageService } from "@app/language/language.service";
+import { PrismaService } from "@app/prisma/prisma.service";
+import { areTranslationsComplete } from "@app/utils/utils";
 import { CreateQuestionInput } from "./dto/create-question.input";
 import { UpdateQuestionTextsInput } from "./dto/update-question-texts.input";
 import { UpdateQuestionInput } from "./dto/update-question.input";

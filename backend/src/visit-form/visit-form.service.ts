@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Prisma, VisitFormState } from "@prisma/client";
-import { PrismaService } from "@prisma/prisma.service";
+import { PrismaService } from "@app/prisma/prisma.service";
 import { CreateVisitFormInput } from "./dto/create-visit-form.input";
 import { UpdateVisitFormInput } from "./dto/update-visit-form.input";
 

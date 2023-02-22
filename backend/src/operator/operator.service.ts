@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Operator, OperatorRole } from "@prisma/client";
-import { PrismaService } from "@prisma/prisma.service";
+import { PrismaService } from "@app/prisma/prisma.service";
 import { CreateOperatorInput } from "./dto/create-operator.input";
 import { UpdateOperatorInput } from "./dto/update-operator.input";
 

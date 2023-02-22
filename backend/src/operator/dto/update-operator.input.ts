@@ -1,5 +1,5 @@
 import { InputType, IntersectionType, PartialType, PickType } from "@nestjs/graphql";
-import { OperatorEntity } from "@operator/entities/operator.entity";
+import { OperatorEntity } from "@app/operator/entities/operator.entity";
 import { CreateOperatorInput } from "./create-operator.input";
 
 @InputType()

@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { UuidScalar } from "@graphql/scalars/uuid-scalar";
+import { UuidScalar } from "@app/graphql/scalars/uuid-scalar";
 import { CreateOperatorInput } from "./dto/create-operator.input";
 import { UpdateOperatorInput } from "./dto/update-operator.input";
 import { OperatorEntity } from "./entities/operator.entity";

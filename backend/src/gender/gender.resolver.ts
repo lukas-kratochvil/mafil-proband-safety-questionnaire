@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { UuidScalar } from "@graphql/scalars/uuid-scalar";
+import { UuidScalar } from "@app/graphql/scalars/uuid-scalar";
 import { CreateGenderInput } from "./dto/create-gender.input";
 import { UpdateGenderInput } from "./dto/update-gender.input";
 import { GenderEntity } from "./entities/gender.entity";

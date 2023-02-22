@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Language } from "@prisma/client";
-import { PrismaService } from "@prisma/prisma.service";
+import { PrismaService } from "@app/prisma/prisma.service";
 import { CreateLanguageInput } from "./dto/create-language.input";
 import { UpdateLanguageInput } from "./dto/update-language.input";
 

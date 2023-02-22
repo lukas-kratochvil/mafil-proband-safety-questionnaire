@@ -1,5 +1,5 @@
 import { Field, InputType, PickType } from "@nestjs/graphql";
-import { VisitFormEntity } from "@visit-form/entities/visit-form.entity";
+import { VisitFormEntity } from "@app/visit-form/entities/visit-form.entity";
 import { UpdateAdditionalVisitFormInfoInput } from "./update-additional-visit-form-info.input";
 import { UpdateAnswerInput } from "./update-answer.input";
 import { UpdateProbandInfoInput } from "./update-proband-info.input";

@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { QuestionTranslation } from "@prisma/client";
-import { PrismaService } from "@prisma/prisma.service";
+import { PrismaService } from "@app/prisma/prisma.service";
 import { CreateQuestionTranslationInput } from "./dto/create-question-translation.input";
 import { UpdateQuestionTranslationInput } from "./dto/update-question-translation.input";
 

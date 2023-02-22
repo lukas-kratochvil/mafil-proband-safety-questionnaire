@@ -1,5 +1,5 @@
 import { Language } from "@prisma/client";
-import { TranslationInput } from "@graphql/dto/create-translation.input";
+import { TranslationInput } from "@app/graphql/dto/create-translation.input";
 
 export const areTranslationsComplete = (languages: Language[], translations: TranslationInput[]): boolean => {
   const translationCodes = translations.map((translation) => translation.code);

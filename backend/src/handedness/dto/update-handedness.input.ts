@@ -1,5 +1,5 @@
 import { InputType, IntersectionType, PartialType, PickType } from "@nestjs/graphql";
-import { HandednessEntity } from "@handedness/entities/handedness.entity";
+import { HandednessEntity } from "@app/handedness/entities/handedness.entity";
 import { CreateHandednessInput } from "./create-handedness.input";
 
 @InputType()

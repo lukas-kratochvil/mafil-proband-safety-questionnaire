@@ -1,5 +1,5 @@
 import { InputType, IntersectionType, PartialType, PickType } from "@nestjs/graphql";
-import { GenderEntity } from "@gender/entities/gender.entity";
+import { GenderEntity } from "@app/gender/entities/gender.entity";
 import { CreateGenderInput } from "./create-gender.input";
 
 @InputType()

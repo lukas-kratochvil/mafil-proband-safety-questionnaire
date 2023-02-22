@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { GenderTranslation } from "@prisma/client";
-import { PrismaService } from "@prisma/prisma.service";
+import { PrismaService } from "@app/prisma/prisma.service";
 import { CreateGenderTranslationInput } from "./dto/create-gender-translation.input";
 import { UpdateGenderTranslationInput } from "./dto/update-gender-translation.input";
 
