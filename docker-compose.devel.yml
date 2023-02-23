@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  server:
+    image: ghcr.io/lukas-kratochvil/mafil-psq-server:devel
+
+  web:
+    image: ghcr.io/lukas-kratochvil/mafil-psq-web:devel
