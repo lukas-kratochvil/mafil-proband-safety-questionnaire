@@ -1,5 +1,5 @@
 import userEvent from "@testing-library/user-event";
-import i18n from "@i18n";
+import i18n from "@app/i18n";
 import { render, within } from "@test-utils";
 import { LanguageMenu } from "../LanguageMenu";
 

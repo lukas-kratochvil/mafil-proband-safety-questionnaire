@@ -1,7 +1,7 @@
-import { FormPageContainer } from "@components/form/forms/FormPageContainer";
-import { PhantomForm } from "@components/form/forms/PhantomForm";
-import { operatorFormSchema } from "@components/form/schemas/form-schema_operator";
-import { loadPhantomFormDefaultValues } from "@components/form/util/loaders";
+import { FormPageContainer } from "@app/components/form/forms/FormPageContainer";
+import { PhantomForm } from "@app/components/form/forms/PhantomForm";
+import { operatorFormSchema } from "@app/components/form/schemas/form-schema_operator";
+import { loadPhantomFormDefaultValues } from "@app/components/form/util/loaders";
 
 const PhantomFormPage = () => (
   <FormPageContainer

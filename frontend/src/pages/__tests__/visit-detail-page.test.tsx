@@ -1,9 +1,9 @@
 import userEvent from "@testing-library/user-event";
-import i18n from "@i18n";
-import { Gender, Handedness, IVisit, VisitState, VisualCorrection } from "@interfaces/visit";
-import VisitDetailPage from "@pages/VisitDetailPage";
+import i18n from "@app/i18n";
+import { Gender, Handedness, IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
+import VisitDetailPage from "@app/pages/VisitDetailPage";
+import * as fetchers from "@app/util/fetch";
 import { render, screen } from "@test-utils";
-import * as fetchers from "@util/fetch";
 
 //----------------------------------------------------------------------
 // Default visit
@@ -58,7 +58,7 @@ vi.mock("react-router-dom", async () => ({
 //----------------------------------------------------------------------
 // Mocking LanguageMenu due to undefined i18n instance that is used inside this component
 //----------------------------------------------------------------------
-vi.mock("@components/header/LanguageMenu", () => ({
+vi.mock("@app/components/header/LanguageMenu", () => ({
   LanguageMenu: () => <div />,
 }));
 
@@ -89,7 +89,7 @@ describe("visit detail page", () => {
     vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => disapprovedVisit);
     setup();
 
-    expect(await screen.findByText(`visitDetailPage.title: ${  disapprovedVisit.visitId}`)).toBeDefined();
+    expect(await screen.findByText(`visitDetailPage.title: ${disapprovedVisit.visitId}`)).toBeDefined();
     await screen.findByText(/visitDetailPage.infoStripes.disapproved/);
     const iframe = await screen.findByTitle("Visit detail");
     expect(iframe).toBeInTheDocument();
@@ -105,7 +105,7 @@ describe("visit detail page", () => {
     vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => approvedVisit);
     setup();
 
-    expect(await screen.findByText(`visitDetailPage.title: ${  approvedVisit.visitId}`)).toBeDefined();
+    expect(await screen.findByText(`visitDetailPage.title: ${approvedVisit.visitId}`)).toBeDefined();
     await screen.findByText(/visitDetailPage.infoStripes.signatureChoice/);
     const iframe = screen.getByTitle("Visit detail");
     expect(iframe).toBeInTheDocument();
@@ -127,7 +127,7 @@ describe("visit detail page", () => {
     vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => forSignatureVisit);
     setup();
 
-    expect(await screen.findByText(`visitDetailPage.title: ${  forSignatureVisit.visitId}`)).toBeDefined();
+    expect(await screen.findByText(`visitDetailPage.title: ${forSignatureVisit.visitId}`)).toBeDefined();
     await screen.findByText(/visitDetailPage.infoStripes.waitingForSignatureConfirmation/);
     const iframe = screen.getByTitle("Visit detail");
     expect(iframe).toBeInTheDocument();
@@ -145,7 +145,7 @@ describe("visit detail page", () => {
     vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => signedVisit);
     setup();
 
-    expect(await screen.findByText(`visitDetailPage.title: ${  signedVisit.visitId}`)).toBeDefined();
+    expect(await screen.findByText(`visitDetailPage.title: ${signedVisit.visitId}`)).toBeDefined();
     await screen.findByText(/visitDetailPage.infoStripes.signed/);
     const iframe = screen.getByTitle("Visit detail");
     expect(iframe).toBeInTheDocument();
@@ -167,7 +167,7 @@ describe("visit detail page", () => {
     vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => signedPhantomVisit);
     setup();
 
-    expect(await screen.findByText(`visitDetailPage.title: ${  signedPhantomVisit.visitId}`)).toBeDefined();
+    expect(await screen.findByText(`visitDetailPage.title: ${signedPhantomVisit.visitId}`)).toBeDefined();
     await screen.findByText(/visitDetailPage.infoStripes.completed/);
     const iframe = screen.getByTitle("Visit detail");
     expect(iframe).toBeInTheDocument();

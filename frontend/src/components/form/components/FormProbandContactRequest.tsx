@@ -2,8 +2,8 @@ import { Grid, Typography } from "@mui/material";
 import { format } from "date-fns";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { defaultNS } from "@i18n";
-import { FormPropType } from "@interfaces/form";
+import { defaultNS } from "@app/i18n";
+import { FormPropType } from "@app/interfaces/form";
 import { FormTextField } from "../inputs/FormTextField";
 import { FormCardContainer } from "./FormCardContainer";
 

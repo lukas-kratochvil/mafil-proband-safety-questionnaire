@@ -3,17 +3,17 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { CardContainer } from "@components/card/CardContainer";
+import { CardContainer } from "@app/components/card/CardContainer";
 import {
   ColoredInfoStripe,
   ColoredInfoStripeColors,
   IColoredInfoStripeProps,
-} from "@components/informative/ColoredInfoStripe";
-import { ErrorAlert } from "@components/informative/ErrorAlert";
-import { defaultNS } from "@i18n";
-import { IVisit, VisitState } from "@interfaces/visit";
-import { fetchVisitDetail } from "@util/fetch";
-import { convertStringToLocalizationKey, getBackButtonProps, IButtonProps } from "@util/utils";
+} from "@app/components/informative/ColoredInfoStripe";
+import { ErrorAlert } from "@app/components/informative/ErrorAlert";
+import { defaultNS } from "@app/i18n";
+import { IVisit, VisitState } from "@app/interfaces/visit";
+import { fetchVisitDetail } from "@app/util/fetch";
+import { convertStringToLocalizationKey, getBackButtonProps, IButtonProps } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
 
 interface IVisitDetailButtonProps extends IButtonProps {

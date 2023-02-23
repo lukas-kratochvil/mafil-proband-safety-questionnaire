@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import { PropsWithChildren } from "react";
-import { Header } from "@components/header/Header";
-import { useAuth } from "@hooks/auth/auth";
+import { Header } from "@app/components/header/Header";
+import { useAuth } from "@app/hooks/auth/auth";
 
 interface IPageContainerProps {
   centerize?: boolean;

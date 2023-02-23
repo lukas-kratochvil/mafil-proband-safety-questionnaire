@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { FormBeforeExamination } from "@components/form/components/FormBeforeExamination";
-import { IFormButtonsProps } from "@components/form/components/FormButtons";
-import { FormEntryInfo } from "@components/form/components/FormEntryInfo";
-import { FormExaminationConsent } from "@components/form/components/FormExaminationConsent";
-import { FormProbandInfo } from "@components/form/components/FormProbandInfo";
-import { FormQuestions } from "@components/form/components/FormQuestions";
-import { FormSafetyInfo } from "@components/form/components/FormSafetyInfo";
-import { FormPropType, FormQac } from "@interfaces/form";
-import { RoutingPaths } from "@routing-paths";
-import { fetchCurrentQuestions } from "@util/fetch";
+import { FormBeforeExamination } from "@app/components/form/components/FormBeforeExamination";
+import { IFormButtonsProps } from "@app/components/form/components/FormButtons";
+import { FormEntryInfo } from "@app/components/form/components/FormEntryInfo";
+import { FormExaminationConsent } from "@app/components/form/components/FormExaminationConsent";
+import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo";
+import { FormQuestions } from "@app/components/form/components/FormQuestions";
+import { FormSafetyInfo } from "@app/components/form/components/FormSafetyInfo";
+import { FormPropType, FormQac } from "@app/interfaces/form";
+import { RoutingPaths } from "@app/routing-paths";
+import { fetchCurrentQuestions } from "@app/util/fetch";
 import { FormProbandContactCheckbox } from "../components/FormProbandContactCheckbox";
 import { FormProbandContactConsent } from "../components/FormProbandContactConsent";
 import { FormProbandContactRequest } from "../components/FormProbandContactRequest";
@@ -23,11 +23,7 @@ enum ProbandFormStep {
 }
 
 export const ProbandForm = () => {
-  const {
-    data: questions,
-    isLoading,
-    isError,
-  } = useQuery("currentQuestions", async () => fetchCurrentQuestions());
+  const { data: questions, isLoading, isError } = useQuery("currentQuestions", async () => fetchCurrentQuestions());
   const navigate = useNavigate();
   const { setError, setValue } = useFormContext<FormPropType>();
 

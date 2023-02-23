@@ -1,5 +1,5 @@
-import { FormPropType } from "@interfaces/form";
-import { Gender, IVisit } from "@interfaces/visit";
+import { FormPropType } from "@app/interfaces/form";
+import { Gender, IVisit } from "@app/interfaces/visit";
 import { genderOptions, getOption, handednessOptions, visualCorrectionOptions } from "./options";
 
 // Autocomplete component default value must be one of the options provided or null

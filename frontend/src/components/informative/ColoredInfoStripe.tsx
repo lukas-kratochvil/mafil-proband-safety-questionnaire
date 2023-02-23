@@ -1,8 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import { blue, green, orange, red } from "@mui/material/colors";
 import { useTranslation } from "react-i18next";
-import { defaultNS } from "@i18n";
-import { convertStringToLocalizationKey } from "@util/utils";
+import { defaultNS } from "@app/i18n";
+import { convertStringToLocalizationKey } from "@app/util/utils";
 
 export enum ColoredInfoStripeColors {
   BLUE,

@@ -1,8 +1,8 @@
 import { Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { defaultNS } from "@i18n";
-import { RoutingPaths } from "@routing-paths";
+import { defaultNS } from "@app/i18n";
+import { RoutingPaths } from "@app/routing-paths";
 import { ActionButtonsContainer, IActionButtonsProps } from "./ActionButtonsContainer";
 
 export const ApprovalRoomActionButtons = ({ visitId }: IActionButtonsProps) => {

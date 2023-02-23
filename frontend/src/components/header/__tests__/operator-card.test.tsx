@@ -1,4 +1,4 @@
-import { IOperator } from "@interfaces/auth";
+import { IOperator } from "@app/interfaces/auth";
 import { render } from "@test-utils";
 import { OperatorCard } from "../OperatorCard";
 
@@ -13,7 +13,7 @@ const mockOperator: IOperator = {
   uco: "",
 };
 
-vi.mock("@hooks/auth/auth", () => ({
+vi.mock("@app/hooks/auth/auth", () => ({
   useAuth: () => ({
     operator: mockOperator,
   }),

@@ -1,5 +1,5 @@
 import { addYears, differenceInCalendarYears, getDate, getMonth, getYear, isExists } from "date-fns";
-import { Gender } from "@interfaces/visit";
+import { Gender } from "@app/interfaces/visit";
 
 const FEMALE_CONST = 50;
 

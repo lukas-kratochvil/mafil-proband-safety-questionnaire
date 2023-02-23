@@ -1,6 +1,6 @@
-import { DuplicationForm } from "@components/form/forms/DuplicationForm";
-import { FormPageContainer } from "@components/form/forms/FormPageContainer";
-import { operatorApprovalFormSchema } from "@components/form/schemas/form-schema_operator-approval";
+import { DuplicationForm } from "@app/components/form/forms/DuplicationForm";
+import { FormPageContainer } from "@app/components/form/forms/FormPageContainer";
+import { operatorApprovalFormSchema } from "@app/components/form/schemas/form-schema_operator-approval";
 
 const DuplicationFormPage = () => (
   <FormPageContainer

@@ -7,7 +7,7 @@ import ScienceIcon from "@mui/icons-material/Science";
 import { SxProps, Theme } from "@mui/material";
 import { amber } from "@mui/material/colors";
 import { Location, NavigateFunction } from "react-router-dom";
-import { RoutingPaths } from "@routing-paths";
+import { RoutingPaths } from "@app/routing-paths";
 
 export const TAB_DEFAULT_COLOR = amber[700];
 export const TAB_HIGHLIGHT_COLOR = amber[600];

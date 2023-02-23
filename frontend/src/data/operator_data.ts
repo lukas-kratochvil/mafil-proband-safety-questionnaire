@@ -1,4 +1,4 @@
-import { IOperator } from "@interfaces/auth";
+import { IOperator } from "@app/interfaces/auth";
 
 export const operatorSpecial: IOperator = {
   name: "Operator",

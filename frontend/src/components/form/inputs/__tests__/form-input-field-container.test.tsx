@@ -1,8 +1,8 @@
-import i18n from "@i18n";
+import i18n from "@app/i18n";
 import { render } from "@test-utils";
 import { FormInputFieldContainer } from "../FormInputFieldContainer";
 
-vi.mock("@components/form/inputs/ErrorMessage", () => ({
+vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
   ErrorMessage: () => <div />,
 }));
 

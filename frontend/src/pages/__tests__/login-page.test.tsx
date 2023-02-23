@@ -1,11 +1,11 @@
-import i18n from "@i18n";
-import LoginPage from "@pages/LoginPage";
+import i18n from "@app/i18n";
+import LoginPage from "@app/pages/LoginPage";
 import { render } from "@test-utils";
 
 //----------------------------------------------------------------------
 // Mocking LanguageMenu due to undefined i18n instance that is used inside this component
 //----------------------------------------------------------------------
-vi.mock("@components/header/LanguageMenu", () => ({
+vi.mock("@app/components/header/LanguageMenu", () => ({
   LanguageMenu: () => <div />,
 }));
 
