@@ -3,11 +3,7 @@
 #-------------------------------------------
 FROM node:16-alpine AS development
 
-WORKDIR /usr/src/app
-
-# we do not want to run under the root user, we will use already created `node` user instead (created in the base `node` image)
-# RUN chown -R node:node /usr/src
-# USER node
+WORKDIR /usr/src/app/frontend
 
 COPY ["frontend/package.json", "frontend/package-lock.json", "./"]
 RUN npm ci
@@ -22,15 +18,11 @@ COPY ./frontend .
 #-------------------------------------------
 FROM node:16-alpine AS build
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/app/frontend
 
-# we do not want to run under the root user, we will use already created `node` user instead (created in the base `node` image)
-# RUN chown -R node:node /usr/src
-# USER node
-
-COPY --from=development ["/usr/src/app/package.json", "/usr/src/app/package-lock.json", "./"]
-COPY --from=development /usr/src/app/node_modules ./node_modules
-COPY --from=development /usr/src/. ../.
+COPY --from=development ["/usr/src/app/frontend/package.json", "/usr/src/app/frontend/package-lock.json", "./"]
+COPY --from=development /usr/src/app/frontend/node_modules ./node_modules
+COPY --from=development /usr/src/app/. ../.
 
 RUN npm run build
 
@@ -42,11 +34,7 @@ RUN npm ci --production && npm cache clean --force
 #-------------------------------------------
 FROM nginx:1.23.3-alpine AS production
 
-# we do not want to run under the root user, we will use already created `node` user instead (created in the base `node` image)
-# RUN chown -R node:node /usr/src/app
-# USER node
-
-COPY --from=build /usr/src/app/dist /usr/share/nginx/html
+COPY --from=build /usr/src/app/frontend/dist /usr/share/nginx/html
 
 COPY ./nginx /etc/nginx
 
