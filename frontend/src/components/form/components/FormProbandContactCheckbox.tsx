@@ -1,6 +1,6 @@
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { defaultNS } from "@i18n";
+import { defaultNS } from "@app/i18n";
 import { FormCardContainer } from "./FormCardContainer";
 
 interface IFormProbandContactCheckboxProps {

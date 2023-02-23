@@ -3,10 +3,10 @@ import MaterialReactTable, { MRT_ColumnDef as MRTColumnDef } from "material-reac
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
-import { defaultNS } from "@i18n";
-import { IVisit } from "@interfaces/visit";
-import { PageContainer } from "@pages/PageContainer";
-import { convertStringToLocalizationKey } from "@util/utils";
+import { defaultNS } from "@app/i18n";
+import { IVisit } from "@app/interfaces/visit";
+import { PageContainer } from "@app/pages/PageContainer";
+import { convertStringToLocalizationKey } from "@app/util/utils";
 
 interface IInteractingTableProps {
   titleLocalizationKey: string;

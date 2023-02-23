@@ -1,4 +1,4 @@
-import { IQuestionData, QuestionPartNumber } from "@interfaces/question";
+import { IQuestionData, QuestionPartNumber } from "@app/interfaces/question";
 
 const questions1 = [
   "Prodělal(a) jste operaci hlavy (mozku)?",

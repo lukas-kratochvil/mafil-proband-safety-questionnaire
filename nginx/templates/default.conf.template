@@ -1,8 +1,8 @@
 server {
   # IPv4
-  listen  ${NGINX_PORT} default_server;
+  listen  ${PORT} default_server;
   # IPv6
-  listen  [::]:${NGINX_PORT} default_server;
+  listen  [::]:${PORT} default_server;
   # 'default_server' option specifies the default server to which a client request with an unknown domain and an empty host field will be forwarded
 
   access_log  /var/log/nginx/mafil-psq.access.log;

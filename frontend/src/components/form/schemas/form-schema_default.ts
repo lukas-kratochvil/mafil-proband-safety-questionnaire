@@ -1,6 +1,6 @@
 import { array, date, mixed, number, object, string } from "yup";
-import { QuestionPartNumber } from "@interfaces/question";
-import { AnswerOption, VisualCorrection } from "@interfaces/visit";
+import { QuestionPartNumber } from "@app/interfaces/question";
+import { AnswerOption, VisualCorrection } from "@app/interfaces/visit";
 import { getOption, IOption, visualCorrectionOptions } from "../util/options";
 
 export const answersSchema = object({

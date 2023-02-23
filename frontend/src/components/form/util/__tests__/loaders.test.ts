@@ -1,5 +1,5 @@
-import { QuestionPartNumber } from "@interfaces/question";
-import { AnswerOption, Gender, Handedness, IVisit, VisitState, VisualCorrection } from "@interfaces/visit";
+import { QuestionPartNumber } from "@app/interfaces/question";
+import { AnswerOption, Gender, Handedness, IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
 import {
   loadEmptyDefaultValues,
   loadFormDefaultValuesFromVisit,

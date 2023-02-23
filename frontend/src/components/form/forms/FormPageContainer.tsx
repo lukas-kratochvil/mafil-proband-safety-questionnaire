@@ -1,9 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { AnyObjectSchema } from "yup";
-import { loadEmptyDefaultValues } from "@components/form/util/loaders";
-import { FormPropType } from "@interfaces/form";
-import { PageContainer } from "@pages/PageContainer";
+import { loadEmptyDefaultValues } from "@app/components/form/util/loaders";
+import { FormPropType } from "@app/interfaces/form";
+import { PageContainer } from "@app/pages/PageContainer";
 
 interface IFormPageContainerProps {
   FormPage: () => JSX.Element;

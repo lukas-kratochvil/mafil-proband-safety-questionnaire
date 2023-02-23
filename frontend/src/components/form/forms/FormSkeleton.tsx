@@ -1,5 +1,5 @@
 import { Skeleton, Stack } from "@mui/material";
-import { useAuth } from "@hooks/auth/auth";
+import { useAuth } from "@app/hooks/auth/auth";
 
 export const FormSkeleton = () => {
   const { operator } = useAuth();

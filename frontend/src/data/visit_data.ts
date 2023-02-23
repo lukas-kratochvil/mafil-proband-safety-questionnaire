@@ -1,6 +1,6 @@
-import { QuestionPartNumber } from "@interfaces/question";
-import { AnswerOption, Gender, Handedness, IQac, IVisit, VisitState, VisualCorrection } from "@interfaces/visit";
-import { getDummyVisitCurrentQuestions } from "@util/fetch.dev";
+import { QuestionPartNumber } from "@app/interfaces/question";
+import { AnswerOption, Gender, Handedness, IQac, IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
+import { getDummyVisitCurrentQuestions } from "@app/util/fetch.dev";
 import { devicesDev, projectsDev } from "./form_data";
 
 const idCounter = {

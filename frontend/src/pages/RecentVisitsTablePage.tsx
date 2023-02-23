@@ -1,11 +1,11 @@
 import { compareAsc, format, parse } from "date-fns";
 import { MRT_ColumnDef as MRTColumnDef, MRT_Row as MRTRow } from "material-react-table";
 import { useTranslation } from "react-i18next";
-import { InteractingTable } from "@components/table/InteractingTable";
-import { RecentVisitsActionButtons } from "@components/table/actions/RecentVisitsActionButtons";
-import { defaultNS } from "@i18n";
-import { IVisit } from "@interfaces/visit";
-import { fetchRecentVisits } from "@util/fetch";
+import { InteractingTable } from "@app/components/table/InteractingTable";
+import { RecentVisitsActionButtons } from "@app/components/table/actions/RecentVisitsActionButtons";
+import { defaultNS } from "@app/i18n";
+import { IVisit } from "@app/interfaces/visit";
+import { fetchRecentVisits } from "@app/util/fetch";
 
 const processedDateFormat = "d.M.y H:mm";
 

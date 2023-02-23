@@ -1,7 +1,7 @@
 import userEvent from "@testing-library/user-event";
 import { format } from "date-fns";
-import i18n from "@i18n";
-import PhantomFormPage from "@pages/PhantomFormPage";
+import i18n from "@app/i18n";
+import PhantomFormPage from "@app/pages/PhantomFormPage";
 import { render, screen, waitFor } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -16,22 +16,22 @@ vi.mock("react-router-dom", async () => ({
 //----------------------------------------------------------------------
 // Mocking LanguageMenu due to undefined i18n instance that is used inside this component
 //----------------------------------------------------------------------
-vi.mock("@components/header/LanguageMenu", () => ({
+vi.mock("@app/components/header/LanguageMenu", () => ({
   LanguageMenu: () => <div />,
 }));
 
 //----------------------------------------------------------------------
 // Mocking custom ErrorMessage component
 //----------------------------------------------------------------------
-vi.mock("@components/form/inputs/ErrorMessage", () => ({
+vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
   ErrorMessage: () => <div />,
 }));
 
 //----------------------------------------------------------------------
 // Mocking custom fetch methods
 //----------------------------------------------------------------------
-vi.mock("@util/fetch", async () => ({
-  ...((await vi.importActual("@util/fetch")) as Record<string, unknown>),
+vi.mock("@app/util/fetch", async () => ({
+  ...((await vi.importActual("@app/util/fetch")) as Record<string, unknown>),
   fetchProjects: async (): Promise<string[]> => ["project1", "project2", "project3"],
   fetchDevices: async (): Promise<string[]> => ["device1", "device2", "device3"],
 }));

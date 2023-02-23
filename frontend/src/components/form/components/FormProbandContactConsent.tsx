@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { PropsWithChildren } from "react";
 import { Trans, useTranslation } from "react-i18next";
-import { defaultNS } from "@i18n";
+import { defaultNS } from "@app/i18n";
 import { FormCardContainer } from "./FormCardContainer";
 
 const Underline = ({ children }: PropsWithChildren) => <span style={{ textDecoration: "underline" }}>{children}</span>;

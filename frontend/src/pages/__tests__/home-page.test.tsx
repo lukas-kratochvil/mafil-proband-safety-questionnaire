@@ -1,13 +1,13 @@
 import userEvent from "@testing-library/user-event";
-import i18n from "@i18n";
-import HomePage from "@pages/HomePage";
-import { RoutingPaths } from "@routing-paths";
+import i18n from "@app/i18n";
+import HomePage from "@app/pages/HomePage";
+import { RoutingPaths } from "@app/routing-paths";
 import { render, screen } from "@test-utils";
 
 //----------------------------------------------------------------------
 // Mocking LanguageMenu due to undefined i18n instance that is used inside this component
 //----------------------------------------------------------------------
-vi.mock("@components/header/LanguageMenu", () => ({
+vi.mock("@app/components/header/LanguageMenu", () => ({
   LanguageMenu: () => <div />,
 }));
 

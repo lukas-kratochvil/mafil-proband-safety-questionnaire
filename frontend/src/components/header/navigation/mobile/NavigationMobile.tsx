@@ -3,8 +3,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Drawer, Grid, IconButton, List, Tooltip } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LogOutButton } from "@components/header/LogOutButton";
-import { OperatorCard } from "@components/header/OperatorCard";
+import { LogOutButton } from "@app/components/header/LogOutButton";
+import { OperatorCard } from "@app/components/header/OperatorCard";
 import { getTabs, TAB_DEFAULT_COLOR } from "../common";
 import { NavigationMobileTab } from "./NavigationMobileTab";
 

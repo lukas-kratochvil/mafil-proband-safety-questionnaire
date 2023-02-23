@@ -1,5 +1,5 @@
-import i18n from "@i18n";
-import { IQuestionData } from "@interfaces/question";
+import i18n from "@app/i18n";
+import { IQuestionData } from "@app/interfaces/question";
 import { render } from "@test-utils";
 import { FormQuestions } from "../FormQuestions";
 
