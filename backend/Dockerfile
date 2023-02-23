@@ -3,11 +3,7 @@
 #-------------------------------------------
 FROM node:16-alpine AS development
 
-WORKDIR /usr/src/app
-
-# we do not want to run under the root user, we will use already created `node` user instead (created in the base `node` image)
-# RUN chown -R node:node /usr/src
-# USER node
+WORKDIR /usr/src/app/backend
 
 COPY ["backend/package.json", "backend/package-lock.json", "./"]
 RUN npm ci
@@ -25,15 +21,11 @@ COPY ./backend .
 #-------------------------------------------
 FROM node:16-alpine AS build
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/app/backend
 
-# we do not want to run under the root user, we will use already created `node` user instead (created in the base `node` image)
-# RUN chown -R node:node /usr/src
-# USER node
-
-COPY --from=development ["/usr/src/app/package.json", "/usr/src/app/package-lock.json", "./"]
-COPY --from=development /usr/src/app/node_modules ./node_modules
-COPY --from=development /usr/src/. ../.
+COPY --from=development ["/usr/src/app/backend/package.json", "/usr/src/app/backend/package-lock.json", "./"]
+COPY --from=development /usr/src/app/backend/node_modules ./node_modules
+COPY --from=development /usr/src/app/. ../.
 
 RUN npm run build
 
@@ -47,11 +39,7 @@ FROM node:16-alpine AS production
 
 WORKDIR /usr/src/app
 
-# we do not want to run under the root user, we will use already created `node` user instead (created in the base `node` image)
-# RUN chown -R node:node /usr/src/app
-# USER node
-
-COPY --from=build /usr/src/app/node_modules ./node_modules
-COPY --from=build /usr/src/app/dist ./dist
+COPY --from=build /usr/src/app/backend/node_modules ./node_modules
+COPY --from=build /usr/src/app/backend/dist ./dist
 
 CMD [ "node", "dist/main.js" ]
