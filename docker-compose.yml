@@ -32,11 +32,7 @@ services:
 
   server:
     container_name: server
-    image: server:1.0.0
-    build:
-      context: .
-      dockerfile: ./backend/Dockerfile
-      target: production
+    image: ghcr.io/lukas-kratochvil/mafil-psq-server:latest
     ports:
       - 127.0.0.1:${SERVER_PORT}:${SERVER_PORT}
     networks:
@@ -48,58 +44,17 @@ services:
     depends_on:
       - postgres
 
-  server-dev:
-    container_name: server-dev
-    image: server-dev:1.0.0
-    build:
-      context: .
-      dockerfile: ./backend/Dockerfile
-      target: development
-    command: npm run start:dev
-    ports:
-      - 127.0.0.1:${DEV_SERVER_PORT}:${DEV_SERVER_PORT}
-    networks:
-      - backend-network
-    environment:
-      - PORT=${DEV_SERVER_PORT}
-      - DATABASE_URL=${DATABASE_URL}
-    restart: unless-stopped
-    depends_on:
-      - postgres
-
   web:
     container_name: web
-    image: web:1.0.0
-    build:
-      context: .
-      dockerfile: ./frontend/Dockerfile
-      target: production
+    image: ghcr.io/lukas-kratochvil/mafil-psq-web:latest
     ports:
-      - 127.0.0.1:${CLIENT_PORT}:${NGINX_PORT}
+      - 127.0.0.1:${WEB_PORT}:${WEB_PORT}
     networks:
       - backend-network
       - frontend-network
     environment:
-      - NGINX_PORT=${NGINX_PORT}
+      - PORT=${WEB_PORT}
       - VITE_SERVER_PORT=${SERVER_PORT}
-    restart: unless-stopped
-
-  web-dev:
-    container_name: web-dev
-    image: web-dev:1.0.0
-    build:
-      context: .
-      dockerfile: ./frontend/Dockerfile
-      target: development
-    command: npm run dev
-    ports:
-      - 127.0.0.1:${DEV_CLIENT_PORT}:${DEV_CLIENT_PORT}
-    networks:
-      - backend-network
-      - frontend-network
-    environment:
-      - PORT=${DEV_CLIENT_PORT}
-      - VITE_SERVER_PORT=${DEV_SERVER_PORT}
     restart: unless-stopped
 
 networks:
