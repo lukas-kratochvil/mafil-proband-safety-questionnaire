@@ -51,7 +51,7 @@ const visit: IVisit = {
     disapprovalReason: null,
   },
   probandInfo: {
-    name: "Jong",
+    name: "John",
     surname: "Wick",
     personalId: "0123456789",
     birthdate: new Date(1980, 8, 24),
@@ -156,7 +156,7 @@ describe("duplication form page", () => {
   test("renders values from the visit being duplicated", async () => {
     setup();
 
-    await waitFor(async () =>
+    await waitFor(() =>
       expect(screen.getByRole("form")).toHaveFormValues({
         project: "",
         device: "",
