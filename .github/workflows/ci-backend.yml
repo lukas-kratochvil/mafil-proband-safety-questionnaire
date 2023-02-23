@@ -2,12 +2,12 @@ name: CI - backend
 
 on:
   push:
-    branches: [ "backend", "main" ]
+    branches: [ "devel", "main" ]
     paths:
       - '.github/workflows/ci-backend.yml'
       - 'backend/**'
   pull_request:
-    branches: [ "backend", "main" ]
+    branches: [ "devel", "main" ]
     paths:
       - 'backend/**'
   # We can manually trigger this workflow
@@ -78,7 +78,7 @@ jobs:
           images: ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}
           tags: |
             type=raw,value=latest,enable=${{ github.ref_name == 'main' }}
-            type=raw,value=devel,enable=${{ github.ref_name == 'backend' }}
+            type=raw,value=devel,enable=${{ github.ref_name == 'devel' }}
           labels: |
             org.opencontainers.image.title=MAFIL - Proband Safety Questionnaire - server
 
