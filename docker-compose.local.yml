@@ -1,7 +1,37 @@
 version: '3.8'
 
 services:
+  postgres:
+    container_name: postgres
+    image: postgres:alpine3.17
+    ports:
+      - 127.0.0.1:${DB_PORT}:${DB_PORT}
+    networks:
+      - backend-network
+    volumes:
+      - ./backend/database-storage:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      PGPORT: ${DB_PORT}
+    restart: unless-stopped
+
+  adminer:
+    container_name: adminer
+    image: adminer:4.8.1
+    ports:
+      - 127.0.0.1:${ADMINER_PORT}:${ADMINER_PORT}
+    networks:
+      - backend-network
+    environment:
+      ADMINER_DESIGN: nette
+    restart: unless-stopped
+    depends_on:
+      - postgres
+
   server:
+    container_name: server
     image: mafil-psq-server
     build:
       context: .
@@ -18,9 +48,19 @@ services:
       # this prevents our host files from overriding container's node_modules
       # – some packages may be platform specific so we always want to run 'npm i' in the container when new package is added
       - exclude-server:/usr/src/app/backend/node_modules/
-    restart: always
+    ports:
+      - 127.0.0.1:${SERVER_PORT}:${SERVER_PORT}
+    networks:
+      - backend-network
+    environment:
+      - PORT=${SERVER_PORT}
+      - DATABASE_URL=${DATABASE_URL}
+    restart: unless-stopped
+    depends_on:
+      - postgres
 
   web:
+    container_name: web
     image: mafil-psq-web
     build:
       context: .
@@ -37,8 +77,21 @@ services:
       # this prevents our host files from overriding container's node_modules
       # – some packages may be platform specific so we always want to run 'npm i' in the container when new package is added
       - exclude-web:/usr/src/app/frontend/node_modules/
-    restart: always
+    ports:
+      - 127.0.0.1:${WEB_PORT}:${WEB_PORT}
+    networks:
+      - backend-network
+      - frontend-network
+    environment:
+      - PORT=${WEB_PORT}
+      - VITE_SERVER_PORT=${SERVER_PORT}
+    restart: unless-stopped
+
+networks:
+  backend-network:
+  frontend-network:
 
 volumes:
+  database-storage:
   exclude-server:
   exclude-web:
