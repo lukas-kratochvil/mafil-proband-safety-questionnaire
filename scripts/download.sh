@@ -4,10 +4,8 @@
 # Download the files necessary to install or update the app
 #------------------------------------------------------------------------------------
 
-ENV_OPTIONS_TEXT="Options are: 'devel' or 'prod'."
-
 while [ true ]; do
-  echo "Which environment do you want to deploy on? $ENV_OPTIONS_TEXT"
+  echo "Which environment do you want to deploy on? Options are: 'devel' or 'prod'."
   read -p "Environment: " ENVIRONMENT
 
   case "$ENVIRONMENT" in
@@ -20,7 +18,7 @@ while [ true ]; do
     break
     ;;
   *)
-    echo "Invalid environment! $ENV_OPTIONS_TEXT Try again!" >&2
+    echo "Invalid environment! Try again!" >&2
     ;;
   esac
 
@@ -44,20 +42,15 @@ echo "> DONE"
 GITHUB_FILE_URL="https://raw.githubusercontent.com/lukas-kratochvil/mafil-proband-safety-questionnaire/$GIT_BRANCH"
 DOCKER_COMPOSE_FILE="docker-compose.$ENVIRONMENT.yml"
 ENV_EXAMPLE_FILE=".env.example"
+SETUP_ENV_FILE="scripts/setup_env.sh"
 
-echo
 echo "Downloading latest $DOCKER_COMPOSE_FILE from the $GIT_BRANCH branch of the GitHub repo…"
-if ! curl -fkSs -o "$DEST_FOLDER_PATH/$DOCKER_COMPOSE_FILE" "$GITHUB_FILE_URL/$DOCKER_COMPOSE_FILE"; then
-  exit 1
-fi
-echo "> DONE"
+(curl -fkSs -o "$DEST_FOLDER_PATH/$DOCKER_COMPOSE_FILE" "$GITHUB_FILE_URL/$DOCKER_COMPOSE_FILE") && echo "> DONE" || echo "> File not found!"
 
-echo
 echo "Downloading latest $ENV_EXAMPLE_FILE from the $GIT_BRANCH branch of the GitHub repo…"
-if ! curl -fkSs -o "$DEST_FOLDER_PATH/.env" "$GITHUB_FILE_URL/$ENV_EXAMPLE_FILE"; then
-  exit 1
-fi
-echo "> DONE"
+(curl -fkSs -o "$DEST_FOLDER_PATH/.env" "$GITHUB_FILE_URL/$ENV_EXAMPLE_FILE") && echo "> DONE" || echo "> File not found!"
 
-echo
+echo "Downloading latest $SETUP_ENV_FILE from the $GIT_BRANCH branch of the GitHub repo…"
+(curl -fkSs -o "$DEST_FOLDER_PATH/$SETUP_ENV_FILE" "$GITHUB_FILE_URL/$SETUP_ENV_FILE") && echo "> DONE" || echo "> File not found!"
+
 echo "Change .env file variables to satisfy your needs and then copy these files to your server."
