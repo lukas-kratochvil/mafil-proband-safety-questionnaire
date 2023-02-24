@@ -24,7 +24,7 @@ while [ true ]; do
     break
     ;;
   *)
-    echo "Invalid environment! $ENV_OPTIONS_TEXT Please, try again…" >&2
+    echo "Invalid environment! $ENV_OPTIONS_TEXT Try again!" >&2
     ;;
   esac
 
@@ -32,15 +32,12 @@ while [ true ]; do
 done
 
 
-find $DOWNLOAD_FOLDER -name "docker-compose.*" -delete
-rm "$DOWNLOAD_FOLDER/.env"
-rmdir $DOWNLOAD_FOLDER
-
 echo
 echo "Creating deploy folder at: $(
   cd "$(dirname "$DOWNLOAD_FOLDER")"
   pwd
 )/$(basename "$DOWNLOAD_FOLDER")"
+rm -r $DOWNLOAD_FOLDER
 mkdir $DOWNLOAD_FOLDER
 echo "> DONE"
 
