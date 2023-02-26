@@ -1,6 +1,9 @@
 #!/bin/bash
 
-# Script created by the instructions from: https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
+#-----------------------------------------------------------------------------------------------------------------------
+# Script will install all the required programs i.e. docker and docker-compose to run the app in the chosen environment.
+# Created by the instructions from: https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
+#-----------------------------------------------------------------------------------------------------------------------
 
 #------------------------
 # Set up the repository
