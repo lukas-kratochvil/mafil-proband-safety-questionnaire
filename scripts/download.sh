@@ -1,8 +1,11 @@
 #!/bin/bash
 
-#------------------------------------------------------------------------------------
-# Download the files necessary to install or update the app
-#------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------------------------
+# Download the files necessary to install the app on chosen environment:
+#   1. docker-compose.ENV.yml - defines app services as containers that will run in the Docker
+#   2. .env - contains configuration for the app services
+#   3. setup_env.sh - will install all the required apps i.e. docker, docker-compose and other required programs
+#-----------------------------------------------------------------------------------------------------------------------
 
 # Change this path depending on where you want to download the files
 DEST_BASE_PATH="../.."
