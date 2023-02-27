@@ -23,6 +23,8 @@
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.5",
     "@mui/x-date-pickers": "^5.0.0-beta.2",
+    "@tanstack/react-query": "^4.24.10",
+    "@tanstack/react-query-devtools": "^4.24.12",
     "date-fns": "^2.29.1",
     "i18next": "^21.10.0",
     "i18next-browser-languagedetector": "^6.1.8",

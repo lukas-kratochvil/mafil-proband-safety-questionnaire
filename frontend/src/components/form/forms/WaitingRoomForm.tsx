@@ -8,10 +8,10 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { IFormButtonsProps } from "@app/components/form/components/FormButtons";
 import { FormProbandContact } from "@app/components/form/components/FormProbandContact";
@@ -36,7 +36,14 @@ export const WaitingRoomForm = () => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
   const { id } = useParams();
-  const { data: visit, isLoading, isError } = useQuery("visitForm", async () => fetchVisit(id));
+  const {
+    data: visit,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["visitForm"],
+    queryFn: () => fetchVisit(id),
+  });
   const navigate = useNavigate();
   const { operator } = useAuth();
   const { getValues, handleSubmit, setValue, trigger } = useFormContext<FormPropType>();
