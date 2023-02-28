@@ -53,6 +53,7 @@ services:
     networks:
       - backend-network
     environment:
+      - NODE_ENV=development
       - PORT=${SERVER_PORT}
       - DATABASE_URL=${DATABASE_URL}
     restart: unless-stopped
