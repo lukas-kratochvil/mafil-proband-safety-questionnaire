@@ -6,6 +6,12 @@ node_modules
 .env*
 !.env.example
 
+# Database
+database-storage
+
+# Generated files or directories (for example GraphQL schema file)
+generated*
+
 # Logs
 logs
 *.log
