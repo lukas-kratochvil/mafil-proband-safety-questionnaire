@@ -11,7 +11,7 @@ const createTranslation = (languageId: string, text: string) => ({
   text,
 });
 
-async function main() {
+async function seed() {
   // Languages (locales)
   const cs = await prisma.language.create({
     data: {
@@ -108,7 +108,7 @@ async function main() {
   );
 }
 
-main()
+seed()
   .then(async () => await prisma.$disconnect())
   .catch(async (e) => {
     console.error(e);
