@@ -11,7 +11,7 @@ Web application for ensuring the registration and safety of MR measurements in t
 
 Firstly, install Docker and docker-compose ([see the official Docker docs](https://docs.docker.com/engine/install/)) on the system you want to run this app on.
 
-After that use `download.sh` script in the project root directory and edit the `DEST_BASE_PATH` variable inside it, so it corresponds with the actual location on your file system.
+After that use `download.sh` script (located in the project root directory) and edit the `DEST_BASE_PATH` variable inside this file, so that a path corresponds with the actual location on your file system.
 
 Running the script will download files essential to run the app.
 * environment-specific docker-compose file
