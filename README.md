@@ -49,7 +49,7 @@ docker-compose -f docker-compose.local.yml up -d
 Source code directories and `package.json` are mapped as volumes in the container file system.
 
 ## Services update
-To update services run this command in the server app directory:
+To update services run these commands in the server app directory:
 ```bash
 docker-compose -f docker-compose.ENV.yml pull [SERVICE]
 docker-compose -f docker-compose.ENV.yml up -d --force-recreate --build [SERVICE]
