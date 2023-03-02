@@ -17,6 +17,9 @@ dist
 # Environment variables
 .env*
 
+# Documentation
+docs
+
 # Generated files (for example GraphQL schema)
 generated*
 

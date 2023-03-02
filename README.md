@@ -17,9 +17,14 @@ Running the script will download files essential to run the app.
 * environment-specific docker-compose file
 * .env containing services configuration
 
-Edit `.env` configuration variables and transfer the directory to the server:
+Edit `.env` configuration variables with your values.
 
-In the server app directory use this command to start all the services:
+Then transfer the directory to the server. You can use this command template:
+```
+scp -r DOWNLOADED_DIR USER@SERVER:APP_DIR -i PRIVATE_KEY_FILE_PATH
+```
+
+In the server app directory start all the services using this command:
 ```bash
 $ docker-compose -f docker-compose.ENV.yml up -d
 ```
