@@ -22,7 +22,6 @@
     "strictPropertyInitialization": false,
   },
   "include": [
-    "prisma",
     "src",
     "test",
   ],
