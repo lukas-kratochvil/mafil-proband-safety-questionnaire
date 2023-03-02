@@ -4,7 +4,8 @@
   "private": true,
   "type": "commonjs",
   "prisma": {
-    "seed": "ts-node prisma/seeding/seed.ts"
+    "seed:dev": "ts-node src/prisma/seeding/seed.ts",
+    "seed": "node dist/prisma/seeding/seed"
   },
   "scripts": {
     "prebuild": "rimraf dist",
