@@ -21,7 +21,7 @@ Edit `.env` configuration variables with your values.
 
 Then transfer the directory to the server. You can use this command template:
 ```
-scp -r DOWNLOADED_DIR SERVER:SERVER_APP_DIR
+scp -r DOWNLOADED_DIR USER@SERVER:APP_DIR -i PRIVATE_KEY_FILE_PATH
 ```
 
 In the server app directory start all the services using this command:
