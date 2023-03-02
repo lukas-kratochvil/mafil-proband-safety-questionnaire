@@ -44,4 +44,4 @@ COPY --from=build /usr/src/app/backend/prisma ./prisma
 COPY --from=build /usr/src/app/backend/node_modules ./node_modules
 COPY --from=build /usr/src/app/backend/dist ./dist
 
-CMD [ "npm", "run", "start:prod:migrate" ]
+CMD [ "npm", "run", "start:migrate:prod" ]
