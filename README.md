@@ -26,7 +26,7 @@ scp -r DOWNLOADED_DIR USER@SERVER:APP_DIR -i PRIVATE_KEY_FILE_PATH
 
 In the server app directory start all the services using this command:
 ```bash
-$ docker-compose -f docker-compose.ENV.yml up -d
+docker-compose -f docker-compose.ENV.yml up -d
 ```
 
 The command will start the services listed below:
@@ -43,7 +43,7 @@ npx prisma db seed
 ## Developers installation
 The docker-compose configuration file to use for the development is called `docker-compose.local.yml`.
 ```bash
-$ docker-compose -f docker-compose.local.yml up -d
+docker-compose -f docker-compose.local.yml up -d
 ```
 
 Source code directories and `package.json` are mapped as volumes in the container file system.
@@ -51,8 +51,9 @@ Source code directories and `package.json` are mapped as volumes in the containe
 ## Services update
 To update services run this command in the server app directory:
 ```bash
-$ docker-compose -f docker-compose.ENV.yml up -d --force-recreate --build [SERVICE]
-$ docker image prune -f
+docker-compose -f docker-compose.ENV.yml pull [SERVICE]
+docker-compose -f docker-compose.ENV.yml up -d --force-recreate --build [SERVICE]
+docker image prune -f
 ```
 It may be necessary to update `.env` variables before running the commands above.
 
