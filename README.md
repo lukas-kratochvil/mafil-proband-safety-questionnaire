@@ -35,9 +35,9 @@ The command will start the services listed below:
 * Server - app server
 * Web – app client
 
-To populate the server database with initial data, the command below must be run inside the `server` container.
+To populate the database with initial data, the command below must be run inside the `server` container.
 ```node
-npx prisma db seed
+npm run seed
 ```
 
 ## Developers installation
@@ -47,6 +47,11 @@ docker-compose -f docker-compose.local.yml up -d
 ```
 
 Source code directories and `package.json` are mapped as volumes in the container file system.
+
+To populate the local database with initial data, the command below must be run inside the `server` container.
+```node
+npm run seed:local
+```
 
 ## Services update
 To update services run this command in the server app directory:
