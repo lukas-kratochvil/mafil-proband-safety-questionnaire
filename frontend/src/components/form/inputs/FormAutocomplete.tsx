@@ -6,13 +6,13 @@ import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormDefaultInputProps } from "./interfaces/input-props";
 
 interface IFormAutocompleteProps extends IFormDefaultInputProps {
-  options: string[];
+  options: string[] | undefined;
 }
 
 export const FormAutocomplete = ({ name, label, isOptional, disabled, options }: IFormAutocompleteProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
-  const loading = options.length === 0;
+  const loading = options === undefined;
 
   return (
     <FormInputFieldContainer
@@ -25,7 +25,7 @@ export const FormAutocomplete = ({ name, label, isOptional, disabled, options }:
         render={({ field }) => (
           <Autocomplete
             id={name}
-            options={options}
+            options={options === undefined ? [] : options}
             value={field.value}
             onChange={(_event, val) => field.onChange(val)}
             onBlur={field.onBlur}
