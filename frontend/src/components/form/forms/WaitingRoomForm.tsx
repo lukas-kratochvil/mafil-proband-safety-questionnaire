@@ -41,7 +41,7 @@ export const WaitingRoomForm = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["visitForm"],
+    queryKey: ["visitForm", id],
     queryFn: () => fetchVisitForm(id),
   });
   const navigate = useNavigate();

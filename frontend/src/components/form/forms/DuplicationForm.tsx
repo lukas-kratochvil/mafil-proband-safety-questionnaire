@@ -28,7 +28,7 @@ export const DuplicationForm = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["visitForm"],
+    queryKey: ["visitForm", id],
     queryFn: () => fetchVisit(id),
   });
   const navigate = useNavigate();

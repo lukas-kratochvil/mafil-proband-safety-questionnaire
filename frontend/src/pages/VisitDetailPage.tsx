@@ -113,7 +113,7 @@ const VisitDetailPage = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["visitDetail"],
+    queryKey: ["visitDetail", id],
     queryFn: () => fetchVisitDetail(id),
   });
   const navigate = useNavigate();
