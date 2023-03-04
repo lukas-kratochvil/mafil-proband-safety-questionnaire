@@ -1,4 +1,3 @@
-import { devicesDev, projectsDev } from "@app/data/form_data";
 import { trustedOperators } from "@app/data/operator_data";
 import { questions } from "@app/data/question_data";
 import { dummyVisits } from "@app/data/visit_data";
@@ -16,10 +15,6 @@ export const authenticateOperator = async (loggingOperator: IAuthGateOperator): 
 export const fetchVisitForm = async (visitId: string | undefined): Promise<IVisit | undefined> =>
   dummyVisits.find((visit) => visit.id === visitId);
 
-// TODO: get visits from MAFILDB
-export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVisit | undefined> =>
-  dummyVisits.find((visit) => visit.id === visitId);
-
 // TODO: get visits from DB
 export const fetchWaitingRoomVisits = async (): Promise<IVisit[]> =>
   dummyVisits.filter((visit) => visit.state === VisitState.NEW);
@@ -27,12 +22,6 @@ export const fetchWaitingRoomVisits = async (): Promise<IVisit[]> =>
 // TODO: get visits from DB
 export const fetchApprovalRoomVisits = async (): Promise<IVisit[]> =>
   dummyVisits.filter((visit) => visit.state === VisitState.IN_APPROVAL);
-
-// TODO: get visits from MAFIL DB – all the visits with assigned visitId and generated PDF are fetched from MAFIL DB
-export const fetchRecentVisits = async (): Promise<IVisit[]> =>
-  dummyVisits.filter((visit) =>
-    [VisitState.APPROVED, VisitState.DISAPPROVED, VisitState.FOR_SIGNATURE, VisitState.SIGNED].includes(visit.state)
-  );
 
 // TODO: get questions from DB
 export const fetchCurrentQuestions = async (): Promise<IQuestionData[]> => questions;
@@ -44,9 +33,3 @@ export const fetchAnswerQuestions = async (answers: IQac[]): Promise<IQuestionDa
 // TODO: get question from DB
 export const fetchQuestion = async (questionId: string): Promise<IQuestionData | undefined> =>
   questions.find((question) => question.id === questionId);
-
-// TODO: get projects from MAFILDB
-export const fetchProjects = async (): Promise<string[]> => projectsDev;
-
-// TODO: get devices from MAFILDB
-export const fetchDevices = async (): Promise<string[]> => devicesDev;
