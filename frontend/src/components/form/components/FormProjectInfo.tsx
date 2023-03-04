@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useQueries } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { ColoredInfoStripe, ColoredInfoStripeColors } from "@app/components/informative/ColoredInfoStripe";
 import { defaultNS } from "@app/i18n";
@@ -11,19 +11,12 @@ import { FormCardContainer } from "./FormCardContainer";
 
 export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.projectInfo" });
-  const [projects, setProjects] = useState<string[]>([]);
-  const [devices, setDevices] = useState<string[]>([]);
-
-  useEffect(() => {
-    const fetch = async () => {
-      const projectsPromise = fetchProjects();
-      const devicesPromise = fetchDevices();
-      setProjects(await projectsPromise);
-      setDevices(await devicesPromise);
-    };
-
-    fetch();
-  }, []);
+  const results = useQueries({
+    queries: [
+      { queryKey: ["projects"], queryFn: fetchProjects },
+      { queryKey: ["devices"], queryFn: fetchDevices },
+    ],
+  });
 
   return (
     <FormCardContainer title={t("title")}>
@@ -51,7 +44,7 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           <FormAutocomplete
             name="project"
             label={t("project")}
-            options={projects}
+            options={results[0].data}
             disabled={disableInputs}
           />
         </Grid>
@@ -64,7 +57,7 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           <FormAutocomplete
             name="device"
             label={t("device")}
-            options={devices}
+            options={results[1].data}
             disabled={disableInputs}
           />
         </Grid>
