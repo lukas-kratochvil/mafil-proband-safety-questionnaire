@@ -34,10 +34,7 @@ async function seed() {
           order: nativeLanguage.order,
           translations: {
             createMany: {
-              data: [
-                createTranslation(cs.id, nativeLanguage.csText),
-                createTranslation(en.id, nativeLanguage.enText),
-              ],
+              data: [createTranslation(cs.id, nativeLanguage.csText), createTranslation(en.id, nativeLanguage.enText)],
             },
           },
         },
@@ -52,10 +49,7 @@ async function seed() {
           code: gender.code,
           translations: {
             createMany: {
-              data: [
-                createTranslation(cs.id, gender.csText),
-                createTranslation(en.id, gender.enText),
-              ],
+              data: [createTranslation(cs.id, gender.csText), createTranslation(en.id, gender.enText)],
             },
           },
         },
@@ -72,10 +66,7 @@ async function seed() {
           isValid: true,
           translations: {
             createMany: {
-              data: [
-                createTranslation(cs.id, question.csText),
-                createTranslation(en.id, question.enText),
-              ],
+              data: [createTranslation(cs.id, question.csText), createTranslation(en.id, question.enText)],
             },
           },
           hiddenByGenders: {
@@ -97,10 +88,7 @@ async function seed() {
         data: {
           translations: {
             createMany: {
-              data: [
-                createTranslation(cs.id, hand.csText),
-                createTranslation(en.id, hand.enText),
-              ],
+              data: [createTranslation(cs.id, hand.csText), createTranslation(en.id, hand.enText)],
             },
           },
         },
