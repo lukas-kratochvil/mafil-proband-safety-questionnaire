@@ -13,7 +13,7 @@ export const authenticateOperator = async (loggingOperator: IAuthGateOperator): 
   );
 
 // TODO: get visits from DB
-export const fetchVisit = async (visitId: string | undefined): Promise<IVisit | undefined> =>
+export const fetchVisitForm = async (visitId: string | undefined): Promise<IVisit | undefined> =>
   dummyVisits.find((visit) => visit.id === visitId);
 
 // TODO: get visits from MAFILDB

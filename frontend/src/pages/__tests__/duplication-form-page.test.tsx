@@ -121,7 +121,7 @@ vi.mock("@app/hooks/auth/auth", () => ({
 //----------------------------------------------------------------------
 vi.mock("@app/util/fetch", async () => ({
   ...((await vi.importActual("@app/util/fetch")) as Record<string, unknown>),
-  fetchVisit: async (): Promise<IVisit> => visit,
+  fetchVisitForm: async (): Promise<IVisit> => visit,
   fetchProjects: async (): Promise<string[]> => ["project1", "project2", "project3"],
   fetchDevices: async (): Promise<string[]> => ["device1", "device2", "device3"],
   fetchCurrentQuestions: async (): Promise<IQuestionData[]> => questionData,
