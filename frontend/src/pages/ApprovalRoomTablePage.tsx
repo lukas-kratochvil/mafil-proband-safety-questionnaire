@@ -5,7 +5,7 @@ import { InteractingTable } from "@app/components/table/InteractingTable";
 import { ApprovalRoomActionButtons } from "@app/components/table/actions/ApprovalRoomActionButtons";
 import { defaultNS } from "@app/i18n";
 import { IVisit } from "@app/interfaces/visit";
-import { fetchApprovalRoomVisits } from "@app/util/fetch";
+import { fetchApprovalRoomVisitForms } from "@app/util/fetch";
 
 const createdAtFormat = "d.M.y H:mm";
 const probandBirthdateFormat = "d.M.y";
@@ -77,7 +77,7 @@ const ApprovalRoomTablePage = () => {
       titleLocalizationKey="approvalRoomTablePage.title"
       header={header}
       queryKey="approvalRoomVisitForms"
-      fetchVisits={fetchApprovalRoomVisits}
+      fetchVisits={fetchApprovalRoomVisitForms}
     />
   );
 };

@@ -2,7 +2,7 @@ import userEvent from "@testing-library/user-event";
 import i18n from "@app/i18n";
 import { Gender, Handedness, IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
 import VisitDetailPage from "@app/pages/VisitDetailPage";
-import * as fetchers from "@app/util/fetch";
+import * as mafildbFetchers from "@app/util/fetch-mafildb";
 import { render, screen } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -75,7 +75,7 @@ describe("visit detail page", () => {
   });
 
   test("contains translations", async () => {
-    vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => defaultVisit);
+    vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => defaultVisit);
     setup();
 
     await screen.findByText(/visitDetailPage.title: /);
@@ -86,7 +86,7 @@ describe("visit detail page", () => {
       ...defaultVisit,
       state: VisitState.DISAPPROVED,
     };
-    vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => disapprovedVisit);
+    vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => disapprovedVisit);
     setup();
 
     expect(await screen.findByText(`visitDetailPage.title: ${disapprovedVisit.visitId}`)).toBeDefined();
@@ -102,7 +102,7 @@ describe("visit detail page", () => {
       ...defaultVisit,
       state: VisitState.APPROVED,
     };
-    vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => approvedVisit);
+    vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => approvedVisit);
     setup();
 
     expect(await screen.findByText(`visitDetailPage.title: ${approvedVisit.visitId}`)).toBeDefined();
@@ -124,7 +124,7 @@ describe("visit detail page", () => {
       ...defaultVisit,
       state: VisitState.FOR_SIGNATURE,
     };
-    vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => forSignatureVisit);
+    vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => forSignatureVisit);
     setup();
 
     expect(await screen.findByText(`visitDetailPage.title: ${forSignatureVisit.visitId}`)).toBeDefined();
@@ -142,7 +142,7 @@ describe("visit detail page", () => {
       ...defaultVisit,
       state: VisitState.SIGNED,
     };
-    vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => signedVisit);
+    vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => signedVisit);
     setup();
 
     expect(await screen.findByText(`visitDetailPage.title: ${signedVisit.visitId}`)).toBeDefined();
@@ -164,7 +164,7 @@ describe("visit detail page", () => {
         isPhantom: true,
       },
     };
-    vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => signedPhantomVisit);
+    vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => signedPhantomVisit);
     setup();
 
     expect(await screen.findByText(`visitDetailPage.title: ${signedPhantomVisit.visitId}`)).toBeDefined();
@@ -182,7 +182,7 @@ describe("visit detail page", () => {
       ...defaultVisit,
       state: VisitState.APPROVED,
     };
-    vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => approvedVisit);
+    vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => approvedVisit);
     setup();
     const user = userEvent.setup();
 
@@ -201,7 +201,7 @@ describe("visit detail page", () => {
       ...defaultVisit,
       state: VisitState.FOR_SIGNATURE,
     };
-    vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => forSignatureVisit);
+    vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => forSignatureVisit);
     setup();
 
     const confirmSignatureButton = await screen.findByText(/visitDetailPage.buttons.confirmSignature/);
@@ -221,7 +221,7 @@ describe("visit detail page", () => {
         isPhantom: true,
       },
     };
-    vi.spyOn(fetchers, "fetchVisitDetail").mockImplementationOnce(async () => forSignaturePhantomVisit);
+    vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => forSignaturePhantomVisit);
     setup();
     const user = userEvent.setup();
 

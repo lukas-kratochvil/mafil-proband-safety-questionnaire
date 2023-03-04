@@ -5,7 +5,7 @@ import { InteractingTable } from "@app/components/table/InteractingTable";
 import { WaitingRoomActionButtons } from "@app/components/table/actions/WaitingRoomActionButtons";
 import { defaultNS } from "@app/i18n";
 import { IVisit } from "@app/interfaces/visit";
-import { fetchWaitingRoomVisits } from "@app/util/fetch";
+import { fetchWaitingRoomVisitForms } from "@app/util/fetch";
 
 const createdAtFormat = "d.M.y H:mm";
 const probandBirthdateFormat = "d.M.y";
@@ -72,7 +72,7 @@ const WaitingRoomTablePage = () => {
       titleLocalizationKey="waitingRoomTablePage.title"
       header={header}
       queryKey="waitingRoomVisitForms"
-      fetchVisits={fetchWaitingRoomVisits}
+      fetchVisits={fetchWaitingRoomVisitForms}
     />
   );
 };

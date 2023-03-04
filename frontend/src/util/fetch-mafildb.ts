@@ -2,6 +2,12 @@ import { devicesDev, projectsDev } from "@app/data/form_data";
 import { dummyVisits } from "@app/data/visit_data";
 import { IVisit, VisitState } from "@app/interfaces/visit";
 
+// TODO: get projects from MAFILDB
+export const fetchProjects = async (): Promise<string[]> => projectsDev;
+
+// TODO: get devices from MAFILDB
+export const fetchDevices = async (): Promise<string[]> => devicesDev;
+
 // TODO: get visit from MAFILDB DB
 export const fetchVisit = async (visitId: string | undefined): Promise<IVisit | undefined> =>
   dummyVisits.find((visit) => visit.id === visitId);
@@ -15,9 +21,3 @@ export const fetchRecentVisits = async (): Promise<IVisit[]> =>
   dummyVisits.filter((visit) =>
     [VisitState.APPROVED, VisitState.DISAPPROVED, VisitState.FOR_SIGNATURE, VisitState.SIGNED].includes(visit.state)
   );
-
-// TODO: get projects from MAFILDB
-export const fetchProjects = async (): Promise<string[]> => projectsDev;
-
-// TODO: get devices from MAFILDB
-export const fetchDevices = async (): Promise<string[]> => devicesDev;

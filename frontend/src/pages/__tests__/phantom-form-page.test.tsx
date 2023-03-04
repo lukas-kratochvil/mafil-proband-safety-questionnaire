@@ -30,8 +30,8 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 //----------------------------------------------------------------------
 // Mocking custom fetch methods
 //----------------------------------------------------------------------
-vi.mock("@app/util/fetch", async () => ({
-  ...((await vi.importActual("@app/util/fetch")) as Record<string, unknown>),
+vi.mock("@app/util/fetch-mafildb", async () => ({
+  ...((await vi.importActual("@app/util/fetch-mafildb")) as Record<string, unknown>),
   fetchProjects: async (): Promise<string[]> => ["project1", "project2", "project3"],
   fetchDevices: async (): Promise<string[]> => ["device1", "device2", "device3"],
 }));

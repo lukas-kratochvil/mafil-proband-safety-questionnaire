@@ -55,9 +55,13 @@ const questionData: IQuestionData[] = [
 
 vi.mock("@app/util/fetch", async () => ({
   ...((await vi.importActual("@app/util/fetch")) as Record<string, unknown>),
+  fetchCurrentQuestions: async (): Promise<IQuestionData[]> => questionData,
+}));
+
+vi.mock("@app/util/fetch-mafildb", async () => ({
+  ...((await vi.importActual("@app/util/fetch-mafildb")) as Record<string, unknown>),
   fetchProjects: async (): Promise<string[]> => ["project1", "project2", "project3"],
   fetchDevices: async (): Promise<string[]> => ["device1", "device2", "device3"],
-  fetchCurrentQuestions: async (): Promise<IQuestionData[]> => questionData,
 }));
 
 //----------------------------------------------------------------------

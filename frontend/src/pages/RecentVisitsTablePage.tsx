@@ -5,7 +5,7 @@ import { InteractingTable } from "@app/components/table/InteractingTable";
 import { RecentVisitsActionButtons } from "@app/components/table/actions/RecentVisitsActionButtons";
 import { defaultNS } from "@app/i18n";
 import { IVisit } from "@app/interfaces/visit";
-import { fetchRecentVisits } from "@app/util/fetch";
+import { fetchRecentVisits } from "@app/util/fetch-mafildb";
 
 const processedDateFormat = "d.M.y H:mm";
 

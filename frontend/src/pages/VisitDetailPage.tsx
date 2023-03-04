@@ -12,7 +12,7 @@ import {
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { defaultNS } from "@app/i18n";
 import { IVisit, VisitState } from "@app/interfaces/visit";
-import { fetchVisitDetail } from "@app/util/fetch";
+import { fetchVisitDetail } from "@app/util/fetch-mafildb";
 import { convertStringToLocalizationKey, getBackButtonProps, IButtonProps } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
 
