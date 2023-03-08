@@ -3,8 +3,8 @@ Web application for ensuring the registration and safety of MR measurements in t
 
 ## Table of contents
 - [Installation](#installation)
-- [Services update](#services-update)
 - [Developers installation](#developers-installation)
+- [Services update](#services-update)
 - [API endpoints](#api-endpoints)
 
 ## Installation
