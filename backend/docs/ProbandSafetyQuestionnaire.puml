@@ -161,6 +161,8 @@ entity Handedness {
   * createdAt: Date
   * modifiedAt: Date
   deletedAt: Date
+  ---
+  * code: String
 }
 
 entity HandednessTranslation {
@@ -182,6 +184,7 @@ entity NativeLanguage {
   * modifiedAt: Date
   deletedAt: Date
   ---
+  * code: String
   order: Int
 }
 

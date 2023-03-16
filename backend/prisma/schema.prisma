@@ -214,6 +214,8 @@ model Handedness {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+
+  code String @unique @db.VarChar(2)
 }
 
 model HandednessTranslation {
@@ -243,6 +245,7 @@ model NativeLanguage {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
+  code String @unique @db.VarChar(2)
   order Int? @unique @db.SmallInt
 }
 

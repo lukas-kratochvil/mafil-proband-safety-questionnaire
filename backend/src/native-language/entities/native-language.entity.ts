@@ -4,6 +4,9 @@ import { TranslationBaseEntity } from "@app/graphql/entities/translation-base.en
 
 @ObjectType()
 export class NativeLanguageEntity extends TranslationBaseEntity implements NativeLanguage {
+  @Field()
+  code: string;
+
   @Field(() => Int, { nullable: true })
   order: number | null;
 }

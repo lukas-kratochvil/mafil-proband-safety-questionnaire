@@ -31,6 +31,7 @@ async function seed() {
     async (nativeLanguage) =>
       await prisma.nativeLanguage.create({
         data: {
+          code: nativeLanguage.code,
           order: nativeLanguage.order,
           translations: {
             createMany: {
@@ -86,6 +87,7 @@ async function seed() {
     async (hand) =>
       await prisma.handedness.create({
         data: {
+          code: hand.code,
           translations: {
             createMany: {
               data: [createTranslation(cs.id, hand.csText), createTranslation(en.id, hand.enText)],
