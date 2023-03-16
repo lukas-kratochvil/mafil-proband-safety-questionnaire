@@ -20,11 +20,11 @@ const nativeLanguageTranslations = Prisma.validator<Prisma.NativeLanguageInclude
   },
 });
 
-const nativeLanguageIncludingTranslations = Prisma.validator<Prisma.NativeLanguageArgs>()({
+const nativeLanguageTranslationsArgs = Prisma.validator<Prisma.NativeLanguageArgs>()({
   include: nativeLanguageTranslations,
 });
 
-type NativeLanguageIncludingTranslations = Prisma.NativeLanguageGetPayload<typeof nativeLanguageIncludingTranslations>;
+type NativeLanguageIncludingTranslations = Prisma.NativeLanguageGetPayload<typeof nativeLanguageTranslationsArgs>;
 
 @Injectable()
 export class NativeLanguageService {

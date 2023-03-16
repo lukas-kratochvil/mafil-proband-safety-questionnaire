@@ -20,11 +20,11 @@ const genderTranslations = Prisma.validator<Prisma.GenderInclude>()({
   },
 });
 
-const genderIncludingTranslations = Prisma.validator<Prisma.GenderArgs>()({
+const genderTranslationsArgs = Prisma.validator<Prisma.GenderArgs>()({
   include: genderTranslations,
 });
 
-type GenderIncludingTranslations = Prisma.GenderGetPayload<typeof genderIncludingTranslations>;
+type GenderIncludingTranslations = Prisma.GenderGetPayload<typeof genderTranslationsArgs>;
 
 @Injectable()
 export class GenderService {

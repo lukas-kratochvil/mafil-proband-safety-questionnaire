@@ -20,11 +20,11 @@ const handednessTranslations = Prisma.validator<Prisma.HandednessInclude>()({
   },
 });
 
-const handednessIncludingTranslations = Prisma.validator<Prisma.HandednessArgs>()({
+const handednessTranslationsArgs = Prisma.validator<Prisma.HandednessArgs>()({
   include: handednessTranslations,
 });
 
-type HandednessIncludingTranslations = Prisma.HandednessGetPayload<typeof handednessIncludingTranslations>;
+type HandednessIncludingTranslations = Prisma.HandednessGetPayload<typeof handednessTranslationsArgs>;
 
 @Injectable()
 export class HandednessService {

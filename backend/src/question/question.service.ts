@@ -7,7 +7,7 @@ import { CreateQuestionInput } from "./dto/create-question.input";
 import { UpdateQuestionTextsInput } from "./dto/update-question-texts.input";
 import { UpdateQuestionInput } from "./dto/update-question.input";
 
-const questionTranslationsInclude = Prisma.validator<Prisma.QuestionInclude>()({
+const questionTranslations = Prisma.validator<Prisma.QuestionInclude>()({
   translations: {
     select: {
       text: true,
@@ -22,16 +22,16 @@ const questionTranslationsInclude = Prisma.validator<Prisma.QuestionInclude>()({
 });
 
 const questionTranslationsArgs = Prisma.validator<Prisma.QuestionArgs>()({
-  include: questionTranslationsInclude,
+  include: questionTranslations,
 });
 
-type QuestionTranslationsInclude = Prisma.QuestionGetPayload<typeof questionTranslationsArgs>;
+type QuestionIncludingTranslations = Prisma.QuestionGetPayload<typeof questionTranslationsArgs>;
 
 @Injectable()
 export class QuestionService {
   constructor(private readonly prisma: PrismaService, private readonly languageService: LanguageService) {}
 
-  async create(createQuestionInput: CreateQuestionInput): Promise<QuestionTranslationsInclude> {
+  async create(createQuestionInput: CreateQuestionInput): Promise<QuestionIncludingTranslations> {
     const languages = await this.languageService.findAll();
 
     if (areTranslationsComplete(languages, createQuestionInput.translations)) {
@@ -49,46 +49,46 @@ export class QuestionService {
             },
           },
         },
-        include: questionTranslationsInclude,
+        include: questionTranslations,
       });
     }
 
     throw new Error("Question doesn't contain all the possible translations!");
   }
 
-  async findAll(): Promise<QuestionTranslationsInclude[]> {
+  async findAll(): Promise<QuestionIncludingTranslations[]> {
     return this.prisma.question.findMany({
       where: {
         isValid: true,
         deletedAt: null,
       },
-      include: questionTranslationsInclude,
+      include: questionTranslations,
     });
   }
 
-  async findOne(id: string): Promise<QuestionTranslationsInclude> {
+  async findOne(id: string): Promise<QuestionIncludingTranslations> {
     return this.prisma.question.findUniqueOrThrow({
       where: {
         id,
       },
-      include: questionTranslationsInclude,
+      include: questionTranslations,
     });
   }
 
-  async update(id: string, updateQuestionInput: UpdateQuestionInput): Promise<QuestionTranslationsInclude> {
+  async update(id: string, updateQuestionInput: UpdateQuestionInput): Promise<QuestionIncludingTranslations> {
     return this.prisma.question.update({
       where: {
         id,
       },
       data: updateQuestionInput,
-      include: questionTranslationsInclude,
+      include: questionTranslations,
     });
   }
 
   async updateTexts(
     id: string,
     updateQuestionTextsInput: UpdateQuestionTextsInput
-  ): Promise<QuestionTranslationsInclude> {
+  ): Promise<QuestionIncludingTranslations> {
     const languages = await this.languageService.findAll();
 
     if (areTranslationsComplete(languages, updateQuestionTextsInput.translations)) {
@@ -121,14 +121,14 @@ export class QuestionService {
             },
           },
         },
-        include: questionTranslationsInclude,
+        include: questionTranslations,
       });
     }
 
     throw new Error("Question doesn't contain all the possible translations!");
   }
 
-  async remove(id: string): Promise<QuestionTranslationsInclude> {
+  async remove(id: string): Promise<QuestionIncludingTranslations> {
     return this.prisma.question.update({
       where: {
         id,
@@ -137,7 +137,7 @@ export class QuestionService {
         deletedAt: new Date(),
         isValid: false,
       },
-      include: questionTranslationsInclude,
+      include: questionTranslations,
     });
   }
 }
