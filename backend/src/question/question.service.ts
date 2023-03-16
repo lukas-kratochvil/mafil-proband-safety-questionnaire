@@ -2,24 +2,12 @@ import { Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 import { LanguageService } from "@app/language/language.service";
 import { PrismaService } from "@app/prisma/prisma.service";
-import { areTranslationsComplete } from "@app/utils/utils";
+import { areTranslationsComplete, translationsIncludeSchema } from "@app/utils/utils";
 import { CreateQuestionInput } from "./dto/create-question.input";
 import { UpdateQuestionTextsInput } from "./dto/update-question-texts.input";
 import { UpdateQuestionInput } from "./dto/update-question.input";
 
-const questionTranslations = Prisma.validator<Prisma.QuestionInclude>()({
-  translations: {
-    select: {
-      text: true,
-      language: {
-        select: {
-          name: true,
-          code: true,
-        },
-      },
-    },
-  },
-});
+const questionTranslations = Prisma.validator<Prisma.QuestionInclude>()(translationsIncludeSchema);
 
 const questionTranslationsArgs = Prisma.validator<Prisma.QuestionArgs>()({
   include: questionTranslations,
