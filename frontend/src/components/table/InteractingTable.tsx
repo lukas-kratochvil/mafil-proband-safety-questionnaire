@@ -1,8 +1,8 @@
 import { Typography } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import MaterialReactTable, { MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useQuery } from "react-query";
 import { defaultNS } from "@app/i18n";
 import { IVisit } from "@app/interfaces/visit";
 import { PageContainer } from "@app/pages/PageContainer";
@@ -16,7 +16,15 @@ interface IInteractingTableProps {
 }
 
 export const InteractingTable = ({ titleLocalizationKey, header, queryKey, fetchVisits }: IInteractingTableProps) => {
-  const { data: visits, isFetching, isLoading, isError } = useQuery(queryKey, async () => fetchVisits());
+  const {
+    data: visits,
+    isFetching,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: [queryKey],
+    queryFn: () => fetchVisits(),
+  });
   const { t } = useTranslation(defaultNS);
 
   const columns = useMemo<MRTColumnDef<IVisit>[]>(() => header, [header]);

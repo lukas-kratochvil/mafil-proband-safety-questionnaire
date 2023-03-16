@@ -1,7 +1,7 @@
 import { Button, Grid, Skeleton, Stack } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { CardContainer } from "@app/components/card/CardContainer";
 import {
@@ -108,7 +108,14 @@ const getButtons = (
 const VisitDetailPage = () => {
   const { t } = useTranslation(defaultNS);
   const { id } = useParams();
-  const { data: visit, isLoading, isError } = useQuery("visitDetail", async () => fetchVisitDetail(id));
+  const {
+    data: visit,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["visitDetail"],
+    queryFn: () => fetchVisitDetail(id),
+  });
   const navigate = useNavigate();
 
   const [visitState, setVisitState] = useState<VisitState>();

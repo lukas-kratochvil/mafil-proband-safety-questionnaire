@@ -1,6 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { IFormButtonsProps } from "@app/components/form/components/FormButtons";
 import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo";
@@ -15,7 +15,14 @@ import { getBackButtonProps } from "@app/util/utils";
 import { FormContainer } from "./FormContainer";
 
 export const PhantomForm = () => {
-  const { data: questions, isLoading, isError } = useQuery("currentQuestions", async () => fetchCurrentQuestions());
+  const {
+    data: questions,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["currentQuestions"],
+    queryFn: () => fetchCurrentQuestions(),
+  });
   const navigate = useNavigate();
   const { setValue } = useFormContext<FormPropType>();
 

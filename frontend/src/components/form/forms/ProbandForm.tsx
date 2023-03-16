@@ -1,6 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { FormBeforeExamination } from "@app/components/form/components/FormBeforeExamination";
 import { IFormButtonsProps } from "@app/components/form/components/FormButtons";
@@ -23,7 +23,14 @@ enum ProbandFormStep {
 }
 
 export const ProbandForm = () => {
-  const { data: questions, isLoading, isError } = useQuery("currentQuestions", async () => fetchCurrentQuestions());
+  const {
+    data: questions,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["currentQuestions"],
+    queryFn: () => fetchCurrentQuestions(),
+  });
   const navigate = useNavigate();
   const { setError, setValue } = useFormContext<FormPropType>();
 

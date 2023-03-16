@@ -1,6 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { IFormButtonsProps } from "@app/components/form/components/FormButtons";
 import { FormProbandContact } from "@app/components/form/components/FormProbandContact";
@@ -21,7 +21,14 @@ import { FormContainer } from "./FormContainer";
 
 export const ApprovalForm = () => {
   const { id } = useParams();
-  const { data: visit, isLoading, isError } = useQuery("visitForm", async () => fetchVisit(id));
+  const {
+    data: visit,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["visitForm"],
+    queryFn: () => fetchVisit(id),
+  });
   const navigate = useNavigate();
   const { operator } = useAuth();
   const { getValues, setValue, trigger } = useFormContext<FormPropType>();
