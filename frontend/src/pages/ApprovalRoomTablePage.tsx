@@ -53,12 +53,18 @@ const ApprovalRoomTablePage = () => {
       maxSize: 0,
     },
     {
-      accessorKey: "probandInfo.gender",
+      accessorFn: (visit) =>
+        visit.probandInfo.gender.translations.find((trans) => trans.language.code === "cs")?.text
+        || visit.probandInfo.gender.translations[0].text,
+      id: "probandInfo.gender",
       header: t("gender"),
       maxSize: 0,
     },
     {
-      accessorKey: "probandInfo.nativeLanguage",
+      accessorFn: (visit) =>
+        visit.probandInfo.nativeLanguage.translations.find((trans) => trans.language.code === "cs")?.text
+        || visit.probandInfo.nativeLanguage.translations[0].text,
+      id: "probandInfo.nativeLanguage",
       header: t("nativeLanguage"),
       maxSize: 0,
     },

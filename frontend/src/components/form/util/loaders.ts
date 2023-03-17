@@ -1,6 +1,7 @@
+import { genders } from "@app/data/translated_entities_data";
 import { FormPropType } from "@app/interfaces/form";
-import { Gender, IVisit } from "@app/interfaces/visit";
-import { genderOptions, getOption, handednessOptions, visualCorrectionOptions } from "./options";
+import { IVisit } from "@app/interfaces/visit";
+import { getOption, visualCorrectionOptions } from "./options";
 
 // Autocomplete component default value must be one of the options provided or null
 export const loadEmptyDefaultValues = (): FormPropType => ({
@@ -28,7 +29,7 @@ export const loadEmptyDefaultValues = (): FormPropType => ({
 export const loadPhantomFormDefaultValues = (): FormPropType => ({
   ...loadEmptyDefaultValues(),
   measurementDate: new Date(),
-  gender: getOption(genderOptions, Gender.OTHER),
+  gender: genders[2], // TODO: must be corrected
 });
 
 // Autocomplete component default value must be one of the options provided or null
@@ -38,8 +39,6 @@ export const loadFormDefaultValuesFromVisit = (visit: IVisit): FormPropType => (
   measurementDate: visit.projectInfo.measurementDate ?? new Date(),
   disapprovalReason: visit.projectInfo.disapprovalReason,
   ...visit.probandInfo,
-  gender: getOption(genderOptions, visit.probandInfo.gender),
-  handedness: getOption(handednessOptions, visit.probandInfo.handedness),
   visualCorrection: getOption(visualCorrectionOptions, visit.probandInfo.visualCorrection),
   answers: visit.answers.map((answer) => ({ ...answer })),
 });

@@ -1,6 +1,6 @@
 import { IOption } from "@app/components/form/util/options";
 import { Override } from "@app/util/utils";
-import { AnswerOption, IQac } from "./visit";
+import { AnswerOption, IQac, ITranslatedEntity } from "./visit";
 
 // Form fields having this data type are validated as numbers
 type TextFieldNumberInput = string | number;
@@ -20,11 +20,11 @@ export interface FormPropType {
   surname: string;
   personalId: string;
   birthdate: Date | null;
-  gender: IOption | null;
-  nativeLanguage: string | null;
+  gender: ITranslatedEntity | null;
+  nativeLanguage: ITranslatedEntity | null;
   height: TextFieldNumberInput;
   weight: TextFieldNumberInput;
-  handedness: IOption | null;
+  handedness: ITranslatedEntity | null;
   visualCorrection: IOption | null;
   visualCorrectionValue: TextFieldNumberInput;
 

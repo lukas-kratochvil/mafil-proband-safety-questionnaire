@@ -1,7 +1,8 @@
 import { QuestionPartNumber } from "@app/interfaces/question";
-import { AnswerOption, Gender, Handedness, IQac, IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
+import { AnswerOption, IQac, IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
 import { getDummyVisitCurrentQuestions } from "@app/util/fetch.dev";
 import { devicesDev, projectsDev } from "./form_data";
+import { genders, handednesses, nativeLanguages } from "./translated_entities_data";
 
 const idCounter = {
   freeId: "1",
@@ -104,11 +105,11 @@ const dummyVisitNew: IVisit = {
     birthdate: new Date(),
     height: 180,
     weight: 85,
-    gender: Gender.MALE,
-    nativeLanguage: "Čeština",
+    gender: genders[0],
+    nativeLanguage: nativeLanguages[0],
     visualCorrection: VisualCorrection.NO,
     visualCorrectionValue: 0,
-    handedness: Handedness.RIGHT_HANDED,
+    handedness: handednesses[0],
     email: "karel.novak@email.cz",
     phone: "123456789",
   },
@@ -142,11 +143,11 @@ const dummyPhantomVisitNew: IVisit = {
     birthdate: new Date(),
     height: 1,
     weight: 1,
-    gender: Gender.OTHER,
-    nativeLanguage: "Čeština",
+    gender: genders[2],
+    nativeLanguage: nativeLanguages[0],
     visualCorrection: VisualCorrection.NO,
     visualCorrectionValue: 0,
-    handedness: Handedness.UNDETERMINED,
+    handedness: handednesses[3],
     email: "",
     phone: "",
   },
@@ -172,7 +173,7 @@ const dummyPhantomVisit: IVisit = {
     ...dummyVisitNew.probandInfo,
     name: "Phantom",
     surname: "Phantom",
-    gender: Gender.OTHER,
+    gender: genders[2],
   },
   answers: [...loadAnswers(dummyPhantomVisitNew.answers, VisitState.SIGNED)],
 };

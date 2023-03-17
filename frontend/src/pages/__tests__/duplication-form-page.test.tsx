@@ -1,8 +1,9 @@
 import { format } from "date-fns";
+import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import i18n from "@app/i18n";
 import { IOperator } from "@app/interfaces/auth";
 import { IQuestionData, QuestionPartNumber } from "@app/interfaces/question";
-import { AnswerOption, Gender, Handedness, IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
+import { AnswerOption, IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
 import { render, screen, waitFor, within } from "@test-utils";
 
@@ -55,11 +56,11 @@ const visit: IVisit = {
     surname: "Wick",
     personalId: "0123456789",
     birthdate: new Date(1980, 8, 24),
-    gender: Gender.MALE,
+    gender: genders[0],
     height: 179,
     weight: 75,
-    nativeLanguage: "Čeština",
-    handedness: Handedness.RIGHT_HANDED,
+    nativeLanguage: nativeLanguages[0],
+    handedness: handednesses[0],
     visualCorrection: VisualCorrection.NO,
     visualCorrectionValue: 0,
     email: "",

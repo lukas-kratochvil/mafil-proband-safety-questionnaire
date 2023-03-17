@@ -4,16 +4,16 @@ import { useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { InfoTooltip } from "@app/components/informative/InfoTooltip";
-import { nativeLanguages } from "@app/data/form_data";
+import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import { defaultNS } from "@app/i18n";
 import { FormPropType } from "@app/interfaces/form";
-import { Gender, VisualCorrection } from "@app/interfaces/visit";
-import { FormAutocomplete } from "../inputs/FormAutocomplete";
+import { VisualCorrection } from "@app/interfaces/visit";
 import { FormDatePicker } from "../inputs/FormDatePicker";
 import { FormOptionsAutocomplete } from "../inputs/FormOptionsAutocomplete";
 import { FormTextField } from "../inputs/FormTextField";
+import { FormTranslatedAutocomplete } from "../inputs/FormTranslatedAutocomplete";
 import { IPhantomFormCardProps } from "../interfaces/form-card";
-import { genderOptions, getOption, handednessOptions, visualCorrectionOptions } from "../util/options";
+import { visualCorrectionOptions } from "../util/options";
 import { CzechPersonalId, getPersonalIdFromBirthdateAndGender } from "../util/personal-id";
 import { FormCardContainer } from "./FormCardContainer";
 
@@ -22,7 +22,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
   const { getFieldState, resetField, setValue } = useFormContext<FormPropType>();
   const personalIdValue = useWatch<FormPropType, "personalId">({ name: "personalId" });
   const birthdateValue = useWatch<FormPropType, "birthdate">({ name: "birthdate" });
-  const genderOption = useWatch<FormPropType, "gender">({ name: "gender" });
+  const genderEntity = useWatch<FormPropType, "gender">({ name: "gender" });
   const visualCorrectionOption = useWatch<FormPropType, "visualCorrection">({ name: "visualCorrection" });
 
   // Auto-fill birthdate and gender from the personalId value
@@ -40,10 +40,10 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
 
     setValue("birthdate", czechPersonalId.getBirthdate(), { shouldTouch: true });
 
-    // Phantom visit has strictly gender 'other'
+    // Phantom visit has strictly gender 'Other'
     if (!isPhantom) {
-      const gender = czechPersonalId.isMale() ? Gender.MALE : Gender.FEMALE;
-      setValue("gender", getOption(genderOptions, gender), { shouldTouch: true });
+      // TODO: must load the gender from DB
+      setValue("gender", czechPersonalId.isMale() ? genders[0] : genders[1], { shouldTouch: true });
     }
   }, [getFieldState, isPhantom, personalIdValue, setValue]);
 
@@ -62,13 +62,13 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
       && birthdateValue !== null
       && isValid(birthdateValue)
       && Math.abs(differenceInCalendarYears(birthdateValue, Date.now())) < 200
-      && genderOption !== null
+      && genderEntity !== null
     ) {
-      setValue("personalId", getPersonalIdFromBirthdateAndGender(birthdateValue, genderOption.value), {
+      setValue("personalId", getPersonalIdFromBirthdateAndGender(birthdateValue, genderEntity), {
         shouldTouch: true,
       });
     }
-  }, [birthdateValue, genderOption, getFieldState, personalIdValue, setValue]);
+  }, [birthdateValue, genderEntity, getFieldState, personalIdValue, setValue]);
 
   useEffect(() => {
     if (visualCorrectionOption?.value !== VisualCorrection.YES) {
@@ -146,10 +146,10 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           sm={6}
           md={4}
         >
-          <FormOptionsAutocomplete
+          <FormTranslatedAutocomplete
             name="gender"
             label={t("gender")}
-            options={genderOptions}
+            options={genders}
             disabled={disableInputs || isPhantom}
           />
         </Grid>
@@ -159,7 +159,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           sm={6}
           md={4}
         >
-          <FormAutocomplete
+          <FormTranslatedAutocomplete
             name="nativeLanguage"
             label={t("nativeLanguage")}
             options={nativeLanguages}
@@ -229,10 +229,10 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           sm={6}
           md={4}
         >
-          <FormOptionsAutocomplete
+          <FormTranslatedAutocomplete
             name="handedness"
             label={t("handedness")}
-            options={handednessOptions}
+            options={handednesses}
             disabled={disableInputs}
           />
         </Grid>

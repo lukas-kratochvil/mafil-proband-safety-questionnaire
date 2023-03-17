@@ -31,6 +31,19 @@ interface IProjectInfo {
   disapprovalReason: string | null;
 }
 
+interface ITranslation {
+  text: string;
+  language: {
+    code: string;
+  };
+}
+
+export interface ITranslatedEntity {
+  id: string;
+  code: string;
+  translations: ITranslation[];
+}
+
 export enum Gender {
   MALE,
   FEMALE,
@@ -56,11 +69,11 @@ interface IProbandInfo {
   birthdate: Date;
   height: number;
   weight: number;
-  gender: Gender; // TODO: object stored in the database
-  nativeLanguage: string; // TODO: object stored in the database
+  gender: ITranslatedEntity; // TODO: object stored in the database
+  nativeLanguage: ITranslatedEntity; // TODO: object stored in the database
   visualCorrection: VisualCorrection;
   visualCorrectionValue: number;
-  handedness: Handedness; // TODO: object stored in the database
+  handedness: ITranslatedEntity; // TODO: object stored in the database
   email: string;
   phone: string;
 }

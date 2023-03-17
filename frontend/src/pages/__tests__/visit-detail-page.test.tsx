@@ -1,6 +1,7 @@
 import userEvent from "@testing-library/user-event";
+import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import i18n from "@app/i18n";
-import { Gender, Handedness, IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
+import { IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
 import VisitDetailPage from "@app/pages/VisitDetailPage";
 import * as mafildbFetchers from "@app/util/fetch-mafildb";
 import { render, screen } from "@test-utils";
@@ -29,11 +30,11 @@ const defaultVisit: IVisit = {
     surname: "Surname",
     personalId: "123456",
     birthdate: new Date(),
-    gender: Gender.OTHER,
+    gender: genders[2],
     height: 179,
     weight: 81,
-    nativeLanguage: "English",
-    handedness: Handedness.UNDETERMINED,
+    nativeLanguage: nativeLanguages[2],
+    handedness: handednesses[3],
     visualCorrection: VisualCorrection.NO,
     visualCorrectionValue: 0,
     email: "",
