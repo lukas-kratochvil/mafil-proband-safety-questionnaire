@@ -29,12 +29,12 @@ export const fetchGenders = async (): Promise<ITranslatedEntity[]> => {
       }
     }
   `;
-  type TranslatedGenders = {
+  type GendersResponseType = {
     data: {
       genders: ITranslatedEntity[];
     };
   };
-  const response = await axiosConfig.serverApi.post<TranslatedGenders>("", { query });
+  const response = await axiosConfig.serverApi.post<GendersResponseType>("", { query });
   return response.data.data.genders;
 };
 
@@ -55,12 +55,12 @@ export const fetchHandedness = async (): Promise<ITranslatedEntity[]> => {
       }
     }
   `;
-  type TranslatedHandednesses = {
+  type HandednessesResponseType = {
     data: {
       handednesses: ITranslatedEntity[];
     };
   };
-  const response = await axiosConfig.serverApi.post<TranslatedHandednesses>("", { query });
+  const response = await axiosConfig.serverApi.post<HandednessesResponseType>("", { query });
   return response.data.data.handednesses;
 };
 
@@ -82,12 +82,12 @@ export const fetchNativeLanguages = async (): Promise<ITranslatedEntity[]> => {
       }
     }
   `;
-  type TranslatedNativeLanguages = {
+  type NativeLanguagesResponseType = {
     data: {
       nativeLanguages: ITranslatedEntity[];
     };
   };
-  const response = await axiosConfig.serverApi.post<TranslatedNativeLanguages>("", { query });
+  const response = await axiosConfig.serverApi.post<NativeLanguagesResponseType>("", { query });
   return response.data.data.nativeLanguages;
 };
 
