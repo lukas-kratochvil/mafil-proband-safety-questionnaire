@@ -38,32 +38,6 @@ export const fetchGenders = async (): Promise<ITranslatedEntity[]> => {
   return response.data.data.genders;
 };
 
-// Fetch handedness from DB
-export const fetchHandedness = async (): Promise<ITranslatedEntity[]> => {
-  const query = `
-    query {
-      handednesses {
-        id
-        code
-        translations {
-          text
-          language {
-            code
-            name
-          }
-        }
-      }
-    }
-  `;
-  type HandednessesResponseType = {
-    data: {
-      handednesses: ITranslatedEntity[];
-    };
-  };
-  const response = await axiosConfig.serverApi.post<HandednessesResponseType>("", { query });
-  return response.data.data.handednesses;
-};
-
 // Fetch native languages from DB
 export const fetchNativeLanguages = async (): Promise<ITranslatedEntity[]> => {
   const query = `
@@ -89,6 +63,32 @@ export const fetchNativeLanguages = async (): Promise<ITranslatedEntity[]> => {
   };
   const response = await axiosConfig.serverApi.post<NativeLanguagesResponseType>("", { query });
   return response.data.data.nativeLanguages;
+};
+
+// Fetch handedness from DB
+export const fetchHandedness = async (): Promise<ITranslatedEntity[]> => {
+  const query = `
+    query {
+      handednesses {
+        id
+        code
+        translations {
+          text
+          language {
+            code
+            name
+          }
+        }
+      }
+    }
+  `;
+  type HandednessesResponseType = {
+    data: {
+      handednesses: ITranslatedEntity[];
+    };
+  };
+  const response = await axiosConfig.serverApi.post<HandednessesResponseType>("", { query });
+  return response.data.data.handednesses;
 };
 
 // TODO: get visits from DB

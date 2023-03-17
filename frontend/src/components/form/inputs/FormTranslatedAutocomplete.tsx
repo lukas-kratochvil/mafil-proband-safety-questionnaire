@@ -1,5 +1,4 @@
 import { Autocomplete, CircularProgress, TextField, Theme, useMediaQuery } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n";
@@ -8,7 +7,8 @@ import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormDefaultInputProps } from "./interfaces/input-props";
 
 interface IFormTranslatedAutocompleteProps extends IFormDefaultInputProps {
-  entitiesFetcher: () => Promise<ITranslatedEntity[]>;
+  options: ITranslatedEntity[] | undefined;
+  isLoading: boolean;
 }
 
 export const FormTranslatedAutocomplete = ({
@@ -16,15 +16,11 @@ export const FormTranslatedAutocomplete = ({
   label,
   isOptional,
   disabled,
-  entitiesFetcher,
+  options,
+  isLoading,
 }: IFormTranslatedAutocompleteProps) => {
   const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form" });
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
-
-  const { data, isLoading } = useQuery({
-    queryKey: [name],
-    queryFn: entitiesFetcher,
-  });
 
   return (
     <FormInputFieldContainer
@@ -37,7 +33,7 @@ export const FormTranslatedAutocomplete = ({
         render={({ field }) => (
           <Autocomplete
             id={name}
-            options={data || []}
+            options={options || []}
             getOptionLabel={(option: ITranslatedEntity) =>
               option.translations.find((trans) => trans.language.code === i18n.language)?.text
               || option.translations[0].text

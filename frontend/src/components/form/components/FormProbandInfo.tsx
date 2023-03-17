@@ -1,4 +1,5 @@
 import { Divider, Grid, Typography } from "@mui/material";
+import { useQueries } from "@tanstack/react-query";
 import { differenceInCalendarYears, isValid } from "date-fns";
 import { useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
@@ -25,6 +26,23 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
   const birthdateValue = useWatch<FormPropType, "birthdate">({ name: "birthdate" });
   const genderEntity = useWatch<FormPropType, "gender">({ name: "gender" });
   const visualCorrectionOption = useWatch<FormPropType, "visualCorrection">({ name: "visualCorrection" });
+
+  const results = useQueries({
+    queries: [
+      {
+        queryKey: ["genders"],
+        queryFn: fetchGenders,
+      },
+      {
+        queryKey: ["nativeLanguages"],
+        queryFn: fetchNativeLanguages,
+      },
+      {
+        queryKey: ["handednesses"],
+        queryFn: fetchHandedness,
+      },
+    ],
+  });
 
   // Auto-fill birthdate and gender from the personalId value
   useEffect(() => {
@@ -150,7 +168,8 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           <FormTranslatedAutocomplete
             name="gender"
             label={t("gender")}
-            entitiesFetcher={fetchGenders}
+            options={results[0].data}
+            isLoading={results[0].isLoading}
             disabled={disableInputs || isPhantom}
           />
         </Grid>
@@ -163,7 +182,8 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           <FormTranslatedAutocomplete
             name="nativeLanguage"
             label={t("nativeLanguage")}
-            entitiesFetcher={fetchNativeLanguages}
+            options={results[1].data}
+            isLoading={results[1].isLoading}
             disabled={disableInputs}
           />
         </Grid>
@@ -233,7 +253,8 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           <FormTranslatedAutocomplete
             name="handedness"
             label={t("handedness")}
-            entitiesFetcher={fetchHandedness}
+            options={results[2].data}
+            isLoading={results[2].isLoading}
             disabled={disableInputs}
           />
         </Grid>
