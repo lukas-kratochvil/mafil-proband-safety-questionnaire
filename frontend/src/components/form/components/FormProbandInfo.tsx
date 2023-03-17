@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { InfoTooltip } from "@app/components/informative/InfoTooltip";
-import { genders } from "@app/data/translated_entities_data";
 import { defaultNS } from "@app/i18n";
 import { FormPropType } from "@app/interfaces/form";
 import { VisualCorrection } from "@app/interfaces/visit";
@@ -17,6 +16,7 @@ import { FormTranslatedAutocomplete } from "../inputs/FormTranslatedAutocomplete
 import { IPhantomFormCardProps } from "../interfaces/form-card";
 import { visualCorrectionOptions } from "../util/options";
 import { CzechPersonalId, getPersonalIdFromBirthdateAndGender } from "../util/personal-id";
+import { GenderCode } from "../util/utils";
 import { FormCardContainer } from "./FormCardContainer";
 
 export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardProps) => {
@@ -59,12 +59,21 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
 
     setValue("birthdate", czechPersonalId.getBirthdate(), { shouldTouch: true });
 
-    // Phantom visit has strictly gender 'Other'
-    if (!isPhantom) {
-      // TODO: must load the gender from DB
-      setValue("gender", czechPersonalId.isMale() ? genders[0] : genders[1], { shouldTouch: true });
+    const genders = results[0].data;
+    // Phantom visit has strictly gender 'Other' - we do not change it
+    if (!isPhantom && genders !== undefined) {
+      let code: GenderCode | undefined;
+
+      if (czechPersonalId.isMale()) {
+        code = "M";
+      } else if (czechPersonalId.isFemale()) {
+        code = "F";
+      }
+
+      const genderToBeSet = genders.find((gender) => gender.code === code) || null;
+      setValue("gender", genderToBeSet, { shouldTouch: true });
     }
-  }, [getFieldState, isPhantom, personalIdValue, setValue]);
+  }, [getFieldState, isPhantom, personalIdValue, results, setValue]);
 
   // Auto-fill part of personalId from the birthdate and gender values
   useEffect(() => {
