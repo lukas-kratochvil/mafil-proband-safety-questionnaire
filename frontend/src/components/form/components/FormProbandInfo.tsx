@@ -4,10 +4,11 @@ import { useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { InfoTooltip } from "@app/components/informative/InfoTooltip";
-import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
+import { genders } from "@app/data/translated_entities_data";
 import { defaultNS } from "@app/i18n";
 import { FormPropType } from "@app/interfaces/form";
 import { VisualCorrection } from "@app/interfaces/visit";
+import { fetchGenders, fetchHandedness, fetchNativeLanguages } from "@app/util/fetch";
 import { FormDatePicker } from "../inputs/FormDatePicker";
 import { FormOptionsAutocomplete } from "../inputs/FormOptionsAutocomplete";
 import { FormTextField } from "../inputs/FormTextField";
@@ -149,7 +150,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           <FormTranslatedAutocomplete
             name="gender"
             label={t("gender")}
-            options={genders}
+            entitiesFetcher={fetchGenders}
             disabled={disableInputs || isPhantom}
           />
         </Grid>
@@ -162,7 +163,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           <FormTranslatedAutocomplete
             name="nativeLanguage"
             label={t("nativeLanguage")}
-            options={nativeLanguages}
+            entitiesFetcher={fetchNativeLanguages}
             disabled={disableInputs}
           />
         </Grid>
@@ -232,7 +233,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           <FormTranslatedAutocomplete
             name="handedness"
             label={t("handedness")}
-            options={handednesses}
+            entitiesFetcher={fetchHandedness}
             disabled={disableInputs}
           />
         </Grid>
