@@ -4,7 +4,8 @@ import { questions } from "@app/data/question_data";
 import { dummyVisits } from "@app/data/visit_data";
 import { IAuthGateOperator, IOperator } from "@app/interfaces/auth";
 import { IQuestionData } from "@app/interfaces/question";
-import { ITranslatedEntity, IVisit, VisitState } from "@app/interfaces/visit";
+import { IVisit, VisitState } from "@app/interfaces/visit";
+import { ITranslatedEntity } from "@app/util/server_API/dto";
 import { GENDERS_QUERY, HANDEDNESSES_QUERY, NATIVE_LANGUAGES_QUERY } from "./server_API/queries";
 import { GendersResponse, HandednessesResponse, NativeLanguagesResponse } from "./server_API/response-types";
 

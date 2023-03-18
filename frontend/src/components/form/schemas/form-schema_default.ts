@@ -1,6 +1,7 @@
 import { array, date, mixed, number, object, string } from "yup";
 import { QuestionPartNumber } from "@app/interfaces/question";
-import { AnswerOption, ITranslatedEntity, VisualCorrection } from "@app/interfaces/visit";
+import { AnswerOption, VisualCorrection } from "@app/interfaces/visit";
+import { ITranslatedEntity } from "@app/util/server_API/dto";
 import { getOption, IOption, visualCorrectionOptions } from "../util/options";
 
 export const answersSchema = object({

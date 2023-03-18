@@ -1,3 +1,4 @@
+import { ITranslatedEntity } from "../util/server_API/dto";
 import { QuestionPartNumber } from "./question";
 
 export enum VisitState {
@@ -29,19 +30,6 @@ interface IProjectInfo {
   isPhantom: boolean;
   measurementDate: Date | null;
   disapprovalReason: string | null;
-}
-
-interface ITranslation {
-  text: string;
-  language: {
-    code: string;
-  };
-}
-
-export interface ITranslatedEntity {
-  id: string;
-  code: string;
-  translations: ITranslation[];
 }
 
 export enum Gender {

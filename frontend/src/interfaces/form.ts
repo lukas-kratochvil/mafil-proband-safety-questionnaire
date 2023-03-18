@@ -1,6 +1,7 @@
 import { IOption } from "@app/components/form/util/options";
 import { Override } from "@app/util/utils";
-import { AnswerOption, IQac, ITranslatedEntity } from "./visit";
+import { ITranslatedEntity } from "../util/server_API/dto";
+import { AnswerOption, IQac } from "./visit";
 
 // Form fields having this data type are validated as numbers
 type TextFieldNumberInput = string | number;

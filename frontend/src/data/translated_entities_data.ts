@@ -1,4 +1,4 @@
-import { ITranslatedEntity } from "@app/interfaces/visit";
+import { ITranslatedEntity } from "@app/util/server_API/dto";
 
 export const genders: ITranslatedEntity[] = [
   {

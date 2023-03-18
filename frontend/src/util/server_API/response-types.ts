@@ -1,4 +1,4 @@
-import { ITranslatedEntity } from "@app/interfaces/visit";
+import { ITranslatedEntity } from "./dto";
 
 export type GendersResponse = {
   data: {
