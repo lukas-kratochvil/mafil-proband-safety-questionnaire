@@ -3,8 +3,90 @@ import { format } from "date-fns";
 import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import i18n from "@app/i18n";
 import PhantomFormPage from "@app/pages/PhantomFormPage";
-import { ITranslatedEntity } from "@app/util/server_API/dto";
+import { IQuestionEntity, ITranslatedEntity } from "@app/util/server_API/dto";
 import { render, screen, waitFor } from "@test-utils";
+
+//----------------------------------------------------------------------
+// Default data
+//----------------------------------------------------------------------
+const questionData: IQuestionEntity[] = [
+  {
+    id: "p1q01",
+    partNumber: 1,
+    mustBeApproved: false,
+    translations: [
+      {
+        text: "Otázka1",
+        language: {
+          code: "cs",
+        },
+      },
+      {
+        text: "Question1",
+        language: {
+          code: "en",
+        },
+      },
+    ],
+  },
+  {
+    id: "p1q02",
+    partNumber: 1,
+    mustBeApproved: false,
+    translations: [
+      {
+        text: "Otázka2",
+        language: {
+          code: "cs",
+        },
+      },
+      {
+        text: "Question2",
+        language: {
+          code: "en",
+        },
+      },
+    ],
+  },
+  {
+    id: "p2q01",
+    partNumber: 2,
+    mustBeApproved: true,
+    translations: [
+      {
+        text: "Otázka3",
+        language: {
+          code: "cs",
+        },
+      },
+      {
+        text: "Question3",
+        language: {
+          code: "en",
+        },
+      },
+    ],
+  },
+  {
+    id: "p2q02",
+    partNumber: 2,
+    mustBeApproved: true,
+    translations: [
+      {
+        text: "Otázka4",
+        language: {
+          code: "cs",
+        },
+      },
+      {
+        text: "Question4",
+        language: {
+          code: "en",
+        },
+      },
+    ],
+  },
+];
 
 //----------------------------------------------------------------------
 // Mocking react-router-dom hooks
@@ -37,6 +119,7 @@ vi.mock("@app/util/fetch", async () => ({
   fetchGenders: async (): Promise<ITranslatedEntity[]> => genders,
   fetchNativeLanguages: async (): Promise<ITranslatedEntity[]> => nativeLanguages,
   fetchHandednesses: async (): Promise<ITranslatedEntity[]> => handednesses,
+  fetchCurrentQuestions: async (): Promise<IQuestionEntity[]> => questionData,
 }));
 
 vi.mock("@app/util/fetch-mafildb", async () => ({

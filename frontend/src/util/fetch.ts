@@ -1,13 +1,23 @@
 import axiosConfig from "@app/axios-config";
 import { trustedOperators } from "@app/data/operator_data";
-import { questions } from "@app/data/question_data";
 import { dummyVisits } from "@app/data/visit_data";
 import { IAuthGateOperator, IOperator } from "@app/interfaces/auth";
-import { IQuestionData } from "@app/interfaces/question";
 import { IVisit, VisitState } from "@app/interfaces/visit";
-import { ITranslatedEntity } from "@app/util/server_API/dto";
-import { GENDERS_QUERY, HANDEDNESSES_QUERY, NATIVE_LANGUAGES_QUERY } from "./server_API/queries";
-import { GendersResponse, HandednessesResponse, NativeLanguagesResponse } from "./server_API/response-types";
+import { IQuestionEntity, ITranslatedEntity } from "@app/util/server_API/dto";
+import {
+  CURRENT_QUESTIONS_QUERY,
+  GENDERS_QUERY,
+  HANDEDNESSES_QUERY,
+  NATIVE_LANGUAGES_QUERY,
+  QUESTION_QUERY,
+} from "./server_API/queries";
+import {
+  GendersResponse,
+  HandednessesResponse,
+  NativeLanguagesResponse,
+  QuestionResponse,
+  QuestionsResponse,
+} from "./server_API/response-types";
 
 // TODO: authorize against DB
 export const authenticateOperator = async (loggingOperator: IAuthGateOperator): Promise<IOperator | undefined> =>
@@ -15,22 +25,30 @@ export const authenticateOperator = async (loggingOperator: IAuthGateOperator): 
     (op) => op.name === loggingOperator.name && op.surname === loggingOperator.surname && op.uco === loggingOperator.uco
   );
 
-// Fetch genders from DB
 export const fetchGenders = async (): Promise<ITranslatedEntity[]> => {
   const { data } = await axiosConfig.serverApi.post<GendersResponse>("", { query: GENDERS_QUERY });
   return data.data.genders;
 };
 
-// Fetch native languages from DB
 export const fetchNativeLanguages = async (): Promise<ITranslatedEntity[]> => {
   const { data } = await axiosConfig.serverApi.post<NativeLanguagesResponse>("", { query: NATIVE_LANGUAGES_QUERY });
   return data.data.nativeLanguages;
 };
 
-// Fetch handedness from DB
 export const fetchHandednesses = async (): Promise<ITranslatedEntity[]> => {
   const { data } = await axiosConfig.serverApi.post<HandednessesResponse>("", { query: HANDEDNESSES_QUERY });
   return data.data.handednesses;
+};
+
+export const fetchCurrentQuestions = async (): Promise<IQuestionEntity[]> => {
+  const { data } = await axiosConfig.serverApi.post<QuestionsResponse>("", { query: CURRENT_QUESTIONS_QUERY });
+  return data.data.questions;
+};
+
+export const fetchQuestion = async (questionId: string): Promise<IQuestionEntity> => {
+  const variables = { id: questionId };
+  const { data } = await axiosConfig.serverApi.post<QuestionResponse>("", { query: QUESTION_QUERY, variables });
+  return data.data.question;
 };
 
 // TODO: get visits from DB
@@ -44,10 +62,3 @@ export const fetchWaitingRoomVisitForms = async (): Promise<IVisit[]> =>
 // TODO: get visits from DB
 export const fetchApprovalRoomVisitForms = async (): Promise<IVisit[]> =>
   dummyVisits.filter((visit) => visit.state === VisitState.IN_APPROVAL);
-
-// TODO: get questions from DB
-export const fetchCurrentQuestions = async (): Promise<IQuestionData[]> => questions;
-
-// TODO: get question from DB
-export const fetchQuestion = async (questionId: string): Promise<IQuestionData | undefined> =>
-  questions.find((question) => question.id === questionId);

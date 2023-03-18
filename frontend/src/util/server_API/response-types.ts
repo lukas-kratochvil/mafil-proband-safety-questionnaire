@@ -1,4 +1,4 @@
-import { ITranslatedEntity } from "./dto";
+import { IQuestionEntity, ITranslatedEntity } from "./dto";
 
 export type GendersResponse = {
   data: {
@@ -15,5 +15,17 @@ export type NativeLanguagesResponse = {
 export type HandednessesResponse = {
   data: {
     handednesses: ITranslatedEntity[];
+  };
+};
+
+export type QuestionsResponse = {
+  data: {
+    questions: IQuestionEntity[];
+  };
+};
+
+export type QuestionResponse = {
+  data: {
+    question: IQuestionEntity;
   };
 };

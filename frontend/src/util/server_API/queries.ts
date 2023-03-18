@@ -46,3 +46,37 @@ query {
   }
 }
 `;
+
+export const CURRENT_QUESTIONS_QUERY = `
+query {
+  questions {
+    id
+    partNumber
+    mustBeApproved
+    translations {
+      text
+      language {
+        code
+        name
+      }
+    }
+  }
+}
+`;
+
+export const QUESTION_QUERY = `
+query($id: UUID!) {
+  question(id: $id) {
+    id
+    partNumber
+    mustBeApproved
+    translations {
+      text
+      language {
+        code
+        name
+      }
+    }
+  }
+}
+`;

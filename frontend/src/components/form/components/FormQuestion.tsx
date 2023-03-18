@@ -18,7 +18,7 @@ interface IFormQuestionProps extends IFormCardProps {
 }
 
 export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuestionProps) => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "form.safetyQuestions" });
+  const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.safetyQuestions" });
   const matchesUpSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
   const { operator } = useAuth();
   const { setValue } = useFormContext<FormPropType>();
@@ -29,7 +29,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
 
   const { data: question } = useQuery({
     queryKey: ["question", qac.questionId],
-    queryFn: async () => fetchQuestion(qac.questionId),
+    queryFn: () => fetchQuestion(qac.questionId),
   });
 
   useEffect(() => {
@@ -58,7 +58,10 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
         xs={1}
         sm
       >
-        <Typography>{question?.text}</Typography>
+        <Typography>
+          {question?.translations.find((trans) => trans.language.code === i18n.language)?.text
+            || question?.translations[0].text}
+        </Typography>
       </Grid>
       <Grid
         item

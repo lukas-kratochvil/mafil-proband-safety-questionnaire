@@ -10,3 +10,10 @@ export interface ITranslatedEntity {
   code: string;
   translations: ITranslation[];
 }
+
+export interface IQuestionEntity {
+  id: string;
+  partNumber: number;
+  mustBeApproved: boolean;
+  translations: ITranslation[];
+}

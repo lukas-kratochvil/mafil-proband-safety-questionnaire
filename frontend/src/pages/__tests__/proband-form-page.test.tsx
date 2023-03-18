@@ -1,9 +1,8 @@
 import userEvent from "@testing-library/user-event";
 import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import i18n from "@app/i18n";
-import { IQuestionData, QuestionPartNumber } from "@app/interfaces/question";
 import ProbandFormPage from "@app/pages/ProbandFormPage";
-import { ITranslatedEntity } from "@app/util/server_API/dto";
+import { IQuestionEntity, ITranslatedEntity } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -32,35 +31,92 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 //----------------------------------------------------------------------
 // Mocking custom fetch methods
 //----------------------------------------------------------------------
-const questionData: IQuestionData[] = [
+const questionData: IQuestionEntity[] = [
   {
     id: "p1q01",
-    partNumber: QuestionPartNumber.ONE,
-    text: "Question1",
+    partNumber: 1,
+    mustBeApproved: false,
+    translations: [
+      {
+        text: "Otázka1",
+        language: {
+          code: "cs",
+        },
+      },
+      {
+        text: "Question1",
+        language: {
+          code: "en",
+        },
+      },
+    ],
   },
   {
     id: "p1q02",
-    partNumber: QuestionPartNumber.ONE,
-    text: "Question2",
+    partNumber: 1,
+    mustBeApproved: false,
+    translations: [
+      {
+        text: "Otázka2",
+        language: {
+          code: "cs",
+        },
+      },
+      {
+        text: "Question2",
+        language: {
+          code: "en",
+        },
+      },
+    ],
   },
   {
     id: "p2q01",
-    partNumber: QuestionPartNumber.TWO,
-    text: "Question3",
+    partNumber: 2,
+    mustBeApproved: true,
+    translations: [
+      {
+        text: "Otázka3",
+        language: {
+          code: "cs",
+        },
+      },
+      {
+        text: "Question3",
+        language: {
+          code: "en",
+        },
+      },
+    ],
   },
   {
     id: "p2q02",
-    partNumber: QuestionPartNumber.TWO,
-    text: "Question4",
+    partNumber: 2,
+    mustBeApproved: true,
+    translations: [
+      {
+        text: "Otázka4",
+        language: {
+          code: "cs",
+        },
+      },
+      {
+        text: "Question4",
+        language: {
+          code: "en",
+        },
+      },
+    ],
   },
 ];
 
 vi.mock("@app/util/fetch", async () => ({
   ...((await vi.importActual("@app/util/fetch")) as Record<string, unknown>),
-  fetchCurrentQuestions: async (): Promise<IQuestionData[]> => questionData,
   fetchGenders: async (): Promise<ITranslatedEntity[]> => genders,
   fetchNativeLanguages: async (): Promise<ITranslatedEntity[]> => nativeLanguages,
   fetchHandednesses: async (): Promise<ITranslatedEntity[]> => handednesses,
+  fetchCurrentQuestions: async (): Promise<IQuestionEntity[]> => questionData,
+  fetchQuestion: async (): Promise<IQuestionEntity> => questionData[0],
 }));
 
 vi.mock("@app/util/fetch-mafildb", async () => ({
