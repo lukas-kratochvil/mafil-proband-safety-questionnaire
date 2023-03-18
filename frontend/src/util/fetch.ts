@@ -17,20 +17,20 @@ export const authenticateOperator = async (loggingOperator: IAuthGateOperator): 
 
 // Fetch genders from DB
 export const fetchGenders = async (): Promise<ITranslatedEntity[]> => {
-  const response = await axiosConfig.serverApi.post<GendersResponse>("", { query: GENDERS_QUERY });
-  return response.data.data.genders;
+  const { data } = await axiosConfig.serverApi.post<GendersResponse>("", { query: GENDERS_QUERY });
+  return data.data.genders;
 };
 
 // Fetch native languages from DB
 export const fetchNativeLanguages = async (): Promise<ITranslatedEntity[]> => {
-  const response = await axiosConfig.serverApi.post<NativeLanguagesResponse>("", { query: NATIVE_LANGUAGES_QUERY });
-  return response.data.data.nativeLanguages;
+  const { data } = await axiosConfig.serverApi.post<NativeLanguagesResponse>("", { query: NATIVE_LANGUAGES_QUERY });
+  return data.data.nativeLanguages;
 };
 
 // Fetch handedness from DB
 export const fetchHandednesses = async (): Promise<ITranslatedEntity[]> => {
-  const response = await axiosConfig.serverApi.post<HandednessesResponse>("", { query: HANDEDNESSES_QUERY });
-  return response.data.data.handednesses;
+  const { data } = await axiosConfig.serverApi.post<HandednessesResponse>("", { query: HANDEDNESSES_QUERY });
+  return data.data.handednesses;
 };
 
 // TODO: get visits from DB
