@@ -27,32 +27,30 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
   const genderEntity = useWatch<FormPropType, "gender">({ name: "gender" });
   const visualCorrectionOption = useWatch<FormPropType, "visualCorrection">({ name: "visualCorrection" });
 
-  const results = useQueries({
+  const [genders, handednesses, nativeLanguages] = useQueries({
     queries: [
       {
         queryKey: ["genders"],
         queryFn: fetchGenders,
       },
       {
-        queryKey: ["nativeLanguages"],
-        queryFn: fetchNativeLanguages,
-      },
-      {
         queryKey: ["handednesses"],
         queryFn: fetchHandednesses,
+      },
+      {
+        queryKey: ["nativeLanguages"],
+        queryFn: fetchNativeLanguages,
       },
     ],
   });
 
   // Setting gender to 'Other' in the phantom visit
   useEffect(() => {
-    const genders = results[0].data;
-
-    if (isPhantom && genders !== undefined) {
-      const genderOther = genders.find((gender) => gender.code === "O") || null;
+    if (isPhantom && genders.data !== undefined) {
+      const genderOther = genders.data.find((gender) => gender.code === "O") || null;
       setValue("gender", genderOther, { shouldTouch: true });
     }
-  }, [isPhantom, results, setValue]);
+  }, [genders.data, isPhantom, setValue]);
 
   // Auto-fill birthdate and gender from the personalId value
   useEffect(() => {
@@ -69,10 +67,8 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
 
     setValue("birthdate", czechPersonalId.getBirthdate(), { shouldTouch: true });
 
-    const genders = results[0].data;
-
     // Phantom visit has strictly gender 'Other' - we do not change it here
-    if (!isPhantom && genders !== undefined) {
+    if (!isPhantom && genders.data !== undefined) {
       let code: GenderCode | undefined;
 
       if (czechPersonalId.isMale()) {
@@ -81,10 +77,10 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
         code = "F";
       }
 
-      const genderToBeSet = genders.find((gender) => gender.code === code) || null;
+      const genderToBeSet = genders.data.find((gender) => gender.code === code) || null;
       setValue("gender", genderToBeSet, { shouldTouch: true });
     }
-  }, [getFieldState, isPhantom, personalIdValue, results, setValue]);
+  }, [genders.data, getFieldState, isPhantom, personalIdValue, setValue]);
 
   // Auto-fill part of personalId from the birthdate and gender values
   useEffect(() => {
@@ -188,8 +184,8 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           <FormTranslatedAutocomplete
             name="gender"
             label={t("gender")}
-            options={results[0].data}
-            isLoading={results[0].isLoading}
+            options={genders.data}
+            isLoading={genders.isLoading}
             disabled={disableInputs || isPhantom}
           />
         </Grid>
@@ -202,8 +198,8 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           <FormTranslatedAutocomplete
             name="nativeLanguage"
             label={t("nativeLanguage")}
-            options={results[1].data}
-            isLoading={results[1].isLoading}
+            options={nativeLanguages.data}
+            isLoading={nativeLanguages.isLoading}
             disabled={disableInputs}
           />
         </Grid>
@@ -273,8 +269,8 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           <FormTranslatedAutocomplete
             name="handedness"
             label={t("handedness")}
-            options={results[2].data}
-            isLoading={results[2].isLoading}
+            options={handednesses.data}
+            isLoading={handednesses.isLoading}
             disabled={disableInputs}
           />
         </Grid>
