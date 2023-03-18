@@ -1,10 +1,23 @@
-import { devicesDev, projectsDev } from "@app/data/form_data";
+import axiosConfig from "@app/axios-config";
 import { trustedOperators } from "@app/data/operator_data";
-import { questions } from "@app/data/question_data";
 import { dummyVisits } from "@app/data/visit_data";
 import { IAuthGateOperator, IOperator } from "@app/interfaces/auth";
-import { IQuestionData } from "@app/interfaces/question";
-import { IQac, IVisit, VisitState } from "@app/interfaces/visit";
+import { IVisit, VisitState } from "@app/interfaces/visit";
+import { IQuestionEntity, ITranslatedEntity } from "@app/util/server_API/dto";
+import {
+  GET_CURRENT_QUESTIONS,
+  GET_GENDERS,
+  GET_HANDEDNESSES,
+  GET_NATIVE_LANGUAGES,
+  GET_QUESTION,
+} from "./server_API/queries";
+import {
+  GendersResponse,
+  HandednessesResponse,
+  NativeLanguagesResponse,
+  QuestionResponse,
+  QuestionsResponse,
+} from "./server_API/response-types";
 
 // TODO: authorize against DB
 export const authenticateOperator = async (loggingOperator: IAuthGateOperator): Promise<IOperator | undefined> =>
@@ -12,41 +25,40 @@ export const authenticateOperator = async (loggingOperator: IAuthGateOperator): 
     (op) => op.name === loggingOperator.name && op.surname === loggingOperator.surname && op.uco === loggingOperator.uco
   );
 
+export const fetchGenders = async (): Promise<ITranslatedEntity[]> => {
+  const { data } = await axiosConfig.serverApi.post<GendersResponse>("", { query: GET_GENDERS });
+  return data.data.genders;
+};
+
+export const fetchNativeLanguages = async (): Promise<ITranslatedEntity[]> => {
+  const { data } = await axiosConfig.serverApi.post<NativeLanguagesResponse>("", { query: GET_NATIVE_LANGUAGES });
+  return data.data.nativeLanguages;
+};
+
+export const fetchHandednesses = async (): Promise<ITranslatedEntity[]> => {
+  const { data } = await axiosConfig.serverApi.post<HandednessesResponse>("", { query: GET_HANDEDNESSES });
+  return data.data.handednesses;
+};
+
+export const fetchCurrentQuestions = async (): Promise<IQuestionEntity[]> => {
+  const { data } = await axiosConfig.serverApi.post<QuestionsResponse>("", { query: GET_CURRENT_QUESTIONS });
+  return data.data.questions;
+};
+
+export const fetchQuestion = async (questionId: string): Promise<IQuestionEntity> => {
+  const variables = { id: questionId };
+  const { data } = await axiosConfig.serverApi.post<QuestionResponse>("", { query: GET_QUESTION, variables });
+  return data.data.question;
+};
+
 // TODO: get visits from DB
-export const fetchVisit = async (visitId: string | undefined): Promise<IVisit | undefined> =>
+export const fetchVisitForm = async (visitId: string | undefined): Promise<IVisit | undefined> =>
   dummyVisits.find((visit) => visit.id === visitId);
 
-// TODO: get visits from MAFILDB
-export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVisit | undefined> =>
-  dummyVisits.find((visit) => visit.id === visitId);
-
 // TODO: get visits from DB
-export const fetchWaitingRoomVisits = async (): Promise<IVisit[]> =>
+export const fetchWaitingRoomVisitForms = async (): Promise<IVisit[]> =>
   dummyVisits.filter((visit) => visit.state === VisitState.NEW);
 
 // TODO: get visits from DB
-export const fetchApprovalRoomVisits = async (): Promise<IVisit[]> =>
+export const fetchApprovalRoomVisitForms = async (): Promise<IVisit[]> =>
   dummyVisits.filter((visit) => visit.state === VisitState.IN_APPROVAL);
-
-// TODO: get visits from MAFIL DB – all the visits with assigned visitId and generated PDF are fetched from MAFIL DB
-export const fetchRecentVisits = async (): Promise<IVisit[]> =>
-  dummyVisits.filter((visit) =>
-    [VisitState.APPROVED, VisitState.DISAPPROVED, VisitState.FOR_SIGNATURE, VisitState.SIGNED].includes(visit.state)
-  );
-
-// TODO: get questions from DB
-export const fetchCurrentQuestions = async (): Promise<IQuestionData[]> => questions;
-
-// TODO: get questions from DB
-export const fetchAnswerQuestions = async (answers: IQac[]): Promise<IQuestionData[]> =>
-  answers.map((answer) => questions.filter((question) => question.id === answer.questionId)[0]);
-
-// TODO: get question from DB
-export const fetchQuestion = async (questionId: string): Promise<IQuestionData | undefined> =>
-  questions.find((question) => question.id === questionId);
-
-// TODO: get projects from MAFILDB
-export const fetchProjects = async (): Promise<string[]> => projectsDev;
-
-// TODO: get devices from MAFILDB
-export const fetchDevices = async (): Promise<string[]> => devicesDev;

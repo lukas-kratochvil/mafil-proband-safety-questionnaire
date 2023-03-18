@@ -2,17 +2,25 @@ import { Autocomplete, CircularProgress, TextField, Theme, useMediaQuery } from 
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n";
+import { ITranslatedEntity } from "@app/util/server_API/dto";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormDefaultInputProps } from "./interfaces/input-props";
 
-interface IFormAutocompleteProps extends IFormDefaultInputProps {
-  options: string[] | undefined;
+interface IFormTranslatedAutocompleteProps extends IFormDefaultInputProps {
+  options: ITranslatedEntity[] | undefined;
+  isLoading: boolean;
 }
 
-export const FormAutocomplete = ({ name, label, isOptional, disabled, options }: IFormAutocompleteProps) => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
+export const FormTranslatedAutocomplete = ({
+  name,
+  label,
+  isOptional,
+  disabled,
+  options,
+  isLoading,
+}: IFormTranslatedAutocompleteProps) => {
+  const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form" });
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
-  const loading = options === undefined;
 
   return (
     <FormInputFieldContainer
@@ -25,14 +33,19 @@ export const FormAutocomplete = ({ name, label, isOptional, disabled, options }:
         render={({ field }) => (
           <Autocomplete
             id={name}
-            options={options === undefined ? [] : options}
+            options={options || []}
+            getOptionLabel={(option: ITranslatedEntity) =>
+              option.translations.find((trans) => trans.language.code === i18n.language)?.text
+              || option.translations[0].text
+            }
+            isOptionEqualToValue={(option, value) => option.id === value.id}
             value={field.value}
             onChange={(_event, val) => field.onChange(val)}
             onBlur={field.onBlur}
             disabled={disabled}
-            loading={loading}
-            loadingText={`${t("loading")}…`}
-            noOptionsText={t("noOptions")}
+            loading={isLoading}
+            loadingText={`${t("common.loading")}…`}
+            noOptionsText={t("common.noOptions")}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -43,7 +56,7 @@ export const FormAutocomplete = ({ name, label, isOptional, disabled, options }:
                   ...params.InputProps,
                   endAdornment: (
                     <>
-                      {loading && (
+                      {isLoading && (
                         <CircularProgress
                           color="inherit"
                           size={20}

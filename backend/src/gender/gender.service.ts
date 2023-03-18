@@ -2,29 +2,17 @@ import { Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 import { LanguageService } from "@app/language/language.service";
 import { PrismaService } from "@app/prisma/prisma.service";
-import { areTranslationsComplete, areUpdateCodesValid } from "@app/utils/utils";
+import { areTranslationsComplete, areUpdateCodesValid, translationsIncludeSchema } from "@app/utils/utils";
 import { CreateGenderInput } from "./dto/create-gender.input";
 import { UpdateGenderInput } from "./dto/update-gender.input";
 
-const genderTranslations = Prisma.validator<Prisma.GenderInclude>()({
-  translations: {
-    select: {
-      text: true,
-      language: {
-        select: {
-          name: true,
-          code: true,
-        },
-      },
-    },
-  },
-});
+const genderTranslations = Prisma.validator<Prisma.GenderInclude>()(translationsIncludeSchema);
 
-const genderIncludingTranslations = Prisma.validator<Prisma.GenderArgs>()({
+const genderTranslationsArgs = Prisma.validator<Prisma.GenderArgs>()({
   include: genderTranslations,
 });
 
-type GenderIncludingTranslations = Prisma.GenderGetPayload<typeof genderIncludingTranslations>;
+type GenderIncludingTranslations = Prisma.GenderGetPayload<typeof genderTranslationsArgs>;
 
 @Injectable()
 export class GenderService {

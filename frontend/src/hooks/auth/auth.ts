@@ -24,7 +24,7 @@ export const useAuthProvider = (): IAuth => {
         loggingOperator = { ...operatorMR };
         break;
       case IAuthMethod.MUNI_HIGHER_PERMISSION:
-        // TODO: delete this case - only for test pruposes
+        // TODO: delete this case - only for test purposes
         loggingOperator = { ...operatorSpecial };
         break;
       default:

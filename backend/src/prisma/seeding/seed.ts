@@ -31,13 +31,11 @@ async function seed() {
     async (nativeLanguage) =>
       await prisma.nativeLanguage.create({
         data: {
+          code: nativeLanguage.code,
           order: nativeLanguage.order,
           translations: {
             createMany: {
-              data: [
-                createTranslation(cs.id, nativeLanguage.csText),
-                createTranslation(en.id, nativeLanguage.enText),
-              ],
+              data: [createTranslation(cs.id, nativeLanguage.csText), createTranslation(en.id, nativeLanguage.enText)],
             },
           },
         },
@@ -52,10 +50,22 @@ async function seed() {
           code: gender.code,
           translations: {
             createMany: {
-              data: [
-                createTranslation(cs.id, gender.csText),
-                createTranslation(en.id, gender.enText),
-              ],
+              data: [createTranslation(cs.id, gender.csText), createTranslation(en.id, gender.enText)],
+            },
+          },
+        },
+      })
+  );
+
+  // Handedness
+  handedness.forEach(
+    async (hand) =>
+      await prisma.handedness.create({
+        data: {
+          code: hand.code,
+          translations: {
+            createMany: {
+              data: [createTranslation(cs.id, hand.csText), createTranslation(en.id, hand.enText)],
             },
           },
         },
@@ -72,10 +82,7 @@ async function seed() {
           isValid: true,
           translations: {
             createMany: {
-              data: [
-                createTranslation(cs.id, question.csText),
-                createTranslation(en.id, question.enText),
-              ],
+              data: [createTranslation(cs.id, question.csText), createTranslation(en.id, question.enText)],
             },
           },
           hiddenByGenders: {
@@ -84,23 +91,6 @@ async function seed() {
                 question.hiddenByGender === undefined
                   ? []
                   : question.hiddenByGender.map((genderCode) => ({ genderCode })),
-            },
-          },
-        },
-      })
-  );
-
-  // Handedness
-  handedness.forEach(
-    async (hand) =>
-      await prisma.handedness.create({
-        data: {
-          translations: {
-            createMany: {
-              data: [
-                createTranslation(cs.id, hand.csText),
-                createTranslation(en.id, hand.enText),
-              ],
             },
           },
         },

@@ -1,8 +1,92 @@
 import userEvent from "@testing-library/user-event";
 import { format } from "date-fns";
+import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import i18n from "@app/i18n";
 import PhantomFormPage from "@app/pages/PhantomFormPage";
+import { IQuestionEntity, ITranslatedEntity } from "@app/util/server_API/dto";
 import { render, screen, waitFor } from "@test-utils";
+
+//----------------------------------------------------------------------
+// Default data
+//----------------------------------------------------------------------
+const questionData: IQuestionEntity[] = [
+  {
+    id: "p1q01",
+    partNumber: 1,
+    mustBeApproved: false,
+    translations: [
+      {
+        text: "Otázka1",
+        language: {
+          code: "cs",
+        },
+      },
+      {
+        text: "Question1",
+        language: {
+          code: "en",
+        },
+      },
+    ],
+  },
+  {
+    id: "p1q02",
+    partNumber: 1,
+    mustBeApproved: false,
+    translations: [
+      {
+        text: "Otázka2",
+        language: {
+          code: "cs",
+        },
+      },
+      {
+        text: "Question2",
+        language: {
+          code: "en",
+        },
+      },
+    ],
+  },
+  {
+    id: "p2q01",
+    partNumber: 2,
+    mustBeApproved: true,
+    translations: [
+      {
+        text: "Otázka3",
+        language: {
+          code: "cs",
+        },
+      },
+      {
+        text: "Question3",
+        language: {
+          code: "en",
+        },
+      },
+    ],
+  },
+  {
+    id: "p2q02",
+    partNumber: 2,
+    mustBeApproved: true,
+    translations: [
+      {
+        text: "Otázka4",
+        language: {
+          code: "cs",
+        },
+      },
+      {
+        text: "Question4",
+        language: {
+          code: "en",
+        },
+      },
+    ],
+  },
+];
 
 //----------------------------------------------------------------------
 // Mocking react-router-dom hooks
@@ -32,6 +116,14 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 //----------------------------------------------------------------------
 vi.mock("@app/util/fetch", async () => ({
   ...((await vi.importActual("@app/util/fetch")) as Record<string, unknown>),
+  fetchGenders: async (): Promise<ITranslatedEntity[]> => genders,
+  fetchNativeLanguages: async (): Promise<ITranslatedEntity[]> => nativeLanguages,
+  fetchHandednesses: async (): Promise<ITranslatedEntity[]> => handednesses,
+  fetchCurrentQuestions: async (): Promise<IQuestionEntity[]> => questionData,
+}));
+
+vi.mock("@app/util/fetch-mafildb", async () => ({
+  ...((await vi.importActual("@app/util/fetch-mafildb")) as Record<string, unknown>),
   fetchProjects: async (): Promise<string[]> => ["project1", "project2", "project3"],
   fetchDevices: async (): Promise<string[]> => ["device1", "device2", "device3"],
 }));
@@ -47,6 +139,11 @@ describe("phantom form page", () => {
   beforeEach(async () => {
     await i18n.changeLanguage("cimode");
   });
+
+  // Data
+  const genderOther = genders[2].translations[0].text;
+  const nativeLanguageCzech = nativeLanguages[0].translations[0].text;
+  const handednessUndetermined = handednesses[3].translations[0].text;
 
   test("contains correct form buttons", async () => {
     setup();
@@ -69,7 +166,7 @@ describe("phantom form page", () => {
         surname: "",
         personalId: "",
         birthdate: "",
-        gender: "form.enums.gender.OTHER",
+        gender: "", // is set to 'Other' in the FormProbandInfo component
         nativeLanguage: "",
         height: "",
         weight: "",
@@ -87,7 +184,7 @@ describe("phantom form page", () => {
     await user.type(await screen.findByLabelText("personalId"), "9606301232");
 
     expect(screen.getByLabelText("birthdate")).toHaveValue("30.06.1996");
-    expect(screen.getByLabelText("gender")).toHaveValue("form.enums.gender.OTHER");
+    expect(screen.getByLabelText("gender")).toHaveValue(genderOther);
   });
 
   test("part of personal ID is filled automatically from valid birthdate", async () => {
@@ -140,7 +237,7 @@ describe("phantom form page", () => {
     const expectedBirthdate = "30.06.1996";
 
     await user.click(screen.getByLabelText("nativeLanguage"));
-    const selectedNativeLanguage = "Čeština";
+    const selectedNativeLanguage = nativeLanguageCzech;
     await user.click(screen.getByRole("option", { name: selectedNativeLanguage }));
 
     const typedHeight = "173";
@@ -158,7 +255,7 @@ describe("phantom form page", () => {
     await user.type(screen.getByLabelText("visualCorrectionValue"), typedVisualCorrectionValue);
 
     await user.click(screen.getByLabelText("handedness"));
-    const selectedHandedness = "form.enums.handedness.UNDETERMINED";
+    const selectedHandedness = handednessUndetermined;
     await user.click(screen.getByRole("option", { name: selectedHandedness }));
 
     const expectedFormValues = {
@@ -169,7 +266,7 @@ describe("phantom form page", () => {
       surname: typedSurname,
       personalId: typedPersonalId,
       birthdate: expectedBirthdate,
-      gender: "form.enums.gender.OTHER",
+      gender: genderOther,
       nativeLanguage: selectedNativeLanguage,
       height: typedHeight,
       weight: typedWeight,
@@ -203,14 +300,14 @@ describe("phantom form page", () => {
     await user.type(screen.getByLabelText("personalId"), "9606301232");
 
     await user.click(screen.getByLabelText("nativeLanguage"));
-    await user.click(screen.getByRole("option", { name: "Čeština" }));
+    await user.click(screen.getByRole("option", { name: nativeLanguageCzech }));
 
     await user.type(screen.getByLabelText("height"), "173");
 
     await user.type(screen.getByLabelText("weight"), "70");
 
     await user.click(screen.getByLabelText("handedness"));
-    await user.click(screen.getByRole("option", { name: "form.enums.handedness.UNDETERMINED" }));
+    await user.click(screen.getByRole("option", { name: handednessUndetermined }));
 
     const finalizeButton = screen.getByRole("button", { name: "form.common.buttons.finalize" });
 

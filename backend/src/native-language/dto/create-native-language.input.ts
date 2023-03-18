@@ -5,5 +5,9 @@ import { NativeLanguageEntity } from "@app/native-language/entities/native-langu
 @InputType()
 export class CreateNativeLanguageInput extends IntersectionType(
   CreateTranslationInput,
-  PartialType(PickType(NativeLanguageEntity, ["order"], InputType))
+  IntersectionType(
+    PickType(NativeLanguageEntity, ["code"]),
+    PartialType(PickType(NativeLanguageEntity, ["order"])),
+    InputType
+  )
 ) {}

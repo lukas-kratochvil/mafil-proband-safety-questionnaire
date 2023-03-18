@@ -1,34 +1,91 @@
 import { format } from "date-fns";
+import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import i18n from "@app/i18n";
 import { IOperator } from "@app/interfaces/auth";
-import { IQuestionData, QuestionPartNumber } from "@app/interfaces/question";
-import { AnswerOption, Gender, Handedness, IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
+import { AnswerOption, IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
+import { IQuestionEntity } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
 
 //----------------------------------------------------------------------
 // Default data
 //----------------------------------------------------------------------
-const questionData: IQuestionData[] = [
+const questionData: IQuestionEntity[] = [
   {
     id: "p1q01",
-    partNumber: QuestionPartNumber.ONE,
-    text: "Question1",
+    partNumber: 1,
+    mustBeApproved: false,
+    translations: [
+      {
+        text: "Otázka1",
+        language: {
+          code: "cs",
+        },
+      },
+      {
+        text: "Question1",
+        language: {
+          code: "en",
+        },
+      },
+    ],
   },
   {
     id: "p1q02",
-    partNumber: QuestionPartNumber.ONE,
-    text: "Question2",
+    partNumber: 1,
+    mustBeApproved: false,
+    translations: [
+      {
+        text: "Otázka2",
+        language: {
+          code: "cs",
+        },
+      },
+      {
+        text: "Question2",
+        language: {
+          code: "en",
+        },
+      },
+    ],
   },
   {
     id: "p2q01",
-    partNumber: QuestionPartNumber.TWO,
-    text: "Question3",
+    partNumber: 2,
+    mustBeApproved: true,
+    translations: [
+      {
+        text: "Otázka3",
+        language: {
+          code: "cs",
+        },
+      },
+      {
+        text: "Question3",
+        language: {
+          code: "en",
+        },
+      },
+    ],
   },
   {
     id: "p2q02",
-    partNumber: QuestionPartNumber.TWO,
-    text: "Question4",
+    partNumber: 2,
+    mustBeApproved: true,
+    translations: [
+      {
+        text: "Otázka4",
+        language: {
+          code: "cs",
+        },
+      },
+      {
+        text: "Question4",
+        language: {
+          code: "en",
+        },
+      },
+    ],
   },
 ];
 
@@ -55,11 +112,11 @@ const visit: IVisit = {
     surname: "Wick",
     personalId: "0123456789",
     birthdate: new Date(1980, 8, 24),
-    gender: Gender.MALE,
+    gender: genders[0],
     height: 179,
     weight: 75,
-    nativeLanguage: "Čeština",
-    handedness: Handedness.RIGHT_HANDED,
+    nativeLanguage: nativeLanguages[0],
+    handedness: handednesses[0],
     visualCorrection: VisualCorrection.NO,
     visualCorrectionValue: 0,
     email: "",
@@ -121,10 +178,15 @@ vi.mock("@app/hooks/auth/auth", () => ({
 //----------------------------------------------------------------------
 vi.mock("@app/util/fetch", async () => ({
   ...((await vi.importActual("@app/util/fetch")) as Record<string, unknown>),
-  fetchVisit: async (): Promise<IVisit> => visit,
+  fetchCurrentQuestions: async (): Promise<IQuestionEntity[]> => questionData,
+  fetchQuestion: async (): Promise<IQuestionEntity> => questionData[0],
+}));
+
+vi.mock("@app/util/fetch-mafildb", async () => ({
+  ...((await vi.importActual("@app/util/fetch-mafildb")) as Record<string, unknown>),
   fetchProjects: async (): Promise<string[]> => ["project1", "project2", "project3"],
   fetchDevices: async (): Promise<string[]> => ["device1", "device2", "device3"],
-  fetchCurrentQuestions: async (): Promise<IQuestionData[]> => questionData,
+  fetchVisit: async (): Promise<IVisit> => visit,
 }));
 
 //----------------------------------------------------------------------
@@ -165,13 +227,13 @@ describe("duplication form page", () => {
         surname: visit.probandInfo.surname,
         personalId: visit.probandInfo.personalId,
         birthdate: format(visit.probandInfo.birthdate, "dd.MM.yyyy"),
-        gender: "form.enums.gender.MALE",
-        nativeLanguage: visit.probandInfo.nativeLanguage,
+        gender: visit.probandInfo.gender.translations[0].text,
+        nativeLanguage: visit.probandInfo.nativeLanguage.translations[0].text,
         height: visit.probandInfo.height.toString(),
         weight: visit.probandInfo.weight.toString(),
         visualCorrection: "form.enums.visualCorrection.NO",
         visualCorrectionValue: visit.probandInfo.visualCorrectionValue.toString(),
-        handedness: "form.enums.handedness.RIGHT_HANDED",
+        handedness: visit.probandInfo.handedness.translations[0].text,
         email: visit.probandInfo.email,
         phone: visit.probandInfo.phone,
       })

@@ -1,11 +1,11 @@
 import { Grid, Theme, Typography, useMediaQuery } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@app/hooks/auth/auth";
 import { defaultNS } from "@app/i18n";
 import { FormPropType, FormQac } from "@app/interfaces/form";
-import { IQuestionData } from "@app/interfaces/question";
 import { AnswerOption } from "@app/interfaces/visit";
 import { fetchQuestion } from "@app/util/fetch";
 import { FormRadioGroup } from "../inputs/FormRadioGroup";
@@ -18,24 +18,19 @@ interface IFormQuestionProps extends IFormCardProps {
 }
 
 export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuestionProps) => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "form.safetyQuestions" });
+  const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.safetyQuestions" });
   const matchesUpSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
   const { operator } = useAuth();
-  const [question, setQuestion] = useState<IQuestionData>();
   const { setValue } = useFormContext<FormPropType>();
   const questionAnswer = useWatch<FormPropType, `answers.${number}.answer`>({
     name: `answers.${qac.index}.answer`,
     defaultValue: qac.answer,
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      // TODO: fetch question from DB
-      setQuestion(await fetchQuestion(qac.questionId));
-    };
-
-    fetchData();
-  }, [qac.questionId]);
+  const { data: question } = useQuery({
+    queryKey: ["question", qac.questionId],
+    queryFn: () => fetchQuestion(qac.questionId),
+  });
 
   useEffect(() => {
     if (questionAnswer !== AnswerOption.YES) {
@@ -63,7 +58,10 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
         xs={1}
         sm
       >
-        <Typography>{question?.text}</Typography>
+        <Typography>
+          {question?.translations.find((trans) => trans.language.code === i18n.language)?.text
+            || question?.translations[0].text}
+        </Typography>
       </Grid>
       <Grid
         item

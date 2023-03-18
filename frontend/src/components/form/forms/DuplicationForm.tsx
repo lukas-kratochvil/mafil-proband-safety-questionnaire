@@ -15,7 +15,7 @@ import { FormPropType, FormQac } from "@app/interfaces/form";
 import { QuestionPartNumber } from "@app/interfaces/question";
 import { AnswerOption, VisitState } from "@app/interfaces/visit";
 import { RoutingPaths } from "@app/routing-paths";
-import { fetchVisit } from "@app/util/fetch";
+import { fetchVisit } from "@app/util/fetch-mafildb";
 import { updateDummyVisitState } from "@app/util/fetch.dev";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
@@ -28,7 +28,7 @@ export const DuplicationForm = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["visitForm"],
+    queryKey: ["visitForm", id],
     queryFn: () => fetchVisit(id),
   });
   const navigate = useNavigate();

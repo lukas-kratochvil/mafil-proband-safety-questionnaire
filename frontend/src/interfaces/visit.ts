@@ -1,3 +1,4 @@
+import { ITranslatedEntity } from "../util/server_API/dto";
 import { QuestionPartNumber } from "./question";
 
 export enum VisitState {
@@ -56,11 +57,11 @@ interface IProbandInfo {
   birthdate: Date;
   height: number;
   weight: number;
-  gender: Gender; // TODO: object stored in the database
-  nativeLanguage: string; // TODO: object stored in the database
+  gender: ITranslatedEntity;
+  nativeLanguage: ITranslatedEntity;
   visualCorrection: VisualCorrection;
   visualCorrectionValue: number;
-  handedness: Handedness; // TODO: object stored in the database
+  handedness: ITranslatedEntity;
   email: string;
   phone: string;
 }

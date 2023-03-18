@@ -21,7 +21,7 @@ export const PhantomForm = () => {
     isError,
   } = useQuery({
     queryKey: ["currentQuestions"],
-    queryFn: () => fetchCurrentQuestions(),
+    queryFn: fetchCurrentQuestions,
   });
   const navigate = useNavigate();
   const { setValue } = useFormContext<FormPropType>();

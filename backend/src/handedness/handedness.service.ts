@@ -2,29 +2,17 @@ import { Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 import { LanguageService } from "@app/language/language.service";
 import { PrismaService } from "@app/prisma/prisma.service";
-import { areTranslationsComplete, areUpdateCodesValid } from "@app/utils/utils";
+import { areTranslationsComplete, areUpdateCodesValid, translationsIncludeSchema } from "@app/utils/utils";
 import { CreateHandednessInput } from "./dto/create-handedness.input";
 import { UpdateHandednessInput } from "./dto/update-handedness.input";
 
-const handednessTranslations = Prisma.validator<Prisma.HandednessInclude>()({
-  translations: {
-    select: {
-      text: true,
-      language: {
-        select: {
-          name: true,
-          code: true,
-        },
-      },
-    },
-  },
-});
+const handednessTranslations = Prisma.validator<Prisma.HandednessInclude>()(translationsIncludeSchema);
 
-const handednessIncludingTranslations = Prisma.validator<Prisma.HandednessArgs>()({
+const handednessTranslationsArgs = Prisma.validator<Prisma.HandednessArgs>()({
   include: handednessTranslations,
 });
 
-type HandednessIncludingTranslations = Prisma.HandednessGetPayload<typeof handednessIncludingTranslations>;
+type HandednessIncludingTranslations = Prisma.HandednessGetPayload<typeof handednessTranslationsArgs>;
 
 @Injectable()
 export class HandednessService {

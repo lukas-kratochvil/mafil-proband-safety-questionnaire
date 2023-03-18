@@ -29,7 +29,7 @@ export const ProbandForm = () => {
     isError,
   } = useQuery({
     queryKey: ["currentQuestions"],
-    queryFn: () => fetchCurrentQuestions(),
+    queryFn: fetchCurrentQuestions,
   });
   const navigate = useNavigate();
   const { setError, setValue } = useFormContext<FormPropType>();

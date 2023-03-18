@@ -54,7 +54,7 @@ services:
       - frontend-network
     environment:
       - PORT=${WEB_PORT}
-      - VITE_SERVER_PORT=${SERVER_PORT}
+      - VITE_SERVER_API_URL=${SERVER_API_URL}
     restart: unless-stopped
 
 networks:
