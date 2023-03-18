@@ -69,11 +69,11 @@ interface IProbandInfo {
   birthdate: Date;
   height: number;
   weight: number;
-  gender: ITranslatedEntity; // TODO: object stored in the database
-  nativeLanguage: ITranslatedEntity; // TODO: object stored in the database
+  gender: ITranslatedEntity;
+  nativeLanguage: ITranslatedEntity;
   visualCorrection: VisualCorrection;
   visualCorrectionValue: number;
-  handedness: ITranslatedEntity; // TODO: object stored in the database
+  handedness: ITranslatedEntity;
   email: string;
   phone: string;
 }
