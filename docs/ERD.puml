@@ -31,7 +31,6 @@ entity VisitForm {
   ---
   * state: VisitFormState
   visitId: String
-  pdf: Bytes
 }
 
 enum VisitFormState {

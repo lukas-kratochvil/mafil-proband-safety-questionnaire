@@ -50,7 +50,6 @@ model VisitForm {
 
   state   VisitFormState @default(NEW)
   visitId String?        @db.VarChar(50)
-  pdf     Bytes?
 }
 
 enum VisitFormState {
