@@ -1,5 +1,5 @@
-export const GENDERS_QUERY = `
-query {
+export const GET_GENDERS = `
+query GetGenders {
   genders {
     id
     code
@@ -14,8 +14,8 @@ query {
 }
 `;
 
-export const NATIVE_LANGUAGES_QUERY = `
-query {
+export const GET_NATIVE_LANGUAGES = `
+query GetNativeLanguages {
   nativeLanguages {
     id
     code
@@ -31,8 +31,8 @@ query {
 }
 `;
 
-export const HANDEDNESSES_QUERY = `
-query {
+export const GET_HANDEDNESSES = `
+query GetHandednesses {
   handednesses {
     id
     code
@@ -47,8 +47,8 @@ query {
 }
 `;
 
-export const CURRENT_QUESTIONS_QUERY = `
-query {
+export const GET_CURRENT_QUESTIONS = `
+query GetCurrentQuestions {
   questions {
     id
     partNumber
@@ -64,8 +64,8 @@ query {
 }
 `;
 
-export const QUESTION_QUERY = `
-query($id: UUID!) {
+export const GET_QUESTION = `
+query GetQuestion($id: UUID!) {
   question(id: $id) {
     id
     partNumber

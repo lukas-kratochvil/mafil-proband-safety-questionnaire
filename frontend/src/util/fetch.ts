@@ -5,11 +5,11 @@ import { IAuthGateOperator, IOperator } from "@app/interfaces/auth";
 import { IVisit, VisitState } from "@app/interfaces/visit";
 import { IQuestionEntity, ITranslatedEntity } from "@app/util/server_API/dto";
 import {
-  CURRENT_QUESTIONS_QUERY,
-  GENDERS_QUERY,
-  HANDEDNESSES_QUERY,
-  NATIVE_LANGUAGES_QUERY,
-  QUESTION_QUERY,
+  GET_CURRENT_QUESTIONS,
+  GET_GENDERS,
+  GET_HANDEDNESSES,
+  GET_NATIVE_LANGUAGES,
+  GET_QUESTION,
 } from "./server_API/queries";
 import {
   GendersResponse,
@@ -26,28 +26,28 @@ export const authenticateOperator = async (loggingOperator: IAuthGateOperator): 
   );
 
 export const fetchGenders = async (): Promise<ITranslatedEntity[]> => {
-  const { data } = await axiosConfig.serverApi.post<GendersResponse>("", { query: GENDERS_QUERY });
+  const { data } = await axiosConfig.serverApi.post<GendersResponse>("", { query: GET_GENDERS });
   return data.data.genders;
 };
 
 export const fetchNativeLanguages = async (): Promise<ITranslatedEntity[]> => {
-  const { data } = await axiosConfig.serverApi.post<NativeLanguagesResponse>("", { query: NATIVE_LANGUAGES_QUERY });
+  const { data } = await axiosConfig.serverApi.post<NativeLanguagesResponse>("", { query: GET_NATIVE_LANGUAGES });
   return data.data.nativeLanguages;
 };
 
 export const fetchHandednesses = async (): Promise<ITranslatedEntity[]> => {
-  const { data } = await axiosConfig.serverApi.post<HandednessesResponse>("", { query: HANDEDNESSES_QUERY });
+  const { data } = await axiosConfig.serverApi.post<HandednessesResponse>("", { query: GET_HANDEDNESSES });
   return data.data.handednesses;
 };
 
 export const fetchCurrentQuestions = async (): Promise<IQuestionEntity[]> => {
-  const { data } = await axiosConfig.serverApi.post<QuestionsResponse>("", { query: CURRENT_QUESTIONS_QUERY });
+  const { data } = await axiosConfig.serverApi.post<QuestionsResponse>("", { query: GET_CURRENT_QUESTIONS });
   return data.data.questions;
 };
 
 export const fetchQuestion = async (questionId: string): Promise<IQuestionEntity> => {
   const variables = { id: questionId };
-  const { data } = await axiosConfig.serverApi.post<QuestionResponse>("", { query: QUESTION_QUERY, variables });
+  const { data } = await axiosConfig.serverApi.post<QuestionResponse>("", { query: GET_QUESTION, variables });
   return data.data.question;
 };
 
