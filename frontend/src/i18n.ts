@@ -1,12 +1,12 @@
 import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
-import cz from "@app/i18n/cz.json";
+import cs from "@app/i18n/cs.json";
 import en from "@app/i18n/en.json";
 
 export const defaultNS = "translation";
 export const resources = {
-  cz,
+  cs,
   en,
 } as const;
 
@@ -21,7 +21,7 @@ i18n
   .init({
     debug: process.env.NODE_ENV === "development",
     defaultNS,
-    fallbackLng: "cz",
+    fallbackLng: "cs",
     interpolation: {
       escapeValue: false, // not needed for React as it escapes by default
     },
