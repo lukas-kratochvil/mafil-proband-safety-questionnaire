@@ -8,7 +8,7 @@ import { InfoTooltip } from "@app/components/informative/InfoTooltip";
 import { defaultNS } from "@app/i18n";
 import { FormPropType } from "@app/interfaces/form";
 import { VisualCorrection } from "@app/interfaces/visit";
-import { fetchGenders, fetchHandedness, fetchNativeLanguages } from "@app/util/fetch";
+import { fetchGenders, fetchHandednesses, fetchNativeLanguages } from "@app/util/fetch";
 import { FormDatePicker } from "../inputs/FormDatePicker";
 import { FormOptionsAutocomplete } from "../inputs/FormOptionsAutocomplete";
 import { FormTextField } from "../inputs/FormTextField";
@@ -39,7 +39,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
       },
       {
         queryKey: ["handednesses"],
-        queryFn: fetchHandedness,
+        queryFn: fetchHandednesses,
       },
     ],
   });

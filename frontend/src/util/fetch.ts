@@ -66,7 +66,7 @@ export const fetchNativeLanguages = async (): Promise<ITranslatedEntity[]> => {
 };
 
 // Fetch handedness from DB
-export const fetchHandedness = async (): Promise<ITranslatedEntity[]> => {
+export const fetchHandednesses = async (): Promise<ITranslatedEntity[]> => {
   const query = `
     query {
       handednesses {
