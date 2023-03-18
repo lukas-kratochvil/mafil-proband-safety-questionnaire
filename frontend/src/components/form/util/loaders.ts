@@ -1,4 +1,3 @@
-import { genders } from "@app/data/translated_entities_data";
 import { FormPropType } from "@app/interfaces/form";
 import { IVisit } from "@app/interfaces/visit";
 import { getOption, visualCorrectionOptions } from "./options";
@@ -29,7 +28,7 @@ export const loadEmptyDefaultValues = (): FormPropType => ({
 export const loadPhantomFormDefaultValues = (): FormPropType => ({
   ...loadEmptyDefaultValues(),
   measurementDate: new Date(),
-  gender: genders[2], // TODO: must be corrected
+  // gender 'Other' is set in the FormProbandInfo component
 });
 
 // Autocomplete component default value must be one of the options provided or null

@@ -44,6 +44,16 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
     ],
   });
 
+  // Setting gender to 'Other' in the phantom visit
+  useEffect(() => {
+    const genders = results[0].data;
+
+    if (isPhantom && genders !== undefined) {
+      const genderOther = genders.find((gender) => gender.code === "O") || null;
+      setValue("gender", genderOther, { shouldTouch: true });
+    }
+  }, [isPhantom, results, setValue]);
+
   // Auto-fill birthdate and gender from the personalId value
   useEffect(() => {
     // Auto-fill in birthdate and gender only when personalId field is being edited for the first time (until it looses focus)
@@ -60,7 +70,8 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
     setValue("birthdate", czechPersonalId.getBirthdate(), { shouldTouch: true });
 
     const genders = results[0].data;
-    // Phantom visit has strictly gender 'Other' - we do not change it
+
+    // Phantom visit has strictly gender 'Other' - we do not change it here
     if (!isPhantom && genders !== undefined) {
       let code: GenderCode | undefined;
 
