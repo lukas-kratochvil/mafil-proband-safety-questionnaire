@@ -8,6 +8,7 @@ interface ITranslation {
 export interface ITranslatedEntity {
   id: string;
   code: string;
+  order?: number | null;
   translations: ITranslation[];
 }
 

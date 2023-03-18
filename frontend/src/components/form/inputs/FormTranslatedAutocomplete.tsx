@@ -8,6 +8,7 @@ import { IFormDefaultInputProps } from "./interfaces/input-props";
 
 interface IFormTranslatedAutocompleteProps extends IFormDefaultInputProps {
   options: ITranslatedEntity[] | undefined;
+  compareFnc: (a: ITranslatedEntity, b: ITranslatedEntity, locale: string) => number;
   isLoading: boolean;
 }
 
@@ -17,6 +18,7 @@ export const FormTranslatedAutocomplete = ({
   isOptional,
   disabled,
   options,
+  compareFnc,
   isLoading,
 }: IFormTranslatedAutocompleteProps) => {
   const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form" });
@@ -33,7 +35,7 @@ export const FormTranslatedAutocomplete = ({
         render={({ field }) => (
           <Autocomplete
             id={name}
-            options={options || []}
+            options={options?.sort((a, b) => compareFnc(a, b, i18n.language)) || []}
             getOptionLabel={(option: ITranslatedEntity) =>
               option.translations.find((trans) => trans.language.code === i18n.language)?.text
               || option.translations[0].text

@@ -16,7 +16,7 @@ import { FormTranslatedAutocomplete } from "../inputs/FormTranslatedAutocomplete
 import { IPhantomFormCardProps } from "../interfaces/form-card";
 import { visualCorrectionOptions } from "../util/options";
 import { CzechPersonalId, getPersonalIdFromBirthdateAndGender } from "../util/personal-id";
-import { GenderCode } from "../util/utils";
+import { compareGenders, compareHandednesses, compareNativeLanguages, GenderCode } from "../util/utils";
 import { FormCardContainer } from "./FormCardContainer";
 
 export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardProps) => {
@@ -185,6 +185,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
             name="gender"
             label={t("gender")}
             options={genders.data}
+            compareFnc={compareGenders}
             isLoading={genders.isLoading}
             disabled={disableInputs || isPhantom}
           />
@@ -199,6 +200,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
             name="nativeLanguage"
             label={t("nativeLanguage")}
             options={nativeLanguages.data}
+            compareFnc={compareNativeLanguages}
             isLoading={nativeLanguages.isLoading}
             disabled={disableInputs}
           />
@@ -270,6 +272,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
             name="handedness"
             label={t("handedness")}
             options={handednesses.data}
+            compareFnc={compareHandednesses}
             isLoading={handednesses.isLoading}
             disabled={disableInputs}
           />
