@@ -124,7 +124,7 @@ describe("form loaders", () => {
     expect(phantomFormDefaultValues.surname).toBe("");
     expect(phantomFormDefaultValues.personalId).toBe("");
     expect(phantomFormDefaultValues.birthdate).toBeNull();
-    expect(phantomFormDefaultValues.gender?.code).toEqual("O");
+    expect(phantomFormDefaultValues.gender).toBeNull(); // is set to 'Other' in the FormProbandInfo component
     expect(phantomFormDefaultValues.nativeLanguage).toBeNull();
     expect(phantomFormDefaultValues.height).toBe("");
     expect(phantomFormDefaultValues.weight).toBe("");

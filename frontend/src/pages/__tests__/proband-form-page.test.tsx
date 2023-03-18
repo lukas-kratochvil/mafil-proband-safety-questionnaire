@@ -1,7 +1,9 @@
 import userEvent from "@testing-library/user-event";
+import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import i18n from "@app/i18n";
 import { IQuestionData, QuestionPartNumber } from "@app/interfaces/question";
 import ProbandFormPage from "@app/pages/ProbandFormPage";
+import { ITranslatedEntity } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -56,6 +58,9 @@ const questionData: IQuestionData[] = [
 vi.mock("@app/util/fetch", async () => ({
   ...((await vi.importActual("@app/util/fetch")) as Record<string, unknown>),
   fetchCurrentQuestions: async (): Promise<IQuestionData[]> => questionData,
+  fetchGenders: async (): Promise<ITranslatedEntity[]> => genders,
+  fetchNativeLanguages: async (): Promise<ITranslatedEntity[]> => nativeLanguages,
+  fetchHandednesses: async (): Promise<ITranslatedEntity[]> => handednesses,
 }));
 
 vi.mock("@app/util/fetch-mafildb", async () => ({
@@ -75,6 +80,12 @@ describe("proband form page", () => {
   beforeEach(async () => {
     await i18n.changeLanguage("cimode");
   });
+
+  // Data
+  const genderMan = genders[0].translations[0].text;
+  const genderWoman = genders[1].translations[0].text;
+  const nativeLanguageCzech = nativeLanguages[0].translations[0].text;
+  const handednessUndetermined = handednesses[3].translations[0].text;
 
   test("contains correct form buttons", async () => {
     setup();
@@ -114,7 +125,7 @@ describe("proband form page", () => {
     await user.type(await screen.findByLabelText("personalId"), "9606301232");
 
     expect(screen.getByLabelText("birthdate")).toHaveValue("30.06.1996");
-    expect(screen.getByLabelText("gender")).toHaveValue("form.enums.gender.MALE");
+    expect(screen.getByLabelText("gender")).toHaveValue(genderMan);
   });
 
   test("birthdate and FEMALE gender is filled automatically from valid personal ID value", async () => {
@@ -124,7 +135,7 @@ describe("proband form page", () => {
     await user.type(await screen.findByLabelText("personalId"), "9656301237");
 
     expect(screen.getByLabelText("birthdate")).toHaveValue("30.06.1996");
-    expect(screen.getByLabelText("gender")).toHaveValue("form.enums.gender.FEMALE");
+    expect(screen.getByLabelText("gender")).toHaveValue(genderWoman);
   });
 
   test("part of personal ID is filled automatically from valid birthdate and MALE gender", async () => {
@@ -133,7 +144,7 @@ describe("proband form page", () => {
 
     await user.type(await screen.findByLabelText("birthdate"), "30.06.1996");
     await user.click(screen.getByRole("combobox", { name: "gender" }));
-    await user.click(screen.getByRole("option", { name: "form.enums.gender.MALE" }));
+    await user.click(screen.getByRole("option", { name: genderMan }));
 
     expect(screen.getByLabelText("personalId")).toHaveValue("960630");
   });
@@ -144,7 +155,7 @@ describe("proband form page", () => {
 
     await user.type(await screen.findByLabelText("birthdate"), "30.06.1996");
     await user.click(screen.getByRole("combobox", { name: "gender" }));
-    await user.click(screen.getByRole("option", { name: "form.enums.gender.FEMALE" }));
+    await user.click(screen.getByRole("option", { name: genderWoman }));
 
     expect(screen.getByLabelText("personalId")).toHaveValue("965630");
   });
@@ -181,10 +192,10 @@ describe("proband form page", () => {
     // birthdate is filled automatically
     const expectedBirthdate = "30.06.1996";
     // gender is filled automatically
-    const expectedGender = "form.enums.gender.FEMALE";
+    const expectedGender = genderWoman;
 
     await user.click(screen.getByLabelText("nativeLanguage"));
-    const selectedNativeLanguage = "Čeština";
+    const selectedNativeLanguage = nativeLanguageCzech;
     await user.click(screen.getByRole("option", { name: selectedNativeLanguage }));
 
     const typedHeight = "173";
@@ -202,7 +213,7 @@ describe("proband form page", () => {
     await user.type(screen.getByLabelText("visualCorrectionValue"), typedVisualCorrectionValue);
 
     await user.click(screen.getByLabelText("handedness"));
-    const selectedHandedness = "form.enums.handedness.UNDETERMINED";
+    const selectedHandedness = handednessUndetermined;
     await user.click(screen.getByRole("option", { name: selectedHandedness }));
 
     const expectedFormValues = {
@@ -268,10 +279,10 @@ describe("proband form page", () => {
     // birthdate is filled automatically
     const expectedBirthdate = "30.06.1996";
     // gender is filled automatically
-    const expectedGender = "form.enums.gender.FEMALE";
+    const expectedGender = genderWoman;
 
     await user.click(screen.getByLabelText("nativeLanguage"));
-    const selectedNativeLanguage = "Čeština";
+    const selectedNativeLanguage = nativeLanguageCzech;
     await user.click(screen.getByRole("option", { name: selectedNativeLanguage }));
 
     const typedHeight = "173";
@@ -289,7 +300,7 @@ describe("proband form page", () => {
     await user.type(screen.getByLabelText("visualCorrectionValue"), typedVisualCorrectionValue);
 
     await user.click(screen.getByLabelText("handedness"));
-    const selectedHandedness = "form.enums.handedness.UNDETERMINED";
+    const selectedHandedness = handednessUndetermined;
     await user.click(screen.getByRole("option", { name: selectedHandedness }));
 
     const questions = screen.getAllByRole("radiogroup");
@@ -337,10 +348,10 @@ describe("proband form page", () => {
     // birthdate is filled automatically
     const expectedBirthdate = "30.06.1996";
     // gender is filled automatically
-    const expectedGender = "form.enums.gender.FEMALE";
+    const expectedGender = genderWoman;
 
     await user.click(screen.getByLabelText("nativeLanguage"));
-    const selectedNativeLanguage = "Čeština";
+    const selectedNativeLanguage = nativeLanguageCzech;
     await user.click(screen.getByRole("option", { name: selectedNativeLanguage }));
 
     const typedHeight = "173";
@@ -358,7 +369,7 @@ describe("proband form page", () => {
     await user.type(screen.getByLabelText("visualCorrectionValue"), typedVisualCorrectionValue);
 
     await user.click(screen.getByLabelText("handedness"));
-    const selectedHandedness = "form.enums.handedness.UNDETERMINED";
+    const selectedHandedness = handednessUndetermined;
     await user.click(screen.getByRole("option", { name: selectedHandedness }));
 
     const questions = screen.getAllByRole("radiogroup");
@@ -417,10 +428,10 @@ describe("proband form page", () => {
     // birthdate is filled automatically
     const expectedBirthdate = "30.06.1996";
     // gender is filled automatically
-    const expectedGender = "form.enums.gender.FEMALE";
+    const expectedGender = genderWoman;
 
     await user.click(screen.getByLabelText("nativeLanguage"));
-    const selectedNativeLanguage = "Čeština";
+    const selectedNativeLanguage = nativeLanguageCzech;
     await user.click(screen.getByRole("option", { name: selectedNativeLanguage }));
 
     const typedHeight = "173";
@@ -438,7 +449,7 @@ describe("proband form page", () => {
     await user.type(screen.getByLabelText("visualCorrectionValue"), typedVisualCorrectionValue);
 
     await user.click(screen.getByLabelText("handedness"));
-    const selectedHandedness = "form.enums.handedness.UNDETERMINED";
+    const selectedHandedness = handednessUndetermined;
     await user.click(screen.getByRole("option", { name: selectedHandedness }));
 
     const questions = screen.getAllByRole("radiogroup");
