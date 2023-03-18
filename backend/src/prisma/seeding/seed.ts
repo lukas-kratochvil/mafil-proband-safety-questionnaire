@@ -57,6 +57,21 @@ async function seed() {
       })
   );
 
+  // Handedness
+  handedness.forEach(
+    async (hand) =>
+      await prisma.handedness.create({
+        data: {
+          code: hand.code,
+          translations: {
+            createMany: {
+              data: [createTranslation(cs.id, hand.csText), createTranslation(en.id, hand.enText)],
+            },
+          },
+        },
+      })
+  );
+
   // Questions
   questions.forEach(
     async (question) =>
@@ -76,21 +91,6 @@ async function seed() {
                 question.hiddenByGender === undefined
                   ? []
                   : question.hiddenByGender.map((genderCode) => ({ genderCode })),
-            },
-          },
-        },
-      })
-  );
-
-  // Handedness
-  handedness.forEach(
-    async (hand) =>
-      await prisma.handedness.create({
-        data: {
-          code: hand.code,
-          translations: {
-            createMany: {
-              data: [createTranslation(cs.id, hand.csText), createTranslation(en.id, hand.enText)],
             },
           },
         },
