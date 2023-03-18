@@ -5,6 +5,7 @@ import { dummyVisits } from "@app/data/visit_data";
 import { IAuthGateOperator, IOperator } from "@app/interfaces/auth";
 import { IQuestionData } from "@app/interfaces/question";
 import { ITranslatedEntity, IVisit, VisitState } from "@app/interfaces/visit";
+import { GENDERS_QUERY, HANDEDNESSES_QUERY, NATIVE_LANGUAGES_QUERY } from "./server_API/queries";
 
 // TODO: authorize against DB
 export const authenticateOperator = async (loggingOperator: IAuthGateOperator): Promise<IOperator | undefined> =>
@@ -14,80 +15,34 @@ export const authenticateOperator = async (loggingOperator: IAuthGateOperator): 
 
 // Fetch genders from DB
 export const fetchGenders = async (): Promise<ITranslatedEntity[]> => {
-  const query = `
-    query {
-      genders {
-        id
-        code
-        translations {
-          text
-          language {
-            code
-            name
-          }
-        }
-      }
-    }
-  `;
   type GendersResponseType = {
     data: {
       genders: ITranslatedEntity[];
     };
   };
-  const response = await axiosConfig.serverApi.post<GendersResponseType>("", { query });
+  const response = await axiosConfig.serverApi.post<GendersResponseType>("", { query: GENDERS_QUERY });
   return response.data.data.genders;
 };
 
 // Fetch native languages from DB
 export const fetchNativeLanguages = async (): Promise<ITranslatedEntity[]> => {
-  const query = `
-    query {
-      nativeLanguages {
-        id
-        code
-        order
-        translations {
-          text
-          language {
-            code
-            name
-          }
-        }
-      }
-    }
-  `;
   type NativeLanguagesResponseType = {
     data: {
       nativeLanguages: ITranslatedEntity[];
     };
   };
-  const response = await axiosConfig.serverApi.post<NativeLanguagesResponseType>("", { query });
+  const response = await axiosConfig.serverApi.post<NativeLanguagesResponseType>("", { query: NATIVE_LANGUAGES_QUERY });
   return response.data.data.nativeLanguages;
 };
 
 // Fetch handedness from DB
 export const fetchHandednesses = async (): Promise<ITranslatedEntity[]> => {
-  const query = `
-    query {
-      handednesses {
-        id
-        code
-        translations {
-          text
-          language {
-            code
-            name
-          }
-        }
-      }
-    }
-  `;
   type HandednessesResponseType = {
     data: {
       handednesses: ITranslatedEntity[];
     };
   };
-  const response = await axiosConfig.serverApi.post<HandednessesResponseType>("", { query });
+  const response = await axiosConfig.serverApi.post<HandednessesResponseType>("", { query: HANDEDNESSES_QUERY });
   return response.data.data.handednesses;
 };
 
