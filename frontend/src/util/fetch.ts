@@ -3,7 +3,7 @@ import { trustedOperators } from "@app/data/operator_data";
 import { dummyVisits } from "@app/data/visit_data";
 import { IAuthGateOperator, IOperator } from "@app/interfaces/auth";
 import { IVisit, VisitState } from "@app/interfaces/visit";
-import { IQuestionEntity, ITranslatedEntity } from "@app/util/server_API/dto";
+import { IQuestionDTO, ITranslatedEntityDTO } from "@app/util/server_API/dto";
 import {
   GET_CURRENT_QUESTIONS,
   GET_GENDERS,
@@ -25,27 +25,27 @@ export const authenticateOperator = async (loggingOperator: IAuthGateOperator): 
     (op) => op.name === loggingOperator.name && op.surname === loggingOperator.surname && op.uco === loggingOperator.uco
   );
 
-export const fetchGenders = async (): Promise<ITranslatedEntity[]> => {
+export const fetchGenders = async (): Promise<ITranslatedEntityDTO[]> => {
   const { data } = await axiosConfig.serverApi.post<GendersResponse>("", { query: GET_GENDERS });
   return data.data.genders;
 };
 
-export const fetchNativeLanguages = async (): Promise<ITranslatedEntity[]> => {
+export const fetchNativeLanguages = async (): Promise<ITranslatedEntityDTO[]> => {
   const { data } = await axiosConfig.serverApi.post<NativeLanguagesResponse>("", { query: GET_NATIVE_LANGUAGES });
   return data.data.nativeLanguages;
 };
 
-export const fetchHandednesses = async (): Promise<ITranslatedEntity[]> => {
+export const fetchHandednesses = async (): Promise<ITranslatedEntityDTO[]> => {
   const { data } = await axiosConfig.serverApi.post<HandednessesResponse>("", { query: GET_HANDEDNESSES });
   return data.data.handednesses;
 };
 
-export const fetchCurrentQuestions = async (): Promise<IQuestionEntity[]> => {
+export const fetchCurrentQuestions = async (): Promise<IQuestionDTO[]> => {
   const { data } = await axiosConfig.serverApi.post<QuestionsResponse>("", { query: GET_CURRENT_QUESTIONS });
   return data.data.questions;
 };
 
-export const fetchQuestion = async (questionId: string): Promise<IQuestionEntity> => {
+export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO> => {
   const variables = { id: questionId };
   const { data } = await axiosConfig.serverApi.post<QuestionResponse>("", { query: GET_QUESTION, variables });
   return data.data.question;

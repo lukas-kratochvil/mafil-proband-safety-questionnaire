@@ -1,6 +1,6 @@
-import { IDeviceEntity, IProjectEntity } from "@app/util/mafildb_API/dto";
+import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
 
-export const projectsDev: IProjectEntity[] = [
+export const projectsDev: IProjectDTO[] = [
   {
     id: "1",
     name: "Projekt 1",
@@ -18,7 +18,7 @@ export const projectsDev: IProjectEntity[] = [
   },
 ];
 
-export const devicesDev: IDeviceEntity[] = [
+export const devicesDev: IDeviceDTO[] = [
   {
     id: "1",
     name: "Magnet 1",

@@ -2,13 +2,13 @@ import { Autocomplete, CircularProgress, TextField, Theme, useMediaQuery } from 
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n";
-import { ITranslatedEntity } from "@app/util/server_API/dto";
+import { ITranslatedEntityDTO } from "@app/util/server_API/dto";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormDefaultInputProps } from "./interfaces/input-props";
 
 interface IFormTranslatedAutocompleteProps extends IFormDefaultInputProps {
-  options: ITranslatedEntity[] | undefined;
-  compareFnc: (a: ITranslatedEntity, b: ITranslatedEntity, locale: string) => number;
+  options: ITranslatedEntityDTO[] | undefined;
+  compareFnc: (a: ITranslatedEntityDTO, b: ITranslatedEntityDTO, locale: string) => number;
   isLoading: boolean;
 }
 
@@ -36,12 +36,12 @@ export const FormTranslatedAutocomplete = ({
           <Autocomplete
             id={name}
             options={options?.sort((a, b) => compareFnc(a, b, i18n.language)) || []}
-            getOptionLabel={(option: ITranslatedEntity) =>
+            getOptionLabel={(option: ITranslatedEntityDTO) =>
               option.translations.find((trans) => trans.language.code === i18n.language)?.text
               || option.translations[0].text
             }
             isOptionEqualToValue={(option, value) => option.id === value.id}
-            value={field.value as ITranslatedEntity}
+            value={field.value as ITranslatedEntityDTO}
             onChange={(_event, val) => field.onChange(val)}
             onBlur={field.onBlur}
             disabled={disabled}

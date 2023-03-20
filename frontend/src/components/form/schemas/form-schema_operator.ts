@@ -1,5 +1,5 @@
 import { array, date, mixed, string } from "yup";
-import { IDeviceEntity, IProjectEntity } from "@app/util/mafildb_API/dto";
+import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
 import { answersSchema, defaultFormSchema } from "./form-schema_default";
 
 const operatorAnswersSchema = answersSchema.shape({
@@ -12,8 +12,8 @@ const operatorAnswersSchema = answersSchema.shape({
 });
 
 export const operatorFormSchema = defaultFormSchema.shape({
-  project: mixed<IProjectEntity>().nullable().required("form.validation.required"),
-  device: mixed<IDeviceEntity>().nullable().required("form.validation.required"),
+  project: mixed<IProjectDTO>().nullable().required("form.validation.required"),
+  device: mixed<IDeviceDTO>().nullable().required("form.validation.required"),
   measurementDate: date().nullable().required("form.validation.required"),
   answers: array().of(operatorAnswersSchema).required("form.validation.safetyQuestionsRequired"),
 });

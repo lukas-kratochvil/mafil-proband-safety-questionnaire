@@ -5,14 +5,14 @@ interface ITranslation {
   };
 }
 
-export interface ITranslatedEntity {
+export interface ITranslatedEntityDTO {
   id: string;
   code: string;
   order?: number | null;
   translations: ITranslation[];
 }
 
-export interface IQuestionEntity {
+export interface IQuestionDTO {
   id: string;
   partNumber: number;
   mustBeApproved: boolean;

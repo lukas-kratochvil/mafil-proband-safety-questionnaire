@@ -2,12 +2,12 @@ import { Autocomplete, CircularProgress, TextField, Theme, useMediaQuery } from 
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n";
-import { IDeviceEntity } from "@app/util/mafildb_API/dto";
+import { IDeviceDTO } from "@app/util/mafildb_API/dto";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormDefaultInputProps } from "./interfaces/input-props";
 
 interface IFormAutocompleteDevicesProps extends IFormDefaultInputProps {
-  options: IDeviceEntity[] | undefined;
+  options: IDeviceDTO[] | undefined;
   isLoading: boolean;
 }
 
@@ -34,9 +34,9 @@ export const FormAutocompleteDevices = ({
           <Autocomplete
             id={name}
             options={options === undefined ? [] : options}
-            getOptionLabel={(option: IDeviceEntity) => option.name}
+            getOptionLabel={(option: IDeviceDTO) => option.name}
             isOptionEqualToValue={(option, value) => option.id === value.id}
-            value={field.value as IDeviceEntity}
+            value={field.value as IDeviceDTO}
             onChange={(_event, val) => field.onChange(val)}
             onBlur={field.onBlur}
             disabled={disabled}

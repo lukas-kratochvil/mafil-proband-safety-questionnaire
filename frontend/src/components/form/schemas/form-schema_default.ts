@@ -1,7 +1,7 @@
 import { array, date, mixed, number, object, string } from "yup";
 import { QuestionPartNumber } from "@app/interfaces/question";
 import { AnswerOption, VisualCorrection } from "@app/interfaces/visit";
-import { ITranslatedEntity } from "@app/util/server_API/dto";
+import { ITranslatedEntityDTO } from "@app/util/server_API/dto";
 import { getOption, IOption, visualCorrectionOptions } from "../util/options";
 
 export const answersSchema = object({
@@ -27,8 +27,8 @@ export const defaultFormSchema = object().shape(
       .typeError("form.validation.notValid")
       .max(new Date(), "form.validation.birthdateMaxDate")
       .required("form.validation.required"),
-    gender: mixed<ITranslatedEntity>().nullable().required("form.validation.required"),
-    nativeLanguage: mixed<ITranslatedEntity>().nullable().required("form.validation.required"),
+    gender: mixed<ITranslatedEntityDTO>().nullable().required("form.validation.required"),
+    nativeLanguage: mixed<ITranslatedEntityDTO>().nullable().required("form.validation.required"),
     height: number()
       .typeError("form.validation.notValid")
       .positive("form.validation.positive")
@@ -37,7 +37,7 @@ export const defaultFormSchema = object().shape(
       .typeError("form.validation.notValid")
       .positive("form.validation.positive")
       .required("form.validation.required"),
-    handedness: mixed<ITranslatedEntity>().nullable().required("form.validation.required"),
+    handedness: mixed<ITranslatedEntityDTO>().nullable().required("form.validation.required"),
     visualCorrection: mixed<IOption>().nullable().required("form.validation.required"),
     visualCorrectionValue: number()
       .default(0)

@@ -5,14 +5,14 @@ import i18n from "@app/i18n";
 import { IOperator } from "@app/interfaces/auth";
 import { AnswerOption, IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
-import { IDeviceEntity, IProjectEntity } from "@app/util/mafildb_API/dto";
-import { IQuestionEntity } from "@app/util/server_API/dto";
+import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
+import { IQuestionDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
 
 //----------------------------------------------------------------------
 // Default data
 //----------------------------------------------------------------------
-const questionData: IQuestionEntity[] = [
+const questionData: IQuestionDTO[] = [
   {
     id: "p1q01",
     partNumber: 1,
@@ -180,14 +180,14 @@ vi.mock("@app/hooks/auth/auth", () => ({
 //----------------------------------------------------------------------
 vi.mock("@app/util/fetch", async () => ({
   ...((await vi.importActual("@app/util/fetch")) as Record<string, unknown>),
-  fetchCurrentQuestions: async (): Promise<IQuestionEntity[]> => questionData,
-  fetchQuestion: async (): Promise<IQuestionEntity> => questionData[0],
+  fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionData,
+  fetchQuestion: async (): Promise<IQuestionDTO> => questionData[0],
 }));
 
 vi.mock("@app/util/fetch-mafildb", async () => ({
   ...((await vi.importActual("@app/util/fetch-mafildb")) as Record<string, unknown>),
-  fetchProjects: async (): Promise<IProjectEntity[]> => projectsDev,
-  fetchDevices: async (): Promise<IDeviceEntity[]> => devicesDev,
+  fetchProjects: async (): Promise<IProjectDTO[]> => projectsDev,
+  fetchDevices: async (): Promise<IDeviceDTO[]> => devicesDev,
   fetchVisit: async (): Promise<IVisit> => visit,
 }));
 

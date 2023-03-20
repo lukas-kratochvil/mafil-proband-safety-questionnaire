@@ -2,13 +2,13 @@ import { Autocomplete, CircularProgress, TextField, Theme, useMediaQuery } from 
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n";
-import { IProjectEntity } from "@app/util/mafildb_API/dto";
+import { IProjectDTO } from "@app/util/mafildb_API/dto";
 import { getProjectText } from "../util/utils";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormDefaultInputProps } from "./interfaces/input-props";
 
 interface IFormAutocompleteProjectsProps extends IFormDefaultInputProps {
-  options: IProjectEntity[] | undefined;
+  options: IProjectDTO[] | undefined;
   isLoading: boolean;
 }
 
@@ -35,9 +35,9 @@ export const FormAutocompleteProjects = ({
           <Autocomplete
             id={name}
             options={options === undefined ? [] : options}
-            getOptionLabel={(option: IProjectEntity) => getProjectText(option)}
+            getOptionLabel={(option: IProjectDTO) => getProjectText(option)}
             isOptionEqualToValue={(option, value) => option.id === value.id}
-            value={field.value as IProjectEntity}
+            value={field.value as IProjectDTO}
             onChange={(_event, val) => field.onChange(val)}
             onBlur={field.onBlur}
             disabled={disabled}

@@ -1,5 +1,5 @@
 import i18n from "@app/i18n";
-import { IQuestionEntity } from "@app/util/server_API/dto";
+import { IQuestionDTO } from "@app/util/server_API/dto";
 import { render } from "@test-utils";
 import { FormQuestions } from "../FormQuestions";
 
@@ -12,7 +12,7 @@ vi.mock("react-hook-form", () => ({
 }));
 
 vi.mock("src/util/fetch", () => ({
-  fetchQuestion: async (): Promise<IQuestionEntity> => ({
+  fetchQuestion: async (): Promise<IQuestionDTO> => ({
     id: "p1q01",
     partNumber: 1,
     mustBeApproved: false,

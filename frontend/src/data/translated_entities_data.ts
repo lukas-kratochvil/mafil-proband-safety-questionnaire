@@ -1,6 +1,6 @@
-import { ITranslatedEntity } from "@app/util/server_API/dto";
+import { ITranslatedEntityDTO } from "@app/util/server_API/dto";
 
-export const genders: ITranslatedEntity[] = [
+export const genders: ITranslatedEntityDTO[] = [
   {
     id: "1",
     code: "M",
@@ -57,7 +57,7 @@ export const genders: ITranslatedEntity[] = [
   },
 ];
 
-export const handednesses: ITranslatedEntity[] = [
+export const handednesses: ITranslatedEntityDTO[] = [
   {
     id: "1",
     code: "r",
@@ -132,7 +132,7 @@ export const handednesses: ITranslatedEntity[] = [
   },
 ];
 
-export const nativeLanguages: ITranslatedEntity[] = [
+export const nativeLanguages: ITranslatedEntityDTO[] = [
   {
     id: "1",
     code: "cs",

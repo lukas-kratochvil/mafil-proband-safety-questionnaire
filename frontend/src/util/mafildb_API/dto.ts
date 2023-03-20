@@ -1,10 +1,10 @@
-export interface IProjectEntity {
+export interface IProjectDTO {
   id: string;
   name: string;
   acronym: string;
 }
 
-export interface IDeviceEntity {
+export interface IDeviceDTO {
   id: string;
   name: string;
 }

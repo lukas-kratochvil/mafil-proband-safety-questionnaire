@@ -1,31 +1,31 @@
-import { IQuestionEntity, ITranslatedEntity } from "./dto";
+import { IQuestionDTO, ITranslatedEntityDTO } from "./dto";
 
 export type GendersResponse = {
   data: {
-    genders: ITranslatedEntity[];
+    genders: ITranslatedEntityDTO[];
   };
 };
 
 export type NativeLanguagesResponse = {
   data: {
-    nativeLanguages: ITranslatedEntity[];
+    nativeLanguages: ITranslatedEntityDTO[];
   };
 };
 
 export type HandednessesResponse = {
   data: {
-    handednesses: ITranslatedEntity[];
+    handednesses: ITranslatedEntityDTO[];
   };
 };
 
 export type QuestionsResponse = {
   data: {
-    questions: IQuestionEntity[];
+    questions: IQuestionDTO[];
   };
 };
 
 export type QuestionResponse = {
   data: {
-    question: IQuestionEntity;
+    question: IQuestionDTO;
   };
 };
