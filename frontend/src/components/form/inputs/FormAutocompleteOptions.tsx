@@ -1,9 +1,10 @@
-import { Autocomplete, CircularProgress, TextField, Theme, useMediaQuery } from "@mui/material";
+import { Autocomplete } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n";
 import { convertStringToLocalizationKey } from "@app/util/utils";
 import { IOption } from "../util/options";
+import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormDefaultInputProps } from "./interfaces/input-props";
 
@@ -19,8 +20,7 @@ export const FormAutocompleteOptions = ({
   options,
 }: IFormAutocompleteOptionsProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form" });
-  const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
-  const loading = options.length === 0;
+  const isLoading = options.length === 0;
 
   return (
     <FormInputFieldContainer
@@ -40,33 +40,15 @@ export const FormAutocompleteOptions = ({
             onChange={(_event, val) => field.onChange(val)}
             onBlur={field.onBlur}
             disabled={disabled}
-            loading={loading}
+            loading={isLoading}
             loadingText={`${t("common.loading")}…`}
             noOptionsText={t("common.noOptions")}
             renderInput={(params) => (
-              <TextField
-                {...params}
-                inputRef={field.ref}
-                name={field.name}
-                size={matchesDownSmBreakpoint ? "small" : "medium"}
-                InputProps={{
-                  ...params.InputProps,
-                  endAdornment: (
-                    <>
-                      {loading && (
-                        <CircularProgress
-                          color="inherit"
-                          size={20}
-                        />
-                      )}
-                      {params.InputProps.endAdornment}
-                    </>
-                  ),
-                }}
-                inputProps={{
-                  ...params.inputProps,
-                  "aria-label": name,
-                }}
+              <FormAutocompleteInputField
+                name={name}
+                isLoading={isLoading}
+                field={field}
+                params={params}
               />
             )}
           />
