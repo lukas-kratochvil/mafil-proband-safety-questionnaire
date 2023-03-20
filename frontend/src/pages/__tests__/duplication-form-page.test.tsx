@@ -101,9 +101,9 @@ const visit: IVisit = {
   createdAt: new Date(),
   pdf: "",
   projectInfo: {
-    project: "project1",
+    projectAcronym: "Proj1",
     projectId: "projectId1",
-    device: "device1",
+    deviceName: "device1",
     deviceId: "deviceId1",
     isPhantom: false,
     measurementDate: new Date(),

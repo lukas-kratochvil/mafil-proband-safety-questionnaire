@@ -15,9 +15,9 @@ const visit: IVisit = {
   pdf: "pdf",
   state: VisitState.APPROVED,
   projectInfo: {
-    project: "Project",
+    projectAcronym: "Proj1",
     projectId: "1",
-    device: "Device",
+    deviceName: "Device",
     deviceId: "1",
     isPhantom: true,
     measurementDate: new Date(),
@@ -55,9 +55,9 @@ const visitNotCompleted: IVisit = {
   pdf: "pdf",
   state: VisitState.APPROVED,
   projectInfo: {
-    project: null,
+    projectAcronym: null,
     projectId: "",
-    device: null,
+    deviceName: null,
     deviceId: "",
     isPhantom: true,
     measurementDate: null,

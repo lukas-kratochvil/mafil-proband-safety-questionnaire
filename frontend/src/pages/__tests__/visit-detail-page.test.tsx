@@ -17,9 +17,9 @@ const defaultVisit: IVisit = {
   createdAt: new Date(),
   pdf: "",
   projectInfo: {
-    project: "Project1",
+    projectAcronym: "Proj1",
     projectId: "ProjectId1",
-    device: "Device1",
+    deviceName: "Device1",
     deviceId: "DeviceId1",
     isPhantom: false,
     measurementDate: new Date(),

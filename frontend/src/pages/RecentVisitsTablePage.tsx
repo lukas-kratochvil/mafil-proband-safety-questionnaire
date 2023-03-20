@@ -25,12 +25,12 @@ const RecentVisitsTablePage = () => {
       minSize: 150,
     },
     {
-      accessorKey: "projectInfo.project",
+      accessorKey: "projectInfo.projectAcronym",
       header: t("project"),
       minSize: 300,
     },
     {
-      accessorKey: "projectInfo.device",
+      accessorKey: "projectInfo.deviceName",
       header: t("device"),
       maxSize: 0,
     },

@@ -45,8 +45,8 @@ export const createVisit = (initialVisit: IVisit, state: VisitState): IVisit => 
       state === VisitState.NEW
         ? {
             ...initialVisit.projectInfo,
-            project: null,
-            device: null,
+            projectAcronym: null,
+            deviceName: null,
           }
         : {
             ...initialVisit.projectInfo,
@@ -91,9 +91,9 @@ const dummyVisitNew: IVisit = {
   pdf: "/dummy-multipage.pdf",
   projectInfo: {
     projectId: projectsDev[0].id,
-    project: projectsDev[0].name,
+    projectAcronym: projectsDev[0].acronym,
     deviceId: devicesDev[0].id,
-    device: devicesDev[0].name,
+    deviceName: devicesDev[0].name,
     isPhantom: false,
     measurementDate: new Date(),
     disapprovalReason: null,
@@ -129,9 +129,9 @@ const dummyPhantomVisitNew: IVisit = {
   pdf: "/dummy.pdf",
   projectInfo: {
     projectId: "",
-    project: null,
+    projectAcronym: null,
     deviceId: "",
-    device: null,
+    deviceName: null,
     isPhantom: true,
     measurementDate: new Date(),
     disapprovalReason: null,

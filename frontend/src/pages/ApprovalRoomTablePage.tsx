@@ -26,7 +26,7 @@ const ApprovalRoomTablePage = () => {
       maxSize: 0,
     },
     {
-      accessorKey: "projectInfo.project",
+      accessorKey: "projectInfo.projectAcronym",
       header: t("project"),
       minSize: 300,
     },

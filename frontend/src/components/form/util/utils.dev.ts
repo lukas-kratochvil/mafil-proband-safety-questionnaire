@@ -16,9 +16,9 @@ export const createNewVisitFromFormData = (data: FormPropType, state: VisitState
       projectInfo: {
         ...data,
         projectId: data.project?.id || null,
-        project: data.project?.name || null,
+        projectAcronym: data.project?.acronym || null,
         deviceId: data.device?.id || null,
-        device: data.device?.name || null,
+        deviceName: data.device?.name || null,
         isPhantom: true,
         measurementDate: data.measurementDate ?? new Date(),
       },

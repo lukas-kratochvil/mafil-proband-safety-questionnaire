@@ -24,9 +24,9 @@ export interface IVisit {
 
 interface IProjectInfo {
   projectId: string | null;
-  project: string | null;
+  projectAcronym: string | null;
   deviceId: string | null;
-  device: string | null;
+  deviceName: string | null;
   isPhantom: boolean;
   measurementDate: Date | null;
   disapprovalReason: string | null;
