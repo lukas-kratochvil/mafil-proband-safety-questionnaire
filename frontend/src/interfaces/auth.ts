@@ -4,6 +4,7 @@ export enum IAuthMethod {
 }
 
 export interface IOperator {
+  id: string;
   name: string;
   surname: string;
   uco: string;

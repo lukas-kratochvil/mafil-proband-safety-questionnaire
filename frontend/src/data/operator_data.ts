@@ -1,6 +1,7 @@
 import { IOperator } from "@app/interfaces/auth";
 
 export const operatorSpecial: IOperator = {
+  id: "operator1",
   name: "Operator",
   surname: "Special",
   uco: "123456",
@@ -9,6 +10,7 @@ export const operatorSpecial: IOperator = {
 };
 
 export const operatorMR: IOperator = {
+  id: "operatorSpec1",
   name: "Operator",
   surname: "MR",
   uco: "987654",

@@ -162,6 +162,7 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 // Mocking custom authentication
 //----------------------------------------------------------------------
 const operator: IOperator = {
+  id: "1",
   name: "Peter",
   surname: "Pan",
   uco: "123456",

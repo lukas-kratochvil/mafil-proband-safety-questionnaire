@@ -6,6 +6,7 @@ const operatorName = "Name";
 const operatorSurname = "Surname";
 
 const mockOperator: IOperator = {
+  id: "1",
   name: operatorName,
   surname: operatorSurname,
   email: "",
