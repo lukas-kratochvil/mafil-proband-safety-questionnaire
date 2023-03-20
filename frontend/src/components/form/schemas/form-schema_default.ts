@@ -19,9 +19,6 @@ export const answersSchema = object({
 
 export const defaultFormSchema = object().shape(
   {
-    project: string().nullable(),
-    device: string().nullable(),
-    measurementDate: date().nullable().typeError("form.validation.notValid"),
     name: string().trim().required("form.validation.required"),
     surname: string().trim().required("form.validation.required"),
     personalId: string().trim().required("form.validation.required"),
@@ -56,6 +53,7 @@ export const defaultFormSchema = object().shape(
           .max(50, "form.validation.visualCorrectionValueTooHigh"),
       })
       .required("form.validation.required"),
+    answers: array().of(answersSchema).required("form.validation.required"),
     email: string()
       .trim()
       .when("phone", {
@@ -72,7 +70,6 @@ export const defaultFormSchema = object().shape(
           .matches(/^$|^(\+|00)?[1-9]{1}[0-9,\s]{3,}$/, "form.validation.notValid")
           .required("form.validation.probandContacts"),
       }),
-    answers: array().of(answersSchema).required("form.validation.required"),
   },
   [["email", "phone"]]
 );
