@@ -1,9 +1,9 @@
 import axiosConfig from "@app/axios-config";
 import { trustedOperators } from "@app/data/operator_data";
 import { dummyVisits } from "@app/data/visit_data";
-import { IAuthGateOperator, IOperator } from "@app/interfaces/auth";
+import { IAuthGateOperator } from "@app/interfaces/auth";
 import { IVisit, VisitState } from "@app/interfaces/visit";
-import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IQuestionDTO } from "@app/util/server_API/dto";
+import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IOperatorDTO, IQuestionDTO } from "@app/util/server_API/dto";
 import {
   GET_CURRENT_QUESTIONS,
   GET_GENDERS,
@@ -20,7 +20,7 @@ import {
 } from "./server_API/response-types";
 
 // TODO: authorize against DB
-export const authenticateOperator = async (loggingOperator: IAuthGateOperator): Promise<IOperator | undefined> =>
+export const authenticateOperator = async (loggingOperator: IAuthGateOperator): Promise<IOperatorDTO | undefined> =>
   trustedOperators.find(
     (op) => op.name === loggingOperator.name && op.surname === loggingOperator.surname && op.uco === loggingOperator.uco
   );

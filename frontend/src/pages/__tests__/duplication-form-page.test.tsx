@@ -2,11 +2,10 @@ import { format } from "date-fns";
 import { devicesDev, projectsDev } from "@app/data/form_data";
 import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import i18n from "@app/i18n";
-import { IOperator } from "@app/interfaces/auth";
 import { AnswerOption, IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
 import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
-import { IQuestionDTO } from "@app/util/server_API/dto";
+import { IOperatorDTO, IQuestionDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -161,7 +160,7 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 //----------------------------------------------------------------------
 // Mocking custom authentication
 //----------------------------------------------------------------------
-const operator: IOperator = {
+const operator: IOperatorDTO = {
   id: "1",
   name: "Peter",
   surname: "Pan",

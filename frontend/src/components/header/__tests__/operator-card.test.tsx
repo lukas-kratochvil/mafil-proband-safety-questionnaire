@@ -1,11 +1,11 @@
-import { IOperator } from "@app/interfaces/auth";
+import { IOperatorDTO } from "@app/util/server_API/dto";
 import { render } from "@test-utils";
 import { OperatorCard } from "../OperatorCard";
 
 const operatorName = "Name";
 const operatorSurname = "Surname";
 
-const mockOperator: IOperator = {
+const mockOperator: IOperatorDTO = {
   id: "1",
   name: operatorName,
   surname: operatorSurname,

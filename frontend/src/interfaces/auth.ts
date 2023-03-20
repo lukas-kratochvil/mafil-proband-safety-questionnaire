@@ -1,15 +1,8 @@
+import { IOperatorDTO } from "@app/util/server_API/dto";
+
 export enum IAuthMethod {
   MUNI,
   MUNI_HIGHER_PERMISSION,
-}
-
-export interface IOperator {
-  id: string;
-  name: string;
-  surname: string;
-  uco: string;
-  email: string;
-  hasHigherPermission: boolean;
 }
 
 export interface IAuthGateOperator {
@@ -20,7 +13,7 @@ export interface IAuthGateOperator {
 }
 
 export interface IAuth {
-  operator: IOperator | undefined;
+  operator: IOperatorDTO | undefined;
   logIn: (authMethod: IAuthMethod) => Promise<boolean>;
   logOut: () => void;
 }

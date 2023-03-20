@@ -1,7 +1,7 @@
-import { IOperator } from "@app/interfaces/auth";
+import { IOperatorDTO } from "@app/util/server_API/dto";
 
-export const operatorSpecial: IOperator = {
-  id: "operator1",
+export const operatorSpecial: IOperatorDTO = {
+  id: "operatorSpec1",
   name: "Operator",
   surname: "Special",
   uco: "123456",
@@ -9,8 +9,8 @@ export const operatorSpecial: IOperator = {
   hasHigherPermission: true,
 };
 
-export const operatorMR: IOperator = {
-  id: "operatorSpec1",
+export const operatorMR: IOperatorDTO = {
+  id: "operator1",
   name: "Operator",
   surname: "MR",
   uco: "987654",
