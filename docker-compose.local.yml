@@ -37,7 +37,7 @@ services:
       context: .
       dockerfile: ./backend/Dockerfile
       target: development
-    command: npm run start:dev
+    command: npm run start:migrate:dev
     volumes:
       # changes in host's ./backend directory will be propagated to the container
       - ./backend:/usr/src/app/backend
