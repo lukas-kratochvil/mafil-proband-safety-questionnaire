@@ -55,9 +55,9 @@ const visitNotCompleted: IVisit = {
   pdf: "pdf",
   state: VisitState.APPROVED,
   projectInfo: {
-    projectAcronym: null,
+    projectAcronym: "",
     projectId: "",
-    deviceName: null,
+    deviceName: "",
     deviceId: "",
     isPhantom: true,
     measurementDate: null,
@@ -140,8 +140,8 @@ describe("form loaders", () => {
     test("all the visit attributes are defined", () => {
       const formDefaultValuesFromVisit = loadFormDefaultValuesFromVisit(visit);
 
-      expect(formDefaultValuesFromVisit.project).toBeNull(); // project is loaded in the FormProjectInfo component
-      expect(formDefaultValuesFromVisit.device).toBeNull(); // device is loaded in the FormProjectInfo component
+      expect(formDefaultValuesFromVisit.project?.id).toEqual(visit.projectInfo.projectId); // project is loaded in the FormProjectInfo component using the projectId
+      expect(formDefaultValuesFromVisit.device?.id).toEqual(visit.projectInfo.deviceId); // device is loaded in the FormProjectInfo component using the deviceId
       expect(formDefaultValuesFromVisit.measurementDate).toEqual(visit.projectInfo.measurementDate);
       expect(formDefaultValuesFromVisit.name).toEqual(visit.probandInfo.name);
       expect(formDefaultValuesFromVisit.surname).toEqual(visit.probandInfo.surname);
@@ -165,8 +165,8 @@ describe("form loaders", () => {
 
       const formDefaultValuesFromVisit = loadFormDefaultValuesFromVisit(visitNotCompleted);
 
-      expect(formDefaultValuesFromVisit.project).toBeNull();
-      expect(formDefaultValuesFromVisit.device).toBeNull();
+      expect(formDefaultValuesFromVisit.project?.id).toEqual(visitNotCompleted.projectInfo.projectId);
+      expect(formDefaultValuesFromVisit.device?.id).toEqual(visitNotCompleted.projectInfo.deviceId);
       expect(formDefaultValuesFromVisit.measurementDate).toEqual(currentDate);
       expect(formDefaultValuesFromVisit.name).toEqual(visitNotCompleted.probandInfo.name);
       expect(formDefaultValuesFromVisit.surname).toEqual(visitNotCompleted.probandInfo.surname);
