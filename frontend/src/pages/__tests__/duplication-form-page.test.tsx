@@ -1,9 +1,11 @@
 import { format } from "date-fns";
+import { devicesDev, projectsDev } from "@app/data/form_data";
 import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import i18n from "@app/i18n";
 import { IOperator } from "@app/interfaces/auth";
 import { AnswerOption, IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
+import { IDeviceEntity, IProjectEntity } from "@app/util/mafildb_API/dto";
 import { IQuestionEntity } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
 
@@ -184,8 +186,8 @@ vi.mock("@app/util/fetch", async () => ({
 
 vi.mock("@app/util/fetch-mafildb", async () => ({
   ...((await vi.importActual("@app/util/fetch-mafildb")) as Record<string, unknown>),
-  fetchProjects: async (): Promise<string[]> => ["project1", "project2", "project3"],
-  fetchDevices: async (): Promise<string[]> => ["device1", "device2", "device3"],
+  fetchProjects: async (): Promise<IProjectEntity[]> => projectsDev,
+  fetchDevices: async (): Promise<IDeviceEntity[]> => devicesDev,
   fetchVisit: async (): Promise<IVisit> => visit,
 }));
 

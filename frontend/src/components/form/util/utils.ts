@@ -1,3 +1,4 @@
+import { IProjectEntity } from "@app/util/mafildb_API/dto";
 import { ITranslatedEntity } from "@app/util/server_API/dto";
 
 export type GenderCode = "M" | "F" | "O";
@@ -38,3 +39,6 @@ export const compareHandednesses = (a: ITranslatedEntity, b: ITranslatedEntity, 
   }
   return aCode === "l" || (aCode === "rl" && bCode !== "l") ? -1 : 1;
 };
+
+// TODO: correct slice() ending
+export const getProjectText = (project: IProjectEntity): string => `${project.acronym} - ${project.name}`.slice(0, 10);

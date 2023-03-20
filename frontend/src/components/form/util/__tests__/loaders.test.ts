@@ -140,8 +140,8 @@ describe("form loaders", () => {
     test("all the visit attributes are defined", () => {
       const formDefaultValuesFromVisit = loadFormDefaultValuesFromVisit(visit);
 
-      expect(formDefaultValuesFromVisit.project).toEqual(visit.projectInfo.project);
-      expect(formDefaultValuesFromVisit.device).toEqual(visit.projectInfo.device);
+      expect(formDefaultValuesFromVisit.project).toBeNull(); // project is loaded in the FormProjectInfo component
+      expect(formDefaultValuesFromVisit.device).toBeNull(); // device is loaded in the FormProjectInfo component
       expect(formDefaultValuesFromVisit.measurementDate).toEqual(visit.projectInfo.measurementDate);
       expect(formDefaultValuesFromVisit.name).toEqual(visit.probandInfo.name);
       expect(formDefaultValuesFromVisit.surname).toEqual(visit.probandInfo.surname);

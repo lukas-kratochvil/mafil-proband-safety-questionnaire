@@ -1,12 +1,13 @@
 import { devicesDev, projectsDev } from "@app/data/form_data";
 import { dummyVisits } from "@app/data/visit_data";
 import { IVisit, VisitState } from "@app/interfaces/visit";
+import { IDeviceEntity, IProjectEntity } from "./mafildb_API/dto";
 
 // TODO: get projects from MAFILDB
-export const fetchProjects = async (): Promise<string[]> => projectsDev;
+export const fetchProjects = async (): Promise<IProjectEntity[]> => projectsDev;
 
 // TODO: get devices from MAFILDB
-export const fetchDevices = async (): Promise<string[]> => devicesDev;
+export const fetchDevices = async (): Promise<IDeviceEntity[]> => devicesDev;
 
 // TODO: get visit from MAFILDB DB
 export const fetchVisit = async (visitId: string | undefined): Promise<IVisit | undefined> =>

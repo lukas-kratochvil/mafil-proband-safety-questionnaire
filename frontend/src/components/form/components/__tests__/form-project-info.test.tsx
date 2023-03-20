@@ -4,6 +4,10 @@ import { FormProjectInfo } from "../FormProjectInfo";
 
 vi.mock("react-hook-form", () => ({
   Controller: () => <div data-testid="input" />,
+  useFormContext: () => ({
+    getValues: vi.fn(),
+    setValue: vi.fn(),
+  }),
 }));
 
 vi.mock("@app/components/form/inputs/ErrorMessage", () => ({

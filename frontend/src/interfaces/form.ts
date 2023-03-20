@@ -1,4 +1,5 @@
 import { IOption } from "@app/components/form/util/options";
+import { IDeviceEntity, IProjectEntity } from "@app/util/mafildb_API/dto";
 import { Override } from "@app/util/utils";
 import { ITranslatedEntity } from "../util/server_API/dto";
 import { AnswerOption, IQac } from "./visit";
@@ -12,8 +13,8 @@ export type FormQac = FormAnswer & { index: number };
 
 export interface FormPropType {
   // Project info
-  project: string | null;
-  device: string | null;
+  project: IProjectEntity | null;
+  device: IDeviceEntity | null;
   measurementDate: Date | null;
 
   // Proband info

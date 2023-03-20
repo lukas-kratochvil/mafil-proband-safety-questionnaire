@@ -33,8 +33,17 @@ export const loadPhantomFormDefaultValues = (): FormPropType => ({
 
 // Autocomplete component default value must be one of the options provided or null
 export const loadFormDefaultValuesFromVisit = (visit: IVisit): FormPropType => ({
-  project: visit.projectInfo.project ?? null,
-  device: visit.projectInfo.device ?? null,
+  // selected project is set in the FormProjectInfo component
+  project: {
+    id: visit.projectInfo.projectId ?? "", // id is used to match the correct project loaded from the MAFILDB
+    acronym: "",
+    name: "",
+  },
+  // selected device is set in the FormProjectInfo component
+  device: {
+    id: visit.projectInfo.deviceId ?? "", // id is used to match the correct project loaded from the MAFILDB
+    name: "",
+  },
   measurementDate: visit.projectInfo.measurementDate ?? new Date(),
   disapprovalReason: visit.projectInfo.disapprovalReason,
   ...visit.probandInfo,

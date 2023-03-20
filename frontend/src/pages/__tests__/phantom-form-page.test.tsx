@@ -1,8 +1,11 @@
 import userEvent from "@testing-library/user-event";
 import { format } from "date-fns";
+import { getProjectText } from "@app/components/form/util/utils";
+import { devicesDev, projectsDev } from "@app/data/form_data";
 import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import i18n from "@app/i18n";
 import PhantomFormPage from "@app/pages/PhantomFormPage";
+import { IDeviceEntity, IProjectEntity } from "@app/util/mafildb_API/dto";
 import { IQuestionEntity, ITranslatedEntity } from "@app/util/server_API/dto";
 import { render, screen, waitFor } from "@test-utils";
 
@@ -124,8 +127,8 @@ vi.mock("@app/util/fetch", async () => ({
 
 vi.mock("@app/util/fetch-mafildb", async () => ({
   ...((await vi.importActual("@app/util/fetch-mafildb")) as Record<string, unknown>),
-  fetchProjects: async (): Promise<string[]> => ["project1", "project2", "project3"],
-  fetchDevices: async (): Promise<string[]> => ["device1", "device2", "device3"],
+  fetchProjects: async (): Promise<IProjectEntity[]> => projectsDev,
+  fetchDevices: async (): Promise<IDeviceEntity[]> => devicesDev,
 }));
 
 //----------------------------------------------------------------------
@@ -144,6 +147,8 @@ describe("phantom form page", () => {
   const genderOther = genders[2].translations[0].text;
   const nativeLanguageCzech = nativeLanguages[0].translations[0].text;
   const handednessUndetermined = handednesses[3].translations[0].text;
+  const project1Text = getProjectText(projectsDev[0]);
+  const device1Name = devicesDev[0].name;
 
   test("contains correct form buttons", async () => {
     setup();
@@ -218,11 +223,11 @@ describe("phantom form page", () => {
     const user = userEvent.setup();
 
     await user.click(await screen.findByRole("combobox", { name: "project" }));
-    const selectedProject = "project1";
+    const selectedProject = project1Text;
     await user.click(screen.getByRole("option", { name: selectedProject }));
 
     await user.click(screen.getByLabelText("device"));
-    const selectedDevice = "device3";
+    const selectedDevice = device1Name;
     await user.click(screen.getByRole("option", { name: selectedDevice }));
 
     const typedName = "John";
@@ -287,10 +292,10 @@ describe("phantom form page", () => {
     const user = userEvent.setup();
 
     await user.click(await screen.findByLabelText("project"));
-    await user.click(screen.getByRole("option", { name: "project1" }));
+    await user.click(screen.getByRole("option", { name: project1Text }));
 
     await user.click(screen.getByLabelText("device"));
-    await user.click(screen.getByRole("option", { name: "device3" }));
+    await user.click(screen.getByRole("option", { name: device1Name }));
 
     await user.type(screen.getByLabelText("name"), "John");
 

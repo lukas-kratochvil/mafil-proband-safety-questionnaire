@@ -2,17 +2,25 @@ import { Autocomplete, CircularProgress, TextField, Theme, useMediaQuery } from 
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n";
+import { IDeviceEntity } from "@app/util/mafildb_API/dto";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormDefaultInputProps } from "./interfaces/input-props";
 
-interface IFormAutocompleteProps extends IFormDefaultInputProps {
-  options: string[] | undefined;
+interface IFormAutocompleteDevicesProps extends IFormDefaultInputProps {
+  options: IDeviceEntity[] | undefined;
+  isLoading: boolean;
 }
 
-export const FormAutocomplete = ({ name, label, isOptional, disabled, options }: IFormAutocompleteProps) => {
+export const FormAutocompleteDevices = ({
+  name,
+  label,
+  isOptional,
+  disabled,
+  options,
+  isLoading,
+}: IFormAutocompleteDevicesProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
-  const loading = options === undefined;
 
   return (
     <FormInputFieldContainer
@@ -26,11 +34,13 @@ export const FormAutocomplete = ({ name, label, isOptional, disabled, options }:
           <Autocomplete
             id={name}
             options={options === undefined ? [] : options}
-            value={field.value}
+            getOptionLabel={(option: IDeviceEntity) => option.name}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
+            value={field.value as IDeviceEntity}
             onChange={(_event, val) => field.onChange(val)}
             onBlur={field.onBlur}
             disabled={disabled}
-            loading={loading}
+            loading={isLoading}
             loadingText={`${t("loading")}…`}
             noOptionsText={t("noOptions")}
             renderInput={(params) => (
@@ -43,7 +53,7 @@ export const FormAutocomplete = ({ name, label, isOptional, disabled, options }:
                   ...params.InputProps,
                   endAdornment: (
                     <>
-                      {loading && (
+                      {isLoading && (
                         <CircularProgress
                           color="inherit"
                           size={20}
