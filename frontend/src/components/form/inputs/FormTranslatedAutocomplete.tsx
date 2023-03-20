@@ -21,7 +21,7 @@ export const FormTranslatedAutocomplete = ({
   compareFnc,
   isLoading,
 }: IFormTranslatedAutocompleteProps) => {
-  const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form" });
+  const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
   return (
@@ -41,13 +41,13 @@ export const FormTranslatedAutocomplete = ({
               || option.translations[0].text
             }
             isOptionEqualToValue={(option, value) => option.id === value.id}
-            value={field.value}
+            value={field.value as ITranslatedEntity}
             onChange={(_event, val) => field.onChange(val)}
             onBlur={field.onBlur}
             disabled={disabled}
             loading={isLoading}
-            loadingText={`${t("common.loading")}…`}
-            noOptionsText={t("common.noOptions")}
+            loadingText={`${t("loading")}…`}
+            noOptionsText={t("noOptions")}
             renderInput={(params) => (
               <TextField
                 {...params}
