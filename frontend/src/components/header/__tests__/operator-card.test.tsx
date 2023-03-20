@@ -10,7 +10,7 @@ const mockOperator: IOperatorDTO = {
   name: operatorName,
   surname: operatorSurname,
   email: "",
-  hasHigherPermission: false,
+  role: "MR",
   uco: "",
 };
 

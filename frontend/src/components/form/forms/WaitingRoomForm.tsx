@@ -120,7 +120,7 @@ export const WaitingRoomForm = () => {
           titleLocalizationKey: "form.common.buttons.finalize",
           onClick: (data: FormPropType) => {
             if (
-              operator?.hasHigherPermission
+              operator?.role === "MR_HIGH_PERM"
               || data.answers.find(
                 (answer) => answer.partNumber === QuestionPartNumber.TWO && answer.answer === AnswerOption.YES
               ) === undefined
@@ -155,17 +155,7 @@ export const WaitingRoomForm = () => {
         ],
       });
     }
-  }, [
-    getValues,
-    id,
-    isDisapproved,
-    isEditing,
-    navigate,
-    operator?.hasHigherPermission,
-    setValue,
-    trigger,
-    valuesBeforeEditing,
-  ]);
+  }, [getValues, id, isDisapproved, isEditing, navigate, operator?.role, setValue, trigger, valuesBeforeEditing]);
 
   const onSubmit = (data: FormPropType) => {
     // TODO: store changes in DB

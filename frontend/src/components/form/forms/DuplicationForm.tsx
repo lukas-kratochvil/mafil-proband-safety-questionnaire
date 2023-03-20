@@ -123,7 +123,7 @@ export const DuplicationForm = () => {
           onClick: (data: FormPropType) => {
             // TODO: store changes in DB if made
             const isApproved
-              = operator?.hasHigherPermission
+              = operator?.role === "MR_HIGH_PERM"
               || data.answers.find(
                 (answer) => answer.partNumber === QuestionPartNumber.TWO && answer.answer === AnswerOption.YES
               ) === undefined;
@@ -169,7 +169,7 @@ export const DuplicationForm = () => {
     isEditing,
     isPhantom,
     navigate,
-    operator?.hasHigherPermission,
+    operator?.role,
     setValue,
     trigger,
     valuesBeforeEditing,

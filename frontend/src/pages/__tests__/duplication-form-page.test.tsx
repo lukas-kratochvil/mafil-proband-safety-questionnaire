@@ -166,7 +166,7 @@ const operator: IOperatorDTO = {
   surname: "Pan",
   uco: "123456",
   email: "peter.pan@gmail.com",
-  hasHigherPermission: true,
+  role: "MR_HIGH_PERM",
 };
 
 vi.mock("@app/hooks/auth/auth", () => ({

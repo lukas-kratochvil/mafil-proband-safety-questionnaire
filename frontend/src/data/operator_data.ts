@@ -6,7 +6,7 @@ export const operatorSpecial: IOperatorDTO = {
   surname: "Special",
   uco: "123456",
   email: "operator.special@gmail.com",
-  hasHigherPermission: true,
+  role: "MR_HIGH_PERM",
 };
 
 export const operatorMR: IOperatorDTO = {
@@ -15,7 +15,7 @@ export const operatorMR: IOperatorDTO = {
   surname: "MR",
   uco: "987654",
   email: "operator.mr@gmail.com",
-  hasHigherPermission: false,
+  role: "MR",
 };
 
 export const trustedOperators = [operatorSpecial, operatorMR];

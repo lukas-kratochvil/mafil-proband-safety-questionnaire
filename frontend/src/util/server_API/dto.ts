@@ -1,10 +1,12 @@
+type OperatorRole = "MR" | "MR_HIGH_PERM";
+
 export interface IOperatorDTO {
   id: string;
   name: string;
   surname: string;
   uco: string;
   email: string;
-  hasHigherPermission: boolean;
+  role: OperatorRole;
 }
 
 interface ITranslation {

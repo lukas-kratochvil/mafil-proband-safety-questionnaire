@@ -53,7 +53,7 @@ export const ApprovalForm = () => {
   }, [visit, setValue]);
 
   useEffect(() => {
-    if (operator?.hasHigherPermission) {
+    if (operator?.role === "MR_HIGH_PERM") {
       if (isEditing) {
         setFormButtons({
           submitButtonProps: {
@@ -138,17 +138,7 @@ export const ApprovalForm = () => {
         buttonsProps: [getBackButtonProps(navigate)],
       });
     }
-  }, [
-    getValues,
-    id,
-    isDisapproved,
-    isEditing,
-    navigate,
-    operator?.hasHigherPermission,
-    setValue,
-    trigger,
-    valuesBeforeEditing,
-  ]);
+  }, [getValues, id, isDisapproved, isEditing, navigate, operator?.role, setValue, trigger, valuesBeforeEditing]);
 
   return (
     <FormContainer
@@ -163,13 +153,13 @@ export const ApprovalForm = () => {
         titleLocalizationKey="titlePart1"
         qacs={qacs.filter((qac) => qac.partNumber === QuestionPartNumber.ONE)}
         disableInputs={!isEditing}
-        disableComment={!operator?.hasHigherPermission || isDisapproved}
+        disableComment={operator?.role !== "MR_HIGH_PERM" || isDisapproved}
       />
       <FormQuestions
         titleLocalizationKey="titlePart2"
         qacs={qacs.filter((qac) => qac.partNumber === QuestionPartNumber.TWO)}
         disableInputs={!isEditing}
-        disableComment={!operator?.hasHigherPermission || isDisapproved}
+        disableComment={operator?.role !== "MR_HIGH_PERM" || isDisapproved}
       />
       {isDisapproved && <FormDisapprovalReason />}
     </FormContainer>
