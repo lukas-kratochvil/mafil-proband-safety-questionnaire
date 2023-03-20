@@ -2,25 +2,27 @@ import { Autocomplete, CircularProgress, TextField, Theme, useMediaQuery } from 
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n";
-import { convertStringToLocalizationKey } from "@app/util/utils";
-import { IOption } from "../util/options";
+import { ITranslatedEntityDTO } from "@app/util/server_API/dto";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormDefaultInputProps } from "./interfaces/input-props";
 
-interface IFormOptionsAutocompleteProps extends IFormDefaultInputProps {
-  options: IOption[];
+interface IFormAutocompleteTranslatedEntityProps extends IFormDefaultInputProps {
+  options: ITranslatedEntityDTO[] | undefined;
+  compareFnc: (a: ITranslatedEntityDTO, b: ITranslatedEntityDTO, locale: string) => number;
+  isLoading: boolean;
 }
 
-export const FormOptionsAutocomplete = ({
+export const FormAutocompleteTranslatedEntity = ({
   name,
   label,
   isOptional,
   disabled,
   options,
-}: IFormOptionsAutocompleteProps) => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "form" });
+  compareFnc,
+  isLoading,
+}: IFormAutocompleteTranslatedEntityProps) => {
+  const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
-  const loading = options.length === 0;
 
   return (
     <FormInputFieldContainer
@@ -33,16 +35,19 @@ export const FormOptionsAutocomplete = ({
         render={({ field }) => (
           <Autocomplete
             id={name}
-            options={options}
-            getOptionLabel={(option: IOption) => t(convertStringToLocalizationKey(`enums.${option.localizationKey}`))}
-            isOptionEqualToValue={(option, value) => option.value === value.value}
-            value={field.value}
+            options={options?.sort((a, b) => compareFnc(a, b, i18n.language)) || []}
+            getOptionLabel={(option: ITranslatedEntityDTO) =>
+              option.translations.find((trans) => trans.language.code === i18n.language)?.text
+              || option.translations[0].text
+            }
+            isOptionEqualToValue={(option, value) => option.id === value.id}
+            value={field.value as ITranslatedEntityDTO}
             onChange={(_event, val) => field.onChange(val)}
             onBlur={field.onBlur}
             disabled={disabled}
-            loading={loading}
-            loadingText={`${t("common.loading")}…`}
-            noOptionsText={t("common.noOptions")}
+            loading={isLoading}
+            loadingText={`${t("loading")}…`}
+            noOptionsText={t("noOptions")}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -53,7 +58,7 @@ export const FormOptionsAutocomplete = ({
                   ...params.InputProps,
                   endAdornment: (
                     <>
-                      {loading && (
+                      {isLoading && (
                         <CircularProgress
                           color="inherit"
                           size={20}

@@ -10,9 +10,9 @@ import { FormPropType } from "@app/interfaces/form";
 import { VisualCorrection } from "@app/interfaces/visit";
 import { fetchGenders, fetchHandednesses, fetchNativeLanguages } from "@app/util/fetch";
 import { FormDatePicker } from "../inputs/FormDatePicker";
-import { FormOptionsAutocomplete } from "../inputs/FormOptionsAutocomplete";
+import { FormAutocompleteOptions } from "../inputs/FormAutocompleteOptions";
 import { FormTextField } from "../inputs/FormTextField";
-import { FormTranslatedAutocomplete } from "../inputs/FormTranslatedAutocomplete";
+import { FormAutocompleteTranslatedEntity } from "../inputs/FormAutocompleteTranslatedEntity";
 import { IPhantomFormCardProps } from "../interfaces/form-card";
 import { visualCorrectionOptions } from "../util/options";
 import { CzechPersonalId, getPersonalIdFromBirthdateAndGender } from "../util/personal-id";
@@ -172,7 +172,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           sm={6}
           md={4}
         >
-          <FormTranslatedAutocomplete
+          <FormAutocompleteTranslatedEntity
             name="gender"
             label={t("gender")}
             options={genders.data}
@@ -187,7 +187,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           sm={6}
           md={4}
         >
-          <FormTranslatedAutocomplete
+          <FormAutocompleteTranslatedEntity
             name="nativeLanguage"
             label={t("nativeLanguage")}
             options={nativeLanguages.data}
@@ -228,7 +228,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           sm={6}
           md={4}
         >
-          <FormOptionsAutocomplete
+          <FormAutocompleteOptions
             name="visualCorrection"
             label={t("visualCorrection")}
             options={visualCorrectionOptions}
@@ -259,7 +259,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           sm={6}
           md={4}
         >
-          <FormTranslatedAutocomplete
+          <FormAutocompleteTranslatedEntity
             name="handedness"
             label={t("handedness")}
             options={handednesses.data}
