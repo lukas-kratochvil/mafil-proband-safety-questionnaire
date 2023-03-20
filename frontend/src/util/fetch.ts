@@ -3,7 +3,7 @@ import { trustedOperators } from "@app/data/operator_data";
 import { dummyVisits } from "@app/data/visit_data";
 import { IAuthGateOperator, IOperator } from "@app/interfaces/auth";
 import { IVisit, VisitState } from "@app/interfaces/visit";
-import { IQuestionDTO, ITranslatedEntityDTO } from "@app/util/server_API/dto";
+import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IQuestionDTO } from "@app/util/server_API/dto";
 import {
   GET_CURRENT_QUESTIONS,
   GET_GENDERS,
@@ -25,17 +25,17 @@ export const authenticateOperator = async (loggingOperator: IAuthGateOperator): 
     (op) => op.name === loggingOperator.name && op.surname === loggingOperator.surname && op.uco === loggingOperator.uco
   );
 
-export const fetchGenders = async (): Promise<ITranslatedEntityDTO[]> => {
+export const fetchGenders = async (): Promise<IGenderDTO[]> => {
   const { data } = await axiosConfig.serverApi.post<GendersResponse>("", { query: GET_GENDERS });
   return data.data.genders;
 };
 
-export const fetchNativeLanguages = async (): Promise<ITranslatedEntityDTO[]> => {
+export const fetchNativeLanguages = async (): Promise<INativeLanguageDTO[]> => {
   const { data } = await axiosConfig.serverApi.post<NativeLanguagesResponse>("", { query: GET_NATIVE_LANGUAGES });
   return data.data.nativeLanguages;
 };
 
-export const fetchHandednesses = async (): Promise<ITranslatedEntityDTO[]> => {
+export const fetchHandednesses = async (): Promise<IHandednessDTO[]> => {
   const { data } = await axiosConfig.serverApi.post<HandednessesResponse>("", { query: GET_HANDEDNESSES });
   return data.data.handednesses;
 };

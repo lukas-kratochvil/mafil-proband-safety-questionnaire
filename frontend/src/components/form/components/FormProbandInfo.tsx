@@ -9,10 +9,12 @@ import { defaultNS } from "@app/i18n";
 import { FormPropType } from "@app/interfaces/form";
 import { VisualCorrection } from "@app/interfaces/visit";
 import { fetchGenders, fetchHandednesses, fetchNativeLanguages } from "@app/util/fetch";
-import { FormDatePicker } from "../inputs/FormDatePicker";
+import { FormAutocompleteGenders } from "../inputs/FormAutocompleteGenders";
+import { FormAutocompleteHandednesses } from "../inputs/FormAutocompleteHandednesses";
+import { FormAutocompleteNativeLanguages } from "../inputs/FormAutocompleteNativeLanguages";
 import { FormAutocompleteOptions } from "../inputs/FormAutocompleteOptions";
+import { FormDatePicker } from "../inputs/FormDatePicker";
 import { FormTextField } from "../inputs/FormTextField";
-import { FormAutocompleteTranslatedEntity } from "../inputs/FormAutocompleteTranslatedEntity";
 import { IPhantomFormCardProps } from "../interfaces/form-card";
 import { visualCorrectionOptions } from "../util/options";
 import { CzechPersonalId, getPersonalIdFromBirthdateAndGender } from "../util/personal-id";
@@ -172,7 +174,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           sm={6}
           md={4}
         >
-          <FormAutocompleteTranslatedEntity
+          <FormAutocompleteGenders
             name="gender"
             label={t("gender")}
             options={genders.data}
@@ -187,7 +189,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           sm={6}
           md={4}
         >
-          <FormAutocompleteTranslatedEntity
+          <FormAutocompleteNativeLanguages
             name="nativeLanguage"
             label={t("nativeLanguage")}
             options={nativeLanguages.data}
@@ -259,7 +261,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           sm={6}
           md={4}
         >
-          <FormAutocompleteTranslatedEntity
+          <FormAutocompleteHandednesses
             name="handedness"
             label={t("handedness")}
             options={handednesses.data}

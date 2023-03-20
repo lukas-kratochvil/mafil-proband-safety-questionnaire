@@ -6,7 +6,7 @@ import { genders, handednesses, nativeLanguages } from "@app/data/translated_ent
 import i18n from "@app/i18n";
 import PhantomFormPage from "@app/pages/PhantomFormPage";
 import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
-import { IQuestionDTO, ITranslatedEntityDTO } from "@app/util/server_API/dto";
+import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IQuestionDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -119,9 +119,9 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 //----------------------------------------------------------------------
 vi.mock("@app/util/fetch", async () => ({
   ...((await vi.importActual("@app/util/fetch")) as Record<string, unknown>),
-  fetchGenders: async (): Promise<ITranslatedEntityDTO[]> => genders,
-  fetchNativeLanguages: async (): Promise<ITranslatedEntityDTO[]> => nativeLanguages,
-  fetchHandednesses: async (): Promise<ITranslatedEntityDTO[]> => handednesses,
+  fetchGenders: async (): Promise<IGenderDTO[]> => genders,
+  fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguages,
+  fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednesses,
   fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionData,
 }));
 

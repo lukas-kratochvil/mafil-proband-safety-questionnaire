@@ -1,5 +1,5 @@
 import { addYears, differenceInCalendarYears, getDate, getMonth, getYear, isExists } from "date-fns";
-import { ITranslatedEntityDTO } from "@app/util/server_API/dto";
+import { IGenderDTO } from "@app/util/server_API/dto";
 
 const FEMALE_CONST = 50;
 
@@ -92,7 +92,7 @@ export class CzechPersonalId {
   };
 }
 
-export const getPersonalIdFromBirthdateAndGender = (birthdate: Date, gender: ITranslatedEntityDTO): string => {
+export const getPersonalIdFromBirthdateAndGender = (birthdate: Date, gender: IGenderDTO): string => {
   const year = getYear(birthdate);
   // month can be plus extra 20, but it's really a rare case when all the IDs are used up on the given day
   const month = getMonth(birthdate) + 1 + (gender.code === "F" ? FEMALE_CONST : 0);

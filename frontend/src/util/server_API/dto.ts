@@ -5,10 +5,22 @@ interface ITranslation {
   };
 }
 
-export interface ITranslatedEntityDTO {
+export interface IGenderDTO {
   id: string;
   code: string;
-  order?: number | null;
+  translations: ITranslation[];
+}
+
+export interface INativeLanguageDTO {
+  id: string;
+  code: string;
+  order: number | null;
+  translations: ITranslation[];
+}
+
+export interface IHandednessDTO {
+  id: string;
+  code: string;
   translations: ITranslation[];
 }
 

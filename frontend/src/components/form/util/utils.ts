@@ -1,17 +1,17 @@
 import { IProjectDTO } from "@app/util/mafildb_API/dto";
-import { ITranslatedEntityDTO } from "@app/util/server_API/dto";
+import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "@app/util/server_API/dto";
 
 export type GenderCode = "M" | "F" | "O";
 
 export type HandednessCode = "r" | "l" | "rl" | "u";
 
-export const compareGenders = (a: ITranslatedEntityDTO, b: ITranslatedEntityDTO, _locale: string): number => {
+export const compareGenders = (a: IGenderDTO, b: IGenderDTO, _locale: string): number => {
   const aCode = a.code as GenderCode;
   const bCode = b.code as GenderCode;
   return aCode === "M" || (aCode === "F" && bCode !== "M") ? -1 : 1;
 };
 
-export const compareNativeLanguages = (a: ITranslatedEntityDTO, b: ITranslatedEntityDTO, locale: string): number => {
+export const compareNativeLanguages = (a: INativeLanguageDTO, b: INativeLanguageDTO, locale: string): number => {
   if (a.order && b.order) {
     return a.order - b.order;
   }
@@ -27,7 +27,7 @@ export const compareNativeLanguages = (a: ITranslatedEntityDTO, b: ITranslatedEn
   return aText === undefined || bText === undefined ? -1 : new Intl.Collator(locale).compare(aText, bText);
 };
 
-export const compareHandednesses = (a: ITranslatedEntityDTO, b: ITranslatedEntityDTO, _locale: string): number => {
+export const compareHandednesses = (a: IHandednessDTO, b: IHandednessDTO, _locale: string): number => {
   const aCode = a.code as HandednessCode;
   const bCode = b.code as HandednessCode;
 

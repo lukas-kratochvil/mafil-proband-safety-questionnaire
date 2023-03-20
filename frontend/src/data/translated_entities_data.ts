@@ -1,6 +1,6 @@
-import { ITranslatedEntityDTO } from "@app/util/server_API/dto";
+import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "@app/util/server_API/dto";
 
-export const genders: ITranslatedEntityDTO[] = [
+export const genders: IGenderDTO[] = [
   {
     id: "1",
     code: "M",
@@ -57,7 +57,7 @@ export const genders: ITranslatedEntityDTO[] = [
   },
 ];
 
-export const handednesses: ITranslatedEntityDTO[] = [
+export const handednesses: IHandednessDTO[] = [
   {
     id: "1",
     code: "r",
@@ -132,10 +132,11 @@ export const handednesses: ITranslatedEntityDTO[] = [
   },
 ];
 
-export const nativeLanguages: ITranslatedEntityDTO[] = [
+export const nativeLanguages: INativeLanguageDTO[] = [
   {
     id: "1",
     code: "cs",
+    order: 1,
     translations: [
       {
         text: "Čeština",
@@ -154,6 +155,7 @@ export const nativeLanguages: ITranslatedEntityDTO[] = [
   {
     id: "2",
     code: "sk",
+    order: 2,
     translations: [
       {
         text: "Slovenština",
@@ -172,6 +174,7 @@ export const nativeLanguages: ITranslatedEntityDTO[] = [
   {
     id: "3",
     code: "en",
+    order: 3,
     translations: [
       {
         text: "Angličtina",
@@ -190,6 +193,7 @@ export const nativeLanguages: ITranslatedEntityDTO[] = [
   {
     id: "4",
     code: "de",
+    order: null,
     translations: [
       {
         text: "Němčina",
@@ -208,6 +212,7 @@ export const nativeLanguages: ITranslatedEntityDTO[] = [
   {
     id: "5",
     code: "pl",
+    order: null,
     translations: [
       {
         text: "Polština",
@@ -226,6 +231,7 @@ export const nativeLanguages: ITranslatedEntityDTO[] = [
   {
     id: "6",
     code: "fr",
+    order: null,
     translations: [
       {
         text: "Francouzština",
@@ -244,6 +250,7 @@ export const nativeLanguages: ITranslatedEntityDTO[] = [
   {
     id: "7",
     code: "es",
+    order: null,
     translations: [
       {
         text: "Španělština",
