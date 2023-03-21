@@ -33,7 +33,7 @@ export class VisitFormService {
           : undefined,
         probandLanguage: {
           connect: {
-            id: createVisitFormInput.probandLanguageId,
+            code: createVisitFormInput.probandLanguageCode,
           },
         },
         probandInfo: {
