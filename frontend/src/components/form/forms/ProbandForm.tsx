@@ -63,7 +63,7 @@ export const ProbandForm = () => {
         }
 
         if (!isValidationError) {
-          // TODO: create visit in DB
+          createProbandVisitForm(data);
           navigate(RoutingPaths.PROBAND_HOME);
         }
       },
