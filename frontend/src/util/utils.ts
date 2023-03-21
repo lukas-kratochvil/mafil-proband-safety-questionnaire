@@ -10,7 +10,7 @@ export interface IButtonProps {
 }
 
 export interface ISubmitButtonProps extends Omit<IButtonProps, "onClick"> {
-  onClick: (data: FormPropType) => void;
+  onClick: (data: FormPropType) => Promise<void>;
 }
 
 export const getBackButtonProps = (navigate: NavigateFunction, customTitleLocalizationKey?: string): IButtonProps => ({

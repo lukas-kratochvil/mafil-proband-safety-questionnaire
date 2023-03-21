@@ -15,22 +15,20 @@ import { getBackButtonProps } from "@app/util/utils";
 import { FormContainer } from "./FormContainer";
 
 export const PhantomForm = () => {
+  const navigate = useNavigate();
+  const { setValue } = useFormContext<FormPropType>();
+
   const {
     data: questions,
     isLoading,
     isError,
-  } = useQuery({
-    queryKey: ["currentQuestions"],
-    queryFn: fetchCurrentQuestions,
-  });
-  const navigate = useNavigate();
-  const { setValue } = useFormContext<FormPropType>();
+  } = useQuery({ queryKey: ["currentQuestions"], queryFn: fetchCurrentQuestions });
 
   const formButtons: IFormButtonsProps = {
     submitButtonProps: {
       titleLocalizationKey: "form.common.buttons.finalize",
-      onClick: (data: FormPropType) => {
-        // TODO: create phantom visit in DB
+      onClick: async (data: FormPropType) => {
+        // TODO: create phantom visit in MAFILDB -> returns visitID -> generate operator PDF -> store PDF in MAFILDB -> redirect to this visit page
         const newPhantomVisit = createNewVisitFromFormData(data, VisitState.SIGNED);
         dummyVisits.push(newPhantomVisit);
         navigate(`${RoutingPaths.RECENT_VISITS}/visit/${newPhantomVisit.id}`);

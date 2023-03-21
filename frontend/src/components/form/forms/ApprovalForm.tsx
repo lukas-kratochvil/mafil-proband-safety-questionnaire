@@ -58,7 +58,7 @@ export const ApprovalForm = () => {
         setFormButtons({
           submitButtonProps: {
             titleLocalizationKey: "form.common.buttons.saveChanges",
-            onClick: (_data: FormPropType) => setIsEditing(false),
+            onClick: async (_data: FormPropType) => setIsEditing(false),
           },
           buttonsProps: [
             {
@@ -82,7 +82,7 @@ export const ApprovalForm = () => {
         setFormButtons({
           submitButtonProps: {
             titleLocalizationKey: "form.common.buttons.confirmDisapproval",
-            onClick: (data: FormPropType) => {
+            onClick: async (data: FormPropType) => {
               // TODO: store changes in DB if made
               updateDummyVisitState(id, VisitState.DISAPPROVED);
               navigate(RoutingPaths.APPROVAL_ROOM);
@@ -103,7 +103,7 @@ export const ApprovalForm = () => {
         setFormButtons({
           submitButtonProps: {
             titleLocalizationKey: "form.common.buttons.approve",
-            onClick: (data: FormPropType) => {
+            onClick: async (data: FormPropType) => {
               // TODO: store changes in DB if made
               updateDummyVisitState(id, VisitState.APPROVED);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${id}`);

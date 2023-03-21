@@ -73,7 +73,7 @@ export const WaitingRoomForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.saveChanges",
-          onClick: (_data: FormPropType) => setIsEditing(false),
+          onClick: async (_data: FormPropType) => setIsEditing(false),
         },
         buttonsProps: [
           {
@@ -97,7 +97,7 @@ export const WaitingRoomForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
-          onClick: (data: FormPropType) => {
+          onClick: async (data: FormPropType) => {
             // TODO: store changes in DB
             updateDummyVisitState(id, VisitState.DISAPPROVED);
             navigate(RoutingPaths.WAITING_ROOM);
@@ -118,7 +118,7 @@ export const WaitingRoomForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.finalize",
-          onClick: (data: FormPropType) => {
+          onClick: async (data: FormPropType) => {
             if (
               operator?.role === "MR_HIGH_PERM"
               || data.answers.find(

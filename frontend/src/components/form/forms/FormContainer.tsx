@@ -16,7 +16,8 @@ export const FormContainer = ({ children, isLoading, isError, buttons }: PropsWi
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const { handleSubmit } = useFormContext<FormPropType>();
 
-  const onValid = (data: FormPropType) => buttons?.submitButtonProps?.onClick(data);
+  // eslint-disable-next-line no-return-await
+  const onValid = async (data: FormPropType) => await buttons?.submitButtonProps?.onClick(data);
 
   if (isError) {
     return <ErrorAlert />;

@@ -62,7 +62,7 @@ export const DuplicationForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.finalize",
-          onClick: (data: FormPropType) => {
+          onClick: async (data: FormPropType) => {
             // TODO: create phantom visit in DB
             const newPhantomVisit = createNewVisitFromFormData(data, VisitState.SIGNED);
             dummyVisits.push(newPhantomVisit);
@@ -75,7 +75,7 @@ export const DuplicationForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.saveChanges",
-          onClick: (_data: FormPropType) => setIsEditing(false),
+          onClick: async (_data: FormPropType) => setIsEditing(false),
         },
         buttonsProps: [
           {
@@ -99,7 +99,7 @@ export const DuplicationForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
-          onClick: (data: FormPropType) => {
+          onClick: async (data: FormPropType) => {
             // TODO: store changes in DB if made
             updateDummyVisitState(id, VisitState.DISAPPROVED);
             navigate(RoutingPaths.RECENT_VISITS);
@@ -120,7 +120,7 @@ export const DuplicationForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.finalize",
-          onClick: (data: FormPropType) => {
+          onClick: async (data: FormPropType) => {
             // TODO: store changes in DB if made
             const isApproved
               = operator?.role === "MR_HIGH_PERM"
