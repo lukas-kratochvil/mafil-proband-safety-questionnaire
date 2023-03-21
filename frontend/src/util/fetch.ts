@@ -72,10 +72,10 @@ export const createProbandVisitForm = async (visitFormData: FormPropType): Promi
         birthdate: visitFormData.birthdate ?? new Date(),
         genderId: visitFormData.gender?.id ?? "",
         nativeLanguageId: visitFormData.nativeLanguage?.id ?? "",
-        heightCm: typeof visitFormData.height === "number" ? visitFormData.height : 0,
-        weightKg: typeof visitFormData.weight === "number" ? visitFormData.weight : 0,
+        heightCm: typeof visitFormData.heightCm === "number" ? visitFormData.heightCm : 0,
+        weightKg: typeof visitFormData.weightKg === "number" ? visitFormData.weightKg : 0,
         visualCorrectionDioptre:
-          typeof visitFormData.visualCorrectionValue === "number" ? visitFormData.visualCorrectionValue : 0,
+          typeof visitFormData.visualCorrectionDioptre === "number" ? visitFormData.visualCorrectionDioptre : 0,
         handednessId: visitFormData.handedness?.id ?? "",
       },
       answers: visitFormData.answers.map((answer) => ({

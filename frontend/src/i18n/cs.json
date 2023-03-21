@@ -112,8 +112,8 @@
         "height": "Výška",
         "weight": "Váha",
         "visualCorrection": "Zraková korekce",
-        "visualCorrectionValue": "Hodnota zrakové korekce",
-        "visualCorrectionValueHint": "Kladné dioptrie značí dalekozrakost, což znamená, že vidíte hůře na blízko. Naopak záporné dioptrie značí krátkozrakost, tedy vidíte hůře na dálku.",
+        "visualCorrectionDioptre": "Hodnota zrakové korekce",
+        "visualCorrectionDioptreHint": "Kladné dioptrie značí dalekozrakost, což znamená, že vidíte hůře na blízko. Naopak záporné dioptrie značí krátkozrakost, tedy vidíte hůře na dálku.",
         "handedness": "Stranová dominance"
       },
       "projectInfo": {
@@ -142,9 +142,9 @@
         "birthdateMaxDate": "Maximální povolená hodnota pro datum narození je dnes.",
         "birthdateNotCorrespondToPersonalId": "Datum narození není shodné s hodnotou získanou z poskytnutého českého nebo slovenského rodného čísla.",
         "genderNotCorrespondToPersonalId": "Pohlaví není shodné s hodnotou získanou z poskytnutého českého nebo slovenského rodného čísla.",
-        "visualCorrectionValueNotEmptyNotZero": "Hodnota musí být vyplněna a nesmí se rovnat nule.",
-        "visualCorrectionValueTooLow": "Hodnota je příliš nízká.",
-        "visualCorrectionValueTooHigh": "Hodnota je příliš vysoká.",
+        "visualCorrectionDioptreNotEmptyNotZero": "Hodnota musí být vyplněna a nesmí se rovnat nule.",
+        "visualCorrectionDioptreTooLow": "Hodnota je příliš nízká.",
+        "visualCorrectionDioptreTooHigh": "Hodnota je příliš vysoká.",
         "safetyQuestionsRequired": "Všechny bezpečnostní otázky musí být zodpovězeny.",
         "probandContacts": "Pokud jste se rozhodli vyplnit kontaktní údaje, vyplňte prosím všechny možné."
       }

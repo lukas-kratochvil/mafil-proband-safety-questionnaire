@@ -38,7 +38,7 @@ describe("form proband info", () => {
     expect(container).toHaveTextContent(/form.probandInfo.height/);
     expect(container).toHaveTextContent(/form.probandInfo.weight/);
     expect(container).toHaveTextContent(/form.probandInfo.visualCorrection/);
-    expect(container).toHaveTextContent(/form.probandInfo.visualCorrectionValue/);
+    expect(container).toHaveTextContent(/form.probandInfo.visualCorrectionDioptre/);
     expect(container).toHaveTextContent(/form.probandInfo.handedness/);
   });
 

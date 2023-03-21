@@ -29,17 +29,17 @@ export const defaultFormSchema = object().shape(
       .required("form.validation.required"),
     gender: mixed<IGenderDTO>().nullable().required("form.validation.required"),
     nativeLanguage: mixed<INativeLanguageDTO>().nullable().required("form.validation.required"),
-    height: number()
+    heightCm: number()
       .typeError("form.validation.notValid")
       .positive("form.validation.positive")
       .required("form.validation.required"),
-    weight: number()
+    weightKg: number()
       .typeError("form.validation.notValid")
       .positive("form.validation.positive")
       .required("form.validation.required"),
     handedness: mixed<IHandednessDTO>().nullable().required("form.validation.required"),
     visualCorrection: mixed<IOption>().nullable().required("form.validation.required"),
-    visualCorrectionValue: number()
+    visualCorrectionDioptre: number()
       .default(0)
       // We are accepting dot and comma as decimal separators
       .transform((_value, originalValue) => Number(String(originalValue).replace(/,/, ".")))
@@ -48,9 +48,9 @@ export const defaultFormSchema = object().shape(
         is: getOption(visualCorrectionOptions, VisualCorrection.YES),
         then: number()
           .typeError("form.validation.notValid")
-          .notOneOf([0], "form.validation.visualCorrectionValueNotEmptyNotZero")
-          .min(-50, "form.validation.visualCorrectionValueTooLow")
-          .max(50, "form.validation.visualCorrectionValueTooHigh"),
+          .notOneOf([0], "form.validation.visualCorrectionDioptreNotEmptyNotZero")
+          .min(-50, "form.validation.visualCorrectionDioptreTooLow")
+          .max(50, "form.validation.visualCorrectionDioptreTooHigh"),
       })
       .required("form.validation.required"),
     answers: array().of(answersSchema).required("form.validation.required"),

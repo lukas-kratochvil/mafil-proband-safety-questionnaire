@@ -165,10 +165,10 @@ describe("proband form page", () => {
         birthdate: "",
         gender: "",
         nativeLanguage: "",
-        height: "",
-        weight: "",
+        heightCm: "",
+        weightKg: "",
         visualCorrection: "",
-        visualCorrectionValue: "0",
+        visualCorrectionDioptre: "0",
         handedness: "",
       })
     );
@@ -223,16 +223,16 @@ describe("proband form page", () => {
   //   setup();
   //   const user = userEvent.setup();
   //   const visualCorrectionInput = screen.getByLabelText("visualCorrection");
-  //   const visualCorrectionValueInput = screen.getByLabelText("visualCorrectionValue");
+  //   const visualCorrectionDioptreInput = screen.getByLabelText("visualCorrectionDioptre");
 
   //   await user.click(visualCorrectionInput);
   //   await user.click(screen.getByRole("option", { name: "form.enums.visualCorrection.YES" }));
-  //   await user.clear(visualCorrectionValueInput);
-  //   await user.type(visualCorrectionValueInput, "-1,5");
+  //   await user.clear(visualCorrectionDioptreInput);
+  //   await user.type(visualCorrectionDioptreInput, "-1,5");
   //   await user.click(visualCorrectionInput);
   //   await user.click(screen.getByRole("option", { name: "form.enums.visualCorrection.NO" }));
 
-  //   expect(visualCorrectionValueInput).toHaveValue("0");
+  //   expect(visualCorrectionDioptreInput).toHaveValue("0");
   // });
 
   test("submits form with all fields filled", async () => {
@@ -257,18 +257,18 @@ describe("proband form page", () => {
     await user.click(screen.getByRole("option", { name: selectedNativeLanguage }));
 
     const typedHeight = "173";
-    await user.type(screen.getByLabelText("height"), typedHeight);
+    await user.type(screen.getByLabelText("heightCm"), typedHeight);
 
     const typedWeight = "70";
-    await user.type(screen.getByLabelText("weight"), typedWeight);
+    await user.type(screen.getByLabelText("weightKg"), typedWeight);
 
     await user.click(screen.getByLabelText("visualCorrection"));
     const selectedVisualCorrection = "form.enums.visualCorrection.YES";
     await user.click(screen.getByRole("option", { name: selectedVisualCorrection }));
 
-    const typedVisualCorrectionValue = "-1,5";
-    await user.clear(screen.getByLabelText("visualCorrectionValue"));
-    await user.type(screen.getByLabelText("visualCorrectionValue"), typedVisualCorrectionValue);
+    const typedVisualCorrectionDioptre = "-1,5";
+    await user.clear(screen.getByLabelText("visualCorrectionDioptre"));
+    await user.type(screen.getByLabelText("visualCorrectionDioptre"), typedVisualCorrectionDioptre);
 
     await user.click(screen.getByLabelText("handedness"));
     const selectedHandedness = handednessUndetermined;
@@ -281,10 +281,10 @@ describe("proband form page", () => {
       birthdate: expectedBirthdate,
       gender: expectedGender,
       nativeLanguage: selectedNativeLanguage,
-      height: typedHeight,
-      weight: typedWeight,
+      heightCm: typedHeight,
+      weightKg: typedWeight,
       visualCorrection: selectedVisualCorrection,
-      visualCorrectionValue: typedVisualCorrectionValue,
+      visualCorrectionDioptre: typedVisualCorrectionDioptre,
       handedness: selectedHandedness,
     };
     expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);
@@ -344,18 +344,18 @@ describe("proband form page", () => {
     await user.click(screen.getByRole("option", { name: selectedNativeLanguage }));
 
     const typedHeight = "173";
-    await user.type(screen.getByLabelText("height"), typedHeight);
+    await user.type(screen.getByLabelText("heightCm"), typedHeight);
 
     const typedWeight = "70";
-    await user.type(screen.getByLabelText("weight"), typedWeight);
+    await user.type(screen.getByLabelText("weightKg"), typedWeight);
 
     await user.click(screen.getByLabelText("visualCorrection"));
     const selectedVisualCorrection = "form.enums.visualCorrection.YES";
     await user.click(screen.getByRole("option", { name: selectedVisualCorrection }));
 
-    const typedVisualCorrectionValue = "-1,5";
-    await user.clear(screen.getByLabelText("visualCorrectionValue"));
-    await user.type(screen.getByLabelText("visualCorrectionValue"), typedVisualCorrectionValue);
+    const typedVisualCorrectionDioptre = "-1,5";
+    await user.clear(screen.getByLabelText("visualCorrectionDioptre"));
+    await user.type(screen.getByLabelText("visualCorrectionDioptre"), typedVisualCorrectionDioptre);
 
     await user.click(screen.getByLabelText("handedness"));
     const selectedHandedness = handednessUndetermined;
@@ -374,10 +374,10 @@ describe("proband form page", () => {
       birthdate: expectedBirthdate,
       gender: expectedGender,
       nativeLanguage: selectedNativeLanguage,
-      height: typedHeight,
-      weight: typedWeight,
+      heightCm: typedHeight,
+      weightKg: typedWeight,
       visualCorrection: selectedVisualCorrection,
-      visualCorrectionValue: typedVisualCorrectionValue,
+      visualCorrectionDioptre: typedVisualCorrectionDioptre,
       handedness: selectedHandedness,
     };
     expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);
@@ -413,18 +413,18 @@ describe("proband form page", () => {
     await user.click(screen.getByRole("option", { name: selectedNativeLanguage }));
 
     const typedHeight = "173";
-    await user.type(screen.getByLabelText("height"), typedHeight);
+    await user.type(screen.getByLabelText("heightCm"), typedHeight);
 
     const typedWeight = "70";
-    await user.type(screen.getByLabelText("weight"), typedWeight);
+    await user.type(screen.getByLabelText("weightKg"), typedWeight);
 
     await user.click(screen.getByLabelText("visualCorrection"));
     const selectedVisualCorrection = "form.enums.visualCorrection.YES";
     await user.click(screen.getByRole("option", { name: selectedVisualCorrection }));
 
-    const typedVisualCorrectionValue = "-1,5";
-    await user.clear(screen.getByLabelText("visualCorrectionValue"));
-    await user.type(screen.getByLabelText("visualCorrectionValue"), typedVisualCorrectionValue);
+    const typedVisualCorrectionDioptre = "-1,5";
+    await user.clear(screen.getByLabelText("visualCorrectionDioptre"));
+    await user.type(screen.getByLabelText("visualCorrectionDioptre"), typedVisualCorrectionDioptre);
 
     await user.click(screen.getByLabelText("handedness"));
     const selectedHandedness = handednessUndetermined;
@@ -443,10 +443,10 @@ describe("proband form page", () => {
       birthdate: expectedBirthdate,
       gender: expectedGender,
       nativeLanguage: selectedNativeLanguage,
-      height: typedHeight,
-      weight: typedWeight,
+      heightCm: typedHeight,
+      weightKg: typedWeight,
       visualCorrection: selectedVisualCorrection,
-      visualCorrectionValue: typedVisualCorrectionValue,
+      visualCorrectionDioptre: typedVisualCorrectionDioptre,
       handedness: selectedHandedness,
     };
     expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);
@@ -493,18 +493,18 @@ describe("proband form page", () => {
     await user.click(screen.getByRole("option", { name: selectedNativeLanguage }));
 
     const typedHeight = "173";
-    await user.type(screen.getByLabelText("height"), typedHeight);
+    await user.type(screen.getByLabelText("heightCm"), typedHeight);
 
     const typedWeight = "70";
-    await user.type(screen.getByLabelText("weight"), typedWeight);
+    await user.type(screen.getByLabelText("weightKg"), typedWeight);
 
     await user.click(screen.getByLabelText("visualCorrection"));
     const selectedVisualCorrection = "form.enums.visualCorrection.YES";
     await user.click(screen.getByRole("option", { name: selectedVisualCorrection }));
 
-    const typedVisualCorrectionValue = "-1,5";
-    await user.clear(screen.getByLabelText("visualCorrectionValue"));
-    await user.type(screen.getByLabelText("visualCorrectionValue"), typedVisualCorrectionValue);
+    const typedVisualCorrectionDioptre = "-1,5";
+    await user.clear(screen.getByLabelText("visualCorrectionDioptre"));
+    await user.type(screen.getByLabelText("visualCorrectionDioptre"), typedVisualCorrectionDioptre);
 
     await user.click(screen.getByLabelText("handedness"));
     const selectedHandedness = handednessUndetermined;
@@ -523,10 +523,10 @@ describe("proband form page", () => {
       birthdate: expectedBirthdate,
       gender: expectedGender,
       nativeLanguage: selectedNativeLanguage,
-      height: typedHeight,
-      weight: typedWeight,
+      heightCm: typedHeight,
+      weightKg: typedWeight,
       visualCorrection: selectedVisualCorrection,
-      visualCorrectionValue: typedVisualCorrectionValue,
+      visualCorrectionDioptre: typedVisualCorrectionDioptre,
       handedness: selectedHandedness,
     };
     expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);

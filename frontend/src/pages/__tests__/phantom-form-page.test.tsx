@@ -173,11 +173,11 @@ describe("phantom form page", () => {
         birthdate: "",
         gender: "", // is set to 'Other' in the FormProbandInfo component
         nativeLanguage: "",
-        height: "",
-        weight: "",
+        heightCm: "",
+        weightKg: "",
         handedness: "",
         visualCorrection: "",
-        visualCorrectionValue: "0",
+        visualCorrectionDioptre: "0",
       })
     );
   });
@@ -206,16 +206,16 @@ describe("phantom form page", () => {
   //   setup();
   //   const user = userEvent.setup();
   //   const visualCorrectionInput = screen.getByLabelText("visualCorrection");
-  //   const visualCorrectionValueInput = screen.getByLabelText("visualCorrectionValue");
+  //   const visualCorrectionDioptreInput = screen.getByLabelText("visualCorrectionDioptre");
 
   //   await user.click(visualCorrectionInput);
   //   await user.click(screen.getByRole("option", { name: "form.enums.visualCorrection.YES" }));
-  //   await user.clear(visualCorrectionValueInput);
-  //   await user.type(visualCorrectionValueInput, "-1,5");
+  //   await user.clear(visualCorrectionDioptreInput);
+  //   await user.type(visualCorrectionDioptreInput, "-1,5");
   //   await user.click(visualCorrectionInput);
   //   await user.click(screen.getByRole("option", { name: "form.enums.visualCorrection.NO" }));
 
-  //   expect(visualCorrectionValueInput).toHaveValue("0");
+  //   expect(visualCorrectionDioptreInput).toHaveValue("0");
   // });
 
   test("submits form", async () => {
@@ -246,18 +246,18 @@ describe("phantom form page", () => {
     await user.click(screen.getByRole("option", { name: selectedNativeLanguage }));
 
     const typedHeight = "173";
-    await user.type(screen.getByLabelText("height"), typedHeight);
+    await user.type(screen.getByLabelText("heightCm"), typedHeight);
 
     const typedWeight = "70";
-    await user.type(screen.getByLabelText("weight"), typedWeight);
+    await user.type(screen.getByLabelText("weightKg"), typedWeight);
 
     await user.click(screen.getByLabelText("visualCorrection"));
     const selectedVisualCorrection = "form.enums.visualCorrection.YES";
     await user.click(screen.getByRole("option", { name: selectedVisualCorrection }));
 
-    const typedVisualCorrectionValue = "-1,5";
-    await user.clear(screen.getByLabelText("visualCorrectionValue"));
-    await user.type(screen.getByLabelText("visualCorrectionValue"), typedVisualCorrectionValue);
+    const typedVisualCorrectionDioptre = "-1,5";
+    await user.clear(screen.getByLabelText("visualCorrectionDioptre"));
+    await user.type(screen.getByLabelText("visualCorrectionDioptre"), typedVisualCorrectionDioptre);
 
     await user.click(screen.getByLabelText("handedness"));
     const selectedHandedness = handednessUndetermined;
@@ -273,11 +273,11 @@ describe("phantom form page", () => {
       birthdate: expectedBirthdate,
       gender: genderOther,
       nativeLanguage: selectedNativeLanguage,
-      height: typedHeight,
-      weight: typedWeight,
+      heightCm: typedHeight,
+      weightKg: typedWeight,
       handedness: selectedHandedness,
       visualCorrection: selectedVisualCorrection,
-      visualCorrectionValue: typedVisualCorrectionValue,
+      visualCorrectionDioptre: typedVisualCorrectionDioptre,
     };
     expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);
 
@@ -307,9 +307,9 @@ describe("phantom form page", () => {
     await user.click(screen.getByLabelText("nativeLanguage"));
     await user.click(screen.getByRole("option", { name: nativeLanguageCzech }));
 
-    await user.type(screen.getByLabelText("height"), "173");
+    await user.type(screen.getByLabelText("heightCm"), "173");
 
-    await user.type(screen.getByLabelText("weight"), "70");
+    await user.type(screen.getByLabelText("weightKg"), "70");
 
     await user.click(screen.getByLabelText("handedness"));
     await user.click(screen.getByRole("option", { name: handednessUndetermined }));
@@ -317,7 +317,7 @@ describe("phantom form page", () => {
     const finalizeButton = screen.getByRole("button", { name: "form.common.buttons.finalize" });
 
     /**
-     * Test case: visualCorrection = YES and visualCorrectionValue = 0
+     * Test case: visualCorrection = YES and visualCorrectionDioptre = 0
      * Expected result: does not submit the form
      */
     await user.click(screen.getByLabelText("visualCorrection"));
@@ -328,11 +328,11 @@ describe("phantom form page", () => {
     mockedUseNavigate.mockClear();
 
     /**
-     * Test case: visualCorrection = YES and visualCorrectionValue != 0
+     * Test case: visualCorrection = YES and visualCorrectionDioptre != 0
      * Expected result: submits the form
      */
-    await user.clear(screen.getByLabelText("visualCorrectionValue"));
-    await user.type(screen.getByLabelText("visualCorrectionValue"), "-1,5");
+    await user.clear(screen.getByLabelText("visualCorrectionDioptre"));
+    await user.type(screen.getByLabelText("visualCorrectionDioptre"), "-1,5");
     await user.click(finalizeButton);
     // TODO: change this to check calling POST method that will create a visit
     expect(mockedUseNavigate).toHaveBeenCalledOnce();

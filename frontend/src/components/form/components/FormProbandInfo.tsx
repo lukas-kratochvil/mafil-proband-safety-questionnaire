@@ -99,7 +99,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
 
   useEffect(() => {
     if (visualCorrectionOption?.value !== VisualCorrection.YES) {
-      resetField("visualCorrectionValue");
+      resetField("visualCorrectionDioptre");
     }
   }, [resetField, visualCorrectionOption]);
 
@@ -204,7 +204,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           md={4}
         >
           <FormTextField
-            name="height"
+            name="heightCm"
             label={t("height")}
             endAdornmentLabel="cm"
             disabled={disableInputs}
@@ -217,7 +217,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           md={4}
         >
           <FormTextField
-            name="weight"
+            name="weightKg"
             label={t("weight")}
             endAdornmentLabel="kg"
             disabled={disableInputs}
@@ -243,13 +243,13 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           md={4}
         >
           <FormTextField
-            name="visualCorrectionValue"
-            label={t("visualCorrectionValue")}
+            name="visualCorrectionDioptre"
+            label={t("visualCorrectionDioptre")}
             disabled={disableInputs || visualCorrectionOption?.value !== VisualCorrection.YES}
             endAdornmentLabel={
               <>
                 <Typography sx={{ marginRight: "0.75rem" }}>D</Typography>
-                <InfoTooltip text={t("visualCorrectionValueHint")} />
+                <InfoTooltip text={t("visualCorrectionDioptreHint")} />
               </>
             }
           />

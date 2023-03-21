@@ -55,12 +55,12 @@ interface IProbandInfo {
   surname: string;
   personalId: string;
   birthdate: Date;
-  height: number;
-  weight: number;
+  heightCm: number;
+  weightKg: number;
   gender: IGenderDTO;
   nativeLanguage: INativeLanguageDTO;
   visualCorrection: VisualCorrection;
-  visualCorrectionValue: number;
+  visualCorrectionDioptre: number;
   handedness: IHandednessDTO;
   email: string;
   phone: string;

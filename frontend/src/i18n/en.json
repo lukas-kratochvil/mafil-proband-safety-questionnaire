@@ -112,8 +112,8 @@
         "height": "Height",
         "weight": "Weight",
         "visualCorrection": "Visual correction",
-        "visualCorrectionValue": "Visual correction value",
-        "visualCorrectionValueHint": "Positive diopters indicate farsightedness, which means that you see worse up close. On the contrary, negative diopters indicate myopia, i.e. you see worse at a distance.",
+        "visualCorrectionDioptre": "Visual correction value",
+        "visualCorrectionDioptreHint": "Positive diopters indicate farsightedness, which means that you see worse up close. On the contrary, negative diopters indicate myopia, i.e. you see worse at a distance.",
         "handedness": "Handedness"
       },
       "projectInfo": {
@@ -142,9 +142,9 @@
         "birthdateMaxDate": "The maximum allowed date of birth is today.",
         "birthdateNotCorrespondToPersonalId": "The birthdate does not match the value obtained from the provided Czech or Slovak personal ID.",
         "genderNotCorrespondToPersonalId": "The gender does not match the value obtained from the provided Czech or Slovak personal ID.",
-        "visualCorrectionValueNotEmptyNotZero": "The value must be filled in and must not be equal to zero.",
-        "visualCorrectionValueTooLow": "The value is too low.",
-        "visualCorrectionValueTooHigh": "The value is too high.",
+        "visualCorrectionDioptreNotEmptyNotZero": "The value must be filled in and must not be equal to zero.",
+        "visualCorrectionDioptreTooLow": "The value is too low.",
+        "visualCorrectionDioptreTooHigh": "The value is too high.",
         "safetyQuestionsRequired": "All security questions must be answered.",
         "probandContacts": "If you chose to fill in contact information, please fill in all possible ones."
       }

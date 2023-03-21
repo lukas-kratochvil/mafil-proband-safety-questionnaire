@@ -24,11 +24,11 @@ export interface FormPropType {
   birthdate: Date | null;
   gender: IGenderDTO | null;
   nativeLanguage: INativeLanguageDTO | null;
-  height: TextFieldNumberInput;
-  weight: TextFieldNumberInput;
+  heightCm: TextFieldNumberInput;
+  weightKg: TextFieldNumberInput;
   handedness: IHandednessDTO | null;
   visualCorrection: IOption | null;
-  visualCorrectionValue: TextFieldNumberInput;
+  visualCorrectionDioptre: TextFieldNumberInput;
 
   // Safety questions
   answers: FormAnswer[];
