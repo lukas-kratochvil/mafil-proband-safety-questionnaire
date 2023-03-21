@@ -29,3 +29,9 @@ export type QuestionResponse = {
     question: IQuestionDTO;
   };
 };
+
+export type CreateProbandVisitFormResponse = {
+  createVisitForm: {
+    id: string;
+  };
+};

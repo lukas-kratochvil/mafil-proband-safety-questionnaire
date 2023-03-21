@@ -1,3 +1,5 @@
+import { AnswerOption } from "@app/interfaces/visit";
+
 type OperatorRole = "MR" | "MR_HIGH_PERM";
 
 export interface IOperatorDTO {
@@ -40,4 +42,34 @@ export interface IQuestionDTO {
   partNumber: number;
   mustBeApproved: boolean;
   translations: ITranslation[];
+}
+
+interface IAnswerDTO {
+  questionId: string;
+  answer: AnswerOption;
+}
+
+export interface ICreateVisitFormInput {
+  createVisitFormInput: {
+    probandLanguageCode: string;
+    probandInfo: {
+      name: string;
+      surname: string;
+      personalId: string;
+      birthdate: Date;
+      genderId: string;
+      nativeLanguageId: string;
+      heightCm: number;
+      weightKg: number;
+      visualCorrectionDioptre: number;
+      handednessId: string;
+      email?: string;
+      phone?: string;
+    };
+    answers: IAnswerDTO[];
+  };
+}
+
+export interface IVisitFormId {
+  id: string;
 }

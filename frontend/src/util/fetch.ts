@@ -1,9 +1,20 @@
 import axiosConfig from "@app/axios-config";
 import { trustedOperators } from "@app/data/operator_data";
 import { dummyVisits } from "@app/data/visit_data";
+import i18n from "@app/i18n";
 import { IAuthGateOperator } from "@app/interfaces/auth";
-import { IVisit, VisitState } from "@app/interfaces/visit";
-import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IOperatorDTO, IQuestionDTO } from "@app/util/server_API/dto";
+import { FormPropType } from "@app/interfaces/form";
+import { AnswerOption, IVisit, VisitState } from "@app/interfaces/visit";
+import {
+  ICreateVisitFormInput,
+  IGenderDTO,
+  IHandednessDTO,
+  INativeLanguageDTO,
+  IOperatorDTO,
+  IQuestionDTO,
+  IVisitFormId,
+} from "@app/util/server_API/dto";
+import { CREATE_PROBAND_VISIT_FORM } from "./server_API/mutations";
 import {
   GET_CURRENT_QUESTIONS,
   GET_GENDERS,
@@ -12,6 +23,7 @@ import {
   GET_QUESTION,
 } from "./server_API/queries";
 import {
+  CreateProbandVisitFormResponse,
   GendersResponse,
   HandednessesResponse,
   NativeLanguagesResponse,
@@ -49,6 +61,34 @@ export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO> =
   const variables = { id: questionId };
   const { data } = await axiosConfig.serverApi.post<QuestionResponse>("", { query: GET_QUESTION, variables });
   return data.data.question;
+};
+
+export const createProbandVisitForm = async (visitFormData: FormPropType): Promise<IVisitFormId> => {
+  const variables: ICreateVisitFormInput = {
+    createVisitFormInput: {
+      probandLanguageCode: i18n.language,
+      probandInfo: {
+        ...visitFormData,
+        birthdate: visitFormData.birthdate ?? new Date(),
+        genderId: visitFormData.gender?.id ?? "",
+        nativeLanguageId: visitFormData.nativeLanguage?.id ?? "",
+        heightCm: typeof visitFormData.height === "number" ? visitFormData.height : 0,
+        weightKg: typeof visitFormData.weight === "number" ? visitFormData.weight : 0,
+        visualCorrectionDioptre:
+          typeof visitFormData.visualCorrectionValue === "number" ? visitFormData.visualCorrectionValue : 0,
+        handednessId: visitFormData.handedness?.id ?? "",
+      },
+      answers: visitFormData.answers.map((answer) => ({
+        ...answer,
+        answer: answer.answer ?? AnswerOption.NO,
+      })),
+    },
+  };
+  const { data } = await axiosConfig.serverApi.post<CreateProbandVisitFormResponse>("", {
+    query: CREATE_PROBAND_VISIT_FORM,
+    variables,
+  });
+  return data.createVisitForm;
 };
 
 // TODO: get visits from DB

@@ -11,7 +11,7 @@ import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { FormSafetyInfo } from "@app/components/form/components/FormSafetyInfo";
 import { FormPropType, FormQac } from "@app/interfaces/form";
 import { RoutingPaths } from "@app/routing-paths";
-import { fetchCurrentQuestions } from "@app/util/fetch";
+import { createProbandVisitForm, fetchCurrentQuestions } from "@app/util/fetch";
 import { FormProbandContactCheckbox } from "../components/FormProbandContactCheckbox";
 import { FormProbandContactConsent } from "../components/FormProbandContactConsent";
 import { FormProbandContactRequest } from "../components/FormProbandContactRequest";
@@ -23,14 +23,6 @@ enum ProbandFormStep {
 }
 
 export const ProbandForm = () => {
-  const {
-    data: questions,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["currentQuestions"],
-    queryFn: fetchCurrentQuestions,
-  });
   const navigate = useNavigate();
   const { setError, setValue } = useFormContext<FormPropType>();
 
@@ -38,11 +30,17 @@ export const ProbandForm = () => {
   const [qacs, setQacs] = useState<FormQac[]>([]);
   const [isContactsRequestShown, setIsContactsRequestShown] = useState<boolean>(false);
 
+  const {
+    data: questions,
+    isLoading,
+    isError,
+  } = useQuery({ queryKey: ["currentQuestions"], queryFn: fetchCurrentQuestions });
+
   const contactsButtons: IFormButtonsProps = {
     submitButtonProps: {
       titleLocalizationKey: "form.common.buttons.complete",
       onClick: (data: FormPropType) => {
-        // TODO: create visit in DB
+        createProbandVisitForm(data);
         navigate(RoutingPaths.PROBAND_HOME);
       },
     },
