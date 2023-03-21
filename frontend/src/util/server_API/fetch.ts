@@ -14,14 +14,8 @@ import {
   IQuestionDTO,
   IVisitFormId,
 } from "@app/util/server_API/dto";
-import { CREATE_PROBAND_VISIT_FORM } from "./server_API/mutations";
-import {
-  GET_CURRENT_QUESTIONS,
-  GET_GENDERS,
-  GET_HANDEDNESSES,
-  GET_NATIVE_LANGUAGES,
-  GET_QUESTION,
-} from "./server_API/queries";
+import { CREATE_PROBAND_VISIT_FORM } from "./mutations";
+import { GET_CURRENT_QUESTIONS, GET_GENDERS, GET_HANDEDNESSES, GET_NATIVE_LANGUAGES, GET_QUESTION } from "./queries";
 import {
   CreateProbandVisitFormResponse,
   GendersResponse,
@@ -29,7 +23,7 @@ import {
   NativeLanguagesResponse,
   QuestionResponse,
   QuestionsResponse,
-} from "./server_API/response-types";
+} from "./response-types";
 
 // TODO: authorize against DB
 export const authenticateOperator = async (loggingOperator: IAuthGateOperator): Promise<IOperatorDTO | undefined> =>

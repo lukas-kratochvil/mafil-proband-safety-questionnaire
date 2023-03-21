@@ -7,7 +7,7 @@ import { useAuth } from "@app/hooks/auth/auth";
 import { defaultNS } from "@app/i18n";
 import { FormPropType, FormQac } from "@app/interfaces/form";
 import { AnswerOption } from "@app/interfaces/visit";
-import { fetchQuestion } from "@app/util/fetch";
+import { fetchQuestion } from "@app/util/server_API/fetch";
 import { FormRadioGroup } from "../inputs/FormRadioGroup";
 import { FormTextField } from "../inputs/FormTextField";
 import { IFormCardProps } from "../interfaces/form-card";

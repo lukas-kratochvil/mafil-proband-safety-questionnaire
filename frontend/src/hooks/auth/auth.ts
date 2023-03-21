@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { operatorMR, operatorSpecial } from "@app/data/operator_data";
 import { IAuth, IAuthGateOperator, IAuthMethod } from "@app/interfaces/auth";
 import { RoutingPaths } from "@app/routing-paths";
-import { authenticateOperator } from "@app/util/fetch";
 import { IOperatorDTO } from "@app/util/server_API/dto";
+import { authenticateOperator } from "@app/util/server_API/fetch";
 
 // defaultValue argument is only used when a component does not have a matching Provider above it in the tree – helpful for testing components in isolation
 export const authContext = createContext<IAuth>({} as IAuth);

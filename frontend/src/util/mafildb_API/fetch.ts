@@ -1,7 +1,7 @@
 import { devicesDev, projectsDev } from "@app/data/form_data";
 import { dummyVisits } from "@app/data/visit_data";
 import { IVisit, VisitState } from "@app/interfaces/visit";
-import { IDeviceDTO, IProjectDTO } from "./mafildb_API/dto";
+import { IDeviceDTO, IProjectDTO } from "./dto";
 
 // TODO: get projects from MAFILDB
 export const fetchProjects = async (): Promise<IProjectDTO[]> => projectsDev;

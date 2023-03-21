@@ -11,7 +11,7 @@ import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { FormSafetyInfo } from "@app/components/form/components/FormSafetyInfo";
 import { FormPropType, FormQac } from "@app/interfaces/form";
 import { RoutingPaths } from "@app/routing-paths";
-import { createProbandVisitForm, fetchCurrentQuestions } from "@app/util/fetch";
+import { createProbandVisitForm, fetchCurrentQuestions } from "@app/util/server_API/fetch";
 import { FormProbandContactCheckbox } from "../components/FormProbandContactCheckbox";
 import { FormProbandContactConsent } from "../components/FormProbandContactConsent";
 import { FormProbandContactRequest } from "../components/FormProbandContactRequest";

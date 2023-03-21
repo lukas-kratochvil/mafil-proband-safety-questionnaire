@@ -10,7 +10,7 @@ import { dummyVisits } from "@app/data/visit_data";
 import { FormPropType } from "@app/interfaces/form";
 import { AnswerOption, VisitState } from "@app/interfaces/visit";
 import { RoutingPaths } from "@app/routing-paths";
-import { fetchCurrentQuestions } from "@app/util/fetch";
+import { fetchCurrentQuestions } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormContainer } from "./FormContainer";
 

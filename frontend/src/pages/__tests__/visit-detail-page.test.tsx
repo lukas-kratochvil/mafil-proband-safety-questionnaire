@@ -3,7 +3,7 @@ import { genders, handednesses, nativeLanguages } from "@app/data/translated_ent
 import i18n from "@app/i18n";
 import { IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
 import VisitDetailPage from "@app/pages/VisitDetailPage";
-import * as mafildbFetchers from "@app/util/fetch-mafildb";
+import * as mafildbFetchers from "@app/util/mafildb_API/fetch";
 import { render, screen } from "@test-utils";
 
 //----------------------------------------------------------------------
