@@ -3,6 +3,7 @@ import { VisitForm, VisitFormState } from "@prisma/client";
 import { BaseEntity } from "@app/graphql/entities/base.entity";
 import { LanguageEntity } from "@app/language/entities/language.entity";
 import { AdditionalVisitFormInfoEntity } from "./additional-visit-form-info.entity";
+import { AnswerEntity } from "./answer.entity";
 import { ProbandInfoEntity } from "./proband-info.entity";
 
 registerEnumType(VisitFormState, {
@@ -29,6 +30,9 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
 
   @HideField()
   additionalInfoId: string | null;
+
+  @Field(() => [AnswerEntity])
+  answers: AnswerEntity[];
 
   @Field(() => VisitFormState)
   state: VisitFormState;

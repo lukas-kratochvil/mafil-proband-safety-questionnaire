@@ -8,6 +8,7 @@ export class CreateVisitFormInput {
   @Field()
   probandLanguageCode: string;
 
+  // additionalInfo object is used when creating Phantom visit form
   @Field(() => CreateAdditionalVisitFormInfoInput, { nullable: true })
   additionalInfo: CreateAdditionalVisitFormInfoInput | null;
 
