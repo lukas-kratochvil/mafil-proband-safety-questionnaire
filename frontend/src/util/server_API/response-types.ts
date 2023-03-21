@@ -30,8 +30,10 @@ export type QuestionResponse = {
   };
 };
 
-export type CreateProbandVisitFormResponse = {
-  createVisitForm: {
-    id: string;
+export type CreateVisitFormResponse = {
+  data: {
+    createVisitForm: {
+      id: string;
+    };
   };
 };

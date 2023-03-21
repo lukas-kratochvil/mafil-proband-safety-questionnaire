@@ -16,7 +16,7 @@ import {
 import { CREATE_VISIT_FORM } from "./mutations";
 import { GET_CURRENT_QUESTIONS, GET_GENDERS, GET_HANDEDNESSES, GET_NATIVE_LANGUAGES, GET_QUESTION } from "./queries";
 import {
-  CreateProbandVisitFormResponse,
+  CreateVisitFormResponse,
   GendersResponse,
   HandednessesResponse,
   NativeLanguagesResponse,
@@ -81,11 +81,11 @@ export const createProbandVisitForm = async (visitFormData: FormPropType): Promi
       })),
     },
   };
-  const { data } = await axiosConfig.serverApi.post<CreateProbandVisitFormResponse>("", {
+  const { data } = await axiosConfig.serverApi.post<CreateVisitFormResponse>("", {
     query: CREATE_VISIT_FORM,
     variables,
   });
-  return data.createVisitForm.id;
+  return data.data.createVisitForm.id;
 };
 
 // TODO: get visits from DB
