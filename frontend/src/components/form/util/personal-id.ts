@@ -92,13 +92,13 @@ export class CzechPersonalId {
   };
 }
 
-export const getPersonalIdFromBirthdateAndGender = (birthdate: Date, gender: IGenderDTO): string => {
-  const year = getYear(birthdate);
-  // month can be plus extra 20, but it's really a rare case when all the IDs are used up on the given day
+export const getPersonalIdPart = (birthdate: Date, gender: IGenderDTO): string => {
+  const year = getYear(birthdate) % 100;
+  // month can be plus extra 20 when all the IDs are used up on the given day, but it's really a rare case
   const month = getMonth(birthdate) + 1 + (gender.code === "F" ? FEMALE_CONST : 0);
   const day = getDate(birthdate);
 
-  const yearStr = year % 100;
+  const yearStr = year < 10 ? `0${year}` : year;
   const monthStr = month < 10 ? `0${month}` : month;
   const dayStr = day < 10 ? `0${day}` : day;
   return `${yearStr}${monthStr}${dayStr}`;

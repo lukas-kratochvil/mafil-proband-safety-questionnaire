@@ -17,7 +17,7 @@ import { FormDatePicker } from "../inputs/FormDatePicker";
 import { FormTextField } from "../inputs/FormTextField";
 import { IPhantomFormCardProps } from "../interfaces/form-card";
 import { visualCorrectionOptions } from "../util/options";
-import { CzechPersonalId, getPersonalIdFromBirthdateAndGender } from "../util/personal-id";
+import { CzechPersonalId, getPersonalIdPart } from "../util/personal-id";
 import { compareGenders, compareHandednesses, compareNativeLanguages, GenderCode } from "../util/utils";
 import { FormCardContainer } from "./FormCardContainer";
 
@@ -92,9 +92,8 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
       && Math.abs(differenceInCalendarYears(birthdateValue, Date.now())) < 200
       && genderEntity !== null
     ) {
-      setValue("personalId", getPersonalIdFromBirthdateAndGender(birthdateValue, genderEntity), {
-        shouldTouch: true,
-      });
+      const personalIdPart = getPersonalIdPart(birthdateValue, genderEntity);
+      setValue("personalId", personalIdPart, { shouldTouch: true });
     }
   }, [birthdateValue, genderEntity, getFieldState, personalIdValue, setValue]);
 

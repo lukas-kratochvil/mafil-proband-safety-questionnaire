@@ -220,26 +220,26 @@ describe("duplication form page", () => {
   test("renders values from the visit being duplicated", async () => {
     setup();
 
-    await waitFor(() =>
-      expect(screen.getByRole("form")).toHaveFormValues({
-        project: "",
-        device: "",
-        measurementDate: format(new Date(), "dd.MM.yyyy"),
-        name: visit.probandInfo.name,
-        surname: visit.probandInfo.surname,
-        personalId: visit.probandInfo.personalId,
-        birthdate: format(visit.probandInfo.birthdate, "dd.MM.yyyy"),
-        gender: visit.probandInfo.gender.translations[0].text,
-        nativeLanguage: visit.probandInfo.nativeLanguage.translations[0].text,
-        height: visit.probandInfo.height.toString(),
-        weight: visit.probandInfo.weight.toString(),
-        visualCorrection: "form.enums.visualCorrection.NO",
-        visualCorrectionValue: visit.probandInfo.visualCorrectionValue.toString(),
-        handedness: visit.probandInfo.handedness.translations[0].text,
-        email: visit.probandInfo.email,
-        phone: visit.probandInfo.phone,
-      })
-    );
+    const expectedFormValues = {
+      project: "",
+      device: "",
+      measurementDate: format(new Date(), "dd.MM.yyyy"),
+      name: visit.probandInfo.name,
+      surname: visit.probandInfo.surname,
+      personalId: visit.probandInfo.personalId,
+      birthdate: format(visit.probandInfo.birthdate, "dd.MM.yyyy"),
+      gender: visit.probandInfo.gender.translations[0].text,
+      nativeLanguage: visit.probandInfo.nativeLanguage.translations[0].text,
+      height: visit.probandInfo.height.toString(),
+      weight: visit.probandInfo.weight.toString(),
+      visualCorrection: "form.enums.visualCorrection.NO",
+      visualCorrectionValue: visit.probandInfo.visualCorrectionValue.toString(),
+      handedness: visit.probandInfo.handedness.translations[0].text,
+      email: visit.probandInfo.email,
+      phone: visit.probandInfo.phone,
+    };
+
+    await waitFor(() => expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues));
 
     const questions = await screen.findAllByRole("radiogroup");
     expect(questions.length).toEqual(questionData.length);

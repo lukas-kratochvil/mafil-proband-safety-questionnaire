@@ -1,4 +1,5 @@
-import { CzechPersonalId } from "../personal-id";
+import { genders } from "@app/data/translated_entities_data";
+import { CzechPersonalId, getPersonalIdPart } from "../personal-id";
 
 describe("personal ID", () => {
   describe("invalid inputs", () => {
@@ -36,7 +37,7 @@ describe("personal ID", () => {
     test.each([
       ["000606915", new Date(1900, 5, 6)],
       ["000606/915", new Date(1900, 5, 6)],
-    ])("valid male personal ID %s", (personalIdInput: string, expectedBirthdate: Date) => {
+    ])("valid MALE personal ID %s", (personalIdInput: string, expectedBirthdate: Date) => {
       const personalId = new CzechPersonalId(personalIdInput);
 
       expect(personalId.isValid()).toBeTruthy();
@@ -48,7 +49,7 @@ describe("personal ID", () => {
     test.each([
       ["006206915", new Date(1900, 11, 6)],
       ["006206/915", new Date(1900, 11, 6)],
-    ])("valid female personal ID %s", (personalIdInput: string, expectedBirthdate: Date) => {
+    ])("valid FEMALE personal ID %s", (personalIdInput: string, expectedBirthdate: Date) => {
       const personalId = new CzechPersonalId(personalIdInput);
 
       expect(personalId.isValid()).toBeTruthy();
@@ -66,7 +67,7 @@ describe("personal ID", () => {
       ["002606/1200", new Date(2000, 5, 6)], // month plus extra 20
       ["0032061205", new Date(2000, 11, 6)], // month plus extra 20
       ["003206/1205", new Date(2000, 11, 6)], // month plus extra 20
-    ])("valid male personal ID %s", (personalIdInput: string, expectedBirthdate: Date) => {
+    ])("valid MALE personal ID %s", (personalIdInput: string, expectedBirthdate: Date) => {
       const personalId = new CzechPersonalId(personalIdInput);
 
       expect(personalId.isValid()).toBeTruthy();
@@ -82,13 +83,41 @@ describe("personal ID", () => {
       ["007606/1260", new Date(2000, 5, 6)], // month plus extra 20
       ["0082061100", new Date(2000, 11, 6)], // month plus extra 20
       ["008206/1100", new Date(2000, 11, 6)], // month plus extra 20
-    ])("valid female personal ID %s", (personalIdInput: string, expectedBirthdate: Date) => {
+    ])("valid FEMALE personal ID %s", (personalIdInput: string, expectedBirthdate: Date) => {
       const personalId = new CzechPersonalId(personalIdInput);
 
       expect(personalId.isValid()).toBeTruthy();
       expect(personalId.isFemale()).toBeTruthy();
       expect(personalId.isMale()).toBeFalsy();
       expect(personalId.getBirthdate()).toEqual(expectedBirthdate);
+    });
+  });
+
+  describe("part of personal ID filled from birthdate and gender", () => {
+    test.each([
+      { birthdate: new Date(2000, 2, 1), expectedPersonalIdPart: "000301" },
+      { birthdate: new Date(2000, 2, 10), expectedPersonalIdPart: "000310" },
+      { birthdate: new Date(2010, 2, 1), expectedPersonalIdPart: "100301" },
+      { birthdate: new Date(2099, 2, 1), expectedPersonalIdPart: "990301" },
+    ])("valid MALE personalID part $expectedPersonalIdPart", ({ birthdate, expectedPersonalIdPart }) => {
+      const maleGender = genders[0];
+      const personalIdPart = getPersonalIdPart(birthdate, maleGender);
+
+      expect(personalIdPart.length).toBe(6);
+      expect(personalIdPart).toBe(expectedPersonalIdPart);
+    });
+
+    test.each([
+      { birthdate: new Date(2000, 2, 1), expectedPersonalIdPart: "005301" },
+      { birthdate: new Date(2000, 2, 10), expectedPersonalIdPart: "005310" },
+      { birthdate: new Date(2010, 2, 1), expectedPersonalIdPart: "105301" },
+      { birthdate: new Date(2099, 2, 1), expectedPersonalIdPart: "995301" },
+    ])("valid FEMALE personalID part $expectedPersonalIdPart", ({ birthdate, expectedPersonalIdPart }) => {
+      const femaleGender = genders[1];
+      const personalIdPart = getPersonalIdPart(birthdate, femaleGender);
+
+      expect(personalIdPart.length).toBe(6);
+      expect(personalIdPart).toBe(expectedPersonalIdPart);
     });
   });
 });
