@@ -3,13 +3,13 @@ import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n";
 import { IHandednessDTO } from "@app/util/server_API/dto";
+import { compareHandednesses } from "../util/utils";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormDefaultInputProps } from "./interfaces/input-props";
 
 interface IFormAutocompleteHandednessesProps extends IFormDefaultInputProps {
   options: IHandednessDTO[] | undefined;
-  compareFnc: (a: IHandednessDTO, b: IHandednessDTO, locale: string) => number;
   isLoading: boolean;
 }
 
@@ -19,7 +19,6 @@ export const FormAutocompleteHandednesses = ({
   isOptional,
   disabled,
   options,
-  compareFnc,
   isLoading,
 }: IFormAutocompleteHandednessesProps) => {
   const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
@@ -35,7 +34,7 @@ export const FormAutocompleteHandednesses = ({
         render={({ field }) => (
           <Autocomplete
             id={name}
-            options={options?.sort((a, b) => compareFnc(a, b, i18n.language)) || []}
+            options={options?.sort((a, b) => compareHandednesses(a, b, i18n.language)) || []}
             getOptionLabel={(option: IHandednessDTO) =>
               option.translations.find((trans) => trans.language.code === i18n.language)?.text
               || option.translations[0].text
