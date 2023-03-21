@@ -112,8 +112,8 @@ const questionData: IQuestionDTO[] = [
   },
 ];
 
-vi.mock("@app/util/fetch", async () => ({
-  ...((await vi.importActual("@app/util/fetch")) as Record<string, unknown>),
+vi.mock("@app/util/server_API/fetch", async () => ({
+  ...((await vi.importActual("@app/util/server_API/fetch")) as Record<string, unknown>),
   fetchGenders: async (): Promise<IGenderDTO[]> => genders,
   fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguages,
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednesses,
@@ -121,8 +121,8 @@ vi.mock("@app/util/fetch", async () => ({
   fetchQuestion: async (): Promise<IQuestionDTO> => questionData[0],
 }));
 
-vi.mock("@app/util/fetch-mafildb", async () => ({
-  ...((await vi.importActual("@app/util/fetch-mafildb")) as Record<string, unknown>),
+vi.mock("@app/util/mafildb_API/fetch", async () => ({
+  ...((await vi.importActual("@app/util/mafildb_API/fetch")) as Record<string, unknown>),
   fetchProjects: async (): Promise<IProjectDTO[]> => projectsDev,
   fetchDevices: async (): Promise<IDeviceDTO[]> => devicesDev,
 }));
