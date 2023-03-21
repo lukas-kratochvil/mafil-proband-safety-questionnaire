@@ -1,4 +1,4 @@
-export const CREATE_PROBAND_VISIT_FORM = `
+export const CREATE_VISIT_FORM = `
 mutation CreateVisitForm (
   $createVisitFormInput: CreateVisitFormInput!
 ) {

@@ -13,7 +13,7 @@ import {
   IOperatorDTO,
   IQuestionDTO,
 } from "@app/util/server_API/dto";
-import { CREATE_PROBAND_VISIT_FORM } from "./mutations";
+import { CREATE_VISIT_FORM } from "./mutations";
 import { GET_CURRENT_QUESTIONS, GET_GENDERS, GET_HANDEDNESSES, GET_NATIVE_LANGUAGES, GET_QUESTION } from "./queries";
 import {
   CreateProbandVisitFormResponse,
@@ -82,7 +82,7 @@ export const createProbandVisitForm = async (visitFormData: FormPropType): Promi
     },
   };
   const { data } = await axiosConfig.serverApi.post<CreateProbandVisitFormResponse>("", {
-    query: CREATE_PROBAND_VISIT_FORM,
+    query: CREATE_VISIT_FORM,
     variables,
   });
   return data.createVisitForm.id;
