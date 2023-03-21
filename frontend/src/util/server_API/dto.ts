@@ -70,7 +70,3 @@ export interface ICreateProbandVisitFormInput {
     answers: IAnswerDTO[];
   };
 }
-
-export interface IVisitFormId {
-  id: string;
-}

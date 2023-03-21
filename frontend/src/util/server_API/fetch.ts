@@ -12,7 +12,6 @@ import {
   INativeLanguageDTO,
   IOperatorDTO,
   IQuestionDTO,
-  IVisitFormId,
 } from "@app/util/server_API/dto";
 import { CREATE_PROBAND_VISIT_FORM } from "./mutations";
 import { GET_CURRENT_QUESTIONS, GET_GENDERS, GET_HANDEDNESSES, GET_NATIVE_LANGUAGES, GET_QUESTION } from "./queries";
@@ -57,7 +56,7 @@ export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO> =
   return data.data.question;
 };
 
-export const createProbandVisitForm = async (visitFormData: FormPropType): Promise<IVisitFormId> => {
+export const createProbandVisitForm = async (visitFormData: FormPropType): Promise<string> => {
   const variables: ICreateProbandVisitFormInput = {
     createVisitFormInput: {
       probandLanguageCode: i18n.language as LocalizationKeys,
@@ -86,7 +85,7 @@ export const createProbandVisitForm = async (visitFormData: FormPropType): Promi
     query: CREATE_PROBAND_VISIT_FORM,
     variables,
   });
-  return data.createVisitForm;
+  return data.createVisitForm.id;
 };
 
 // TODO: get visits from DB
