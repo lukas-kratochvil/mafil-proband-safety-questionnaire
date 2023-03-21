@@ -1,3 +1,4 @@
+import { LocalizationKeys } from "@app/i18n";
 import { AnswerOption } from "@app/interfaces/visit";
 
 type OperatorRole = "MR" | "MR_HIGH_PERM";
@@ -51,7 +52,7 @@ interface IAnswerDTO {
 
 export interface ICreateVisitFormInput {
   createVisitFormInput: {
-    probandLanguageCode: string;
+    probandLanguageCode: LocalizationKeys;
     probandInfo: {
       name: string;
       surname: string;

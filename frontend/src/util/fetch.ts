@@ -1,7 +1,7 @@
 import axiosConfig from "@app/axios-config";
 import { trustedOperators } from "@app/data/operator_data";
 import { dummyVisits } from "@app/data/visit_data";
-import i18n from "@app/i18n";
+import i18n, { LocalizationKeys } from "@app/i18n";
 import { IAuthGateOperator } from "@app/interfaces/auth";
 import { FormPropType } from "@app/interfaces/form";
 import { AnswerOption, IVisit, VisitState } from "@app/interfaces/visit";
@@ -66,7 +66,7 @@ export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO> =
 export const createProbandVisitForm = async (visitFormData: FormPropType): Promise<IVisitFormId> => {
   const variables: ICreateVisitFormInput = {
     createVisitFormInput: {
-      probandLanguageCode: i18n.language,
+      probandLanguageCode: i18n.language as LocalizationKeys,
       probandInfo: {
         ...visitFormData,
         birthdate: visitFormData.birthdate ?? new Date(),
