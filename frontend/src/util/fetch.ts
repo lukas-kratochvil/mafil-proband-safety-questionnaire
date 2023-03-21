@@ -6,7 +6,7 @@ import { IAuthGateOperator } from "@app/interfaces/auth";
 import { FormPropType } from "@app/interfaces/form";
 import { AnswerOption, IVisit, VisitState } from "@app/interfaces/visit";
 import {
-  ICreateVisitFormInput,
+  ICreateProbandVisitFormInput,
   IGenderDTO,
   IHandednessDTO,
   INativeLanguageDTO,
@@ -64,11 +64,13 @@ export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO> =
 };
 
 export const createProbandVisitForm = async (visitFormData: FormPropType): Promise<IVisitFormId> => {
-  const variables: ICreateVisitFormInput = {
+  const variables: ICreateProbandVisitFormInput = {
     createVisitFormInput: {
       probandLanguageCode: i18n.language as LocalizationKeys,
       probandInfo: {
-        ...visitFormData,
+        name: visitFormData.name,
+        surname: visitFormData.surname,
+        personalId: visitFormData.personalId,
         birthdate: visitFormData.birthdate ?? new Date(),
         genderId: visitFormData.gender?.id ?? "",
         nativeLanguageId: visitFormData.nativeLanguage?.id ?? "",
@@ -77,9 +79,11 @@ export const createProbandVisitForm = async (visitFormData: FormPropType): Promi
         visualCorrectionDioptre:
           typeof visitFormData.visualCorrectionDioptre === "number" ? visitFormData.visualCorrectionDioptre : 0,
         handednessId: visitFormData.handedness?.id ?? "",
+        email: visitFormData.email,
+        phone: visitFormData.phone,
       },
       answers: visitFormData.answers.map((answer) => ({
-        ...answer,
+        questionId: answer.questionId,
         answer: answer.answer ?? AnswerOption.NO,
       })),
     },

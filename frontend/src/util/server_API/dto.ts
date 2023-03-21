@@ -50,7 +50,7 @@ interface IAnswerDTO {
   answer: AnswerOption;
 }
 
-export interface ICreateVisitFormInput {
+export interface ICreateProbandVisitFormInput {
   createVisitFormInput: {
     probandLanguageCode: LocalizationKeys;
     probandInfo: {
@@ -64,8 +64,8 @@ export interface ICreateVisitFormInput {
       weightKg: number;
       visualCorrectionDioptre: number;
       handednessId: string;
-      email?: string;
-      phone?: string;
+      email: string;
+      phone: string;
     };
     answers: IAnswerDTO[];
   };
