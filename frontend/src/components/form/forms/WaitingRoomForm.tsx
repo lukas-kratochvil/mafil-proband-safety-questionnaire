@@ -156,7 +156,7 @@ export const WaitingRoomForm = () => {
   }, [getValues, id, isDisapproved, isEditing, navigate, operator?.role, setValue, trigger, valuesBeforeEditing]);
 
   const onMoveToApprovalRoom = (data: FormPropType) => {
-    // TODO: create IN_APPROVAL visit in the server DB
+    // TODO: update visit with IN_APPROVAL state in the server DB
     updateDummyVisitState(id, VisitState.IN_APPROVAL);
     setOpenFinalizeDialog(false);
     navigate(RoutingPaths.WAITING_ROOM);
