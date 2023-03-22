@@ -69,6 +69,14 @@
         "phone": "phone",
         "email": "e-mail"
       },
+      "finalizeDialog": {
+        "title": "Approval of the visit form",
+        "text": "The visit form will be sent for approval by the MR operator with a higher authority.",
+        "buttons": {
+          "continue": "Continue",
+          "cancel": "Cancel"
+        }
+      },
       "probandContact": {
         "title": "Contact information",
         "email": "E-mail",
@@ -172,16 +180,6 @@
         "waitingForSignatureConfirmation": "Waiting for signature confirmation",
         "completed": "Completed",
         "signed": "Signed"
-      }
-    },
-    "waitingRoomFormPage": {
-      "finalizeDialog": {
-        "title": "Approval of the visit form",
-        "text": "The visit form will be sent for approval by the MR operator with a higher authority.",
-        "buttons": {
-          "continue": "Continue",
-          "cancel": "Cancel"
-        }
       }
     },
     "waitingRoomTablePage": {

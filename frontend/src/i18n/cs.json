@@ -69,6 +69,14 @@
         "phone": "telefon",
         "email": "email"
       },
+      "finalizeDialog": {
+        "title": "Schválení formuláře visity",
+        "text": "Formulář visity bude odeslán ke schválení MR operátorem s vyšším oprávněním.",
+        "buttons": {
+          "continue": "Pokračovat",
+          "cancel": "Zrušit"
+        }
+      },
       "probandContact": {
         "title": "Kontaktní údaje",
         "email": "Email",
@@ -172,16 +180,6 @@
         "waitingForSignatureConfirmation": "Čeká se na potvrzení podpisu",
         "completed": "Dokončeno",
         "signed": "Podepsáno"
-      }
-    },
-    "waitingRoomFormPage": {
-      "finalizeDialog": {
-        "title": "Schválení formuláře visity",
-        "text": "Formulář visity bude odeslán ke schválení MR operátorem s vyšším oprávněním.",
-        "buttons": {
-          "continue": "Pokračovat",
-          "cancel": "Zrušit"
-        }
       }
     },
     "waitingRoomTablePage": {

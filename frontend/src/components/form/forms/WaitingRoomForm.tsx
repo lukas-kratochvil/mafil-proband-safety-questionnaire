@@ -1,17 +1,6 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Theme,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { IFormButtonsProps } from "@app/components/form/components/FormButtons";
 import { FormProbandContact } from "@app/components/form/components/FormProbandContact";
@@ -20,7 +9,6 @@ import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesFromVisit } from "@app/components/form/util/loaders";
 import { useAuth } from "@app/hooks/auth/auth";
-import { defaultNS } from "@app/i18n";
 import { FormPropType, FormQac } from "@app/interfaces/form";
 import { QuestionPartNumber } from "@app/interfaces/question";
 import { AnswerOption, VisitState } from "@app/interfaces/visit";
@@ -29,12 +17,10 @@ import { updateDummyVisitState } from "@app/util/fetch.dev";
 import { fetchVisitForm } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
+import { FormFinalizeDialog } from "../components/FormFinalizeDialog";
 import { FormContainer } from "./FormContainer";
 
 export const WaitingRoomForm = () => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomFormPage.finalizeDialog" });
-  const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
-
   const { id } = useParams();
   const {
     data: visit,
@@ -43,7 +29,7 @@ export const WaitingRoomForm = () => {
   } = useQuery({ queryKey: ["visitForm", id], queryFn: () => fetchVisitForm(id) });
   const navigate = useNavigate();
   const { operator } = useAuth();
-  const { getValues, handleSubmit, setValue, trigger } = useFormContext<FormPropType>();
+  const { getValues, setValue, trigger } = useFormContext<FormPropType>();
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [valuesBeforeEditing, setValuesBeforeEditing] = useState<FormPropType>();
@@ -155,7 +141,7 @@ export const WaitingRoomForm = () => {
     }
   }, [getValues, id, isDisapproved, isEditing, navigate, operator?.role, setValue, trigger, valuesBeforeEditing]);
 
-  const onMoveToApprovalRoom = (data: FormPropType) => {
+  const moveToApprovalRoom = async (data: FormPropType) => {
     // TODO: update visit with IN_APPROVAL state in the server DB
     updateDummyVisitState(id, VisitState.IN_APPROVAL);
     setOpenFinalizeDialog(false);
@@ -182,20 +168,11 @@ export const WaitingRoomForm = () => {
         disableInputs={!isEditing}
       />
       {isDisapproved && <FormDisapprovalReason />}
-      <Dialog
-        // Warning dialog that the visit form has to be approved by an operator with higher permissions
-        open={openFinalizeDialog}
-        fullScreen={matchesDownSmBreakpoint}
-      >
-        <DialogTitle>{t("title")}</DialogTitle>
-        <DialogContent>
-          <Typography>{t("text")}</Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => handleSubmit(onMoveToApprovalRoom)()}>{t("buttons.continue")}</Button>
-          <Button onClick={() => setOpenFinalizeDialog(false)}>{t("buttons.cancel")}</Button>
-        </DialogActions>
-      </Dialog>
+      <FormFinalizeDialog
+        isOpen={openFinalizeDialog}
+        setIsOpen={setOpenFinalizeDialog}
+        onContinue={moveToApprovalRoom}
+      />
     </FormContainer>
   );
 };
