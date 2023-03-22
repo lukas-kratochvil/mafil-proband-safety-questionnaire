@@ -51,7 +51,6 @@ entity AdditionalVisitFormInfo {
   * projectAcronym: String
   * deviceId: <<UUID>>
   * deviceName: String
-  * isPhantom: Boolean
   * measuredAt: Date
   * finalizedAt: Date
 }

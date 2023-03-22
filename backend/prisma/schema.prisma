@@ -72,7 +72,6 @@ model AdditionalVisitFormInfo {
   projectAcronym String    @db.VarChar(30)
   deviceId       String    @db.VarChar(35)
   deviceName     String    @db.VarChar(200)
-  isPhantom      Boolean   @default(false)
   measuredAt     DateTime
   finalizedAt    DateTime
 }
