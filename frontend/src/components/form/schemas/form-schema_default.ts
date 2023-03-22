@@ -17,7 +17,7 @@ export const answersSchema = object({
   comment: string().nullable(),
 });
 
-const phoneNumberRegex = /^$|^(\+|00)?[1-9]{1}[0-9,\s]{3,}$/;
+const PHONE_NUMBER_REGEX = /^$|^(\+|00)?[1-9]{1}[0-9,\s]{3,}$/;
 
 export const defaultFormSchema = object().shape(
   {
@@ -67,9 +67,9 @@ export const defaultFormSchema = object().shape(
       .trim()
       .when("email", {
         is: "",
-        then: string().matches(phoneNumberRegex, "form.validation.notValid"),
+        then: string().matches(PHONE_NUMBER_REGEX, "form.validation.notValid"),
         otherwise: string()
-          .matches(phoneNumberRegex, "form.validation.notValid")
+          .matches(PHONE_NUMBER_REGEX, "form.validation.notValid")
           .required("form.validation.probandContacts"),
       }),
   },
