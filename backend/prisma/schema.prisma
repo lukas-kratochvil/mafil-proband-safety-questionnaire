@@ -14,7 +14,6 @@ model Operator {
   id String @id @default(uuid()) @db.Uuid
 
   finalizedVisits AdditionalVisitFormInfo[] @relation(name: "FinalizedBy")
-  approvedVisits  AdditionalVisitFormInfo[] @relation(name: "ApprovedBy")
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -64,8 +63,6 @@ model AdditionalVisitFormInfo {
   visitFormId String    @unique @db.Uuid
   finalizer   Operator  @relation(name: "FinalizedBy", fields: [finalizerId], references: [id])
   finalizerId String    @db.Uuid
-  approver    Operator? @relation(name: "ApprovedBy", fields: [approverId], references: [id])
-  approverId  String?   @db.Uuid
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -78,7 +75,6 @@ model AdditionalVisitFormInfo {
   isPhantom      Boolean   @default(false)
   measuredAt     DateTime
   finalizedAt    DateTime
-  approvedAt     DateTime?
 }
 
 model ProbandInfo {

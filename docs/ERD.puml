@@ -42,7 +42,6 @@ entity AdditionalVisitFormInfo {
   * id: <<UUID>>
   * visitFormId: <<FK>>
   * operatorId: <<FK>>
-  approverId: <<FK>>
   ---
   * createdAt: Date
   * modifiedAt: Date
@@ -55,7 +54,6 @@ entity AdditionalVisitFormInfo {
   * isPhantom: Boolean
   * measuredAt: Date
   * finalizedAt: Date
-  approvedAt: Date
 }
 
 entity ProbandInfo {
@@ -207,7 +205,6 @@ entity Language {
 
 Operator }o..|| OperatorRole
 Operator ||..o{ AdditionalVisitFormInfo : finalized by
-Operator |o..o{ AdditionalVisitFormInfo : approved by
 VisitForm }o..|| VisitFormState
 VisitForm ||..o| AdditionalVisitFormInfo
 VisitForm }|..|| ProbandInfo
