@@ -167,7 +167,7 @@ export const DuplicationForm = () => {
     valuesBeforeEditing,
   ]);
 
-  const createInApprovalRoom = async (data: FormPropType) => {
+  const createVisitFormInApprovalRoom = async (data: FormPropType) => {
     // TODO: create IN_APPROVAL visit in the server DB
     const visitInApproval = createNewVisitFromFormData(data, VisitState.IN_APPROVAL);
     dummyVisits.push(visitInApproval);
@@ -202,7 +202,7 @@ export const DuplicationForm = () => {
           <FormFinalizeDialog
             isOpen={openFinalizeDialog}
             setIsOpen={setOpenFinalizeDialog}
-            onContinue={createInApprovalRoom}
+            onContinue={createVisitFormInApprovalRoom}
           />
         </>
       )}
