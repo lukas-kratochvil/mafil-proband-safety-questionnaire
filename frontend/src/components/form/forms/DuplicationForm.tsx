@@ -19,6 +19,7 @@ import { updateDummyVisitState } from "@app/util/fetch.dev";
 import { fetchVisit } from "@app/util/mafildb_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
+import { FormFinalizeDialog } from "../components/FormFinalizeDialog";
 import { FormContainer } from "./FormContainer";
 
 export const DuplicationForm = () => {
@@ -32,6 +33,7 @@ export const DuplicationForm = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [valuesBeforeEditing, setValuesBeforeEditing] = useState<FormPropType>();
   const [isDisapproved, setIsDisapproved] = useState<boolean>(false);
+  const [openFinalizeDialog, setOpenFinalizeDialog] = useState<boolean>(false);
   const [qacs, setQacs] = useState<FormQac[]>([]);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
 
@@ -125,10 +127,8 @@ export const DuplicationForm = () => {
               dummyVisits.push(approvedVisit);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${approvedVisit.id}`);
             } else {
-              // TODO: create IN_APPROVAL visit in the server DB
-              const visitInApproval = createNewVisitFromFormData(data, VisitState.IN_APPROVAL);
-              dummyVisits.push(visitInApproval);
-              navigate(RoutingPaths.RECENT_VISITS);
+              // open warning dialog that the visit form has to be approved by an operator with higher permissions
+              setOpenFinalizeDialog(true);
             }
           },
         },
@@ -167,6 +167,13 @@ export const DuplicationForm = () => {
     valuesBeforeEditing,
   ]);
 
+  const createInApprovalRoom = async (data: FormPropType) => {
+    // TODO: create IN_APPROVAL visit in the server DB
+    const visitInApproval = createNewVisitFromFormData(data, VisitState.IN_APPROVAL);
+    dummyVisits.push(visitInApproval);
+    navigate(RoutingPaths.RECENT_VISITS);
+  };
+
   return (
     <FormContainer
       isLoading={isLoading}
@@ -192,6 +199,11 @@ export const DuplicationForm = () => {
             disableInputs={!isEditing}
           />
           {isDisapproved && <FormDisapprovalReason />}
+          <FormFinalizeDialog
+            isOpen={openFinalizeDialog}
+            setIsOpen={setOpenFinalizeDialog}
+            onContinue={createInApprovalRoom}
+          />
         </>
       )}
     </FormContainer>
