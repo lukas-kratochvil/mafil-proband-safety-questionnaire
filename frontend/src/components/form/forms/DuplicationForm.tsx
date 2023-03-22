@@ -23,14 +23,7 @@ import { FormContainer } from "./FormContainer";
 
 export const DuplicationForm = () => {
   const { id } = useParams();
-  const {
-    data: visit,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["visitForm", id],
-    queryFn: () => fetchVisit(id),
-  });
+  const { data: visit, isLoading, isError } = useQuery({ queryKey: ["visitForm", id], queryFn: () => fetchVisit(id) });
   const navigate = useNavigate();
   const { operator } = useAuth();
   const { getValues, setValue, trigger } = useFormContext<FormPropType>();
@@ -63,7 +56,7 @@ export const DuplicationForm = () => {
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.finalize",
           onClick: async (data: FormPropType) => {
-            // TODO: create phantom visit in DB
+            // TODO: create PHANTOM_DONE visit in the MAFILDB
             const newPhantomVisit = createNewVisitFromFormData(data, VisitState.SIGNED);
             dummyVisits.push(newPhantomVisit);
             navigate(`${RoutingPaths.RECENT_VISITS}/visit/${newPhantomVisit.id}`);
@@ -100,7 +93,7 @@ export const DuplicationForm = () => {
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
           onClick: async (data: FormPropType) => {
-            // TODO: store changes in DB if made
+            // TODO: create DISAPPROVED visit in the MAFILDB
             updateDummyVisitState(id, VisitState.DISAPPROVED);
             navigate(RoutingPaths.RECENT_VISITS);
           },
@@ -121,21 +114,20 @@ export const DuplicationForm = () => {
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.finalize",
           onClick: async (data: FormPropType) => {
-            // TODO: store changes in DB if made
-            const isApproved
-              = operator?.role === "MR_HIGH_PERM"
+            if (
+              operator?.role === "MR_HIGH_PERM"
               || data.answers.find(
                 (answer) => answer.partNumber === QuestionPartNumber.TWO && answer.answer === AnswerOption.YES
-              ) === undefined;
-            const newVisit = createNewVisitFromFormData(
-              data,
-              isApproved ? VisitState.APPROVED : VisitState.IN_APPROVAL
-            );
-            dummyVisits.push(newVisit);
-
-            if (isApproved) {
-              navigate(`${RoutingPaths.RECENT_VISITS}/visit/${newVisit.id}`);
+              ) === undefined
+            ) {
+              // TODO: create APPROVED visit in the MAFILDB
+              const approvedVisit = createNewVisitFromFormData(data, VisitState.APPROVED);
+              dummyVisits.push(approvedVisit);
+              navigate(`${RoutingPaths.RECENT_VISITS}/visit/${approvedVisit.id}`);
             } else {
+              // TODO: create IN_APPROVAL visit in the server DB
+              const visitInApproval = createNewVisitFromFormData(data, VisitState.IN_APPROVAL);
+              dummyVisits.push(visitInApproval);
               navigate(RoutingPaths.RECENT_VISITS);
             }
           },

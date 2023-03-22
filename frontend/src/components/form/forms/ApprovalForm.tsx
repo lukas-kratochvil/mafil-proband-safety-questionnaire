@@ -83,7 +83,7 @@ export const ApprovalForm = () => {
           submitButtonProps: {
             titleLocalizationKey: "form.common.buttons.confirmDisapproval",
             onClick: async (data: FormPropType) => {
-              // TODO: store changes in DB if made
+              // TODO: create DISAPPROVED visit in the MAFILDB
               updateDummyVisitState(id, VisitState.DISAPPROVED);
               navigate(RoutingPaths.APPROVAL_ROOM);
             },
@@ -104,7 +104,7 @@ export const ApprovalForm = () => {
           submitButtonProps: {
             titleLocalizationKey: "form.common.buttons.approve",
             onClick: async (data: FormPropType) => {
-              // TODO: store changes in DB if made
+              // TODO: create APPROVED visit in the MAFILDB
               updateDummyVisitState(id, VisitState.APPROVED);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${id}`);
             },
@@ -134,7 +134,7 @@ export const ApprovalForm = () => {
     } else {
       setFormButtons({
         submitButtonProps: undefined,
-        // Even though it's the only button, it doesn't have 'submit' type because MUI uses <span> for buttons
+        // Even though the 'Back button' is the only button in the form, it doesn't have 'submit' type because MUI uses <span> for buttons
         buttonsProps: [getBackButtonProps(navigate)],
       });
     }

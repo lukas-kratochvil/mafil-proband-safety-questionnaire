@@ -40,10 +40,7 @@ export const WaitingRoomForm = () => {
     data: visit,
     isLoading,
     isError,
-  } = useQuery({
-    queryKey: ["visitForm", id],
-    queryFn: () => fetchVisitForm(id),
-  });
+  } = useQuery({ queryKey: ["visitForm", id], queryFn: () => fetchVisitForm(id) });
   const navigate = useNavigate();
   const { operator } = useAuth();
   const { getValues, handleSubmit, setValue, trigger } = useFormContext<FormPropType>();
@@ -98,7 +95,7 @@ export const WaitingRoomForm = () => {
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
           onClick: async (data: FormPropType) => {
-            // TODO: store changes in DB
+            // TODO: create DISAPPROVED visit in the MAFILDB
             updateDummyVisitState(id, VisitState.DISAPPROVED);
             navigate(RoutingPaths.WAITING_ROOM);
           },
@@ -125,10 +122,11 @@ export const WaitingRoomForm = () => {
                 (answer) => answer.partNumber === QuestionPartNumber.TWO && answer.answer === AnswerOption.YES
               ) === undefined
             ) {
-              // TODO: store changes in DB
+              // TODO: create APPROVED visit in the MAFILDB
               updateDummyVisitState(id, VisitState.APPROVED);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${id}`);
             } else {
+              // open warning dialog that the visit form has to be approved by an operator with higher permissions
               setOpenFinalizeDialog(true);
             }
           },
@@ -157,8 +155,8 @@ export const WaitingRoomForm = () => {
     }
   }, [getValues, id, isDisapproved, isEditing, navigate, operator?.role, setValue, trigger, valuesBeforeEditing]);
 
-  const onSubmit = (data: FormPropType) => {
-    // TODO: store changes in DB
+  const onMoveToApprovalRoom = (data: FormPropType) => {
+    // TODO: create IN_APPROVAL visit in the server DB
     updateDummyVisitState(id, VisitState.IN_APPROVAL);
     setOpenFinalizeDialog(false);
     navigate(RoutingPaths.WAITING_ROOM);
@@ -185,6 +183,7 @@ export const WaitingRoomForm = () => {
       />
       {isDisapproved && <FormDisapprovalReason />}
       <Dialog
+        // Warning dialog that the visit form has to be approved by an operator with higher permissions
         open={openFinalizeDialog}
         fullScreen={matchesDownSmBreakpoint}
       >
@@ -193,7 +192,7 @@ export const WaitingRoomForm = () => {
           <Typography>{t("text")}</Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => handleSubmit(onSubmit)()}>{t("buttons.continue")}</Button>
+          <Button onClick={() => handleSubmit(onMoveToApprovalRoom)()}>{t("buttons.continue")}</Button>
           <Button onClick={() => setOpenFinalizeDialog(false)}>{t("buttons.cancel")}</Button>
         </DialogActions>
       </Dialog>

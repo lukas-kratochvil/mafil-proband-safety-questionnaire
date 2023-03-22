@@ -28,7 +28,7 @@ export const PhantomForm = () => {
     submitButtonProps: {
       titleLocalizationKey: "form.common.buttons.finalize",
       onClick: async (data: FormPropType) => {
-        // TODO: create phantom visit in MAFILDB -> returns visitID -> generate operator PDF -> store PDF in MAFILDB -> redirect to this visit page
+        // TODO: create PHANTOM_DONE visit in the MAFILDB
         const newPhantomVisit = createNewVisitFromFormData(data, VisitState.SIGNED);
         dummyVisits.push(newPhantomVisit);
         navigate(`${RoutingPaths.RECENT_VISITS}/visit/${newPhantomVisit.id}`);
