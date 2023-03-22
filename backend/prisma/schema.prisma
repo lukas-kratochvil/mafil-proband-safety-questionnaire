@@ -54,10 +54,6 @@ model VisitForm {
 enum VisitFormState {
   NEW
   IN_APPROVAL
-  APPROVED
-  DISAPPROVED
-  FOR_SIGNATURE
-  SIGNED
   DELETED
 }
 
