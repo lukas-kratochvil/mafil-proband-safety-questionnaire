@@ -30,7 +30,6 @@ entity VisitForm {
   deletedAt: Date
   ---
   * state: VisitFormState
-  visitId: String
 }
 
 enum VisitFormState {

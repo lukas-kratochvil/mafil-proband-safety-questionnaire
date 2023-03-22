@@ -49,7 +49,6 @@ model VisitForm {
   deletedAt DateTime?
 
   state   VisitFormState @default(NEW)
-  visitId String?        @db.VarChar(50) @default("")
 }
 
 enum VisitFormState {
