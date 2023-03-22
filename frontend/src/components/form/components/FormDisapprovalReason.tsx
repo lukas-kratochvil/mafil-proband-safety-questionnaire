@@ -12,6 +12,7 @@ export const FormDisapprovalReason = () => {
         name="disapprovalReason"
         label={t("reason")}
         isMultiline
+        hasAutoFocus
       />
     </FormCardContainer>
   );

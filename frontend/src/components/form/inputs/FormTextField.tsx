@@ -10,6 +10,7 @@ interface IFormTextFieldProps extends IFormDefaultInputProps {
   isMultiline?: boolean;
   hasAutocomplete?: boolean;
   endAdornmentLabel?: ReactNode;
+  hasAutoFocus?: boolean;
 }
 
 export const FormTextField = ({
@@ -22,6 +23,7 @@ export const FormTextField = ({
   isMultiline,
   hasAutocomplete,
   endAdornmentLabel,
+  hasAutoFocus,
 }: IFormTextFieldProps) => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
@@ -43,6 +45,7 @@ export const FormTextField = ({
             size={isSmall || matchesDownSmBreakpoint ? "small" : "medium"}
             multiline={isMultiline}
             autoComplete={hasAutocomplete ? "on" : "off"}
+            autoFocus={hasAutoFocus}
             InputProps={{
               endAdornment: <InputAdornment position="end">{endAdornmentLabel}</InputAdornment>,
             }}
