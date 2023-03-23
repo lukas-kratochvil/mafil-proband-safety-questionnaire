@@ -1,6 +1,5 @@
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { operatorMR, operatorSpecial } from "@app/data/operator_data";
 import { IAuth, IAuthGateOperator, IAuthMethod } from "@app/interfaces/auth";
 import { RoutingPaths } from "@app/routing-paths";
 import { IOperatorDTO } from "@app/util/server_API/dto";
@@ -17,21 +16,13 @@ export const useAuthProvider = (): IAuth => {
   });
 
   const logIn = async (authMethod: IAuthMethod) => {
-    let loggingOperator: IAuthGateOperator;
-
-    switch (authMethod) {
-      case IAuthMethod.MUNI:
-        // TODO: call the actual MUNI authentication gate
-        loggingOperator = { ...operatorMR };
-        break;
-      case IAuthMethod.MUNI_HIGHER_PERMISSION:
-        // TODO: delete this case - only for test purposes
-        loggingOperator = { ...operatorSpecial };
-        break;
-      default:
-        throw new Error(`'${IAuthMethod[authMethod]}' authentication method is not implemented!`);
-    }
-
+    // TODO: call the actual MUNI authentication gate
+    const loggingOperator: IAuthGateOperator = {
+      name: "Operator",
+      surname: authMethod === IAuthMethod.MUNI_HIGHER_PERMISSION ? "Special" : "MR",
+      uco: authMethod === IAuthMethod.MUNI_HIGHER_PERMISSION ? "987654" : "123456",
+      email: authMethod === IAuthMethod.MUNI_HIGHER_PERMISSION ? "987654@muni.cz" : "123456@muni.cz",
+    };
     const fetchedOperator = await authenticateOperator(loggingOperator);
 
     if (fetchedOperator === undefined) {

@@ -1,5 +1,4 @@
 import axiosConfig from "@app/axios-config";
-import { trustedOperators } from "@app/data/operator_data";
 import { dummyVisits } from "@app/data/visit_data";
 import i18n, { LocalizationKeys } from "@app/i18n";
 import { IAuthGateOperator } from "@app/interfaces/auth";
@@ -14,8 +13,16 @@ import {
   IQuestionDTO,
 } from "@app/util/server_API/dto";
 import { CREATE_VISIT_FORM } from "./mutations";
-import { GET_CURRENT_QUESTIONS, GET_GENDERS, GET_HANDEDNESSES, GET_NATIVE_LANGUAGES, GET_QUESTION } from "./queries";
 import {
+  AUTHENTICATE_OPERATOR,
+  GET_CURRENT_QUESTIONS,
+  GET_GENDERS,
+  GET_HANDEDNESSES,
+  GET_NATIVE_LANGUAGES,
+  GET_QUESTION,
+} from "./queries";
+import {
+  AuthenticateOperatorResponse,
   CreateVisitFormResponse,
   GendersResponse,
   HandednessesResponse,
@@ -24,11 +31,14 @@ import {
   QuestionsResponse,
 } from "./response-types";
 
-// TODO: authorize against DB
-export const authenticateOperator = async (loggingOperator: IAuthGateOperator): Promise<IOperatorDTO | undefined> =>
-  trustedOperators.find(
-    (op) => op.name === loggingOperator.name && op.surname === loggingOperator.surname && op.uco === loggingOperator.uco
-  );
+export const authenticateOperator = async (loggingOperator: IAuthGateOperator): Promise<IOperatorDTO | undefined> => {
+  const variables: IAuthGateOperator = { ...loggingOperator };
+  const { data } = await axiosConfig.serverApi.post<AuthenticateOperatorResponse>("", {
+    query: AUTHENTICATE_OPERATOR,
+    variables,
+  });
+  return { ...loggingOperator, ...data.data.authenticateOperator };
+};
 
 export const fetchGenders = async (): Promise<IGenderDTO[]> => {
   const { data } = await axiosConfig.serverApi.post<GendersResponse>("", { query: GET_GENDERS });

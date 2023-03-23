@@ -1,3 +1,12 @@
+export const AUTHENTICATE_OPERATOR = `
+query AuthenticateOperator($name: String!, $surname: String!, $uco: String!, $email: String!) {
+  authenticateOperator(name: $name, surname: $surname, uco: $uco, email: $email) {
+    id,
+    role
+  }
+}
+`;
+
 export const GET_GENDERS = `
 query GetGenders {
   genders {

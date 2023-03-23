@@ -1,4 +1,13 @@
-import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IQuestionDTO } from "./dto";
+import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IQuestionDTO, OperatorRole } from "./dto";
+
+export type AuthenticateOperatorResponse = {
+  data: {
+    authenticateOperator: {
+      id: string;
+      role: OperatorRole;
+    };
+  };
+};
 
 export type GendersResponse = {
   data: {

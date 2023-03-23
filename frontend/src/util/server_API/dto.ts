@@ -1,7 +1,7 @@
 import { LocalizationKeys } from "@app/i18n";
 import { AnswerOption } from "@app/interfaces/visit";
 
-type OperatorRole = "MR" | "MR_HIGH_PERM";
+export type OperatorRole = "MR" | "MR_HIGH_PERM";
 
 export interface IOperatorDTO {
   id: string;
