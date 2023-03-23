@@ -30,8 +30,8 @@ const waitingRoomVisitForm: IWaitingRoomVisitFormDTO = {
       questionId: "1",
       answer: AnswerOption.NO,
     },
-  ]
-}
+  ],
+};
 
 const approvalRoomVisitForm: IApprovalRoomVisitFormDTO = {
   ...waitingRoomVisitForm,
@@ -41,7 +41,7 @@ const approvalRoomVisitForm: IApprovalRoomVisitFormDTO = {
     deviceId: "6552515",
     measuredAt: new Date(),
   },
-}
+};
 
 const visit: IVisit = {
   id: "1",
@@ -184,7 +184,9 @@ describe("form loaders", () => {
     expect(loadedFormValues.heightCm).toEqual(fetchedVisit.probandInfo.heightCm);
     expect(loadedFormValues.weightKg).toEqual(fetchedVisit.probandInfo.weightKg);
     expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.probandInfo.handednessId);
-    expect(loadedFormValues.visualCorrection?.value).toEqual(fetchedVisit.probandInfo.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES);
+    expect(loadedFormValues.visualCorrection?.value).toEqual(
+      fetchedVisit.probandInfo.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
+    );
     expect(loadedFormValues.visualCorrectionDioptre).toEqual(fetchedVisit.probandInfo.visualCorrectionDioptre);
     expect(loadedFormValues.email).toEqual(fetchedVisit.probandInfo.email);
     expect(loadedFormValues.phone).toEqual(fetchedVisit.probandInfo.phone);
@@ -211,7 +213,9 @@ describe("form loaders", () => {
     expect(loadedFormValues.heightCm).toEqual(fetchedVisit.probandInfo.heightCm);
     expect(loadedFormValues.weightKg).toEqual(fetchedVisit.probandInfo.weightKg);
     expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.probandInfo.handednessId);
-    expect(loadedFormValues.visualCorrection?.value).toEqual(fetchedVisit.probandInfo.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES);
+    expect(loadedFormValues.visualCorrection?.value).toEqual(
+      fetchedVisit.probandInfo.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
+    );
     expect(loadedFormValues.visualCorrectionDioptre).toEqual(fetchedVisit.probandInfo.visualCorrectionDioptre);
     expect(loadedFormValues.email).toEqual(fetchedVisit.probandInfo.email);
     expect(loadedFormValues.phone).toEqual(fetchedVisit.probandInfo.phone);
