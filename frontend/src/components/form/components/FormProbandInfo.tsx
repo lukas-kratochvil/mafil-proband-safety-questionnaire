@@ -47,8 +47,11 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
       } else {
         // Setting selected gender
         const genderId = getValues("gender.id");
-        const selectedGender = genders.data.find((gender) => gender.id === genderId) || null;
-        setValue("gender", selectedGender, { shouldTouch: true });
+
+        if (genderId !== null && genderId !== undefined && genderId !== "") {
+          const selectedGender = genders.data.find((gender) => gender.id === genderId) || null;
+          setValue("gender", selectedGender, { shouldTouch: true });
+        }
       }
     }
   }, [getValues, genders.data, isPhantom, setValue]);
@@ -57,9 +60,12 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
   useEffect(() => {
     if (nativeLanguages.data !== undefined) {
       const nativeLanguageId = getValues("nativeLanguage.id");
-      const selectedNativeLanguage
-        = nativeLanguages.data.find((nativeLanguage) => nativeLanguage.id === nativeLanguageId) || null;
-      setValue("nativeLanguage", selectedNativeLanguage, { shouldTouch: true });
+
+      if (nativeLanguageId !== null && nativeLanguageId !== undefined && nativeLanguageId !== "") {
+        const selectedNativeLanguage
+          = nativeLanguages.data.find((nativeLanguage) => nativeLanguage.id === nativeLanguageId) || null;
+        setValue("nativeLanguage", selectedNativeLanguage, { shouldTouch: true });
+      }
     }
   }, [nativeLanguages.data, getValues, setValue]);
 
@@ -67,8 +73,11 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
   useEffect(() => {
     if (handednesses.data !== undefined) {
       const handednessId = getValues("handedness.id");
-      const selectedHandedness = handednesses.data.find((handedness) => handedness.id === handednessId) || null;
-      setValue("handedness", selectedHandedness, { shouldTouch: true });
+
+      if (handednessId !== null && handednessId !== undefined && handednessId !== "") {
+        const selectedHandedness = handednesses.data.find((handedness) => handedness.id === handednessId) || null;
+        setValue("handedness", selectedHandedness, { shouldTouch: true });
+      }
     }
   }, [handednesses.data, getValues, setValue]);
 
