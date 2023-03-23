@@ -39,4 +39,4 @@ export type FormPropType = {
 
   // Visit-form approval
   disapprovalReason: string | null;
-}
+};

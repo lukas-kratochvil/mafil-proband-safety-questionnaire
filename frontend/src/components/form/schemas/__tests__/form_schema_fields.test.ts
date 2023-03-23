@@ -8,9 +8,7 @@ describe("form schemas", () => {
       [" John ", true],
     ])("name: '%s' -> %s", (input: string, isValid: boolean) => {
       const schema = probandFormSchema.pick(["name"]) as AnySchema;
-      const toValidate = {
-        name: input,
-      };
+      const toValidate = { name: input };
 
       expect(schema.isValidSync(toValidate)).toBe(isValid);
     });
@@ -20,9 +18,7 @@ describe("form schemas", () => {
       [" Wick ", true],
     ])("surname: '%s' -> %s", (input: string, isValid: boolean) => {
       const schema = probandFormSchema.pick(["surname"]) as AnySchema;
-      const toValidate = {
-        surname: input
-      };
+      const toValidate = { surname: input };
 
       expect(schema.isValidSync(toValidate)).toBe(isValid);
     });
@@ -34,9 +30,7 @@ describe("form schemas", () => {
       [" 0025644861 ", true],
     ])("personal ID: '%s' -> %s", (input: string, isValid: boolean) => {
       const schema = probandFormSchema.pick(["personalId"]) as AnySchema;
-      const toValidate = {
-        personalId: input
-      };
+      const toValidate = { personalId: input };
 
       expect(schema.isValidSync(toValidate)).toBe(isValid);
     });
@@ -46,9 +40,7 @@ describe("form schemas", () => {
       ["9999-12-03T10:15:30Z", false],
     ])("birthdate: '%s' -> %s", (input: string, isValid: boolean) => {
       const schema = probandFormSchema.pick(["birthdate"]) as AnySchema;
-      const toValidate = {
-        birthdate: input
-      };
+      const toValidate = { birthdate: input };
 
       expect(schema.isValidSync(toValidate)).toBe(isValid);
     });
@@ -60,9 +52,7 @@ describe("form schemas", () => {
       [" 1 ", true],
     ])("height cm: '%s' -> %s", (input: string, isValid: boolean) => {
       const schema = probandFormSchema.pick(["heightCm"]) as AnySchema;
-      const toValidate = {
-        heightCm: input
-      };
+      const toValidate = { heightCm: input };
 
       expect(schema.isValidSync(toValidate)).toBe(isValid);
     });
@@ -74,9 +64,7 @@ describe("form schemas", () => {
       [" 1 ", true],
     ])("weight kg: '%s' -> %s", (input: string, isValid: boolean) => {
       const schema = probandFormSchema.pick(["weightKg"]) as AnySchema;
-      const toValidate = {
-        weightKg: input
-      };
+      const toValidate = { weightKg: input };
 
       expect(schema.isValidSync(toValidate)).toBe(isValid);
     });
@@ -91,9 +79,7 @@ describe("form schemas", () => {
       [" name.surname@email.com ", true],
     ])("email: '%s' -> %s", (input: string, isValid: boolean) => {
       const schema = probandFormSchema.pick(["email"]) as AnySchema;
-      const toValidate = {
-        email: input
-      };
+      const toValidate = { email: input };
 
       expect(schema.isValidSync(toValidate)).toBe(isValid);
     });
@@ -111,9 +97,7 @@ describe("form schemas", () => {
       ["00 5", false],
     ])("phone: '%s' -> %s", (input: string, isValid: boolean) => {
       const schema = probandFormSchema.pick(["phone"]) as AnySchema;
-      const toValidate = {
-        phone: input
-      };
+      const toValidate = { phone: input };
 
       expect(schema.isValidSync(toValidate)).toBe(isValid);
     });
