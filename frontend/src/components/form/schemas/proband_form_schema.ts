@@ -17,6 +17,7 @@ export const answersSchema = object({
   comment: string().nullable(),
 });
 
+// phone number can be empty if proband does not want to fill in contact info
 const PHONE_NUMBER_REGEX = /^$|^(\+|00)?[1-9]{1}[0-9]{3,}$/;
 
 export const probandFormSchema = object().shape(
@@ -64,8 +65,8 @@ export const probandFormSchema = object().shape(
         otherwise: string().email("form.validation.notValid").required("form.validation.probandContacts"),
       }),
     phone: string()
-      // get rid of all the white-spaces
-      .transform((value, originalValue, context) => (context.isType(value) ? originalValue.replace(/\s/g, "") : value))
+      // get rid of all the white-spaces and replace '+' at the beginning with the '00'
+      .transform((_value, originalValue) => originalValue.replace(/\s|-|\(|\)/g, "").replace(/^\+/, "00"))
       .when("email", {
         is: "",
         then: string().matches(PHONE_NUMBER_REGEX, "form.validation.notValid"),
