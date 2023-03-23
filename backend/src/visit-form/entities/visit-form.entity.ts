@@ -36,7 +36,4 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
 
   @Field(() => VisitFormState)
   state: VisitFormState;
-
-  @Field(() => String, { nullable: true })
-  visitId: string | null;
 }

@@ -19,12 +19,6 @@ export class AdditionalVisitFormInfoEntity extends BaseEntity implements Additio
   @Field(() => UuidScalar)
   finalizerId: string;
 
-  @Field(() => OperatorEntity, { nullable: true })
-  approver: OperatorEntity | null;
-
-  @Field(() => UuidScalar, { nullable: true })
-  approverId: string | null;
-
   @Field()
   projectId: string;
 
@@ -37,15 +31,9 @@ export class AdditionalVisitFormInfoEntity extends BaseEntity implements Additio
   @Field()
   deviceName: string;
 
-  @Field()
-  isPhantom: boolean;
-
   @Field(() => Date)
   measuredAt: Date;
 
   @Field(() => Date)
   finalizedAt: Date;
-
-  @Field(() => Date, { nullable: true })
-  approvedAt: Date | null;
 }
