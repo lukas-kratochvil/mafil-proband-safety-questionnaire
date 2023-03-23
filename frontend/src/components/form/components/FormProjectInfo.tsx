@@ -28,11 +28,8 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
   useEffect(() => {
     if (projects.data !== undefined) {
       const projectId = getValues("project.id");
-
-      if (projectId !== "") {
-        const selectedProject = projects.data.find((project) => project.id === projectId) || null;
-        setValue("project", selectedProject, { shouldTouch: true });
-      }
+      const selectedProject = projects.data.find((project) => project.id === projectId) || null;
+      setValue("project", selectedProject, { shouldTouch: true });
     }
   }, [getValues, projects.data, setValue]);
 
@@ -40,11 +37,8 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
   useEffect(() => {
     if (devices.data !== undefined) {
       const deviceId = getValues("device.id");
-
-      if (deviceId !== "") {
-        const selectedDevice = devices.data.find((device) => device.id === deviceId) || null;
-        setValue("device", selectedDevice, { shouldTouch: true });
-      }
+      const selectedDevice = devices.data.find((device) => device.id === deviceId) || null;
+      setValue("device", selectedDevice, { shouldTouch: true });
     }
   }, [devices.data, getValues, setValue]);
 
