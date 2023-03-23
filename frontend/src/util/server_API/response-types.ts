@@ -1,4 +1,12 @@
-import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IQuestionDTO, OperatorRole } from "./dto";
+import {
+  IApprovalRoomVisitFormDTO,
+  IGenderDTO,
+  IHandednessDTO,
+  INativeLanguageDTO,
+  IQuestionDTO,
+  IWaitingRoomVisitFormDTO,
+  OperatorRole,
+} from "./dto";
 
 export type AuthenticateOperatorResponse = {
   data: {
@@ -36,6 +44,18 @@ export type QuestionsResponse = {
 export type QuestionResponse = {
   data: {
     question: IQuestionDTO;
+  };
+};
+
+export type WaitingRoomVisitFormResponse = {
+  data: {
+    visitForm: IWaitingRoomVisitFormDTO;
+  };
+};
+
+export type ApprovalRoomVisitFormResponse = {
+  data: {
+    visitForm: IApprovalRoomVisitFormDTO;
   };
 };
 

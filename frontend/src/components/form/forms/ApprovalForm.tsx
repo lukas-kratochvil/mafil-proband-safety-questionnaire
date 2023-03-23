@@ -7,14 +7,14 @@ import { FormProbandContact } from "@app/components/form/components/FormProbandC
 import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo";
 import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo";
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
-import { loadFormDefaultValuesFromVisit } from "@app/components/form/util/loaders";
+import { loadFormDefaultValuesFromApprovalRoomVisitForm } from "@app/components/form/util/loaders";
 import { useAuth } from "@app/hooks/auth/auth";
 import { FormPropType, FormQac } from "@app/interfaces/form";
 import { QuestionPartNumber } from "@app/interfaces/question";
 import { VisitState } from "@app/interfaces/visit";
 import { RoutingPaths } from "@app/routing-paths";
 import { updateDummyVisitState } from "@app/util/fetch.dev";
-import { fetchVisitForm } from "@app/util/server_API/fetch";
+import { fetchApprovalRoomVisitForm } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormContainer } from "./FormContainer";
@@ -25,10 +25,7 @@ export const ApprovalForm = () => {
     data: visit,
     isLoading,
     isError,
-  } = useQuery({
-    queryKey: ["visitForm", id],
-    queryFn: () => fetchVisitForm(id),
-  });
+  } = useQuery({ queryKey: ["visitForm", id], queryFn: () => fetchApprovalRoomVisitForm(id) });
   const navigate = useNavigate();
   const { operator } = useAuth();
   const { getValues, setValue, trigger } = useFormContext<FormPropType>();
@@ -41,10 +38,9 @@ export const ApprovalForm = () => {
 
   useEffect(() => {
     if (visit !== undefined) {
-      setQacs(visit.answers.map((answer, index) => ({ index, ...answer })));
-
       // TODO: try if there's a need for isLoading flag due to the slow form initialization
-      const defaultValues = loadFormDefaultValuesFromVisit(visit);
+      const defaultValues = loadFormDefaultValuesFromApprovalRoomVisitForm(visit);
+      setQacs(defaultValues.answers.map((answer, index) => ({ index, ...answer })));
       type DefaultValuesPropertyType = keyof typeof defaultValues;
       Object.keys(defaultValues).forEach((propertyName) => {
         setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);

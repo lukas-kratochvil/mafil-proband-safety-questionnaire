@@ -89,3 +89,59 @@ query GetQuestion($id: UUID!) {
   }
 }
 `;
+
+export const GET_WAITING_ROOM_VISIT_FORM = `
+query GetWaitingRoomVisitForm($id: UUID!) {
+  visitForm(id: $id) {
+    probandInfo {
+      name
+      surname
+      personalId
+      birthdate
+      genderId
+      nativeLanguageId
+      heightCm
+      weightKg
+      visualCorrectionDioptre
+      handednessId
+      email
+      phone
+    }
+    answers {
+      questionId
+      answer
+    }
+  }
+}
+`;
+
+export const GET_APPROVAL_ROOM_VISIT_FORM = `
+query GetApprovalRoomVisitForm($id: UUID!) {
+  visitForm(id: $id) {
+    additionalInfo {
+      projectId
+      deviceId
+      measuredAt
+    }
+    probandInfo {
+      name
+      surname
+      personalId
+      birthdate
+      genderId
+      nativeLanguageId
+      heightCm
+      weightKg
+      visualCorrectionDioptre
+      handednessId
+      email
+      phone
+    }
+    answers {
+      questionId
+      answer
+      comment
+    }
+  }
+}
+`;

@@ -50,6 +50,37 @@ interface IProbandAnswerDTO {
   answer: AnswerOption;
 }
 
+interface IOperatorAnswerDTO extends IProbandAnswerDTO {
+  comment: string;
+}
+
+export interface IWaitingRoomVisitFormDTO {
+  probandInfo: {
+    name: string;
+    surname: string;
+    personalId: string;
+    birthdate: Date;
+    genderId: string;
+    nativeLanguageId: string;
+    heightCm: number;
+    weightKg: number;
+    visualCorrectionDioptre: number;
+    handednessId: string;
+    email: string;
+    phone: string;
+  };
+  answers: IProbandAnswerDTO[];
+}
+
+export interface IApprovalRoomVisitFormDTO extends IWaitingRoomVisitFormDTO {
+  answers: IOperatorAnswerDTO[];
+  additionalInfo: {
+    projectId: string;
+    deviceId: string;
+    measuredAt: Date;
+  };
+}
+
 interface ICreateVisitFormInput {
   probandLanguageCode: LocalizationKeys;
   probandInfo: {
@@ -74,10 +105,6 @@ export interface ICreateProbandVisitFormInput {
 }
 
 type VisitFormState = "NEW" | "IN_APPROVAL";
-
-interface IOperatorAnswerDTO extends IProbandAnswerDTO {
-  comment: string;
-}
 
 export interface ICreateDuplicatedVisitFormForApprovalInput {
   createVisitFormInput: ICreateVisitFormInput & {

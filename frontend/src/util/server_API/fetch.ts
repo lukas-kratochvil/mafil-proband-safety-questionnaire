@@ -5,6 +5,7 @@ import { IAuthGateOperator } from "@app/interfaces/auth";
 import { FormPropType } from "@app/interfaces/form";
 import { AnswerOption, IVisit, VisitState } from "@app/interfaces/visit";
 import {
+  IApprovalRoomVisitFormDTO,
   ICreateDuplicatedVisitFormForApprovalInput,
   ICreateProbandVisitFormInput,
   IGenderDTO,
@@ -12,17 +13,21 @@ import {
   INativeLanguageDTO,
   IOperatorDTO,
   IQuestionDTO,
+  IWaitingRoomVisitFormDTO,
 } from "@app/util/server_API/dto";
 import { CREATE_VISIT_FORM } from "./mutations";
 import {
   AUTHENTICATE_OPERATOR,
+  GET_APPROVAL_ROOM_VISIT_FORM,
   GET_CURRENT_QUESTIONS,
   GET_GENDERS,
   GET_HANDEDNESSES,
   GET_NATIVE_LANGUAGES,
   GET_QUESTION,
+  GET_WAITING_ROOM_VISIT_FORM,
 } from "./queries";
 import {
+  ApprovalRoomVisitFormResponse,
   AuthenticateOperatorResponse,
   CreateVisitFormResponse,
   GendersResponse,
@@ -30,6 +35,7 @@ import {
   NativeLanguagesResponse,
   QuestionResponse,
   QuestionsResponse,
+  WaitingRoomVisitFormResponse,
 } from "./response-types";
 
 export const authenticateOperator = async (loggingOperator: IAuthGateOperator): Promise<IOperatorDTO | undefined> => {
@@ -67,9 +73,27 @@ export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO> =
   return data.data.question;
 };
 
-// TODO: get visits from DB
-export const fetchVisitForm = async (visitId: string | undefined): Promise<IVisit | undefined> =>
-  dummyVisits.find((visit) => visit.id === visitId);
+export const fetchWaitingRoomVisitForm = async (
+  visitId: string | undefined
+): Promise<IWaitingRoomVisitFormDTO | undefined> => {
+  const variables = { id: visitId };
+  const { data } = await axiosConfig.serverApi.post<WaitingRoomVisitFormResponse>("", {
+    query: GET_WAITING_ROOM_VISIT_FORM,
+    variables,
+  });
+  return data.data.visitForm;
+};
+
+export const fetchApprovalRoomVisitForm = async (
+  visitId: string | undefined
+): Promise<IApprovalRoomVisitFormDTO | undefined> => {
+  const variables = { id: visitId };
+  const { data } = await axiosConfig.serverApi.post<ApprovalRoomVisitFormResponse>("", {
+    query: GET_APPROVAL_ROOM_VISIT_FORM,
+    variables,
+  });
+  return data.data.visitForm;
+};
 
 // TODO: get visits from DB
 export const fetchWaitingRoomVisitForms = async (): Promise<IVisit[]> =>

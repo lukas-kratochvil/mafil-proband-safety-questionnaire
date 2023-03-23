@@ -1,12 +1,47 @@
 import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import { QuestionPartNumber } from "@app/interfaces/question";
 import { AnswerOption, IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
+import { IApprovalRoomVisitFormDTO, IWaitingRoomVisitFormDTO } from "@app/util/server_API/dto";
 import {
   loadEmptyDefaultValues,
-  loadFormDefaultValuesFromVisit,
+  loadFormDefaultValuesFromApprovalRoomVisitForm,
+  loadFormDefaultValuesFromWaitingRoomVisitForm,
   loadFormDefaultValuesVisitDuplication,
   loadPhantomFormDefaultValues,
 } from "../loaders";
+
+const waitingRoomVisitForm: IWaitingRoomVisitFormDTO = {
+  probandInfo: {
+    name: "Name",
+    surname: "Surname",
+    personalId: "000000",
+    birthdate: new Date(),
+    genderId: genders[0].id,
+    nativeLanguageId: nativeLanguages[2].id,
+    heightCm: 180,
+    weightKg: 80,
+    visualCorrectionDioptre: 1,
+    handednessId: handednesses[3].id,
+    email: "name.surname@email.com",
+    phone: "123456789",
+  },
+  answers: [
+    {
+      questionId: "1",
+      answer: AnswerOption.NO,
+    },
+  ]
+}
+
+const approvalRoomVisitForm: IApprovalRoomVisitFormDTO = {
+  ...waitingRoomVisitForm,
+  answers: waitingRoomVisitForm.answers.map((answer) => ({ ...answer, comment: "comment" })),
+  additionalInfo: {
+    projectId: "1552314",
+    deviceId: "6552515",
+    measuredAt: new Date(),
+  },
+}
 
 const visit: IVisit = {
   id: "1",
@@ -136,56 +171,54 @@ describe("form loaders", () => {
     expect(phantomFormDefaultValues.answers).toEqual([]);
   });
 
-  describe("default values loaded from a visit", () => {
-    test("all the visit attributes are defined", () => {
-      const formDefaultValuesFromVisit = loadFormDefaultValuesFromVisit(visit);
+  test("waiting room visit form default values", () => {
+    const fetchedVisit = waitingRoomVisitForm;
+    const loadedFormValues = loadFormDefaultValuesFromWaitingRoomVisitForm(fetchedVisit);
 
-      expect(formDefaultValuesFromVisit.project?.id).toEqual(visit.projectInfo.projectId); // project is loaded in the FormProjectInfo component using the projectId
-      expect(formDefaultValuesFromVisit.device?.id).toEqual(visit.projectInfo.deviceId); // device is loaded in the FormProjectInfo component using the deviceId
-      expect(formDefaultValuesFromVisit.measurementDate).toEqual(visit.projectInfo.measurementDate);
-      expect(formDefaultValuesFromVisit.name).toEqual(visit.probandInfo.name);
-      expect(formDefaultValuesFromVisit.surname).toEqual(visit.probandInfo.surname);
-      expect(formDefaultValuesFromVisit.personalId).toEqual(visit.probandInfo.personalId);
-      expect(formDefaultValuesFromVisit.birthdate).toEqual(visit.probandInfo.birthdate);
-      expect(formDefaultValuesFromVisit.gender?.id).toEqual(visit.probandInfo.gender.id);
-      expect(formDefaultValuesFromVisit.nativeLanguage).toEqual(visit.probandInfo.nativeLanguage);
-      expect(formDefaultValuesFromVisit.heightCm).toEqual(visit.probandInfo.heightCm);
-      expect(formDefaultValuesFromVisit.weightKg).toEqual(visit.probandInfo.weightKg);
-      expect(formDefaultValuesFromVisit.handedness?.id).toEqual(visit.probandInfo.handedness.id);
-      expect(formDefaultValuesFromVisit.visualCorrection?.value).toEqual(visit.probandInfo.visualCorrection);
-      expect(formDefaultValuesFromVisit.visualCorrectionDioptre).toEqual(visit.probandInfo.visualCorrectionDioptre);
-      expect(formDefaultValuesFromVisit.email).toEqual(visit.probandInfo.email);
-      expect(formDefaultValuesFromVisit.phone).toEqual(visit.probandInfo.phone);
-      expect(formDefaultValuesFromVisit.answers).toEqual(visit.answers);
+    expect(loadedFormValues.name).toEqual(fetchedVisit.probandInfo.name);
+    expect(loadedFormValues.surname).toEqual(fetchedVisit.probandInfo.surname);
+    expect(loadedFormValues.personalId).toEqual(fetchedVisit.probandInfo.personalId);
+    expect(loadedFormValues.birthdate).toEqual(fetchedVisit.probandInfo.birthdate);
+    expect(loadedFormValues.gender?.id).toEqual(fetchedVisit.probandInfo.genderId);
+    expect(loadedFormValues.nativeLanguage?.id).toEqual(fetchedVisit.probandInfo.nativeLanguageId);
+    expect(loadedFormValues.heightCm).toEqual(fetchedVisit.probandInfo.heightCm);
+    expect(loadedFormValues.weightKg).toEqual(fetchedVisit.probandInfo.weightKg);
+    expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.probandInfo.handednessId);
+    expect(loadedFormValues.visualCorrection?.value).toEqual(fetchedVisit.probandInfo.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES);
+    expect(loadedFormValues.visualCorrectionDioptre).toEqual(fetchedVisit.probandInfo.visualCorrectionDioptre);
+    expect(loadedFormValues.email).toEqual(fetchedVisit.probandInfo.email);
+    expect(loadedFormValues.phone).toEqual(fetchedVisit.probandInfo.phone);
+    loadedFormValues.answers.forEach((loadedAnswer, i) => {
+      expect(loadedAnswer.answer).toEqual(fetchedVisit.answers[i].answer);
+      expect(loadedAnswer.questionId).toEqual(fetchedVisit.answers[i].questionId);
+      expect(loadedAnswer.comment).toEqual("");
     });
+  });
 
-    test("all the visit nullable attributes are null", () => {
-      const currentDate = new Date();
-      vi.spyOn(global, "Date").mockImplementationOnce(() => currentDate as unknown as string);
+  test("approval room visit form default values", () => {
+    const fetchedVisit = approvalRoomVisitForm;
+    const loadedFormValues = loadFormDefaultValuesFromApprovalRoomVisitForm(fetchedVisit);
 
-      const formDefaultValuesFromVisit = loadFormDefaultValuesFromVisit(visitNotCompleted);
-
-      expect(formDefaultValuesFromVisit.project?.id).toEqual(visitNotCompleted.projectInfo.projectId);
-      expect(formDefaultValuesFromVisit.device?.id).toEqual(visitNotCompleted.projectInfo.deviceId);
-      expect(formDefaultValuesFromVisit.measurementDate).toEqual(currentDate);
-      expect(formDefaultValuesFromVisit.name).toEqual(visitNotCompleted.probandInfo.name);
-      expect(formDefaultValuesFromVisit.surname).toEqual(visitNotCompleted.probandInfo.surname);
-      expect(formDefaultValuesFromVisit.personalId).toEqual(visitNotCompleted.probandInfo.personalId);
-      expect(formDefaultValuesFromVisit.birthdate).toEqual(visitNotCompleted.probandInfo.birthdate);
-      expect(formDefaultValuesFromVisit.gender?.id).toEqual(visitNotCompleted.probandInfo.gender.id);
-      expect(formDefaultValuesFromVisit.nativeLanguage).toEqual(visitNotCompleted.probandInfo.nativeLanguage);
-      expect(formDefaultValuesFromVisit.heightCm).toEqual(visitNotCompleted.probandInfo.heightCm);
-      expect(formDefaultValuesFromVisit.weightKg).toEqual(visitNotCompleted.probandInfo.weightKg);
-      expect(formDefaultValuesFromVisit.handedness?.id).toEqual(visitNotCompleted.probandInfo.handedness.id);
-      expect(formDefaultValuesFromVisit.visualCorrection?.value).toEqual(
-        visitNotCompleted.probandInfo.visualCorrection
-      );
-      expect(formDefaultValuesFromVisit.visualCorrectionDioptre).toEqual(
-        visitNotCompleted.probandInfo.visualCorrectionDioptre
-      );
-      expect(formDefaultValuesFromVisit.email).toEqual(visitNotCompleted.probandInfo.email);
-      expect(formDefaultValuesFromVisit.phone).toEqual(visitNotCompleted.probandInfo.phone);
-      expect(formDefaultValuesFromVisit.answers).toEqual(visitNotCompleted.answers);
+    expect(loadedFormValues.project?.id).toEqual(fetchedVisit.additionalInfo.projectId); // project is loaded in the FormProjectInfo component using the projectId
+    expect(loadedFormValues.device?.id).toEqual(fetchedVisit.additionalInfo.deviceId); // device is loaded in the FormProjectInfo component using the deviceId
+    expect(loadedFormValues.measurementDate).toEqual(fetchedVisit.additionalInfo.measuredAt);
+    expect(loadedFormValues.name).toEqual(fetchedVisit.probandInfo.name);
+    expect(loadedFormValues.surname).toEqual(fetchedVisit.probandInfo.surname);
+    expect(loadedFormValues.personalId).toEqual(fetchedVisit.probandInfo.personalId);
+    expect(loadedFormValues.birthdate).toEqual(fetchedVisit.probandInfo.birthdate);
+    expect(loadedFormValues.gender?.id).toEqual(fetchedVisit.probandInfo.genderId);
+    expect(loadedFormValues.nativeLanguage?.id).toEqual(fetchedVisit.probandInfo.nativeLanguageId);
+    expect(loadedFormValues.heightCm).toEqual(fetchedVisit.probandInfo.heightCm);
+    expect(loadedFormValues.weightKg).toEqual(fetchedVisit.probandInfo.weightKg);
+    expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.probandInfo.handednessId);
+    expect(loadedFormValues.visualCorrection?.value).toEqual(fetchedVisit.probandInfo.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES);
+    expect(loadedFormValues.visualCorrectionDioptre).toEqual(fetchedVisit.probandInfo.visualCorrectionDioptre);
+    expect(loadedFormValues.email).toEqual(fetchedVisit.probandInfo.email);
+    expect(loadedFormValues.phone).toEqual(fetchedVisit.probandInfo.phone);
+    loadedFormValues.answers.forEach((loadedAnswer, i) => {
+      expect(loadedAnswer.answer).toEqual(fetchedVisit.answers[i].answer);
+      expect(loadedAnswer.questionId).toEqual(fetchedVisit.answers[i].questionId);
+      expect(loadedAnswer.comment).toEqual(fetchedVisit.answers[i].comment);
     });
   });
 
