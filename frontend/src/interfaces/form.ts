@@ -11,7 +11,7 @@ export type FormAnswer = Override<IQac, { answer: AnswerOption | null }>;
 
 export type FormQac = FormAnswer & { index: number };
 
-export interface FormPropType {
+export type FormPropType = {
   // Project info
   project: IProjectDTO | null;
   device: IDeviceDTO | null;
