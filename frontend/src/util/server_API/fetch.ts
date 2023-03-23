@@ -5,6 +5,7 @@ import { IAuthGateOperator } from "@app/interfaces/auth";
 import { FormPropType } from "@app/interfaces/form";
 import { AnswerOption, IVisit, VisitState } from "@app/interfaces/visit";
 import {
+  ICreateDuplicatedVisitFormForApprovalInput,
   ICreateProbandVisitFormInput,
   IGenderDTO,
   IHandednessDTO,
@@ -66,6 +67,18 @@ export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO> =
   return data.data.question;
 };
 
+// TODO: get visits from DB
+export const fetchVisitForm = async (visitId: string | undefined): Promise<IVisit | undefined> =>
+  dummyVisits.find((visit) => visit.id === visitId);
+
+// TODO: get visits from DB
+export const fetchWaitingRoomVisitForms = async (): Promise<IVisit[]> =>
+  dummyVisits.filter((visit) => visit.state === VisitState.NEW);
+
+// TODO: get visits from DB
+export const fetchApprovalRoomVisitForms = async (): Promise<IVisit[]> =>
+  dummyVisits.filter((visit) => visit.state === VisitState.IN_APPROVAL);
+
 export const createProbandVisitForm = async (visitFormData: FormPropType): Promise<string> => {
   const variables: ICreateProbandVisitFormInput = {
     createVisitFormInput: {
@@ -98,14 +111,48 @@ export const createProbandVisitForm = async (visitFormData: FormPropType): Promi
   return data.data.createVisitForm.id;
 };
 
-// TODO: get visits from DB
-export const fetchVisitForm = async (visitId: string | undefined): Promise<IVisit | undefined> =>
-  dummyVisits.find((visit) => visit.id === visitId);
-
-// TODO: get visits from DB
-export const fetchWaitingRoomVisitForms = async (): Promise<IVisit[]> =>
-  dummyVisits.filter((visit) => visit.state === VisitState.NEW);
-
-// TODO: get visits from DB
-export const fetchApprovalRoomVisitForms = async (): Promise<IVisit[]> =>
-  dummyVisits.filter((visit) => visit.state === VisitState.IN_APPROVAL);
+export const createDuplicatedVisitFormForApproval = async (
+  visitFormData: FormPropType,
+  finalizerId: string | undefined
+): Promise<string> => {
+  const variables: ICreateDuplicatedVisitFormForApprovalInput = {
+    createVisitFormInput: {
+      state: "IN_APPROVAL",
+      additionalInfo: {
+        projectId: visitFormData.project?.id ?? "",
+        projectAcronym: visitFormData.project?.acronym ?? "",
+        deviceId: visitFormData.device?.id ?? "",
+        deviceName: visitFormData.device?.name ?? "",
+        measuredAt: visitFormData.measurementDate ?? new Date(),
+        finalizerId: finalizerId ?? "",
+        finalizedAt: new Date(),
+      },
+      probandLanguageCode: i18n.language as LocalizationKeys,
+      probandInfo: {
+        name: visitFormData.name,
+        surname: visitFormData.surname,
+        personalId: visitFormData.personalId,
+        birthdate: visitFormData.birthdate ?? new Date(),
+        genderId: visitFormData.gender?.id ?? "",
+        nativeLanguageId: visitFormData.nativeLanguage?.id ?? "",
+        heightCm: typeof visitFormData.heightCm === "number" ? visitFormData.heightCm : 0,
+        weightKg: typeof visitFormData.weightKg === "number" ? visitFormData.weightKg : 0,
+        visualCorrectionDioptre:
+          typeof visitFormData.visualCorrectionDioptre === "number" ? visitFormData.visualCorrectionDioptre : 0,
+        handednessId: visitFormData.handedness?.id ?? "",
+        email: visitFormData.email,
+        phone: visitFormData.phone,
+      },
+      answers: visitFormData.answers.map((answer) => ({
+        questionId: answer.questionId,
+        answer: answer.answer ?? AnswerOption.NO,
+        comment: answer.comment,
+      })),
+    },
+  };
+  const { data } = await axiosConfig.serverApi.post<CreateVisitFormResponse>("", {
+    query: CREATE_VISIT_FORM,
+    variables,
+  });
+  return data.data.createVisitForm.id;
+};

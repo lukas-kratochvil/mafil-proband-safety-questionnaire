@@ -23,7 +23,7 @@ export class VisitFormService {
   async create(createVisitFormInput: CreateVisitFormInput): Promise<VisitFormInclude> {
     return await this.prisma.visitForm.create({
       data: {
-        state: VisitFormState.NEW,
+        state: createVisitFormInput.state ?? VisitFormState.NEW,
         additionalInfo: createVisitFormInput.additionalInfo
           ? {
               create: {

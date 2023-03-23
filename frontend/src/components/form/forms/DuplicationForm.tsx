@@ -17,6 +17,7 @@ import { AnswerOption, VisitState } from "@app/interfaces/visit";
 import { RoutingPaths } from "@app/routing-paths";
 import { updateDummyVisitState } from "@app/util/fetch.dev";
 import { fetchVisit } from "@app/util/mafildb_API/fetch";
+import { createDuplicatedVisitFormForApproval } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormFinalizeDialog } from "../components/FormFinalizeDialog";
@@ -168,9 +169,7 @@ export const DuplicationForm = () => {
   ]);
 
   const createVisitFormInApprovalRoom = async (data: FormPropType) => {
-    // TODO: create IN_APPROVAL visit in the server DB
-    const visitInApproval = createNewVisitFromFormData(data, VisitState.IN_APPROVAL);
-    dummyVisits.push(visitInApproval);
+    createDuplicatedVisitFormForApproval(data, operator?.id);
     navigate(RoutingPaths.RECENT_VISITS);
   };
 

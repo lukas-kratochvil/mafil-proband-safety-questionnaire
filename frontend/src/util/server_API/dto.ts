@@ -45,28 +45,52 @@ export interface IQuestionDTO {
   translations: ITranslation[];
 }
 
-interface IAnswerDTO {
+interface IProbandAnswerDTO {
   questionId: string;
   answer: AnswerOption;
 }
 
+interface ICreateVisitFormInput {
+  probandLanguageCode: LocalizationKeys;
+  probandInfo: {
+    name: string;
+    surname: string;
+    personalId: string;
+    birthdate: Date;
+    genderId: string;
+    nativeLanguageId: string;
+    heightCm: number;
+    weightKg: number;
+    visualCorrectionDioptre: number;
+    handednessId: string;
+    email: string;
+    phone: string;
+  };
+  answers: IProbandAnswerDTO[];
+}
+
 export interface ICreateProbandVisitFormInput {
-  createVisitFormInput: {
-    probandLanguageCode: LocalizationKeys;
-    probandInfo: {
-      name: string;
-      surname: string;
-      personalId: string;
-      birthdate: Date;
-      genderId: string;
-      nativeLanguageId: string;
-      heightCm: number;
-      weightKg: number;
-      visualCorrectionDioptre: number;
-      handednessId: string;
-      email: string;
-      phone: string;
+  createVisitFormInput: ICreateVisitFormInput;
+}
+
+type VisitFormState = "NEW" | "IN_APPROVAL";
+
+interface IOperatorAnswerDTO extends IProbandAnswerDTO {
+  comment: string;
+}
+
+export interface ICreateDuplicatedVisitFormForApprovalInput {
+  createVisitFormInput: ICreateVisitFormInput & {
+    answers: IOperatorAnswerDTO[];
+    state: VisitFormState;
+    additionalInfo: {
+      projectId: string;
+      projectAcronym: string;
+      deviceId: string;
+      deviceName: string;
+      measuredAt: Date;
+      finalizerId: string;
+      finalizedAt: Date;
     };
-    answers: IAnswerDTO[];
   };
 }
