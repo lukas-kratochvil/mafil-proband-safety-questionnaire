@@ -1,12 +1,12 @@
 import { FormPageContainer } from "@app/components/form/forms/FormPageContainer";
 import { PhantomForm } from "@app/components/form/forms/PhantomForm";
-import { operatorFormSchema } from "@app/components/form/schemas/form-schema_operator";
+import { operatorFinalizationFormSchema } from "@app/components/form/schemas/operator_finalization_form_schema";
 import { loadPhantomFormDefaultValues } from "@app/components/form/util/loaders";
 
 const PhantomFormPage = () => (
   <FormPageContainer
     FormPage={PhantomForm}
-    validationSchema={operatorFormSchema}
+    validationSchema={operatorFinalizationFormSchema}
     loadDefaultValues={loadPhantomFormDefaultValues}
   />
 );

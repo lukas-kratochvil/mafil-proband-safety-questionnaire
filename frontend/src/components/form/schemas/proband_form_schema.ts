@@ -19,7 +19,7 @@ export const answersSchema = object({
 
 const PHONE_NUMBER_REGEX = /^$|^(\+|00)?[1-9]{1}[0-9]{3,}$/;
 
-export const defaultFormSchema = object().shape(
+export const probandFormSchema = object().shape(
   {
     name: string().trim().required("form.validation.required"),
     surname: string().trim().required("form.validation.required"),
