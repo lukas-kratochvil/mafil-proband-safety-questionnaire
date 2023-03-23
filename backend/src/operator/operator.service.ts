@@ -11,10 +11,17 @@ export class OperatorService {
 
   async authenticate(authenticateOperatorArgs: AuthenticateOperatorArgs): Promise<Operator | never> {
     const operator = await this.prisma.operator.findUniqueOrThrow({
-      where: authenticateOperatorArgs,
+      where: {
+        uco: authenticateOperatorArgs.uco,
+      },
     });
 
-    if (!operator.isValid) {
+    if (
+      operator.name !== authenticateOperatorArgs.name
+      || operator.surname !== authenticateOperatorArgs.surname
+      || operator.email !== authenticateOperatorArgs.email
+      || !operator.isValid
+    ) {
       throw new Error("Operator cannot be authenticated!");
     }
 
