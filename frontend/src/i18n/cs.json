@@ -128,7 +128,7 @@
         "title": "Informace o projektu",
         "project": "Projekt",
         "device": "Přístroj",
-        "measurementDate": "Datum měření",
+        "measuredAt": "Datum měření",
         "phantomInfoStripe": "Fantom"
       },
       "safetyInfo": {

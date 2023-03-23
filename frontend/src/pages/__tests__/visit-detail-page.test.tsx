@@ -22,7 +22,7 @@ const defaultVisit: IVisit = {
     deviceName: "Device1",
     deviceId: "DeviceId1",
     isPhantom: false,
-    measurementDate: new Date(),
+    measuredAt: new Date(),
     disapprovalReason: null,
   },
   probandInfo: {

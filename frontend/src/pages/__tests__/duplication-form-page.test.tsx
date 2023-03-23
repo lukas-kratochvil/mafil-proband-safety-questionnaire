@@ -105,7 +105,7 @@ const visit: IVisit = {
     deviceName: "device1",
     deviceId: "deviceId1",
     isPhantom: false,
-    measurementDate: new Date(),
+    measuredAt: new Date(),
     disapprovalReason: null,
   },
   probandInfo: {
@@ -223,7 +223,7 @@ describe("duplication form page", () => {
     const expectedFormValues = {
       project: "",
       device: "",
-      measurementDate: format(new Date(), "dd.MM.yyyy"),
+      measuredAt: format(new Date(), "dd.MM.yyyy"),
       name: visit.probandInfo.name,
       surname: visit.probandInfo.surname,
       personalId: visit.probandInfo.personalId,

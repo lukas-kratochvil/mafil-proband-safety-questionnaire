@@ -14,6 +14,6 @@ const operatorAnswersSchema = answersSchema.shape({
 export const operatorFinalizationFormSchema = probandFormSchema.shape({
   project: mixed<IProjectDTO>().nullable().required("form.validation.required"),
   device: mixed<IDeviceDTO>().nullable().required("form.validation.required"),
-  measurementDate: date().nullable().required("form.validation.required"),
+  measuredAt: date().nullable().required("form.validation.required"),
   answers: array().of(operatorAnswersSchema).required("form.validation.safetyQuestionsRequired"),
 });

@@ -166,7 +166,7 @@ describe("phantom form page", () => {
       expect(screen.getByRole("form")).toHaveFormValues({
         project: "",
         device: "",
-        measurementDate: format(new Date(), "dd.MM.yyyy"),
+        measuredAt: format(new Date(), "dd.MM.yyyy"),
         name: "",
         surname: "",
         personalId: "",
@@ -266,7 +266,7 @@ describe("phantom form page", () => {
     const expectedFormValues = {
       project: selectedProject,
       device: selectedDevice,
-      measurementDate: format(new Date(), "dd.MM.yyyy"),
+      measuredAt: format(new Date(), "dd.MM.yyyy"),
       name: typedName,
       surname: typedSurname,
       personalId: typedPersonalId,

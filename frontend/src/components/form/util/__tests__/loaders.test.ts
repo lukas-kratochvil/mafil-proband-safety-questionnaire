@@ -55,7 +55,7 @@ const visit: IVisit = {
     deviceName: "Device",
     deviceId: "1",
     isPhantom: true,
-    measurementDate: new Date(),
+    measuredAt: new Date(),
     disapprovalReason: null,
   },
   probandInfo: {
@@ -95,7 +95,7 @@ const visitNotCompleted: IVisit = {
     deviceName: "",
     deviceId: "",
     isPhantom: true,
-    measurementDate: null,
+    measuredAt: null,
     disapprovalReason: null,
   },
   probandInfo: {
@@ -129,7 +129,7 @@ describe("form loaders", () => {
 
     expect(emptyFormDefaultValues.project).toBeNull();
     expect(emptyFormDefaultValues.device).toBeNull();
-    expect(emptyFormDefaultValues.measurementDate).toBeNull();
+    expect(emptyFormDefaultValues.measuredAt).toBeNull();
     expect(emptyFormDefaultValues.name).toBe("");
     expect(emptyFormDefaultValues.surname).toBe("");
     expect(emptyFormDefaultValues.personalId).toBe("");
@@ -154,7 +154,7 @@ describe("form loaders", () => {
 
     expect(phantomFormDefaultValues.project).toBeNull();
     expect(phantomFormDefaultValues.device).toBeNull();
-    expect(phantomFormDefaultValues.measurementDate).toEqual(currentDate);
+    expect(phantomFormDefaultValues.measuredAt).toEqual(currentDate);
     expect(phantomFormDefaultValues.name).toEqual("");
     expect(phantomFormDefaultValues.surname).toBe("");
     expect(phantomFormDefaultValues.personalId).toBe("");
@@ -201,7 +201,7 @@ describe("form loaders", () => {
 
     expect(loadedFormValues.project?.id).toEqual(fetchedVisit.additionalInfo.projectId); // project is loaded in the FormProjectInfo component using the projectId
     expect(loadedFormValues.device?.id).toEqual(fetchedVisit.additionalInfo.deviceId); // device is loaded in the FormProjectInfo component using the deviceId
-    expect(loadedFormValues.measurementDate).toEqual(fetchedVisit.additionalInfo.measuredAt);
+    expect(loadedFormValues.measuredAt).toEqual(fetchedVisit.additionalInfo.measuredAt);
     expect(loadedFormValues.name).toEqual(fetchedVisit.probandInfo.name);
     expect(loadedFormValues.surname).toEqual(fetchedVisit.probandInfo.surname);
     expect(loadedFormValues.personalId).toEqual(fetchedVisit.probandInfo.personalId);
@@ -228,7 +228,7 @@ describe("form loaders", () => {
 
       expect(formDefaultValuesVisitDuplication.project).toBeNull();
       expect(formDefaultValuesVisitDuplication.device).toBeNull();
-      expect(formDefaultValuesVisitDuplication.measurementDate).toEqual(visit.projectInfo.measurementDate);
+      expect(formDefaultValuesVisitDuplication.measuredAt).toEqual(visit.projectInfo.measuredAt);
       expect(formDefaultValuesVisitDuplication.name).toEqual(visit.probandInfo.name);
       expect(formDefaultValuesVisitDuplication.surname).toEqual(visit.probandInfo.surname);
       expect(formDefaultValuesVisitDuplication.personalId).toEqual(visit.probandInfo.personalId);
@@ -255,7 +255,7 @@ describe("form loaders", () => {
 
       expect(formDefaultValuesVisitDuplication.project).toBeNull();
       expect(formDefaultValuesVisitDuplication.device).toBeNull();
-      expect(formDefaultValuesVisitDuplication.measurementDate).toEqual(currentDate);
+      expect(formDefaultValuesVisitDuplication.measuredAt).toEqual(currentDate);
       expect(formDefaultValuesVisitDuplication.name).toEqual(visitNotCompleted.probandInfo.name);
       expect(formDefaultValuesVisitDuplication.surname).toEqual(visitNotCompleted.probandInfo.surname);
       expect(formDefaultValuesVisitDuplication.personalId).toEqual(visitNotCompleted.probandInfo.personalId);

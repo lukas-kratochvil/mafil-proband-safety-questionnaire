@@ -20,7 +20,7 @@ export const createNewVisitFromFormData = (data: FormPropType, state: VisitState
         deviceId: data.device?.id || null,
         deviceName: data.device?.name || null,
         isPhantom: true,
-        measurementDate: data.measurementDate ?? new Date(),
+        measuredAt: data.measuredAt ?? new Date(),
       },
       probandInfo: {
         ...data,

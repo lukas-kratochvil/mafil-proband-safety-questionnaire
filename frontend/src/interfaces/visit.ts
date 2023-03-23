@@ -28,7 +28,7 @@ interface IProjectInfo {
   deviceId: string | null;
   deviceName: string | null;
   isPhantom: boolean;
-  measurementDate: Date | null;
+  measuredAt: Date | null;
   disapprovalReason: string | null;
 }
 

@@ -94,8 +94,8 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           md={4}
         >
           <FormDatePicker
-            name="measurementDate"
-            label={t("measurementDate")}
+            name="measuredAt"
+            label={t("measuredAt")}
             disabled={disableInputs}
           />
         </Grid>

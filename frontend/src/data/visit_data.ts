@@ -95,7 +95,7 @@ const dummyVisitNew: IVisit = {
     deviceId: devicesDev[0].id,
     deviceName: devicesDev[0].name,
     isPhantom: false,
-    measurementDate: new Date(),
+    measuredAt: new Date(),
     disapprovalReason: null,
   },
   probandInfo: {
@@ -133,7 +133,7 @@ const dummyPhantomVisitNew: IVisit = {
     deviceId: "",
     deviceName: null,
     isPhantom: true,
-    measurementDate: new Date(),
+    measuredAt: new Date(),
     disapprovalReason: null,
   },
   probandInfo: {

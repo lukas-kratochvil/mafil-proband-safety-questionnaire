@@ -147,7 +147,7 @@ export const createDuplicatedVisitFormForApproval = async (
         projectAcronym: visitFormData.project?.acronym ?? "",
         deviceId: visitFormData.device?.id ?? "",
         deviceName: visitFormData.device?.name ?? "",
-        measuredAt: visitFormData.measurementDate ?? new Date(),
+        measuredAt: visitFormData.measuredAt ?? new Date(),
         finalizerId: finalizerId ?? "",
         finalizedAt: new Date(),
       },

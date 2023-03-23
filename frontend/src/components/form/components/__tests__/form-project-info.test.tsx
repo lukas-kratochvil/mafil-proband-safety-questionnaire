@@ -25,7 +25,7 @@ describe("form project info", () => {
     await waitFor(async () => expect(container).toHaveTextContent(/form.projectInfo.title/));
     expect(container).toHaveTextContent(/form.projectInfo.project/);
     expect(container).toHaveTextContent(/form.projectInfo.device/);
-    expect(container).toHaveTextContent(/form.projectInfo.measurementDate/);
+    expect(container).toHaveTextContent(/form.projectInfo.measuredAt/);
   });
 
   test("has all input fields", async () => {

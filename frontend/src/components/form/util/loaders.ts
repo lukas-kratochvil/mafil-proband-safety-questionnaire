@@ -8,7 +8,7 @@ import { getOption, visualCorrectionOptions } from "./options";
 export const loadEmptyDefaultValues = (): FormPropType => ({
   project: null,
   device: null,
-  measurementDate: null,
+  measuredAt: null,
   disapprovalReason: null,
   name: "",
   surname: "",
@@ -29,7 +29,7 @@ export const loadEmptyDefaultValues = (): FormPropType => ({
 // Autocomplete component default value must be one of the options provided or null
 export const loadPhantomFormDefaultValues = (): FormPropType => ({
   ...loadEmptyDefaultValues(),
-  measurementDate: new Date(),
+  measuredAt: new Date(),
   // gender 'Other' is set in the FormProbandInfo component
 });
 
@@ -37,7 +37,7 @@ export const loadPhantomFormDefaultValues = (): FormPropType => ({
 export const loadFormDefaultValuesFromWaitingRoomVisitForm = (visit: IWaitingRoomVisitFormDTO): FormPropType => ({
   project: null,
   device: null,
-  measurementDate: new Date(),
+  measuredAt: new Date(),
   disapprovalReason: null,
   ...visit.probandInfo,
   gender: {
@@ -77,7 +77,7 @@ export const loadFormDefaultValuesFromApprovalRoomVisitForm = (visit: IApprovalR
     id: visit.additionalInfo.deviceId ?? "", // id is used to match the correct project loaded from the MAFILDB
     name: "",
   },
-  measurementDate: visit.additionalInfo.measuredAt ?? new Date(),
+  measuredAt: visit.additionalInfo.measuredAt ?? new Date(),
   answers: visit.answers.map((answer) => ({ ...answer, partNumber: QuestionPartNumber.ONE })), // TODO: how to get question part number?
 });
 
@@ -85,7 +85,7 @@ export const loadFormDefaultValuesFromApprovalRoomVisitForm = (visit: IApprovalR
 export const loadFormDefaultValuesVisitDuplication = (visit: IVisit): FormPropType => ({
   project: null,
   device: null,
-  measurementDate: visit.projectInfo.measurementDate ?? new Date(),
+  measuredAt: visit.projectInfo.measuredAt ?? new Date(),
   disapprovalReason: visit.projectInfo.disapprovalReason,
   ...visit.probandInfo,
   visualCorrection: getOption(visualCorrectionOptions, visit.probandInfo.visualCorrection),

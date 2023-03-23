@@ -128,7 +128,7 @@
         "title": "Project information",
         "project": "Project",
         "device": "Device",
-        "measurementDate": "Measurement date",
+        "measuredAt": "Measurement date",
         "phantomInfoStripe": "Phantom"
       },
       "safetyInfo": {
