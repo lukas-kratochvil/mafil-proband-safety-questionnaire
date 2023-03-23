@@ -23,7 +23,7 @@ import { FormCardContainer } from "./FormCardContainer";
 
 export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandInfo" });
-  const { getFieldState, resetField, setValue } = useFormContext<FormPropType>();
+  const { getFieldState, getValues, resetField, setValue } = useFormContext<FormPropType>();
   const personalIdValue = useWatch<FormPropType, "personalId">({ name: "personalId" });
   const birthdateValue = useWatch<FormPropType, "birthdate">({ name: "birthdate" });
   const genderEntity = useWatch<FormPropType, "gender">({ name: "gender" });
@@ -37,13 +37,40 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
     ],
   });
 
-  // Setting gender to 'Other' in the phantom visit
+  // Setting gender
   useEffect(() => {
-    if (isPhantom && genders.data !== undefined) {
-      const genderOther = genders.data.find((gender) => gender.code === "O") || null;
-      setValue("gender", genderOther, { shouldTouch: true });
+    if (genders.data !== undefined) {
+      if (isPhantom) {
+        // Setting gender to 'Other' in the phantom visit
+        const genderOther = genders.data.find((gender) => gender.code === "O") || null;
+        setValue("gender", genderOther, { shouldTouch: true });
+      } else {
+        // Setting selected gender
+        const genderId = getValues("gender.id");
+        const selectedGender = genders.data.find((gender) => gender.id === genderId) || null;
+        setValue("gender", selectedGender, { shouldTouch: true });
+      }
     }
-  }, [genders.data, isPhantom, setValue]);
+  }, [getValues, genders.data, isPhantom, setValue]);
+
+  // Setting selected native language
+  useEffect(() => {
+    if (nativeLanguages.data !== undefined) {
+      const nativeLanguageId = getValues("nativeLanguage.id");
+      const selectedNativeLanguage
+        = nativeLanguages.data.find((nativeLanguage) => nativeLanguage.id === nativeLanguageId) || null;
+      setValue("nativeLanguage", selectedNativeLanguage, { shouldTouch: true });
+    }
+  }, [nativeLanguages.data, getValues, setValue]);
+
+  // Setting selected handedness
+  useEffect(() => {
+    if (handednesses.data !== undefined) {
+      const handednessId = getValues("handedness.id");
+      const selectedHandedness = handednesses.data.find((handedness) => handedness.id === handednessId) || null;
+      setValue("handedness", selectedHandedness, { shouldTouch: true });
+    }
+  }, [handednesses.data, getValues, setValue]);
 
   // Auto-fill birthdate and gender from the personalId value
   useEffect(() => {
