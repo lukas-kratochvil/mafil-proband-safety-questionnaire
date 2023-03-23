@@ -44,9 +44,7 @@ export const probandFormSchema = object().shape(
     visualCorrectionDioptre: number()
       .default(0)
       // accepting dot and comma as decimal separators
-      .transform((value, originalValue, context) =>
-        context.isType(value) ? Number(String(originalValue).replace(/,/, ".")) : value
-      )
+      .transform((_value, originalValue) => Number(String(originalValue).replace(/,/, ".")))
       .typeError("form.validation.notValid")
       .when("visualCorrection", {
         is: getOption(visualCorrectionOptions, VisualCorrection.YES),
