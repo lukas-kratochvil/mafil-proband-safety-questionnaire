@@ -98,8 +98,8 @@ model ProbandInfo {
   heightCm                Float
   weightKg                Float
   visualCorrectionDioptre Float
-  email                   String?  @default("")
-  phone                   String?  @default("")
+  email                   String   @default("")
+  phone                   String   @default("")
 }
 
 model Answer {
@@ -114,8 +114,8 @@ model Answer {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  answer  String  @db.VarChar(3)
-  comment String? @default("")
+  answer  String @db.VarChar(3)
+  comment String @default("")
 }
 
 model Question {

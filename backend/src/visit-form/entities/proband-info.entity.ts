@@ -39,9 +39,9 @@ export class ProbandInfoEntity extends BaseEntity implements ProbandInfo {
   @Field(() => Float)
   visualCorrectionDioptre: number;
 
-  @Field(() => String, { nullable: true })
-  email: string | null;
+  @Field()
+  email: string;
 
-  @Field(() => String, { nullable: true })
-  phone: string | null;
+  @Field()
+  phone: string;
 }

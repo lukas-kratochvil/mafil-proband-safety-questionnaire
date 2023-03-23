@@ -14,6 +14,6 @@ export class AnswerEntity extends BaseEntity implements Answer {
   @Field()
   answer: string;
 
-  @Field(() => String, { nullable: true })
-  comment: string | null;
+  @Field()
+  comment: string;
 }
