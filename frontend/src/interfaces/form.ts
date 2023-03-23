@@ -15,7 +15,7 @@ export type FormPropType = {
   // Project info
   project: IProjectDTO | null;
   device: IDeviceDTO | null;
-  measurementDate: Date | null;
+  measurementDate: Date | null; // TODO: rename to 'measuredAt'
 
   // Proband info
   name: string;

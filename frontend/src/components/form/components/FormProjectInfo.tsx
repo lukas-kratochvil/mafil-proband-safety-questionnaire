@@ -24,7 +24,7 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
     ],
   });
 
-  // Setting project
+  // Setting selected project
   useEffect(() => {
     if (projects.data !== undefined) {
       const projectId = getValues("project.id");
@@ -36,7 +36,7 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
     }
   }, [getValues, projects.data, setValue]);
 
-  // Setting device
+  // Setting selected device
   useEffect(() => {
     if (devices.data !== undefined) {
       const deviceId = getValues("device.id");
