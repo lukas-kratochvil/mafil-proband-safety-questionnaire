@@ -150,7 +150,7 @@
         "birthdateMaxDate": "Maximální povolená hodnota pro datum narození je dnes.",
         "birthdateNotCorrespondToPersonalId": "Datum narození není shodné s hodnotou získanou z poskytnutého českého nebo slovenského rodného čísla.",
         "genderNotCorrespondToPersonalId": "Pohlaví není shodné s hodnotou získanou z poskytnutého českého nebo slovenského rodného čísla.",
-        "visualCorrectionDioptreNotEmptyNotZero": "Hodnota musí být vyplněna a nesmí se rovnat nule.",
+        "visualCorrectionDioptreNotZero": "Hodnota se nesmí rovnat nule.",
         "visualCorrectionDioptreTooLow": "Hodnota je příliš nízká.",
         "visualCorrectionDioptreTooHigh": "Hodnota je příliš vysoká.",
         "safetyQuestionsRequired": "Všechny bezpečnostní otázky musí být zodpovězeny.",

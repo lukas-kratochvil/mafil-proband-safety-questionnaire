@@ -52,7 +52,7 @@ export const probandFormSchema = object().shape(
         is: getOption(visualCorrectionOptions, VisualCorrection.YES),
         then: number()
           .typeError("form.validation.notValid")
-          .notOneOf([0], "form.validation.visualCorrectionDioptreNotEmptyNotZero")
+          .notOneOf([0], "form.validation.visualCorrectionDioptreNotZero")
           .min(-50, "form.validation.visualCorrectionDioptreTooLow")
           .max(50, "form.validation.visualCorrectionDioptreTooHigh"),
       })

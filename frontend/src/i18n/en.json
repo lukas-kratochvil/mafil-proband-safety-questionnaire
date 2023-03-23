@@ -150,7 +150,7 @@
         "birthdateMaxDate": "The maximum allowed date of birth is today.",
         "birthdateNotCorrespondToPersonalId": "The birthdate does not match the value obtained from the provided Czech or Slovak personal ID.",
         "genderNotCorrespondToPersonalId": "The gender does not match the value obtained from the provided Czech or Slovak personal ID.",
-        "visualCorrectionDioptreNotEmptyNotZero": "The value must be filled in and must not be equal to zero.",
+        "visualCorrectionDioptreNotZero": "The value must not be equal to zero.",
         "visualCorrectionDioptreTooLow": "The value is too low.",
         "visualCorrectionDioptreTooHigh": "The value is too high.",
         "safetyQuestionsRequired": "All security questions must be answered.",
