@@ -17,7 +17,7 @@ export const answersSchema = object({
   comment: string().nullable(),
 });
 
-const PHONE_NUMBER_REGEX = /^$|^(\+|00)?[1-9]{1}[0-9,\s]{3,}$/;
+const PHONE_NUMBER_REGEX = /^$|^(\+|00)?[1-9]{1}[0-9]{3,}$/;
 
 export const defaultFormSchema = object().shape(
   {
@@ -44,7 +44,9 @@ export const defaultFormSchema = object().shape(
     visualCorrectionDioptre: number()
       .default(0)
       // accepting dot and comma as decimal separators
-      .transform((_value, originalValue) => Number(String(originalValue).replace(/,/, ".")))
+      .transform((value, originalValue, context) =>
+        context.isType(value) ? Number(String(originalValue).replace(/,/, ".")) : value
+      )
       .typeError("form.validation.notValid")
       .when("visualCorrection", {
         is: getOption(visualCorrectionOptions, VisualCorrection.YES),
@@ -64,7 +66,8 @@ export const defaultFormSchema = object().shape(
         otherwise: string().email("form.validation.notValid").required("form.validation.probandContacts"),
       }),
     phone: string()
-      .trim()
+      // get rid of all the white-spaces
+      .transform((value, originalValue, context) => (context.isType(value) ? originalValue.replace(/\s/g, "") : value))
       .when("email", {
         is: "",
         then: string().matches(PHONE_NUMBER_REGEX, "form.validation.notValid"),
