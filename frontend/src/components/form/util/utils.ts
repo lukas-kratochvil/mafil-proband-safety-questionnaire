@@ -40,5 +40,5 @@ export const compareHandednesses = (a: IHandednessDTO, b: IHandednessDTO, _local
   return aCode === "l" || (aCode === "rl" && bCode !== "l") ? -1 : 1;
 };
 
-// TODO: correct slice() ending
-export const getProjectText = (project: IProjectDTO): string => `${project.acronym} - ${project.name}`.slice(0, 10);
+export const getProjectText = (project: IProjectDTO): string =>
+  project.name === null ? project.acronym : `${project.acronym} - ${project.name}`.slice(0, 10); // TODO: correct slice() ending
