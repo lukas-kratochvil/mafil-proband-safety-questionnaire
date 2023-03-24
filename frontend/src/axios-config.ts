@@ -7,12 +7,14 @@ const serverApi = axios.create({
   },
 });
 
-// TODO: connect to the MAFILDB API
-// const mafilDbApi = axios.create({
-//   baseURL: "",
-// });
+const mafildbApi = axios.create({
+  baseURL: `${import.meta.env.VITE_MAFILDB_API_URL}`,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 export default {
   serverApi,
-  // mafilDbApi,
+  mafildbApi,
 };
