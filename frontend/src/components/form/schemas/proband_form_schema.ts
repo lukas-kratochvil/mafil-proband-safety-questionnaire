@@ -65,8 +65,15 @@ export const probandFormSchema = object().shape(
         otherwise: string().email("form.validation.notValid").required("form.validation.probandContacts"),
       }),
     phone: string()
-      // get rid of all the white-spaces and replace '+' at the beginning with the '00'
-      .transform((_value, originalValue) => originalValue.replace(/\s|-|\(|\)/g, "").replace(/^\+/, "00"))
+      .transform((_value, originalValue: string) => {
+        // get rid of all the white-spaces and replace '+' at the beginning with the '00'
+        const phoneNumber = originalValue.replace(/\s|-|\(|\)/g, "").replace(/^\+/, "00");
+        // prefix with czech phone number code (+420) if the phone number does not have any national phone number code
+        const CZECH_PHONE_NUMBER_CODE = "00420";
+        return phoneNumber.length === 0 || /^(00)/.test(phoneNumber)
+          ? phoneNumber
+          : `${CZECH_PHONE_NUMBER_CODE}${phoneNumber}`;
+      })
       .when("email", {
         is: "",
         then: string().matches(PHONE_NUMBER_REGEX, "form.validation.notValid"),

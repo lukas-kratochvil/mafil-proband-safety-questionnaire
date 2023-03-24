@@ -85,6 +85,7 @@ describe("form schemas", () => {
     });
 
     test.each([
+      ["123456789", true], // without any national code prefix
       ["00155625", true],
       ["00 1 556 25", true],
       [" 00 1 556 25 ", true],
