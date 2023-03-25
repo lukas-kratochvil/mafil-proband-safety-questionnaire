@@ -105,7 +105,7 @@ export class VisitFormService {
         id,
       },
       data: {
-        state: VisitFormState[updateVisitFormInput.state as keyof typeof VisitFormState],
+        state: updateVisitFormInput.state,
         additionalInfo: {
           update: {
             ...updateVisitFormInput.additionalInfo,
