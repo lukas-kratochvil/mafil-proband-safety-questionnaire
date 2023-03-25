@@ -9,3 +9,7 @@ export type ProjectsResponse = {
 export type CreateVisitResponse = {
   visit_name: string;
 };
+
+export type UpdateVisitStateResponse = {
+  visit_name: string;
+};
