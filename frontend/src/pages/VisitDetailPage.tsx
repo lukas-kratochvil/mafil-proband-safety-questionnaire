@@ -11,7 +11,7 @@ import {
 } from "@app/components/informative/ColoredInfoStripe";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { defaultNS } from "@app/i18n";
-import { IVisit, VisitState } from "@app/interfaces/visit";
+import { IVisit, VisitStateDEV } from "@app/interfaces/visit";
 import { fetchVisitDetail } from "@app/util/mafildb_API/fetch";
 import { convertStringToLocalizationKey, getBackButtonProps, IButtonProps } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
@@ -21,26 +21,26 @@ interface IVisitDetailButtonProps extends IButtonProps {
 }
 
 const getColoredInfoStripe = (
-  visitState: VisitState | undefined,
+  visitState: VisitStateDEV | undefined,
   visit: IVisit | undefined
 ): IColoredInfoStripeProps | undefined => {
   switch (visitState) {
-    case VisitState.APPROVED:
+    case VisitStateDEV.APPROVED:
       return {
         textLocalizationKey: "visitDetailPage.infoStripes.signatureChoice",
         color: ColoredInfoStripeColors.BLUE,
       };
-    case VisitState.DISAPPROVED:
+    case VisitStateDEV.DISAPPROVED:
       return {
         textLocalizationKey: "visitDetailPage.infoStripes.disapproved",
         color: ColoredInfoStripeColors.RED,
       };
-    case VisitState.FOR_SIGNATURE:
+    case VisitStateDEV.FOR_SIGNATURE:
       return {
         textLocalizationKey: "visitDetailPage.infoStripes.waitingForSignatureConfirmation",
         color: ColoredInfoStripeColors.ORANGE,
       };
-    case VisitState.SIGNED:
+    case VisitStateDEV.SIGNED:
       return {
         textLocalizationKey: visit?.projectInfo.isPhantom
           ? "visitDetailPage.infoStripes.completed"
@@ -53,11 +53,11 @@ const getColoredInfoStripe = (
 };
 
 const getButtons = (
-  visitState: VisitState | undefined,
-  setVisitState: React.Dispatch<React.SetStateAction<VisitState | undefined>>
+  visitState: VisitStateDEV | undefined,
+  setVisitState: React.Dispatch<React.SetStateAction<VisitStateDEV | undefined>>
 ): IVisitDetailButtonProps[] => {
   switch (visitState) {
-    case VisitState.APPROVED:
+    case VisitStateDEV.APPROVED:
       return [
         {
           titleLocalizationKey: "visitDetailPage.buttons.downloadPDFAndPhysicallySign",
@@ -68,29 +68,29 @@ const getButtons = (
              *  - open system download window, so the auth user can choose where to store it (or show the print windows instead?)
              *  - check my Firefox bookmarks for some interesting websites!!!
              */
-            setVisitState(VisitState.FOR_SIGNATURE);
+            setVisitState(VisitStateDEV.FOR_SIGNATURE);
           },
         },
         {
           titleLocalizationKey: "visitDetailPage.buttons.signElectronically",
           onClick: () => {
             // TODO: PDF will be generated and stored in DB on the server
-            setVisitState(VisitState.FOR_SIGNATURE);
+            setVisitState(VisitStateDEV.FOR_SIGNATURE);
           },
           disabled: true,
         },
       ];
-    case VisitState.FOR_SIGNATURE:
+    case VisitStateDEV.FOR_SIGNATURE:
       return [
         {
           titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
           onClick: () => {
             // TODO: store the state in DB
-            setVisitState(VisitState.SIGNED);
+            setVisitState(VisitStateDEV.SIGNED);
           },
         },
       ];
-    case VisitState.SIGNED:
+    case VisitStateDEV.SIGNED:
       return [
         {
           titleLocalizationKey: "visitDetailPage.buttons.downloadPDF",
@@ -118,7 +118,7 @@ const VisitDetailPage = () => {
   });
   const navigate = useNavigate();
 
-  const [visitState, setVisitState] = useState<VisitState>();
+  const [visitState, setVisitState] = useState<VisitStateDEV>();
   const [coloredInfoStripe, setColoredInfoStripe] = useState<IColoredInfoStripeProps>();
   const [buttons, setButtons] = useState<IVisitDetailButtonProps[]>();
 

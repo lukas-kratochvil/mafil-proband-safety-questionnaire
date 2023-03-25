@@ -11,7 +11,7 @@ import { loadFormDefaultValuesFromApprovalRoomVisitForm } from "@app/components/
 import { useAuth } from "@app/hooks/auth/auth";
 import { FormPropType, FormQac } from "@app/interfaces/form";
 import { QuestionPartNumber } from "@app/interfaces/question";
-import { VisitState } from "@app/interfaces/visit";
+import { VisitStateDEV } from "@app/interfaces/visit";
 import { RoutingPaths } from "@app/routing-paths";
 import { updateDummyVisitState } from "@app/util/fetch.dev";
 import { fetchApprovalRoomVisitForm } from "@app/util/server_API/fetch";
@@ -80,7 +80,7 @@ export const ApprovalForm = () => {
             titleLocalizationKey: "form.common.buttons.confirmDisapproval",
             onClick: async (data: FormPropType) => {
               // TODO: create DISAPPROVED visit in the MAFILDB
-              updateDummyVisitState(id, VisitState.DISAPPROVED);
+              updateDummyVisitState(id, VisitStateDEV.DISAPPROVED);
               navigate(RoutingPaths.APPROVAL_ROOM);
             },
             showErrorColor: true,
@@ -101,7 +101,7 @@ export const ApprovalForm = () => {
             titleLocalizationKey: "form.common.buttons.approve",
             onClick: async (data: FormPropType) => {
               // TODO: create APPROVED visit in the MAFILDB
-              updateDummyVisitState(id, VisitState.APPROVED);
+              updateDummyVisitState(id, VisitStateDEV.APPROVED);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${id}`);
             },
           },

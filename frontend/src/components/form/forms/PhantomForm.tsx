@@ -8,7 +8,7 @@ import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo
 import { createNewVisitFromFormData } from "@app/components/form/util/utils.dev";
 import { dummyVisits } from "@app/data/visit_data";
 import { FormPropType } from "@app/interfaces/form";
-import { AnswerOption, VisitState } from "@app/interfaces/visit";
+import { AnswerOption, VisitStateDEV } from "@app/interfaces/visit";
 import { RoutingPaths } from "@app/routing-paths";
 import { fetchCurrentQuestions } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
@@ -29,7 +29,7 @@ export const PhantomForm = () => {
       titleLocalizationKey: "form.common.buttons.finalize",
       onClick: async (data: FormPropType) => {
         // TODO: create PHANTOM_DONE visit in the MAFILDB
-        const newPhantomVisit = createNewVisitFromFormData(data, VisitState.SIGNED);
+        const newPhantomVisit = createNewVisitFromFormData(data, VisitStateDEV.SIGNED);
         dummyVisits.push(newPhantomVisit);
         navigate(`${RoutingPaths.RECENT_VISITS}/visit/${newPhantomVisit.id}`);
       },

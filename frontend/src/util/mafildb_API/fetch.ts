@@ -1,7 +1,7 @@
 import axiosConfig from "@app/axios-config";
 import { devicesDev } from "@app/data/form_data";
 import { dummyVisits } from "@app/data/visit_data";
-import { IVisit, VisitState } from "@app/interfaces/visit";
+import { IVisit, VisitStateDEV } from "@app/interfaces/visit";
 import { IDeviceDTO, IProjectDTO } from "./dto";
 import { ProjectsResponse } from "./response-types";
 
@@ -24,5 +24,7 @@ export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVi
 // TODO: get visits from MAFIL DB – all the visits with assigned visitId and generated PDF are fetched from MAFIL DB
 export const fetchRecentVisits = async (): Promise<IVisit[]> =>
   dummyVisits.filter((visit) =>
-    [VisitState.APPROVED, VisitState.DISAPPROVED, VisitState.FOR_SIGNATURE, VisitState.SIGNED].includes(visit.state)
+    [VisitStateDEV.APPROVED, VisitStateDEV.DISAPPROVED, VisitStateDEV.FOR_SIGNATURE, VisitStateDEV.SIGNED].includes(
+      visit.state
+    )
   );

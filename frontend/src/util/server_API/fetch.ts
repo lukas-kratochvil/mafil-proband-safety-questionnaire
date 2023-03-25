@@ -3,7 +3,7 @@ import { dummyVisits } from "@app/data/visit_data";
 import i18n, { LocalizationKeys } from "@app/i18n";
 import { IAuthGateOperator } from "@app/interfaces/auth";
 import { FormPropType } from "@app/interfaces/form";
-import { AnswerOption, IVisit, VisitState } from "@app/interfaces/visit";
+import { AnswerOption, IVisit, VisitStateDEV } from "@app/interfaces/visit";
 import {
   IApprovalRoomVisitFormDTO,
   ICreateDuplicatedVisitFormForApprovalInput,
@@ -97,11 +97,11 @@ export const fetchApprovalRoomVisitForm = async (
 
 // TODO: get visits from DB
 export const fetchWaitingRoomVisitForms = async (): Promise<IVisit[]> =>
-  dummyVisits.filter((visit) => visit.state === VisitState.NEW);
+  dummyVisits.filter((visit) => visit.state === VisitStateDEV.NEW);
 
 // TODO: get visits from DB
 export const fetchApprovalRoomVisitForms = async (): Promise<IVisit[]> =>
-  dummyVisits.filter((visit) => visit.state === VisitState.IN_APPROVAL);
+  dummyVisits.filter((visit) => visit.state === VisitStateDEV.IN_APPROVAL);
 
 export const createProbandVisitForm = async (visitFormData: FormPropType): Promise<string> => {
   const variables: ICreateProbandVisitFormInput = {

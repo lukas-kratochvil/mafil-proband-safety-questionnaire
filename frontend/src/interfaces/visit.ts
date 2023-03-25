@@ -1,7 +1,7 @@
 import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "../util/server_API/dto";
 import { QuestionPartNumber } from "./question";
 
-export enum VisitState {
+export enum VisitStateDEV {
   NEW = "Nové",
   IN_APPROVAL = "Ve schvalování",
   APPROVED = "Schváleno, nepodepsáno",
@@ -15,7 +15,7 @@ export interface IVisit {
   id: string;
   createdAt: Date;
   visitId: string;
-  state: VisitState;
+  state: VisitStateDEV;
   pdf: string;
   projectInfo: IProjectInfo;
   probandInfo: IProbandInfo;

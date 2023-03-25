@@ -1,5 +1,5 @@
 import { QuestionPartNumber } from "@app/interfaces/question";
-import { AnswerOption, IQac, IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
+import { AnswerOption, IQac, IVisit, VisitStateDEV, VisualCorrection } from "@app/interfaces/visit";
 import { getDummyVisitCurrentQuestions } from "@app/util/fetch.dev";
 import { devicesDev, projectsDev } from "./form_data";
 import { genders, handednesses, nativeLanguages } from "./translated_entities_data";
@@ -14,14 +14,16 @@ const generateId = (): string => {
   return id;
 };
 
-const loadAnswers = (answers: IQac[], visitState: VisitState): IQac[] =>
+const loadAnswers = (answers: IQac[], visitState: VisitStateDEV): IQac[] =>
   answers.map((answer) => {
     let comment = answer.comment.trim().length > 0 ? answer.comment : "";
 
     if (
       answer.answer === AnswerOption.YES
-      && ((VisitState.IN_APPROVAL && answer.partNumber === QuestionPartNumber.ONE)
-        || [VisitState.APPROVED, VisitState.DISAPPROVED, VisitState.FOR_SIGNATURE, VisitState.SIGNED].includes(visitState))
+      && ((VisitStateDEV.IN_APPROVAL && answer.partNumber === QuestionPartNumber.ONE)
+        || [VisitStateDEV.APPROVED, VisitStateDEV.DISAPPROVED, VisitStateDEV.FOR_SIGNATURE, VisitStateDEV.SIGNED].includes(
+          visitState
+        ))
     ) {
       comment = "Komentář";
     }
@@ -33,7 +35,7 @@ const loadAnswers = (answers: IQac[], visitState: VisitState): IQac[] =>
     };
   });
 
-export const createVisit = (initialVisit: IVisit, state: VisitState): IVisit => {
+export const createVisit = (initialVisit: IVisit, state: VisitStateDEV): IVisit => {
   const newId: string = generateId();
   return {
     ...initialVisit,
@@ -42,7 +44,7 @@ export const createVisit = (initialVisit: IVisit, state: VisitState): IVisit => 
     visitId: `${initialVisit.projectInfo.isPhantom ? "phantom" : "visit"}${newId}`,
     state,
     projectInfo:
-      state === VisitState.NEW
+      state === VisitStateDEV.NEW
         ? {
             ...initialVisit.projectInfo,
             projectAcronym: null,
@@ -65,14 +67,14 @@ export const duplicateVisit = (initialVisit: IVisit): IVisit => {
     ...initialVisit,
     id: newId,
     visitId: `${initialVisit.projectInfo.isPhantom ? "phantom" : "visit"}${newId}`,
-    state: VisitState.NEW,
+    state: VisitStateDEV.NEW,
     projectInfo: { ...initialVisit.projectInfo },
     probandInfo: { ...initialVisit.probandInfo },
     answers: [...initialVisit.answers],
   };
 };
 
-const createVisits = (initialVisit: IVisit, state: VisitState, count: number): IVisit[] => {
+const createVisits = (initialVisit: IVisit, state: VisitStateDEV, count: number): IVisit[] => {
   const visits = [];
 
   for (let i = 0; i < count; i++) {
@@ -87,7 +89,7 @@ const dummyVisitNew: IVisit = {
   id: generateId(),
   createdAt: new Date(1663390000000),
   visitId: "visit1",
-  state: VisitState.NEW,
+  state: VisitStateDEV.NEW,
   pdf: "/dummy-multipage.pdf",
   projectInfo: {
     projectId: projectsDev[0].id,
@@ -125,7 +127,7 @@ const dummyPhantomVisitNew: IVisit = {
   id: generateId(),
   createdAt: new Date(1663700000000),
   visitId: "phantom123",
-  state: VisitState.NEW,
+  state: VisitStateDEV.NEW,
   pdf: "/dummy.pdf",
   projectInfo: {
     projectId: "",
@@ -163,7 +165,7 @@ const dummyPhantomVisit: IVisit = {
   id: generateId(),
   createdAt: new Date(1663000000000),
   visitId: "phantom2",
-  state: VisitState.SIGNED,
+  state: VisitStateDEV.SIGNED,
   pdf: "/dummy.pdf",
   projectInfo: {
     ...dummyVisitNew.projectInfo,
@@ -175,16 +177,16 @@ const dummyPhantomVisit: IVisit = {
     surname: "Phantom",
     gender: genders[2],
   },
-  answers: [...loadAnswers(dummyPhantomVisitNew.answers, VisitState.SIGNED)],
+  answers: [...loadAnswers(dummyPhantomVisitNew.answers, VisitStateDEV.SIGNED)],
 };
 
 export const dummyVisits: IVisit[] = [
   dummyVisitNew,
-  ...createVisits(dummyVisitNew, VisitState.NEW, 3),
-  ...createVisits(dummyVisitNew, VisitState.IN_APPROVAL, 2),
-  ...createVisits(dummyVisitNew, VisitState.DISAPPROVED, 3),
-  ...createVisits(dummyVisitNew, VisitState.APPROVED, 4),
-  ...createVisits(dummyVisitNew, VisitState.SIGNED, 2),
+  ...createVisits(dummyVisitNew, VisitStateDEV.NEW, 3),
+  ...createVisits(dummyVisitNew, VisitStateDEV.IN_APPROVAL, 2),
+  ...createVisits(dummyVisitNew, VisitStateDEV.DISAPPROVED, 3),
+  ...createVisits(dummyVisitNew, VisitStateDEV.APPROVED, 4),
+  ...createVisits(dummyVisitNew, VisitStateDEV.SIGNED, 2),
   dummyPhantomVisit,
-  ...createVisits(dummyPhantomVisit, VisitState.SIGNED, 2),
+  ...createVisits(dummyPhantomVisit, VisitStateDEV.SIGNED, 2),
 ];

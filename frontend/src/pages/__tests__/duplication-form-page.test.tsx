@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import { devicesDev, projectsDev } from "@app/data/form_data";
 import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import i18n from "@app/i18n";
-import { AnswerOption, IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
+import { AnswerOption, IVisit, VisitStateDEV, VisualCorrection } from "@app/interfaces/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
 import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
 import { IOperatorDTO, IQuestionDTO } from "@app/util/server_API/dto";
@@ -96,7 +96,7 @@ const comment = "Comment";
 const visit: IVisit = {
   id,
   visitId: "VisitId1",
-  state: VisitState.SIGNED,
+  state: VisitStateDEV.SIGNED,
   createdAt: new Date(),
   pdf: "",
   projectInfo: {

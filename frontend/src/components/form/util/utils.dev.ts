@@ -2,9 +2,9 @@
 import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import { createVisit } from "@app/data/visit_data";
 import { FormPropType } from "@app/interfaces/form";
-import { AnswerOption, IVisit, VisitState, VisualCorrection } from "@app/interfaces/visit";
+import { AnswerOption, IVisit, VisitStateDEV, VisualCorrection } from "@app/interfaces/visit";
 
-export const createNewVisitFromFormData = (data: FormPropType, state: VisitState): IVisit =>
+export const createNewVisitFromFormData = (data: FormPropType, state: VisitStateDEV): IVisit =>
   createVisit(
     {
       ...data,

@@ -11,7 +11,7 @@ import { loadFormDefaultValuesFromWaitingRoomVisitForm } from "@app/components/f
 import { useAuth } from "@app/hooks/auth/auth";
 import { FormPropType, FormQac } from "@app/interfaces/form";
 import { QuestionPartNumber } from "@app/interfaces/question";
-import { AnswerOption, VisitState } from "@app/interfaces/visit";
+import { AnswerOption, VisitStateDEV } from "@app/interfaces/visit";
 import { RoutingPaths } from "@app/routing-paths";
 import { updateDummyVisitState } from "@app/util/fetch.dev";
 import { fetchWaitingRoomVisitForm } from "@app/util/server_API/fetch";
@@ -81,7 +81,7 @@ export const WaitingRoomForm = () => {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
           onClick: async (data: FormPropType) => {
             // TODO: create DISAPPROVED visit in the MAFILDB
-            updateDummyVisitState(id, VisitState.DISAPPROVED);
+            updateDummyVisitState(id, VisitStateDEV.DISAPPROVED);
             navigate(RoutingPaths.WAITING_ROOM);
           },
           showErrorColor: true,
@@ -108,7 +108,7 @@ export const WaitingRoomForm = () => {
               ) === undefined
             ) {
               // TODO: create APPROVED visit in the MAFILDB
-              updateDummyVisitState(id, VisitState.APPROVED);
+              updateDummyVisitState(id, VisitStateDEV.APPROVED);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${id}`);
             } else {
               // open warning dialog that the visit form has to be approved by an operator with higher permissions
@@ -142,7 +142,7 @@ export const WaitingRoomForm = () => {
 
   const moveVisitFormToApprovalRoom = async (data: FormPropType) => {
     // TODO: update visit with IN_APPROVAL state in the server DB
-    updateDummyVisitState(id, VisitState.IN_APPROVAL);
+    updateDummyVisitState(id, VisitStateDEV.IN_APPROVAL);
     setOpenFinalizeDialog(false);
     navigate(RoutingPaths.WAITING_ROOM);
   };
