@@ -38,7 +38,7 @@ services:
     networks:
       - backend-network
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
       - PORT=${SERVER_PORT}
       - DATABASE_URL=${DATABASE_URL}
       - MAFILDB_API_URL=${MAFILDB_API_URL}
@@ -55,6 +55,7 @@ services:
       - backend-network
       - frontend-network
     environment:
+      - NODE_ENV=production
       - PORT=${WEB_PORT}
       - VITE_SERVER_API_URL=${SERVER_API_URL}
       - VITE_MAFILDB_API_URL=${MAFILDB_API_URL}
