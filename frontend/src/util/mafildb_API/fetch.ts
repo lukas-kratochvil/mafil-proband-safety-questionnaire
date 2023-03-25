@@ -7,12 +7,12 @@ import { CreateVisitResponse, DevicesResponse, ProjectsResponse, UpdateVisitStat
 
 export const fetchProjects = async (): Promise<IProjectDTO[]> => {
   const { data } = await axiosConfig.mafildbApi.get<ProjectsResponse>("projects.json");
-  return data.data.rows;
+  return data.rows;
 };
 
 export const fetchDevices = async (): Promise<IDeviceDTO[]> => {
   const { data } = await axiosConfig.mafildbApi.get<DevicesResponse>("devices.json");
-  return data.data.rows;
+  return data.rows;
 }
 
 // TODO: get visit from MAFILDB DB

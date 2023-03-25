@@ -1,15 +1,11 @@
 import { IDeviceDTO, IProjectDTO } from "./dto";
 
 export type ProjectsResponse = {
-  data: {
-    rows: IProjectDTO[];
-  };
+  rows: IProjectDTO[];
 };
 
 export type DevicesResponse = {
-  data: {
-    rows: IDeviceDTO[];
-  };
+  rows: IDeviceDTO[];
 };
 
 export type CreateVisitResponse = {
