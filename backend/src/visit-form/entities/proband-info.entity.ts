@@ -1,19 +1,30 @@
-import { Field, Float, ObjectType } from "@nestjs/graphql";
+import { Field, Float, HideField, ObjectType } from "@nestjs/graphql";
 import { ProbandInfo } from "@prisma/client";
+import { GenderEntity } from "@app/gender/entities/gender.entity";
 import { BaseEntity } from "@app/graphql/entities/base.entity";
-import { UuidScalar } from "@app/graphql/scalars/uuid-scalar";
+import { HandednessEntity } from "@app/handedness/entities/handedness.entity";
+import { NativeLanguageEntity } from "@app/native-language/entities/native-language.entity";
 import { VisitFormEntity } from "@app/visit-form/entities/visit-form.entity";
 
 @ObjectType()
 export class ProbandInfoEntity extends BaseEntity implements ProbandInfo {
-  @Field(() => UuidScalar)
+  @HideField()
   nativeLanguageId: string;
 
-  @Field(() => UuidScalar)
+  @Field(() => NativeLanguageEntity)
+  nativeLanguage: NativeLanguageEntity;
+
+  @HideField()
   genderId: string;
 
-  @Field(() => UuidScalar)
+  @Field(() => GenderEntity)
+  gender: GenderEntity;
+
+  @HideField()
   handednessId: string;
+
+  @Field(() => HandednessEntity)
+  handedness: HandednessEntity;
 
   @Field(() => [VisitFormEntity])
   visitForms: VisitFormEntity[];
