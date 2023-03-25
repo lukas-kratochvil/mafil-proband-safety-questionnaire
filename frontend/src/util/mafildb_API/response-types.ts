@@ -1,8 +1,14 @@
-import { IProjectDTO } from "./dto";
+import { IDeviceDTO, IProjectDTO } from "./dto";
 
 export type ProjectsResponse = {
   data: {
     rows: IProjectDTO[];
+  };
+};
+
+export type DevicesResponse = {
+  data: {
+    rows: IDeviceDTO[];
   };
 };
 

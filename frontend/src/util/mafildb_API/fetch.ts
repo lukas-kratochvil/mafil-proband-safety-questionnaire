@@ -1,18 +1,19 @@
 import axiosConfig from "@app/axios-config";
-import { devicesDev } from "@app/data/form_data";
 import { dummyVisits } from "@app/data/visit_data";
 import { FormPropType } from "@app/interfaces/form";
 import { IVisit, VisitStateDEV } from "@app/interfaces/visit";
-import { IDeviceDTO, IProjectDTO, VisitState } from "./dto";
-import { CreateVisitResponse, ProjectsResponse, UpdateVisitStateResponse } from "./response-types";
+import { IDeviceDTO, IProjectDTO, IVisitDTO, VisitState } from "./dto";
+import { CreateVisitResponse, DevicesResponse, ProjectsResponse, UpdateVisitStateResponse } from "./response-types";
 
 export const fetchProjects = async (): Promise<IProjectDTO[]> => {
   const { data } = await axiosConfig.mafildbApi.get<ProjectsResponse>("projects.json");
   return data.data.rows;
 };
 
-// TODO: get devices from MAFILDB
-export const fetchDevices = async (): Promise<IDeviceDTO[]> => devicesDev;
+export const fetchDevices = async (): Promise<IDeviceDTO[]> => {
+  const { data } = await axiosConfig.mafildbApi.get<DevicesResponse>("devices.json");
+  return data.data.rows;
+}
 
 // TODO: get visit from MAFILDB DB
 export const fetchVisit = async (visitId: string | undefined): Promise<IVisit | undefined> =>
