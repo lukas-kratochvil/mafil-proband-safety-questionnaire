@@ -1,7 +1,11 @@
 export const AUTHENTICATE_OPERATOR = `
 query AuthenticateOperator($name: String!, $surname: String!, $uco: String!, $email: String!) {
   authenticateOperator(name: $name, surname: $surname, uco: $uco, email: $email) {
-    id,
+    id
+    name
+    surname
+    uco
+    email
     role
   }
 }

@@ -12,6 +12,10 @@ export type AuthenticateOperatorResponse = {
   data: {
     authenticateOperator: {
       id: string;
+      name: string;
+      surname: string;
+      uco: string;
+      email: string;
       role: OperatorRole;
     };
   };

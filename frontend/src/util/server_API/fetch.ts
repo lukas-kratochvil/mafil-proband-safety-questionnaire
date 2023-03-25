@@ -44,7 +44,7 @@ export const authenticateOperator = async (loggingOperator: IAuthGateOperator): 
     query: AUTHENTICATE_OPERATOR,
     variables,
   });
-  return { ...loggingOperator, ...data.data.authenticateOperator };
+  return data.data.authenticateOperator;
 };
 
 export const fetchGenders = async (): Promise<IGenderDTO[]> => {
