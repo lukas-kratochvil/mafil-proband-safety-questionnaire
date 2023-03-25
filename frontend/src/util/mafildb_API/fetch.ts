@@ -19,10 +19,6 @@ export const fetchDevices = async (): Promise<IDeviceDTO[]> => {
 export const fetchVisit = async (visitId: string | undefined): Promise<IVisit | undefined> =>
   dummyVisits.find((visit) => visit.id === visitId);
 
-// TODO: get visits from MAFILDB
-export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVisit | undefined> =>
-  dummyVisits.find((visit) => visit.id === visitId);
-
 // TODO: get visits from MAFIL DB – all the visits with assigned visitId and generated PDF are fetched from MAFIL DB
 export const fetchRecentVisits = async (): Promise<IVisit[]> =>
   dummyVisits.filter((visit) =>
