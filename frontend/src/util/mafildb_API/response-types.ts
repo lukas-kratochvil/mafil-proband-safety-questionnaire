@@ -5,3 +5,7 @@ export type ProjectsResponse = {
     rows: IProjectDTO[];
   };
 };
+
+export type CreateVisitResponse = {
+  visit_name: string;
+};

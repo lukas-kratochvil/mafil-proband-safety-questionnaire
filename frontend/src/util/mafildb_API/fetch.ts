@@ -1,9 +1,10 @@
 import axiosConfig from "@app/axios-config";
 import { devicesDev } from "@app/data/form_data";
 import { dummyVisits } from "@app/data/visit_data";
+import { FormPropType } from "@app/interfaces/form";
 import { IVisit, VisitStateDEV } from "@app/interfaces/visit";
-import { IDeviceDTO, IProjectDTO } from "./dto";
-import { ProjectsResponse } from "./response-types";
+import { IDeviceDTO, IProjectDTO, VisitState } from "./dto";
+import { CreateVisitResponse, ProjectsResponse } from "./response-types";
 
 export const fetchProjects = async (): Promise<IProjectDTO[]> => {
   const { data } = await axiosConfig.mafildbApi.get<ProjectsResponse>("projects.json");
@@ -28,3 +29,13 @@ export const fetchRecentVisits = async (): Promise<IVisit[]> =>
       visit.state
     )
   );
+
+// TODO: create visit in MAFILDB
+export const createVisit = async (visitFormData: FormPropType, state: VisitState): Promise<string | undefined> => {
+  const createData = {
+    ...visitFormData,
+    state,
+  };
+  const { data } = await axiosConfig.mafildbApi.post<CreateVisitResponse>("visit", createData);
+  return data.visit_name;
+};
