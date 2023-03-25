@@ -44,4 +44,4 @@ export const getProjectText = (project: IProjectDTO): string => {
   const projectAcronym = project.acronym.trim();
   const projectName = project.name.trim();
   return projectName === "" ? projectAcronym : `${projectAcronym} - ${projectName}`;
-}
+};
