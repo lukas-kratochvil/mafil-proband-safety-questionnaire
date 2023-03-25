@@ -16,18 +16,10 @@ import { blue } from "@mui/material/colors";
 import { bindPopper, bindToggle, usePopupState } from "material-ui-popup-state/hooks";
 import i18n, { LocalizationKeys } from "@app/i18n";
 
-type SupportedLanguageType = {
-  [key in LocalizationKeys]: {
-    nativeName: string;
-  };
+const languageNativeNames: Record<LocalizationKeys, string> = {
+  cs: "Čeština",
+  en: "English",
 };
-
-const supportedLanguages: SupportedLanguageType = {
-  cs: { nativeName: "Čeština" },
-  en: { nativeName: "English" },
-};
-
-type SupportedLanguageKeys = keyof typeof supportedLanguages;
 
 const languageItemHoverFocus: SxProps<Theme> = {
   color: blue[800],
@@ -40,8 +32,6 @@ export const LanguageMenu = () => {
     popupId: "language-menu",
     disableAutoFocus: true,
   });
-
-  const selectedLanguageNativeName = supportedLanguages[i18n.resolvedLanguage as SupportedLanguageKeys].nativeName;
 
   const selectedLanguageOnClick = (language: string) => {
     i18n.changeLanguage(language);
@@ -67,7 +57,7 @@ export const LanguageMenu = () => {
           },
         }}
       >
-        {selectedLanguageNativeName}
+        {languageNativeNames[i18n.resolvedLanguage as LocalizationKeys]}
       </Button>
       <Popper
         {...bindPopper(popupState)}
@@ -92,7 +82,7 @@ export const LanguageMenu = () => {
                     },
                   }}
                 >
-                  {Object.keys(supportedLanguages).map((language) => (
+                  {Object.keys(languageNativeNames).map((language) => (
                     <MenuItem
                       key={language}
                       onClick={() => selectedLanguageOnClick(language)}
@@ -102,7 +92,7 @@ export const LanguageMenu = () => {
                         "&:focus-visible": { ...languageItemHoverFocus },
                       }}
                     >
-                      {supportedLanguages[language as SupportedLanguageKeys].nativeName}
+                      {languageNativeNames[language as LocalizationKeys]}
                     </MenuItem>
                   ))}
                 </MenuList>
