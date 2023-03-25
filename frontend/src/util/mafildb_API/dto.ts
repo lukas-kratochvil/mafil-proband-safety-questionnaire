@@ -1,7 +1,7 @@
 export interface IProjectDTO {
   id: string;
   acronym: string;
-  name: string | null;
+  name: string;
 }
 
 export interface IDeviceDTO {
