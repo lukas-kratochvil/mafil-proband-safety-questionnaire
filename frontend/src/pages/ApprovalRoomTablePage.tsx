@@ -1,10 +1,10 @@
-import { Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { compareAsc, format, parse } from "date-fns";
 import MaterialReactTable, { MRT_ColumnDef as MRTColumnDef, MRT_Row as MRTRow } from "material-react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { ApprovalRoomActionButtons } from "@app/components/table/actions/ApprovalRoomActionButtons";
+import { defaultTableProps } from "@app/components/table/table-default-props";
 import { defaultNS } from "@app/i18n";
 import { IApprovalRoomVisitFormDTO } from "@app/util/server_API/dto";
 import { fetchApprovalRoomVisitForms } from "@app/util/server_API/fetch";
@@ -94,38 +94,7 @@ const ApprovalRoomTablePage = () => {
 
   return (
     <PageContainer isTablePage>
-      <MaterialReactTable
-        columns={columns}
-        data={visitForms || []}
-        enableDensityToggle={false}
-        enableEditing={false}
-        enableColumnFilters={false}
-        enableHiding={false}
-        enableBottomToolbar={false}
-        memoMode="rows" // breaks some dynamic rendering features (read: https://www.material-react-table.com/docs/guides/memoize-components)
-        muiToolbarAlertBannerProps={
-          isError
-            ? {
-                color: "error",
-                children: "Error loading data",
-              }
-            : undefined
-        }
-        state={{
-          isLoading,
-          showAlertBanner: isError,
-          showProgressBars: isFetching,
-        }}
-        renderTopToolbarCustomActions={() => (
-          <Typography
-            paddingLeft="0.5rem"
-            fontSize="1.5rem"
-            textTransform="uppercase"
-          >
-            {t("title")}
-          </Typography>
-        )}
-      />
+      <MaterialReactTable {...defaultTableProps(t("title"), columns, visitForms, isFetching, isLoading, isError)} />
     </PageContainer>
   );
 };
