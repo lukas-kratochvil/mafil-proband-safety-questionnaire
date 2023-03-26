@@ -26,7 +26,7 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   probandLanguageId: string;
 
   @Field(() => AdditionalVisitFormInfoEntity, { nullable: true })
-  additionalInfo: AdditionalVisitFormInfoEntity | null;
+  additionalInfo?: AdditionalVisitFormInfoEntity;
 
   @HideField()
   additionalInfoId: string | null;

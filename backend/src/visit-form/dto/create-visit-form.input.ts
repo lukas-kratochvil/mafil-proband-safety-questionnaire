@@ -17,9 +17,9 @@ export class CreateVisitFormInput {
 
   // additionalInfo is created for a duplicated visit that is going to be approved
   @Field(() => CreateAdditionalVisitFormInfoInput, { nullable: true })
-  additionalInfo: CreateAdditionalVisitFormInfoInput | null;
+  additionalInfo?: CreateAdditionalVisitFormInfoInput;
 
   // state is IN_APPROVAL for a duplicated visit that is going to be approved
   @Field(() => VisitFormState, { nullable: true })
-  state: VisitFormState | null;
+  state?: VisitFormState;
 }

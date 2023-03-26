@@ -7,11 +7,11 @@ import { UpdateProbandInfoInput } from "./update-proband-info.input";
 @InputType()
 export class UpdateVisitFormInput extends PickType(VisitFormEntity, ["id", "state"], InputType) {
   @Field(() => UpdateAdditionalVisitFormInfoInput, { nullable: true })
-  additionalInfo: UpdateAdditionalVisitFormInfoInput | null;
+  additionalInfo?: UpdateAdditionalVisitFormInfoInput;
 
   @Field(() => UpdateProbandInfoInput, { nullable: true })
-  probandInfo: UpdateProbandInfoInput | null;
+  probandInfo?: UpdateProbandInfoInput;
 
   @Field(() => [UpdateAnswerInput], { nullable: true })
-  answers: UpdateAnswerInput[] | null;
+  answers?: UpdateAnswerInput[];
 }

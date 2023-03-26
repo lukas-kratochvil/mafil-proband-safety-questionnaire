@@ -108,27 +108,30 @@ export class VisitFormService {
       data: {
         state: updateVisitFormInput.state,
         additionalInfo: {
-          update: {
-            ...updateVisitFormInput.additionalInfo,
-          },
+          update: updateVisitFormInput.additionalInfo
+            ? {
+                ...updateVisitFormInput.additionalInfo,
+              }
+            : undefined,
         },
         probandInfo: {
-          update: {
-            ...updateVisitFormInput.probandInfo,
-          },
+          update: updateVisitFormInput.probandInfo
+            ? {
+                ...updateVisitFormInput.probandInfo,
+              }
+            : undefined,
         },
         answers: {
-          updateMany:
-            updateVisitFormInput.answers === null
-              ? undefined
-              : updateVisitFormInput.answers.map((answer) => ({
-                  where: {
-                    id: answer.id,
-                  },
-                  data: {
-                    ...answer,
-                  },
-                })),
+          updateMany: updateVisitFormInput.answers
+            ? updateVisitFormInput.answers.map((answer) => ({
+                where: {
+                  id: answer.id,
+                },
+                data: {
+                  ...answer,
+                },
+              }))
+            : undefined,
         },
       },
       include: visitFormInclude,

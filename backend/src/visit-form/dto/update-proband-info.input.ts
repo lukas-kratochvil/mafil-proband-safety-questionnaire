@@ -1,9 +1,5 @@
-import { InputType, IntersectionType, PartialType, PickType } from "@nestjs/graphql";
-import { ProbandInfoEntity } from "@app/visit-form/entities/proband-info.entity";
+import { InputType, PartialType } from "@nestjs/graphql";
 import { CreateProbandInfoInput } from "./create-proband-info.input";
 
 @InputType()
-export class UpdateProbandInfoInput extends IntersectionType(
-  PickType(ProbandInfoEntity, ["id"], InputType),
-  PartialType(CreateProbandInfoInput)
-) {}
+export class UpdateProbandInfoInput extends PartialType(CreateProbandInfoInput, InputType) {}
