@@ -8,7 +8,6 @@ import { WaitingRoomActionButtons } from "@app/components/table/actions/WaitingR
 import { defaultNS } from "@app/i18n";
 import { IWaitingRoomVisitFormDTO } from "@app/util/server_API/dto";
 import { fetchWaitingRoomVisitForms } from "@app/util/server_API/fetch";
-import { convertStringToLocalizationKey } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
 
 const createdAtFormat = "d.M.y H:mm";
@@ -118,7 +117,7 @@ const WaitingRoomTablePage = () => {
             fontSize="1.5rem"
             textTransform="uppercase"
           >
-            {t(convertStringToLocalizationKey("title"))}
+            {t("title")}
           </Typography>
         )}
       />
