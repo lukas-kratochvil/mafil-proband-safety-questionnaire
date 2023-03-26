@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { CardContainer } from "@app/components/card/CardContainer";
 import { useAuth } from "@app/hooks/auth/auth";
 import { defaultNS } from "@app/i18n";
-import { IAuthMethod } from "@app/interfaces/auth";
+import { IAuthMethod } from "@app/model/auth";
 import { PageContainer } from "./PageContainer";
 
 const LoginPage = () => {

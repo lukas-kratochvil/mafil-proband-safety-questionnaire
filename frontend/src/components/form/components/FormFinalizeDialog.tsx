@@ -12,7 +12,7 @@ import { SetStateAction } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n";
-import { FormPropType } from "@app/interfaces/form";
+import { FormPropType } from "@app/model/form";
 
 interface IFormFinalizeDialogProps {
   isOpen: boolean;

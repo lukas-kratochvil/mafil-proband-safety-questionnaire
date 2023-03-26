@@ -1,4 +1,4 @@
-import { Gender, Handedness, VisualCorrection } from "@app/interfaces/visit";
+import { Gender, Handedness, VisualCorrection } from "@app/model/visit";
 
 export interface IOption {
   value: number;

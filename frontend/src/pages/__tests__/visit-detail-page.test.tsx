@@ -1,7 +1,7 @@
 import userEvent from "@testing-library/user-event";
 import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import i18n from "@app/i18n";
-import { IVisit, VisitStateDEV, VisualCorrection } from "@app/interfaces/visit";
+import { IVisit, VisitStateDEV, VisualCorrection } from "@app/model/visit";
 import VisitDetailPage from "@app/pages/VisitDetailPage";
 import * as mafildbFetchers from "@app/util/mafildb_API/fetch";
 import { render, screen } from "@test-utils";

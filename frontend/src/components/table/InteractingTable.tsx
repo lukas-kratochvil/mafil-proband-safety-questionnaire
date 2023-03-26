@@ -4,7 +4,7 @@ import MaterialReactTable, { MRT_ColumnDef as MRTColumnDef } from "material-reac
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n";
-import { IVisit } from "@app/interfaces/visit";
+import { IVisit } from "@app/model/visit";
 import { PageContainer } from "@app/pages/PageContainer";
 import { convertStringToLocalizationKey } from "@app/util/utils";
 

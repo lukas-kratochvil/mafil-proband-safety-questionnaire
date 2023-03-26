@@ -1,5 +1,5 @@
-import { QuestionPartNumber } from "@app/interfaces/question";
-import { AnswerOption, IQac, IVisit, VisitStateDEV, VisualCorrection } from "@app/interfaces/visit";
+import { QuestionPartNumber } from "@app/model/question";
+import { AnswerOption, IQac, IVisit, VisitStateDEV, VisualCorrection } from "@app/model/visit";
 import { getDummyVisitCurrentQuestions } from "@app/util/fetch.dev";
 import { devicesDev, projectsDev } from "./form_data";
 import { genders, handednesses, nativeLanguages } from "./translated_entities_data";

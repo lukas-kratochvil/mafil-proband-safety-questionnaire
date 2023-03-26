@@ -1,7 +1,7 @@
 import axiosConfig from "@app/axios-config";
 import { dummyVisits } from "@app/data/visit_data";
-import { FormPropType } from "@app/interfaces/form";
-import { IVisit, VisitStateDEV } from "@app/interfaces/visit";
+import { FormPropType } from "@app/model/form";
+import { IVisit, VisitStateDEV } from "@app/model/visit";
 import { IDeviceDTO, IProjectDTO, VisitState } from "./dto";
 import { CreateVisitResponse, DevicesResponse, ProjectsResponse, UpdateVisitStateResponse } from "./response-types";
 

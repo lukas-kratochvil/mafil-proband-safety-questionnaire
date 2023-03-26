@@ -1,7 +1,7 @@
 import { questions } from "@app/data/question_data";
 import { dummyVisits } from "@app/data/visit_data";
-import { IQuestionData } from "@app/interfaces/question";
-import { IVisit, VisitStateDEV } from "@app/interfaces/visit";
+import { IQuestionData } from "@app/model/question";
+import { IVisit, VisitStateDEV } from "@app/model/visit";
 
 /**
  * TODO: functions in this file must be deleted!

@@ -1,8 +1,8 @@
 // TODO: delete this file - only for DEV purposes
 import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import { createVisit } from "@app/data/visit_data";
-import { FormPropType } from "@app/interfaces/form";
-import { AnswerOption, IVisit, VisitStateDEV, VisualCorrection } from "@app/interfaces/visit";
+import { FormPropType } from "@app/model/form";
+import { AnswerOption, IVisit, VisitStateDEV, VisualCorrection } from "@app/model/visit";
 
 export const createNewVisitFromFormData = (data: FormPropType, state: VisitStateDEV): IVisit =>
   createVisit(

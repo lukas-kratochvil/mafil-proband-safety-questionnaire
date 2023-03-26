@@ -3,7 +3,7 @@ import { PropsWithChildren } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormButtons, IFormButtonsProps } from "@app/components/form/components/FormButtons";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
-import { FormPropType } from "@app/interfaces/form";
+import { FormPropType } from "@app/model/form";
 import { FormSkeleton } from "./FormSkeleton";
 
 interface IFormContainerProps {

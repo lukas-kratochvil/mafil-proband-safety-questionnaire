@@ -1,9 +1,9 @@
 import axiosConfig from "@app/axios-config";
 import { dummyVisits } from "@app/data/visit_data";
 import i18n, { LocalizationKeys } from "@app/i18n";
-import { IAuthGateOperator } from "@app/interfaces/auth";
-import { FormPropType } from "@app/interfaces/form";
-import { AnswerOption, IVisit, VisitStateDEV } from "@app/interfaces/visit";
+import { IAuthGateOperator } from "@app/model/auth";
+import { FormPropType } from "@app/model/form";
+import { AnswerOption, IVisit, VisitStateDEV } from "@app/model/visit";
 import {
   IApprovalRoomVisitFormDTO,
   ICreateDuplicatedVisitFormForApprovalInput,

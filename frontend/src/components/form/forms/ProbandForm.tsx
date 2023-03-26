@@ -9,7 +9,7 @@ import { FormExaminationConsent } from "@app/components/form/components/FormExam
 import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo";
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { FormSafetyInfo } from "@app/components/form/components/FormSafetyInfo";
-import { FormPropType, FormQac } from "@app/interfaces/form";
+import { FormPropType, FormQac } from "@app/model/form";
 import { RoutingPaths } from "@app/routing-paths";
 import { createProbandVisitForm, fetchCurrentQuestions } from "@app/util/server_API/fetch";
 import { FormProbandContactCheckbox } from "../components/FormProbandContactCheckbox";

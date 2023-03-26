@@ -1,6 +1,6 @@
-import { FormPropType } from "@app/interfaces/form";
-import { QuestionPartNumber } from "@app/interfaces/question";
-import { IVisit, VisualCorrection } from "@app/interfaces/visit";
+import { FormPropType } from "@app/model/form";
+import { QuestionPartNumber } from "@app/model/question";
+import { IVisit, VisualCorrection } from "@app/model/visit";
 import { IApprovalRoomVisitFormDTO, IWaitingRoomVisitFormDTO } from "@app/util/server_API/dto";
 import { getOption, visualCorrectionOptions } from "./options";
 

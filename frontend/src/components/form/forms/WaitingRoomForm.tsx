@@ -9,9 +9,9 @@ import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesFromWaitingRoomVisitForm } from "@app/components/form/util/loaders";
 import { useAuth } from "@app/hooks/auth/auth";
-import { FormPropType, FormQac } from "@app/interfaces/form";
-import { QuestionPartNumber } from "@app/interfaces/question";
-import { AnswerOption, VisitStateDEV } from "@app/interfaces/visit";
+import { FormPropType, FormQac } from "@app/model/form";
+import { QuestionPartNumber } from "@app/model/question";
+import { AnswerOption, VisitStateDEV } from "@app/model/visit";
 import { RoutingPaths } from "@app/routing-paths";
 import { updateDummyVisitState } from "@app/util/fetch.dev";
 import { fetchWaitingRoomVisitForm } from "@app/util/server_API/fetch";

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { InteractingTable } from "@app/components/table/InteractingTable";
 import { RecentVisitsActionButtons } from "@app/components/table/actions/RecentVisitsActionButtons";
 import { defaultNS } from "@app/i18n";
-import { IVisit } from "@app/interfaces/visit";
+import { IVisit } from "@app/model/visit";
 import { fetchRecentVisits } from "@app/util/mafildb_API/fetch";
 
 const processedDateFormat = "d.M.y H:mm";

@@ -7,8 +7,8 @@ import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo
 import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo";
 import { createNewVisitFromFormData } from "@app/components/form/util/utils.dev";
 import { dummyVisits } from "@app/data/visit_data";
-import { FormPropType } from "@app/interfaces/form";
-import { AnswerOption, VisitStateDEV } from "@app/interfaces/visit";
+import { FormPropType } from "@app/model/form";
+import { AnswerOption, VisitStateDEV } from "@app/model/visit";
 import { RoutingPaths } from "@app/routing-paths";
 import { fetchCurrentQuestions } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";

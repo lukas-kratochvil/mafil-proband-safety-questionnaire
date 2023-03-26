@@ -1,5 +1,5 @@
 import { LocalizationKeys } from "@app/i18n";
-import { AnswerOption } from "@app/interfaces/visit";
+import { AnswerOption } from "@app/model/visit";
 
 export type OperatorRole = "MR" | "MR_HIGH_PERM";
 
