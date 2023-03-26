@@ -4,6 +4,9 @@ import { initReactI18next } from "react-i18next";
 import cs from "@app/i18n/cs.json";
 import en from "@app/i18n/en.json";
 
+export const convertStringToLocalizationKey = (str: string): TemplateStringsArray =>
+  str as unknown as TemplateStringsArray;
+
 export const defaultNS = "translation";
 export const resources = {
   cs,

@@ -10,10 +10,10 @@ import {
   IColoredInfoStripeProps,
 } from "@app/components/informative/ColoredInfoStripe";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
-import { defaultNS } from "@app/i18n";
+import { convertStringToLocalizationKey, defaultNS } from "@app/i18n";
 import { IVisit, VisitStateDEV } from "@app/model/visit";
 import { fetchVisit } from "@app/util/mafildb_API/fetch";
-import { convertStringToLocalizationKey, getBackButtonProps, IButtonProps } from "@app/util/utils";
+import { getBackButtonProps, IButtonProps } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
 
 interface IVisitDetailButtonProps extends IButtonProps {

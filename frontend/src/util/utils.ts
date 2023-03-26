@@ -20,9 +20,6 @@ export const getBackButtonProps = (navigate: NavigateFunction, customTitleLocali
   onClick: () => navigate(-1),
 });
 
-export const convertStringToLocalizationKey = (str: string): TemplateStringsArray =>
-  str as unknown as TemplateStringsArray;
-
 export const getTranslation = (translations: ITranslation[], languageCode: LocalizationKeys): string => {
   if (translations.length === 0) {
     return "";
