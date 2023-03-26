@@ -12,7 +12,7 @@ export interface IOperatorDTO {
   role: OperatorRole;
 }
 
-interface ITranslation {
+export interface ITranslation {
   text: string;
   language: {
     code: string;

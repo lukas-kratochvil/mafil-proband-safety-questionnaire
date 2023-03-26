@@ -1,5 +1,7 @@
 import { NavigateFunction } from "react-router-dom";
+import { LocalizationKeys } from "@app/i18n";
 import { FormPropType } from "@app/model/form";
+import { ITranslation } from "./server_API/dto";
 
 export type Override<T, U> = Omit<T, keyof U> & U;
 
@@ -20,3 +22,11 @@ export const getBackButtonProps = (navigate: NavigateFunction, customTitleLocali
 
 export const convertStringToLocalizationKey = (str: string): TemplateStringsArray =>
   str as unknown as TemplateStringsArray;
+
+export const getTranslation = (translations: ITranslation[], languageCode: LocalizationKeys): string => {
+  if (translations.length === 0) {
+    return "";
+  }
+
+  return translations.find((trans) => trans.language.code === languageCode)?.text || translations[0].text;
+};
