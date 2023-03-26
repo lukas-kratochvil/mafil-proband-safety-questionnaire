@@ -16,12 +16,12 @@ const waitingRoomVisitForm: IWaitingRoomVisitFormDTO = {
     surname: "Surname",
     personalId: "000000",
     birthdate: new Date(),
-    genderId: genders[0].id,
-    nativeLanguageId: nativeLanguages[2].id,
+    gender: genders[0],
+    nativeLanguage: nativeLanguages[2],
     heightCm: 180,
     weightKg: 80,
     visualCorrectionDioptre: 1,
-    handednessId: handednesses[3].id,
+    handedness: handednesses[3],
     email: "name.surname@email.com",
     phone: "123456789",
   },
@@ -179,11 +179,11 @@ describe("form loaders", () => {
     expect(loadedFormValues.surname).toEqual(fetchedVisit.probandInfo.surname);
     expect(loadedFormValues.personalId).toEqual(fetchedVisit.probandInfo.personalId);
     expect(loadedFormValues.birthdate).toEqual(fetchedVisit.probandInfo.birthdate);
-    expect(loadedFormValues.gender?.id).toEqual(fetchedVisit.probandInfo.genderId);
-    expect(loadedFormValues.nativeLanguage?.id).toEqual(fetchedVisit.probandInfo.nativeLanguageId);
+    expect(loadedFormValues.gender?.id).toEqual(fetchedVisit.probandInfo.gender.id);
+    expect(loadedFormValues.nativeLanguage?.id).toEqual(fetchedVisit.probandInfo.nativeLanguage.id);
     expect(loadedFormValues.heightCm).toEqual(fetchedVisit.probandInfo.heightCm);
     expect(loadedFormValues.weightKg).toEqual(fetchedVisit.probandInfo.weightKg);
-    expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.probandInfo.handednessId);
+    expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.probandInfo.handedness.id);
     expect(loadedFormValues.visualCorrection?.value).toEqual(
       fetchedVisit.probandInfo.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
     );
@@ -208,11 +208,11 @@ describe("form loaders", () => {
     expect(loadedFormValues.surname).toEqual(fetchedVisit.probandInfo.surname);
     expect(loadedFormValues.personalId).toEqual(fetchedVisit.probandInfo.personalId);
     expect(loadedFormValues.birthdate).toEqual(fetchedVisit.probandInfo.birthdate);
-    expect(loadedFormValues.gender?.id).toEqual(fetchedVisit.probandInfo.genderId);
-    expect(loadedFormValues.nativeLanguage?.id).toEqual(fetchedVisit.probandInfo.nativeLanguageId);
+    expect(loadedFormValues.gender?.id).toEqual(fetchedVisit.probandInfo.gender.id);
+    expect(loadedFormValues.nativeLanguage?.id).toEqual(fetchedVisit.probandInfo.nativeLanguage.id);
     expect(loadedFormValues.heightCm).toEqual(fetchedVisit.probandInfo.heightCm);
     expect(loadedFormValues.weightKg).toEqual(fetchedVisit.probandInfo.weightKg);
-    expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.probandInfo.handednessId);
+    expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.probandInfo.handedness.id);
     expect(loadedFormValues.visualCorrection?.value).toEqual(
       fetchedVisit.probandInfo.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
     );

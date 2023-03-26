@@ -102,12 +102,36 @@ query GetWaitingRoomVisitForm($id: UUID!) {
       surname
       personalId
       birthdate
-      genderId
-      nativeLanguageId
+      gender {
+        id
+        translations {
+          text
+          language {
+            code
+          }
+        }
+      }
+      nativeLanguage {
+        id
+        translations {
+          text
+          language {
+            code
+          }
+        }
+      }
       heightCm
       weightKg
       visualCorrectionDioptre
-      handednessId
+      handedness {
+        id
+        translations {
+          text
+          language {
+            code
+          }
+        }
+      }
       email
       phone
     }

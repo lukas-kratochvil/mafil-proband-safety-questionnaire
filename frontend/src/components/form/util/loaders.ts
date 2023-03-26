@@ -40,27 +40,12 @@ export const loadFormDefaultValuesFromWaitingRoomVisitForm = (visit: IWaitingRoo
   measuredAt: new Date(),
   disapprovalReason: null,
   ...visit.probandInfo,
-  gender: {
-    id: visit.probandInfo.genderId,
-    code: "",
-    translations: [],
-  },
-  nativeLanguage: {
-    id: visit.probandInfo.nativeLanguageId,
-    code: "",
-    order: null,
-    translations: [],
-  },
-  handedness: {
-    id: visit.probandInfo.handednessId,
-    code: "",
-    translations: [],
-  },
   visualCorrection: getOption(
     visualCorrectionOptions,
     visit.probandInfo.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
   ),
-  answers: visit.answers.map((answer) => ({ ...answer, comment: "", partNumber: QuestionPartNumber.ONE })), // TODO: how to get question part number?
+  // TODO: how to get question part number?
+  answers: visit.answers.map((answer) => ({ ...answer, comment: "", partNumber: QuestionPartNumber.ONE })),
 });
 
 // Autocomplete component default value must be one of the options provided or null

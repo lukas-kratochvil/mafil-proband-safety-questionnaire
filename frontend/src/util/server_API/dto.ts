@@ -60,12 +60,12 @@ export interface IWaitingRoomVisitFormDTO {
     surname: string;
     personalId: string;
     birthdate: Date;
-    genderId: string;
-    nativeLanguageId: string;
+    gender: IGenderDTO;
+    nativeLanguage: INativeLanguageDTO;
     heightCm: number;
     weightKg: number;
     visualCorrectionDioptre: number;
-    handednessId: string;
+    handedness: IHandednessDTO;
     email: string;
     phone: string;
   };
