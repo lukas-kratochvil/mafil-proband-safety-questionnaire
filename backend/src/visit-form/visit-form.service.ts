@@ -81,9 +81,10 @@ export class VisitFormService {
     });
   }
 
-  async findAll(): Promise<VisitFormInclude[]> {
+  async findAll(state?: VisitFormState): Promise<VisitFormInclude[]> {
     return this.prisma.visitForm.findMany({
       where: {
+        state,
         deletedAt: null,
       },
       include: visitFormInclude,

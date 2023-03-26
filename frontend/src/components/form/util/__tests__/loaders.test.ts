@@ -11,6 +11,7 @@ import {
 } from "../loaders";
 
 const waitingRoomVisitForm: IWaitingRoomVisitFormDTO = {
+  id: "123",
   probandInfo: {
     name: "Name",
     surname: "Surname",

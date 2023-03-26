@@ -51,6 +51,12 @@ export type QuestionResponse = {
   };
 };
 
+export type WaitingRoomVisitFormsResponse = {
+  data: {
+    visitForms: IWaitingRoomVisitFormDTO[];
+  };
+};
+
 export type WaitingRoomVisitFormResponse = {
   data: {
     visitForm: IWaitingRoomVisitFormDTO;

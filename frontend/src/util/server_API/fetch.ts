@@ -25,6 +25,7 @@ import {
   GET_NATIVE_LANGUAGES,
   GET_QUESTION,
   GET_WAITING_ROOM_VISIT_FORM,
+  GET_WAITING_ROOM_VISIT_FORMS,
 } from "./queries";
 import {
   ApprovalRoomVisitFormResponse,
@@ -36,6 +37,7 @@ import {
   QuestionResponse,
   QuestionsResponse,
   WaitingRoomVisitFormResponse,
+  WaitingRoomVisitFormsResponse,
 } from "./response-types";
 
 export const authenticateOperator = async (loggingOperator: IAuthGateOperator): Promise<IOperatorDTO | undefined> => {
@@ -73,6 +75,15 @@ export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO> =
   return data.data.question;
 };
 
+export const fetchWaitingRoomVisitForms = async (): Promise<IWaitingRoomVisitFormDTO[]> => {
+  const variables = { state: "NEW" };
+  const { data } = await axiosConfig.serverApi.post<WaitingRoomVisitFormsResponse>("", {
+    query: GET_WAITING_ROOM_VISIT_FORMS,
+    variables,
+  });
+  return data.data.visitForms;
+};
+
 export const fetchWaitingRoomVisitForm = async (
   visitId: string | undefined
 ): Promise<IWaitingRoomVisitFormDTO | undefined> => {
@@ -94,10 +105,6 @@ export const fetchApprovalRoomVisitForm = async (
   });
   return data.data.visitForm;
 };
-
-// TODO: get visits from DB
-export const fetchWaitingRoomVisitForms = async (): Promise<IVisit[]> =>
-  dummyVisits.filter((visit) => visit.state === VisitStateDEV.NEW);
 
 // TODO: get visits from DB
 export const fetchApprovalRoomVisitForms = async (): Promise<IVisit[]> =>

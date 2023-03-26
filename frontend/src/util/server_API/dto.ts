@@ -55,6 +55,8 @@ interface IOperatorAnswerDTO extends IProbandAnswerDTO {
 }
 
 export interface IWaitingRoomVisitFormDTO {
+  id: string;
+  createdAt?: Date;
   probandInfo: {
     name: string;
     surname: string;
