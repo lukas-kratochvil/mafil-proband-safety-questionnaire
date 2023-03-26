@@ -129,3 +129,14 @@ export interface ICreateProbandVisitFormInput {
 export interface ICreateDuplicatedVisitFormForApprovalInput {
   createVisitFormInput: CreateVisitFormInput;
 }
+
+type UpdateVisitFormInput = {
+  state: Partial<Omit<VisitFormState, "NEW">>;
+  additionalInfo: Partial<Omit<AdditionalInfo, "finalizerId" | "finalizedAt">>;
+  probandInfo: Partial<ProbandInfo>;
+  answers: Partial<IOperatorAnswerDTO>[];
+};
+
+export interface ISendVisitFormForApprovalInput {
+  updateVisitFormInput: UpdateVisitFormInput;
+}

@@ -14,7 +14,7 @@ import { QuestionPartNumber } from "@app/model/question";
 import { AnswerOption, VisitStateDEV } from "@app/model/visit";
 import { RoutingPaths } from "@app/routing-paths";
 import { updateDummyVisitState } from "@app/util/fetch.dev";
-import { fetchWaitingRoomVisitForm } from "@app/util/server_API/fetch";
+import { fetchWaitingRoomVisitForm, sendVisitFormForApproval } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormFinalizeDialog } from "../components/FormFinalizeDialog";
@@ -141,8 +141,7 @@ export const WaitingRoomForm = () => {
   }, [getValues, id, isDisapproved, isEditing, navigate, operator?.role, setValue, trigger, valuesBeforeEditing]);
 
   const moveVisitFormToApprovalRoom = async (data: FormPropType) => {
-    // TODO: update visit with IN_APPROVAL state in the server DB
-    updateDummyVisitState(id, VisitStateDEV.IN_APPROVAL);
+    sendVisitFormForApproval(data);
     setOpenFinalizeDialog(false);
     navigate(RoutingPaths.WAITING_ROOM);
   };

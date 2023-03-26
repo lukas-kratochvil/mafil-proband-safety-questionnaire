@@ -12,9 +12,10 @@ import {
   INativeLanguageDTO,
   IOperatorDTO,
   IQuestionDTO,
+  ISendVisitFormForApprovalInput,
   IWaitingRoomVisitFormDTO,
 } from "@app/util/server_API/dto";
-import { CREATE_VISIT_FORM } from "./mutations";
+import { CREATE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
 import {
   AUTHENTICATE_OPERATOR,
   GET_APPROVAL_ROOM_VISIT_FORM,
@@ -37,6 +38,7 @@ import {
   NativeLanguagesResponse,
   QuestionResponse,
   QuestionsResponse,
+  UpdateVisitFormResponse,
   WaitingRoomVisitFormResponse,
   WaitingRoomVisitFormsResponse,
 } from "./response-types";
@@ -192,4 +194,45 @@ export const createDuplicatedVisitFormForApproval = async (
     variables,
   });
   return data.data.createVisitForm.id;
+};
+
+export const sendVisitFormForApproval = async (visitFormData: Partial<FormPropType>): Promise<string> => {
+  const variables: ISendVisitFormForApprovalInput = {
+    updateVisitFormInput: {
+      state: "IN_APPROVAL",
+      additionalInfo: {
+        projectId: visitFormData.project?.id ?? undefined,
+        projectAcronym: visitFormData.project?.acronym ?? undefined,
+        deviceId: visitFormData.device?.id ?? undefined,
+        deviceName: visitFormData.device?.name ?? undefined,
+        measuredAt: visitFormData.measuredAt ?? undefined,
+      },
+      probandInfo: {
+        name: visitFormData.name,
+        surname: visitFormData.surname,
+        personalId: visitFormData.personalId,
+        birthdate: visitFormData.birthdate ?? undefined,
+        genderId: visitFormData.gender?.id ?? undefined,
+        nativeLanguageId: visitFormData.nativeLanguage?.id ?? undefined,
+        heightCm: typeof visitFormData.heightCm === "number" ? visitFormData.heightCm : undefined,
+        weightKg: typeof visitFormData.weightKg === "number" ? visitFormData.weightKg : undefined,
+        visualCorrectionDioptre:
+          typeof visitFormData.visualCorrectionDioptre === "number" ? visitFormData.visualCorrectionDioptre : undefined,
+        handednessId: visitFormData.handedness?.id ?? undefined,
+        email: visitFormData.email,
+        phone: visitFormData.phone,
+      },
+      answers:
+        visitFormData.answers?.map((answer) => ({
+          questionId: answer.questionId,
+          answer: answer.answer ?? undefined,
+          comment: answer.comment,
+        })) ?? [],
+    },
+  };
+  const { data } = await axiosConfig.serverApi.post<UpdateVisitFormResponse>("", {
+    query: UPDATE_VISIT_FORM,
+    variables,
+  });
+  return data.data.updateVisitForm.id;
 };

@@ -7,3 +7,13 @@ mutation CreateVisitForm (
   }
 }
 `;
+
+export const UPDATE_VISIT_FORM = `
+mutation UpdateVisitForm (
+  $updateVisitFormInput: UpdateVisitFormInput!
+) {
+  updateVisitForm(updateVisitFormInput: $updateVisitFormInput) {
+    id
+  }
+}
+`;

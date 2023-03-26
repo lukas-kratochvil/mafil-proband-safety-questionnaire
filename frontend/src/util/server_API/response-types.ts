@@ -82,3 +82,11 @@ export type CreateVisitFormResponse = {
     };
   };
 };
+
+export type UpdateVisitFormResponse = {
+  data: {
+    updateVisitForm: {
+      id: string;
+    };
+  };
+};
