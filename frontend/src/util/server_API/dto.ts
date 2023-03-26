@@ -87,41 +87,45 @@ export interface IApprovalRoomVisitFormDTO extends IWaitingRoomVisitFormDTO {
   };
 }
 
-interface ICreateVisitFormInput {
+type AdditionalInfo = {
+  projectId: string;
+  projectAcronym: string;
+  deviceId: string;
+  deviceName: string;
+  measuredAt: Date;
+  finalizerId: string;
+  finalizedAt: Date;
+};
+
+type ProbandInfo = {
+  name: string;
+  surname: string;
+  personalId: string;
+  birthdate: Date;
+  genderId: string;
+  nativeLanguageId: string;
+  heightCm: number;
+  weightKg: number;
+  visualCorrectionDioptre: number;
+  handednessId: string;
+  email: string;
+  phone: string;
+};
+
+type CreateVisitFormInput = {
+  state: VisitFormState;
+  additionalInfo: AdditionalInfo;
   probandLanguageCode: LocalizationKeys;
-  probandInfo: {
-    name: string;
-    surname: string;
-    personalId: string;
-    birthdate: Date;
-    genderId: string;
-    nativeLanguageId: string;
-    heightCm: number;
-    weightKg: number;
-    visualCorrectionDioptre: number;
-    handednessId: string;
-    email: string;
-    phone: string;
-  };
-  answers: IProbandAnswerDTO[];
-}
+  probandInfo: ProbandInfo;
+  answers: IOperatorAnswerDTO[];
+};
 
 export interface ICreateProbandVisitFormInput {
-  createVisitFormInput: ICreateVisitFormInput;
+  createVisitFormInput: Omit<CreateVisitFormInput, "state" | "additionalInfo" | "answers"> & {
+    answers: IProbandAnswerDTO[];
+  };
 }
 
 export interface ICreateDuplicatedVisitFormForApprovalInput {
-  createVisitFormInput: ICreateVisitFormInput & {
-    answers: IOperatorAnswerDTO[];
-    state: VisitFormState;
-    additionalInfo: {
-      projectId: string;
-      projectAcronym: string;
-      deviceId: string;
-      deviceName: string;
-      measuredAt: Date;
-      finalizerId: string;
-      finalizedAt: Date;
-    };
-  };
+  createVisitFormInput: CreateVisitFormInput;
 }
