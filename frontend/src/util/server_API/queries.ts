@@ -195,6 +195,65 @@ query GetWaitingRoomVisitForm($id: UUID!) {
 }
 `;
 
+export const GET_APPROVAL_ROOM_VISIT_FORMS = `
+query GetWaitingRoomVisitForms($state: VisitFormState) {
+  visitForms(state: $state) {
+    id
+    createdAt
+    additionalInfo {
+      projectId
+      projectAcronym
+      deviceId
+      deviceName
+      measuredAt
+    }
+    probandInfo {
+      name
+      surname
+      personalId
+      birthdate
+      gender {
+        id
+        translations {
+          text
+          language {
+            code
+          }
+        }
+      }
+      nativeLanguage {
+        id
+        translations {
+          text
+          language {
+            code
+          }
+        }
+      }
+      heightCm
+      weightKg
+      visualCorrectionDioptre
+      handedness {
+        id
+        translations {
+          text
+          language {
+            code
+          }
+        }
+      }
+      email
+      phone
+    }
+    answers {
+      questionId
+      answer
+      comment
+    }
+  }
+}
+`;
+
 export const GET_APPROVAL_ROOM_VISIT_FORM = `
 query GetApprovalRoomVisitForm($id: UUID!) {
   visitForm(id: $id) {

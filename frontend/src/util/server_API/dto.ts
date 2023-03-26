@@ -54,6 +54,8 @@ interface IOperatorAnswerDTO extends IProbandAnswerDTO {
   comment: string;
 }
 
+type VisitFormState = "NEW" | "IN_APPROVAL";
+
 export interface IWaitingRoomVisitFormDTO {
   id: string;
   createdAt?: Date;
@@ -78,7 +80,9 @@ export interface IApprovalRoomVisitFormDTO extends IWaitingRoomVisitFormDTO {
   answers: IOperatorAnswerDTO[];
   additionalInfo: {
     projectId: string;
+    projectAcronym: string;
     deviceId: string;
+    deviceName: string;
     measuredAt: Date;
   };
 }
@@ -105,8 +109,6 @@ interface ICreateVisitFormInput {
 export interface ICreateProbandVisitFormInput {
   createVisitFormInput: ICreateVisitFormInput;
 }
-
-type VisitFormState = "NEW" | "IN_APPROVAL";
 
 export interface ICreateDuplicatedVisitFormForApprovalInput {
   createVisitFormInput: ICreateVisitFormInput & {

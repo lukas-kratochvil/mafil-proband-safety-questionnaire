@@ -1,9 +1,8 @@
 import axiosConfig from "@app/axios-config";
-import { dummyVisits } from "@app/data/visit_data";
 import i18n, { LocalizationKeys } from "@app/i18n";
 import { IAuthGateOperator } from "@app/model/auth";
 import { FormPropType } from "@app/model/form";
-import { AnswerOption, IVisit, VisitStateDEV } from "@app/model/visit";
+import { AnswerOption } from "@app/model/visit";
 import {
   IApprovalRoomVisitFormDTO,
   ICreateDuplicatedVisitFormForApprovalInput,
@@ -19,6 +18,7 @@ import { CREATE_VISIT_FORM } from "./mutations";
 import {
   AUTHENTICATE_OPERATOR,
   GET_APPROVAL_ROOM_VISIT_FORM,
+  GET_APPROVAL_ROOM_VISIT_FORMS,
   GET_CURRENT_QUESTIONS,
   GET_GENDERS,
   GET_HANDEDNESSES,
@@ -29,6 +29,7 @@ import {
 } from "./queries";
 import {
   ApprovalRoomVisitFormResponse,
+  ApprovalRoomVisitFormsResponse,
   AuthenticateOperatorResponse,
   CreateVisitFormResponse,
   GendersResponse,
@@ -95,6 +96,15 @@ export const fetchWaitingRoomVisitForm = async (
   return data.data.visitForm;
 };
 
+export const fetchApprovalRoomVisitForms = async (): Promise<IApprovalRoomVisitFormDTO[]> => {
+  const variables = { state: "IN_APPROVAL" };
+  const { data } = await axiosConfig.serverApi.post<ApprovalRoomVisitFormsResponse>("", {
+    query: GET_APPROVAL_ROOM_VISIT_FORMS,
+    variables,
+  });
+  return data.data.visitForms;
+};
+
 export const fetchApprovalRoomVisitForm = async (
   visitId: string | undefined
 ): Promise<IApprovalRoomVisitFormDTO | undefined> => {
@@ -105,10 +115,6 @@ export const fetchApprovalRoomVisitForm = async (
   });
   return data.data.visitForm;
 };
-
-// TODO: get visits from DB
-export const fetchApprovalRoomVisitForms = async (): Promise<IVisit[]> =>
-  dummyVisits.filter((visit) => visit.state === VisitStateDEV.IN_APPROVAL);
 
 export const createProbandVisitForm = async (visitFormData: FormPropType): Promise<string> => {
   const variables: ICreateProbandVisitFormInput = {

@@ -39,7 +39,9 @@ const approvalRoomVisitForm: IApprovalRoomVisitFormDTO = {
   answers: waitingRoomVisitForm.answers.map((answer) => ({ ...answer, comment: "comment" })),
   additionalInfo: {
     projectId: "1552314",
+    projectAcronym: "Proj1",
     deviceId: "6552515",
+    deviceName: "M1",
     measuredAt: new Date(),
   },
 };

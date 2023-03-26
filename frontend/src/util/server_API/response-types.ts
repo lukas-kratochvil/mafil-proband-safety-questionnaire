@@ -63,6 +63,12 @@ export type WaitingRoomVisitFormResponse = {
   };
 };
 
+export type ApprovalRoomVisitFormsResponse = {
+  data: {
+    visitForms: IApprovalRoomVisitFormDTO[];
+  };
+};
+
 export type ApprovalRoomVisitFormResponse = {
   data: {
     visitForm: IApprovalRoomVisitFormDTO;
