@@ -1,14 +1,14 @@
 import { Field, HideField, ObjectType } from "@nestjs/graphql";
 import { Answer } from "@prisma/client";
 import { BaseEntity } from "@app/graphql/entities/base.entity";
-import { UuidScalar } from "@app/graphql/scalars/uuid-scalar";
+import { UUID } from "@app/graphql/scalars/uuid-scalar";
 
 @ObjectType()
 export class AnswerEntity extends BaseEntity implements Answer {
   @HideField()
   visitFormId: string;
 
-  @Field(() => UuidScalar)
+  @Field(() => UUID)
   questionId: string;
 
   @Field()

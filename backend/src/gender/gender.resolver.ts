@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { UuidScalar } from "@app/graphql/scalars/uuid-scalar";
+import { UUID } from "@app/graphql/scalars/uuid-scalar";
 import { CreateGenderInput } from "./dto/create-gender.input";
 import { UpdateGenderInput } from "./dto/update-gender.input";
 import { GenderEntity } from "./entities/gender.entity";
@@ -20,7 +20,7 @@ export class GenderResolver {
   }
 
   @Query(() => GenderEntity, { name: "gender" })
-  findOne(@Args("id", { type: () => UuidScalar }) id: string): Promise<GenderEntity> {
+  findOne(@Args("id", { type: () => UUID }) id: string): Promise<GenderEntity> {
     return this.genderService.findOne(id);
   }
 
@@ -30,7 +30,7 @@ export class GenderResolver {
   }
 
   @Mutation(() => GenderEntity)
-  removeGender(@Args("id", { type: () => UuidScalar }) id: string): Promise<GenderEntity> {
+  removeGender(@Args("id", { type: () => UUID }) id: string): Promise<GenderEntity> {
     return this.genderService.remove(id);
   }
 }

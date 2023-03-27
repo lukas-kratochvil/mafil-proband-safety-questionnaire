@@ -1,7 +1,7 @@
 import { Field, HideField, ObjectType } from "@nestjs/graphql";
 import { AdditionalVisitFormInfo } from "@prisma/client";
 import { BaseEntity } from "@app/graphql/entities/base.entity";
-import { UuidScalar } from "@app/graphql/scalars/uuid-scalar";
+import { UUID } from "@app/graphql/scalars/uuid-scalar";
 import { OperatorEntity } from "@app/operator/entities/operator.entity";
 import { VisitFormEntity } from "./visit-form.entity";
 
@@ -16,7 +16,7 @@ export class AdditionalVisitFormInfoEntity extends BaseEntity implements Additio
   @Field(() => OperatorEntity)
   finalizer: OperatorEntity;
 
-  @Field(() => UuidScalar)
+  @Field(() => UUID)
   finalizerId: string;
 
   @Field()

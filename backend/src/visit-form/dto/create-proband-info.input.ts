@@ -1,5 +1,5 @@
 import { Field, InputType, IntersectionType, PartialType, PickType } from "@nestjs/graphql";
-import { UuidScalar } from "@app/graphql/scalars/uuid-scalar";
+import { UUID } from "@app/graphql/scalars/uuid-scalar";
 import { ProbandInfoEntity } from "@app/visit-form/entities/proband-info.entity";
 
 @InputType()
@@ -16,12 +16,12 @@ export class CreateProbandInfoInput extends IntersectionType(
   PartialType(PickType(ProbandInfoEntity, ["email", "phone"])),
   InputType
 ) {
-  @Field(() => UuidScalar)
+  @Field(() => UUID)
   genderId: string;
 
-  @Field(() => UuidScalar)
+  @Field(() => UUID)
   nativeLanguageId: string;
 
-  @Field(() => UuidScalar)
+  @Field(() => UUID)
   handednessId: string;
 }

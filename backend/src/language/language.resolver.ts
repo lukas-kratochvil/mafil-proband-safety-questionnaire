@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { UuidScalar } from "@app/graphql/scalars/uuid-scalar";
+import { UUID } from "@app/graphql/scalars/uuid-scalar";
 import { CreateLanguageInput } from "./dto/create-language.input";
 import { UpdateLanguageInput } from "./dto/update-language.input";
 import { LanguageEntity } from "./entities/language.entity";
@@ -20,7 +20,7 @@ export class LanguageResolver {
   }
 
   @Query(() => LanguageEntity, { name: "language" })
-  findOne(@Args("id", { type: () => UuidScalar }) id: string): Promise<LanguageEntity> {
+  findOne(@Args("id", { type: () => UUID }) id: string): Promise<LanguageEntity> {
     return this.languageService.findOne(id);
   }
 
@@ -30,7 +30,7 @@ export class LanguageResolver {
   }
 
   @Mutation(() => LanguageEntity)
-  removeLanguage(@Args("id", { type: () => UuidScalar }) id: string): Promise<LanguageEntity> {
+  removeLanguage(@Args("id", { type: () => UUID }) id: string): Promise<LanguageEntity> {
     return this.languageService.remove(id);
   }
 }

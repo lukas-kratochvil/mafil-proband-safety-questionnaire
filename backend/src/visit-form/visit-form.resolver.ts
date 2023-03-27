@@ -1,6 +1,6 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { VisitFormState } from "@prisma/client";
-import { UuidScalar } from "@app/graphql/scalars/uuid-scalar";
+import { UUID } from "@app/graphql/scalars/uuid-scalar";
 import { CreateVisitFormInput } from "./dto/create-visit-form.input";
 import { UpdateVisitFormInput } from "./dto/update-visit-form.input";
 import { VisitFormEntity } from "./entities/visit-form.entity";
@@ -22,7 +22,7 @@ export class VisitFormResolver {
   }
 
   @Query(() => VisitFormEntity, { name: "visitForm" })
-  findOne(@Args("id", { type: () => UuidScalar }) id: string) {
+  findOne(@Args("id", { type: () => UUID }) id: string) {
     return this.visitFormService.findOne(id);
   }
 
@@ -32,7 +32,7 @@ export class VisitFormResolver {
   }
 
   @Mutation(() => Void)
-  removeVisitForm(@Args("id", { type: () => UuidScalar }) id: string) {
+  removeVisitForm(@Args("id", { type: () => UUID }) id: string) {
     this.visitFormService.remove(id);
   }
 }

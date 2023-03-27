@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { UuidScalar } from "@app/graphql/scalars/uuid-scalar";
+import { UUID } from "@app/graphql/scalars/uuid-scalar";
 import { AuthenticateOperatorArgs } from "./dto/authenticate-operator.args";
 import { CreateOperatorInput } from "./dto/create-operator.input";
 import { UpdateOperatorInput } from "./dto/update-operator.input";
@@ -26,7 +26,7 @@ export class OperatorResolver {
   }
 
   @Query(() => OperatorEntity, { name: "operator", nullable: true })
-  findOne(@Args("id", { type: () => UuidScalar }) id: string): Promise<OperatorEntity> {
+  findOne(@Args("id", { type: () => UUID }) id: string): Promise<OperatorEntity> {
     return this.operatorService.findOne(id);
   }
 
@@ -36,7 +36,7 @@ export class OperatorResolver {
   }
 
   @Mutation(() => OperatorEntity)
-  removeOperator(@Args("id", { type: () => UuidScalar }) id: string): Promise<OperatorEntity> {
+  removeOperator(@Args("id", { type: () => UUID }) id: string): Promise<OperatorEntity> {
     return this.operatorService.remove(id);
   }
 }

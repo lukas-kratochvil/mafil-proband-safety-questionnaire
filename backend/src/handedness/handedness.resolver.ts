@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { UuidScalar } from "@app/graphql/scalars/uuid-scalar";
+import { UUID } from "@app/graphql/scalars/uuid-scalar";
 import { CreateHandednessInput } from "./dto/create-handedness.input";
 import { UpdateHandednessInput } from "./dto/update-handedness.input";
 import { HandednessEntity } from "./entities/handedness.entity";
@@ -22,7 +22,7 @@ export class HandednessResolver {
   }
 
   @Query(() => HandednessEntity, { name: "handedness" })
-  findOne(@Args("id", { type: () => UuidScalar }) id: string): Promise<HandednessEntity> {
+  findOne(@Args("id", { type: () => UUID }) id: string): Promise<HandednessEntity> {
     return this.handednessService.findOne(id);
   }
 
@@ -34,7 +34,7 @@ export class HandednessResolver {
   }
 
   @Mutation(() => HandednessEntity)
-  removeHandedness(@Args("id", { type: () => UuidScalar }) id: string): Promise<HandednessEntity> {
+  removeHandedness(@Args("id", { type: () => UUID }) id: string): Promise<HandednessEntity> {
     return this.handednessService.remove(id);
   }
 }

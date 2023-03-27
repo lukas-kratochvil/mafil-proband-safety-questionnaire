@@ -9,7 +9,7 @@ const validateUuid = (uuid: unknown): string | never => {
   throw new Error("Invalid UUID!");
 };
 
-export const UuidScalar = new GraphQLScalarType({
+export const UUID = new GraphQLScalarType({
   name: "UUID",
   description: "UUID parser.",
   serialize: (value) => validateUuid(value),

@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { UuidScalar } from "@app/graphql/scalars/uuid-scalar";
+import { UUID } from "@app/graphql/scalars/uuid-scalar";
 import { CreateQuestionInput } from "./dto/create-question.input";
 import { UpdateQuestionTextsInput } from "./dto/update-question-texts.input";
 import { UpdateQuestionInput } from "./dto/update-question.input";
@@ -21,7 +21,7 @@ export class QuestionResolver {
   }
 
   @Query(() => QuestionEntity, { name: "question" })
-  findOne(@Args("id", { type: () => UuidScalar }) id: string): Promise<QuestionEntity> {
+  findOne(@Args("id", { type: () => UUID }) id: string): Promise<QuestionEntity> {
     return this.questionService.findOne(id);
   }
 
@@ -38,7 +38,7 @@ export class QuestionResolver {
   }
 
   @Mutation(() => QuestionEntity)
-  removeQuestion(@Args("id", { type: () => UuidScalar }) id: string): Promise<QuestionEntity> {
+  removeQuestion(@Args("id", { type: () => UUID }) id: string): Promise<QuestionEntity> {
     return this.questionService.remove(id);
   }
 }
