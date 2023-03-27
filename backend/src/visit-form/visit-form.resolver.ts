@@ -31,7 +31,7 @@ export class VisitFormResolver {
     return this.visitFormService.update(updateVisitFormInput.id, updateVisitFormInput);
   }
 
-  @Mutation(() => Void)
+  @Mutation(() => Void, { nullable: true })
   removeVisitForm(@Args("id", { type: () => UUID }) id: string) {
     this.visitFormService.remove(id);
   }
