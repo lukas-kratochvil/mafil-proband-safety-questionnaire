@@ -167,6 +167,7 @@ export class VisitFormService {
         id,
       },
       data: {
+        state: VisitFormState.DELETED,
         deletedAt: new Date(),
       },
       include: visitFormInclude,
