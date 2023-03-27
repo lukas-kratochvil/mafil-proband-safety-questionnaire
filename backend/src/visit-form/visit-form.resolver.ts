@@ -5,6 +5,7 @@ import { CreateVisitFormInput } from "./dto/create-visit-form.input";
 import { UpdateVisitFormInput } from "./dto/update-visit-form.input";
 import { VisitFormEntity } from "./entities/visit-form.entity";
 import { VisitFormService } from "./visit-form.service";
+import { Void } from "@app/graphql/scalars/void-scalar";
 
 @Resolver(() => VisitFormEntity)
 export class VisitFormResolver {
@@ -30,8 +31,8 @@ export class VisitFormResolver {
     return this.visitFormService.update(updateVisitFormInput.id, updateVisitFormInput);
   }
 
-  @Mutation(() => VisitFormEntity)
+  @Mutation(() => Void)
   removeVisitForm(@Args("id", { type: () => UuidScalar }) id: string) {
-    return this.visitFormService.remove(id);
+    this.visitFormService.remove(id);
   }
 }
