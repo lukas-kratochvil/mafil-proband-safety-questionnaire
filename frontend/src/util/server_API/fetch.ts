@@ -15,7 +15,7 @@ import {
   ISendVisitFormForApprovalInput,
   IWaitingRoomVisitFormDTO,
 } from "@app/util/server_API/dto";
-import { CREATE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
+import { CREATE_VISIT_FORM, DELETE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
 import {
   AUTHENTICATE_OPERATOR,
   GET_APPROVAL_ROOM_VISIT_FORM,
@@ -235,4 +235,12 @@ export const sendVisitFormForApproval = async (visitFormData: Partial<FormPropTy
     variables,
   });
   return data.data.updateVisitForm.id;
+};
+
+export const deleteVisitForm = async (visitFormId: string): Promise<void> => {
+  const variables = { id: visitFormId };
+  await axiosConfig.serverApi.post<null>("", {
+    query: DELETE_VISIT_FORM,
+    variables,
+  });
 };

@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { defaultNS } from "@app/i18n";
 import { RoutingPaths } from "@app/routing-paths";
+import { deleteVisitForm } from "@app/util/server_API/fetch";
 import { ActionButtonsContainer, IActionButtonsProps } from "./ActionButtonsContainer";
 
 export const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
@@ -24,14 +25,11 @@ export const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
 
   const onDelete = () => {
-    // TODO: mark visit form as deleted
-    alert("Funkcionalita bude brzy naimplementována.");
+    deleteVisitForm(visitId);
     setOpenDeleteDialog(false);
   };
 
-  const onCancel = () => {
-    setOpenDeleteDialog(false);
-  };
+  const onCancel = () => setOpenDeleteDialog(false);
 
   return (
     <ActionButtonsContainer>

@@ -17,3 +17,9 @@ mutation UpdateVisitForm (
   }
 }
 `;
+
+export const DELETE_VISIT_FORM = `
+mutation DeleteVisitForm($id: UUID!) {
+  removeVisitForm(id: $id)
+}
+`;
