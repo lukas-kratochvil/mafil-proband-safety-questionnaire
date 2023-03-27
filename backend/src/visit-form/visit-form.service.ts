@@ -68,7 +68,30 @@ export class VisitFormService {
         },
         probandInfo: {
           create: {
-            ...createVisitFormInput.probandInfo,
+            name: createVisitFormInput.probandInfo.name,
+            surname: createVisitFormInput.probandInfo.surname,
+            personalId: createVisitFormInput.probandInfo.personalId,
+            birthdate: createVisitFormInput.probandInfo.birthdate,
+            gender: {
+              connect: {
+                id: createVisitFormInput.probandInfo.genderId,
+              },
+            },
+            nativeLanguage: {
+              connect: {
+                id: createVisitFormInput.probandInfo.nativeLanguageId,
+              },
+            },
+            heightCm: createVisitFormInput.probandInfo.heightCm,
+            weightKg: createVisitFormInput.probandInfo.weightKg,
+            handedness: {
+              connect: {
+                id: createVisitFormInput.probandInfo.handednessId,
+              },
+            },
+            visualCorrectionDioptre: createVisitFormInput.probandInfo.visualCorrectionDioptre,
+            email: createVisitFormInput.probandInfo.email,
+            phone: createVisitFormInput.probandInfo.phone,
           },
         },
         answers: {

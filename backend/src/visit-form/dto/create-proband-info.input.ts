@@ -1,22 +1,27 @@
-import { InputType, PickType } from "@nestjs/graphql";
+import { Field, InputType, IntersectionType, PartialType, PickType } from "@nestjs/graphql";
+import { UuidScalar } from "@app/graphql/scalars/uuid-scalar";
 import { ProbandInfoEntity } from "@app/visit-form/entities/proband-info.entity";
 
 @InputType()
-export class CreateProbandInfoInput extends PickType(
-  ProbandInfoEntity,
-  [
+export class CreateProbandInfoInput extends IntersectionType(
+  PickType(ProbandInfoEntity, [
     "name",
     "surname",
     "personalId",
     "birthdate",
-    "genderId",
-    "nativeLanguageId",
     "heightCm",
     "weightKg",
     "visualCorrectionDioptre",
-    "handednessId",
-    "email",
-    "phone",
-  ],
+  ]),
+  PartialType(PickType(ProbandInfoEntity, ["email", "phone"])),
   InputType
-) {}
+) {
+  @Field(() => UuidScalar)
+  genderId: string;
+
+  @Field(() => UuidScalar)
+  nativeLanguageId: string;
+
+  @Field(() => UuidScalar)
+  handednessId: string;
+}
