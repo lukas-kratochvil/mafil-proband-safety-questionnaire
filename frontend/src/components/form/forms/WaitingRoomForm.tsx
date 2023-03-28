@@ -18,6 +18,7 @@ import { fetchWaitingRoomVisitForm, sendVisitFormFromWaitingRoomForApproval } fr
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormFinalizeDialog } from "../components/FormFinalizeDialog";
+import { getModifiedFieldsOnly } from "../util/utils";
 import { FormContainer } from "./FormContainer";
 
 export const WaitingRoomForm = () => {
@@ -32,6 +33,7 @@ export const WaitingRoomForm = () => {
   const { operator } = useAuth();
   const { getValues, setValue, trigger } = useFormContext<FormPropType>();
 
+  const [initialFormData, setInitialFormData] = useState<FormPropType>();
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [valuesBeforeEditing, setValuesBeforeEditing] = useState<FormPropType>();
   const [isDisapproved, setIsDisapproved] = useState<boolean>(false);
@@ -43,6 +45,7 @@ export const WaitingRoomForm = () => {
     if (visitForm !== undefined) {
       // TODO: try if there's a need for isLoading flag due to the slow form initialization
       const defaultValues = loadFormDefaultValuesFromWaitingRoomVisitForm(visitForm);
+      setInitialFormData(defaultValues);
       setQacs(defaultValues.answers.map((answer, index) => ({ index, ...answer })));
       type DefaultValuesPropertyType = keyof typeof defaultValues;
       Object.keys(defaultValues).forEach((propertyName) => {
@@ -142,7 +145,20 @@ export const WaitingRoomForm = () => {
   }, [getValues, id, isDisapproved, isEditing, navigate, operator?.role, setValue, trigger, valuesBeforeEditing]);
 
   const moveVisitFormToApprovalRoom = async (data: FormPropType) => {
-    await sendVisitFormFromWaitingRoomForApproval(id || "", data, operator?.id || "");
+    const modifiedFields: Partial<FormPropType> = {
+      ...getModifiedFieldsOnly(initialFormData, data),
+      device: {
+        id: data.device?.id ?? "",
+        name: data.device?.name ?? "",
+      },
+      project: {
+        id: data.project?.id ?? "",
+        acronym: data.project?.acronym ?? "",
+        name: data.project?.name ?? "",
+      },
+      measuredAt: data.measuredAt ?? new Date(),
+    };
+    await sendVisitFormFromWaitingRoomForApproval(id || "", modifiedFields, operator?.id || "");
     queryClient.invalidateQueries({ queryKey: ["waitingRoomVisitForms"], exact: true });
     setOpenFinalizeDialog(false);
     navigate(RoutingPaths.WAITING_ROOM);

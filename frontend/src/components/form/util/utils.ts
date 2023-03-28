@@ -1,3 +1,5 @@
+import { updatedDiff } from "deep-object-diff";
+import { FormAnswer, FormPropType } from "@app/model/form";
 import { IProjectDTO } from "@app/util/mafildb_API/dto";
 import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "@app/util/server_API/dto";
 
@@ -44,4 +46,33 @@ export const getProjectText = (project: IProjectDTO): string => {
   const projectAcronym = project.acronym.trim();
   const projectName = project.name.trim();
   return projectName === "" ? projectAcronym : `${projectAcronym} - ${projectName}`;
+};
+
+export const getModifiedFieldsOnly = (
+  initialData: FormPropType | undefined,
+  submittedData: FormPropType
+): Partial<FormPropType> => {
+  if (initialData === undefined) {
+    return submittedData;
+  }
+
+  const { answers: initialAnswers, ...initialDataRest } = initialData;
+  const { answers: submittedAnswers, ...submittedDataRest } = submittedData;
+
+  let diffAnswers: FormAnswer[] | undefined;
+  const sortedInitialAnswers = initialAnswers.sort();
+  const sortedSubmittedAnswers = submittedAnswers.sort();
+
+  if (
+    initialAnswers.length === submittedAnswers.length
+    && sortedInitialAnswers.every((answer, i) => answer.questionId === sortedSubmittedAnswers[i].questionId)
+  ) {
+    diffAnswers = sortedInitialAnswers.filter(
+      (answer, i) =>
+        answer.answer !== sortedSubmittedAnswers[i].answer || answer.comment !== sortedSubmittedAnswers[i].comment
+    );
+  }
+
+  const diffRest = updatedDiff(initialDataRest, submittedDataRest);
+  return { ...diffRest, answers: diffAnswers || submittedAnswers };
 };
