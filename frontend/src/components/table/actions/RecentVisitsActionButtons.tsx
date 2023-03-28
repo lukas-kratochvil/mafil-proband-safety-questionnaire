@@ -4,9 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { defaultNS } from "@app/i18n";
 import { RoutingPaths } from "@app/routing-paths";
 import { getDummyVisit } from "@app/util/fetch.dev";
-import { ActionButtonsContainer, IActionButtonsProps } from "./ActionButtonsContainer";
+import { ActionButtonsContainer } from "./ActionButtonsContainer";
 
-export const RecentVisitsActionButtons = ({ visitId }: IActionButtonsProps) => {
+interface IRecentVisitsActionButtonsProps {
+  visitId: string;
+}
+
+export const RecentVisitsActionButtons = ({ visitId }: IRecentVisitsActionButtonsProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "recentVisitsTablePage.actions" });
   const navigate = useNavigate();
 

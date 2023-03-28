@@ -79,7 +79,7 @@ const WaitingRoomTablePage = () => {
         // eslint-disable-next-line react/no-unstable-nested-components
         Cell: ({ row }: { row: MRTRow<IWaitingRoomVisitFormDTO> }) => (
           <WaitingRoomActionButtons
-            visitId={row.original.id}
+            visitFormId={row.original.id}
             queryKey={queryKey}
           />
         ),

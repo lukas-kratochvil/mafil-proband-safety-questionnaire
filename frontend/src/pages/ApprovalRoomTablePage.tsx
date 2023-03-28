@@ -81,7 +81,7 @@ const ApprovalRoomTablePage = () => {
         columnDefType: "display", // turns off data column features like sorting, filtering, etc.
         // eslint-disable-next-line react/no-unstable-nested-components
         Cell: ({ row }: { row: MRTRow<IApprovalRoomVisitFormDTO> }) => (
-          <ApprovalRoomActionButtons visitId={row.original.id} />
+          <ApprovalRoomActionButtons visitFormId={row.original.id} />
         ),
         maxSize: 0,
       },

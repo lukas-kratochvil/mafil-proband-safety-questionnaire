@@ -17,13 +17,14 @@ import { useNavigate } from "react-router-dom";
 import { defaultNS } from "@app/i18n";
 import { RoutingPaths } from "@app/routing-paths";
 import { deleteVisitForm } from "@app/util/server_API/fetch";
-import { ActionButtonsContainer, IActionButtonsProps } from "./ActionButtonsContainer";
+import { ActionButtonsContainer } from "./ActionButtonsContainer";
 
-interface IWaitingRoomActionButtonsProps extends IActionButtonsProps {
+interface IWaitingRoomActionButtonsProps {
+  visitFormId: string;
   queryKey: QueryKey;
 }
 
-export const WaitingRoomActionButtons = ({ visitId, queryKey }: IWaitingRoomActionButtonsProps) => {
+export const WaitingRoomActionButtons = ({ visitFormId, queryKey }: IWaitingRoomActionButtonsProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomTablePage.actions" });
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ export const WaitingRoomActionButtons = ({ visitId, queryKey }: IWaitingRoomActi
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
 
   const onDelete = async () => {
-    await deleteVisitForm(visitId);
+    await deleteVisitForm(visitFormId);
     queryClient.invalidateQueries({ queryKey, exact: true });
     setOpenDeleteDialog(false);
   };
@@ -43,7 +44,7 @@ export const WaitingRoomActionButtons = ({ visitId, queryKey }: IWaitingRoomActi
       <Button
         size="small"
         variant="contained"
-        onClick={() => navigate(`${RoutingPaths.WAITING_ROOM}/form/${visitId}`)}
+        onClick={() => navigate(`${RoutingPaths.WAITING_ROOM}/form/${visitFormId}`)}
       >
         {t("processButton")}
       </Button>

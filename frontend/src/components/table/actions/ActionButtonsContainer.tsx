@@ -1,10 +1,6 @@
 import { Box } from "@mui/material";
 import { PropsWithChildren } from "react";
 
-export interface IActionButtonsProps {
-  visitId: string;
-}
-
 export const ActionButtonsContainer = ({ children }: PropsWithChildren) => (
   <Box
     sx={{
