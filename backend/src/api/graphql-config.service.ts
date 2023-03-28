@@ -3,8 +3,8 @@ import { ApolloDriverConfig } from "@nestjs/apollo";
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { GqlOptionsFactory } from "@nestjs/graphql";
-import { UUID } from "./scalars/uuid-scalar";
-import { Void } from "./scalars/void-scalar";
+import { UUID } from "./utils/scalars/uuid-scalar";
+import { Void } from "./utils/scalars/void-scalar";
 
 @Injectable()
 // eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided

@@ -1,8 +1,8 @@
 import { Field, HideField, ObjectType } from "@nestjs/graphql";
 import { AdditionalVisitFormInfo } from "@prisma/client";
-import { BaseEntity } from "@app/api/graphql/entities/base.entity";
-import { UUID } from "@app/api/graphql/scalars/uuid-scalar";
 import { OperatorEntity } from "@app/api/operator/entities/operator.entity";
+import { BaseEntity } from "@app/api/utils/entities/base.entity";
+import { UUID } from "@app/api/utils/scalars/uuid-scalar";
 import { VisitFormEntity } from "./visit-form.entity";
 
 @ObjectType()

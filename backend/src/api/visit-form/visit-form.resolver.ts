@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { VisitFormState } from "@prisma/client";
-import { UUID } from "@app/api/graphql/scalars/uuid-scalar";
-import { Void } from "@app/api/graphql/scalars/void-scalar";
+import { UUID } from "@app/api/utils/scalars/uuid-scalar";
+import { Void } from "@app/api/utils/scalars/void-scalar";
 import { CreateVisitFormInput } from "./dto/create-visit-form.input";
 import { UpdateVisitFormInput } from "./dto/update-visit-form.input";
 import { VisitFormEntity } from "./entities/visit-form.entity";

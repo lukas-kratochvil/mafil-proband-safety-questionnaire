@@ -1,5 +1,5 @@
 import { Field, InputType, IntersectionType, PartialType, PickType } from "@nestjs/graphql";
-import { UUID } from "@app/api/graphql/scalars/uuid-scalar";
+import { UUID } from "@app/api/utils/scalars/uuid-scalar";
 import { ProbandInfoEntity } from "@app/api/visit-form/entities/proband-info.entity";
 
 @InputType()

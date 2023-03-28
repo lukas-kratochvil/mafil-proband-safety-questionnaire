@@ -1,6 +1,6 @@
 import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Operator, OperatorRole } from "@prisma/client";
-import { BaseEntity } from "@app/api/graphql/entities/base.entity";
+import { BaseEntity } from "@app/api/utils/entities/base.entity";
 
 registerEnumType(OperatorRole, {
   name: "OperatorRole",

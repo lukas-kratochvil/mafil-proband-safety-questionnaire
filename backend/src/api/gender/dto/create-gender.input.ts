@@ -1,5 +1,5 @@
 import { InputType, IntersectionType, PickType } from "@nestjs/graphql";
-import { CreateTranslationInput } from "@app/api/graphql/dto/create-translation.input";
+import { CreateTranslationInput } from "@app/api/utils/dto/create-translation.input";
 import { GenderEntity } from "../entities/gender.entity";
 
 @InputType()

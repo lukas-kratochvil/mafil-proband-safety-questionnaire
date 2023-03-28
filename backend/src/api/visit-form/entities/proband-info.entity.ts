@@ -1,9 +1,9 @@
 import { Field, Float, HideField, ObjectType } from "@nestjs/graphql";
 import { ProbandInfo } from "@prisma/client";
 import { GenderEntity } from "@app/api/gender/entities/gender.entity";
-import { BaseEntity } from "@app/api/graphql/entities/base.entity";
 import { HandednessEntity } from "@app/api/handedness/entities/handedness.entity";
 import { NativeLanguageEntity } from "@app/api/native-language/entities/native-language.entity";
+import { BaseEntity } from "@app/api/utils/entities/base.entity";
 import { VisitFormEntity } from "@app/api/visit-form/entities/visit-form.entity";
 
 @ObjectType()

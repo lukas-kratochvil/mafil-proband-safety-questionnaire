@@ -1,6 +1,6 @@
 import { Field, HideField, ObjectType } from "@nestjs/graphql";
 import { NativeLanguageTranslation } from "@prisma/client";
-import { BaseEntity } from "@app/api/graphql/entities/base.entity";
+import { BaseEntity } from "@app/api/utils/entities/base.entity";
 
 @ObjectType()
 export class NativeLanguageTranslationEntity extends BaseEntity implements NativeLanguageTranslation {
