@@ -51,7 +51,7 @@ export class VisitFormService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createVisitFormInput: CreateVisitFormInput): Promise<VisitFormInclude> {
-    return await this.prisma.visitForm.create({
+    return this.prisma.visitForm.create({
       data: {
         state: createVisitFormInput.state ?? VisitFormState.NEW,
         additionalInfo: createVisitFormInput.additionalInfo
@@ -140,7 +140,30 @@ export class VisitFormService {
         probandInfo: {
           update: updateVisitFormInput.probandInfo
             ? {
-                ...updateVisitFormInput.probandInfo,
+                name: updateVisitFormInput.probandInfo.name,
+                surname: updateVisitFormInput.probandInfo.surname,
+                personalId: updateVisitFormInput.probandInfo.personalId,
+                birthdate: updateVisitFormInput.probandInfo.birthdate,
+                gender: {
+                  connect: {
+                    id: updateVisitFormInput.probandInfo.genderId,
+                  },
+                },
+                nativeLanguage: {
+                  connect: {
+                    id: updateVisitFormInput.probandInfo.nativeLanguageId,
+                  },
+                },
+                heightCm: updateVisitFormInput.probandInfo.heightCm,
+                weightKg: updateVisitFormInput.probandInfo.weightKg,
+                handedness: {
+                  connect: {
+                    id: updateVisitFormInput.probandInfo.handednessId,
+                  },
+                },
+                visualCorrectionDioptre: updateVisitFormInput.probandInfo.visualCorrectionDioptre,
+                email: updateVisitFormInput.probandInfo.email,
+                phone: updateVisitFormInput.probandInfo.phone,
               }
             : undefined,
         },
@@ -151,7 +174,8 @@ export class VisitFormService {
                   id: answer.id,
                 },
                 data: {
-                  ...answer,
+                  answer: answer.answer,
+                  comment: answer.comment,
                 },
               }))
             : undefined,
