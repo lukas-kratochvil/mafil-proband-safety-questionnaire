@@ -41,7 +41,6 @@ model VisitForm {
   probandLanguageId String                   @db.Uuid
   answers           Answer[]
   additionalInfo    AdditionalVisitFormInfo?
-  additionalInfoId  String?                  @db.Uuid
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
