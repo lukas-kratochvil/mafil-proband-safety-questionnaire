@@ -14,6 +14,8 @@ import { PageContainer } from "./PageContainer";
 const createdAtFormat = "d.M.y H:mm";
 const probandBirthdateFormat = "d.M.y";
 
+const queryKey = ["waitingRoomVisitForms"];
+
 const WaitingRoomTablePage = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomTablePage" });
   const {
@@ -21,7 +23,7 @@ const WaitingRoomTablePage = () => {
     isFetching,
     isLoading,
     isError,
-  } = useQuery({ queryKey: ["waitingRoomVisitForms"], queryFn: () => fetchWaitingRoomVisitForms() });
+  } = useQuery({ queryKey, queryFn: () => fetchWaitingRoomVisitForms() });
 
   const columns = useMemo<MRTColumnDef<IWaitingRoomVisitFormDTO>[]>(
     () => [
@@ -76,7 +78,10 @@ const WaitingRoomTablePage = () => {
         columnDefType: "display", // turns off data column features like sorting, filtering, etc.
         // eslint-disable-next-line react/no-unstable-nested-components
         Cell: ({ row }: { row: MRTRow<IWaitingRoomVisitFormDTO> }) => (
-          <WaitingRoomActionButtons visitId={row.original.id} />
+          <WaitingRoomActionButtons
+            visitId={row.original.id}
+            queryKey={queryKey}
+          />
         ),
         maxSize: 0,
       },

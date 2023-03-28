@@ -10,6 +10,7 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
+import { QueryKey, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -18,14 +19,20 @@ import { RoutingPaths } from "@app/routing-paths";
 import { deleteVisitForm } from "@app/util/server_API/fetch";
 import { ActionButtonsContainer, IActionButtonsProps } from "./ActionButtonsContainer";
 
-export const WaitingRoomActionButtons = ({ visitId }: IActionButtonsProps) => {
+interface IWaitingRoomActionButtonsProps extends IActionButtonsProps {
+  queryKey: QueryKey;
+}
+
+export const WaitingRoomActionButtons = ({ visitId, queryKey }: IWaitingRoomActionButtonsProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomTablePage.actions" });
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
 
-  const onDelete = () => {
-    deleteVisitForm(visitId);
+  const onDelete = async () => {
+    await deleteVisitForm(visitId);
+    queryClient.invalidateQueries({ queryKey, exact: true });
     setOpenDeleteDialog(false);
   };
 
