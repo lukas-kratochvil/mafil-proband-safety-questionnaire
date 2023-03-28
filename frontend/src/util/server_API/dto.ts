@@ -131,12 +131,15 @@ export interface ICreateDuplicatedVisitFormForApprovalInput {
 }
 
 type UpdateVisitFormInput = {
+  id: string;
   state: Partial<Omit<VisitFormState, "NEW">>;
-  additionalInfo: Partial<Omit<AdditionalInfo, "finalizerId" | "finalizedAt">>;
+  additionalInfo: Partial<AdditionalInfo>;
   probandInfo: Partial<ProbandInfo>;
   answers: Partial<IOperatorAnswerDTO>[];
 };
 
-export interface ISendVisitFormForApprovalInput {
-  updateVisitFormInput: UpdateVisitFormInput;
+export interface ISendVisitFormFromWaitingRoomForApprovalInput {
+  updateVisitFormInput: Omit<UpdateVisitFormInput, "additionalInfo"> & {
+    additionalInfo: AdditionalInfo;
+  };
 }

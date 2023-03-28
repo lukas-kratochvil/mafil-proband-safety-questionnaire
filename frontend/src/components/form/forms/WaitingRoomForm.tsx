@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -14,7 +14,7 @@ import { QuestionPartNumber } from "@app/model/question";
 import { AnswerOption, VisitStateDEV } from "@app/model/visit";
 import { RoutingPaths } from "@app/routing-paths";
 import { updateDummyVisitState } from "@app/util/fetch.dev";
-import { fetchWaitingRoomVisitForm, sendVisitFormForApproval } from "@app/util/server_API/fetch";
+import { fetchWaitingRoomVisitForm, sendVisitFormFromWaitingRoomForApproval } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormFinalizeDialog } from "../components/FormFinalizeDialog";
@@ -27,6 +27,7 @@ export const WaitingRoomForm = () => {
     isLoading,
     isError,
   } = useQuery({ queryKey: ["visitForm", id], queryFn: () => fetchWaitingRoomVisitForm(id) });
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { operator } = useAuth();
   const { getValues, setValue, trigger } = useFormContext<FormPropType>();
@@ -141,7 +142,8 @@ export const WaitingRoomForm = () => {
   }, [getValues, id, isDisapproved, isEditing, navigate, operator?.role, setValue, trigger, valuesBeforeEditing]);
 
   const moveVisitFormToApprovalRoom = async (data: FormPropType) => {
-    sendVisitFormForApproval(data);
+    await sendVisitFormFromWaitingRoomForApproval(id || "", data, operator?.id || "");
+    queryClient.invalidateQueries({ queryKey: ["waitingRoomVisitForms"], exact: true });
     setOpenFinalizeDialog(false);
     navigate(RoutingPaths.WAITING_ROOM);
   };

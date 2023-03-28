@@ -12,7 +12,7 @@ import {
   INativeLanguageDTO,
   IOperatorDTO,
   IQuestionDTO,
-  ISendVisitFormForApprovalInput,
+  ISendVisitFormFromWaitingRoomForApprovalInput,
   IWaitingRoomVisitFormDTO,
 } from "@app/util/server_API/dto";
 import { CREATE_VISIT_FORM, DELETE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
@@ -196,21 +196,28 @@ export const createDuplicatedVisitFormForApproval = async (
   return data.data.createVisitForm.id;
 };
 
-export const sendVisitFormForApproval = async (visitFormData: Partial<FormPropType>): Promise<string> => {
-  const variables: ISendVisitFormForApprovalInput = {
+export const sendVisitFormFromWaitingRoomForApproval = async (
+  visitFormId: string,
+  visitFormData: Partial<FormPropType>,
+  finalizerId: string
+): Promise<string> => {
+  const variables: ISendVisitFormFromWaitingRoomForApprovalInput = {
     updateVisitFormInput: {
+      id: visitFormId,
       state: "IN_APPROVAL",
       additionalInfo: {
-        projectId: visitFormData.project?.id ?? undefined,
-        projectAcronym: visitFormData.project?.acronym ?? undefined,
-        deviceId: visitFormData.device?.id ?? undefined,
-        deviceName: visitFormData.device?.name ?? undefined,
-        measuredAt: visitFormData.measuredAt ?? undefined,
+        projectId: visitFormData.project?.id ?? "",
+        projectAcronym: visitFormData.project?.acronym ?? "",
+        deviceId: visitFormData.device?.id ?? "",
+        deviceName: visitFormData.device?.name ?? "",
+        measuredAt: visitFormData.measuredAt ?? new Date(),
+        finalizedAt: new Date(),
+        finalizerId,
       },
       probandInfo: {
-        name: visitFormData.name,
-        surname: visitFormData.surname,
-        personalId: visitFormData.personalId,
+        name: visitFormData.name === "" ? undefined : visitFormData.name,
+        surname: visitFormData.surname === "" ? undefined : visitFormData.surname,
+        personalId: visitFormData.personalId === "" ? undefined : visitFormData.personalId,
         birthdate: visitFormData.birthdate ?? undefined,
         genderId: visitFormData.gender?.id ?? undefined,
         nativeLanguageId: visitFormData.nativeLanguage?.id ?? undefined,
