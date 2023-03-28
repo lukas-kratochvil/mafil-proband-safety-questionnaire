@@ -28,9 +28,6 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   @Field(() => AdditionalVisitFormInfoEntity, { nullable: true })
   additionalInfo?: AdditionalVisitFormInfoEntity;
 
-  @HideField()
-  additionalInfoId: string | null;
-
   @Field(() => [AnswerEntity])
   answers: AnswerEntity[];
 
