@@ -23,7 +23,7 @@ import { FormContainer } from "./FormContainer";
 export const WaitingRoomForm = () => {
   const { id } = useParams();
   const {
-    data: visit,
+    data: visitForm,
     isLoading,
     isError,
   } = useQuery({ queryKey: ["visitForm", id], queryFn: () => fetchWaitingRoomVisitForm(id) });
@@ -39,16 +39,16 @@ export const WaitingRoomForm = () => {
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
 
   useEffect(() => {
-    if (visit !== undefined) {
+    if (visitForm !== undefined) {
       // TODO: try if there's a need for isLoading flag due to the slow form initialization
-      const defaultValues = loadFormDefaultValuesFromWaitingRoomVisitForm(visit);
+      const defaultValues = loadFormDefaultValuesFromWaitingRoomVisitForm(visitForm);
       setQacs(defaultValues.answers.map((answer, index) => ({ index, ...answer })));
       type DefaultValuesPropertyType = keyof typeof defaultValues;
       Object.keys(defaultValues).forEach((propertyName) => {
         setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
       });
     }
-  }, [visit, setValue]);
+  }, [visitForm, setValue]);
 
   useEffect(() => {
     if (isEditing) {

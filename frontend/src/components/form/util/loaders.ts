@@ -34,36 +34,37 @@ export const loadPhantomFormDefaultValues = (): FormPropType => ({
 });
 
 // Autocomplete component default value must be one of the options provided or null
-export const loadFormDefaultValuesFromWaitingRoomVisitForm = (visit: IWaitingRoomVisitFormDTO): FormPropType => ({
+export const loadFormDefaultValuesFromWaitingRoomVisitForm = (visitForm: IWaitingRoomVisitFormDTO): FormPropType => ({
   project: null,
   device: null,
   measuredAt: new Date(),
   disapprovalReason: null,
-  ...visit.probandInfo,
+  ...visitForm.probandInfo,
   visualCorrection: getOption(
     visualCorrectionOptions,
-    visit.probandInfo.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
+    visitForm.probandInfo.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
   ),
   // TODO: how to get question part number?
-  answers: visit.answers.map((answer) => ({ ...answer, comment: "", partNumber: QuestionPartNumber.ONE })),
+  answers: visitForm.answers.map((answer) => ({ ...answer, comment: "", partNumber: QuestionPartNumber.ONE })),
 });
 
 // Autocomplete component default value must be one of the options provided or null
-export const loadFormDefaultValuesFromApprovalRoomVisitForm = (visit: IApprovalRoomVisitFormDTO): FormPropType => ({
-  ...loadFormDefaultValuesFromWaitingRoomVisitForm(visit),
+export const loadFormDefaultValuesFromApprovalRoomVisitForm = (visitForm: IApprovalRoomVisitFormDTO): FormPropType => ({
+  ...loadFormDefaultValuesFromWaitingRoomVisitForm(visitForm),
   // selected project is set in the FormProjectInfo component
   project: {
-    id: visit.additionalInfo.projectId ?? "", // id is used to match the correct project loaded from the MAFILDB
+    id: visitForm.additionalInfo.projectId ?? "", // id is used to match the correct project loaded from the MAFILDB
     acronym: "",
     name: "",
   },
   // selected device is set in the FormProjectInfo component
   device: {
-    id: visit.additionalInfo.deviceId ?? "", // id is used to match the correct project loaded from the MAFILDB
+    id: visitForm.additionalInfo.deviceId ?? "", // id is used to match the correct project loaded from the MAFILDB
     name: "",
   },
-  measuredAt: visit.additionalInfo.measuredAt ?? new Date(),
-  answers: visit.answers.map((answer) => ({ ...answer, partNumber: QuestionPartNumber.ONE })), // TODO: how to get question part number?
+  measuredAt: visitForm.additionalInfo.measuredAt ?? new Date(),
+  // TODO: how to get question part number?
+  answers: visitForm.answers.map((answer) => ({ ...answer, partNumber: QuestionPartNumber.ONE })),
 });
 
 // Autocomplete component default value must be one of the options provided or null

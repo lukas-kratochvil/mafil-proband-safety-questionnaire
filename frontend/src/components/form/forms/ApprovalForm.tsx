@@ -22,7 +22,7 @@ import { FormContainer } from "./FormContainer";
 export const ApprovalForm = () => {
   const { id } = useParams();
   const {
-    data: visit,
+    data: visitForm,
     isLoading,
     isError,
   } = useQuery({ queryKey: ["visitForm", id], queryFn: () => fetchApprovalRoomVisitForm(id) });
@@ -37,16 +37,16 @@ export const ApprovalForm = () => {
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
 
   useEffect(() => {
-    if (visit !== undefined) {
+    if (visitForm !== undefined) {
       // TODO: try if there's a need for isLoading flag due to the slow form initialization
-      const defaultValues = loadFormDefaultValuesFromApprovalRoomVisitForm(visit);
+      const defaultValues = loadFormDefaultValuesFromApprovalRoomVisitForm(visitForm);
       setQacs(defaultValues.answers.map((answer, index) => ({ index, ...answer })));
       type DefaultValuesPropertyType = keyof typeof defaultValues;
       Object.keys(defaultValues).forEach((propertyName) => {
         setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
       });
     }
-  }, [visit, setValue]);
+  }, [visitForm, setValue]);
 
   useEffect(() => {
     if (operator?.role === "MR_HIGH_PERM") {
