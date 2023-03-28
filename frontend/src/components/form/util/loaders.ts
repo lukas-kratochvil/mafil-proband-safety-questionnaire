@@ -45,7 +45,7 @@ export const loadFormDefaultValuesFromWaitingRoomVisitForm = (visitForm: IWaitin
     visitForm.probandInfo.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
   ),
   // TODO: how to get question part number?
-  answers: visitForm.answers.map((answer) => ({ ...answer, comment: "", partNumber: QuestionPartNumber.ONE })),
+  answers: visitForm.answers.map((answer) => ({ ...answer, comment: "", partNumber: QuestionPartNumber.TWO })),
 });
 
 // Autocomplete component default value must be one of the options provided or null
@@ -64,7 +64,7 @@ export const loadFormDefaultValuesFromApprovalRoomVisitForm = (visitForm: IAppro
   },
   measuredAt: visitForm.additionalInfo.measuredAt ?? new Date(),
   // TODO: how to get question part number?
-  answers: visitForm.answers.map((answer) => ({ ...answer, partNumber: QuestionPartNumber.ONE })),
+  answers: visitForm.answers.map((answer) => ({ ...answer, partNumber: QuestionPartNumber.TWO })),
 });
 
 // Autocomplete component default value must be one of the options provided or null
