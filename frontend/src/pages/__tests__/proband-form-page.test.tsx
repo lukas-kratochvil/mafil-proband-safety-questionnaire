@@ -112,6 +112,8 @@ const questionData: IQuestionDTO[] = [
   },
 ];
 
+const newProbandVisitFormId = "id123";
+
 vi.mock("@app/util/server_API/fetch", async () => ({
   ...((await vi.importActual("@app/util/server_API/fetch")) as Record<string, unknown>),
   fetchGenders: async (): Promise<IGenderDTO[]> => genders,
@@ -119,6 +121,7 @@ vi.mock("@app/util/server_API/fetch", async () => ({
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednesses,
   fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionData,
   fetchQuestion: async (): Promise<IQuestionDTO> => questionData[0],
+  createProbandVisitForm: async (): Promise<string> => newProbandVisitFormId,
 }));
 
 vi.mock("@app/util/mafildb_API/fetch", async () => ({

@@ -123,6 +123,7 @@ vi.mock("@app/util/server_API/fetch", async () => ({
   fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguages,
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednesses,
   fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionData,
+  fetchQuestion: async (): Promise<IQuestionDTO> => questionData[0],
 }));
 
 vi.mock("@app/util/mafildb_API/fetch", async () => ({

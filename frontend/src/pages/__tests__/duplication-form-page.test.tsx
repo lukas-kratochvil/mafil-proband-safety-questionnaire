@@ -5,7 +5,7 @@ import i18n from "@app/i18n";
 import { AnswerOption, IVisit, VisitStateDEV, VisualCorrection } from "@app/model/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
 import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
-import { IOperatorDTO, IQuestionDTO } from "@app/util/server_API/dto";
+import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IOperatorDTO, IQuestionDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -178,10 +178,16 @@ vi.mock("@app/hooks/auth/auth", () => ({
 //----------------------------------------------------------------------
 // Mocking custom fetch methods
 //----------------------------------------------------------------------
+const newDuplicatedVisitFormId = "id123";
+
 vi.mock("@app/util/server_API/fetch", async () => ({
   ...((await vi.importActual("@app/util/server_API/fetch")) as Record<string, unknown>),
+  fetchGenders: async (): Promise<IGenderDTO[]> => genders,
+  fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguages,
+  fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednesses,
   fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionData,
   fetchQuestion: async (): Promise<IQuestionDTO> => questionData[0],
+  createDuplicatedVisitFormForApproval: async (): Promise<string> => newDuplicatedVisitFormId,
 }));
 
 vi.mock("@app/util/mafildb_API/fetch", async () => ({
