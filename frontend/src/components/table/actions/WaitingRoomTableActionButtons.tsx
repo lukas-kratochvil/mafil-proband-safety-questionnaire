@@ -17,14 +17,14 @@ import { useNavigate } from "react-router-dom";
 import { defaultNS } from "@app/i18n";
 import { RoutingPaths } from "@app/routing-paths";
 import { deleteVisitForm } from "@app/util/server_API/fetch";
-import { ActionButtonsContainer } from "./ActionButtonsContainer";
+import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
-interface IWaitingRoomActionButtonsProps {
+interface IWaitingRoomTableActionButtonsProps {
   visitFormId: string;
   queryKey: QueryKey;
 }
 
-export const WaitingRoomActionButtons = ({ visitFormId, queryKey }: IWaitingRoomActionButtonsProps) => {
+export const WaitingRoomTableActionButtons = ({ visitFormId, queryKey }: IWaitingRoomTableActionButtonsProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomTablePage.actions" });
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ export const WaitingRoomActionButtons = ({ visitFormId, queryKey }: IWaitingRoom
   const onCancel = () => setOpenDeleteDialog(false);
 
   return (
-    <ActionButtonsContainer>
+    <TableActionButtonsContainer>
       <Button
         size="small"
         variant="contained"
@@ -73,6 +73,6 @@ export const WaitingRoomActionButtons = ({ visitFormId, queryKey }: IWaitingRoom
           <Button onClick={onCancel}>{t("clearIconDialogCancel")}</Button>
         </DialogActions>
       </Dialog>
-    </ActionButtonsContainer>
+    </TableActionButtonsContainer>
   );
 };

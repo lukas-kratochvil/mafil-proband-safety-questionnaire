@@ -2,7 +2,7 @@ import { compareAsc, format, parse } from "date-fns";
 import { MRT_ColumnDef as MRTColumnDef, MRT_Row as MRTRow } from "material-react-table";
 import { useTranslation } from "react-i18next";
 import { InteractingTable } from "@app/components/table/InteractingTable";
-import { RecentVisitsActionButtons } from "@app/components/table/actions/RecentVisitsActionButtons";
+import { RecentVisitsTableActionButtons } from "@app/components/table/actions/RecentVisitsTableActionButtons";
 import { defaultNS } from "@app/i18n";
 import { IVisit } from "@app/model/visit";
 import { fetchRecentVisits } from "@app/util/mafildb_API/fetch";
@@ -63,7 +63,7 @@ const RecentVisitsTablePage = () => {
       header: t("actions"),
       columnDefType: "display", // turns off data column features like sorting, filtering, etc.
       // eslint-disable-next-line react/no-unstable-nested-components
-      Cell: ({ row }: { row: MRTRow<IVisit> }) => <RecentVisitsActionButtons visitId={row.original.id} />,
+      Cell: ({ row }: { row: MRTRow<IVisit> }) => <RecentVisitsTableActionButtons visitId={row.original.id} />,
       minSize: 300,
     },
   ];

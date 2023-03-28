@@ -4,18 +4,18 @@ import { useNavigate } from "react-router-dom";
 import { defaultNS } from "@app/i18n";
 import { RoutingPaths } from "@app/routing-paths";
 import { getDummyVisit } from "@app/util/fetch.dev";
-import { ActionButtonsContainer } from "./ActionButtonsContainer";
+import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
-interface IRecentVisitsActionButtonsProps {
+interface IRecentVisitsTableActionButtonsProps {
   visitId: string;
 }
 
-export const RecentVisitsActionButtons = ({ visitId }: IRecentVisitsActionButtonsProps) => {
+export const RecentVisitsTableActionButtons = ({ visitId }: IRecentVisitsTableActionButtonsProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "recentVisitsTablePage.actions" });
   const navigate = useNavigate();
 
   return (
-    <ActionButtonsContainer>
+    <TableActionButtonsContainer>
       <Button
         size="small"
         variant="contained"
@@ -40,6 +40,6 @@ export const RecentVisitsActionButtons = ({ visitId }: IRecentVisitsActionButton
       >
         {t("duplicateButton")}
       </Button>
-    </ActionButtonsContainer>
+    </TableActionButtonsContainer>
   );
 };

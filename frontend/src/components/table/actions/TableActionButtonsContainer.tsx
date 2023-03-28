@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { PropsWithChildren } from "react";
 
-export const ActionButtonsContainer = ({ children }: PropsWithChildren) => (
+export const TableActionButtonsContainer = ({ children }: PropsWithChildren) => (
   <Box
     sx={{
       display: "flex",

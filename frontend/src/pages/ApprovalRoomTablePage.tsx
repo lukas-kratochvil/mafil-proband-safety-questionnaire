@@ -3,7 +3,7 @@ import { compareAsc, format, parse } from "date-fns";
 import MaterialReactTable, { MRT_ColumnDef as MRTColumnDef, MRT_Row as MRTRow } from "material-react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { ApprovalRoomActionButtons } from "@app/components/table/actions/ApprovalRoomActionButtons";
+import { ApprovalRoomTableActionButtons } from "@app/components/table/actions/ApprovalRoomTableActionButtons";
 import { defaultTableProps } from "@app/components/table/table-default-props";
 import { defaultNS } from "@app/i18n";
 import { IApprovalRoomVisitFormDTO } from "@app/util/server_API/dto";
@@ -81,7 +81,7 @@ const ApprovalRoomTablePage = () => {
         columnDefType: "display", // turns off data column features like sorting, filtering, etc.
         // eslint-disable-next-line react/no-unstable-nested-components
         Cell: ({ row }: { row: MRTRow<IApprovalRoomVisitFormDTO> }) => (
-          <ApprovalRoomActionButtons visitFormId={row.original.id} />
+          <ApprovalRoomTableActionButtons visitFormId={row.original.id} />
         ),
         maxSize: 0,
       },

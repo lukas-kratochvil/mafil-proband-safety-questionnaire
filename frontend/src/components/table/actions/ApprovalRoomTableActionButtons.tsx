@@ -3,18 +3,18 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { defaultNS } from "@app/i18n";
 import { RoutingPaths } from "@app/routing-paths";
-import { ActionButtonsContainer } from "./ActionButtonsContainer";
+import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
-interface IApprovalRoomActionButtonsProps {
+interface IApprovalRoomTableActionButtonsProps {
   visitFormId: string;
 }
 
-export const ApprovalRoomActionButtons = ({ visitFormId }: IApprovalRoomActionButtonsProps) => {
+export const ApprovalRoomTableActionButtons = ({ visitFormId }: IApprovalRoomTableActionButtonsProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "approvalRoomTablePage.actions" });
   const navigate = useNavigate();
 
   return (
-    <ActionButtonsContainer>
+    <TableActionButtonsContainer>
       <Button
         size="small"
         variant="contained"
@@ -22,6 +22,6 @@ export const ApprovalRoomActionButtons = ({ visitFormId }: IApprovalRoomActionBu
       >
         {t("showButton")}
       </Button>
-    </ActionButtonsContainer>
+    </TableActionButtonsContainer>
   );
 };
