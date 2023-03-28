@@ -130,13 +130,28 @@ export class VisitFormService {
       },
       data: {
         state: updateVisitFormInput.state,
-        additionalInfo: {
-          update: updateVisitFormInput.additionalInfo
-            ? {
-                ...updateVisitFormInput.additionalInfo,
-              }
-            : undefined,
-        },
+        additionalInfo: updateVisitFormInput.additionalInfo
+          ? {
+              upsert: {
+                create: {
+                  projectId: updateVisitFormInput.additionalInfo.projectId || "",
+                  projectAcronym: updateVisitFormInput.additionalInfo.projectAcronym || "",
+                  deviceId: updateVisitFormInput.additionalInfo.deviceId || "",
+                  deviceName: updateVisitFormInput.additionalInfo.deviceName || "",
+                  measuredAt: updateVisitFormInput.additionalInfo.measuredAt || new Date(),
+                  finalizedAt: updateVisitFormInput.additionalInfo.finalizedAt || new Date(),
+                  finalizer: {
+                    connect: {
+                      id: updateVisitFormInput.additionalInfo.finalizerId,
+                    },
+                  },
+                },
+                update: {
+                  ...updateVisitFormInput.additionalInfo,
+                },
+              },
+            }
+          : undefined,
         probandInfo: {
           update: updateVisitFormInput.probandInfo
             ? {
@@ -144,41 +159,48 @@ export class VisitFormService {
                 surname: updateVisitFormInput.probandInfo.surname,
                 personalId: updateVisitFormInput.probandInfo.personalId,
                 birthdate: updateVisitFormInput.probandInfo.birthdate,
-                gender: {
-                  connect: {
-                    id: updateVisitFormInput.probandInfo.genderId,
-                  },
-                },
-                nativeLanguage: {
-                  connect: {
-                    id: updateVisitFormInput.probandInfo.nativeLanguageId,
-                  },
-                },
+                gender: updateVisitFormInput.probandInfo.genderId
+                  ? {
+                      connect: {
+                        id: updateVisitFormInput.probandInfo.genderId,
+                      },
+                    }
+                  : undefined,
+                nativeLanguage: updateVisitFormInput.probandInfo.nativeLanguageId
+                  ? {
+                      connect: {
+                        id: updateVisitFormInput.probandInfo.nativeLanguageId,
+                      },
+                    }
+                  : undefined,
                 heightCm: updateVisitFormInput.probandInfo.heightCm,
                 weightKg: updateVisitFormInput.probandInfo.weightKg,
-                handedness: {
-                  connect: {
-                    id: updateVisitFormInput.probandInfo.handednessId,
-                  },
-                },
+                handedness: updateVisitFormInput.probandInfo.handednessId
+                  ? {
+                      connect: {
+                        id: updateVisitFormInput.probandInfo.handednessId,
+                      },
+                    }
+                  : undefined,
                 visualCorrectionDioptre: updateVisitFormInput.probandInfo.visualCorrectionDioptre,
                 email: updateVisitFormInput.probandInfo.email,
                 phone: updateVisitFormInput.probandInfo.phone,
               }
-            : undefined,
+            : {},
         },
         answers: {
           updateMany: updateVisitFormInput.answers
             ? updateVisitFormInput.answers.map((answer) => ({
                 where: {
-                  id: answer.id,
+                  // updates all the related answers having specified question ID
+                  questionId: answer.questionId,
                 },
                 data: {
                   answer: answer.answer,
                   comment: answer.comment,
                 },
               }))
-            : undefined,
+            : [],
         },
       },
       include: visitFormInclude,
