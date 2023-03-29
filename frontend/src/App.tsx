@@ -24,7 +24,7 @@ export const App = () => {
   return (
     <Suspense
       fallback={
-        <PageContainer centerize>
+        <PageContainer center>
           <CircularProgress />
         </PageContainer>
       }

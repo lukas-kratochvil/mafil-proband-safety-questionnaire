@@ -11,7 +11,7 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   return (
-    <PageContainer centerize>
+    <PageContainer center>
       <CardContainer title={t("title")}>
         <Grid
           container

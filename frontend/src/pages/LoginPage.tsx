@@ -17,7 +17,7 @@ const LoginPage = () => {
   };
 
   return (
-    <PageContainer centerize>
+    <PageContainer center>
       <CardContainer title={t("title")}>
         <Stack
           spacing="1rem"
