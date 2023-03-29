@@ -69,12 +69,12 @@ export const App = () => {
               element={<ApprovalFormPage />}
             />
             <Route
-              path={`${RoutingPaths.RECENT_VISITS}/duplicate/:id`}
-              element={<DuplicationFormPage />}
-            />
-            <Route
               path={RoutingPaths.RECENT_VISITS}
               element={<RecentVisitsTablePage />}
+            />
+            <Route
+              path={`${RoutingPaths.RECENT_VISITS}/duplicate/:id`}
+              element={<DuplicationFormPage />}
             />
             <Route
               path={`${RoutingPaths.RECENT_VISITS}/visit/:id`}
