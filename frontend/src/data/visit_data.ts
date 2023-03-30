@@ -1,5 +1,6 @@
+import { FormAnswer } from "@app/model/form";
 import { QuestionPartNumber } from "@app/model/question";
-import { AnswerOption, IQac, IVisit, VisitStateDEV, VisualCorrection } from "@app/model/visit";
+import { AnswerOption, IVisit, VisitStateDEV, VisualCorrection } from "@app/model/visit";
 import { getDummyVisitCurrentQuestions } from "@app/util/fetch.dev";
 import { devicesDev, projectsDev } from "./form_data";
 import { genders, handednesses, nativeLanguages } from "./translated_entities_data";
@@ -14,7 +15,7 @@ const generateId = (): string => {
   return id;
 };
 
-const loadAnswers = (answers: IQac[], visitState: VisitStateDEV): IQac[] =>
+const loadAnswers = (answers: FormAnswer[], visitState: VisitStateDEV): FormAnswer[] =>
   answers.map((answer) => {
     let comment = answer.comment.trim().length > 0 ? answer.comment : "";
 

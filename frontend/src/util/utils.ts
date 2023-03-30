@@ -3,8 +3,6 @@ import { LocalizationKeys } from "@app/i18n";
 import { FormPropType } from "@app/model/form";
 import { ITranslation } from "./server_API/dto";
 
-export type Override<T, U> = Omit<T, keyof U> & U;
-
 export interface IButtonProps {
   titleLocalizationKey: string;
   onClick: () => void;

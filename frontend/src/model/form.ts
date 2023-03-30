@@ -1,13 +1,18 @@
 import { IOption } from "@app/components/form/util/options";
 import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
-import { Override } from "@app/util/utils";
 import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "../util/server_API/dto";
-import { AnswerOption, IQac } from "./visit";
+import { QuestionPartNumber } from "./question";
+import { AnswerOption } from "./visit";
 
 // Form fields having this data type are validated as numbers
 type TextFieldNumberInput = string | number;
 
-export type FormAnswer = Override<IQac, { answer: AnswerOption | null }>;
+export type FormAnswer = {
+  questionId: string;
+  partNumber: QuestionPartNumber;
+  answer: AnswerOption | null;
+  comment: string;
+};
 
 export type FormQac = FormAnswer & { index: number };
 

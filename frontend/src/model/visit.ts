@@ -1,5 +1,5 @@
 import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "../util/server_API/dto";
-import { QuestionPartNumber } from "./question";
+import { FormAnswer } from "./form";
 
 export enum VisitStateDEV {
   NEW = "Nové",
@@ -19,7 +19,7 @@ export interface IVisit {
   pdf: string;
   projectInfo: IProjectInfo;
   probandInfo: IProbandInfo;
-  answers: IQac[];
+  answers: FormAnswer[];
 }
 
 interface IProjectInfo {
@@ -69,11 +69,4 @@ interface IProbandInfo {
 export enum AnswerOption {
   YES = "yes",
   NO = "no",
-}
-
-export interface IQac {
-  questionId: string;
-  partNumber: QuestionPartNumber;
-  answer: AnswerOption;
-  comment: string;
 }
