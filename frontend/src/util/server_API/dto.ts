@@ -45,6 +45,14 @@ export interface IQuestionDTO {
   translations: ITranslation[];
 }
 
+interface IHiddenByGender {
+  genderCode: string;
+}
+
+export interface IQuestionHiddenByGendersDTO extends IQuestionDTO {
+  hiddenByGenders: IHiddenByGender[];
+}
+
 interface IProbandAnswerDTO {
   questionId: string;
   answer: AnswerOption;

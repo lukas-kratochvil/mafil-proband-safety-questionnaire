@@ -4,6 +4,7 @@ import {
   IHandednessDTO,
   INativeLanguageDTO,
   IQuestionDTO,
+  IQuestionHiddenByGendersDTO,
   IWaitingRoomVisitFormDTO,
   OperatorRole,
 } from "./dto";
@@ -39,7 +40,7 @@ export type HandednessesResponse = {
   };
 };
 
-export type QuestionsResponse = {
+export type CurrentQuestionsResponse = {
   data: {
     questions: IQuestionDTO[];
   };
@@ -47,7 +48,7 @@ export type QuestionsResponse = {
 
 export type QuestionResponse = {
   data: {
-    question: IQuestionDTO;
+    question: IQuestionHiddenByGendersDTO;
   };
 };
 

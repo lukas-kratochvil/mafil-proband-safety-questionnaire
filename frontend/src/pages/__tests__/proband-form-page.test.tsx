@@ -4,7 +4,13 @@ import { genders, handednesses, nativeLanguages } from "@app/data/translated_ent
 import i18n from "@app/i18n";
 import ProbandFormPage from "@app/pages/ProbandFormPage";
 import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
-import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IQuestionDTO } from "@app/util/server_API/dto";
+import {
+  IGenderDTO,
+  IHandednessDTO,
+  INativeLanguageDTO,
+  IQuestionDTO,
+  IQuestionHiddenByGendersDTO,
+} from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -33,7 +39,7 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 //----------------------------------------------------------------------
 // Mocking custom fetch methods
 //----------------------------------------------------------------------
-const questionData: IQuestionDTO[] = [
+const questionData: IQuestionHiddenByGendersDTO[] = [
   {
     id: "p1q01",
     partNumber: 1,
@@ -52,6 +58,7 @@ const questionData: IQuestionDTO[] = [
         },
       },
     ],
+    hiddenByGenders: [],
   },
   {
     id: "p1q02",
@@ -71,6 +78,7 @@ const questionData: IQuestionDTO[] = [
         },
       },
     ],
+    hiddenByGenders: [],
   },
   {
     id: "p2q01",
@@ -90,6 +98,7 @@ const questionData: IQuestionDTO[] = [
         },
       },
     ],
+    hiddenByGenders: [],
   },
   {
     id: "p2q02",
@@ -109,6 +118,7 @@ const questionData: IQuestionDTO[] = [
         },
       },
     ],
+    hiddenByGenders: [],
   },
 ];
 
@@ -120,7 +130,7 @@ vi.mock("@app/util/server_API/fetch", async () => ({
   fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguages,
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednesses,
   fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionData,
-  fetchQuestion: async (): Promise<IQuestionDTO> => questionData[0],
+  fetchQuestion: async (): Promise<IQuestionHiddenByGendersDTO> => questionData[0],
   createProbandVisitForm: async (): Promise<string> => newProbandVisitFormId,
 }));
 

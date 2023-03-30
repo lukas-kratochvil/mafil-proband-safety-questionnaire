@@ -1,6 +1,6 @@
 import { Grid, Theme, Typography, useMediaQuery } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@app/hooks/auth/auth";
@@ -21,21 +21,38 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
   const matchesUpSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
   const { operator } = useAuth();
   const { setValue } = useFormContext<FormPropType>();
+  const { data: question } = useQuery({
+    queryKey: ["question", qac.questionId],
+    queryFn: () => fetchQuestion(qac.questionId),
+  });
+
+  const [hideQuestion, setHideQuestion] = useState<boolean>(false);
+  const selectedGender = useWatch<FormPropType, "gender">({ name: "gender" });
   const questionAnswer = useWatch<FormPropType, `answers.${number}.answer`>({
     name: `answers.${qac.index}.answer`,
     defaultValue: qac.answer,
   });
 
-  const { data: question } = useQuery({
-    queryKey: ["question", qac.questionId],
-    queryFn: () => fetchQuestion(qac.questionId),
-  });
+  // hide question when specified genders are selected
+  useEffect(() => {
+    if (selectedGender && question?.hiddenByGenders.map((h) => h.genderCode).includes(selectedGender.code)) {
+      setHideQuestion(true);
+      setValue(`answers.${qac.index}.answer`, AnswerOption.NO);
+    } else {
+      setValue(`answers.${qac.index}.answer`, null);
+      setHideQuestion(false);
+    }
+  }, [qac.index, question, selectedGender, setValue]);
 
   useEffect(() => {
     if (questionAnswer !== AnswerOption.YES) {
       setValue(`answers.${qac.index}.comment`, "");
     }
   }, [qac.index, questionAnswer, setValue]);
+
+  if (hideQuestion) {
+    return null;
+  }
 
   return (
     <Grid

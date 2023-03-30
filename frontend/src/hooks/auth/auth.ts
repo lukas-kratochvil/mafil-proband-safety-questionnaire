@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { IOperatorAuthorization, IAuthMethod } from "@app/model/auth";
+import { IAuthMethod, IOperatorAuthorization } from "@app/model/auth";
 import { RoutingPaths } from "@app/routing-paths";
 import { IOperatorDTO } from "@app/util/server_API/dto";
 import { authenticateOperator } from "@app/util/server_API/fetch";

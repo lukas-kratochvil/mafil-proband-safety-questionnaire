@@ -90,6 +90,9 @@ query GetQuestion($id: UUID!) {
         name
       }
     }
+    hiddenByGenders {
+      genderCode
+    }
   }
 }
 `;

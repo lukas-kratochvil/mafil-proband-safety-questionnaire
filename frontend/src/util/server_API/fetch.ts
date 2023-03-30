@@ -11,6 +11,7 @@ import {
   IHandednessDTO,
   INativeLanguageDTO,
   IQuestionDTO,
+  IQuestionHiddenByGendersDTO,
   ISendVisitFormFromWaitingRoomForApprovalInput,
   IWaitingRoomVisitFormDTO,
 } from "@app/util/server_API/dto";
@@ -32,11 +33,11 @@ import {
   ApprovalRoomVisitFormsResponse,
   AuthenticateOperatorResponse,
   CreateVisitFormResponse,
+  CurrentQuestionsResponse,
   GendersResponse,
   HandednessesResponse,
   NativeLanguagesResponse,
   QuestionResponse,
-  QuestionsResponse,
   UpdateVisitFormResponse,
   WaitingRoomVisitFormResponse,
   WaitingRoomVisitFormsResponse,
@@ -67,11 +68,11 @@ export const fetchHandednesses = async (): Promise<IHandednessDTO[]> => {
 };
 
 export const fetchCurrentQuestions = async (): Promise<IQuestionDTO[]> => {
-  const { data } = await axiosConfig.serverApi.post<QuestionsResponse>("", { query: GET_CURRENT_QUESTIONS });
+  const { data } = await axiosConfig.serverApi.post<CurrentQuestionsResponse>("", { query: GET_CURRENT_QUESTIONS });
   return data.data.questions;
 };
 
-export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO> => {
+export const fetchQuestion = async (questionId: string): Promise<IQuestionHiddenByGendersDTO> => {
   const variables = { id: questionId };
   const { data } = await axiosConfig.serverApi.post<QuestionResponse>("", { query: GET_QUESTION, variables });
   return data.data.question;
