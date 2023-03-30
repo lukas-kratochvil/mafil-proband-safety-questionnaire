@@ -3,37 +3,20 @@ import { Prisma, VisitFormState } from "@prisma/client";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { CreateVisitFormInput } from "./dto/create-visit-form.input";
 import { UpdateVisitFormInput } from "./dto/update-visit-form.input";
+import { translationsIncludeSchema } from "../utils/utils";
 
 const visitFormInclude = Prisma.validator<Prisma.VisitFormInclude>()({
   additionalInfo: true,
   probandInfo: {
     include: {
       gender: {
-        include: {
-          translations: {
-            include: {
-              language: true,
-            },
-          },
-        },
+        include: translationsIncludeSchema,
       },
       nativeLanguage: {
-        include: {
-          translations: {
-            include: {
-              language: true,
-            },
-          },
-        },
+        include: translationsIncludeSchema,
       },
       handedness: {
-        include: {
-          translations: {
-            include: {
-              language: true,
-            },
-          },
-        },
+        include: translationsIncludeSchema,
       },
     },
   },

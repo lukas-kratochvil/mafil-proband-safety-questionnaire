@@ -5,12 +5,7 @@ export const translationsIncludeSchema = {
   translations: {
     select: {
       text: true,
-      language: {
-        select: {
-          name: true,
-          code: true,
-        },
-      },
+      language: true,
     },
   },
 };
