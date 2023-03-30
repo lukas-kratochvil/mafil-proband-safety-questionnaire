@@ -1,8 +1,7 @@
 import axiosConfig from "@app/axios-config";
 import i18n, { LocalizationKeys } from "@app/i18n";
 import { IAuthGateOperator } from "@app/model/auth";
-import { FormPropType } from "@app/model/form";
-import { AnswerOption } from "@app/model/visit";
+import { AnswerOption, FormPropType } from "@app/model/form";
 import {
   IApprovalRoomVisitFormDTO,
   ICreateDuplicatedVisitFormForApprovalInput,

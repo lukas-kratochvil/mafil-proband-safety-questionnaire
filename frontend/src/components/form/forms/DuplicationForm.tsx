@@ -11,9 +11,9 @@ import { loadFormDefaultValuesVisitDuplication } from "@app/components/form/util
 import { createNewVisitFromFormData } from "@app/components/form/util/utils.dev";
 import { dummyVisits } from "@app/data/visit_data";
 import { useAuth } from "@app/hooks/auth/auth";
-import { FormPropType, FormQac } from "@app/model/form";
+import { AnswerOption, FormPropType, FormQac } from "@app/model/form";
 import { QuestionPartNumber } from "@app/model/question";
-import { AnswerOption, VisitStateDEV } from "@app/model/visit";
+import { VisitStateDEV } from "@app/model/visit";
 import { RoutingPaths } from "@app/routing-paths";
 import { updateDummyVisitState } from "@app/util/fetch.dev";
 import { fetchVisit } from "@app/util/mafildb_API/fetch";

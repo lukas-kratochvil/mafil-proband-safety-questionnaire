@@ -65,8 +65,3 @@ interface IProbandInfo {
   email: string;
   phone: string;
 }
-
-export enum AnswerOption {
-  YES = "yes",
-  NO = "no",
-}

@@ -1,6 +1,6 @@
-import { FormAnswer } from "@app/model/form";
+import { AnswerOption, FormAnswer } from "@app/model/form";
 import { QuestionPartNumber } from "@app/model/question";
-import { AnswerOption, IVisit, VisitStateDEV, VisualCorrection } from "@app/model/visit";
+import { IVisit, VisitStateDEV, VisualCorrection } from "@app/model/visit";
 import { getDummyVisitCurrentQuestions } from "@app/util/fetch.dev";
 import { devicesDev, projectsDev } from "./form_data";
 import { genders, handednesses, nativeLanguages } from "./translated_entities_data";
