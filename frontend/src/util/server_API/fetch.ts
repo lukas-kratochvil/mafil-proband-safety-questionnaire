@@ -1,6 +1,7 @@
 import axiosConfig from "@app/axios-config";
+import { Operator } from "@app/hooks/auth/auth";
 import i18n, { LocalizationKeys } from "@app/i18n";
-import { IAuthGateOperator } from "@app/model/auth";
+import { IOperatorAuthorization } from "@app/model/auth";
 import { AnswerOption, FormPropType } from "@app/model/form";
 import {
   IApprovalRoomVisitFormDTO,
@@ -9,7 +10,6 @@ import {
   IGenderDTO,
   IHandednessDTO,
   INativeLanguageDTO,
-  IOperatorDTO,
   IQuestionDTO,
   ISendVisitFormFromWaitingRoomForApprovalInput,
   IWaitingRoomVisitFormDTO,
@@ -42,8 +42,8 @@ import {
   WaitingRoomVisitFormsResponse,
 } from "./response-types";
 
-export const authenticateOperator = async (loggingOperator: IAuthGateOperator): Promise<IOperatorDTO | undefined> => {
-  const variables: IAuthGateOperator = { ...loggingOperator };
+export const authenticateOperator = async (loggingOperator: IOperatorAuthorization): Promise<Operator> => {
+  const variables: IOperatorAuthorization = { ...loggingOperator };
   const { data } = await axiosConfig.serverApi.post<AuthenticateOperatorResponse>("", {
     query: AUTHENTICATE_OPERATOR,
     variables,

@@ -3,7 +3,7 @@ export enum IAuthMethod {
   MUNI_HIGHER_PERMISSION,
 }
 
-export interface IAuthGateOperator {
+export interface IOperatorAuthorization {
   name: string;
   surname: string;
   uco: string;
