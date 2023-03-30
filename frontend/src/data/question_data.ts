@@ -1,4 +1,4 @@
-import { IQuestionData, QuestionPartNumber } from "@app/model/question";
+import { IQuestionData, QuestionPartNumber } from "@app/model/form";
 
 const questions1 = [
   "Prodělal(a) jste operaci hlavy (mozku)?",
