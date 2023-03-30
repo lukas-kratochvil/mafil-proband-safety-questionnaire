@@ -22,7 +22,7 @@ module.exports = {
     project: "tsconfig.json",
     tsconfigRootDir: __dirname,
   },
-  plugins: ["react", "react-hooks", "react-hooks-addons", "testing-library"],
+  plugins: ["@tanstack/query", "react", "react-hooks", "react-hooks-addons", "testing-library"],
   rules: {
     "react/function-component-definition": [2, { namedComponents: "arrow-function" }],
     "react/jsx-filename-extension": ["warn", { extensions: [".tsx"] }],
