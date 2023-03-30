@@ -7,7 +7,10 @@ import { CreateQuestionInput } from "./dto/create-question.input";
 import { UpdateQuestionTextsInput } from "./dto/update-question-texts.input";
 import { UpdateQuestionInput } from "./dto/update-question.input";
 
-const questionTranslations = Prisma.validator<Prisma.QuestionInclude>()(translationsIncludeSchema);
+const questionTranslations = Prisma.validator<Prisma.QuestionInclude>()({
+  ...translationsIncludeSchema,
+  hiddenByGenders: true,
+});
 
 const questionTranslationsArgs = Prisma.validator<Prisma.QuestionArgs>()({
   include: questionTranslations,

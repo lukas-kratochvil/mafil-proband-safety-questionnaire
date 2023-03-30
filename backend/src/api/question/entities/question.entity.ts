@@ -1,6 +1,7 @@
 import { Field, HideField, Int, ObjectType } from "@nestjs/graphql";
-import { Question } from "@prisma/client";
+import { GenderHiddenQuestion, Question } from "@prisma/client";
 import { TranslationBaseEntity } from "@app/api/utils/entities/translation-base.entity";
+import { GenderHiddenQuestionEntity } from "./genderHiddenQuestion";
 
 @ObjectType()
 export class QuestionEntity extends TranslationBaseEntity implements Question {
@@ -15,4 +16,7 @@ export class QuestionEntity extends TranslationBaseEntity implements Question {
 
   @Field()
   isValid: boolean;
+
+  @Field(() => [GenderHiddenQuestionEntity])
+  hiddenByGenders: GenderHiddenQuestion[];
 }
