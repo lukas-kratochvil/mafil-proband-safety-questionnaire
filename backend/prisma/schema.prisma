@@ -92,7 +92,7 @@ model AdditionalVisitFormInfo {
 model Answer {
   id String @id @default(uuid()) @db.Uuid
 
-  visitForm   VisitForm @relation(fields: [visitFormId], references: [id])
+  visitForm   VisitForm @relation(fields: [visitFormId], references: [id], onDelete: Cascade)
   visitFormId String    @db.Uuid
   question    Question  @relation(fields: [questionId], references: [id])
   questionId  String    @db.Uuid
