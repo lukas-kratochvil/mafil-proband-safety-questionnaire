@@ -59,7 +59,7 @@ enum VisitFormState {
 model AdditionalVisitFormInfo {
   id String @id @default(uuid()) @db.Uuid
 
-  visitForm   VisitForm @relation(fields: [visitFormId], references: [id])
+  visitForm   VisitForm @relation(fields: [visitFormId], references: [id], onDelete: Cascade)
   visitFormId String    @unique @db.Uuid
   finalizer   Operator  @relation(name: "FinalizedBy", fields: [finalizerId], references: [id])
   finalizerId String    @db.Uuid
@@ -140,7 +140,7 @@ model Question {
 model QuestionTranslation {
   id String @id @default(uuid()) @db.Uuid
 
-  question   Question @relation(fields: [questionId], references: [id])
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId String   @db.Uuid
   language   Language @relation(fields: [languageId], references: [id])
   languageId String   @db.Uuid
@@ -155,9 +155,9 @@ model QuestionTranslation {
 model GenderHiddenQuestion {
   id String @id @default(uuid()) @db.Uuid
 
-  gender     Gender   @relation(fields: [genderCode], references: [code])
+  gender     Gender   @relation(fields: [genderCode], references: [code], onDelete: Cascade, onUpdate: Cascade)
   genderCode String   @db.VarChar(1)
-  question   Question @relation(fields: [questionId], references: [id])
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId String   @db.Uuid
 
   @@unique([genderCode, questionId])
@@ -180,7 +180,7 @@ model Gender {
 model GenderTranslation {
   id String @id @default(uuid()) @db.Uuid
 
-  gender     Gender   @relation(fields: [genderId], references: [id])
+  gender     Gender   @relation(fields: [genderId], references: [id], onDelete: Cascade)
   genderId   String   @db.Uuid
   language   Language @relation(fields: [languageId], references: [id])
   languageId String   @db.Uuid
@@ -210,7 +210,7 @@ model Handedness {
 model HandednessTranslation {
   id String @id @default(uuid()) @db.Uuid
 
-  handedness   Handedness @relation(fields: [handednessId], references: [id])
+  handedness   Handedness @relation(fields: [handednessId], references: [id], onDelete: Cascade)
   handednessId String     @db.Uuid
   language     Language   @relation(fields: [languageId], references: [id])
   languageId   String     @db.Uuid
@@ -241,7 +241,7 @@ model NativeLanguage {
 model NativeLanguageTranslation {
   id String @id @default(uuid()) @db.Uuid
 
-  nativeLanguage   NativeLanguage @relation(fields: [nativeLanguageId], references: [id])
+  nativeLanguage   NativeLanguage @relation(fields: [nativeLanguageId], references: [id], onDelete: Cascade)
   nativeLanguageId String         @db.Uuid
   language         Language       @relation(fields: [languageId], references: [id])
   languageId       String         @db.Uuid
