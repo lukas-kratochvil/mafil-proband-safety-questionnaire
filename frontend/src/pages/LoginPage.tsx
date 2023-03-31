@@ -2,17 +2,17 @@ import { Alert, Avatar, Button, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CardContainer } from "@app/components/card/CardContainer";
-import { useAuth } from "@app/hooks/auth/auth";
+import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { defaultNS } from "@app/i18n";
-import { IAuthMethod } from "@app/model/auth";
+import { IAuthMethodDev } from "@app/model/auth";
 import { PageContainer } from "./PageContainer";
 
 const LoginPage = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "loginPage" });
-  const { logIn } = useAuth();
+  const { logIn } = useAuthDev();
   const [isLoginSuccessful, setIsLoginSuccessful] = useState<boolean>(true);
 
-  const handleLogIn = async (authMethod: IAuthMethod) => {
+  const handleLogIn = async (authMethod: IAuthMethodDev) => {
     setIsLoginSuccessful(await logIn(authMethod));
   };
 
@@ -39,7 +39,7 @@ const LoginPage = () => {
             <Button
               variant="outlined"
               onClick={async () => {
-                await handleLogIn(IAuthMethod.MUNI);
+                await handleLogIn(IAuthMethodDev.MUNI);
               }}
               startIcon={
                 <Avatar
@@ -60,7 +60,7 @@ const LoginPage = () => {
             <Button
               variant="outlined"
               onClick={async () => {
-                await handleLogIn(IAuthMethod.MUNI_HIGHER_PERMISSION);
+                await handleLogIn(IAuthMethodDev.MUNI_HIGHER_PERMISSION);
               }}
               startIcon={
                 <Avatar

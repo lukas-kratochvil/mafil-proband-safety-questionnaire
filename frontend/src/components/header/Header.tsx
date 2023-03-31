@@ -1,5 +1,5 @@
 import { AppBar, Grid, Theme, Toolbar, useMediaQuery } from "@mui/material";
-import { useAuth } from "@app/hooks/auth/auth";
+import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { CeitecMafilLogo } from "./CeitecMafilLogo";
 import { LanguageMenu } from "./LanguageMenu";
 import { LoginOperator } from "./LoginOperator";
@@ -7,7 +7,7 @@ import { Navigation } from "./navigation/Navigation";
 import { NavigationMobile } from "./navigation/mobile/NavigationMobile";
 
 export const Header = () => {
-  const { operator } = useAuth();
+  const { operator } = useAuthDev();
   const matchesDownMdBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
 
   return (

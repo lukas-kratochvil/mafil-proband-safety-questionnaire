@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "@app/hooks/auth/auth";
+import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { defaultNS } from "@app/i18n";
 import { AnswerOption, FormPropType, FormQac } from "@app/model/form";
 import { fetchQuestion } from "@app/util/server_API/fetch";
@@ -19,7 +19,7 @@ interface IFormQuestionProps extends IFormCardProps {
 export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuestionProps) => {
   const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.safetyQuestions" });
   const matchesUpSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
-  const { operator } = useAuth();
+  const { operator } = useAuthDev();
   const { setValue } = useFormContext<FormPropType>();
   const { data: question } = useQuery({
     queryKey: ["question", qac.questionId],

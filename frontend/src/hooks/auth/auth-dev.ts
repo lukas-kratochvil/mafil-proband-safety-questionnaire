@@ -1,35 +1,35 @@
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { IAuthMethod, IOperatorAuthorization } from "@app/model/auth";
+import { IAuthMethodDev, IOperatorAuthorization } from "@app/model/auth";
 import { RoutingPaths } from "@app/routing-paths";
 import { IOperatorDTO } from "@app/util/server_API/dto";
 import { authenticateOperator } from "@app/util/server_API/fetch";
 
-export type Operator = IOperatorDTO | undefined;
+export type OperatorDev = IOperatorDTO | undefined;
 
-interface IAuth {
-  operator: Operator;
-  logIn: (authMethod: IAuthMethod) => Promise<boolean>;
+interface IAuthDev {
+  operator: OperatorDev;
+  logIn: (authMethod: IAuthMethodDev) => Promise<boolean>;
   logOut: () => void;
 }
 
 // defaultValue argument is only used when a component does not have a matching Provider above it in the tree – helpful for testing components in isolation
-export const authContext = createContext<IAuth>({} as IAuth);
+export const authContextDev = createContext<IAuthDev>({} as IAuthDev);
 
-export const useAuthProvider = (): IAuth => {
+export const useAuthProviderDev = (): IAuthDev => {
   const navigate = useNavigate();
-  const [operator, setOperator] = useState<Operator>(() => {
+  const [operator, setOperator] = useState<OperatorDev>(() => {
     const storedOperator = window.sessionStorage.getItem("operator");
     return storedOperator === null ? undefined : JSON.parse(storedOperator);
   });
 
-  const logIn = async (authMethod: IAuthMethod) => {
+  const logIn = async (authMethod: IAuthMethodDev) => {
     // TODO: call the actual MUNI authentication gate
     const loggingOperator: IOperatorAuthorization = {
       name: "Operator",
-      surname: authMethod === IAuthMethod.MUNI_HIGHER_PERMISSION ? "Special" : "MR",
-      uco: authMethod === IAuthMethod.MUNI_HIGHER_PERMISSION ? "987654" : "123456",
-      email: authMethod === IAuthMethod.MUNI_HIGHER_PERMISSION ? "987654@muni.cz" : "123456@muni.cz",
+      surname: authMethod === IAuthMethodDev.MUNI_HIGHER_PERMISSION ? "Special" : "MR",
+      uco: authMethod === IAuthMethodDev.MUNI_HIGHER_PERMISSION ? "987654" : "123456",
+      email: authMethod === IAuthMethodDev.MUNI_HIGHER_PERMISSION ? "987654@muni.cz" : "123456@muni.cz",
     };
     const fetchedOperator = await authenticateOperator(loggingOperator);
 
@@ -59,4 +59,4 @@ export const useAuthProvider = (): IAuth => {
   };
 };
 
-export const useAuth = () => useContext(authContext);
+export const useAuthDev = () => useContext(authContextDev);

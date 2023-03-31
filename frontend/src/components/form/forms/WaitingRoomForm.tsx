@@ -8,7 +8,7 @@ import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo
 import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo";
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesFromWaitingRoomVisitForm } from "@app/components/form/util/loaders";
-import { useAuth } from "@app/hooks/auth/auth";
+import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { AnswerOption, FormPropType, FormQac, QuestionPartNumber } from "@app/model/form";
 import { VisitStateDEV } from "@app/model/visit";
 import { RoutingPaths } from "@app/routing-paths";
@@ -29,7 +29,7 @@ export const WaitingRoomForm = () => {
   } = useQuery({ queryKey: ["visitForm", id], queryFn: () => fetchWaitingRoomVisitForm(id) });
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { operator } = useAuth();
+  const { operator } = useAuthDev();
   const { getValues, setValue, trigger } = useFormContext<FormPropType>();
 
   const [initialFormData, setInitialFormData] = useState<FormPropType>();

@@ -1,4 +1,4 @@
-export enum IAuthMethod {
+export enum IAuthMethodDev {
   MUNI,
   MUNI_HIGHER_PERMISSION,
 }

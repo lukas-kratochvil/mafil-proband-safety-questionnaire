@@ -8,7 +8,7 @@ import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo
 import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo";
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesFromApprovalRoomVisitForm } from "@app/components/form/util/loaders";
-import { useAuth } from "@app/hooks/auth/auth";
+import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { FormPropType, FormQac, QuestionPartNumber } from "@app/model/form";
 import { VisitStateDEV } from "@app/model/visit";
 import { RoutingPaths } from "@app/routing-paths";
@@ -26,7 +26,7 @@ export const ApprovalForm = () => {
     isError,
   } = useQuery({ queryKey: ["visitForm", id], queryFn: () => fetchApprovalRoomVisitForm(id) });
   const navigate = useNavigate();
-  const { operator } = useAuth();
+  const { operator } = useAuthDev();
   const { getValues, setValue, trigger } = useFormContext<FormPropType>();
 
   const [isEditing, setIsEditing] = useState<boolean>(false);

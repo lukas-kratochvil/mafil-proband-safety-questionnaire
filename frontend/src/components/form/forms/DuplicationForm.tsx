@@ -10,7 +10,7 @@ import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesVisitDuplication } from "@app/components/form/util/loaders";
 import { createNewVisitFromFormData } from "@app/components/form/util/utils.dev";
 import { dummyVisits } from "@app/data/visit_data";
-import { useAuth } from "@app/hooks/auth/auth";
+import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { AnswerOption, FormPropType, FormQac, QuestionPartNumber } from "@app/model/form";
 import { VisitStateDEV } from "@app/model/visit";
 import { RoutingPaths } from "@app/routing-paths";
@@ -26,7 +26,7 @@ export const DuplicationForm = () => {
   const { id } = useParams();
   const { data: visit, isLoading, isError } = useQuery({ queryKey: ["visit", id], queryFn: () => fetchVisit(id) });
   const navigate = useNavigate();
-  const { operator } = useAuth();
+  const { operator } = useAuthDev();
   const { getValues, setValue, trigger } = useFormContext<FormPropType>();
 
   const [isPhantom, setIsPhantom] = useState<boolean>(false);

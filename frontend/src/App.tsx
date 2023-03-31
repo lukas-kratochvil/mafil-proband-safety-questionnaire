@@ -1,7 +1,7 @@
 import { CircularProgress } from "@mui/material";
 import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { useAuth } from "@app/hooks/auth/auth";
+import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { PageContainer } from "@app/pages/PageContainer";
 import { RoutingPaths } from "./routing-paths";
 
@@ -19,7 +19,7 @@ const VisitDetailPage = lazy(() => import("@app/pages/VisitDetailPage"));
 const NotFoundPage = lazy(() => import("@app/pages/NotFoundPage"));
 
 export const App = () => {
-  const { operator } = useAuth();
+  const { operator } = useAuthDev();
 
   return (
     <Suspense
