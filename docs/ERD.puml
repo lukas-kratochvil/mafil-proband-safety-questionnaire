@@ -22,14 +22,25 @@ enum OperatorRole {
 
 entity VisitForm {
   * id: <<UUID>>
-  * probandInfoId: <<FK>>
   * probandLanguageId: <<FK>>
+  * genderId: <<FK>>
+  * handednessId: <<FK>>
+  * nativeLanguageId: <<FK>>
   ---
   * createdAt: Date
   * modifiedAt: Date
   deletedAt: Date
   ---
   * state: VisitFormState
+  * name: String
+  * surname: String
+  * personalId: String
+  * birthdate: Date
+  * heightCm: Float
+  * weightKg: Float
+  * visualCorrectionDioptre: Float
+  email: String
+  phone: String
 }
 
 enum VisitFormState {
@@ -53,27 +64,6 @@ entity AdditionalVisitFormInfo {
   * deviceName: String
   * measuredAt: Date
   * finalizedAt: Date
-}
-
-entity ProbandInfo {
-  * id: <<UUID>>
-  * genderId: <<FK>>
-  * handednessId: <<FK>>
-  * nativeLanguageId: <<FK>>
-  ---
-  * createdAt: Date
-  * modifiedAt: Date
-  deletedAt: Date
-  ---
-  * name: String
-  * surname: String
-  * personalId: String
-  * birthdate: Date
-  * heightCm: Float
-  * weightKg: Float
-  * visualCorrectionDioptre: Float
-  email: String
-  phone: String
 }
 
 entity Answer {
@@ -206,16 +196,15 @@ Operator }o..|| OperatorRole
 Operator ||..o{ AdditionalVisitFormInfo : finalized by
 VisitForm }o..|| VisitFormState
 VisitForm ||..o| AdditionalVisitFormInfo
-VisitForm }|..|| ProbandInfo
 VisitForm ||..|{ Answer
 VisitForm }o..|| Language
+VisitForm }o..|| Gender
+VisitForm }o..|| Handedness
+VisitForm }o..|| NativeLanguage
 Answer }o..|| Question
 Question |o..|| Question
 Question ||..|{ QuestionTranslation
 QuestionTranslation }o..|| Language
-ProbandInfo }o..|| Gender
-ProbandInfo }o..|| Handedness
-ProbandInfo }o..|| NativeLanguage
 GenderHiddenQuestion }o..|| Gender
 GenderHiddenQuestion }o..|| Question
 Gender ||..|{ GenderTranslation

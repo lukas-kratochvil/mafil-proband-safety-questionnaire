@@ -1,26 +1,22 @@
 import { Injectable } from "@nestjs/common";
 import { Prisma, VisitFormState } from "@prisma/client";
 import { PrismaService } from "@app/prisma/prisma.service";
+import { translationsIncludeSchema } from "../utils/utils";
 import { CreateVisitFormInput } from "./dto/create-visit-form.input";
 import { UpdateVisitFormInput } from "./dto/update-visit-form.input";
-import { translationsIncludeSchema } from "../utils/utils";
 
 const visitFormInclude = Prisma.validator<Prisma.VisitFormInclude>()({
   additionalInfo: true,
-  probandInfo: {
-    include: {
-      gender: {
-        include: translationsIncludeSchema,
-      },
-      nativeLanguage: {
-        include: translationsIncludeSchema,
-      },
-      handedness: {
-        include: translationsIncludeSchema,
-      },
-    },
-  },
   answers: true,
+  gender: {
+    include: translationsIncludeSchema,
+  },
+  nativeLanguage: {
+    include: translationsIncludeSchema,
+  },
+  handedness: {
+    include: translationsIncludeSchema,
+  },
 });
 
 const visitFormArgs = Prisma.validator<Prisma.VisitFormArgs>()({
@@ -37,6 +33,30 @@ export class VisitFormService {
     return this.prisma.visitForm.create({
       data: {
         state: createVisitFormInput.state ?? VisitFormState.NEW,
+        name: createVisitFormInput.name,
+        surname: createVisitFormInput.surname,
+        personalId: createVisitFormInput.personalId,
+        birthdate: createVisitFormInput.birthdate,
+        gender: {
+          connect: {
+            id: createVisitFormInput.genderId,
+          },
+        },
+        nativeLanguage: {
+          connect: {
+            id: createVisitFormInput.nativeLanguageId,
+          },
+        },
+        heightCm: createVisitFormInput.heightCm,
+        weightKg: createVisitFormInput.weightKg,
+        handedness: {
+          connect: {
+            id: createVisitFormInput.handednessId,
+          },
+        },
+        visualCorrectionDioptre: createVisitFormInput.visualCorrectionDioptre,
+        email: createVisitFormInput.email,
+        phone: createVisitFormInput.phone,
         additionalInfo: createVisitFormInput.additionalInfo
           ? {
               create: {
@@ -47,34 +67,6 @@ export class VisitFormService {
         probandLanguage: {
           connect: {
             code: createVisitFormInput.probandLanguageCode,
-          },
-        },
-        probandInfo: {
-          create: {
-            name: createVisitFormInput.probandInfo.name,
-            surname: createVisitFormInput.probandInfo.surname,
-            personalId: createVisitFormInput.probandInfo.personalId,
-            birthdate: createVisitFormInput.probandInfo.birthdate,
-            gender: {
-              connect: {
-                id: createVisitFormInput.probandInfo.genderId,
-              },
-            },
-            nativeLanguage: {
-              connect: {
-                id: createVisitFormInput.probandInfo.nativeLanguageId,
-              },
-            },
-            heightCm: createVisitFormInput.probandInfo.heightCm,
-            weightKg: createVisitFormInput.probandInfo.weightKg,
-            handedness: {
-              connect: {
-                id: createVisitFormInput.probandInfo.handednessId,
-              },
-            },
-            visualCorrectionDioptre: createVisitFormInput.probandInfo.visualCorrectionDioptre,
-            email: createVisitFormInput.probandInfo.email,
-            phone: createVisitFormInput.probandInfo.phone,
           },
         },
         answers: {
@@ -113,6 +105,36 @@ export class VisitFormService {
       },
       data: {
         state: updateVisitFormInput.state,
+        name: updateVisitFormInput.name,
+        surname: updateVisitFormInput.surname,
+        personalId: updateVisitFormInput.personalId,
+        birthdate: updateVisitFormInput.birthdate,
+        gender: updateVisitFormInput.genderId
+          ? {
+              connect: {
+                id: updateVisitFormInput.genderId,
+              },
+            }
+          : undefined,
+        nativeLanguage: updateVisitFormInput.nativeLanguageId
+          ? {
+              connect: {
+                id: updateVisitFormInput.nativeLanguageId,
+              },
+            }
+          : undefined,
+        heightCm: updateVisitFormInput.heightCm,
+        weightKg: updateVisitFormInput.weightKg,
+        handedness: updateVisitFormInput.handednessId
+          ? {
+              connect: {
+                id: updateVisitFormInput.handednessId,
+              },
+            }
+          : undefined,
+        visualCorrectionDioptre: updateVisitFormInput.visualCorrectionDioptre,
+        email: updateVisitFormInput.email,
+        phone: updateVisitFormInput.phone,
         additionalInfo: updateVisitFormInput.additionalInfo
           ? {
               upsert: {
@@ -135,42 +157,6 @@ export class VisitFormService {
               },
             }
           : undefined,
-        probandInfo: {
-          update: updateVisitFormInput.probandInfo
-            ? {
-                name: updateVisitFormInput.probandInfo.name,
-                surname: updateVisitFormInput.probandInfo.surname,
-                personalId: updateVisitFormInput.probandInfo.personalId,
-                birthdate: updateVisitFormInput.probandInfo.birthdate,
-                gender: updateVisitFormInput.probandInfo.genderId
-                  ? {
-                      connect: {
-                        id: updateVisitFormInput.probandInfo.genderId,
-                      },
-                    }
-                  : undefined,
-                nativeLanguage: updateVisitFormInput.probandInfo.nativeLanguageId
-                  ? {
-                      connect: {
-                        id: updateVisitFormInput.probandInfo.nativeLanguageId,
-                      },
-                    }
-                  : undefined,
-                heightCm: updateVisitFormInput.probandInfo.heightCm,
-                weightKg: updateVisitFormInput.probandInfo.weightKg,
-                handedness: updateVisitFormInput.probandInfo.handednessId
-                  ? {
-                      connect: {
-                        id: updateVisitFormInput.probandInfo.handednessId,
-                      },
-                    }
-                  : undefined,
-                visualCorrectionDioptre: updateVisitFormInput.probandInfo.visualCorrectionDioptre,
-                email: updateVisitFormInput.probandInfo.email,
-                phone: updateVisitFormInput.probandInfo.phone,
-              }
-            : {},
-        },
         answers: {
           updateMany: updateVisitFormInput.answers
             ? updateVisitFormInput.answers.map((answer) => ({

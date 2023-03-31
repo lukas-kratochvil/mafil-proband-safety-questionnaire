@@ -35,10 +35,14 @@ enum OperatorRole {
 model VisitForm {
   id String @id @default(uuid()) @db.Uuid
 
-  probandInfo       ProbandInfo              @relation(fields: [probandInfoId], references: [id])
-  probandInfoId     String                   @db.Uuid
   probandLanguage   Language                 @relation(fields: [probandLanguageId], references: [id])
   probandLanguageId String                   @db.Uuid
+  gender            Gender                   @relation(fields: [genderId], references: [id])
+  genderId          String                   @db.Uuid
+  handedness        Handedness               @relation(fields: [handednessId], references: [id])
+  handednessId      String                   @db.Uuid
+  nativeLanguage    NativeLanguage           @relation(fields: [nativeLanguageId], references: [id])
+  nativeLanguageId  String                   @db.Uuid
   answers           Answer[]
   additionalInfo    AdditionalVisitFormInfo?
 
@@ -46,7 +50,16 @@ model VisitForm {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  state   VisitFormState @default(NEW)
+  state                   VisitFormState @default(NEW)
+  name                    String         @db.VarChar(200)
+  surname                 String         @db.VarChar(200)
+  personalId              String         @db.VarChar(50)
+  birthdate               DateTime
+  heightCm                Float
+  weightKg                Float
+  visualCorrectionDioptre Float
+  email                   String         @default("")
+  phone                   String         @default("")
 }
 
 enum VisitFormState {
@@ -68,38 +81,12 @@ model AdditionalVisitFormInfo {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  projectId      String    @db.VarChar(35)
-  projectAcronym String    @db.VarChar(30)
-  deviceId       String    @db.VarChar(35)
-  deviceName     String    @db.VarChar(200)
+  projectId      String   @db.VarChar(35)
+  projectAcronym String   @db.VarChar(30)
+  deviceId       String   @db.VarChar(35)
+  deviceName     String   @db.VarChar(200)
   measuredAt     DateTime
   finalizedAt    DateTime
-}
-
-model ProbandInfo {
-  id String @id @default(uuid()) @db.Uuid
-
-  visitForms       VisitForm[]
-  gender           Gender         @relation(fields: [genderId], references: [id])
-  genderId         String         @db.Uuid
-  handedness       Handedness     @relation(fields: [handednessId], references: [id])
-  handednessId     String         @db.Uuid
-  nativeLanguage   NativeLanguage @relation(fields: [nativeLanguageId], references: [id])
-  nativeLanguageId String         @db.Uuid
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
-
-  name                    String   @db.VarChar(200)
-  surname                 String   @db.VarChar(200)
-  personalId              String   @db.VarChar(50)
-  birthdate               DateTime
-  heightCm                Float
-  weightKg                Float
-  visualCorrectionDioptre Float
-  email                   String   @default("")
-  phone                   String   @default("")
 }
 
 model Answer {
@@ -123,10 +110,10 @@ model Question {
 
   answers            Answer[]
   translations       QuestionTranslation[]
-  updatedQuestion    Question?             @relation(name: "QuestionHistory")
-  previousQuestion   Question?             @relation(name: "QuestionHistory", fields: [previousQuestionId], references: [id])
-  previousQuestionId String?               @unique @db.Uuid
-  hiddenByGenders   GenderHiddenQuestion[]
+  updatedQuestion    Question?              @relation(name: "QuestionHistory")
+  previousQuestion   Question?              @relation(name: "QuestionHistory", fields: [previousQuestionId], references: [id])
+  previousQuestionId String?                @unique @db.Uuid
+  hiddenByGenders    GenderHiddenQuestion[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -166,7 +153,7 @@ model GenderHiddenQuestion {
 model Gender {
   id String @id @default(uuid()) @db.Uuid
 
-  probandInfos    ProbandInfo[]
+  visitForms      VisitForm[]
   translations    GenderTranslation[]
   hiddenQuestions GenderHiddenQuestion[]
 
@@ -197,7 +184,7 @@ model GenderTranslation {
 model Handedness {
   id String @id @default(uuid()) @db.Uuid
 
-  probandInfos ProbandInfo[]
+  visitForms   VisitForm[]
   translations HandednessTranslation[]
 
   createdAt DateTime  @default(now())
@@ -227,15 +214,15 @@ model HandednessTranslation {
 model NativeLanguage {
   id String @id @default(uuid()) @db.Uuid
 
-  probandInfos ProbandInfo[]
+  visitForms   VisitForm[]
   translations NativeLanguageTranslation[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  code String @unique @db.VarChar(2)
-  order Int? @unique @db.SmallInt
+  code  String @unique @db.VarChar(2)
+  order Int?   @unique @db.SmallInt
 }
 
 model NativeLanguageTranslation {
