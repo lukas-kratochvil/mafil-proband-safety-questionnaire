@@ -57,6 +57,7 @@ services:
       - PORT=${SERVER_PORT}
       - DATABASE_URL=${DATABASE_URL}
       - MAFILDB_API_URL=${MAFILDB_API_URL}
+      - API_KEY_FOR_WEB=${SERVER_API_KEY_FOR_WEB}
     restart: unless-stopped
     depends_on:
       - postgres
@@ -87,6 +88,7 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=${WEB_PORT}
+      - VITE_SERVER_API_KEY=${SERVER_API_KEY_FOR_WEB}
       - VITE_SERVER_API_URL=${SERVER_API_URL}
       - VITE_MAFILDB_API_URL=${MAFILDB_API_URL}
     restart: unless-stopped

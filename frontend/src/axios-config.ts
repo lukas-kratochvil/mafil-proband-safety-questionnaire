@@ -6,6 +6,7 @@ const serverApi = axios.create({
   baseURL: `${import.meta.env.VITE_SERVER_API_URL}/graphql`,
   headers: {
     "Content-Type": "application/json",
+    "SERVER-API-KEY": import.meta.env.VITE_SERVER_API_KEY,
   },
 });
 

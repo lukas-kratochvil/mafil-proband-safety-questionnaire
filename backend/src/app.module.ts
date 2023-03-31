@@ -4,6 +4,7 @@ import { ConfigModule } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
 import { GraphQLApiModule } from "./api/graphql-api.module";
 import { GraphQLConfigService } from "./api/graphql-config.service";
+import { AuthModule } from "./auth/auth.module";
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { GraphQLConfigService } from "./api/graphql-config.service";
       useClass: GraphQLConfigService,
     }),
     GraphQLApiModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
