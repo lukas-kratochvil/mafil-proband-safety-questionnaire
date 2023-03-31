@@ -42,19 +42,19 @@ const ApprovalRoomTablePage = () => {
         minSize: 300,
       },
       {
-        accessorFn: (visit) => `${visit.probandInfo.surname}, ${visit.probandInfo.name}`,
+        accessorFn: (visit) => `${visit.surname}, ${visit.name}`,
         id: "proband",
         header: t("header.proband"),
         minSize: 150,
       },
       {
-        accessorKey: "probandInfo.personalId",
+        accessorKey: "personalId",
         header: t("header.personalId"),
         maxSize: 0,
       },
       {
-        accessorFn: (visit) => format(visit.probandInfo.birthdate, probandBirthdateFormat),
-        id: "probandInfo.birthdate",
+        accessorFn: (visit) => format(visit.birthdate, probandBirthdateFormat),
+        id: "birthdate",
         header: t("header.birthdate"),
         sortingFn: (rowA, rowB, columnId) =>
           compareAsc(
@@ -64,14 +64,14 @@ const ApprovalRoomTablePage = () => {
         maxSize: 0,
       },
       {
-        accessorFn: (visit) => getTranslation(visit.probandInfo.gender.translations, "cs"),
-        id: "probandInfo.gender",
+        accessorFn: (visit) => getTranslation(visit.gender.translations, "cs"),
+        id: "gender",
         header: t("header.gender"),
         maxSize: 0,
       },
       {
-        accessorFn: (visit) => getTranslation(visit.probandInfo.nativeLanguage.translations, "cs"),
-        id: "probandInfo.nativeLanguage",
+        accessorFn: (visit) => getTranslation(visit.nativeLanguage.translations, "cs"),
+        id: "nativeLanguage",
         header: t("header.nativeLanguage"),
         maxSize: 0,
       },

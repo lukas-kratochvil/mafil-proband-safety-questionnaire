@@ -43,6 +43,7 @@ export const createVisit = (initialVisit: IVisit, state: VisitStateDEV): IVisit 
     createdAt: new Date(+`16630${+newId % 10}0000000`),
     visitId: `${initialVisit.projectInfo.isPhantom ? "phantom" : "visit"}${newId}`,
     state,
+    birthdate: new Date((initialVisit.birthdate.valueOf() % 1000000000) + +newId * 10000000),
     projectInfo:
       state === VisitStateDEV.NEW
         ? {
@@ -53,10 +54,6 @@ export const createVisit = (initialVisit: IVisit, state: VisitStateDEV): IVisit 
         : {
             ...initialVisit.projectInfo,
           },
-    probandInfo: {
-      ...initialVisit.probandInfo,
-      birthdate: new Date((initialVisit.probandInfo.birthdate.valueOf() % 1000000000) + +newId * 10000000),
-    },
     answers: [...loadAnswers(initialVisit.answers, state)],
   };
 };
@@ -69,7 +66,6 @@ export const duplicateVisit = (initialVisit: IVisit): IVisit => {
     visitId: `${initialVisit.projectInfo.isPhantom ? "phantom" : "visit"}${newId}`,
     state: VisitStateDEV.NEW,
     projectInfo: { ...initialVisit.projectInfo },
-    probandInfo: { ...initialVisit.probandInfo },
     answers: [...initialVisit.answers],
   };
 };
@@ -90,6 +86,19 @@ const dummyVisitNew: IVisit = {
   createdAt: new Date(1663390000000),
   visitId: "visit1",
   state: VisitStateDEV.NEW,
+  name: "Karel",
+  surname: "Novák",
+  personalId: "123456789",
+  birthdate: new Date(),
+  heightCm: 180,
+  weightKg: 85,
+  gender: genders[0],
+  nativeLanguage: nativeLanguages[0],
+  visualCorrection: VisualCorrection.NO,
+  visualCorrectionDioptre: 0,
+  handedness: handednesses[0],
+  email: "karel.novak@email.cz",
+  phone: "123456789",
   pdf: "/dummy-multipage.pdf",
   projectInfo: {
     projectId: projectsDev[0].id,
@@ -99,21 +108,6 @@ const dummyVisitNew: IVisit = {
     isPhantom: false,
     measuredAt: new Date(),
     disapprovalReason: null,
-  },
-  probandInfo: {
-    name: "Karel",
-    surname: "Novák",
-    personalId: "123456789",
-    birthdate: new Date(),
-    heightCm: 180,
-    weightKg: 85,
-    gender: genders[0],
-    nativeLanguage: nativeLanguages[0],
-    visualCorrection: VisualCorrection.NO,
-    visualCorrectionDioptre: 0,
-    handedness: handednesses[0],
-    email: "karel.novak@email.cz",
-    phone: "123456789",
   },
   answers: getDummyVisitCurrentQuestions().map((question, i) => ({
     questionId: question.id,
@@ -128,6 +122,19 @@ const dummyPhantomVisitNew: IVisit = {
   createdAt: new Date(1663700000000),
   visitId: "phantom123",
   state: VisitStateDEV.NEW,
+  name: "Phantom 1",
+  surname: "Phantom 1",
+  personalId: "123456789",
+  birthdate: new Date(),
+  heightCm: 1,
+  weightKg: 1,
+  gender: genders[2],
+  nativeLanguage: nativeLanguages[0],
+  visualCorrection: VisualCorrection.NO,
+  visualCorrectionDioptre: 0,
+  handedness: handednesses[3],
+  email: "",
+  phone: "",
   pdf: "/dummy.pdf",
   projectInfo: {
     projectId: "",
@@ -138,21 +145,6 @@ const dummyPhantomVisitNew: IVisit = {
     measuredAt: new Date(),
     disapprovalReason: null,
   },
-  probandInfo: {
-    name: "Phantom 1",
-    surname: "Phantom 1",
-    personalId: "123456789",
-    birthdate: new Date(),
-    heightCm: 1,
-    weightKg: 1,
-    gender: genders[2],
-    nativeLanguage: nativeLanguages[0],
-    visualCorrection: VisualCorrection.NO,
-    visualCorrectionDioptre: 0,
-    handedness: handednesses[3],
-    email: "",
-    phone: "",
-  },
   answers: getDummyVisitCurrentQuestions().map((question) => ({
     questionId: question.id,
     partNumber: question.partNumber,
@@ -162,20 +154,18 @@ const dummyPhantomVisitNew: IVisit = {
 };
 
 const dummyPhantomVisit: IVisit = {
+  ...dummyVisitNew,
   id: generateId(),
   createdAt: new Date(1663000000000),
   visitId: "phantom2",
   state: VisitStateDEV.SIGNED,
+  name: "Phantom",
+  surname: "Phantom",
+  gender: genders[2],
   pdf: "/dummy.pdf",
   projectInfo: {
     ...dummyVisitNew.projectInfo,
     isPhantom: true,
-  },
-  probandInfo: {
-    ...dummyVisitNew.probandInfo,
-    name: "Phantom",
-    surname: "Phantom",
-    gender: genders[2],
   },
   answers: [...loadAnswers(dummyPhantomVisitNew.answers, VisitStateDEV.SIGNED)],
 };

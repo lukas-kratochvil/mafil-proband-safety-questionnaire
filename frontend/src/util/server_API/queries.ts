@@ -102,44 +102,42 @@ query GetWaitingRoomVisitForms($state: VisitFormState) {
   visitForms(state: $state) {
     id
     createdAt
-    probandInfo {
-      name
-      surname
-      personalId
-      birthdate
-      gender {
-        id
-        translations {
-          text
-          language {
-            code
-          }
+    name
+    surname
+    personalId
+    birthdate
+    gender {
+      id
+      translations {
+        text
+        language {
+          code
         }
       }
-      nativeLanguage {
-        id
-        translations {
-          text
-          language {
-            code
-          }
-        }
-      }
-      heightCm
-      weightKg
-      visualCorrectionDioptre
-      handedness {
-        id
-        translations {
-          text
-          language {
-            code
-          }
-        }
-      }
-      email
-      phone
     }
+    nativeLanguage {
+      id
+      translations {
+        text
+        language {
+          code
+        }
+      }
+    }
+    heightCm
+    weightKg
+    visualCorrectionDioptre
+    handedness {
+      id
+      translations {
+        text
+        language {
+          code
+        }
+      }
+    }
+    email
+    phone
     answers {
       questionId
       answer
@@ -152,44 +150,42 @@ query GetWaitingRoomVisitForms($state: VisitFormState) {
 export const GET_WAITING_ROOM_VISIT_FORM = `
 query GetWaitingRoomVisitForm($id: UUID!) {
   visitForm(id: $id) {
-    probandInfo {
-      name
-      surname
-      personalId
-      birthdate
-      gender {
-        id
-        translations {
-          text
-          language {
-            code
-          }
+    name
+    surname
+    personalId
+    birthdate
+    gender {
+      id
+      translations {
+        text
+        language {
+          code
         }
       }
-      nativeLanguage {
-        id
-        translations {
-          text
-          language {
-            code
-          }
-        }
-      }
-      heightCm
-      weightKg
-      visualCorrectionDioptre
-      handedness {
-        id
-        translations {
-          text
-          language {
-            code
-          }
-        }
-      }
-      email
-      phone
     }
+    nativeLanguage {
+      id
+      translations {
+        text
+        language {
+          code
+        }
+      }
+    }
+    heightCm
+    weightKg
+    visualCorrectionDioptre
+    handedness {
+      id
+      translations {
+        text
+        language {
+          code
+        }
+      }
+    }
+    email
+    phone
     answers {
       questionId
       answer
@@ -203,50 +199,48 @@ query GetWaitingRoomVisitForms($state: VisitFormState) {
   visitForms(state: $state) {
     id
     createdAt
+    name
+    surname
+    personalId
+    birthdate
+    gender {
+      id
+      translations {
+        text
+        language {
+          code
+        }
+      }
+    }
+    nativeLanguage {
+      id
+      translations {
+        text
+        language {
+          code
+        }
+      }
+    }
+    heightCm
+    weightKg
+    visualCorrectionDioptre
+    handedness {
+      id
+      translations {
+        text
+        language {
+          code
+        }
+      }
+    }
+    email
+    phone
     additionalInfo {
       projectId
       projectAcronym
       deviceId
       deviceName
       measuredAt
-    }
-    probandInfo {
-      name
-      surname
-      personalId
-      birthdate
-      gender {
-        id
-        translations {
-          text
-          language {
-            code
-          }
-        }
-      }
-      nativeLanguage {
-        id
-        translations {
-          text
-          language {
-            code
-          }
-        }
-      }
-      heightCm
-      weightKg
-      visualCorrectionDioptre
-      handedness {
-        id
-        translations {
-          text
-          language {
-            code
-          }
-        }
-      }
-      email
-      phone
     }
     answers {
       questionId
@@ -260,48 +254,46 @@ query GetWaitingRoomVisitForms($state: VisitFormState) {
 export const GET_APPROVAL_ROOM_VISIT_FORM = `
 query GetApprovalRoomVisitForm($id: UUID!) {
   visitForm(id: $id) {
+    name
+    surname
+    personalId
+    birthdate
+    gender {
+      id
+      translations {
+        text
+        language {
+          code
+        }
+      }
+    }
+    nativeLanguage {
+      id
+      translations {
+        text
+        language {
+          code
+        }
+      }
+    }
+    heightCm
+    weightKg
+    visualCorrectionDioptre
+    handedness {
+      id
+      translations {
+        text
+        language {
+          code
+        }
+      }
+    }
+    email
+    phone
     additionalInfo {
       projectId
       deviceId
       measuredAt
-    }
-    probandInfo {
-      name
-      surname
-      personalId
-      birthdate
-      gender {
-        id
-        translations {
-          text
-          language {
-            code
-          }
-        }
-      }
-      nativeLanguage {
-        id
-        translations {
-          text
-          language {
-            code
-          }
-        }
-      }
-      heightCm
-      weightKg
-      visualCorrectionDioptre
-      handedness {
-        id
-        translations {
-          text
-          language {
-            code
-          }
-        }
-      }
-      email
-      phone
     }
     answers {
       questionId

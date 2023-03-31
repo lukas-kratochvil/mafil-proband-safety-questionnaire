@@ -16,9 +16,21 @@ export interface IVisit {
   createdAt: Date;
   visitId: string;
   state: VisitStateDEV;
+  name: string;
+  surname: string;
+  personalId: string;
+  birthdate: Date;
+  heightCm: number;
+  weightKg: number;
+  gender: IGenderDTO;
+  nativeLanguage: INativeLanguageDTO;
+  visualCorrection: VisualCorrection;
+  visualCorrectionDioptre: number;
+  handedness: IHandednessDTO;
+  email: string;
+  phone: string;
   pdf: string;
   projectInfo: IProjectInfo;
-  probandInfo: IProbandInfo;
   answers: FormAnswer[];
 }
 
@@ -48,20 +60,4 @@ export enum Handedness {
   LEFT_HANDED,
   LEFT_HANDED_RETRAINED,
   UNDETERMINED,
-}
-
-interface IProbandInfo {
-  name: string;
-  surname: string;
-  personalId: string;
-  birthdate: Date;
-  heightCm: number;
-  weightKg: number;
-  gender: IGenderDTO;
-  nativeLanguage: INativeLanguageDTO;
-  visualCorrection: VisualCorrection;
-  visualCorrectionDioptre: number;
-  handedness: IHandednessDTO;
-  email: string;
-  phone: string;
 }

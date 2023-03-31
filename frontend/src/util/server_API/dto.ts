@@ -67,20 +67,18 @@ type VisitFormState = "NEW" | "IN_APPROVAL";
 export interface IWaitingRoomVisitFormDTO {
   id: string;
   createdAt?: Date;
-  probandInfo: {
-    name: string;
-    surname: string;
-    personalId: string;
-    birthdate: Date;
-    gender: IGenderDTO;
-    nativeLanguage: INativeLanguageDTO;
-    heightCm: number;
-    weightKg: number;
-    visualCorrectionDioptre: number;
-    handedness: IHandednessDTO;
-    email: string;
-    phone: string;
-  };
+  name: string;
+  surname: string;
+  personalId: string;
+  birthdate: Date;
+  gender: IGenderDTO;
+  nativeLanguage: INativeLanguageDTO;
+  heightCm: number;
+  weightKg: number;
+  visualCorrectionDioptre: number;
+  handedness: IHandednessDTO;
+  email: string;
+  phone: string;
   answers: IProbandAnswerDTO[];
 }
 
@@ -105,7 +103,7 @@ type AdditionalInfo = {
   finalizedAt: Date;
 };
 
-type ProbandInfo = {
+type CreateProbandInfoInput = {
   name: string;
   surname: string;
   personalId: string;
@@ -120,11 +118,10 @@ type ProbandInfo = {
   phone: string;
 };
 
-type CreateVisitFormInput = {
+type CreateVisitFormInput = CreateProbandInfoInput & {
   state: VisitFormState;
   additionalInfo: AdditionalInfo;
   probandLanguageCode: LocalizationKeys;
-  probandInfo: ProbandInfo;
   answers: IOperatorAnswerDTO[];
 };
 
@@ -138,11 +135,10 @@ export interface ICreateDuplicatedVisitFormForApprovalInput {
   createVisitFormInput: CreateVisitFormInput;
 }
 
-type UpdateVisitFormInput = {
+type UpdateVisitFormInput = Partial<CreateProbandInfoInput> & {
   id: string;
   state: Partial<Omit<VisitFormState, "NEW">>;
   additionalInfo: Partial<AdditionalInfo>;
-  probandInfo: Partial<ProbandInfo>;
   answers: Partial<IOperatorAnswerDTO>[];
 };
 

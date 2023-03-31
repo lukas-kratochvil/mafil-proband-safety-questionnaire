@@ -122,21 +122,19 @@ export const createProbandVisitForm = async (visitFormData: FormPropType): Promi
   const variables: ICreateProbandVisitFormInput = {
     createVisitFormInput: {
       probandLanguageCode: i18n.language as LocalizationKeys,
-      probandInfo: {
-        name: visitFormData.name,
-        surname: visitFormData.surname,
-        personalId: visitFormData.personalId,
-        birthdate: visitFormData.birthdate ?? new Date(),
-        genderId: visitFormData.gender?.id ?? "",
-        nativeLanguageId: visitFormData.nativeLanguage?.id ?? "",
-        heightCm: typeof visitFormData.heightCm === "number" ? visitFormData.heightCm : 0,
-        weightKg: typeof visitFormData.weightKg === "number" ? visitFormData.weightKg : 0,
-        visualCorrectionDioptre:
-          typeof visitFormData.visualCorrectionDioptre === "number" ? visitFormData.visualCorrectionDioptre : 0,
-        handednessId: visitFormData.handedness?.id ?? "",
-        email: visitFormData.email,
-        phone: visitFormData.phone,
-      },
+      name: visitFormData.name,
+      surname: visitFormData.surname,
+      personalId: visitFormData.personalId,
+      birthdate: visitFormData.birthdate ?? new Date(),
+      genderId: visitFormData.gender?.id ?? "",
+      nativeLanguageId: visitFormData.nativeLanguage?.id ?? "",
+      heightCm: typeof visitFormData.heightCm === "number" ? visitFormData.heightCm : 0,
+      weightKg: typeof visitFormData.weightKg === "number" ? visitFormData.weightKg : 0,
+      visualCorrectionDioptre:
+        typeof visitFormData.visualCorrectionDioptre === "number" ? visitFormData.visualCorrectionDioptre : 0,
+      handednessId: visitFormData.handedness?.id ?? "",
+      email: visitFormData.email,
+      phone: visitFormData.phone,
       answers: visitFormData.answers.map((answer) => ({
         questionId: answer.questionId,
         answer: answer.answer ?? AnswerOption.NO,
@@ -157,6 +155,19 @@ export const createDuplicatedVisitFormForApproval = async (
   const variables: ICreateDuplicatedVisitFormForApprovalInput = {
     createVisitFormInput: {
       state: "IN_APPROVAL",
+      name: visitFormData.name,
+      surname: visitFormData.surname,
+      personalId: visitFormData.personalId,
+      birthdate: visitFormData.birthdate ?? new Date(),
+      genderId: visitFormData.gender?.id ?? "",
+      nativeLanguageId: visitFormData.nativeLanguage?.id ?? "",
+      heightCm: typeof visitFormData.heightCm === "number" ? visitFormData.heightCm : 0,
+      weightKg: typeof visitFormData.weightKg === "number" ? visitFormData.weightKg : 0,
+      visualCorrectionDioptre:
+        typeof visitFormData.visualCorrectionDioptre === "number" ? visitFormData.visualCorrectionDioptre : 0,
+      handednessId: visitFormData.handedness?.id ?? "",
+      email: visitFormData.email,
+      phone: visitFormData.phone,
       additionalInfo: {
         projectId: visitFormData.project?.id ?? "",
         projectAcronym: visitFormData.project?.acronym ?? "",
@@ -167,21 +178,6 @@ export const createDuplicatedVisitFormForApproval = async (
         finalizedAt: new Date(),
       },
       probandLanguageCode: i18n.language as LocalizationKeys,
-      probandInfo: {
-        name: visitFormData.name,
-        surname: visitFormData.surname,
-        personalId: visitFormData.personalId,
-        birthdate: visitFormData.birthdate ?? new Date(),
-        genderId: visitFormData.gender?.id ?? "",
-        nativeLanguageId: visitFormData.nativeLanguage?.id ?? "",
-        heightCm: typeof visitFormData.heightCm === "number" ? visitFormData.heightCm : 0,
-        weightKg: typeof visitFormData.weightKg === "number" ? visitFormData.weightKg : 0,
-        visualCorrectionDioptre:
-          typeof visitFormData.visualCorrectionDioptre === "number" ? visitFormData.visualCorrectionDioptre : 0,
-        handednessId: visitFormData.handedness?.id ?? "",
-        email: visitFormData.email,
-        phone: visitFormData.phone,
-      },
       answers: visitFormData.answers.map((answer) => ({
         questionId: answer.questionId,
         answer: answer.answer ?? AnswerOption.NO,
@@ -205,6 +201,19 @@ export const sendVisitFormFromWaitingRoomForApproval = async (
     updateVisitFormInput: {
       id: visitFormId,
       state: "IN_APPROVAL",
+      name: visitFormData.name === "" ? undefined : visitFormData.name,
+      surname: visitFormData.surname === "" ? undefined : visitFormData.surname,
+      personalId: visitFormData.personalId === "" ? undefined : visitFormData.personalId,
+      birthdate: visitFormData.birthdate ?? undefined,
+      genderId: visitFormData.gender?.id ?? undefined,
+      nativeLanguageId: visitFormData.nativeLanguage?.id ?? undefined,
+      heightCm: typeof visitFormData.heightCm === "number" ? visitFormData.heightCm : undefined,
+      weightKg: typeof visitFormData.weightKg === "number" ? visitFormData.weightKg : undefined,
+      visualCorrectionDioptre:
+        typeof visitFormData.visualCorrectionDioptre === "number" ? visitFormData.visualCorrectionDioptre : undefined,
+      handednessId: visitFormData.handedness?.id ?? undefined,
+      email: visitFormData.email,
+      phone: visitFormData.phone,
       additionalInfo: {
         projectId: visitFormData.project?.id ?? "",
         projectAcronym: visitFormData.project?.acronym ?? "",
@@ -213,21 +222,6 @@ export const sendVisitFormFromWaitingRoomForApproval = async (
         measuredAt: visitFormData.measuredAt ?? new Date(),
         finalizedAt: new Date(),
         finalizerId,
-      },
-      probandInfo: {
-        name: visitFormData.name === "" ? undefined : visitFormData.name,
-        surname: visitFormData.surname === "" ? undefined : visitFormData.surname,
-        personalId: visitFormData.personalId === "" ? undefined : visitFormData.personalId,
-        birthdate: visitFormData.birthdate ?? undefined,
-        genderId: visitFormData.gender?.id ?? undefined,
-        nativeLanguageId: visitFormData.nativeLanguage?.id ?? undefined,
-        heightCm: typeof visitFormData.heightCm === "number" ? visitFormData.heightCm : undefined,
-        weightKg: typeof visitFormData.weightKg === "number" ? visitFormData.weightKg : undefined,
-        visualCorrectionDioptre:
-          typeof visitFormData.visualCorrectionDioptre === "number" ? visitFormData.visualCorrectionDioptre : undefined,
-        handednessId: visitFormData.handedness?.id ?? undefined,
-        email: visitFormData.email,
-        phone: visitFormData.phone,
       },
       answers:
         visitFormData.answers?.map((answer) => ({

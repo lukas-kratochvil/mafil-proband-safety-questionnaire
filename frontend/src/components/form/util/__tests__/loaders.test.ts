@@ -12,20 +12,18 @@ import {
 
 const waitingRoomVisitForm: IWaitingRoomVisitFormDTO = {
   id: "123",
-  probandInfo: {
-    name: "Name",
-    surname: "Surname",
-    personalId: "000000",
-    birthdate: new Date(),
-    gender: genders[0],
-    nativeLanguage: nativeLanguages[2],
-    heightCm: 180,
-    weightKg: 80,
-    visualCorrectionDioptre: 1,
-    handedness: handednesses[3],
-    email: "name.surname@email.com",
-    phone: "123456789",
-  },
+  name: "Name",
+  surname: "Surname",
+  personalId: "000000",
+  birthdate: new Date(),
+  gender: genders[0],
+  nativeLanguage: nativeLanguages[2],
+  heightCm: 180,
+  weightKg: 80,
+  visualCorrectionDioptre: 1,
+  handedness: handednesses[3],
+  email: "name.surname@email.com",
+  phone: "123456789",
   answers: [
     {
       questionId: "1",
@@ -52,6 +50,19 @@ const visit: IVisit = {
   visitId: "1",
   pdf: "pdf",
   state: VisitStateDEV.APPROVED,
+  name: "Name",
+  surname: "Surname",
+  personalId: "000000",
+  birthdate: new Date(),
+  gender: genders[0],
+  nativeLanguage: nativeLanguages[2],
+  heightCm: 180,
+  weightKg: 80,
+  visualCorrection: VisualCorrection.YES,
+  visualCorrectionDioptre: 1,
+  handedness: handednesses[3],
+  email: "name.surname@email.com",
+  phone: "123456789",
   projectInfo: {
     projectAcronym: "Proj1",
     projectId: "1",
@@ -60,21 +71,6 @@ const visit: IVisit = {
     isPhantom: true,
     measuredAt: new Date(),
     disapprovalReason: null,
-  },
-  probandInfo: {
-    name: "Name",
-    surname: "Surname",
-    personalId: "000000",
-    birthdate: new Date(),
-    gender: genders[0],
-    nativeLanguage: nativeLanguages[2],
-    heightCm: 180,
-    weightKg: 80,
-    visualCorrection: VisualCorrection.YES,
-    visualCorrectionDioptre: 1,
-    handedness: handednesses[3],
-    email: "name.surname@email.com",
-    phone: "123456789",
   },
   answers: [
     {
@@ -92,6 +88,19 @@ const visitNotCompleted: IVisit = {
   visitId: "1",
   pdf: "pdf",
   state: VisitStateDEV.APPROVED,
+  name: "Name",
+  surname: "Surname",
+  personalId: "000000",
+  birthdate: new Date(),
+  gender: genders[0],
+  nativeLanguage: nativeLanguages[2],
+  heightCm: 180,
+  weightKg: 80,
+  visualCorrection: VisualCorrection.NO,
+  visualCorrectionDioptre: 0,
+  handedness: handednesses[3],
+  email: "",
+  phone: "",
   projectInfo: {
     projectAcronym: "",
     projectId: "",
@@ -100,21 +109,6 @@ const visitNotCompleted: IVisit = {
     isPhantom: true,
     measuredAt: null,
     disapprovalReason: null,
-  },
-  probandInfo: {
-    name: "Name",
-    surname: "Surname",
-    personalId: "000000",
-    birthdate: new Date(),
-    gender: genders[0],
-    nativeLanguage: nativeLanguages[2],
-    heightCm: 180,
-    weightKg: 80,
-    visualCorrection: VisualCorrection.NO,
-    visualCorrectionDioptre: 0,
-    handedness: handednesses[3],
-    email: "",
-    phone: "",
   },
   answers: [
     {
@@ -178,21 +172,21 @@ describe("form loaders", () => {
     const fetchedVisit = waitingRoomVisitForm;
     const loadedFormValues = loadFormDefaultValuesFromWaitingRoomVisitForm(fetchedVisit);
 
-    expect(loadedFormValues.name).toEqual(fetchedVisit.probandInfo.name);
-    expect(loadedFormValues.surname).toEqual(fetchedVisit.probandInfo.surname);
-    expect(loadedFormValues.personalId).toEqual(fetchedVisit.probandInfo.personalId);
-    expect(loadedFormValues.birthdate).toEqual(fetchedVisit.probandInfo.birthdate);
-    expect(loadedFormValues.gender?.id).toEqual(fetchedVisit.probandInfo.gender.id);
-    expect(loadedFormValues.nativeLanguage?.id).toEqual(fetchedVisit.probandInfo.nativeLanguage.id);
-    expect(loadedFormValues.heightCm).toEqual(fetchedVisit.probandInfo.heightCm);
-    expect(loadedFormValues.weightKg).toEqual(fetchedVisit.probandInfo.weightKg);
-    expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.probandInfo.handedness.id);
+    expect(loadedFormValues.name).toEqual(fetchedVisit.name);
+    expect(loadedFormValues.surname).toEqual(fetchedVisit.surname);
+    expect(loadedFormValues.personalId).toEqual(fetchedVisit.personalId);
+    expect(loadedFormValues.birthdate).toEqual(fetchedVisit.birthdate);
+    expect(loadedFormValues.gender?.id).toEqual(fetchedVisit.gender.id);
+    expect(loadedFormValues.nativeLanguage?.id).toEqual(fetchedVisit.nativeLanguage.id);
+    expect(loadedFormValues.heightCm).toEqual(fetchedVisit.heightCm);
+    expect(loadedFormValues.weightKg).toEqual(fetchedVisit.weightKg);
+    expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.handedness.id);
     expect(loadedFormValues.visualCorrection?.value).toEqual(
-      fetchedVisit.probandInfo.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
+      fetchedVisit.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
     );
-    expect(loadedFormValues.visualCorrectionDioptre).toEqual(fetchedVisit.probandInfo.visualCorrectionDioptre);
-    expect(loadedFormValues.email).toEqual(fetchedVisit.probandInfo.email);
-    expect(loadedFormValues.phone).toEqual(fetchedVisit.probandInfo.phone);
+    expect(loadedFormValues.visualCorrectionDioptre).toEqual(fetchedVisit.visualCorrectionDioptre);
+    expect(loadedFormValues.email).toEqual(fetchedVisit.email);
+    expect(loadedFormValues.phone).toEqual(fetchedVisit.phone);
     loadedFormValues.answers.forEach((loadedAnswer, i) => {
       expect(loadedAnswer.answer).toEqual(fetchedVisit.answers[i].answer);
       expect(loadedAnswer.questionId).toEqual(fetchedVisit.answers[i].questionId);
@@ -207,21 +201,21 @@ describe("form loaders", () => {
     expect(loadedFormValues.project?.id).toEqual(fetchedVisit.additionalInfo.projectId); // project is loaded in the FormProjectInfo component using the projectId
     expect(loadedFormValues.device?.id).toEqual(fetchedVisit.additionalInfo.deviceId); // device is loaded in the FormProjectInfo component using the deviceId
     expect(loadedFormValues.measuredAt).toEqual(fetchedVisit.additionalInfo.measuredAt);
-    expect(loadedFormValues.name).toEqual(fetchedVisit.probandInfo.name);
-    expect(loadedFormValues.surname).toEqual(fetchedVisit.probandInfo.surname);
-    expect(loadedFormValues.personalId).toEqual(fetchedVisit.probandInfo.personalId);
-    expect(loadedFormValues.birthdate).toEqual(fetchedVisit.probandInfo.birthdate);
-    expect(loadedFormValues.gender?.id).toEqual(fetchedVisit.probandInfo.gender.id);
-    expect(loadedFormValues.nativeLanguage?.id).toEqual(fetchedVisit.probandInfo.nativeLanguage.id);
-    expect(loadedFormValues.heightCm).toEqual(fetchedVisit.probandInfo.heightCm);
-    expect(loadedFormValues.weightKg).toEqual(fetchedVisit.probandInfo.weightKg);
-    expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.probandInfo.handedness.id);
+    expect(loadedFormValues.name).toEqual(fetchedVisit.name);
+    expect(loadedFormValues.surname).toEqual(fetchedVisit.surname);
+    expect(loadedFormValues.personalId).toEqual(fetchedVisit.personalId);
+    expect(loadedFormValues.birthdate).toEqual(fetchedVisit.birthdate);
+    expect(loadedFormValues.gender?.id).toEqual(fetchedVisit.gender.id);
+    expect(loadedFormValues.nativeLanguage?.id).toEqual(fetchedVisit.nativeLanguage.id);
+    expect(loadedFormValues.heightCm).toEqual(fetchedVisit.heightCm);
+    expect(loadedFormValues.weightKg).toEqual(fetchedVisit.weightKg);
+    expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.handedness.id);
     expect(loadedFormValues.visualCorrection?.value).toEqual(
-      fetchedVisit.probandInfo.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
+      fetchedVisit.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
     );
-    expect(loadedFormValues.visualCorrectionDioptre).toEqual(fetchedVisit.probandInfo.visualCorrectionDioptre);
-    expect(loadedFormValues.email).toEqual(fetchedVisit.probandInfo.email);
-    expect(loadedFormValues.phone).toEqual(fetchedVisit.probandInfo.phone);
+    expect(loadedFormValues.visualCorrectionDioptre).toEqual(fetchedVisit.visualCorrectionDioptre);
+    expect(loadedFormValues.email).toEqual(fetchedVisit.email);
+    expect(loadedFormValues.phone).toEqual(fetchedVisit.phone);
     loadedFormValues.answers.forEach((loadedAnswer, i) => {
       expect(loadedAnswer.answer).toEqual(fetchedVisit.answers[i].answer);
       expect(loadedAnswer.questionId).toEqual(fetchedVisit.answers[i].questionId);
@@ -236,21 +230,19 @@ describe("form loaders", () => {
       expect(formDefaultValuesVisitDuplication.project).toBeNull();
       expect(formDefaultValuesVisitDuplication.device).toBeNull();
       expect(formDefaultValuesVisitDuplication.measuredAt).toEqual(visit.projectInfo.measuredAt);
-      expect(formDefaultValuesVisitDuplication.name).toEqual(visit.probandInfo.name);
-      expect(formDefaultValuesVisitDuplication.surname).toEqual(visit.probandInfo.surname);
-      expect(formDefaultValuesVisitDuplication.personalId).toEqual(visit.probandInfo.personalId);
-      expect(formDefaultValuesVisitDuplication.birthdate).toEqual(visit.probandInfo.birthdate);
-      expect(formDefaultValuesVisitDuplication.gender?.id).toEqual(visit.probandInfo.gender.id);
-      expect(formDefaultValuesVisitDuplication.nativeLanguage).toEqual(visit.probandInfo.nativeLanguage);
-      expect(formDefaultValuesVisitDuplication.heightCm).toEqual(visit.probandInfo.heightCm);
-      expect(formDefaultValuesVisitDuplication.weightKg).toEqual(visit.probandInfo.weightKg);
-      expect(formDefaultValuesVisitDuplication.handedness?.id).toEqual(visit.probandInfo.handedness.id);
-      expect(formDefaultValuesVisitDuplication.visualCorrection?.value).toEqual(visit.probandInfo.visualCorrection);
-      expect(formDefaultValuesVisitDuplication.visualCorrectionDioptre).toEqual(
-        visit.probandInfo.visualCorrectionDioptre
-      );
-      expect(formDefaultValuesVisitDuplication.email).toEqual(visit.probandInfo.email);
-      expect(formDefaultValuesVisitDuplication.phone).toEqual(visit.probandInfo.phone);
+      expect(formDefaultValuesVisitDuplication.name).toEqual(visit.name);
+      expect(formDefaultValuesVisitDuplication.surname).toEqual(visit.surname);
+      expect(formDefaultValuesVisitDuplication.personalId).toEqual(visit.personalId);
+      expect(formDefaultValuesVisitDuplication.birthdate).toEqual(visit.birthdate);
+      expect(formDefaultValuesVisitDuplication.gender?.id).toEqual(visit.gender.id);
+      expect(formDefaultValuesVisitDuplication.nativeLanguage).toEqual(visit.nativeLanguage);
+      expect(formDefaultValuesVisitDuplication.heightCm).toEqual(visit.heightCm);
+      expect(formDefaultValuesVisitDuplication.weightKg).toEqual(visit.weightKg);
+      expect(formDefaultValuesVisitDuplication.handedness?.id).toEqual(visit.handedness.id);
+      expect(formDefaultValuesVisitDuplication.visualCorrection?.value).toEqual(visit.visualCorrection);
+      expect(formDefaultValuesVisitDuplication.visualCorrectionDioptre).toEqual(visit.visualCorrectionDioptre);
+      expect(formDefaultValuesVisitDuplication.email).toEqual(visit.email);
+      expect(formDefaultValuesVisitDuplication.phone).toEqual(visit.phone);
       expect(formDefaultValuesVisitDuplication.answers).toEqual(visit.answers);
     });
 
@@ -263,23 +255,21 @@ describe("form loaders", () => {
       expect(formDefaultValuesVisitDuplication.project).toBeNull();
       expect(formDefaultValuesVisitDuplication.device).toBeNull();
       expect(formDefaultValuesVisitDuplication.measuredAt).toEqual(currentDate);
-      expect(formDefaultValuesVisitDuplication.name).toEqual(visitNotCompleted.probandInfo.name);
-      expect(formDefaultValuesVisitDuplication.surname).toEqual(visitNotCompleted.probandInfo.surname);
-      expect(formDefaultValuesVisitDuplication.personalId).toEqual(visitNotCompleted.probandInfo.personalId);
-      expect(formDefaultValuesVisitDuplication.birthdate).toEqual(visitNotCompleted.probandInfo.birthdate);
-      expect(formDefaultValuesVisitDuplication.gender?.id).toEqual(visitNotCompleted.probandInfo.gender.id);
-      expect(formDefaultValuesVisitDuplication.nativeLanguage).toEqual(visitNotCompleted.probandInfo.nativeLanguage);
-      expect(formDefaultValuesVisitDuplication.heightCm).toEqual(visitNotCompleted.probandInfo.heightCm);
-      expect(formDefaultValuesVisitDuplication.weightKg).toEqual(visitNotCompleted.probandInfo.weightKg);
-      expect(formDefaultValuesVisitDuplication.handedness?.id).toEqual(visitNotCompleted.probandInfo.handedness.id);
-      expect(formDefaultValuesVisitDuplication.visualCorrection?.value).toEqual(
-        visitNotCompleted.probandInfo.visualCorrection
-      );
+      expect(formDefaultValuesVisitDuplication.name).toEqual(visitNotCompleted.name);
+      expect(formDefaultValuesVisitDuplication.surname).toEqual(visitNotCompleted.surname);
+      expect(formDefaultValuesVisitDuplication.personalId).toEqual(visitNotCompleted.personalId);
+      expect(formDefaultValuesVisitDuplication.birthdate).toEqual(visitNotCompleted.birthdate);
+      expect(formDefaultValuesVisitDuplication.gender?.id).toEqual(visitNotCompleted.gender.id);
+      expect(formDefaultValuesVisitDuplication.nativeLanguage).toEqual(visitNotCompleted.nativeLanguage);
+      expect(formDefaultValuesVisitDuplication.heightCm).toEqual(visitNotCompleted.heightCm);
+      expect(formDefaultValuesVisitDuplication.weightKg).toEqual(visitNotCompleted.weightKg);
+      expect(formDefaultValuesVisitDuplication.handedness?.id).toEqual(visitNotCompleted.handedness.id);
+      expect(formDefaultValuesVisitDuplication.visualCorrection?.value).toEqual(visitNotCompleted.visualCorrection);
       expect(formDefaultValuesVisitDuplication.visualCorrectionDioptre).toEqual(
-        visitNotCompleted.probandInfo.visualCorrectionDioptre
+        visitNotCompleted.visualCorrectionDioptre
       );
-      expect(formDefaultValuesVisitDuplication.email).toEqual(visitNotCompleted.probandInfo.email);
-      expect(formDefaultValuesVisitDuplication.phone).toEqual(visitNotCompleted.probandInfo.phone);
+      expect(formDefaultValuesVisitDuplication.email).toEqual(visitNotCompleted.email);
+      expect(formDefaultValuesVisitDuplication.phone).toEqual(visitNotCompleted.phone);
       expect(formDefaultValuesVisitDuplication.answers).toEqual(visitNotCompleted.answers);
     });
   });

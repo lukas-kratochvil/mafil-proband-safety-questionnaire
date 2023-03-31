@@ -38,10 +38,10 @@ export const loadFormDefaultValuesFromWaitingRoomVisitForm = (visitForm: IWaitin
   device: null,
   measuredAt: new Date(),
   disapprovalReason: null,
-  ...visitForm.probandInfo,
+  ...visitForm,
   visualCorrection: getOption(
     visualCorrectionOptions,
-    visitForm.probandInfo.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
+    visitForm.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
   ),
   // TODO: how to get question part number?
   answers: visitForm.answers.map((answer) => ({ ...answer, comment: "", partNumber: QuestionPartNumber.TWO })),
@@ -72,7 +72,7 @@ export const loadFormDefaultValuesVisitDuplication = (visit: IVisit): FormPropTy
   device: null,
   measuredAt: visit.projectInfo.measuredAt ?? new Date(),
   disapprovalReason: visit.projectInfo.disapprovalReason,
-  ...visit.probandInfo,
-  visualCorrection: getOption(visualCorrectionOptions, visit.probandInfo.visualCorrection),
+  ...visit,
+  visualCorrection: getOption(visualCorrectionOptions, visit.visualCorrection),
   answers: visit.answers.map((answer) => ({ ...answer })),
 });
