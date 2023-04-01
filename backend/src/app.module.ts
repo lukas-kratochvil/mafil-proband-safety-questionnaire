@@ -1,10 +1,11 @@
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
-import { Module } from "@nestjs/common";
+import { Logger, MiddlewareConsumer, Module, NestModule, RequestMethod } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
 import { GraphQLApiModule } from "./api/graphql-api.module";
 import { GraphQLConfigService } from "./api/graphql-config.service";
 import { AuthModule } from "./auth/auth.module";
+import { LoggerMiddleware } from "./log/logger.middleware";
 
 @Module({
   imports: [
@@ -17,5 +18,10 @@ import { AuthModule } from "./auth/auth.module";
     GraphQLApiModule,
     AuthModule,
   ],
+  providers: [Logger],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes({ path: "*", method: RequestMethod.ALL });
+  }
+}

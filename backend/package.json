@@ -33,9 +33,11 @@
     "@prisma/client": "^4.11.0",
     "class-validator": "^0.14.0",
     "graphql": "^16.6.0",
+    "nest-winston": "^1.9.1",
     "prisma": "^4.11.0",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "winston": "^3.8.2"
   },
   "devDependencies": {
     "@darraghor/eslint-plugin-nestjs-typed": "^3.16.0",
