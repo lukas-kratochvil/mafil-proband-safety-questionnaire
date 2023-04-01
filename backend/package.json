@@ -23,12 +23,12 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@apollo/server": "^4.4.0",
-    "@nestjs/apollo": "^10.2.0",
+    "@apollo/server": "^4.5.0",
+    "@nestjs/apollo": "^11.0.4",
     "@nestjs/common": "^9.3.12",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.3.12",
-    "@nestjs/graphql": "^10.1.7",
+    "@nestjs/graphql": "^11.0.4",
     "@nestjs/platform-express": "^9.3.12",
     "@prisma/client": "^4.11.0",
     "class-validator": "^0.14.0",

@@ -18,7 +18,6 @@ export class GraphQLConfigService implements GqlOptionsFactory {
         UUID: UUID,
         Void: Void,
       },
-      debug: this.configService.get<string>("NODE_ENV") === "development",
       playground: this.configService.get<string>("NODE_ENV") === "development",
     };
   }
