@@ -25,6 +25,7 @@ services:
     networks:
       - backend-network
     environment:
+      TZ: ${TIMEZONE}
       ADMINER_DESIGN: nette
     restart: unless-stopped
     depends_on:
@@ -54,6 +55,7 @@ services:
       - backend-network
     environment:
       - NODE_ENV=development
+      - TZ=${TIMEZONE}
       - PORT=${SERVER_PORT}
       - DATABASE_URL=${DATABASE_URL}
       - MAFILDB_API_URL=${MAFILDB_API_URL}
@@ -87,6 +89,7 @@ services:
       - frontend-network
     environment:
       - NODE_ENV=development
+      - TZ=${TIMEZONE}
       - PORT=${WEB_PORT}
       - VITE_SERVER_API_KEY=${SERVER_API_KEY_FOR_WEB}
       - VITE_SERVER_API_URL=${SERVER_API_URL}
