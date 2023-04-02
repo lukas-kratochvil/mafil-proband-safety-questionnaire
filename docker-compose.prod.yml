@@ -62,7 +62,7 @@ services:
       - TZ=${TIMEZONE}
       - PORT=${WEB_PORT}
       - VITE_SERVER_API_KEY=${SERVER_API_KEY_FOR_WEB}
-      - VITE_SERVER_API_URL=${SERVER_API_URL}
+      - VITE_SERVER_URL=${SERVER_URL}
       - VITE_MAFILDB_API_URL=${MAFILDB_API_URL}
     restart: unless-stopped
 
