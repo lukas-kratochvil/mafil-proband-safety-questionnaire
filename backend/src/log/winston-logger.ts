@@ -1,11 +1,12 @@
-import { utilities as nestWinstonModuleUtilities } from "nest-winston";
+import { LoggerService } from "@nestjs/common";
+import { utilities as nestWinstonModuleUtilities, WinstonModule } from "nest-winston";
 import * as winston from "winston";
 
 const defaultFileTransportOptions: winston.transports.FileTransportOptions = {
   dirname: "logs",
 };
 
-export const createWinstonLogger = (): winston.Logger => {
+export const createWinstonLogger = (): LoggerService => {
   const winstonLogger = winston.createLogger({
     level: "info",
     format: winston.format.combine(winston.format.timestamp(), winston.format.prettyPrint()),
@@ -31,5 +32,5 @@ export const createWinstonLogger = (): winston.Logger => {
     );
   }
 
-  return winstonLogger;
+  return WinstonModule.createLogger(winstonLogger);
 };
