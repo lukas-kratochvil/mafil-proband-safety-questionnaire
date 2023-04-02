@@ -2,9 +2,11 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { Logger, MiddlewareConsumer, Module, NestModule, RequestMethod } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
+import { ScheduleModule } from "@nestjs/schedule";
 import { GraphQLApiModule } from "./api/graphql-api.module";
 import { GraphQLConfigService } from "./api/graphql-config.service";
 import { AuthModule } from "./auth/auth.module";
+import { CronModule } from "./cron/cron.module";
 import { LoggerMiddleware } from "./log/logger.middleware";
 
 @Module({
@@ -17,6 +19,8 @@ import { LoggerMiddleware } from "./log/logger.middleware";
     }),
     GraphQLApiModule,
     AuthModule,
+    CronModule,
+    ScheduleModule.forRoot(),
   ],
   providers: [Logger],
 })
