@@ -7,14 +7,26 @@ async function bootstrap() {
   const logger = createWinstonLogger();
   const app = await NestFactory.create(AppModule, { logger });
   const configService = app.get(ConfigService);
-  const port = configService.get<number>("PORT");
 
-  if (port === undefined) {
-    logger.error("MAFIL-PSQ server port is not defined! Shutting down…");
-    throw new Error("MAFIL-PSQ server port is not defined! Shutting down…");
+  // CORS
+  const webUrl = configService.get<string>("WEB_URL");
+  if (webUrl === undefined) {
+    const errorMsg = "MAFIL-PSQ web app URL is not defined! Shutting down…";
+    logger.error(errorMsg);
+    throw new Error(errorMsg);
   }
+  app.enableCors({ origin: [webUrl] });
 
+  // PORT
+  const port = configService.get<number>("PORT");
+  if (port === undefined) {
+    const errorMsg = "MAFIL-PSQ server port is not defined! Shutting down…";
+    logger.error(errorMsg);
+    throw new Error(errorMsg);
+  }
   logger.log(`MAFIL-PSQ server is listening on: http://localhost:${port}`);
+
+  // STARTING THE APP
   await app.listen(port);
 }
 
