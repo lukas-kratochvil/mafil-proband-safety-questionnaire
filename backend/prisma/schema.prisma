@@ -51,6 +51,7 @@ model VisitForm {
   deletedAt DateTime?
 
   state                   VisitFormState @default(NEW)
+  sentToMafilDbAt         DateTime?
   name                    String         @db.VarChar(200)
   surname                 String         @db.VarChar(200)
   personalId              String         @db.VarChar(50)

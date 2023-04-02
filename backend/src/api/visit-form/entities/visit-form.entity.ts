@@ -31,6 +31,9 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   state: VisitFormState;
 
   @HideField()
+  sentToMafilDbAt: Date | null;
+
+  @HideField()
   nativeLanguageId: string;
 
   @Field(() => NativeLanguageEntity)
