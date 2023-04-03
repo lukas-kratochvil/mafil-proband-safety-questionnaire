@@ -26,7 +26,7 @@ services:
       - backend-network
     environment:
       TZ: ${TIMEZONE}
-      ADMINER_DESIGN: nette
+      ADMINER_DESIGN: pappu687
     restart: unless-stopped
     depends_on:
       - postgres
