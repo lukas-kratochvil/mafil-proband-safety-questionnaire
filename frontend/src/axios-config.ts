@@ -3,7 +3,7 @@ import { transformDateStringToDate } from "./axios-transformers";
 
 /* SERVER instance */
 const serverApi = axios.create({
-  baseURL: `${import.meta.env.VITE_SERVER_URL}/graphql`,
+  baseURL: import.meta.env.PROD ? "graphql" : `${import.meta.env.VITE_SERVER_URL}/graphql`,
   headers: {
     "Content-Type": "application/json",
     "SERVER-API-KEY": import.meta.env.VITE_SERVER_API_KEY,

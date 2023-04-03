@@ -1,3 +1,8 @@
+upstream server_api {
+  # 'server' is the name of our docker-compose backend API service
+  server server:${SERVER_PORT};
+}
+
 server {
   # IPv4
   listen 80;
@@ -18,5 +23,19 @@ server {
     # - React app has only one index.html -> so this always fallback to the root index.html for every URI requested
     # - see also: https://linuxhint.com/use-nginx-try_files-directive/
     try_files $uri /index.html;
+  }
+
+  # API calls to our backend service are redirected to the 'server_api' upstream
+  location ~ /graphql$ {
+    # rewrite any URI ending with '.../graphql' just to '/graphql'
+    rewrite ^ /graphql break;
+    proxy_pass http://server_api;
+    proxy_http_version 1.1;
+    # authorization header to access API methods
+    proxy_set_header SERVER-API-KEY "${SERVER_API_KEY}";
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_cache_bypass $http_upgrade;
   }
 }
