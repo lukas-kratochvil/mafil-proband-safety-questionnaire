@@ -5,7 +5,7 @@ services:
     container_name: postgres
     image: postgres:alpine3.17
     ports:
-      - 127.0.0.1:${DB_PORT}:${DB_PORT}
+      - ${DB_PORT}:${DB_PORT}
     networks:
       - backend-network
     volumes:
@@ -21,7 +21,7 @@ services:
     container_name: adminer
     image: adminer:4.8.1
     ports:
-      - 127.0.0.1:${ADMINER_PORT}:${ADMINER_PORT}
+      - ${ADMINER_PORT}:${ADMINER_PORT}
     networks:
       - backend-network
     environment:
@@ -35,7 +35,7 @@ services:
     container_name: server
     image: ghcr.io/lukas-kratochvil/mafil-psq-server:devel
     ports:
-      - 127.0.0.1:${SERVER_PORT}:${SERVER_PORT}
+      - ${SERVER_PORT}:${SERVER_PORT}
     networks:
       - backend-network
     environment:
@@ -54,7 +54,7 @@ services:
     container_name: web
     image: ghcr.io/lukas-kratochvil/mafil-psq-web:devel
     ports:
-      - 127.0.0.1:${WEB_PORT}:${WEB_PORT}
+      - ${WEB_PORT}:${WEB_PORT}
     networks:
       - backend-network
       - frontend-network

@@ -5,7 +5,7 @@ services:
     container_name: postgres
     image: postgres:alpine3.17
     ports:
-      - 127.0.0.1:${DB_PORT}:${DB_PORT}
+      - ${DB_PORT}:${DB_PORT}
     networks:
       - backend-network
     volumes:
@@ -21,7 +21,7 @@ services:
     container_name: adminer
     image: adminer:4.8.1
     ports:
-      - 127.0.0.1:${ADMINER_PORT}:${ADMINER_PORT}
+      - ${ADMINER_PORT}:${ADMINER_PORT}
     networks:
       - backend-network
     environment:
@@ -50,7 +50,7 @@ services:
       # – some packages may be platform specific so we always want to run 'npm i' in the container when new package is added
       - exclude-server:/usr/src/app/backend/node_modules/
     ports:
-      - 127.0.0.1:${SERVER_PORT}:${SERVER_PORT}
+      - ${SERVER_PORT}:${SERVER_PORT}
     networks:
       - backend-network
     environment:
@@ -84,7 +84,7 @@ services:
       # – some packages may be platform specific so we always want to run 'npm i' in the container when new package is added
       - exclude-web:/usr/src/app/frontend/node_modules/
     ports:
-      - 127.0.0.1:${WEB_PORT}:${WEB_PORT}
+      - ${WEB_PORT}:${WEB_PORT}
     networks:
       - backend-network
       - frontend-network
