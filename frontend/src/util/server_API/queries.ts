@@ -97,6 +97,15 @@ query GetQuestion($id: UUID!) {
 }
 `;
 
+export const GET_PROBAND_CONTACT_CONSENT = `
+query GetProbandContactConsent($locale: String!) {
+  probandContactConsent(locale: $locale) {
+    title
+    bodyHtml
+  }
+}
+`;
+
 export const GET_WAITING_ROOM_VISIT_FORMS = `
 query GetWaitingRoomVisitForms($state: VisitFormState) {
   visitForms(state: $state) {

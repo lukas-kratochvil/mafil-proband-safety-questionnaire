@@ -10,6 +10,7 @@ import {
   IGenderDTO,
   IHandednessDTO,
   INativeLanguageDTO,
+  IProbandContactConsentDTO,
   IQuestionDTO,
   IQuestionHiddenByGendersDTO,
   ISendVisitFormFromWaitingRoomForApprovalInput,
@@ -24,6 +25,7 @@ import {
   GET_GENDERS,
   GET_HANDEDNESSES,
   GET_NATIVE_LANGUAGES,
+  GET_PROBAND_CONTACT_CONSENT,
   GET_QUESTION,
   GET_WAITING_ROOM_VISIT_FORM,
   GET_WAITING_ROOM_VISIT_FORMS,
@@ -37,6 +39,7 @@ import {
   GendersResponse,
   HandednessesResponse,
   NativeLanguagesResponse,
+  ProbandContactConsentResponse,
   QuestionResponse,
   UpdateVisitFormResponse,
   WaitingRoomVisitFormResponse,
@@ -76,6 +79,15 @@ export const fetchQuestion = async (questionId: string): Promise<IQuestionHidden
   const variables = { id: questionId };
   const { data } = await axiosConfig.serverApi.post<QuestionResponse>("", { query: GET_QUESTION, variables });
   return data.data.question;
+};
+
+export const fetchProbandContactConsent = async (locale: LocalizationKeys): Promise<IProbandContactConsentDTO> => {
+  const variables = { locale };
+  const { data } = await axiosConfig.serverApi.post<ProbandContactConsentResponse>("", {
+    query: GET_PROBAND_CONTACT_CONSENT,
+    variables,
+  });
+  return data.data.probandContactConsent;
 };
 
 export const fetchWaitingRoomVisitForms = async (): Promise<IWaitingRoomVisitFormDTO[]> => {

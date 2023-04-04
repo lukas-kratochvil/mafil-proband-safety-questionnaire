@@ -3,6 +3,7 @@ import {
   IGenderDTO,
   IHandednessDTO,
   INativeLanguageDTO,
+  IProbandContactConsentDTO,
   IQuestionDTO,
   IQuestionHiddenByGendersDTO,
   IWaitingRoomVisitFormDTO,
@@ -49,6 +50,12 @@ export type CurrentQuestionsResponse = {
 export type QuestionResponse = {
   data: {
     question: IQuestionHiddenByGendersDTO;
+  };
+};
+
+export type ProbandContactConsentResponse = {
+  data: {
+    probandContactConsent: IProbandContactConsentDTO;
   };
 };
 

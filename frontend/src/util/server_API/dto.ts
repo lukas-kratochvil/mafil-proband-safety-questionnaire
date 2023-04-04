@@ -45,6 +45,11 @@ export interface IQuestionDTO {
   translations: ITranslation[];
 }
 
+export interface IProbandContactConsentDTO {
+  title: string;
+  bodyHtml: string;
+}
+
 interface IHiddenByGender {
   genderCode: string;
 }

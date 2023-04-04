@@ -94,20 +94,6 @@
         "emailNote": "Na email bude zaslán odkaz pro stažení dat.",
         "phoneNote": "Na telefonní číslo bude zaslán bezpečnostní kód pro přihlášení."
       },
-      "probandContactConsent": {
-        "title": "Souhlas se zpracováním osobních údajů",
-        "text1": "V souladu se zněním nařízení (EU) 2016/679 ze dne 27. dubna 2016 o ochraně fyzických osob v souvislosti se zpracováním osobních údajů a o volném pohybu těchto údajů a o zrušení směrnice 95/46/ES (obecné nařízení o ochraně osobních údajů) uděluji",
-        "text2": "Masarykově univerzitě, Žerotínovo nám. 617/9, 601 77 Brno, jako správci osobních údajů, na dobu pěti let, souhlas se zpracováním svých osobních údajů v rozsahu:",
-        "text3": "jméno, příjmení, datum narození, e-mailová adresa a telefonní číslo",
-        "text4": "za účelem zaslání naměřených dat elektronickou cestou.",
-        "list": "Beru na vědomí, že podle obecného nařízení o ochraně osobních údajů mám právo:",
-        "list-item1": "udělený souhlas kdykoliv odvolat, aniž by mi za to hrozila jakákoli sankce, a to zasláním e-mailu na elektronickou adresu <underline>{{email}}</underline>,",
-        "list-item2": "požadovat po správci informaci, jaké moje osobní údaje zpracovává, a požádat o kopii těchto údajů,",
-        "list-item3": "vyžádat si u správce přístup k těmto údajům, nechat je aktualizovat nebo opravit, popřípadě požadovat omezení zpracování,",
-        "list-item4": "požadovat po správci výmaz zpracovávaných osobních údajů,",
-        "list-item5": "podat stížnost u Úřadu pro ochranu osobních údajů Pplk. Sochora 27, 170 00 Praha 7, ID datové schránky: qkbaa2n, telefonní číslo +420 234 665 111, webové stránky <underline>{{email1}}</underline>, elektronická adresa <underline>{{email2}}</underline>.",
-        "text5": "Kontakt na pověřence pro ochranu osobních údajů: Iva Zlatušková, telefon 54949 1030, e-mail <underline>{{email}}</underline>.<br/>Informace o zpracování osobních údajů na Masarykově univerzitě jsou k dispozici na úřední desce na adrese <underline>{{link1}}</underline>.<br/>Informace pro subjekty údajů k uplatnění jejich práv jsou k dispozici na úřední desce na adrese <underline>{{link2}}</underline>."
-      },
       "probandInfo": {
         "title": "Osobní údaje",
         "name": "Jméno",
