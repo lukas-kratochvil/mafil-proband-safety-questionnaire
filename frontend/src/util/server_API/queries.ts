@@ -101,7 +101,7 @@ export const GET_PROBAND_CONTACT_CONSENT = `
 query GetProbandContactConsent($locale: String!) {
   probandContactConsent(locale: $locale) {
     title
-    bodyHtml
+    html
   }
 }
 `;

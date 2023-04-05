@@ -47,7 +47,7 @@ export interface IQuestionDTO {
 
 export interface IProbandContactConsentDTO {
   title: string;
-  bodyHtml: string;
+  html: string;
 }
 
 interface IHiddenByGender {

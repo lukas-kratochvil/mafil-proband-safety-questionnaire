@@ -6,5 +6,5 @@ export class ProbandContactConsentEntity {
   title: string;
 
   @Field()
-  bodyHtml: string;
+  html: string;
 }

@@ -3,7 +3,7 @@ import { Injectable, Logger } from "@nestjs/common";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { ProbandContactConsentEntity } from "./entities/proband-contact-consent.entity";
 
-interface IHtmlData {
+export interface IProbandContactConsentTexts {
   title: string;
   text1: string;
   text2: string;
@@ -21,7 +21,7 @@ interface IHtmlData {
   text5Part3: string;
 }
 
-interface ICommonHtmlData {
+export interface IProbandContactConsentCommonItems {
   mafilEmail: string;
   uoouSite: string;
   uoouEmail: string;
@@ -32,8 +32,6 @@ interface ICommonHtmlData {
 
 @Injectable()
 export class ProbandContactConsentService {
-  private readonly logger: Logger;
-
   constructor(private readonly prisma: PrismaService) {}
 
   async findOne(locale: string): Promise<ProbandContactConsentEntity> {
@@ -49,38 +47,38 @@ export class ProbandContactConsentService {
 
     const dirPath = path.join(process.cwd(), "dist", "assets", "proband-contact-consent");
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const data: IHtmlData = require(path.join(dirPath, `${locale}.json`));
+    const texts: IProbandContactConsentTexts = require(path.join(dirPath, `${locale}.json`));
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const commonStyledData: ICommonHtmlData = require(path.join(dirPath, "common.json"));
+    const commonItems: IProbandContactConsentCommonItems = require(path.join(dirPath, "common.json"));
 
     const html = `
-      <p style="margin-top: 0">${data.text1}</p>
+      <p style="margin-top: 0">${texts.text1}</p>
       <p>
-        ${data.text2}
+        ${texts.text2}
         <br />
-        ${data.text3}
+        ${texts.text3}
       </p>
-      <p>${data.text4}</p>
-      <div>${data.list}</div>
+      <p>${texts.text4}</p>
+      <div>${texts.list}</div>
       <ul style="margin: 0">
-      <li>${data.listItem1} <u>${commonStyledData.mafilEmail}</u>,</li>
-      <li>${data.listItem2}</li>
-      <li>${data.listItem3}</li>
-      <li>${data.listItem4}</li>
-      <li>${data.listItem5Part1} <u>${commonStyledData.uoouSite}</u>, ${data.listItem5Part2} <u>${commonStyledData.uoouEmail}</u>.</li>
+      <li>${texts.listItem1} <u>${commonItems.mafilEmail}</u>,</li>
+      <li>${texts.listItem2}</li>
+      <li>${texts.listItem3}</li>
+      <li>${texts.listItem4}</li>
+      <li>${texts.listItem5Part1} <u>${commonItems.uoouSite}</u>, ${texts.listItem5Part2} <u>${commonItems.uoouEmail}</u>.</li>
       </ul>
       <p style="margin-bottom: 0">
-        ${data.text5Part1} <u>${commonStyledData.poverenecEmail}</u>.
-        <br />${data.text5Part2}
-        <br /><u>${commonStyledData.personalInfoProtectionSite}</u>.
-        <br />${data.text5Part3}
-        <br /><u>${commonStyledData.applicationOfDataSubjectRightsSite}</u>.
+        ${texts.text5Part1} <u>${commonItems.poverenecEmail}</u>.
+        <br />${texts.text5Part2}
+        <br /><u>${commonItems.personalInfoProtectionSite}</u>.
+        <br />${texts.text5Part3}
+        <br /><u>${commonItems.applicationOfDataSubjectRightsSite}</u>.
       </p>
     `;
 
     const probandContactConsent = new ProbandContactConsentEntity();
-    probandContactConsent.title = data.title;
-    probandContactConsent.bodyHtml = html;
+    probandContactConsent.title = texts.title;
+    probandContactConsent.html = html;
     return probandContactConsent;
   }
 }

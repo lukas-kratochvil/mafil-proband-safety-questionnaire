@@ -19,7 +19,7 @@ export const FormProbandContactConsent = () => {
   return (
     <FormCardContainer title={data.title}>
       {/* eslint-disable-next-line react/no-danger */}
-      <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.bodyHtml) }} />
+      <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.html) }} />
     </FormCardContainer>
   );
 };
