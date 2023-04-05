@@ -1,0 +1,19 @@
+{
+  "probandContactConsent": {
+    "title": "Consent to the processing of personal data",
+    "text1": "In accordance with the wording of Regulation (EU) 2016/679 of April 27, 2016 on the protection of natural persons in connection with the processing of personal data and on the free movement of such data and on the repeal of Directive 95/46/EC (General Data Protection Regulation) I grant",
+    "text2": "Masaryk University, Žerotínovo nám. 617/9, 601 77 Brno, as the administrator of personal data, for a period of five years, consent to the processing of personal data to the extent of:",
+    "text3": "first name, last name, date of birth, e-mail address and telephone number",
+    "text4": "for the purpose of sending the measured data electronically.",
+    "list": "I understand that according to the General Data Protection Regulation I have the right to:",
+    "listItem1": "revoke the consent given at any time, without being threatened with any sanction, by sending an e-mail to the electronic address",
+    "listItem2": "request information from the administrator about what kind of personal data it processes and request a copy of this data,",
+    "listItem3": "request access to this data from the administrator, have it updated or corrected, or request restriction of processing,",
+    "listItem4": "request the deletion of processed personal data from the administrator,",
+    "listItem5Part1": "file a complaint with the Office for the Protection of Personal Data Lt. Col. Sochora 27, 170 00 Prague 7, mailbox ID: qkbaa2n, phone number +420 234 665 111, website",
+    "listItem5Part2": "email address",
+    "text5Part1": "Contact for the personal data protection officer: Iva Zlatušková, telephone 54949 1030, e-mail",
+    "text5Part2": "Information on the processing of personal data at Masaryk University is available on the official board at",
+    "text5Part3": "Information for data subjects to exercise their rights is available on the official board at"
+  }
+}
