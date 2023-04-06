@@ -4,6 +4,14 @@ import { IPdfCommonItemsFile, IPdfTextsFile } from "@app/pdf/interfaces";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { HTMLCardEntity } from "./entities/html-card.entity";
 
+const DIR_PATH = path.join(process.cwd(), "dist", "assets", "localization");
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const getCommonTextsFile = (): IPdfCommonItemsFile => require(path.join(DIR_PATH, "common.json"));
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const getLocalizedTextsFilePath = (locale: string): IPdfTextsFile => require(path.join(DIR_PATH, `${locale}.json`));
+
 @Injectable()
 export class HTMLCardService {
   constructor(private readonly prisma: PrismaService) {}
@@ -19,11 +27,8 @@ export class HTMLCardService {
       throw new Error(`Locale '${locale}' is not supported!`);
     }
 
-    const dirPath = path.join(process.cwd(), "dist", "assets", "localization");
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const texts: IPdfTextsFile = require(path.join(dirPath, `${locale}.json`));
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const commonItems: IPdfCommonItemsFile = require(path.join(dirPath, "common.json"));
+    const texts: IPdfTextsFile = getLocalizedTextsFilePath(locale);
+    const commonItems: IPdfCommonItemsFile = getCommonTextsFile();
 
     const html = `
       <p style="margin-top: 0">${texts.probandContact.consent.text1}</p>
