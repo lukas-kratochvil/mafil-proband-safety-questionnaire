@@ -35,18 +35,18 @@ export class HTMLCardService {
       <p>${texts.probandContact.consent.text4}</p>
       <div>${texts.probandContact.consent.list}</div>
       <ul style="margin: 0">
-      <li>${texts.probandContact.consent.listItem1} <u>${commonItems.mafilEmail}</u>,</li>
+      <li>${texts.probandContact.consent.listItem1} <u>${commonItems.probandContact.consent.mafilEmail}</u>,</li>
       <li>${texts.probandContact.consent.listItem2}</li>
       <li>${texts.probandContact.consent.listItem3}</li>
       <li>${texts.probandContact.consent.listItem4}</li>
-      <li>${texts.probandContact.consent.listItem5Part1} <u>${commonItems.uoouSite}</u>, ${texts.probandContact.consent.listItem5Part2} <u>${commonItems.uoouEmail}</u>.</li>
+      <li>${texts.probandContact.consent.listItem5Part1} <u>${commonItems.probandContact.consent.uoouSite}</u>, ${texts.probandContact.consent.listItem5Part2} <u>${commonItems.probandContact.consent.uoouEmail}</u>.</li>
       </ul>
       <p style="margin-bottom: 0">
-        ${texts.probandContact.consent.text5Part1} <u>${commonItems.poverenecEmail}</u>.
+        ${texts.probandContact.consent.text5Part1} <u>${commonItems.probandContact.consent.poverenecEmail}</u>.
         <br />${texts.probandContact.consent.text5Part2}
-        <br /><u>${commonItems.personalInfoProtectionSite}</u>.
+        <br /><u>${commonItems.probandContact.consent.personalInfoProtectionSite}</u>.
         <br />${texts.probandContact.consent.text5Part3}
-        <br /><u>${commonItems.applicationOfDataSubjectRightsSite}</u>.
+        <br /><u>${commonItems.probandContact.consent.applicationOfDataSubjectRightsSite}</u>.
       </p>
     `;
 

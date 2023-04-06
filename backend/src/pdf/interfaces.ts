@@ -1,10 +1,14 @@
 export interface IPdfCommonItemsFile {
-  mafilEmail: string;
-  uoouSite: string;
-  uoouEmail: string;
-  poverenecEmail: string;
-  personalInfoProtectionSite: string;
-  applicationOfDataSubjectRightsSite: string;
+  probandContact: {
+    consent: {
+      mafilEmail: string;
+      uoouSite: string;
+      uoouEmail: string;
+      poverenecEmail: string;
+      personalInfoProtectionSite: string;
+      applicationOfDataSubjectRightsSite: string;
+    };
+  };
 }
 
 export interface IPdfTextsFile {
