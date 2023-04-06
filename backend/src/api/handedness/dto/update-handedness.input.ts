@@ -4,6 +4,6 @@ import { CreateHandednessInput } from "./create-handedness.input";
 
 @InputType()
 export class UpdateHandednessInput extends IntersectionType(
-  PickType(HandednessEntity, ["id"], InputType),
+  PickType(HandednessEntity, ["id"] as const, InputType),
   PartialType(CreateHandednessInput)
 ) {}

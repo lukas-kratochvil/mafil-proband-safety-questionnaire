@@ -4,7 +4,7 @@ import { CreateLanguageInput } from "./create-language.input";
 
 @InputType()
 export class UpdateLanguageInput extends IntersectionType(
-  PickType(LanguageEntity, ["id"]),
+  PickType(LanguageEntity, ["id"] as const),
   PartialType(CreateLanguageInput),
   InputType
 ) {}

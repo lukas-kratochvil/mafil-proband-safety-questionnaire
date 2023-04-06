@@ -5,5 +5,5 @@ import { CreateTranslationInput } from "@app/api/utils/dto/create-translation.in
 @InputType()
 export class CreateQuestionInput extends IntersectionType(
   CreateTranslationInput,
-  PickType(QuestionEntity, ["partNumber"], InputType)
+  PickType(QuestionEntity, ["partNumber"] as const, InputType)
 ) {}

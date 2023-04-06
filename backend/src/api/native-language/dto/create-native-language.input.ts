@@ -6,8 +6,8 @@ import { CreateTranslationInput } from "@app/api/utils/dto/create-translation.in
 export class CreateNativeLanguageInput extends IntersectionType(
   CreateTranslationInput,
   IntersectionType(
-    PickType(NativeLanguageEntity, ["code"]),
-    PartialType(PickType(NativeLanguageEntity, ["order"])),
+    PickType(NativeLanguageEntity, ["code"] as const),
+    PartialType(PickType(NativeLanguageEntity, ["order"] as const)),
     InputType
   )
 ) {}

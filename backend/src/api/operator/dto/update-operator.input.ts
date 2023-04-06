@@ -4,6 +4,6 @@ import { CreateOperatorInput } from "./create-operator.input";
 
 @InputType()
 export class UpdateOperatorInput extends IntersectionType(
-  PickType(OperatorEntity, ["id"], InputType),
+  PickType(OperatorEntity, ["id"] as const, InputType),
   PartialType(CreateOperatorInput)
 ) {}

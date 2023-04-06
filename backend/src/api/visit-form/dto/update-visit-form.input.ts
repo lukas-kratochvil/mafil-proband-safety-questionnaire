@@ -6,7 +6,7 @@ import { UpdateAnswerInput } from "./update-answer.input";
 
 @InputType()
 export class UpdateVisitFormInput extends IntersectionType(
-  PickType(VisitFormEntity, ["id"]),
+  PickType(VisitFormEntity, ["id"] as const),
   PartialType(
     PickType(CreateVisitFormInput, [
       "state",
@@ -22,7 +22,7 @@ export class UpdateVisitFormInput extends IntersectionType(
       "visualCorrectionDioptre",
       "email",
       "phone",
-    ])
+    ] as const)
   ),
   InputType
 ) {

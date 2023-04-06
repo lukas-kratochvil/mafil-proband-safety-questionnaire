@@ -4,6 +4,6 @@ import { NativeLanguageTranslationEntity } from "@app/api/native-language-transl
 @InputType()
 export class CreateNativeLanguageTranslationInput extends PickType(
   NativeLanguageTranslationEntity,
-  ["languageId", "nativeLanguageId", "text"],
+  ["languageId", "nativeLanguageId", "text"] as const,
   InputType
 ) {}

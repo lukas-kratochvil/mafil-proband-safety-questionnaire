@@ -5,5 +5,5 @@ import { HandednessEntity } from "../entities/handedness.entity";
 @InputType()
 export class CreateHandednessInput extends IntersectionType(
   CreateTranslationInput,
-  PickType(HandednessEntity, ["code"], InputType)
+  PickType(HandednessEntity, ["code"] as const, InputType)
 ) {}

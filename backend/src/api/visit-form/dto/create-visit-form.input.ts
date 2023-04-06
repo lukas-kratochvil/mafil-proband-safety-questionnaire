@@ -14,9 +14,9 @@ export class CreateVisitFormInput extends IntersectionType(
     "heightCm",
     "weightKg",
     "visualCorrectionDioptre",
-  ]),
+  ] as const),
   // state is IN_APPROVAL for a duplicated visit that is going to be approved
-  PartialType(PickType(VisitFormEntity, ["state", "email", "phone"])),
+  PartialType(PickType(VisitFormEntity, ["state", "email", "phone"] as const)),
   InputType
 ) {
   @Field()

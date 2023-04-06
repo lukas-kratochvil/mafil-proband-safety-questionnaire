@@ -3,7 +3,7 @@ import { AnswerEntity } from "@app/api/visit-form/entities/answer.entity";
 
 @InputType()
 export class UpdateAnswerInput extends IntersectionType(
-  PickType(AnswerEntity, ["questionId"]),
-  PartialType(PickType(AnswerEntity, ["answer", "comment"])),
+  PickType(AnswerEntity, ["questionId"] as const),
+  PartialType(PickType(AnswerEntity, ["answer", "comment"] as const)),
   InputType
 ) {}

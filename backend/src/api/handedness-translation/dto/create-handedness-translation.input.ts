@@ -4,6 +4,6 @@ import { HandednessTranslationEntity } from "@app/api/handedness-translation/ent
 @InputType()
 export class CreateHandednessTranslationInput extends PickType(
   HandednessTranslationEntity,
-  ["languageId", "handednessId", "text"],
+  ["languageId", "handednessId", "text"] as const,
   InputType
 ) {}

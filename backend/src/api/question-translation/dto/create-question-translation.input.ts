@@ -4,6 +4,6 @@ import { QuestionTranslationEntity } from "@app/api/question-translation/entitie
 @InputType()
 export class CreateQuestionTranslationInput extends PickType(
   QuestionTranslationEntity,
-  ["languageId", "questionId", "text"],
+  ["languageId", "questionId", "text"] as const,
   InputType
 ) {}

@@ -4,6 +4,6 @@ import { GenderTranslationEntity } from "@app/api/gender-translation/entities/ge
 @InputType()
 export class CreateGenderTranslationInput extends PickType(
   GenderTranslationEntity,
-  ["languageId", "genderId", "text"],
+  ["languageId", "genderId", "text"] as const,
   InputType
 ) {}

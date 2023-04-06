@@ -3,6 +3,6 @@ import { QuestionEntity } from "@app/api/question/entities/question.entity";
 
 @InputType()
 export class UpdateQuestionInput extends IntersectionType(
-  PickType(QuestionEntity, ["id"], InputType),
-  PartialType(PickType(QuestionEntity, ["isValid", "partNumber"], InputType))
+  PickType(QuestionEntity, ["id"] as const, InputType),
+  PartialType(PickType(QuestionEntity, ["isValid", "partNumber"] as const, InputType))
 ) {}

@@ -5,5 +5,5 @@ import { GenderEntity } from "../entities/gender.entity";
 @InputType()
 export class CreateGenderInput extends IntersectionType(
   CreateTranslationInput,
-  PickType(GenderEntity, ["code"], InputType)
+  PickType(GenderEntity, ["code"] as const, InputType)
 ) {}

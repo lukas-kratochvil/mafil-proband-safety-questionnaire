@@ -4,10 +4,10 @@ import { CreateQuestionInput } from "./create-question.input";
 
 @InputType()
 export class UpdateQuestionTextsInput extends IntersectionType(
-  PickType(QuestionEntity, ["id"]),
+  PickType(QuestionEntity, ["id"] as const),
   IntersectionType(
-    PartialType(PickType(CreateQuestionInput, ["partNumber"])),
-    PickType(CreateQuestionInput, ["translations"])
+    PartialType(PickType(CreateQuestionInput, ["partNumber"] as const)),
+    PickType(CreateQuestionInput, ["translations"] as const)
   ),
   InputType
 ) {}
