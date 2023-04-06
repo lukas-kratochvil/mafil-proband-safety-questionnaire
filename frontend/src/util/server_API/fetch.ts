@@ -26,6 +26,7 @@ import {
   GET_HANDEDNESSES,
   GET_NATIVE_LANGUAGES,
   GET_PROBAND_CONTACT_CONSENT,
+  GET_PROBAND_CONTACT_REQUEST,
   GET_QUESTION,
   GET_WAITING_ROOM_VISIT_FORM,
   GET_WAITING_ROOM_VISIT_FORMS,
@@ -40,6 +41,7 @@ import {
   HandednessesResponse,
   NativeLanguagesResponse,
   ProbandContactConsentResponse,
+  ProbandContactRequestResponse,
   QuestionResponse,
   UpdateVisitFormResponse,
   WaitingRoomVisitFormResponse,
@@ -79,6 +81,21 @@ export const fetchQuestion = async (questionId: string): Promise<IQuestionHidden
   const variables = { id: questionId };
   const { data } = await axiosConfig.serverApi.post<QuestionResponse>("", { query: GET_QUESTION, variables });
   return data.data.question;
+};
+
+export const fetchProbandContactRequest = async (
+  locale: LocalizationKeys,
+  name: string,
+  surname: string,
+  birthdateStr: string,
+  currentDateStr: string
+): Promise<IHTMLCardDTO> => {
+  const variables = { locale, name, surname, birthdateStr, currentDateStr };
+  const { data } = await axiosConfig.serverApi.post<ProbandContactRequestResponse>("", {
+    query: GET_PROBAND_CONTACT_REQUEST,
+    variables,
+  });
+  return data.data.probandContactRequest;
 };
 
 export const fetchProbandContactConsent = async (locale: LocalizationKeys): Promise<IHTMLCardDTO> => {

@@ -53,6 +53,12 @@ export type QuestionResponse = {
   };
 };
 
+export type ProbandContactRequestResponse = {
+  data: {
+    probandContactRequest: IHTMLCardDTO;
+  };
+};
+
 export type ProbandContactConsentResponse = {
   data: {
     probandContactConsent: IHTMLCardDTO;

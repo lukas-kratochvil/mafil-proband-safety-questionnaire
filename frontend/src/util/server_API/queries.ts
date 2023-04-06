@@ -97,6 +97,15 @@ query GetQuestion($id: UUID!) {
 }
 `;
 
+export const GET_PROBAND_CONTACT_REQUEST = `
+query GetProbandContactRequest($locale: String!, $name: String!, $surname: String!, $birthdateStr: String!, $currentDateStr: String!) {
+  probandContactRequest(locale: $locale, name: $name, surname: $surname, birthdateStr: $birthdateStr, currentDateStr: $currentDateStr) {
+    title
+    html
+  }
+}
+`;
+
 export const GET_PROBAND_CONTACT_CONSENT = `
 query GetProbandContactConsent($locale: String!) {
   probandContactConsent(locale: $locale) {

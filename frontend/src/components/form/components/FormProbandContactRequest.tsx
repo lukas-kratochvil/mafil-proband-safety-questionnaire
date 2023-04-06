@@ -1,9 +1,12 @@
 import { Grid, Typography } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
+import DOMPurify from "dompurify";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { defaultNS } from "@app/i18n";
+import i18n, { defaultNS, LocalizationKeys } from "@app/i18n";
 import { FormPropType } from "@app/model/form";
+import { fetchProbandContactRequest } from "@app/util/server_API/fetch";
 import { FormTextField } from "../inputs/FormTextField";
 import { FormCardContainer } from "./FormCardContainer";
 
@@ -11,8 +14,25 @@ export const FormProbandContactRequest = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandContactRequest" });
   const { getValues } = useFormContext<FormPropType>();
 
+  const name = getValues("name");
+  const surname = getValues("surname");
+  const birthdateStr = format(getValues("birthdate") as Date, "d.M.y");
+  const currentDateStr = format(new Date(), "d.M.y");
+
+  const { data } = useQuery({
+    queryKey: ["probandContactRequest", i18n.language, name, surname, birthdateStr, currentDateStr],
+    queryFn: () =>
+      fetchProbandContactRequest(i18n.language as LocalizationKeys, name, surname, birthdateStr, currentDateStr),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
+
+  if (data === undefined) {
+    return null;
+  }
+
   return (
-    <FormCardContainer title={t("title")}>
+    <FormCardContainer title={data.title}>
       <Grid
         container
         direction="row"
@@ -23,14 +43,8 @@ export const FormProbandContactRequest = () => {
           item
           xs={2}
         >
-          <Typography>
-            {t("text", {
-              name: getValues("name"),
-              surname: getValues("surname"),
-              birthdate: format(getValues("birthdate") as Date, "d.M.y"),
-              currentDate: format(new Date(), "d.M.y"),
-            })}
-          </Typography>
+          {/* eslint-disable-next-line react/no-danger */}
+          <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.html) }} />
         </Grid>
         <Grid
           item
