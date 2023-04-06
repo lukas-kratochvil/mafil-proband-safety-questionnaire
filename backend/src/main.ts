@@ -1,5 +1,6 @@
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
+import helmet from "helmet";
 import { AppModule } from "./app.module";
 import { createWinstonLogger } from "./log/winston-logger";
 
@@ -9,6 +10,7 @@ async function bootstrap() {
     cors: true,
     logger,
   });
+  app.use(helmet());
   const configService = app.get(ConfigService);
 
   // TODO: use CORS? Origins 'localhost' and '127.0.0.1' are different.
