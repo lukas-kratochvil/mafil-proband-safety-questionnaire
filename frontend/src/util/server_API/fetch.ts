@@ -9,8 +9,8 @@ import {
   ICreateProbandVisitFormInput,
   IGenderDTO,
   IHandednessDTO,
+  IHTMLCardDTO,
   INativeLanguageDTO,
-  IProbandContactConsentDTO,
   IQuestionDTO,
   IQuestionHiddenByGendersDTO,
   ISendVisitFormFromWaitingRoomForApprovalInput,
@@ -81,7 +81,7 @@ export const fetchQuestion = async (questionId: string): Promise<IQuestionHidden
   return data.data.question;
 };
 
-export const fetchProbandContactConsent = async (locale: LocalizationKeys): Promise<IProbandContactConsentDTO> => {
+export const fetchProbandContactConsent = async (locale: LocalizationKeys): Promise<IHTMLCardDTO> => {
   const variables = { locale };
   const { data } = await axiosConfig.serverApi.post<ProbandContactConsentResponse>("", {
     query: GET_PROBAND_CONTACT_CONSENT,

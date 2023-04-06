@@ -2,8 +2,8 @@ import {
   IApprovalRoomVisitFormDTO,
   IGenderDTO,
   IHandednessDTO,
+  IHTMLCardDTO,
   INativeLanguageDTO,
-  IProbandContactConsentDTO,
   IQuestionDTO,
   IQuestionHiddenByGendersDTO,
   IWaitingRoomVisitFormDTO,
@@ -55,7 +55,7 @@ export type QuestionResponse = {
 
 export type ProbandContactConsentResponse = {
   data: {
-    probandContactConsent: IProbandContactConsentDTO;
+    probandContactConsent: IHTMLCardDTO;
   };
 };
 

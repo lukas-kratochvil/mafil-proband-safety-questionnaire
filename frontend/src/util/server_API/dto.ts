@@ -45,7 +45,7 @@ export interface IQuestionDTO {
   translations: ITranslation[];
 }
 
-export interface IProbandContactConsentDTO {
+export interface IHTMLCardDTO {
   title: string;
   html: string;
 }
