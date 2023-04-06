@@ -14,6 +14,8 @@ export class GraphQLConfigService implements GqlOptionsFactory {
   createGqlOptions(): ApolloDriverConfig {
     return {
       autoSchemaFile: path.join(process.cwd(), "graphql-schema.gql"),
+      // passing original request and response objects into the GraphQL context
+      context: ({ req, res }: { req: any, res: any }) => ({ req, res }),
       resolvers: {
         UUID: UUID,
         Void: Void,
