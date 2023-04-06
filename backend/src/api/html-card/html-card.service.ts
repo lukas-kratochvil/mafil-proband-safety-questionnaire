@@ -22,7 +22,7 @@ const DIR_PATH = path.join(process.cwd(), "dist", "assets", "localization");
 const getCommonTextsFile = (): IPdfCommonItemsFile => require(path.join(DIR_PATH, "common.json"));
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const getLocalizedTextsFilePath = (locale: string): IPdfTextsFile => require(path.join(DIR_PATH, `${locale}.json`));
+const getLocalizedTextsFile = (locale: string): IPdfTextsFile => require(path.join(DIR_PATH, `${locale}.json`));
 
 const createHTMLCard = (title: string, html: string): HTMLCardEntity => {
   const probandContactConsent = new HTMLCardEntity();
@@ -38,7 +38,7 @@ export class HTMLCardService {
   async getProbandContactConsent(locale: string): Promise<HTMLCardEntity | never> {
     await checkLocaleValidity(this.prisma, locale);
 
-    const texts: IPdfTextsFile = getLocalizedTextsFilePath(locale);
+    const texts: IPdfTextsFile = getLocalizedTextsFile(locale);
     const commonItems: IPdfCommonItemsFile = getCommonTextsFile();
 
     const html = `
