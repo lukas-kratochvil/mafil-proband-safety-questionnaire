@@ -45,7 +45,6 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - THROTTLE_TTL=${THROTTLE_TTL}
       - THROTTLE_LIMIT=${THROTTLE_LIMIT}
-      - MAFILDB_API_URL=${MAFILDB_API_URL}
       - API_KEY_FOR_WEB=${SERVER_API_KEY_FOR_WEB}
       - WEB_URL=${WEB_URL}
     restart: unless-stopped
