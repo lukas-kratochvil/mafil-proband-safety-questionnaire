@@ -22,7 +22,12 @@ export const PhantomForm = () => {
     data: questions,
     isLoading,
     isError,
-  } = useQuery({ queryKey: ["currentQuestions"], queryFn: fetchCurrentQuestions });
+  } = useQuery({
+    queryKey: ["currentQuestions"],
+    queryFn: fetchCurrentQuestions,
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
 
   const formButtons: IFormButtonsProps = {
     submitButtonProps: {

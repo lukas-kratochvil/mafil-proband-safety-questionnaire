@@ -10,6 +10,8 @@ export const FormProbandContactConsent = () => {
   const { data } = useQuery({
     queryKey: ["probandContactConsent", i18n.language],
     queryFn: () => fetchProbandContactConsent(i18n.language as LocalizationKeys),
+    staleTime: Infinity,
+    cacheTime: Infinity,
   });
 
   if (data === undefined) {

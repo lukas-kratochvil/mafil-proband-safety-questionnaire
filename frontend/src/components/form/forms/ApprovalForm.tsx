@@ -24,7 +24,12 @@ export const ApprovalForm = () => {
     data: visitForm,
     isLoading,
     isError,
-  } = useQuery({ queryKey: ["visitForm", id], queryFn: () => fetchApprovalRoomVisitForm(id) });
+  } = useQuery({
+    queryKey: ["visitForm", id],
+    queryFn: () => fetchApprovalRoomVisitForm(id),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
   const navigate = useNavigate();
   const { operator } = useAuthDev();
   const { getValues, setValue, trigger } = useFormContext<FormPropType>();

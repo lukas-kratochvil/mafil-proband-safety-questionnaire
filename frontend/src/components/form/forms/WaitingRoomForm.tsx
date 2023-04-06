@@ -26,7 +26,12 @@ export const WaitingRoomForm = () => {
     data: visitForm,
     isLoading,
     isError,
-  } = useQuery({ queryKey: ["visitForm", id], queryFn: () => fetchWaitingRoomVisitForm(id) });
+  } = useQuery({
+    queryKey: ["visitForm", id],
+    queryFn: () => fetchWaitingRoomVisitForm(id),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { operator } = useAuthDev();

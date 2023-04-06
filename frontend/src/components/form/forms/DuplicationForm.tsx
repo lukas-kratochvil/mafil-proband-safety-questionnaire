@@ -24,7 +24,11 @@ import { FormContainer } from "./FormContainer";
 
 export const DuplicationForm = () => {
   const { id } = useParams();
-  const { data: visit, isLoading, isError } = useQuery({ queryKey: ["visit", id], queryFn: () => fetchVisit(id) });
+  const {
+    data: visit,
+    isLoading,
+    isError,
+  } = useQuery({ queryKey: ["visit", id], queryFn: () => fetchVisit(id), staleTime: Infinity, cacheTime: Infinity });
   const navigate = useNavigate();
   const { operator } = useAuthDev();
   const { getValues, setValue, trigger } = useFormContext<FormPropType>();

@@ -24,6 +24,8 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
   const { data: question } = useQuery({
     queryKey: ["question", qac.questionId],
     queryFn: () => fetchQuestion(qac.questionId),
+    staleTime: Infinity,
+    cacheTime: Infinity,
   });
 
   const [hideQuestion, setHideQuestion] = useState<boolean>(false);
