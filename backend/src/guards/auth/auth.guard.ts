@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
   // TODO: implement app authorization somehow
   async canActivate(exContext: ExecutionContext): Promise<boolean> {
     if (exContext.getType<GqlContextType>() !== "graphql") {
-      this.logger.error(exContext);
+      this.logger.error(`Invalid execution context type '${exContext.getType()}'!`);
       return false;
     }
 
@@ -27,13 +27,16 @@ export class AuthGuard implements CanActivate {
     }
 
     const gqlExContext = GqlExecutionContext.create(exContext);
-    const apiKey = gqlExContext.getContext().req.headers["server-api-key"] || "";
+    const gqlContext = gqlExContext.getContext();
+    const request = gqlContext.req;
+    const apiKey = request.headers["server-api-key"] || "";
 
     if (apiKey === this.config.get("API_KEY_FOR_WEB")) {
       return true;
     }
 
-    this.logger.error(`Request has invalid API key: '${apiKey}'`);
+    const ip = request.ip || "";
+    this.logger.error(`Request from ${ip} has invalid API key: '${apiKey}'`);
     return false;
   }
 }
