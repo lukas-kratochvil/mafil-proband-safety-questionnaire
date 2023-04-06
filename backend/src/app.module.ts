@@ -7,7 +7,7 @@ import { GraphQLApiModule } from "./api/graphql-api.module";
 import { GraphQLConfigService } from "./api/graphql-config.service";
 import { CronModule } from "./cron/cron.module";
 import { AuthGuardModule } from "./guards/auth/auth.module";
-import { LoggerMiddleware } from "./log/logger.middleware";
+import { LoggerMiddleware } from "./middleware/logger.middleware";
 
 @Module({
   imports: [
