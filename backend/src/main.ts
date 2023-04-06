@@ -2,7 +2,7 @@ import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import helmet from "helmet";
 import { AppModule } from "./app.module";
-import { createWinstonLogger } from "./log/winston-logger";
+import { createWinstonLogger } from "./winston-logger";
 
 async function bootstrap() {
   const logger = createWinstonLogger();
