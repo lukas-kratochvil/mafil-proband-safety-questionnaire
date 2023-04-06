@@ -5,5 +5,6 @@ import { HandednessTranslationService } from "./handedness-translation.service";
 
 @Module({
   providers: [HandednessTranslationResolver, HandednessTranslationService, PrismaService],
+  exports: [HandednessTranslationResolver],
 })
 export class HandednessTranslationModule {}

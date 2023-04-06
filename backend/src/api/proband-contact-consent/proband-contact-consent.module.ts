@@ -5,5 +5,6 @@ import { ProbandContactConsentService } from "./proband-contact-consent.service"
 
 @Module({
   providers: [ProbandContactConsentResolver, ProbandContactConsentService, PrismaService],
+  exports: [ProbandContactConsentResolver],
 })
 export class ProbandContactConsentModule {}

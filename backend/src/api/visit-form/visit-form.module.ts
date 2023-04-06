@@ -5,5 +5,6 @@ import { VisitFormService } from "./visit-form.service";
 
 @Module({
   providers: [VisitFormResolver, VisitFormService, PrismaService],
+  exports: [VisitFormResolver],
 })
 export class VisitFormModule {}

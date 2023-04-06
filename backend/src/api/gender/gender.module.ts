@@ -1,10 +1,12 @@
 import { Module } from "@nestjs/common";
-import { LanguageService } from "@app/api/language/language.service";
 import { PrismaService } from "@app/prisma/prisma.service";
+import { LanguageModule } from "../language/language.module";
 import { GenderResolver } from "./gender.resolver";
 import { GenderService } from "./gender.service";
 
 @Module({
-  providers: [GenderResolver, GenderService, PrismaService, LanguageService],
+  imports: [LanguageModule],
+  providers: [GenderResolver, GenderService, PrismaService],
+  exports: [GenderResolver],
 })
 export class GenderModule {}

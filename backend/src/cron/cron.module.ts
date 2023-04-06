@@ -4,5 +4,6 @@ import { CronPrismaTasksService } from "./cron-prisma-tasks.service";
 
 @Module({
   providers: [CronPrismaTasksService, PrismaService],
+  exports: [CronPrismaTasksService],
 })
 export class CronModule {}

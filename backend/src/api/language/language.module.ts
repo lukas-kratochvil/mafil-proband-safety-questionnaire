@@ -5,5 +5,6 @@ import { LanguageService } from "./language.service";
 
 @Module({
   providers: [LanguageResolver, LanguageService, PrismaService],
+  exports: [LanguageResolver, LanguageService],
 })
 export class LanguageModule {}

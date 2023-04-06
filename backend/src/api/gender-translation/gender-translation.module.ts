@@ -5,5 +5,6 @@ import { GenderTranslationService } from "./gender-translation.service";
 
 @Module({
   providers: [GenderTranslationResolver, GenderTranslationService, PrismaService],
+  exports: [GenderTranslationResolver],
 })
 export class GenderTranslationModule {}

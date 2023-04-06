@@ -5,5 +5,6 @@ import { NativeLanguageTranslationService } from "./native-language-translation.
 
 @Module({
   providers: [NativeLanguageTranslationResolver, NativeLanguageTranslationService, PrismaService],
+  exports: [NativeLanguageTranslationResolver],
 })
 export class NativeLanguageTranslationModule {}

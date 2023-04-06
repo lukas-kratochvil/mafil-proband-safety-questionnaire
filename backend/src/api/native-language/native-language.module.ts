@@ -1,10 +1,12 @@
 import { Module } from "@nestjs/common";
-import { LanguageService } from "@app/api/language/language.service";
 import { PrismaService } from "@app/prisma/prisma.service";
+import { LanguageModule } from "../language/language.module";
 import { NativeLanguageResolver } from "./native-language.resolver";
 import { NativeLanguageService } from "./native-language.service";
 
 @Module({
-  providers: [NativeLanguageResolver, NativeLanguageService, PrismaService, LanguageService],
+  imports: [LanguageModule],
+  providers: [NativeLanguageResolver, NativeLanguageService, PrismaService],
+  exports: [NativeLanguageResolver],
 })
 export class NativeLanguageModule {}

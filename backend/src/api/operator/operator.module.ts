@@ -5,5 +5,6 @@ import { OperatorService } from "./operator.service";
 
 @Module({
   providers: [OperatorResolver, OperatorService, PrismaService],
+  exports: [OperatorResolver],
 })
 export class OperatorModule {}

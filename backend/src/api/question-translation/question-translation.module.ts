@@ -5,5 +5,6 @@ import { QuestionTranslationService } from "./question-translation.service";
 
 @Module({
   providers: [QuestionTranslationResolver, QuestionTranslationService, PrismaService],
+  exports: [QuestionTranslationResolver],
 })
 export class QuestionTranslationModule {}
