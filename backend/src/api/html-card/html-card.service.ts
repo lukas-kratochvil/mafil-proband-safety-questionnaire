@@ -2,13 +2,13 @@ import path from "path";
 import { Injectable } from "@nestjs/common";
 import { IPdfCommonItemsFile, IPdfTextsFile } from "@app/pdf/interfaces";
 import { PrismaService } from "@app/prisma/prisma.service";
-import { ProbandContactConsentEntity } from "./entities/proband-contact-consent.entity";
+import { HTMLCardEntity } from "./entities/html-card.entity";
 
 @Injectable()
-export class ProbandContactConsentService {
+export class HTMLCardService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findOne(locale: string): Promise<ProbandContactConsentEntity> {
+  async getProbandContactConsent(locale: string): Promise<HTMLCardEntity> {
     try {
       await this.prisma.language.findUniqueOrThrow({
         where: {
@@ -50,7 +50,7 @@ export class ProbandContactConsentService {
       </p>
     `;
 
-    const probandContactConsent = new ProbandContactConsentEntity();
+    const probandContactConsent = new HTMLCardEntity();
     probandContactConsent.title = texts.probandContact.consent.title;
     probandContactConsent.html = html;
     return probandContactConsent;

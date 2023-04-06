@@ -2,25 +2,25 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { PrismaClient } from "@prisma/client";
 import { DeepMockProxy, mockDeep } from "jest-mock-extended";
 import { PrismaService } from "@app/prisma/prisma.service";
-import { ProbandContactConsentResolver } from "./proband-contact-consent.resolver";
+import { HTMLCardService } from "./html-card.service";
 
-describe("ProbandContactConsentResolver", () => {
-  let probandContactConsentResolver: ProbandContactConsentResolver;
+describe("HTMLCardService", () => {
+  let htmlCardService: HTMLCardService;
   let prisma: DeepMockProxy<PrismaClient>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ProbandContactConsentResolver, PrismaService],
+      providers: [HTMLCardService, PrismaService],
     })
       .overrideProvider(PrismaService)
       .useValue(mockDeep<PrismaClient>())
       .compile();
 
-    probandContactConsentResolver = module.get<ProbandContactConsentResolver>(ProbandContactConsentResolver);
+    htmlCardService = module.get<HTMLCardService>(HTMLCardService);
     prisma = module.get<PrismaService, DeepMockProxy<PrismaClient>>(PrismaService);
   });
 
   it("should be defined", () => {
-    expect(probandContactConsentResolver).toBeDefined();
+    expect(htmlCardService).toBeDefined();
   });
 });

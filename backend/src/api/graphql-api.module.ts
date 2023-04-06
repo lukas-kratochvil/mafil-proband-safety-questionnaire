@@ -5,9 +5,9 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
 import { GenderModule } from "./gender/gender.module";
 import { HandednessModule } from "./handedness/handedness.module";
+import { HTMLCardModule } from "./html-card/html-card.module";
 import { NativeLanguageModule } from "./native-language/native-language.module";
 import { OperatorModule } from "./operator/operator.module";
-import { ProbandContactConsentModule } from "./proband-contact-consent/proband-contact-consent.module";
 import { QuestionModule } from "./question/question.module";
 import { UUID } from "./utils/scalars/uuid-scalar";
 import { Void } from "./utils/scalars/void-scalar";
@@ -33,9 +33,9 @@ import { VisitFormModule } from "./visit-form/visit-form.module";
     // only GraphQL resolvers imported from the modules below can be accessed via the GraphQL API
     GenderModule,
     HandednessModule,
+    HTMLCardModule,
     NativeLanguageModule,
     OperatorModule,
-    ProbandContactConsentModule,
     QuestionModule,
     VisitFormModule,
   ],
