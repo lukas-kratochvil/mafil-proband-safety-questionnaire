@@ -63,7 +63,7 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   @Field()
   personalId: string;
 
-  @Field(() => Date)
+  @Field()
   birthdate: Date;
 
   @Field(() => Float)

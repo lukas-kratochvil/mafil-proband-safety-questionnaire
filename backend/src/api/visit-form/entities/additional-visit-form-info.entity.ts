@@ -31,9 +31,9 @@ export class AdditionalVisitFormInfoEntity extends BaseEntity implements Additio
   @Field()
   deviceName: string;
 
-  @Field(() => Date)
+  @Field()
   measuredAt: Date;
 
-  @Field(() => Date)
+  @Field()
   finalizedAt: Date;
 }

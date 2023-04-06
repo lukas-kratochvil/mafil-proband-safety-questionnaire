@@ -6,7 +6,7 @@ export class BaseEntity {
   @Field(() => UUID)
   id: string;
 
-  @Field(() => Date)
+  @Field()
   createdAt: Date;
 
   @HideField()
