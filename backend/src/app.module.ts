@@ -5,8 +5,8 @@ import { GraphQLModule } from "@nestjs/graphql";
 import { ScheduleModule } from "@nestjs/schedule";
 import { GraphQLApiModule } from "./api/graphql-api.module";
 import { GraphQLConfigService } from "./api/graphql-config.service";
-import { AuthModule } from "./auth/auth.module";
 import { CronModule } from "./cron/cron.module";
+import { AuthGuardModule } from "./guards/auth/auth.module";
 import { LoggerMiddleware } from "./log/logger.middleware";
 
 @Module({
@@ -18,7 +18,7 @@ import { LoggerMiddleware } from "./log/logger.middleware";
       useClass: GraphQLConfigService,
     }),
     GraphQLApiModule,
-    AuthModule,
+    AuthGuardModule,
     CronModule,
     ScheduleModule.forRoot(),
   ],

@@ -26,8 +26,8 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
-    const graphqlContext = GqlExecutionContext.create(exContext);
-    const apiKey = graphqlContext.getContext().req.headers["server-api-key"] || "";
+    const gqlExContext = GqlExecutionContext.create(exContext);
+    const apiKey = gqlExContext.getContext().req.headers["server-api-key"] || "";
 
     if (apiKey === this.config.get("API_KEY_FOR_WEB")) {
       return true;
