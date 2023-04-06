@@ -2,6 +2,7 @@ import path from "path";
 import { Injectable } from "@nestjs/common";
 import { IPdfCommonItemsFile, IPdfTextsFile } from "@app/pdf/interfaces";
 import { PrismaService } from "@app/prisma/prisma.service";
+import { ProbandContactRequestArgs } from "./dto/proband-contact-request.args";
 import { HTMLCardEntity } from "./entities/html-card.entity";
 
 const checkLocaleValidity = async (prisma: PrismaService, locale: string): Promise<void | never> => {
@@ -14,7 +15,7 @@ const checkLocaleValidity = async (prisma: PrismaService, locale: string): Promi
   } catch {
     throw new Error(`Locale '${locale}' is not supported!`);
   }
-}
+};
 
 const DIR_PATH = path.join(process.cwd(), "dist", "assets", "localization");
 
@@ -29,11 +30,21 @@ const createHTMLCard = (title: string, html: string): HTMLCardEntity => {
   probandContactConsent.title = title;
   probandContactConsent.html = html;
   return probandContactConsent;
-}
+};
 
 @Injectable()
 export class HTMLCardService {
   constructor(private readonly prisma: PrismaService) {}
+
+  async getProbandContactRequest(locale: string, data: ProbandContactRequestArgs): Promise<HTMLCardEntity | never> {
+    await checkLocaleValidity(this.prisma, locale);
+
+    const texts: IPdfTextsFile = getLocalizedTextsFile(locale);
+
+    const html = `${texts.probandContact.request.text1}, ${data.name} ${data.surname} ${data.birthdateStr}, ${texts.probandContact.request.text2} ${data.currentDateStr} ${texts.probandContact.request.text3}:`;
+
+    return createHTMLCard(texts.probandContact.request.title, html);
+  }
 
   async getProbandContactConsent(locale: string): Promise<HTMLCardEntity | never> {
     await checkLocaleValidity(this.prisma, locale);
