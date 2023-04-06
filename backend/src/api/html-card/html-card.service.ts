@@ -4,6 +4,18 @@ import { IPdfCommonItemsFile, IPdfTextsFile } from "@app/pdf/interfaces";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { HTMLCardEntity } from "./entities/html-card.entity";
 
+const checkLocaleValidity = async (prisma: PrismaService, locale: string): Promise<void | never> => {
+  try {
+    await prisma.language.findUniqueOrThrow({
+      where: {
+        code: locale,
+      },
+    });
+  } catch {
+    throw new Error(`Locale '${locale}' is not supported!`);
+  }
+}
+
 const DIR_PATH = path.join(process.cwd(), "dist", "assets", "localization");
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -16,16 +28,8 @@ const getLocalizedTextsFilePath = (locale: string): IPdfTextsFile => require(pat
 export class HTMLCardService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getProbandContactConsent(locale: string): Promise<HTMLCardEntity> {
-    try {
-      await this.prisma.language.findUniqueOrThrow({
-        where: {
-          code: locale,
-        },
-      });
-    } catch {
-      throw new Error(`Locale '${locale}' is not supported!`);
-    }
+  async getProbandContactConsent(locale: string): Promise<HTMLCardEntity | never> {
+    await checkLocaleValidity(this.prisma, locale);
 
     const texts: IPdfTextsFile = getLocalizedTextsFilePath(locale);
     const commonItems: IPdfCommonItemsFile = getCommonTextsFile();
