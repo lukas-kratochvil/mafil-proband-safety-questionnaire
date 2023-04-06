@@ -5,7 +5,7 @@ import { ScheduleModule } from "@nestjs/schedule";
 import { ThrottlerModule } from "@nestjs/throttler";
 import { GraphQLApiModule } from "./api/graphql-api.module";
 import { CronModule } from "./cron/cron.module";
-import { AuthGuardModule } from "./guards/auth/auth.module";
+import { AuthGuard } from "./guards/auth/auth.guard";
 import { ThrottlerGuard } from "./guards/throttler/throttler.guard";
 import { LoggerMiddleware } from "./middleware/logger.middleware";
 
@@ -21,7 +21,6 @@ import { LoggerMiddleware } from "./middleware/logger.middleware";
       }),
     }),
     GraphQLApiModule,
-    AuthGuardModule,
     CronModule,
     ScheduleModule.forRoot(),
   ],
@@ -30,6 +29,10 @@ import { LoggerMiddleware } from "./middleware/logger.middleware";
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
     },
   ],
 })
