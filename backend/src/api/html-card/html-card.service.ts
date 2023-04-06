@@ -24,6 +24,13 @@ const getCommonTextsFile = (): IPdfCommonItemsFile => require(path.join(DIR_PATH
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const getLocalizedTextsFilePath = (locale: string): IPdfTextsFile => require(path.join(DIR_PATH, `${locale}.json`));
 
+const createHTMLCard = (title: string, html: string): HTMLCardEntity => {
+  const probandContactConsent = new HTMLCardEntity();
+  probandContactConsent.title = title;
+  probandContactConsent.html = html;
+  return probandContactConsent;
+}
+
 @Injectable()
 export class HTMLCardService {
   constructor(private readonly prisma: PrismaService) {}
@@ -59,9 +66,6 @@ export class HTMLCardService {
       </p>
     `;
 
-    const probandContactConsent = new HTMLCardEntity();
-    probandContactConsent.title = texts.probandContact.consent.title;
-    probandContactConsent.html = html;
-    return probandContactConsent;
+    return createHTMLCard(texts.probandContact.consent.title, html);
   }
 }
