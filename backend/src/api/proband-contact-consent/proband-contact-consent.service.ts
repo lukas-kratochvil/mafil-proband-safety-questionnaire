@@ -26,32 +26,32 @@ export class ProbandContactConsentService {
     const commonItems: IPdfCommonItemsFile = require(path.join(dirPath, "common.json"));
 
     const html = `
-      <p style="margin-top: 0">${texts.probandContactConsent.text1}</p>
+      <p style="margin-top: 0">${texts.probandContact.consent.text1}</p>
       <p>
-        ${texts.probandContactConsent.text2}
+        ${texts.probandContact.consent.text2}
         <br />
-        ${texts.probandContactConsent.text3}
+        ${texts.probandContact.consent.text3}
       </p>
-      <p>${texts.probandContactConsent.text4}</p>
-      <div>${texts.probandContactConsent.list}</div>
+      <p>${texts.probandContact.consent.text4}</p>
+      <div>${texts.probandContact.consent.list}</div>
       <ul style="margin: 0">
-      <li>${texts.probandContactConsent.listItem1} <u>${commonItems.mafilEmail}</u>,</li>
-      <li>${texts.probandContactConsent.listItem2}</li>
-      <li>${texts.probandContactConsent.listItem3}</li>
-      <li>${texts.probandContactConsent.listItem4}</li>
-      <li>${texts.probandContactConsent.listItem5Part1} <u>${commonItems.uoouSite}</u>, ${texts.probandContactConsent.listItem5Part2} <u>${commonItems.uoouEmail}</u>.</li>
+      <li>${texts.probandContact.consent.listItem1} <u>${commonItems.mafilEmail}</u>,</li>
+      <li>${texts.probandContact.consent.listItem2}</li>
+      <li>${texts.probandContact.consent.listItem3}</li>
+      <li>${texts.probandContact.consent.listItem4}</li>
+      <li>${texts.probandContact.consent.listItem5Part1} <u>${commonItems.uoouSite}</u>, ${texts.probandContact.consent.listItem5Part2} <u>${commonItems.uoouEmail}</u>.</li>
       </ul>
       <p style="margin-bottom: 0">
-        ${texts.probandContactConsent.text5Part1} <u>${commonItems.poverenecEmail}</u>.
-        <br />${texts.probandContactConsent.text5Part2}
+        ${texts.probandContact.consent.text5Part1} <u>${commonItems.poverenecEmail}</u>.
+        <br />${texts.probandContact.consent.text5Part2}
         <br /><u>${commonItems.personalInfoProtectionSite}</u>.
-        <br />${texts.probandContactConsent.text5Part3}
+        <br />${texts.probandContact.consent.text5Part3}
         <br /><u>${commonItems.applicationOfDataSubjectRightsSite}</u>.
       </p>
     `;
 
     const probandContactConsent = new ProbandContactConsentEntity();
-    probandContactConsent.title = texts.probandContactConsent.title;
+    probandContactConsent.title = texts.probandContact.consent.title;
     probandContactConsent.html = html;
     return probandContactConsent;
   }

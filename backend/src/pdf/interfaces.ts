@@ -23,21 +23,23 @@ export interface IPdfTextsFile {
     visualCorrection: string;
     handedness: string;
   };
-  probandContactConsent: {
-    title: string;
-    text1: string;
-    text2: string;
-    text3: string;
-    text4: string;
-    list: string;
-    listItem1: string;
-    listItem2: string;
-    listItem3: string;
-    listItem4: string;
-    listItem5Part1: string;
-    listItem5Part2: string;
-    text5Part1: string;
-    text5Part2: string;
-    text5Part3: string;
+  probandContact: {
+    consent: {
+      title: string;
+      text1: string;
+      text2: string;
+      text3: string;
+      text4: string;
+      list: string;
+      listItem1: string;
+      listItem2: string;
+      listItem3: string;
+      listItem4: string;
+      listItem5Part1: string;
+      listItem5Part2: string;
+      text5Part1: string;
+      text5Part2: string;
+      text5Part3: string;
+    };
   };
 }
