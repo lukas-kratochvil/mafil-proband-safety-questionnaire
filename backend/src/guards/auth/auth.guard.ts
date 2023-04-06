@@ -17,6 +17,7 @@ export class AuthGuard implements CanActivate {
       return false;
     }
 
+    // Checking if the route is public
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       exContext.getHandler(),
       exContext.getClass(),
@@ -26,6 +27,7 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
+    // Checking API key
     const gqlExContext = GqlExecutionContext.create(exContext);
     const gqlContext = gqlExContext.getContext();
     const request = gqlContext.req;

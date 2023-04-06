@@ -12,6 +12,7 @@ import { LoggerMiddleware } from "./middleware/logger.middleware";
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    ScheduleModule.forRoot(),
     ThrottlerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -22,7 +23,6 @@ import { LoggerMiddleware } from "./middleware/logger.middleware";
     }),
     GraphQLApiModule,
     CronModule,
-    ScheduleModule.forRoot(),
   ],
   providers: [
     Logger,
