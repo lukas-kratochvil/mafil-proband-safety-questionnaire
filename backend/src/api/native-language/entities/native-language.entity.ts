@@ -5,12 +5,12 @@ import { TranslationBaseEntity } from "@app/api/utils/entities/translation-base.
 
 @ObjectType()
 export class NativeLanguageEntity extends TranslationBaseEntity implements NativeLanguage {
-  @Field()
   @MaxLength(2)
+  @Field()
   code: string;
 
-  @Field(() => Int, { nullable: true })
-  @IsInt()
   @IsOptional()
+  @IsInt()
+  @Field(() => Int, { nullable: true })
   order: number | null;
 }

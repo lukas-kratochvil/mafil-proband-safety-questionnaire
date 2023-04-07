@@ -5,15 +5,15 @@ import { BaseEntity } from "@app/api/utils/entities/base.entity";
 
 @ObjectType()
 export class HandednessTranslationEntity extends BaseEntity implements HandednessTranslation {
-  @HideField()
   @IsUUID()
+  @HideField()
   handednessId: string;
 
-  @HideField()
   @IsUUID()
+  @HideField()
   languageId: string;
 
-  @Field()
   @IsString()
+  @Field()
   text: string;
 }

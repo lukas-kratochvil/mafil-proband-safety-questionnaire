@@ -8,43 +8,43 @@ import { VisitFormEntity } from "./visit-form.entity";
 
 @ObjectType()
 export class AdditionalVisitFormInfoEntity extends BaseEntity implements AdditionalVisitFormInfo {
-  @Field(() => VisitFormEntity)
   @IsInstance(VisitFormEntity)
+  @Field(() => VisitFormEntity)
   visitForm: VisitFormEntity;
 
-  @HideField()
   @IsUUID()
+  @HideField()
   visitFormId: string;
 
-  @Field(() => OperatorEntity)
   @IsInstance(OperatorEntity)
+  @Field(() => OperatorEntity)
   finalizer: OperatorEntity;
 
-  @Field(() => UUID)
   @IsUUID()
+  @Field(() => UUID)
   finalizerId: string;
 
-  @Field()
   @MaxLength(35)
+  @Field()
   projectId: string;
 
-  @Field()
   @MaxLength(30)
+  @Field()
   projectAcronym: string;
 
-  @Field()
   @MaxLength(35)
+  @Field()
   deviceId: string;
 
-  @Field()
   @MaxLength(200)
+  @Field()
   deviceName: string;
 
-  @Field()
   @IsDate()
+  @Field()
   measuredAt: Date;
 
-  @Field()
   @IsDate()
+  @Field()
   finalizedAt: Date;
 }

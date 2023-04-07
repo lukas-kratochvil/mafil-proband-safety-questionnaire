@@ -13,7 +13,7 @@ export class TranslationInput extends IntersectionType(
 
 @InputType()
 export class CreateTranslationInput extends BaseEntity {
-  @Field(() => [TranslationInput])
   @IsArray()
+  @Field(() => [TranslationInput])
   translations: TranslationInput[];
 }

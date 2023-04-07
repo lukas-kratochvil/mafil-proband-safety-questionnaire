@@ -5,15 +5,15 @@ import { BaseEntity } from "@app/api/utils/entities/base.entity";
 
 @ObjectType()
 export class GenderTranslationEntity extends BaseEntity implements GenderTranslation {
-  @HideField()
   @IsUUID()
+  @HideField()
   genderId: string;
 
-  @HideField()
   @IsUUID()
+  @HideField()
   languageId: string;
 
-  @Field()
   @IsString()
+  @Field()
   text: string;
 }

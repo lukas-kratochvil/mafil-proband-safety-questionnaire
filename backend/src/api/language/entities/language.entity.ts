@@ -5,11 +5,11 @@ import { BaseEntity } from "@app/api/utils/entities/base.entity";
 
 @ObjectType()
 export class LanguageEntity extends BaseEntity implements Language {
-  @Field()
   @MaxLength(5)
+  @Field()
   code: string;
 
-  @Field()
   @MaxLength(25)
+  @Field()
   name: string;
 }

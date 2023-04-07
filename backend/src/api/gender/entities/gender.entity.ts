@@ -5,7 +5,7 @@ import { TranslationBaseEntity } from "@app/api/utils/entities/translation-base.
 
 @ObjectType()
 export class GenderEntity extends TranslationBaseEntity implements Gender {
-  @Field()
   @MaxLength(1)
+  @Field()
   code: string;
 }

@@ -5,7 +5,7 @@ import { TranslationBaseEntity } from "@app/api/utils/entities/translation-base.
 
 @ObjectType()
 export class HandednessEntity extends TranslationBaseEntity implements Handedness {
-  @Field()
   @MaxLength(2)
+  @Field()
   code: string;
 }

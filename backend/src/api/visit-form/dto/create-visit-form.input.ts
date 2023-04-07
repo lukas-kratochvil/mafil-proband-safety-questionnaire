@@ -20,29 +20,29 @@ export class CreateVisitFormInput extends IntersectionType(
   PartialType(PickType(VisitFormEntity, ["state", "email", "phone"] as const)),
   InputType
 ) {
-  @Field()
   @MaxLength(5)
+  @Field()
   probandLanguageCode: string;
 
-  @Field(() => [CreateAnswerInput])
   @IsArray()
+  @Field(() => [CreateAnswerInput])
   answers: CreateAnswerInput[];
 
   // additionalInfo is created for a duplicated visit that is going to be approved
-  @Field(() => CreateAdditionalVisitFormInfoInput, { nullable: true })
   @IsOptional()
   @IsInstance(CreateAdditionalVisitFormInfoInput)
+  @Field(() => CreateAdditionalVisitFormInfoInput, { nullable: true })
   additionalInfo?: CreateAdditionalVisitFormInfoInput;
 
-  @Field(() => UUID)
   @IsUUID()
+  @Field(() => UUID)
   genderId: string;
 
-  @Field(() => UUID)
   @IsUUID()
+  @Field(() => UUID)
   nativeLanguageId: string;
 
-  @Field(() => UUID)
   @IsUUID()
+  @Field(() => UUID)
   handednessId: string;
 }

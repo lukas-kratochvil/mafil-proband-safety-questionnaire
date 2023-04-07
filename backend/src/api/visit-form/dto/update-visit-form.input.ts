@@ -27,13 +27,13 @@ export class UpdateVisitFormInput extends IntersectionType(
   ),
   InputType
 ) {
-  @Field(() => UpdateAdditionalVisitFormInfoInput, { nullable: true })
   @IsOptional()
   @IsInstance(UpdateAdditionalVisitFormInfoInput)
+  @Field(() => UpdateAdditionalVisitFormInfoInput, { nullable: true })
   additionalInfo?: UpdateAdditionalVisitFormInfoInput;
 
-  @Field(() => [UpdateAnswerInput], { nullable: true })
   @IsOptional()
   @IsArray()
+  @Field(() => [UpdateAnswerInput], { nullable: true })
   answers?: UpdateAnswerInput[];
 }

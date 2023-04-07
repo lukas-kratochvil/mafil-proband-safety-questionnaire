@@ -18,27 +18,27 @@ registerEnumType(OperatorRole, {
 
 @ObjectType()
 export class OperatorEntity extends BaseEntity implements Operator {
-  @Field()
   @MaxLength(200)
+  @Field()
   name: string;
 
-  @Field()
   @MaxLength(200)
+  @Field()
   surname: string;
 
-  @Field()
   @MaxLength(8)
+  @Field()
   uco: string;
 
-  @Field()
   @IsEmail()
+  @Field()
   email: string;
 
-  @Field(() => OperatorRole)
   @IsEnum(OperatorRole)
+  @Field(() => OperatorRole)
   role: OperatorRole;
 
-  @Field()
   @IsBoolean()
+  @Field()
   isValid: boolean;
 }

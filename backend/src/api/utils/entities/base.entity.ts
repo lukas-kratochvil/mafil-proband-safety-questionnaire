@@ -4,20 +4,20 @@ import { UUID } from "../scalars/uuid-scalar";
 
 @ObjectType()
 export class BaseEntity {
-  @Field(() => UUID)
   @IsUUID()
+  @Field(() => UUID)
   id: string;
 
-  @Field()
   @IsDate()
+  @Field()
   createdAt: Date;
 
-  @HideField()
   @IsDate()
+  @HideField()
   updatedAt: Date;
 
-  @HideField()
-  @IsDate()
   @IsOptional()
+  @IsDate()
+  @HideField()
   deletedAt: Date | null;
 }

@@ -5,15 +5,15 @@ import { BaseEntity } from "@app/api/utils/entities/base.entity";
 
 @ObjectType()
 export class NativeLanguageTranslationEntity extends BaseEntity implements NativeLanguageTranslation {
-  @HideField()
   @IsUUID()
+  @HideField()
   nativeLanguageId: string;
 
-  @HideField()
   @IsUUID()
+  @HideField()
   languageId: string;
 
-  @Field()
   @IsString()
+  @Field()
   text: string;
 }

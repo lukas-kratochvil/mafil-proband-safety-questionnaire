@@ -5,15 +5,15 @@ import { BaseEntity } from "@app/api/utils/entities/base.entity";
 
 @ObjectType()
 export class QuestionTranslationEntity extends BaseEntity implements QuestionTranslation {
-  @HideField()
   @IsUUID()
+  @HideField()
   questionId: string;
 
-  @HideField()
   @IsUUID()
+  @HideField()
   languageId: string;
 
-  @Field()
   @IsString()
+  @Field()
   text: string;
 }

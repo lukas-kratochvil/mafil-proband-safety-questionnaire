@@ -6,19 +6,19 @@ import { UUID } from "@app/api/utils/scalars/uuid-scalar";
 
 @ObjectType()
 export class AnswerEntity extends BaseEntity implements Answer {
-  @HideField()
   @IsUUID()
+  @HideField()
   visitFormId: string;
 
-  @Field(() => UUID)
   @IsUUID()
+  @Field(() => UUID)
   questionId: string;
 
-  @Field()
   @MaxLength(3)
+  @Field()
   answer: string;
 
-  @Field()
   @IsString()
+  @Field()
   comment: string;
 }

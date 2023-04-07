@@ -8,18 +8,18 @@ export class TranslationLanguageEntity extends PickType(LanguageEntity, ["code",
 
 @ObjectType({ isAbstract: true })
 export class TranslationEntity {
-  @Field()
   @IsString()
+  @Field()
   text: string;
 
-  @Field(() => TranslationLanguageEntity)
   @IsInstance(TranslationLanguageEntity)
+  @Field(() => TranslationLanguageEntity)
   language: TranslationLanguageEntity;
 }
 
 @ObjectType({ isAbstract: true })
 export class TranslationBaseEntity extends BaseEntity {
-  @Field(() => [TranslationEntity])
   @IsArray()
+  @Field(() => [TranslationEntity])
   translations: TranslationEntity[];
 }

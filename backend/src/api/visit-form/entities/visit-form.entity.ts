@@ -30,95 +30,95 @@ registerEnumType(VisitFormState, {
 
 @ObjectType()
 export class VisitFormEntity extends BaseEntity implements VisitForm {
-  @Field(() => LanguageEntity)
   @IsInstance(LanguageEntity)
+  @Field(() => LanguageEntity)
   probandLanguage: LanguageEntity;
 
-  @HideField()
   @IsUUID()
+  @HideField()
   probandLanguageId: string;
 
-  @Field(() => AdditionalVisitFormInfoEntity, { nullable: true })
   @IsOptional()
   @IsInstance(AdditionalVisitFormInfoEntity)
+  @Field(() => AdditionalVisitFormInfoEntity, { nullable: true })
   additionalInfo?: AdditionalVisitFormInfoEntity;
 
-  @Field(() => [AnswerEntity])
   @IsArray()
+  @Field(() => [AnswerEntity])
   answers: AnswerEntity[];
 
-  @Field(() => VisitFormState)
   @IsEnum(VisitFormState)
+  @Field(() => VisitFormState)
   state: VisitFormState;
 
-  @HideField()
   @IsOptional()
   @IsDate()
+  @HideField()
   sentToMafilDbAt: Date | null;
 
-  @HideField()
   @IsUUID()
+  @HideField()
   nativeLanguageId: string;
 
-  @Field(() => NativeLanguageEntity)
   @IsInstance(NativeLanguageEntity)
+  @Field(() => NativeLanguageEntity)
   nativeLanguage: NativeLanguageEntity;
 
-  @HideField()
   @IsUUID()
+  @HideField()
   genderId: string;
 
-  @Field(() => GenderEntity)
   @IsInstance(GenderEntity)
+  @Field(() => GenderEntity)
   gender: GenderEntity;
 
-  @HideField()
   @IsUUID()
+  @HideField()
   handednessId: string;
 
-  @Field(() => HandednessEntity)
   @IsInstance(HandednessEntity)
+  @Field(() => HandednessEntity)
   handedness: HandednessEntity;
 
-  @Field(() => [VisitFormEntity])
   @IsArray()
+  @Field(() => [VisitFormEntity])
   visitForms: VisitFormEntity[];
 
-  @Field()
   @MaxLength(200)
+  @Field()
   name: string;
 
-  @Field()
   @MaxLength(200)
+  @Field()
   surname: string;
 
-  @Field()
   @MaxLength(50)
+  @Field()
   personalId: string;
 
-  @Field()
   @MaxDate(() => new Date())
+  @Field()
   birthdate: Date;
 
-  @Field(() => Float)
   @IsPositive()
+  @Field(() => Float)
   heightCm: number;
 
-  @Field(() => Float)
   @IsPositive()
+  @Field(() => Float)
   weightKg: number;
 
-  @Field(() => Float)
   @IsNumber()
+  @Field(() => Float)
   visualCorrectionDioptre: number;
 
-  @Field()
   @ValidateIf((object) => object.email !== "")
   @IsEmail()
+  @Field()
   email: string;
 
-  @Field()
   @ValidateIf((object) => object.phone !== "")
   @IsMobilePhone()
+  @Field()
   phone: string;
 }

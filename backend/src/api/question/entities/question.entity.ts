@@ -6,24 +6,24 @@ import { GenderHiddenQuestionEntity } from "./genderHiddenQuestion";
 
 @ObjectType()
 export class QuestionEntity extends TranslationBaseEntity implements Question {
-  @HideField()
-  @IsUUID()
   @IsOptional()
+  @IsUUID()
+  @HideField()
   previousQuestionId: string | null;
 
-  @Field(() => Int)
   @IsIn([1, 2])
+  @Field(() => Int)
   partNumber: number;
 
-  @Field()
   @IsBoolean()
+  @Field()
   mustBeApproved: boolean;
 
-  @Field()
   @IsBoolean()
+  @Field()
   isValid: boolean;
 
-  @Field(() => [GenderHiddenQuestionEntity])
   @IsArray()
+  @Field(() => [GenderHiddenQuestionEntity])
   hiddenByGenders: GenderHiddenQuestionEntity[];
 }

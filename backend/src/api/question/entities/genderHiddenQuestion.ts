@@ -6,11 +6,11 @@ import { UUID } from "@app/api/utils/scalars/uuid-scalar";
 
 @ObjectType()
 export class GenderHiddenQuestionEntity extends BaseEntity implements GenderHiddenQuestion {
-  @Field()
   @MaxLength(1)
+  @Field()
   genderCode: string;
 
-  @Field(() => UUID)
   @IsUUID()
+  @Field(() => UUID)
   questionId: string;
 }
