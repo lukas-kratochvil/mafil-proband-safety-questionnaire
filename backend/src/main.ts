@@ -6,24 +6,28 @@ import { AppModule } from "./app.module";
 import { createUserInputError } from "./exception-handling";
 import { createWinstonLogger } from "./winston-logger";
 
+// Development Helmet options so we can use GraphQL playground
+const devHelmetOptions: HelmetOptions = {
+  contentSecurityPolicy: {
+    directives: {
+      "script-src": ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
+      "img-src": ["'self'", "data:", "https://cdn.jsdelivr.net"],
+    },
+  },
+};
+
 async function bootstrap() {
   const logger = createWinstonLogger();
   const app = await NestFactory.create(AppModule, {
     cors: true,
     logger,
   });
-  const configService = app.get(ConfigService);
+  const config = app.get(ConfigService);
 
-  // Registering plugins
-  const devHelmetOptions: HelmetOptions = {
-    contentSecurityPolicy: {
-      directives: {
-        "script-src": ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
-        "img-src": ["'self'", "data:", "https://cdn.jsdelivr.net"],
-      },
-    },
-  };
-  app.use(helmet(configService.get<string>("NODE_ENV") === "development" ? devHelmetOptions : undefined));
+  // Protection from some well-known web vulnerabilities by setting HTTP headers appropriately
+  app.use(helmet(config.get<string>("NODE_ENV") === "development" ? devHelmetOptions : undefined));
+
+  // Enabling input data validation
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
@@ -34,7 +38,7 @@ async function bootstrap() {
 
   // TODO: use CORS? Origins 'localhost' and '127.0.0.1' are different.
   // CORS
-  // const webUrl = configService.get<string>("WEB_URL");
+  // const webUrl = config.get<string>("WEB_URL");
   // if (webUrl === undefined) {
   //   const errorMsg = "MAFIL-PSQ web app URL is not defined! Shutting down…";
   //   logger.error(errorMsg);
@@ -43,7 +47,7 @@ async function bootstrap() {
   // app.enableCors({ origin: [webUrl] });
 
   // Setting up the port
-  const port = configService.get<number>("PORT");
+  const port = config.get<number>("PORT");
 
   if (port === undefined) {
     const errorMsg = "MAFIL-PSQ server port is not defined! Shutting down…";
