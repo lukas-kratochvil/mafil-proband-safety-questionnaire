@@ -4,7 +4,6 @@ import {
   IsArray,
   IsDate,
   IsEmail,
-  IsEmpty,
   IsEnum,
   IsInstance,
   IsMobilePhone,
@@ -114,12 +113,12 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   visualCorrectionDioptre: number;
 
   @Field()
-  @ValidateIf(o => o.email !== '')
+  @ValidateIf((o) => o.email !== "")
   @IsEmail()
   email: string;
 
   @Field()
-  @ValidateIf(o => o.phone !== '')
+  @ValidateIf((o) => o.phone !== "")
   @IsMobilePhone()
   phone: string;
 }
