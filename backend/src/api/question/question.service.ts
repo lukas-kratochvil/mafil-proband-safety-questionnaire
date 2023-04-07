@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 import { LanguageService } from "@app/api/language/language.service";
 import { areTranslationsComplete, translationsIncludeSchema } from "@app/api/utils/utils";
@@ -22,7 +22,7 @@ type QuestionIncludingTranslations = Prisma.QuestionGetPayload<typeof questionTr
 export class QuestionService {
   constructor(private readonly prisma: PrismaService, private readonly languageService: LanguageService) {}
 
-  async create(createQuestionInput: CreateQuestionInput): Promise<QuestionIncludingTranslations> {
+  async create(createQuestionInput: CreateQuestionInput): Promise<QuestionIncludingTranslations | never> {
     const languages = await this.languageService.findAll();
 
     if (areTranslationsComplete(languages, createQuestionInput.translations)) {
@@ -44,7 +44,7 @@ export class QuestionService {
       });
     }
 
-    throw new Error("Question doesn't contain all the possible translations!");
+    throw new BadRequestException("Question doesn't contain all the possible translations!");
   }
 
   async findAll(): Promise<QuestionIncludingTranslations[]> {
@@ -79,7 +79,7 @@ export class QuestionService {
   async updateTexts(
     id: string,
     updateQuestionTextsInput: UpdateQuestionTextsInput
-  ): Promise<QuestionIncludingTranslations> {
+  ): Promise<QuestionIncludingTranslations | never> {
     const languages = await this.languageService.findAll();
 
     if (areTranslationsComplete(languages, updateQuestionTextsInput.translations)) {
@@ -116,7 +116,7 @@ export class QuestionService {
       });
     }
 
-    throw new Error("Question doesn't contain all the possible translations!");
+    throw new BadRequestException("Question contains invalid locales!");
   }
 
   async remove(id: string): Promise<QuestionIncludingTranslations> {

@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 import { LanguageService } from "@app/api/language/language.service";
 import { areTranslationsComplete, areUpdateCodesValid, translationsIncludeSchema } from "@app/api/utils/utils";
@@ -18,7 +18,9 @@ type NativeLanguageIncludingTranslations = Prisma.NativeLanguageGetPayload<typeo
 export class NativeLanguageService {
   constructor(private readonly prisma: PrismaService, private readonly languageService: LanguageService) {}
 
-  async create(createNativeLanguageInput: CreateNativeLanguageInput): Promise<NativeLanguageIncludingTranslations> {
+  async create(
+    createNativeLanguageInput: CreateNativeLanguageInput
+  ): Promise<NativeLanguageIncludingTranslations | never> {
     const languages = await this.languageService.findAll();
 
     if (areTranslationsComplete(languages, createNativeLanguageInput.translations)) {
@@ -38,7 +40,7 @@ export class NativeLanguageService {
       });
     }
 
-    throw new Error("Native language doesn't contain all the possible translations!");
+    throw new BadRequestException("Native language doesn't contain all the possible translations!");
   }
 
   async findAll(): Promise<NativeLanguageIncludingTranslations[]> {
@@ -65,7 +67,7 @@ export class NativeLanguageService {
   async update(
     id: string,
     updateNativeLanguageInput: UpdateNativeLanguageInput
-  ): Promise<NativeLanguageIncludingTranslations> {
+  ): Promise<NativeLanguageIncludingTranslations | never> {
     const languages = await this.languageService.findAll();
 
     if (areUpdateCodesValid(languages, updateNativeLanguageInput.translations)) {
@@ -94,7 +96,7 @@ export class NativeLanguageService {
       });
     }
 
-    throw new Error("Native language invalid contains invalid locales!");
+    throw new BadRequestException("Native language contains invalid locales!");
   }
 
   async remove(id: string): Promise<NativeLanguageIncludingTranslations> {

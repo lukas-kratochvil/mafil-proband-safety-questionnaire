@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { ForbiddenException, Injectable } from "@nestjs/common";
 import { Operator, OperatorRole } from "@prisma/client";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { AuthenticateOperatorArgs } from "./dto/authenticate-operator.args";
@@ -22,7 +22,7 @@ export class OperatorService {
       || operator.email !== authenticateOperatorArgs.email
       || !operator.isValid
     ) {
-      throw new Error("Operator cannot be authenticated!");
+      throw new ForbiddenException("Invalid operator login data!");
     }
 
     return operator;

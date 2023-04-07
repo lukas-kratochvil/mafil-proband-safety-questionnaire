@@ -1,3 +1,4 @@
+import { BadRequestException } from "@nestjs/common";
 import { GraphQLScalarType } from "graphql";
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -6,7 +7,7 @@ const validateUuid = (uuid: unknown): string | never => {
   if (typeof uuid === "string" && UUID_REGEX.test(uuid)) {
     return uuid;
   }
-  throw new Error("Invalid UUID!");
+  throw new BadRequestException("Invalid UUID!");
 };
 
 export const UUID = new GraphQLScalarType({

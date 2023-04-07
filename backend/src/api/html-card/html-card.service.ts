@@ -1,5 +1,5 @@
 import path from "path";
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { IPdfCommonItemsFile, IPdfTextsFile } from "@app/pdf/interfaces";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { ProbandContactRequestArgs } from "./dto/proband-contact-request.args";
@@ -13,7 +13,7 @@ const checkLocaleValidity = async (prisma: PrismaService, locale: string): Promi
       },
     });
   } catch {
-    throw new Error(`Locale '${locale}' is not supported!`);
+    throw new BadRequestException(`Locale '${locale}' is not supported!`);
   }
 };
 

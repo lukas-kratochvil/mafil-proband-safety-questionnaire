@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 import { LanguageService } from "@app/api/language/language.service";
 import { areTranslationsComplete, areUpdateCodesValid, translationsIncludeSchema } from "@app/api/utils/utils";
@@ -18,7 +18,7 @@ type HandednessIncludingTranslations = Prisma.HandednessGetPayload<typeof handed
 export class HandednessService {
   constructor(private readonly prisma: PrismaService, private readonly languageService: LanguageService) {}
 
-  async create(createHandednessInput: CreateHandednessInput): Promise<HandednessIncludingTranslations> {
+  async create(createHandednessInput: CreateHandednessInput): Promise<HandednessIncludingTranslations | never> {
     const languages = await this.languageService.findAll();
 
     if (areTranslationsComplete(languages, createHandednessInput.translations)) {
@@ -38,7 +38,7 @@ export class HandednessService {
       });
     }
 
-    throw new Error("Handedness doesn't contain all the possible translations!");
+    throw new BadRequestException("Handedness doesn't contain all the possible translations!");
   }
 
   async findAll(): Promise<HandednessIncludingTranslations[]> {
@@ -59,7 +59,10 @@ export class HandednessService {
     });
   }
 
-  async update(id: string, updateHandednessInput: UpdateHandednessInput): Promise<HandednessIncludingTranslations> {
+  async update(
+    id: string,
+    updateHandednessInput: UpdateHandednessInput
+  ): Promise<HandednessIncludingTranslations | never> {
     const languages = await this.languageService.findAll();
 
     if (areUpdateCodesValid(languages, updateHandednessInput.translations)) {
@@ -88,7 +91,7 @@ export class HandednessService {
       });
     }
 
-    throw new Error("Handedness doesn't contain all the possible translations!");
+    throw new BadRequestException("Handedness contains invalid locales!");
   }
 
   async remove(id: string): Promise<HandednessIncludingTranslations> {

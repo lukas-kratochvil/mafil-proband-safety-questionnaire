@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 import { LanguageService } from "@app/api/language/language.service";
 import { areTranslationsComplete, areUpdateCodesValid, translationsIncludeSchema } from "@app/api/utils/utils";
@@ -18,7 +18,7 @@ type GenderIncludingTranslations = Prisma.GenderGetPayload<typeof genderTranslat
 export class GenderService {
   constructor(private readonly prisma: PrismaService, private readonly languageService: LanguageService) {}
 
-  async create(createGenderInput: CreateGenderInput): Promise<GenderIncludingTranslations> {
+  async create(createGenderInput: CreateGenderInput): Promise<GenderIncludingTranslations | never> {
     const languages = await this.languageService.findAll();
 
     if (areTranslationsComplete(languages, createGenderInput.translations)) {
@@ -38,7 +38,7 @@ export class GenderService {
       });
     }
 
-    throw new Error("Gender doesn't contain all the possible translations!");
+    throw new BadRequestException("Gender doesn't contain all the possible translations!");
   }
 
   async findAll(): Promise<GenderIncludingTranslations[]> {
@@ -59,7 +59,7 @@ export class GenderService {
     });
   }
 
-  async update(id: string, updateGenderInput: UpdateGenderInput): Promise<GenderIncludingTranslations> {
+  async update(id: string, updateGenderInput: UpdateGenderInput): Promise<GenderIncludingTranslations | never> {
     const languages = await this.languageService.findAll();
 
     if (areUpdateCodesValid(languages, updateGenderInput.translations)) {
@@ -88,7 +88,7 @@ export class GenderService {
       });
     }
 
-    throw new Error("Gender doesn't contain all the possible translations!");
+    throw new BadRequestException("Gender contains invalid locales!");
   }
 
   async remove(id: string): Promise<GenderIncludingTranslations> {

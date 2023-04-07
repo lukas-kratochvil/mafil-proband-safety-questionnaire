@@ -1,4 +1,4 @@
-import { ExecutionContext, Injectable, Logger } from "@nestjs/common";
+import { BadRequestException, ExecutionContext, Injectable, Logger } from "@nestjs/common";
 import { GqlContextType, GqlExecutionContext } from "@nestjs/graphql";
 import { ThrottlerGuard as NestThrottlerGuard } from "@nestjs/throttler";
 
@@ -18,6 +18,6 @@ export class ThrottlerGuard extends NestThrottlerGuard {
 
     const errorMsg = `Invalid execution context type '${exContext.getType()}'!`;
     this.logger.error(errorMsg);
-    throw new Error(errorMsg);
+    throw new BadRequestException(errorMsg);
   }
 }
