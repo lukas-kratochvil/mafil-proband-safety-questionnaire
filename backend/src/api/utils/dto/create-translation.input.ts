@@ -1,4 +1,5 @@
 import { Field, InputType, IntersectionType, PickType } from "@nestjs/graphql";
+import { IsArray } from "class-validator";
 import { LanguageEntity } from "@app/api/language/entities/language.entity";
 import { BaseEntity } from "../entities/base.entity";
 import { TranslationEntity } from "../entities/translation-base.entity";
@@ -13,5 +14,6 @@ export class TranslationInput extends IntersectionType(
 @InputType()
 export class CreateTranslationInput extends BaseEntity {
   @Field(() => [TranslationInput])
+  @IsArray()
   translations: TranslationInput[];
 }
