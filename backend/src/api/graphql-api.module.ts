@@ -3,6 +3,8 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
+import { GraphQLFormattedError } from "graphql";
+import { AppErrorExtensions, ValidationFieldErrors, VALIDATION_ERROR } from "@app/exception-handling";
 import { GenderModule } from "./gender/gender.module";
 import { HandednessModule } from "./handedness/handedness.module";
 import { HTMLCardModule } from "./html-card/html-card.module";
@@ -23,6 +25,37 @@ import { VisitFormModule } from "./visit-form/visit-form.module";
         autoSchemaFile: path.join(process.cwd(), "graphql-schema.gql"),
         // passing original request and response objects into the GraphQL context
         context: ({ req, res }: { req: any; res: any }) => ({ req, res }),
+        // error formatting inspired by: https://github.com/nestjs/graphql/issues/1053#issuecomment-786972617
+        formatError: (error: GraphQLFormattedError) => {
+          if (error.message === VALIDATION_ERROR) {
+            const appErrorExtensions = error.extensions as AppErrorExtensions;
+            const validationFieldErrors: ValidationFieldErrors[] = [];
+
+            appErrorExtensions.validationErrors.forEach((validationError) => {
+              if (validationError.constraints !== undefined) {
+                const constraints: string[] = [];
+                Object.keys(validationError.constraints).forEach((constraintKey) => {
+                  constraints.push((validationError.constraints as any)[constraintKey]);
+                });
+                validationFieldErrors.push({
+                  field: validationError.property,
+                  errors: constraints,
+                });
+              }
+            });
+
+            const graphQLFormattedError: GraphQLFormattedError = {
+              message: "Validation error",
+              extensions: {
+                code: VALIDATION_ERROR,
+                errors: validationFieldErrors,
+              },
+            };
+            return graphQLFormattedError;
+          } else {
+            return error;
+          }
+        },
         resolvers: {
           UUID: UUID,
           Void: Void,

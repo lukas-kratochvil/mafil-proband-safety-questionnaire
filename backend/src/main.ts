@@ -3,6 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import helmet, { HelmetOptions } from "helmet";
 import { AppModule } from "./app.module";
+import { createUserInputError } from "./exception-handling";
 import { createWinstonLogger } from "./winston-logger";
 
 async function bootstrap() {
@@ -23,7 +24,13 @@ async function bootstrap() {
     },
   };
   app.use(helmet(configService.get<string>("NODE_ENV") === "development" ? devHelmetOptions : undefined));
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      exceptionFactory: createUserInputError,
+      forbidUnknownValues: true,
+    })
+  );
 
   // TODO: use CORS? Origins 'localhost' and '127.0.0.1' are different.
   // CORS
