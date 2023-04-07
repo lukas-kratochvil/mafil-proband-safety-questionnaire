@@ -28,6 +28,16 @@ export interface IPdfTextsFile {
     handedness: string;
   };
   probandContact: {
+    request: {
+      title: string;
+      text1: string;
+      text2: string;
+      text3: string;
+      emailAddress: string;
+      emailAddressInfo: string;
+      phoneNumber: string;
+      phoneNumberInfo: string;
+    };
     consent: {
       title: string;
       text1: string;

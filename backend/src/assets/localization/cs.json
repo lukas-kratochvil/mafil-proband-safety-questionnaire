@@ -1,5 +1,15 @@
 {
   "probandContact": {
+    "request": {
+      "title": "Žádost o předání naměřených dat",
+      "text1": "Já",
+      "text2": "tímto žádám o předání naměřených dat v laboratoři MAFIL-CEITEC, ze dne",
+      "text3": "elektronickou cestou na",
+      "emailAddress": "Emailová adresa",
+      "emailAddressInfo": "kam bude zaslán odkaz pro stažení dat",
+      "phoneNumber": "Telefonní číslo",
+      "phoneNumberInfo": "na které bude zaslán bezpečnostní kód pro přihlášení"
+    },
     "consent": {
       "title": "Souhlas se zpracováním osobních údajů",
       "text1": "V souladu se zněním nařízení (EU) 2016/679 ze dne 27. dubna 2016 o ochraně fyzických osob v souvislosti se zpracováním osobních údajů a o volném pohybu těchto údajů a o zrušení směrnice 95/46/ES (obecné nařízení o ochraně osobních údajů) uděluji",
