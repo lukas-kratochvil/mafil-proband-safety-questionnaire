@@ -12,21 +12,6 @@ export interface IPdfCommonItemsFile {
 }
 
 export interface IPdfTextsFile {
-  inputTitles: {
-    project: string;
-    measurementDate: string;
-    phantom: string;
-    name: string;
-    surname: string;
-    personalId: string;
-    birthdate: string;
-    gender: string;
-    nativeLanguage: string;
-    height: string;
-    weight: string;
-    visualCorrection: string;
-    handedness: string;
-  };
   probandContact: {
     request: {
       title: string;

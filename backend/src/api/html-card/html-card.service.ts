@@ -39,7 +39,7 @@ export class HTMLCardService {
   async getProbandContactRequest(locale: string, data: ProbandContactRequestArgs): Promise<HTMLCardEntity | never> {
     await checkLocaleValidity(this.prisma, locale);
 
-    const texts: IPdfTextsFile = getLocalizedTextsFile(locale);
+    const texts = getLocalizedTextsFile(locale);
 
     const html = `${texts.probandContact.request.text1}, ${data.name} ${data.surname} ${data.birthdateStr}, ${texts.probandContact.request.text2} ${data.currentDateStr} ${texts.probandContact.request.text3}:`;
 
@@ -49,8 +49,8 @@ export class HTMLCardService {
   async getProbandContactConsent(locale: string): Promise<HTMLCardEntity | never> {
     await checkLocaleValidity(this.prisma, locale);
 
-    const texts: IPdfTextsFile = getLocalizedTextsFile(locale);
-    const commonItems: IPdfCommonItemsFile = getCommonTextsFile();
+    const texts = getLocalizedTextsFile(locale);
+    const commonItems = getCommonTextsFile();
 
     const html = `
       <p style="margin-top: 0">${texts.probandContact.consent.text1}</p>
