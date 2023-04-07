@@ -1,3 +1,4 @@
+import { ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import helmet from "helmet";
@@ -6,11 +7,14 @@ import { createWinstonLogger } from "./winston-logger";
 
 async function bootstrap() {
   const logger = createWinstonLogger();
+
   const app = await NestFactory.create(AppModule, {
     cors: true,
     logger,
   });
   app.use(helmet());
+  app.useGlobalPipes(new ValidationPipe());
+
   const configService = app.get(ConfigService);
 
   // TODO: use CORS? Origins 'localhost' and '127.0.0.1' are different.
