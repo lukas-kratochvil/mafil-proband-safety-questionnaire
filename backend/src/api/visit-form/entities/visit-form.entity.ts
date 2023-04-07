@@ -96,14 +96,17 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   @Field()
   personalId: string;
 
+  @IsDate()
   @MaxDate(new Date())
   @Field()
   birthdate: Date;
 
+  @IsNumber()
   @IsPositive()
   @Field(() => Float)
   heightCm: number;
 
+  @IsNumber()
   @IsPositive()
   @Field(() => Float)
   weightKg: number;
