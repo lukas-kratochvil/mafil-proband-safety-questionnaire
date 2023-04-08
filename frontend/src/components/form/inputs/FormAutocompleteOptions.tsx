@@ -35,7 +35,7 @@ export const FormAutocompleteOptions = ({
             options={options}
             getOptionLabel={(option: IOption) => t(convertStringToLocalizationKey(`enums.${option.localizationKey}`))}
             isOptionEqualToValue={(option, value) => option.value === value.value}
-            value={field.value}
+            value={field.value as IOption}
             onChange={(_event, val) => field.onChange(val)}
             onBlur={field.onBlur}
             disabled={disabled}
