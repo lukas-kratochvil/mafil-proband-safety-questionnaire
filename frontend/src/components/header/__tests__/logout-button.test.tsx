@@ -5,8 +5,8 @@ import { LogOutButton } from "../LogOutButton";
 
 const logOutSpy = vi.fn();
 
-vi.mock("@app/hooks/auth/auth", () => ({
-  useAuth: () => ({
+vi.mock("@app/hooks/auth/auth-dev", () => ({
+  useAuthDev: () => ({
     logOut: logOutSpy,
   }),
 }));
