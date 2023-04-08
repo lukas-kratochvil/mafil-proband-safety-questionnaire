@@ -21,7 +21,7 @@ const loadAnswers = (answers: FormAnswer[], visitState: VisitStateDEV): FormAnsw
 
     if (
       answer.answer === AnswerOption.YES
-      && ((VisitStateDEV.IN_APPROVAL && answer.partNumber === QuestionPartNumber.ONE)
+      && ((VisitStateDEV.IN_APPROVAL && !answer.mustBeApproved)
         || [VisitStateDEV.APPROVED, VisitStateDEV.DISAPPROVED, VisitStateDEV.FOR_SIGNATURE, VisitStateDEV.SIGNED].includes(
           visitState
         ))
@@ -113,6 +113,7 @@ const dummyVisitNew: IVisit = {
   answers: getDummyVisitCurrentQuestions().map((question, i) => ({
     questionId: question.id,
     partNumber: question.partNumber,
+    mustBeApproved: question.partNumber === QuestionPartNumber.TWO,
     answer: i % 5 === 4 ? AnswerOption.YES : AnswerOption.NO,
     comment: "",
   })),
@@ -149,6 +150,7 @@ const dummyPhantomVisitNew: IVisit = {
   answers: getDummyVisitCurrentQuestions().map((question) => ({
     questionId: question.id,
     partNumber: question.partNumber,
+    mustBeApproved: question.partNumber === QuestionPartNumber.TWO,
     answer: AnswerOption.NO,
     comment: "",
   })),

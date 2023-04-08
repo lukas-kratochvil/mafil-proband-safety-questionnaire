@@ -1,4 +1,9 @@
-import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "../util/server_API/dto";
+import {
+  IGenderDTO,
+  IHandednessDTO,
+  INativeLanguageDTO,
+  VisitFormAnswerIncludingQuestion,
+} from "../util/server_API/dto";
 import { FormAnswer } from "./form";
 
 export enum VisitStateDEV {
@@ -47,4 +52,8 @@ interface IProjectInfo {
 export enum VisualCorrection {
   YES,
   NO,
+}
+
+export interface IVisitIncludingQuestions extends Omit<IVisit, "answers"> {
+  answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
 }

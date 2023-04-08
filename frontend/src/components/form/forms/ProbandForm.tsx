@@ -93,22 +93,16 @@ export const ProbandForm = () => {
   useEffect(() => {
     if (questions !== undefined && step === ProbandFormStep.EXAMINATION) {
       setQacs(
-        questions.map((qac, index) => ({
+        questions.map((question, index) => ({
+          ...question,
           index,
-          questionId: qac.id,
-          partNumber: qac.partNumber,
+          questionId: question.id,
           answer: null,
           comment: "",
         }))
       );
     }
   }, [questions, step]);
-
-  useEffect(() => {
-    if (step === ProbandFormStep.EXAMINATION) {
-      setValue("answers", qacs);
-    }
-  }, [qacs, setValue, step]);
 
   useEffect(() => {
     if (step === ProbandFormStep.CONTACTS) {

@@ -1,6 +1,6 @@
 import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import { AnswerOption } from "@app/model/form";
-import { IVisit, VisitStateDEV, VisualCorrection } from "@app/model/visit";
+import { IVisitIncludingQuestions, VisitStateDEV, VisualCorrection } from "@app/model/visit";
 import {
   IApprovalRoomVisitFormIncludingQuestionsDTO,
   IWaitingRoomVisitFormIncludingQuestionsDTO,
@@ -31,6 +31,7 @@ const waitingRoomVisitForm: IWaitingRoomVisitFormIncludingQuestionsDTO = {
   answersIncludingQuestions: [
     {
       answer: AnswerOption.NO,
+      comment: "",
       questionId: "1",
       partNumber: 1,
       mustBeApproved: false,
@@ -55,7 +56,7 @@ const approvalRoomVisitForm: IApprovalRoomVisitFormIncludingQuestionsDTO = {
   },
 };
 
-const visit: IVisit = {
+const visit: IVisitIncludingQuestions = {
   id: "1",
   createdAt: new Date(),
   visitId: "1",
@@ -83,17 +84,20 @@ const visit: IVisit = {
     measuredAt: new Date(),
     disapprovalReason: null,
   },
-  answers: [
+  answersIncludingQuestions: [
     {
       questionId: "1",
       partNumber: QuestionPartNumber.ONE,
+      mustBeApproved: false,
       answer: AnswerOption.NO,
       comment: "",
+      hiddenByGenders: [],
+      translations: [],
     },
   ],
 };
 
-const visitNotCompleted: IVisit = {
+const visitNotCompleted: IVisitIncludingQuestions = {
   id: "1",
   createdAt: new Date(),
   visitId: "1",
@@ -121,12 +125,15 @@ const visitNotCompleted: IVisit = {
     measuredAt: null,
     disapprovalReason: null,
   },
-  answers: [
+  answersIncludingQuestions: [
     {
       questionId: "1",
       partNumber: QuestionPartNumber.ONE,
+      mustBeApproved: false,
       answer: AnswerOption.NO,
       comment: "",
+      hiddenByGenders: [],
+      translations: [],
     },
   ],
 };
@@ -254,7 +261,13 @@ describe("form loaders", () => {
       expect(formDefaultValuesVisitDuplication.visualCorrectionDioptre).toEqual(visit.visualCorrectionDioptre);
       expect(formDefaultValuesVisitDuplication.email).toEqual(visit.email);
       expect(formDefaultValuesVisitDuplication.phone).toEqual(visit.phone);
-      expect(formDefaultValuesVisitDuplication.answers).toEqual(visit.answers);
+
+      formDefaultValuesVisitDuplication.answers.forEach((answer, i) => {
+        expect(answer.questionId).toEqual(visitNotCompleted.answersIncludingQuestions[i].questionId);
+        expect(answer.mustBeApproved).toEqual(visitNotCompleted.answersIncludingQuestions[i].mustBeApproved);
+        expect(answer.answer).toEqual(visitNotCompleted.answersIncludingQuestions[i].answer);
+        expect(answer.comment).toEqual(visitNotCompleted.answersIncludingQuestions[i].comment);
+      });
     });
 
     test("all the visit nullable attributes are null", () => {
@@ -281,7 +294,13 @@ describe("form loaders", () => {
       );
       expect(formDefaultValuesVisitDuplication.email).toEqual(visitNotCompleted.email);
       expect(formDefaultValuesVisitDuplication.phone).toEqual(visitNotCompleted.phone);
-      expect(formDefaultValuesVisitDuplication.answers).toEqual(visitNotCompleted.answers);
+
+      formDefaultValuesVisitDuplication.answers.forEach((answer, i) => {
+        expect(answer.questionId).toEqual(visitNotCompleted.answersIncludingQuestions[i].questionId);
+        expect(answer.mustBeApproved).toEqual(visitNotCompleted.answersIncludingQuestions[i].mustBeApproved);
+        expect(answer.answer).toEqual(visitNotCompleted.answersIncludingQuestions[i].answer);
+        expect(answer.comment).toEqual(visitNotCompleted.answersIncludingQuestions[i].comment);
+      });
     });
   });
 });

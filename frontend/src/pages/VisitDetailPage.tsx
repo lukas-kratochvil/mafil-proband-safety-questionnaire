@@ -12,7 +12,7 @@ import {
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n";
 import { IVisit, VisitStateDEV } from "@app/model/visit";
-import { fetchVisit } from "@app/util/mafildb_API/fetch";
+import { fetchVisitDetail } from "@app/util/mafildb_API/fetch";
 import { getBackButtonProps, IButtonProps } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
 
@@ -108,7 +108,11 @@ const getButtons = (
 const VisitDetailPage = () => {
   const { t } = useTranslation(defaultNS);
   const { id } = useParams();
-  const { data: visit, isLoading, isError } = useQuery({ queryKey: ["visit", id], queryFn: () => fetchVisit(id) });
+  const {
+    data: visit,
+    isLoading,
+    isError,
+  } = useQuery({ queryKey: ["visit", id], queryFn: () => fetchVisitDetail(id) });
   const navigate = useNavigate();
 
   const [visitState, setVisitState] = useState<VisitStateDEV>();

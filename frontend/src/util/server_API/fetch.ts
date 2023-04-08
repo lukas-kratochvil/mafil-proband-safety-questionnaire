@@ -4,7 +4,6 @@ import i18n, { LocalizationKeys } from "@app/i18n";
 import { IOperatorAuthorization } from "@app/model/auth";
 import { AnswerOption, FormPropType } from "@app/model/form";
 import {
-  ApprovalRoomVisitFormAnswerIncludingQuestion,
   IApprovalRoomVisitFormDTO,
   IApprovalRoomVisitFormIncludingQuestionsDTO,
   ICreateDuplicatedVisitFormForApprovalInput,
@@ -17,7 +16,7 @@ import {
   ISendVisitFormFromWaitingRoomForApprovalInput,
   IWaitingRoomVisitFormDTO,
   IWaitingRoomVisitFormIncludingQuestionsDTO,
-  WaitingRoomVisitFormAnswerIncludingQuestion,
+  VisitFormAnswerIncludingQuestion,
 } from "@app/util/server_API/dto";
 import { CREATE_VISIT_FORM, DELETE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
 import {
@@ -129,9 +128,9 @@ export const fetchWaitingRoomVisitForm = async (
   });
   const { visitForm } = data.data;
   const answersIncludingQuestions = await Promise.all(
-    visitForm.answers.map(async (answer): Promise<WaitingRoomVisitFormAnswerIncludingQuestion> => {
+    visitForm.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
       const question = await fetchQuestion(answer.questionId);
-      return { ...answer, ...question };
+      return { ...answer, ...question, comment: "" };
     })
   );
   return { ...visitForm, answersIncludingQuestions };
@@ -156,7 +155,7 @@ export const fetchApprovalRoomVisitForm = async (
   });
   const { visitForm } = data.data;
   const answersIncludingQuestions = await Promise.all(
-    visitForm.answers.map(async (answer): Promise<ApprovalRoomVisitFormAnswerIncludingQuestion> => {
+    visitForm.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
       const question = await fetchQuestion(answer.questionId);
       return { ...answer, ...question };
     })

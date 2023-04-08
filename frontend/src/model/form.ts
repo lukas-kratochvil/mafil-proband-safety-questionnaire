@@ -1,6 +1,11 @@
 import { IOption } from "@app/components/form/util/options";
 import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
-import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, QuestionPartNumber } from "../util/server_API/dto";
+import {
+  IGenderDTO,
+  IHandednessDTO,
+  INativeLanguageDTO,
+  QuestionHiddenByGendersWithoutId,
+} from "../util/server_API/dto";
 
 // Form fields having this data type are validated as numbers
 type TextFieldNumberInput = string | number;
@@ -12,12 +17,16 @@ export enum AnswerOption {
 
 export type FormAnswer = {
   questionId: string;
-  partNumber: QuestionPartNumber;
+  mustBeApproved: boolean;
   answer: AnswerOption | null;
   comment: string;
 };
 
-export type FormQac = FormAnswer & { index: number };
+// QAC entity is grouping Question, Answer and Comment together
+export type FormQac = FormAnswer &
+  Omit<QuestionHiddenByGendersWithoutId, "mustBeApproved"> & {
+    index: number; // 'index' is important to index specific question in the react-hook-form values
+  };
 
 export type FormPropType = {
   // Project info

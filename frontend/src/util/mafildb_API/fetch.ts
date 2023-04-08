@@ -1,8 +1,10 @@
 import axiosConfig from "@app/axios-config";
 import { devicesDev, projectsDev } from "@app/data/form_data";
 import { dummyVisits } from "@app/data/visit_data";
-import { FormPropType } from "@app/model/form";
-import { IVisit, VisitStateDEV } from "@app/model/visit";
+import { AnswerOption, FormPropType } from "@app/model/form";
+import { IVisit, IVisitIncludingQuestions, VisitStateDEV } from "@app/model/visit";
+import { VisitFormAnswerIncludingQuestion } from "../server_API/dto";
+import { fetchQuestion } from "../server_API/fetch";
 import { IDeviceDTO, IProjectDTO, VisitState } from "./dto";
 import { CreateVisitResponse, UpdateVisitStateResponse } from "./response-types";
 
@@ -19,8 +21,26 @@ export const fetchDevices = async (): Promise<IDeviceDTO[]> =>
   devicesDev;
 
 // TODO: get visit from MAFILDB DB
-export const fetchVisit = async (visitId: string | undefined): Promise<IVisit | undefined> =>
-  dummyVisits.find((visit) => visit.id === visitId);
+export const fetchVisitForDuplication = async (
+  visitId: string | undefined
+): Promise<IVisitIncludingQuestions | undefined> => {
+  const visit = dummyVisits.find((dummyVisit) => dummyVisit.id === visitId);
+
+  if (visit === undefined) {
+    return undefined;
+  }
+
+  const answersIncludingQuestions = await Promise.all(
+    visit.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
+      const question = await fetchQuestion(answer.questionId);
+      return { ...answer, ...question, answer: AnswerOption.NO, comment: "" };
+    })
+  );
+  return { ...visit, answersIncludingQuestions };
+};
+
+export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVisit | undefined> =>
+  dummyVisits.find((dummyVisit) => dummyVisit.id === visitId);
 
 // TODO: get visits from MAFIL DB – all the visits with assigned visitId and generated PDF are fetched from MAFIL DB
 export const fetchRecentVisits = async (): Promise<IVisit[]> =>

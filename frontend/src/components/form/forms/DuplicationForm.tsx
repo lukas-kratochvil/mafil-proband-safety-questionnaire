@@ -15,7 +15,7 @@ import { AnswerOption, FormPropType, FormQac } from "@app/model/form";
 import { VisitStateDEV } from "@app/model/visit";
 import { RoutingPaths } from "@app/routing-paths";
 import { updateDummyVisitState } from "@app/util/fetch.dev";
-import { fetchVisit } from "@app/util/mafildb_API/fetch";
+import { fetchVisitForDuplication } from "@app/util/mafildb_API/fetch";
 import { QuestionPartNumber } from "@app/util/server_API/dto";
 import { createDuplicatedVisitFormForApproval } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
@@ -29,7 +29,12 @@ export const DuplicationForm = () => {
     data: visit,
     isLoading,
     isError,
-  } = useQuery({ queryKey: ["visit", id], queryFn: () => fetchVisit(id), staleTime: Infinity, cacheTime: Infinity });
+  } = useQuery({
+    queryKey: ["visit", id],
+    queryFn: () => fetchVisitForDuplication(id),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
   const navigate = useNavigate();
   const { operator } = useAuthDev();
   const { getValues, setValue, trigger } = useFormContext<FormPropType>();
@@ -44,7 +49,7 @@ export const DuplicationForm = () => {
 
   useEffect(() => {
     if (visit !== undefined) {
-      setQacs(visit.answers.map((answer, index) => ({ index, ...answer })));
+      setQacs(visit.answersIncludingQuestions.map((answer, index) => ({ ...answer, index })));
 
       // TODO: try if there's a need for isLoading flag due to the slow form initialization
       const defaultValues = loadFormDefaultValuesVisitDuplication(visit);
@@ -123,9 +128,7 @@ export const DuplicationForm = () => {
           onClick: async (data: FormPropType) => {
             if (
               operator?.role === "MR_HIGH_PERM"
-              || data.answers.find(
-                (answer) => answer.partNumber === QuestionPartNumber.TWO && answer.answer === AnswerOption.YES
-              ) === undefined
+              || data.answers.find((answer) => answer.mustBeApproved && answer.answer === AnswerOption.YES) === undefined
             ) {
               // TODO: create APPROVED visit in the MAFILDB
               const approvedVisit = createNewVisitFromFormData(data, VisitStateDEV.APPROVED);

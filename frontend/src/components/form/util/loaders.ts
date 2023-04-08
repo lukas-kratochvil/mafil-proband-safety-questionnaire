@@ -1,5 +1,5 @@
 import { FormPropType } from "@app/model/form";
-import { IVisit, VisualCorrection } from "@app/model/visit";
+import { IVisitIncludingQuestions, VisualCorrection } from "@app/model/visit";
 import {
   IApprovalRoomVisitFormIncludingQuestionsDTO,
   IWaitingRoomVisitFormIncludingQuestionsDTO,
@@ -72,12 +72,12 @@ export const loadFormDefaultValuesFromApprovalRoomVisitForm = (
 });
 
 // Autocomplete component default value must be one of the options provided or null
-export const loadFormDefaultValuesVisitDuplication = (visit: IVisit): FormPropType => ({
+export const loadFormDefaultValuesVisitDuplication = (visit: IVisitIncludingQuestions): FormPropType => ({
   project: null,
   device: null,
   measuredAt: visit.projectInfo.measuredAt ?? new Date(),
   disapprovalReason: visit.projectInfo.disapprovalReason,
   ...visit,
   visualCorrection: getOption(visualCorrectionOptions, visit.visualCorrection),
-  answers: visit.answers.map((answer) => ({ ...answer })),
+  answers: visit.answersIncludingQuestions.map((answer) => ({ ...answer })),
 });

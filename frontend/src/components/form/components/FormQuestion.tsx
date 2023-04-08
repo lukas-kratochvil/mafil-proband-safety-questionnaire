@@ -1,12 +1,10 @@
 import { Grid, Theme, Typography, useMediaQuery } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { defaultNS } from "@app/i18n";
 import { AnswerOption, FormPropType, FormQac } from "@app/model/form";
-import { fetchQuestion } from "@app/util/server_API/fetch";
 import { FormRadioGroup } from "../inputs/FormRadioGroup";
 import { FormTextField } from "../inputs/FormTextField";
 import { IFormCardProps } from "../interfaces/form-card";
@@ -21,12 +19,6 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
   const matchesUpSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
   const { operator } = useAuthDev();
   const { setValue } = useFormContext<FormPropType>();
-  const { data: question } = useQuery({
-    queryKey: ["question", qac.questionId],
-    queryFn: () => fetchQuestion(qac.questionId),
-    staleTime: Infinity,
-    cacheTime: Infinity,
-  });
 
   const [hideQuestion, setHideQuestion] = useState<boolean>(false);
   const selectedGender = useWatch<FormPropType, "gender">({ name: "gender" });
@@ -37,14 +29,14 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
 
   // hide question when specified genders are selected
   useEffect(() => {
-    if (selectedGender && question?.hiddenByGenders.map((h) => h.genderCode).includes(selectedGender.code)) {
+    if (selectedGender && qac.hiddenByGenders.map((h) => h.genderCode).includes(selectedGender.code)) {
       setHideQuestion(true);
       setValue(`answers.${qac.index}.answer`, AnswerOption.NO);
     } else {
       setValue(`answers.${qac.index}.answer`, null);
       setHideQuestion(false);
     }
-  }, [qac.index, question, selectedGender, setValue]);
+  }, [qac.index, qac.hiddenByGenders, selectedGender, setValue]);
 
   useEffect(() => {
     if (questionAnswer !== AnswerOption.YES) {
@@ -76,10 +68,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
         xs={1}
         sm
       >
-        <Typography>
-          {question?.translations.find((trans) => trans.language.code === i18n.language)?.text
-            || question?.translations[0].text}
-        </Typography>
+        <Typography>{qac.translations.find((trans) => trans.language.code === i18n.language)?.text || ""}</Typography>
       </Grid>
       <Grid
         item

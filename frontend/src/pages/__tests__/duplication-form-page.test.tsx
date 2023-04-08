@@ -128,7 +128,7 @@ const visit: IVisit = {
   },
   answers: questionData.map((question, index) => ({
     questionId: question.id,
-    partNumber: question.partNumber,
+    mustBeApproved: index % 2 === 0,
     answer: index % 2 === 0 ? AnswerOption.YES : AnswerOption.NO,
     comment: index % 2 === 0 ? comment : "",
   })),

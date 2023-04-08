@@ -48,10 +48,10 @@ export const WaitingRoomForm = () => {
 
   useEffect(() => {
     if (visitForm !== undefined) {
+      setQacs(visitForm.answersIncludingQuestions.map((answer, index) => ({ ...answer, index })));
       // TODO: try if there's a need for isLoading flag due to the slow form initialization
       const defaultValues = loadFormDefaultValuesFromWaitingRoomVisitForm(visitForm);
       setInitialFormData(defaultValues);
-      setQacs(defaultValues.answers.map((answer, index) => ({ index, ...answer })));
       type DefaultValuesPropertyType = keyof typeof defaultValues;
       Object.keys(defaultValues).forEach((propertyName) => {
         setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
@@ -112,9 +112,7 @@ export const WaitingRoomForm = () => {
           onClick: async (data: FormPropType) => {
             if (
               operator?.role === "MR_HIGH_PERM"
-              || data.answers.find(
-                (answer) => answer.partNumber === QuestionPartNumber.TWO && answer.answer === AnswerOption.YES
-              ) === undefined
+              || data.answers.find((answer) => answer.mustBeApproved && answer.answer === AnswerOption.YES) === undefined
             ) {
               // TODO: create APPROVED visit in the MAFILDB
               updateDummyVisitState(id, VisitStateDEV.APPROVED);
