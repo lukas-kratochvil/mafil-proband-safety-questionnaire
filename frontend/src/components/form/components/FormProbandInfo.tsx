@@ -37,7 +37,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
     ],
   });
 
-  // Setting gender
+  // Setting selected gender
   useEffect(() => {
     if (genders.data !== undefined) {
       if (isPhantom) {

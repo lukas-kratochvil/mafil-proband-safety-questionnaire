@@ -27,17 +27,24 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
     defaultValue: qac.answer,
   });
 
-  // hide question when specified genders are selected
+  // Setting selected answer and comment
   useEffect(() => {
-    if (selectedGender && qac.hiddenByGenders.map((h) => h.genderCode).includes(selectedGender.code)) {
+    setValue(`answers.${qac.index}.answer`, qac.answer);
+    setValue(`answers.${qac.index}.comment`, qac.comment);
+  }, [qac.answer, qac.comment, qac.index, setValue]);
+
+  // Hide question when specified genders are selected
+  useEffect(() => {
+    if (selectedGender !== null && qac.hiddenByGenders.map((hbg) => hbg.genderCode).includes(selectedGender.code)) {
       setHideQuestion(true);
       setValue(`answers.${qac.index}.answer`, AnswerOption.NO);
     } else {
-      setValue(`answers.${qac.index}.answer`, null);
+      setValue(`answers.${qac.index}.answer`, qac.answer);
       setHideQuestion(false);
     }
-  }, [qac.index, qac.hiddenByGenders, selectedGender, setValue]);
+  }, [qac.answer, qac.index, qac.hiddenByGenders, selectedGender, setValue]);
 
+  // Reset comment if the current answer is 'NO'
   useEffect(() => {
     if (questionAnswer !== AnswerOption.YES) {
       setValue(`answers.${qac.index}.comment`, "");
