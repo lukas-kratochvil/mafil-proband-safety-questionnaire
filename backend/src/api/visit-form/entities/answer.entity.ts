@@ -1,8 +1,21 @@
-import { Field, HideField, ObjectType } from "@nestjs/graphql";
-import { Answer } from "@prisma/client";
-import { IsString, IsUUID, MaxLength } from "class-validator";
+import { Field, HideField, ObjectType, registerEnumType } from "@nestjs/graphql";
+import { Answer, AnswerOption } from "@prisma/client";
+import { IsEnum, IsString, IsUUID } from "class-validator";
 import { BaseEntity } from "@app/api/utils/entities/base.entity";
 import { UUID } from "@app/api/utils/scalars/uuid-scalar";
+
+registerEnumType(AnswerOption, {
+  name: "AnswerOption",
+  description: "Question answer options.",
+  valuesMap: {
+    YES: {
+      description: "Yes option.",
+    },
+    NO: {
+      description: "No option.",
+    },
+  },
+});
 
 @ObjectType()
 export class AnswerEntity extends BaseEntity implements Answer {
@@ -14,9 +27,9 @@ export class AnswerEntity extends BaseEntity implements Answer {
   @Field(() => UUID)
   questionId: string;
 
-  @MaxLength(3)
-  @Field()
-  answer: string;
+  @IsEnum(AnswerOption)
+  @Field(() => AnswerOption)
+  answer: AnswerOption;
 
   @IsString()
   @Field()

@@ -66,6 +66,11 @@ entity AdditionalVisitFormInfo {
   * finalizedAt: Date
 }
 
+enum AnswerOption {
+  YES
+  NO
+}
+
 entity Answer {
   * id: <<UUID>>
   * visitFormId: <<FK>>
@@ -75,7 +80,7 @@ entity Answer {
   * modifiedAt: Date
   deletedAt: Date
   ---
-  * answer: String
+  * answer: AnswerOption
   comment: String
 }
 
@@ -202,6 +207,7 @@ VisitForm }o..|| Gender
 VisitForm }o..|| Handedness
 VisitForm }o..|| NativeLanguage
 Answer }o..|| Question
+Answer }o..|| AnswerOption
 Question |o..|| Question
 Question ||..|{ QuestionTranslation
 QuestionTranslation }o..|| Language

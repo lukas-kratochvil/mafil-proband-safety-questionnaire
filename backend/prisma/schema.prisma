@@ -90,6 +90,11 @@ model AdditionalVisitFormInfo {
   finalizedAt    DateTime
 }
 
+enum AnswerOption {
+  YES
+  NO
+}
+
 model Answer {
   id String @id @default(uuid()) @db.Uuid
 
@@ -102,8 +107,8 @@ model Answer {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  answer  String @db.VarChar(3)
-  comment String @default("")
+  answer  AnswerOption
+  comment String       @default("")
 }
 
 model Question {
