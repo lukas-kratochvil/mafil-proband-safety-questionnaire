@@ -10,12 +10,6 @@ export enum QuestionPartNumber {
   TWO = 2,
 }
 
-export interface IQuestionData {
-  id: string;
-  text: string;
-  partNumber: QuestionPartNumber;
-}
-
 export enum AnswerOption {
   YES = "YES",
   NO = "NO",

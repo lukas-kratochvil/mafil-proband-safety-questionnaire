@@ -1,4 +1,4 @@
-import { IQuestionData, QuestionPartNumber } from "@app/model/form";
+import { QuestionPartNumber } from "@app/model/form";
 
 const questions1 = [
   "Prodělal(a) jste operaci hlavy (mozku)?",
@@ -26,13 +26,19 @@ const questions2 = [
   "Je možné, že se ve Vašem těle nachází kovová střepina?",
 ];
 
-const createQuestions = (questions: string[], partNumber: QuestionPartNumber): IQuestionData[] =>
+export interface IQuestionDataDev {
+  id: string;
+  text: string;
+  partNumber: QuestionPartNumber;
+}
+
+const createQuestions = (questions: string[], partNumber: QuestionPartNumber): IQuestionDataDev[] =>
   questions.map(
-    (text, index): IQuestionData => ({
+    (text, index): IQuestionDataDev => ({
       id: `p${partNumber}q${index + 1 < 10 ? `0${index + 1}` : `${index + 1}`}`,
       text,
       partNumber,
     })
   );
 
-export const questions: IQuestionData[] = [...createQuestions(questions1, 1), ...createQuestions(questions2, 2)];
+export const questions: IQuestionDataDev[] = [...createQuestions(questions1, 1), ...createQuestions(questions2, 2)];
