@@ -47,6 +47,7 @@ enum VisitFormState {
   NEW
   IN_APPROVAL
   SENT_TO_MAFILDB
+  DELETED
 }
 
 entity AdditionalVisitFormInfo {
