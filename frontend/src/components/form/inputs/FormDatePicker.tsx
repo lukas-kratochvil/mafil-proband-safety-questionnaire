@@ -34,7 +34,7 @@ export const FormDatePicker = ({ name, label, isOptional, disabled, maxDate }: I
             <DatePicker
               value={field.value}
               onChange={field.onChange}
-              ref={field.ref}
+              inputRef={field.ref}
               inputFormat="dd.MM.yyyy"
               maxDate={maxDate}
               renderInput={(params) => (
