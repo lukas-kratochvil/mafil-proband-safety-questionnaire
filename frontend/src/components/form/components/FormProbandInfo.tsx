@@ -134,10 +134,13 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
   }, [birthdateValue, genderEntity, getFieldState, personalIdValue, setValue]);
 
   useEffect(() => {
-    if (visualCorrectionOption?.value !== VisualCorrection.YES) {
+    const visualCorrectionDioptreValue = getValues("visualCorrectionDioptre");
+
+    // If we don't check the visual correction dioptre value resetField() causes infinite re-renders
+    if (+visualCorrectionDioptreValue !== 0 && visualCorrectionOption?.value !== VisualCorrection.YES) {
       resetField("visualCorrectionDioptre");
     }
-  }, [resetField, visualCorrectionOption]);
+  }, [getValues, resetField, visualCorrectionOption]);
 
   return (
     <FormCardContainer title={t("title")}>
