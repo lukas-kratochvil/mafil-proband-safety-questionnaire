@@ -19,23 +19,24 @@ export interface ITranslation {
   };
 }
 
-export interface IGenderDTO {
-  id: string;
-  code: string;
+interface ITranslations {
   translations: ITranslation[];
 }
 
-export interface INativeLanguageDTO {
+export interface IGenderDTO extends ITranslations {
+  id: string;
+  code: string;
+}
+
+export interface INativeLanguageDTO extends ITranslations {
   id: string;
   code: string;
   order: number | null;
-  translations: ITranslation[];
 }
 
-export interface IHandednessDTO {
+export interface IHandednessDTO extends ITranslations {
   id: string;
   code: string;
-  translations: ITranslation[];
 }
 
 export interface IHTMLCardDTO {
@@ -43,11 +44,10 @@ export interface IHTMLCardDTO {
   html: string;
 }
 
-export interface IQuestionDTO {
+export interface IQuestionDTO extends ITranslations {
   id: string;
   partNumber: number;
   mustBeApproved: boolean;
-  translations: ITranslation[];
   hiddenByGenders: {
     genderCode: string;
   }[];

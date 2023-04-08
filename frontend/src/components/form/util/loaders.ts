@@ -48,7 +48,6 @@ export const loadFormDefaultValuesFromWaitingRoomVisitForm = (
     visualCorrectionOptions,
     visitForm.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
   ),
-  // TODO: how to get question part number?
   answers: visitForm.answersIncludingQuestions.map((answer) => ({ ...answer, comment: "" })),
 });
 
@@ -69,7 +68,6 @@ export const loadFormDefaultValuesFromApprovalRoomVisitForm = (
     name: "",
   },
   measuredAt: visitForm.additionalInfo.measuredAt ?? new Date(),
-  // TODO: how to get question part number?
   answers: visitForm.answersIncludingQuestions.map((answer) => ({ ...answer })),
 });
 
