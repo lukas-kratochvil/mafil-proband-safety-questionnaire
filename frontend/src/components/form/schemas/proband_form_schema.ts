@@ -1,7 +1,7 @@
 import { array, date, mixed, number, object, string } from "yup";
-import { AnswerOption, QuestionPartNumber } from "@app/model/form";
+import { AnswerOption } from "@app/model/form";
 import { VisualCorrection } from "@app/model/visit";
-import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "@app/util/server_API/dto";
+import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, QuestionPartNumber } from "@app/util/server_API/dto";
 import { getOption, IOption, visualCorrectionOptions } from "../util/options";
 
 export const answersSchema = object({

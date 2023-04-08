@@ -1,14 +1,9 @@
 import { IOption } from "@app/components/form/util/options";
 import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
-import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "../util/server_API/dto";
+import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, QuestionPartNumber } from "../util/server_API/dto";
 
 // Form fields having this data type are validated as numbers
 type TextFieldNumberInput = string | number;
-
-export enum QuestionPartNumber {
-  ONE = 1,
-  TWO = 2,
-}
 
 export enum AnswerOption {
   YES = "YES",

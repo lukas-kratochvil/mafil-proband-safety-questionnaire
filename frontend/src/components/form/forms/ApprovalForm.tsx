@@ -9,10 +9,11 @@ import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesFromApprovalRoomVisitForm } from "@app/components/form/util/loaders";
 import { useAuthDev } from "@app/hooks/auth/auth-dev";
-import { FormPropType, FormQac, QuestionPartNumber } from "@app/model/form";
+import { FormPropType, FormQac } from "@app/model/form";
 import { VisitStateDEV } from "@app/model/visit";
 import { RoutingPaths } from "@app/routing-paths";
 import { updateDummyVisitState } from "@app/util/fetch.dev";
+import { QuestionPartNumber } from "@app/util/server_API/dto";
 import { fetchApprovalRoomVisitForm } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";

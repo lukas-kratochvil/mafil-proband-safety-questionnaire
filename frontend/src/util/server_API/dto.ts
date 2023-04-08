@@ -44,9 +44,14 @@ export interface IHTMLCardDTO {
   html: string;
 }
 
+export enum QuestionPartNumber {
+  ONE = 1,
+  TWO = 2,
+}
+
 export interface IQuestionDTO extends ITranslations {
   id: string;
-  partNumber: number;
+  partNumber: QuestionPartNumber;
   mustBeApproved: boolean;
   hiddenByGenders: {
     genderCode: string;

@@ -1,9 +1,10 @@
 import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
-import { AnswerOption, QuestionPartNumber } from "@app/model/form";
+import { AnswerOption } from "@app/model/form";
 import { IVisit, VisitStateDEV, VisualCorrection } from "@app/model/visit";
 import {
   IApprovalRoomVisitFormIncludingQuestionsDTO,
   IWaitingRoomVisitFormIncludingQuestionsDTO,
+  QuestionPartNumber,
 } from "@app/util/server_API/dto";
 import {
   loadEmptyDefaultValues,

@@ -11,11 +11,12 @@ import { loadFormDefaultValuesVisitDuplication } from "@app/components/form/util
 import { createNewVisitFromFormData } from "@app/components/form/util/utils.dev";
 import { dummyVisits } from "@app/data/visit_data";
 import { useAuthDev } from "@app/hooks/auth/auth-dev";
-import { AnswerOption, FormPropType, FormQac, QuestionPartNumber } from "@app/model/form";
+import { AnswerOption, FormPropType, FormQac } from "@app/model/form";
 import { VisitStateDEV } from "@app/model/visit";
 import { RoutingPaths } from "@app/routing-paths";
 import { updateDummyVisitState } from "@app/util/fetch.dev";
 import { fetchVisit } from "@app/util/mafildb_API/fetch";
+import { QuestionPartNumber } from "@app/util/server_API/dto";
 import { createDuplicatedVisitFormForApproval } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";

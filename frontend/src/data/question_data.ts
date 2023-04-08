@@ -1,4 +1,4 @@
-import { QuestionPartNumber } from "@app/model/form";
+import { QuestionPartNumber } from "@app/util/server_API/dto";
 
 const questions1 = [
   "Prodělal(a) jste operaci hlavy (mozku)?",
