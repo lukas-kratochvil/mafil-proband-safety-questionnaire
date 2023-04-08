@@ -87,6 +87,14 @@ export interface IWaitingRoomVisitFormDTO {
   answers: IProbandAnswerDTO[];
 }
 
+type QuestionHiddenByGendersWithoutId = Omit<IQuestionHiddenByGendersDTO, "id">;
+
+export type WaitingRoomVisitFormAnswerIncludingQuestion = IProbandAnswerDTO & QuestionHiddenByGendersWithoutId;
+
+export interface IWaitingRoomVisitFormIncludingQuestionsDTO extends Omit<IWaitingRoomVisitFormDTO, "answers"> {
+  answersIncludingQuestions: WaitingRoomVisitFormAnswerIncludingQuestion[];
+}
+
 export interface IApprovalRoomVisitFormDTO extends IWaitingRoomVisitFormDTO {
   answers: IOperatorAnswerDTO[];
   additionalInfo: {
@@ -96,6 +104,12 @@ export interface IApprovalRoomVisitFormDTO extends IWaitingRoomVisitFormDTO {
     deviceName: string;
     measuredAt: Date;
   };
+}
+
+export type ApprovalRoomVisitFormAnswerIncludingQuestion = IOperatorAnswerDTO & QuestionHiddenByGendersWithoutId;
+
+export interface IApprovalRoomVisitFormIncludingQuestionsDTO extends Omit<IApprovalRoomVisitFormDTO, "answers"> {
+  answersIncludingQuestions: ApprovalRoomVisitFormAnswerIncludingQuestion[];
 }
 
 type AdditionalInfo = {

@@ -1,7 +1,7 @@
 import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import { AnswerOption, QuestionPartNumber } from "@app/model/form";
 import { IVisit, VisitStateDEV, VisualCorrection } from "@app/model/visit";
-import { IApprovalRoomVisitFormDTO, IWaitingRoomVisitFormDTO } from "@app/util/server_API/dto";
+import { IApprovalRoomVisitFormDTO, IApprovalRoomVisitFormIncludingQuestionsDTO, IWaitingRoomVisitFormIncludingQuestionsDTO } from "@app/util/server_API/dto";
 import {
   loadEmptyDefaultValues,
   loadFormDefaultValuesFromApprovalRoomVisitForm,
@@ -10,7 +10,7 @@ import {
   loadPhantomFormDefaultValues,
 } from "../loaders";
 
-const waitingRoomVisitForm: IWaitingRoomVisitFormDTO = {
+const waitingRoomVisitForm: IWaitingRoomVisitFormIncludingQuestionsDTO = {
   id: "123",
   name: "Name",
   surname: "Surname",
@@ -24,17 +24,21 @@ const waitingRoomVisitForm: IWaitingRoomVisitFormDTO = {
   handedness: handednesses[3],
   email: "name.surname@email.com",
   phone: "123456789",
-  answers: [
+  answersIncludingQuestions: [
     {
-      questionId: "1",
       answer: AnswerOption.NO,
+      questionId: "1",
+      partNumber: 1,
+      mustBeApproved: false,
+      hiddenByGenders: [],
+      translations: [],
     },
   ],
 };
 
-const approvalRoomVisitForm: IApprovalRoomVisitFormDTO = {
+const approvalRoomVisitForm: IApprovalRoomVisitFormIncludingQuestionsDTO = {
   ...waitingRoomVisitForm,
-  answers: waitingRoomVisitForm.answers.map((answer) => ({ ...answer, comment: "comment" })),
+  answersIncludingQuestions: waitingRoomVisitForm.answersIncludingQuestions.map((answer) => ({ ...answer, comment: "comment" })),
   additionalInfo: {
     projectId: "1552314",
     projectAcronym: "Proj1",
@@ -188,8 +192,8 @@ describe("form loaders", () => {
     expect(loadedFormValues.email).toEqual(fetchedVisit.email);
     expect(loadedFormValues.phone).toEqual(fetchedVisit.phone);
     loadedFormValues.answers.forEach((loadedAnswer, i) => {
-      expect(loadedAnswer.answer).toEqual(fetchedVisit.answers[i].answer);
-      expect(loadedAnswer.questionId).toEqual(fetchedVisit.answers[i].questionId);
+      expect(loadedAnswer.answer).toEqual(fetchedVisit.answersIncludingQuestions[i].answer);
+      expect(loadedAnswer.questionId).toEqual(fetchedVisit.answersIncludingQuestions[i].questionId);
       expect(loadedAnswer.comment).toEqual("");
     });
   });
@@ -217,9 +221,9 @@ describe("form loaders", () => {
     expect(loadedFormValues.email).toEqual(fetchedVisit.email);
     expect(loadedFormValues.phone).toEqual(fetchedVisit.phone);
     loadedFormValues.answers.forEach((loadedAnswer, i) => {
-      expect(loadedAnswer.answer).toEqual(fetchedVisit.answers[i].answer);
-      expect(loadedAnswer.questionId).toEqual(fetchedVisit.answers[i].questionId);
-      expect(loadedAnswer.comment).toEqual(fetchedVisit.answers[i].comment);
+      expect(loadedAnswer.answer).toEqual(fetchedVisit.answersIncludingQuestions[i].answer);
+      expect(loadedAnswer.questionId).toEqual(fetchedVisit.answersIncludingQuestions[i].questionId);
+      expect(loadedAnswer.comment).toEqual(fetchedVisit.answersIncludingQuestions[i].comment);
     });
   });
 

@@ -4,7 +4,9 @@ import i18n, { LocalizationKeys } from "@app/i18n";
 import { IOperatorAuthorization } from "@app/model/auth";
 import { AnswerOption, FormPropType } from "@app/model/form";
 import {
+  ApprovalRoomVisitFormAnswerIncludingQuestion,
   IApprovalRoomVisitFormDTO,
+  IApprovalRoomVisitFormIncludingQuestionsDTO,
   ICreateDuplicatedVisitFormForApprovalInput,
   ICreateProbandVisitFormInput,
   IGenderDTO,
@@ -15,6 +17,8 @@ import {
   IQuestionHiddenByGendersDTO,
   ISendVisitFormFromWaitingRoomForApprovalInput,
   IWaitingRoomVisitFormDTO,
+  IWaitingRoomVisitFormIncludingQuestionsDTO,
+  WaitingRoomVisitFormAnswerIncludingQuestion,
 } from "@app/util/server_API/dto";
 import { CREATE_VISIT_FORM, DELETE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
 import {
@@ -118,13 +122,20 @@ export const fetchWaitingRoomVisitForms = async (): Promise<IWaitingRoomVisitFor
 
 export const fetchWaitingRoomVisitForm = async (
   visitId: string | undefined
-): Promise<IWaitingRoomVisitFormDTO | undefined> => {
+): Promise<IWaitingRoomVisitFormIncludingQuestionsDTO | undefined> => {
   const variables = { id: visitId };
   const { data } = await axiosConfig.serverApi.post<WaitingRoomVisitFormResponse>("", {
     query: GET_WAITING_ROOM_VISIT_FORM,
     variables,
   });
-  return data.data.visitForm;
+  const {visitForm} = data.data;
+  const answersIncludingQuestions = await Promise.all(
+    visitForm.answers.map(async (answer): Promise<WaitingRoomVisitFormAnswerIncludingQuestion> => {
+      const question = await fetchQuestion(answer.questionId);
+      return { ...answer, ...question };
+    })
+  );
+  return { ...visitForm, answersIncludingQuestions };
 };
 
 export const fetchApprovalRoomVisitForms = async (): Promise<IApprovalRoomVisitFormDTO[]> => {
@@ -138,13 +149,20 @@ export const fetchApprovalRoomVisitForms = async (): Promise<IApprovalRoomVisitF
 
 export const fetchApprovalRoomVisitForm = async (
   visitId: string | undefined
-): Promise<IApprovalRoomVisitFormDTO | undefined> => {
+): Promise<IApprovalRoomVisitFormIncludingQuestionsDTO | undefined> => {
   const variables = { id: visitId };
   const { data } = await axiosConfig.serverApi.post<ApprovalRoomVisitFormResponse>("", {
     query: GET_APPROVAL_ROOM_VISIT_FORM,
     variables,
   });
-  return data.data.visitForm;
+  const {visitForm} = data.data;
+  const answersIncludingQuestions = await Promise.all(
+    visitForm.answers.map(async (answer): Promise<ApprovalRoomVisitFormAnswerIncludingQuestion> => {
+      const question = await fetchQuestion(answer.questionId);
+      return { ...answer, ...question };
+    })
+  );
+  return { ...visitForm, answersIncludingQuestions };
 };
 
 export const createProbandVisitForm = async (visitFormData: FormPropType): Promise<string> => {

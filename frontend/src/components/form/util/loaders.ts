@@ -1,6 +1,9 @@
-import { FormPropType, QuestionPartNumber } from "@app/model/form";
+import { FormPropType } from "@app/model/form";
 import { IVisit, VisualCorrection } from "@app/model/visit";
-import { IApprovalRoomVisitFormDTO, IWaitingRoomVisitFormDTO } from "@app/util/server_API/dto";
+import {
+  IApprovalRoomVisitFormIncludingQuestionsDTO,
+  IWaitingRoomVisitFormIncludingQuestionsDTO,
+} from "@app/util/server_API/dto";
 import { getOption, visualCorrectionOptions } from "./options";
 
 // Autocomplete component default value must be one of the options provided or null
@@ -33,7 +36,9 @@ export const loadPhantomFormDefaultValues = (): FormPropType => ({
 });
 
 // Autocomplete component default value must be one of the options provided or null
-export const loadFormDefaultValuesFromWaitingRoomVisitForm = (visitForm: IWaitingRoomVisitFormDTO): FormPropType => ({
+export const loadFormDefaultValuesFromWaitingRoomVisitForm = (
+  visitForm: IWaitingRoomVisitFormIncludingQuestionsDTO
+): FormPropType => ({
   project: null,
   device: null,
   measuredAt: new Date(),
@@ -44,11 +49,13 @@ export const loadFormDefaultValuesFromWaitingRoomVisitForm = (visitForm: IWaitin
     visitForm.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
   ),
   // TODO: how to get question part number?
-  answers: visitForm.answers.map((answer) => ({ ...answer, comment: "", partNumber: QuestionPartNumber.TWO })),
+  answers: visitForm.answersIncludingQuestions.map((answer) => ({ ...answer, comment: "" })),
 });
 
 // Autocomplete component default value must be one of the options provided or null
-export const loadFormDefaultValuesFromApprovalRoomVisitForm = (visitForm: IApprovalRoomVisitFormDTO): FormPropType => ({
+export const loadFormDefaultValuesFromApprovalRoomVisitForm = (
+  visitForm: IApprovalRoomVisitFormIncludingQuestionsDTO
+): FormPropType => ({
   ...loadFormDefaultValuesFromWaitingRoomVisitForm(visitForm),
   // selected project is set in the FormProjectInfo component
   project: {
@@ -63,7 +70,7 @@ export const loadFormDefaultValuesFromApprovalRoomVisitForm = (visitForm: IAppro
   },
   measuredAt: visitForm.additionalInfo.measuredAt ?? new Date(),
   // TODO: how to get question part number?
-  answers: visitForm.answers.map((answer) => ({ ...answer, partNumber: QuestionPartNumber.TWO })),
+  answers: visitForm.answersIncludingQuestions.map((answer) => ({ ...answer })),
 });
 
 // Autocomplete component default value must be one of the options provided or null
