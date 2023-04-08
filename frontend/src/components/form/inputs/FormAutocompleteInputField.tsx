@@ -4,7 +4,7 @@ import { ControllerRenderProps, FieldValues } from "react-hook-form";
 interface IFormAutocompleteInputFieldProps {
   name: string;
   isLoading: boolean;
-  field: ControllerRenderProps<FieldValues, string>;
+  field: Pick<ControllerRenderProps<FieldValues, string>, "name" | "ref">;
   params: AutocompleteRenderInputParams;
 }
 
