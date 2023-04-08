@@ -124,8 +124,6 @@
         "birthdateNotCorrespondToPersonalId": "The birthdate does not match the value obtained from the provided Czech or Slovak personal ID.",
         "genderNotCorrespondToPersonalId": "The gender does not match the value obtained from the provided Czech or Slovak personal ID.",
         "visualCorrectionDioptreNotZero": "The value must not be equal to zero.",
-        "visualCorrectionDioptreTooLow": "The value is too low.",
-        "visualCorrectionDioptreTooHigh": "The value is too high.",
         "safetyQuestionsRequired": "All security questions must be answered.",
         "probandContacts": "If you chose to fill in contact information, please fill in all possible ones."
       }
