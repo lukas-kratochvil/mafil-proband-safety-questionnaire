@@ -38,24 +38,19 @@ export interface IHandednessDTO {
   translations: ITranslation[];
 }
 
-export interface IQuestionDTO {
-  id: string;
-  partNumber: number;
-  mustBeApproved: boolean;
-  translations: ITranslation[];
-}
-
 export interface IHTMLCardDTO {
   title: string;
   html: string;
 }
 
-interface IHiddenByGender {
-  genderCode: string;
-}
-
-export interface IQuestionHiddenByGendersDTO extends IQuestionDTO {
-  hiddenByGenders: IHiddenByGender[];
+export interface IQuestionDTO {
+  id: string;
+  partNumber: number;
+  mustBeApproved: boolean;
+  translations: ITranslation[];
+  hiddenByGenders: {
+    genderCode: string;
+  }[];
 }
 
 interface IProbandAnswerDTO {
@@ -87,7 +82,7 @@ export interface IWaitingRoomVisitFormDTO {
   answers: IProbandAnswerDTO[];
 }
 
-type QuestionHiddenByGendersWithoutId = Omit<IQuestionHiddenByGendersDTO, "id">;
+type QuestionHiddenByGendersWithoutId = Omit<IQuestionDTO, "id">;
 
 export type WaitingRoomVisitFormAnswerIncludingQuestion = IProbandAnswerDTO & QuestionHiddenByGendersWithoutId;
 

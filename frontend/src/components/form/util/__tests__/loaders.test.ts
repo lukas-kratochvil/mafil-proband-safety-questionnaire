@@ -1,7 +1,10 @@
 import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import { AnswerOption, QuestionPartNumber } from "@app/model/form";
 import { IVisit, VisitStateDEV, VisualCorrection } from "@app/model/visit";
-import { IApprovalRoomVisitFormDTO, IApprovalRoomVisitFormIncludingQuestionsDTO, IWaitingRoomVisitFormIncludingQuestionsDTO } from "@app/util/server_API/dto";
+import {
+  IApprovalRoomVisitFormIncludingQuestionsDTO,
+  IWaitingRoomVisitFormIncludingQuestionsDTO,
+} from "@app/util/server_API/dto";
 import {
   loadEmptyDefaultValues,
   loadFormDefaultValuesFromApprovalRoomVisitForm,
@@ -38,7 +41,10 @@ const waitingRoomVisitForm: IWaitingRoomVisitFormIncludingQuestionsDTO = {
 
 const approvalRoomVisitForm: IApprovalRoomVisitFormIncludingQuestionsDTO = {
   ...waitingRoomVisitForm,
-  answersIncludingQuestions: waitingRoomVisitForm.answersIncludingQuestions.map((answer) => ({ ...answer, comment: "comment" })),
+  answersIncludingQuestions: waitingRoomVisitForm.answersIncludingQuestions.map((answer) => ({
+    ...answer,
+    comment: "comment",
+  })),
   additionalInfo: {
     projectId: "1552314",
     projectAcronym: "Proj1",

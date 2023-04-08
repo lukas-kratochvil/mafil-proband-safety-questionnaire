@@ -14,7 +14,6 @@ import {
   IHTMLCardDTO,
   INativeLanguageDTO,
   IQuestionDTO,
-  IQuestionHiddenByGendersDTO,
   ISendVisitFormFromWaitingRoomForApprovalInput,
   IWaitingRoomVisitFormDTO,
   IWaitingRoomVisitFormIncludingQuestionsDTO,
@@ -81,7 +80,7 @@ export const fetchCurrentQuestions = async (): Promise<IQuestionDTO[]> => {
   return data.data.questions;
 };
 
-export const fetchQuestion = async (questionId: string): Promise<IQuestionHiddenByGendersDTO> => {
+export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO> => {
   const variables = { id: questionId };
   const { data } = await axiosConfig.serverApi.post<QuestionResponse>("", { query: GET_QUESTION, variables });
   return data.data.question;
@@ -128,7 +127,7 @@ export const fetchWaitingRoomVisitForm = async (
     query: GET_WAITING_ROOM_VISIT_FORM,
     variables,
   });
-  const {visitForm} = data.data;
+  const { visitForm } = data.data;
   const answersIncludingQuestions = await Promise.all(
     visitForm.answers.map(async (answer): Promise<WaitingRoomVisitFormAnswerIncludingQuestion> => {
       const question = await fetchQuestion(answer.questionId);
@@ -155,7 +154,7 @@ export const fetchApprovalRoomVisitForm = async (
     query: GET_APPROVAL_ROOM_VISIT_FORM,
     variables,
   });
-  const {visitForm} = data.data;
+  const { visitForm } = data.data;
   const answersIncludingQuestions = await Promise.all(
     visitForm.answers.map(async (answer): Promise<ApprovalRoomVisitFormAnswerIncludingQuestion> => {
       const question = await fetchQuestion(answer.questionId);

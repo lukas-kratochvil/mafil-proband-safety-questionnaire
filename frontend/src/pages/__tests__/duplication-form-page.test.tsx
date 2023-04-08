@@ -6,20 +6,13 @@ import { AnswerOption } from "@app/model/form";
 import { IVisit, VisitStateDEV, VisualCorrection } from "@app/model/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
 import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
-import {
-  IGenderDTO,
-  IHandednessDTO,
-  INativeLanguageDTO,
-  IOperatorDTO,
-  IQuestionDTO,
-  IQuestionHiddenByGendersDTO,
-} from "@app/util/server_API/dto";
+import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IOperatorDTO, IQuestionDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor } from "@test-utils";
 
 //----------------------------------------------------------------------
 // Default data
 //----------------------------------------------------------------------
-const questionData: IQuestionHiddenByGendersDTO[] = [
+const questionData: IQuestionDTO[] = [
   {
     id: "p1q01",
     partNumber: 1,
@@ -196,7 +189,7 @@ vi.mock("@app/util/server_API/fetch", async () => ({
   fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguages,
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednesses,
   fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionData,
-  fetchQuestion: async (): Promise<IQuestionHiddenByGendersDTO> => questionData[0],
+  fetchQuestion: async (): Promise<IQuestionDTO> => questionData[0],
   createDuplicatedVisitFormForApproval: async (): Promise<string> => newDuplicatedVisitFormId,
 }));
 

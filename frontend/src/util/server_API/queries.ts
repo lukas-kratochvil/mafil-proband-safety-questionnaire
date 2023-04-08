@@ -73,6 +73,9 @@ query GetCurrentQuestions {
         name
       }
     }
+    hiddenByGenders {
+      genderCode
+    }
   }
 }
 `;

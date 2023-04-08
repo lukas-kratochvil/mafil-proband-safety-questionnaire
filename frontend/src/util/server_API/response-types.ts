@@ -5,7 +5,6 @@ import {
   IHTMLCardDTO,
   INativeLanguageDTO,
   IQuestionDTO,
-  IQuestionHiddenByGendersDTO,
   IWaitingRoomVisitFormDTO,
   OperatorRole,
 } from "./dto";
@@ -49,7 +48,7 @@ export type CurrentQuestionsResponse = {
 
 export type QuestionResponse = {
   data: {
-    question: IQuestionHiddenByGendersDTO;
+    question: IQuestionDTO;
   };
 };
 
