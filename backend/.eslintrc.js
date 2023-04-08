@@ -18,12 +18,14 @@ module.exports = {
       "warn",
       {
         src: ["src/**/*.ts"],
-        filterFromPaths: [".spec."],
+        filterFromPaths: [".spec.", ".test."],
       },
     ],
     "@darraghor/nestjs-typed/validated-non-primitive-property-needs-type-decorator": [
       "error",
-      { additionalTypeDecorators: ["Field", "HideField"] }, // Field and HideField is used in GraphlQL DTOs to provide metadata about the property type
+      // Input data structure is validated by the GraphQL schema
+      // Field and HideField is used in GraphlQL DTOs to provide metadata about the property type
+      { additionalTypeDecorators: ["Field", "HideField"] },
     ],
   },
 };
