@@ -1,5 +1,5 @@
 import { Field, InputType, IntersectionType, PartialType, PickType } from "@nestjs/graphql";
-import { IsArray, IsInstance, IsOptional, IsUUID, MaxLength } from "class-validator";
+import { IsArray, IsObject, IsOptional, IsUUID, MaxLength } from "class-validator";
 import { UUID } from "@app/api/utils/scalars/uuid-scalar";
 import { CreateAdditionalVisitFormInfoInput } from "@app/api/visit-form/dto/create-additional-visit-form-info.input";
 import { CreateAnswerInput } from "@app/api/visit-form/dto/create-answer.input";
@@ -30,7 +30,7 @@ export class CreateVisitFormInput extends IntersectionType(
 
   // additionalInfo is created for a duplicated visit that is going to be approved
   @IsOptional()
-  @IsInstance(CreateAdditionalVisitFormInfoInput)
+  @IsObject()
   @Field(() => CreateAdditionalVisitFormInfoInput, { nullable: true })
   additionalInfo?: CreateAdditionalVisitFormInfoInput;
 

@@ -1,5 +1,5 @@
 import { Field, InputType, IntersectionType, PartialType, PickType } from "@nestjs/graphql";
-import { IsArray, IsInstance, IsOptional } from "class-validator";
+import { IsArray, IsObject, IsOptional } from "class-validator";
 import { VisitFormEntity } from "@app/api/visit-form/entities/visit-form.entity";
 import { CreateVisitFormInput } from "./create-visit-form.input";
 import { UpdateAdditionalVisitFormInfoInput } from "./update-additional-visit-form-info.input";
@@ -28,7 +28,7 @@ export class UpdateVisitFormInput extends IntersectionType(
   InputType
 ) {
   @IsOptional()
-  @IsInstance(UpdateAdditionalVisitFormInfoInput)
+  @IsObject()
   @Field(() => UpdateAdditionalVisitFormInfoInput, { nullable: true })
   additionalInfo?: UpdateAdditionalVisitFormInfoInput;
 

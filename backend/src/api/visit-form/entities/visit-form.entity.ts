@@ -5,9 +5,9 @@ import {
   IsDate,
   IsEmail,
   IsEnum,
-  IsInstance,
   IsMobilePhone,
   IsNumber,
+  IsObject,
   IsOptional,
   IsPositive,
   IsUUID,
@@ -30,7 +30,7 @@ registerEnumType(VisitFormState, {
 
 @ObjectType()
 export class VisitFormEntity extends BaseEntity implements VisitForm {
-  @IsInstance(LanguageEntity)
+  @IsObject()
   @Field(() => LanguageEntity)
   probandLanguage: LanguageEntity;
 
@@ -39,7 +39,7 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   probandLanguageId: string;
 
   @IsOptional()
-  @IsInstance(AdditionalVisitFormInfoEntity)
+  @IsObject()
   @Field(() => AdditionalVisitFormInfoEntity, { nullable: true })
   additionalInfo?: AdditionalVisitFormInfoEntity;
 
@@ -60,7 +60,7 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   @HideField()
   nativeLanguageId: string;
 
-  @IsInstance(NativeLanguageEntity)
+  @IsObject()
   @Field(() => NativeLanguageEntity)
   nativeLanguage: NativeLanguageEntity;
 
@@ -68,7 +68,7 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   @HideField()
   genderId: string;
 
-  @IsInstance(GenderEntity)
+  @IsObject()
   @Field(() => GenderEntity)
   gender: GenderEntity;
 
@@ -76,7 +76,7 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   @HideField()
   handednessId: string;
 
-  @IsInstance(HandednessEntity)
+  @IsObject()
   @Field(() => HandednessEntity)
   handedness: HandednessEntity;
 
