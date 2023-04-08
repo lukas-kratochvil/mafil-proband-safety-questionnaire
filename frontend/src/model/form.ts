@@ -17,8 +17,8 @@ export interface IQuestionData {
 }
 
 export enum AnswerOption {
-  YES = "yes",
-  NO = "no",
+  YES = "YES",
+  NO = "NO",
 }
 
 export type FormAnswer = {
