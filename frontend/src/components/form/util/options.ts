@@ -1,4 +1,4 @@
-import { Gender, Handedness, VisualCorrection } from "@app/model/visit";
+import { VisualCorrection } from "@app/model/visit";
 
 export interface IOption {
   value: number;
@@ -35,9 +35,7 @@ export const getOption = (options: IOption[], value: number): IOption | null =>
 
 export const getOptionsValues = (options: IOption[]): number[] => options.map((option) => option.value);
 
-export const genderOptions = createOptions<Gender>(Object.entries(Gender), "gender");
 export const visualCorrectionOptions = createOptions<VisualCorrection>(
   Object.entries(VisualCorrection),
   "visualCorrection"
 );
-export const handednessOptions = createOptions<Handedness>(Object.entries(Handedness), "handedness");

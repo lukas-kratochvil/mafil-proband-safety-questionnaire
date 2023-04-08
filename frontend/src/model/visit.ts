@@ -44,20 +44,7 @@ interface IProjectInfo {
   disapprovalReason: string | null;
 }
 
-export enum Gender {
-  MALE,
-  FEMALE,
-  OTHER,
-}
-
 export enum VisualCorrection {
   YES,
   NO,
-}
-
-export enum Handedness {
-  RIGHT_HANDED,
-  LEFT_HANDED,
-  LEFT_HANDED_RETRAINED,
-  UNDETERMINED,
 }

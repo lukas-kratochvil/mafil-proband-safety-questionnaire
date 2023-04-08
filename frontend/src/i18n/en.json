@@ -30,20 +30,9 @@
         }
       },
       "enums": {
-        "gender": {
-          "MALE": "Male",
-          "FEMALE": "Female",
-          "OTHER": "Other"
-        },
         "visualCorrection": {
           "YES": "Yes",
           "NO": "No"
-        },
-        "handedness": {
-          "RIGHT_HANDED": "Right-handed",
-          "LEFT_HANDED": "Left-handed",
-          "LEFT_HANDED_RETRAINED": "Retrained left-handed",
-          "UNDETERMINED": "Undetermined"
         }
       },
       "beforeExamination": {

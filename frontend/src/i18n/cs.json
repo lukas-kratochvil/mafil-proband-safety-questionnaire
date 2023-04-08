@@ -30,20 +30,9 @@
         }
       },
       "enums": {
-        "gender": {
-          "MALE": "Muž",
-          "FEMALE": "Žena",
-          "OTHER": "Jiné"
-        },
         "visualCorrection": {
           "YES": "Ano",
           "NO": "Ne"
-        },
-        "handedness": {
-          "RIGHT_HANDED": "Pravák",
-          "LEFT_HANDED": "Levák",
-          "LEFT_HANDED_RETRAINED": "Přeučený levák",
-          "UNDETERMINED": "Neurčeno"
         }
       },
       "beforeExamination": {
