@@ -11,13 +11,33 @@ import {
   OperatorRole,
 } from "./dto";
 
+/**
+ * Generic GraphQL API response type
+ */
+// TODO: this one is correct - data is null if error occurs
+// type DataErrorsResponse<DataType> = {
+//   data: DataType | null;
+//   errors?: {
+//     message: string;
+//     extensions: {
+//       code: string;
+//       errors?: {
+//         field: string;
+//         errors: string[];
+//       }[];
+//     };
+//   }[];
+// };
 type DataErrorsResponse<DataType> = {
   data: DataType;
   errors?: {
     message: string;
     extensions: {
       code: string;
-      errors?: string[];
+      errors?: {
+        field: string;
+        errors: string[];
+      }[];
     };
   }[];
 };
