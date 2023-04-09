@@ -11,97 +11,58 @@ import {
   OperatorRole,
 } from "./dto";
 
-export type AuthenticateOperatorResponse = {
-  data: {
-    authenticateOperator: {
-      id: string;
-      name: string;
-      surname: string;
-      uco: string;
-      email: string;
-      role: OperatorRole;
+type DataErrorsResponse<DataType> = {
+  data: DataType;
+  errors?: {
+    message: string;
+    extensions: {
+      code: string;
+      errors?: string[];
     };
-  };
+  }[];
 };
 
-export type GendersResponse = {
-  data: {
-    genders: IGenderDTO[];
+export type AuthenticateOperatorResponse = DataErrorsResponse<{
+  authenticateOperator: {
+    id: string;
+    name: string;
+    surname: string;
+    uco: string;
+    email: string;
+    role: OperatorRole;
   };
-};
+}>;
 
-export type NativeLanguagesResponse = {
-  data: {
-    nativeLanguages: INativeLanguageDTO[];
-  };
-};
+export type GendersResponse = DataErrorsResponse<{ genders: IGenderDTO[] }>;
 
-export type HandednessesResponse = {
-  data: {
-    handednesses: IHandednessDTO[];
-  };
-};
+export type NativeLanguagesResponse = DataErrorsResponse<{ nativeLanguages: INativeLanguageDTO[] }>;
 
-export type CurrentQuestionsResponse = {
-  data: {
-    questions: IQuestionDTO[];
-  };
-};
+export type HandednessesResponse = DataErrorsResponse<{ handednesses: IHandednessDTO[] }>;
 
-export type QuestionResponse = {
-  data: {
-    question: IQuestionDTO;
-  };
-};
+export type CurrentQuestionsResponse = DataErrorsResponse<{ questions: IQuestionDTO[] }>;
 
-export type ProbandContactRequestResponse = {
-  data: {
-    probandContactRequest: IHTMLCardDTO;
-  };
-};
+export type QuestionResponse = DataErrorsResponse<{ question: IQuestionDTO }>;
 
-export type ProbandContactConsentResponse = {
-  data: {
-    probandContactConsent: IHTMLCardDTO;
-  };
-};
+export type ProbandContactRequestResponse = DataErrorsResponse<{ probandContactRequest: IHTMLCardDTO }>;
 
-export type WaitingRoomTableVisitFormsResponse = {
-  data: {
-    visitForms: IWaitingRoomTableVisitFormDTO[];
-  };
-};
+export type ProbandContactConsentResponse = DataErrorsResponse<{ probandContactConsent: IHTMLCardDTO }>;
 
-export type WaitingRoomVisitFormResponse = {
-  data: {
-    visitForm: IWaitingRoomVisitFormDTO;
-  };
-};
+export type WaitingRoomTableVisitFormsResponse = DataErrorsResponse<{ visitForms: IWaitingRoomTableVisitFormDTO[] }>;
 
-export type ApprovalRoomTableVisitFormsResponse = {
-  data: {
-    visitForms: IApprovalRoomTableVisitFormDTO[];
-  };
-};
+export type WaitingRoomVisitFormResponse = DataErrorsResponse<{ visitForm: IWaitingRoomVisitFormDTO }>;
 
-export type ApprovalRoomVisitFormResponse = {
-  data: {
-    visitForm: IApprovalRoomVisitFormDTO;
-  };
-};
+export type ApprovalRoomTableVisitFormsResponse = DataErrorsResponse<{ visitForms: IApprovalRoomTableVisitFormDTO[] }>;
 
-export type CreateVisitFormResponse = {
-  data: {
-    createVisitForm: {
-      id: string;
-    };
-  };
-};
+export type ApprovalRoomVisitFormResponse = DataErrorsResponse<{ visitForm: IApprovalRoomVisitFormDTO }>;
 
-export type UpdateVisitFormResponse = {
-  data: {
-    updateVisitForm: {
-      id: string;
-    };
+export type CreateVisitFormResponse = DataErrorsResponse<{
+  createVisitForm: {
+    id: string;
   };
-};
+}>;
+
+export type UpdateVisitFormResponse = DataErrorsResponse<{
+  updateVisitForm: {
+    id: string;
+  };
+}>;
