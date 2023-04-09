@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import { DeepMockProxy, mockDeep } from "jest-mock-extended";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { HTMLCardResolver } from "./html-card.resolver";
+import { HTMLCardService } from "./html-card.service";
 
 describe("HTMLCardResolver", () => {
   let htmlCardResolver: HTMLCardResolver;
@@ -10,7 +11,7 @@ describe("HTMLCardResolver", () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [HTMLCardResolver, PrismaService],
+      providers: [HTMLCardResolver, HTMLCardService, PrismaService],
     })
       .overrideProvider(PrismaService)
       .useValue(mockDeep<PrismaClient>())
