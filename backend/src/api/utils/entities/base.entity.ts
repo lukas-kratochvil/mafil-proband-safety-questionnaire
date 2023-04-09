@@ -2,7 +2,7 @@ import { Field, HideField, ObjectType } from "@nestjs/graphql";
 import { IsDate, IsOptional, IsUUID } from "class-validator";
 import { UUID } from "../scalars/uuid-scalar";
 
-@ObjectType()
+@ObjectType({ isAbstract: true })
 export class BaseEntity {
   @IsUUID()
   @Field(() => UUID)
