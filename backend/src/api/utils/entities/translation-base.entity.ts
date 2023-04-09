@@ -1,5 +1,5 @@
 import { Field, ObjectType, PickType } from "@nestjs/graphql";
-import { IsArray, IsObject, IsString } from "class-validator";
+import { ArrayNotEmpty, ArrayUnique, IsArray, IsObject, IsString } from "class-validator";
 import { LanguageEntity } from "@app/api/language/entities/language.entity";
 import { BaseEntity } from "./base.entity";
 
@@ -20,6 +20,8 @@ export class TranslationEntity {
 @ObjectType({ isAbstract: true })
 export class TranslationBaseEntity extends BaseEntity {
   @IsArray()
+  @ArrayNotEmpty()
+  @ArrayUnique<TranslationEntity>((elem) => elem.language.code)
   @Field(() => [TranslationEntity])
   translations: TranslationEntity[];
 }

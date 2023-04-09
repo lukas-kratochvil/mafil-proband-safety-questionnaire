@@ -1,6 +1,8 @@
 import { Field, Float, HideField, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { VisitForm, VisitFormState } from "@prisma/client";
 import {
+  ArrayNotEmpty,
+  ArrayUnique,
   IsArray,
   IsDate,
   IsEmail,
@@ -44,6 +46,8 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   additionalInfo?: AdditionalVisitFormInfoEntity;
 
   @IsArray()
+  @ArrayNotEmpty()
+  @ArrayUnique<AnswerEntity>((elem) => elem.questionId)
   @Field(() => [AnswerEntity])
   answers: AnswerEntity[];
 

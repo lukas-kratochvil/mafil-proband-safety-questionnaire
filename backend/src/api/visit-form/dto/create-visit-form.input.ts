@@ -1,5 +1,5 @@
 import { Field, InputType, IntersectionType, PartialType, PickType } from "@nestjs/graphql";
-import { IsArray, IsObject, IsOptional, IsUUID, MaxLength } from "class-validator";
+import { ArrayNotEmpty, ArrayUnique, IsArray, IsObject, IsOptional, IsUUID, MaxLength } from "class-validator";
 import { UUID } from "@app/api/utils/scalars/uuid-scalar";
 import { CreateAdditionalVisitFormInfoInput } from "@app/api/visit-form/dto/create-additional-visit-form-info.input";
 import { CreateAnswerInput } from "@app/api/visit-form/dto/create-answer.input";
@@ -25,6 +25,8 @@ export class CreateVisitFormInput extends IntersectionType(
   probandLanguageCode: string;
 
   @IsArray()
+  @ArrayNotEmpty()
+  @ArrayUnique<CreateAnswerInput>((elem) => elem.questionId)
   @Field(() => [CreateAnswerInput])
   answers: CreateAnswerInput[];
 
