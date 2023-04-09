@@ -4,7 +4,7 @@ import MaterialReactTable, { MRT_ColumnDef as MRTColumnDef, MRT_Row as MRTRow } 
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { WaitingRoomTableActionButtons } from "@app/components/table/actions/WaitingRoomTableActionButtons";
-import { defaultTableProps } from "@app/components/table/table-default-props";
+import { defaultTableProps } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n";
 import { IWaitingRoomVisitFormDTO } from "@app/util/server_API/dto";
 import { fetchWaitingRoomVisitForms } from "@app/util/server_API/fetch";
