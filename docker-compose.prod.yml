@@ -68,6 +68,8 @@ services:
       - SERVER_API_KEY=${SERVER_API_KEY_FOR_WEB}
       - VITE_MAFILDB_API_URL=${MAFILDB_API_URL}
     restart: unless-stopped
+    depends_on:
+      - server
 
 networks:
   backend-network:
