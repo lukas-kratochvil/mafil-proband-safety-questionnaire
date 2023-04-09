@@ -69,7 +69,7 @@ interface IOperatorAnswerDTO extends IProbandAnswerDTO {
 
 type VisitFormState = "NEW" | "IN_APPROVAL";
 
-export interface IWaitingRoomVisitFormDTO {
+export interface IWaitingRoomTableVisitFormDTO {
   id: string;
   createdAt?: Date;
   name: string;
@@ -84,6 +84,9 @@ export interface IWaitingRoomVisitFormDTO {
   handedness: IHandednessDTO;
   email: string;
   phone: string;
+}
+
+export interface IWaitingRoomVisitFormDTO extends IWaitingRoomTableVisitFormDTO {
   answers: IProbandAnswerDTO[];
 }
 
@@ -91,11 +94,11 @@ export type QuestionHiddenByGendersWithoutId = Omit<IQuestionDTO, "id">;
 
 export type VisitFormAnswerIncludingQuestion = IOperatorAnswerDTO & QuestionHiddenByGendersWithoutId;
 
-export interface IWaitingRoomVisitFormIncludingQuestionsDTO extends Omit<IWaitingRoomVisitFormDTO, "answers"> {
+export interface IWaitingRoomVisitFormIncludingQuestionsDTO extends IWaitingRoomTableVisitFormDTO {
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
 }
 
-export interface IApprovalRoomVisitFormDTO extends IWaitingRoomVisitFormDTO {
+export interface IApprovalRoomVisitFormDTO extends IWaitingRoomTableVisitFormDTO {
   answers: IOperatorAnswerDTO[];
   additionalInfo: {
     projectId: string;

@@ -14,7 +14,7 @@ import {
   INativeLanguageDTO,
   IQuestionDTO,
   ISendVisitFormFromWaitingRoomForApprovalInput,
-  IWaitingRoomVisitFormDTO,
+  IWaitingRoomTableVisitFormDTO,
   IWaitingRoomVisitFormIncludingQuestionsDTO,
   VisitFormAnswerIncludingQuestion,
 } from "@app/util/server_API/dto";
@@ -30,8 +30,8 @@ import {
   GET_PROBAND_CONTACT_CONSENT,
   GET_PROBAND_CONTACT_REQUEST,
   GET_QUESTION,
+  GET_WAITING_ROOM_TABLE_VISIT_FORMS,
   GET_WAITING_ROOM_VISIT_FORM,
-  GET_WAITING_ROOM_VISIT_FORMS,
 } from "./queries";
 import {
   ApprovalRoomVisitFormResponse,
@@ -46,8 +46,8 @@ import {
   ProbandContactRequestResponse,
   QuestionResponse,
   UpdateVisitFormResponse,
+  WaitingRoomTableVisitFormsResponse,
   WaitingRoomVisitFormResponse,
-  WaitingRoomVisitFormsResponse,
 } from "./response-types";
 
 export const authenticateOperator = async (loggingOperator: IOperatorAuthorization): Promise<OperatorDev> => {
@@ -109,10 +109,10 @@ export const fetchProbandContactConsent = async (locale: LocalizationKeys): Prom
   return data.data.probandContactConsent;
 };
 
-export const fetchWaitingRoomVisitForms = async (): Promise<IWaitingRoomVisitFormDTO[]> => {
+export const fetchWaitingRoomTableVisitForms = async (): Promise<IWaitingRoomTableVisitFormDTO[]> => {
   const variables = { state: "NEW" };
-  const { data } = await axiosConfig.serverApi.post<WaitingRoomVisitFormsResponse>("", {
-    query: GET_WAITING_ROOM_VISIT_FORMS,
+  const { data } = await axiosConfig.serverApi.post<WaitingRoomTableVisitFormsResponse>("", {
+    query: GET_WAITING_ROOM_TABLE_VISIT_FORMS,
     variables,
   });
   return data.data.visitForms;

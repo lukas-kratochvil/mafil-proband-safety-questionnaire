@@ -6,8 +6,8 @@ import { useTranslation } from "react-i18next";
 import { WaitingRoomTableActionButtons } from "@app/components/table/actions/WaitingRoomTableActionButtons";
 import { defaultTableProps } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n";
-import { IWaitingRoomVisitFormDTO } from "@app/util/server_API/dto";
-import { fetchWaitingRoomVisitForms } from "@app/util/server_API/fetch";
+import { IWaitingRoomTableVisitFormDTO } from "@app/util/server_API/dto";
+import { fetchWaitingRoomTableVisitForms } from "@app/util/server_API/fetch";
 import { getTranslation } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
 
@@ -23,9 +23,9 @@ const WaitingRoomTablePage = () => {
     isFetching,
     isLoading,
     isError,
-  } = useQuery({ queryKey, queryFn: () => fetchWaitingRoomVisitForms() });
+  } = useQuery({ queryKey, queryFn: () => fetchWaitingRoomTableVisitForms() });
 
-  const columns = useMemo<MRTColumnDef<IWaitingRoomVisitFormDTO>[]>(
+  const columns = useMemo<MRTColumnDef<IWaitingRoomTableVisitFormDTO>[]>(
     () => [
       {
         accessorFn: (visit) => (visit.createdAt ? format(visit.createdAt, createdAtFormat) : ""),
@@ -77,7 +77,7 @@ const WaitingRoomTablePage = () => {
         header: t("header.actions"),
         columnDefType: "display", // turns off data column features like sorting, filtering, etc.
         // eslint-disable-next-line react/no-unstable-nested-components
-        Cell: ({ row }: { row: MRTRow<IWaitingRoomVisitFormDTO> }) => (
+        Cell: ({ row }: { row: MRTRow<IWaitingRoomTableVisitFormDTO> }) => (
           <WaitingRoomTableActionButtons
             visitFormId={row.original.id}
             queryKey={queryKey}

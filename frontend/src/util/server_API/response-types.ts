@@ -5,6 +5,7 @@ import {
   IHTMLCardDTO,
   INativeLanguageDTO,
   IQuestionDTO,
+  IWaitingRoomTableVisitFormDTO,
   IWaitingRoomVisitFormDTO,
   OperatorRole,
 } from "./dto";
@@ -64,9 +65,9 @@ export type ProbandContactConsentResponse = {
   };
 };
 
-export type WaitingRoomVisitFormsResponse = {
+export type WaitingRoomTableVisitFormsResponse = {
   data: {
-    visitForms: IWaitingRoomVisitFormDTO[];
+    visitForms: IWaitingRoomTableVisitFormDTO[];
   };
 };
 

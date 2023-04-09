@@ -118,7 +118,7 @@ query GetProbandContactConsent($locale: String!) {
 }
 `;
 
-export const GET_WAITING_ROOM_VISIT_FORMS = `
+export const GET_WAITING_ROOM_TABLE_VISIT_FORMS = `
 query GetWaitingRoomVisitForms($state: VisitFormState) {
   visitForms(state: $state) {
     id
@@ -159,11 +159,6 @@ query GetWaitingRoomVisitForms($state: VisitFormState) {
     }
     email
     phone
-    answers {
-      questionId
-      answer
-      comment
-    }
   }
 }
 `;
