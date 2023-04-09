@@ -80,10 +80,6 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   @Field(() => HandednessEntity)
   handedness: HandednessEntity;
 
-  @IsArray()
-  @Field(() => [VisitFormEntity])
-  visitForms: VisitFormEntity[];
-
   @MaxLength(200)
   @Field()
   name: string;
