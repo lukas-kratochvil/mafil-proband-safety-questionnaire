@@ -11,6 +11,8 @@ services:
     volumes:
       - ./database-storage:/var/lib/postgresql/data
     environment:
+      TZ: ${TIMEZONE}
+      PGTZ: ${TIMEZONE}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
