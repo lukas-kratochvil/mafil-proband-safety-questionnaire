@@ -6,8 +6,8 @@ import { TranslationEntity } from "../entities/translation-base.entity";
 
 @InputType({ isAbstract: true })
 export class TranslationInput extends IntersectionType(
-  PickType(LanguageEntity, ["code"]),
-  PickType(TranslationEntity, ["text"]),
+  PickType(LanguageEntity, ["code"] as const),
+  PickType(TranslationEntity, ["text"] as const),
   InputType
 ) {}
 
