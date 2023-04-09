@@ -3,6 +3,7 @@ import { ApolloDriverConfig } from "@nestjs/apollo";
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { GqlOptionsFactory } from "@nestjs/graphql";
+import { Request, Response } from "express";
 import { GraphQLFormattedError } from "graphql";
 import { AppErrorExtensions, ValidationFieldErrors, VALIDATION_ERROR } from "@app/exception-handling";
 import { UUID } from "./utils/scalars/uuid-scalar";
@@ -17,7 +18,7 @@ export class GraphQLConfigService implements GqlOptionsFactory {
     return {
       autoSchemaFile: path.join(process.cwd(), "graphql-schema.gql"),
       // passing original request and response objects into the GraphQL context
-      context: ({ req, res }: { req: any; res: any }) => ({ req, res }),
+      context: ({ req, res }: { req: Request; res: Response }) => ({ req, res }),
       // error formatting inspired by: https://github.com/nestjs/graphql/issues/1053#issuecomment-786972617
       formatError: (error: GraphQLFormattedError) => {
         if (error.message === VALIDATION_ERROR) {
@@ -28,7 +29,7 @@ export class GraphQLConfigService implements GqlOptionsFactory {
             if (validationError.constraints !== undefined) {
               const constraints: string[] = [];
               Object.keys(validationError.constraints).forEach((constraintKey) => {
-                constraints.push((validationError.constraints as any)[constraintKey]);
+                constraints.push((validationError.constraints as Record<string, string>)[constraintKey]);
               });
               validationFieldErrors.push({
                 field: validationError.property,
