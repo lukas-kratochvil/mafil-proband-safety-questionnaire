@@ -210,7 +210,7 @@ query GetWaitingRoomVisitForm($id: UUID!) {
 }
 `;
 
-export const GET_APPROVAL_ROOM_VISIT_FORMS = `
+export const GET_APPROVAL_ROOM_TABLE_VISIT_FORMS = `
 query GetWaitingRoomVisitForms($state: VisitFormState) {
   visitForms(state: $state) {
     id
@@ -257,11 +257,6 @@ query GetWaitingRoomVisitForms($state: VisitFormState) {
       deviceId
       deviceName
       measuredAt
-    }
-    answers {
-      questionId
-      answer
-      comment
     }
   }
 }

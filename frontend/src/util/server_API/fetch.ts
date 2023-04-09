@@ -4,7 +4,7 @@ import i18n, { LocalizationKeys } from "@app/i18n";
 import { IOperatorAuthorization } from "@app/model/auth";
 import { AnswerOption, FormPropType } from "@app/model/form";
 import {
-  IApprovalRoomVisitFormDTO,
+  IApprovalRoomTableVisitFormDTO,
   IApprovalRoomVisitFormIncludingQuestionsDTO,
   ICreateDuplicatedVisitFormForApprovalInput,
   ICreateProbandVisitFormInput,
@@ -21,8 +21,8 @@ import {
 import { CREATE_VISIT_FORM, DELETE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
 import {
   AUTHENTICATE_OPERATOR,
+  GET_APPROVAL_ROOM_TABLE_VISIT_FORMS,
   GET_APPROVAL_ROOM_VISIT_FORM,
-  GET_APPROVAL_ROOM_VISIT_FORMS,
   GET_CURRENT_QUESTIONS,
   GET_GENDERS,
   GET_HANDEDNESSES,
@@ -34,8 +34,8 @@ import {
   GET_WAITING_ROOM_VISIT_FORM,
 } from "./queries";
 import {
+  ApprovalRoomTableVisitFormsResponse,
   ApprovalRoomVisitFormResponse,
-  ApprovalRoomVisitFormsResponse,
   AuthenticateOperatorResponse,
   CreateVisitFormResponse,
   CurrentQuestionsResponse,
@@ -136,10 +136,10 @@ export const fetchWaitingRoomVisitForm = async (
   return { ...visitForm, answersIncludingQuestions };
 };
 
-export const fetchApprovalRoomVisitForms = async (): Promise<IApprovalRoomVisitFormDTO[]> => {
+export const fetchApprovalRoomTableVisitForms = async (): Promise<IApprovalRoomTableVisitFormDTO[]> => {
   const variables = { state: "IN_APPROVAL" };
-  const { data } = await axiosConfig.serverApi.post<ApprovalRoomVisitFormsResponse>("", {
-    query: GET_APPROVAL_ROOM_VISIT_FORMS,
+  const { data } = await axiosConfig.serverApi.post<ApprovalRoomTableVisitFormsResponse>("", {
+    query: GET_APPROVAL_ROOM_TABLE_VISIT_FORMS,
     variables,
   });
   return data.data.visitForms;

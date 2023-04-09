@@ -6,8 +6,8 @@ import { useTranslation } from "react-i18next";
 import { ApprovalRoomTableActionButtons } from "@app/components/table/actions/ApprovalRoomTableActionButtons";
 import { defaultTableProps } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n";
-import { IApprovalRoomVisitFormDTO } from "@app/util/server_API/dto";
-import { fetchApprovalRoomVisitForms } from "@app/util/server_API/fetch";
+import { IApprovalRoomTableVisitFormDTO } from "@app/util/server_API/dto";
+import { fetchApprovalRoomTableVisitForms } from "@app/util/server_API/fetch";
 import { getTranslation } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
 
@@ -21,9 +21,9 @@ const ApprovalRoomTablePage = () => {
     isFetching,
     isLoading,
     isError,
-  } = useQuery({ queryKey: ["approvalRoomVisitForms"], queryFn: () => fetchApprovalRoomVisitForms() });
+  } = useQuery({ queryKey: ["approvalRoomVisitForms"], queryFn: () => fetchApprovalRoomTableVisitForms() });
 
-  const columns = useMemo<MRTColumnDef<IApprovalRoomVisitFormDTO>[]>(
+  const columns = useMemo<MRTColumnDef<IApprovalRoomTableVisitFormDTO>[]>(
     () => [
       {
         accessorFn: (visit) => (visit.createdAt ? format(visit.createdAt, createdAtFormat) : ""),
@@ -80,7 +80,7 @@ const ApprovalRoomTablePage = () => {
         header: t("header.actions"),
         columnDefType: "display", // turns off data column features like sorting, filtering, etc.
         // eslint-disable-next-line react/no-unstable-nested-components
-        Cell: ({ row }: { row: MRTRow<IApprovalRoomVisitFormDTO> }) => (
+        Cell: ({ row }: { row: MRTRow<IApprovalRoomTableVisitFormDTO> }) => (
           <ApprovalRoomTableActionButtons visitFormId={row.original.id} />
         ),
         maxSize: 0,

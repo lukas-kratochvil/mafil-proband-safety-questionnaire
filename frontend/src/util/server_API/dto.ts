@@ -98,8 +98,7 @@ export interface IWaitingRoomVisitFormIncludingQuestionsDTO extends IWaitingRoom
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
 }
 
-export interface IApprovalRoomVisitFormDTO extends IWaitingRoomTableVisitFormDTO {
-  answers: IOperatorAnswerDTO[];
+export interface IApprovalRoomTableVisitFormDTO extends IWaitingRoomTableVisitFormDTO {
   additionalInfo: {
     projectId: string;
     projectAcronym: string;
@@ -109,7 +108,11 @@ export interface IApprovalRoomVisitFormDTO extends IWaitingRoomTableVisitFormDTO
   };
 }
 
-export interface IApprovalRoomVisitFormIncludingQuestionsDTO extends Omit<IApprovalRoomVisitFormDTO, "answers"> {
+export interface IApprovalRoomVisitFormDTO extends IApprovalRoomTableVisitFormDTO {
+  answers: IOperatorAnswerDTO[];
+}
+
+export interface IApprovalRoomVisitFormIncludingQuestionsDTO extends IApprovalRoomTableVisitFormDTO {
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
 }
 

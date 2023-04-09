@@ -1,4 +1,5 @@
 import {
+  IApprovalRoomTableVisitFormDTO,
   IApprovalRoomVisitFormDTO,
   IGenderDTO,
   IHandednessDTO,
@@ -77,9 +78,9 @@ export type WaitingRoomVisitFormResponse = {
   };
 };
 
-export type ApprovalRoomVisitFormsResponse = {
+export type ApprovalRoomTableVisitFormsResponse = {
   data: {
-    visitForms: IApprovalRoomVisitFormDTO[];
+    visitForms: IApprovalRoomTableVisitFormDTO[];
   };
 };
 
