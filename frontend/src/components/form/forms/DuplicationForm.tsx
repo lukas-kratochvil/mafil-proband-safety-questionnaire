@@ -11,7 +11,7 @@ import { loadFormDefaultValuesVisitDuplication } from "@app/components/form/util
 import { createNewVisitFromFormData } from "@app/components/form/util/utils.dev";
 import { dummyVisits } from "@app/data/visit_data";
 import { useAuthDev } from "@app/hooks/auth/auth-dev";
-import { AnswerOption, FormPropType, FormQac } from "@app/model/form";
+import { FormPropType, FormQac } from "@app/model/form";
 import { VisitStateDEV } from "@app/model/visit";
 import { RoutingPaths } from "@app/routing-paths";
 import { updateDummyVisitState } from "@app/util/fetch.dev";
@@ -21,6 +21,7 @@ import { createDuplicatedVisitFormForApproval } from "@app/util/server_API/fetch
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormFinalizeDialog } from "../components/FormFinalizeDialog";
+import { isVisitFormForApproval } from "../util/utils";
 import { FormContainer } from "./FormContainer";
 
 export const DuplicationForm = () => {
@@ -126,17 +127,14 @@ export const DuplicationForm = () => {
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.finalize",
           onClick: async (data: FormPropType) => {
-            if (
-              operator?.role === "MR_HIGH_PERM"
-              || data.answers.find((answer) => answer.mustBeApproved && answer.answer === AnswerOption.YES) === undefined
-            ) {
+            if (isVisitFormForApproval(operator, data)) {
+              // open warning dialog that the visit form has to be approved by an operator with higher permissions
+              setOpenFinalizeDialog(true);
+            } else {
               // TODO: create APPROVED visit in the MAFILDB
               const approvedVisit = createNewVisitFromFormData(data, VisitStateDEV.APPROVED);
               dummyVisits.push(approvedVisit);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${approvedVisit.id}`);
-            } else {
-              // open warning dialog that the visit form has to be approved by an operator with higher permissions
-              setOpenFinalizeDialog(true);
             }
           },
         },
@@ -162,18 +160,7 @@ export const DuplicationForm = () => {
         ],
       });
     }
-  }, [
-    getValues,
-    id,
-    isDisapproved,
-    isEditing,
-    isPhantom,
-    navigate,
-    operator?.role,
-    setValue,
-    trigger,
-    valuesBeforeEditing,
-  ]);
+  }, [getValues, id, isDisapproved, isEditing, isPhantom, navigate, operator, setValue, trigger, valuesBeforeEditing]);
 
   const createVisitFormInApprovalRoom = async (data: FormPropType) => {
     createDuplicatedVisitFormForApproval(data, operator?.id);

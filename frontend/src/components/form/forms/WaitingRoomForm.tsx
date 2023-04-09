@@ -9,7 +9,7 @@ import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesFromWaitingRoomVisitForm } from "@app/components/form/util/loaders";
 import { useAuthDev } from "@app/hooks/auth/auth-dev";
-import { AnswerOption, FormPropType, FormQac } from "@app/model/form";
+import { FormPropType, FormQac } from "@app/model/form";
 import { VisitStateDEV } from "@app/model/visit";
 import { RoutingPaths } from "@app/routing-paths";
 import { updateDummyVisitState } from "@app/util/fetch.dev";
@@ -18,7 +18,7 @@ import { fetchWaitingRoomVisitForm, sendVisitFormFromWaitingRoomForApproval } fr
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormFinalizeDialog } from "../components/FormFinalizeDialog";
-import { getModifiedFieldsOnly } from "../util/utils";
+import { getModifiedFieldsOnly, isVisitFormForApproval } from "../util/utils";
 import { FormContainer } from "./FormContainer";
 
 export const WaitingRoomForm = () => {
@@ -110,16 +110,13 @@ export const WaitingRoomForm = () => {
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.finalize",
           onClick: async (data: FormPropType) => {
-            if (
-              operator?.role === "MR_HIGH_PERM"
-              || data.answers.find((answer) => answer.mustBeApproved && answer.answer === AnswerOption.YES) === undefined
-            ) {
+            if (isVisitFormForApproval(operator, data)) {
+              // open warning dialog that the visit form has to be approved by an operator with higher permissions
+              setOpenFinalizeDialog(true);
+            } else {
               // TODO: create APPROVED visit in the MAFILDB
               updateDummyVisitState(id, VisitStateDEV.APPROVED);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${id}`);
-            } else {
-              // open warning dialog that the visit form has to be approved by an operator with higher permissions
-              setOpenFinalizeDialog(true);
             }
           },
         },
@@ -145,7 +142,7 @@ export const WaitingRoomForm = () => {
         ],
       });
     }
-  }, [getValues, id, isDisapproved, isEditing, navigate, operator?.role, setValue, trigger, valuesBeforeEditing]);
+  }, [getValues, id, isDisapproved, isEditing, navigate, operator, setValue, trigger, valuesBeforeEditing]);
 
   const moveVisitFormToApprovalRoom = async (data: FormPropType) => {
     const modifiedFields: Partial<FormPropType> = {

@@ -1,5 +1,6 @@
 import { updatedDiff } from "deep-object-diff";
-import { FormAnswer, FormPropType } from "@app/model/form";
+import { OperatorDev } from "@app/hooks/auth/auth-dev";
+import { AnswerOption, FormAnswer, FormPropType } from "@app/model/form";
 import { IProjectDTO } from "@app/util/mafildb_API/dto";
 import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "@app/util/server_API/dto";
 
@@ -76,3 +77,8 @@ export const getModifiedFieldsOnly = (
   const diffRest = updatedDiff(initialDataRest, submittedDataRest);
   return { ...diffRest, answers: diffAnswers || submittedAnswers };
 };
+
+export const isVisitFormForApproval = (operator: OperatorDev, data: FormPropType) =>
+  operator === undefined
+  || (operator.role !== "MR_HIGH_PERM"
+    && data.answers.some((answer) => answer.mustBeApproved && answer.answer === AnswerOption.YES));
