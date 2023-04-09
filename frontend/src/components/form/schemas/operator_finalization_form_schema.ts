@@ -1,4 +1,5 @@
 import { array, date, mixed, string } from "yup";
+import { AnswerOption } from "@app/model/form";
 import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
 import { answersSchema, probandFormSchema } from "./proband_form_schema";
 
@@ -6,7 +7,7 @@ const operatorAnswersSchema = answersSchema.shape({
   comment: string()
     .default("")
     .when("answer", {
-      is: "yes",
+      is: AnswerOption.YES,
       then: string().trim().required("form.validation.required"),
     }),
 });

@@ -27,11 +27,13 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
     defaultValue: qac.answer,
   });
 
-  // Setting selected answer and comment
+  // Setting all the question default data
   useEffect(() => {
+    setValue(`answers.${qac.index}.questionId`, qac.questionId);
+    setValue(`answers.${qac.index}.mustBeApproved`, qac.mustBeApproved);
     setValue(`answers.${qac.index}.answer`, qac.answer);
     setValue(`answers.${qac.index}.comment`, qac.comment);
-  }, [qac.answer, qac.comment, qac.index, setValue]);
+  }, [qac.answer, qac.comment, qac.index, qac.mustBeApproved, qac.questionId, setValue]);
 
   // Hide question when specified genders are selected
   useEffect(() => {

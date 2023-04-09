@@ -3,7 +3,7 @@ import { devicesDev, projectsDev } from "@app/data/form_data";
 import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import i18n from "@app/i18n";
 import { AnswerOption } from "@app/model/form";
-import { IVisit, VisitStateDEV, VisualCorrection } from "@app/model/visit";
+import { IVisitIncludingQuestions, VisitStateDEV, VisualCorrection } from "@app/model/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
 import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
 import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IOperatorDTO, IQuestionDTO } from "@app/util/server_API/dto";
@@ -98,7 +98,7 @@ const questionData: IQuestionDTO[] = [
 const id = "ID1";
 const comment = "Comment";
 
-const visit: IVisit = {
+const visit: IVisitIncludingQuestions = {
   id,
   createdAt: new Date(),
   visitId: "VisitId1",
@@ -126,7 +126,8 @@ const visit: IVisit = {
     measuredAt: new Date(),
     disapprovalReason: null,
   },
-  answers: questionData.map((question, index) => ({
+  answersIncludingQuestions: questionData.map((question, index) => ({
+    ...question,
     questionId: question.id,
     mustBeApproved: index % 2 === 0,
     answer: index % 2 === 0 ? AnswerOption.YES : AnswerOption.NO,
@@ -189,7 +190,6 @@ vi.mock("@app/util/server_API/fetch", async () => ({
   fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguages,
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednesses,
   fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionData,
-  fetchQuestion: async (): Promise<IQuestionDTO> => questionData[0],
   createDuplicatedVisitFormForApproval: async (): Promise<string> => newDuplicatedVisitFormId,
 }));
 
@@ -197,7 +197,7 @@ vi.mock("@app/util/mafildb_API/fetch", async () => ({
   ...((await vi.importActual("@app/util/mafildb_API/fetch")) as Record<string, unknown>),
   fetchProjects: async (): Promise<IProjectDTO[]> => projectsDev,
   fetchDevices: async (): Promise<IDeviceDTO[]> => devicesDev,
-  fetchVisit: async (): Promise<IVisit> => visit,
+  fetchVisitForDuplication: async (): Promise<IVisitIncludingQuestions> => visit,
 }));
 
 //----------------------------------------------------------------------

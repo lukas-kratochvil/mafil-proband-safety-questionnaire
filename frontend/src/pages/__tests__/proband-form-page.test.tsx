@@ -1,10 +1,14 @@
 import userEvent from "@testing-library/user-event";
-import { devicesDev, projectsDev } from "@app/data/form_data";
 import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import i18n from "@app/i18n";
 import ProbandFormPage from "@app/pages/ProbandFormPage";
-import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
-import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IQuestionDTO } from "@app/util/server_API/dto";
+import {
+  IGenderDTO,
+  IHandednessDTO,
+  INativeLanguageDTO,
+  IQuestionDTO,
+  QuestionPartNumber,
+} from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -36,7 +40,7 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 const questionData: IQuestionDTO[] = [
   {
     id: "p1q01",
-    partNumber: 1,
+    partNumber: QuestionPartNumber.ONE,
     mustBeApproved: false,
     translations: [
       {
@@ -56,7 +60,7 @@ const questionData: IQuestionDTO[] = [
   },
   {
     id: "p1q02",
-    partNumber: 1,
+    partNumber: QuestionPartNumber.ONE,
     mustBeApproved: false,
     translations: [
       {
@@ -76,7 +80,7 @@ const questionData: IQuestionDTO[] = [
   },
   {
     id: "p2q01",
-    partNumber: 2,
+    partNumber: QuestionPartNumber.TWO,
     mustBeApproved: true,
     translations: [
       {
@@ -96,7 +100,7 @@ const questionData: IQuestionDTO[] = [
   },
   {
     id: "p2q02",
-    partNumber: 2,
+    partNumber: QuestionPartNumber.TWO,
     mustBeApproved: true,
     translations: [
       {
@@ -124,14 +128,9 @@ vi.mock("@app/util/server_API/fetch", async () => ({
   fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguages,
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednesses,
   fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionData,
-  fetchQuestion: async (): Promise<IQuestionDTO> => questionData[0],
   createProbandVisitForm: async (): Promise<string> => newProbandVisitFormId,
-}));
-
-vi.mock("@app/util/mafildb_API/fetch", async () => ({
-  ...((await vi.importActual("@app/util/mafildb_API/fetch")) as Record<string, unknown>),
-  fetchProjects: async (): Promise<IProjectDTO[]> => projectsDev,
-  fetchDevices: async (): Promise<IDeviceDTO[]> => devicesDev,
+  fetchProbandContactRequest: async (): Promise<string> => "",
+  fetchProbandContactConsent: async (): Promise<string> => "",
 }));
 
 //----------------------------------------------------------------------

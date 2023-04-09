@@ -1,18 +1,12 @@
-import { array, date, mixed, number, object, string } from "yup";
+import { array, boolean, date, mixed, number, object, string } from "yup";
 import { AnswerOption } from "@app/model/form";
 import { VisualCorrection } from "@app/model/visit";
-import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, QuestionPartNumber } from "@app/util/server_API/dto";
+import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "@app/util/server_API/dto";
 import { getOption, IOption, visualCorrectionOptions } from "../util/options";
 
 export const answersSchema = object({
   questionId: string().trim().required("form.validation.required"),
-  partNumber: number()
-    .oneOf(
-      Object.values(QuestionPartNumber)
-        .filter((val) => typeof val === "number")
-        .map((val) => +val)
-    )
-    .required("form.validation.required"),
+  mustBeApproved: boolean().required("form.validation.required"),
   answer: mixed<AnswerOption>().nullable().oneOf(Object.values(AnswerOption)).required("form.validation.required"),
   comment: string().nullable(),
 });
