@@ -27,13 +27,9 @@ export class GraphQLConfigService implements GqlOptionsFactory {
 
           appErrorExtensions.validationErrors.forEach((validationError) => {
             if (validationError.constraints !== undefined) {
-              const constraints: string[] = [];
-              Object.keys(validationError.constraints).forEach((constraintKey) => {
-                constraints.push((validationError.constraints as Record<string, string>)[constraintKey]);
-              });
               validationFieldErrors.push({
                 field: validationError.property,
-                errors: constraints,
+                errors: Object.values(validationError.constraints),
               });
             }
           });
