@@ -4,7 +4,7 @@ import { LanguageEntity } from "@app/api/language/entities/language.entity";
 import { BaseEntity } from "./base.entity";
 
 @ObjectType({ isAbstract: true })
-export class TranslationLanguageEntity extends PickType(LanguageEntity, ["code", "name"]) {}
+class TranslationLanguageEntity extends PickType(LanguageEntity, ["code", "name"]) {}
 
 @ObjectType({ isAbstract: true })
 export class TranslationEntity {
