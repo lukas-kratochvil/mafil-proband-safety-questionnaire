@@ -7,14 +7,6 @@ import { UUID } from "@app/api/utils/scalars/uuid-scalar";
 registerEnumType(AnswerOption, {
   name: "AnswerOption",
   description: "Question answer options.",
-  valuesMap: {
-    YES: {
-      description: "Yes option.",
-    },
-    NO: {
-      description: "No option.",
-    },
-  },
 });
 
 @ObjectType()
