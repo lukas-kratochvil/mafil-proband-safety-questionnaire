@@ -52,13 +52,13 @@ export class GeneratePDFsArgs extends IntersectionType(
   handednessCode: string;
 
   // eslint-disable-next-line @darraghor/nestjs-typed/all-properties-have-explicit-defined
-  @ValidateIf((object) => !object.isPhantom)
+  @ValidateIf((object: GeneratePDFsArgs) => !object.isPhantom)
   @MaxLength(5)
   @Field({ nullable: true })
   probandLanguageCode?: string;
 
   // eslint-disable-next-line @darraghor/nestjs-typed/all-properties-have-explicit-defined
-  @ValidateIf((object) => !object.isPhantom)
+  @ValidateIf((object: GeneratePDFsArgs) => !object.isPhantom)
   @IsArray()
   @ArrayNotEmpty()
   @ArrayUnique<PDFAnswer>((elem) => elem.questionId)

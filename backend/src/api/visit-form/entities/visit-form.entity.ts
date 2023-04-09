@@ -115,12 +115,12 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   @Field(() => Float)
   visualCorrectionDioptre: number;
 
-  @ValidateIf((object) => object.email !== "")
+  @ValidateIf((object: VisitFormEntity) => object.email !== "")
   @IsEmail()
   @Field()
   email: string;
 
-  @ValidateIf((object) => object.phone !== "")
+  @ValidateIf((object: VisitFormEntity) => object.phone !== "")
   @IsMobilePhone()
   @Field()
   phone: string;
