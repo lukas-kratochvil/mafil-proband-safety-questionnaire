@@ -21,7 +21,7 @@ export class PDFService {
   constructor(private readonly prisma: PrismaService) {}
 
   async generate(generatePDFsInput: GeneratePDFsArgs): Promise<PDFEntity[]> {
-    const gender = (
+    const genderText = (
       await this.prisma.gender.findFirstOrThrow({
         where: {
           code: generatePDFsInput.genderCode,
@@ -37,7 +37,7 @@ export class PDFService {
         },
       })
     ).translations[0].text;
-    const nativeLanguage = (
+    const nativeLanguageText = (
       await this.prisma.nativeLanguage.findFirstOrThrow({
         where: {
           code: generatePDFsInput.nativeLanguageCode,
@@ -53,7 +53,7 @@ export class PDFService {
         },
       })
     ).translations[0].text;
-    const handedness = (
+    const handednessText = (
       await this.prisma.handedness.findFirstOrThrow({
         where: {
           code: generatePDFsInput.handednessCode,
@@ -79,31 +79,34 @@ export class PDFService {
       surname: generatePDFsInput.surname,
       personalId: generatePDFsInput.personalId,
       birthdate: generatePDFsInput.birthdate,
-      gender,
-      nativeLanguage,
+      gender: genderText,
+      nativeLanguage: nativeLanguageText,
       heightCm: generatePDFsInput.heightCm,
       weightKg: generatePDFsInput.weightKg,
       visualCorrectionDioptre: generatePDFsInput.visualCorrectionDioptre,
-      handedness,
+      handedness: handednessText,
       email: generatePDFsInput.email,
       phone: generatePDFsInput.phone,
     };
 
+    const pdfName = `${generatePDFsInput.visitId}_${generatePDFsInput.surname}_${generatePDFsInput.name}`;
+
     if (generatePDFsInput.isPhantom) {
-      const name = `PDF_file_${generatePDFsInput.surname}_${generatePDFsInput.name}`;
       const content = await generatePDF(PDFType.PHANTOM, data, OPERATOR_LANGUAGE_CODE);
-      return [createPDF(PDFType.OPERATOR, name, content)];
+      return [createPDF(PDFType.OPERATOR, pdfName, content)];
     }
 
-    // const probandPDF: PDFEntity = {
-    //   type: PDFType.PROBAND,
-    //   content: generatePDF(PDFType.PROBAND, ...generatePDFsInput, generatePDFsInput.probandLanguageCode),
-    // };
-    // const operatorPDF: PDFEntity = {
-    //   type: PDFType.OPERATOR,
-    //   content: generatePDF(PDFType.OPERATOR, ...generatePDFsInput, generatePDFsInput.probandLanguageCode),
-    // };
-    // return [probandPDF, operatorPDF];
-    return [];
+    // check if provided proband language code is valid
+    await this.prisma.language.findUniqueOrThrow({
+      where: {
+        code: generatePDFsInput.probandLanguageCode,
+      },
+    });
+
+    const [probandContent, operatorContent] = await Promise.all([
+      generatePDF(PDFType.PROBAND, data, generatePDFsInput.probandLanguageCode || OPERATOR_LANGUAGE_CODE),
+      generatePDF(PDFType.OPERATOR, data, OPERATOR_LANGUAGE_CODE),
+    ]);
+    return [createPDF(PDFType.PROBAND, pdfName, probandContent), createPDF(PDFType.OPERATOR, pdfName, operatorContent)];
   }
 }
