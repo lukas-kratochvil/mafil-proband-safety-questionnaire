@@ -1,7 +1,6 @@
-import path from "path";
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { IPdfCommonItemsFile, IPdfTextsFile } from "@app/pdf/interfaces";
 import { PrismaService } from "@app/prisma/prisma.service";
+import { getCommonTextsFile, getLocalizedTextsFile } from "@app/utils/assets-loaders";
 import { ProbandContactRequestArgs } from "./dto/proband-contact-request.args";
 import { HTMLCardEntity } from "./entities/html-card.entity";
 
@@ -16,14 +15,6 @@ const checkLocaleValidity = async (prisma: PrismaService, locale: string): Promi
     throw new BadRequestException(`Locale '${locale}' is not supported!`);
   }
 };
-
-const DIR_PATH = path.join(process.cwd(), "dist", "assets", "localization");
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const getCommonTextsFile = (): IPdfCommonItemsFile => require(path.join(DIR_PATH, "common.json"));
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const getLocalizedTextsFile = (locale: string): IPdfTextsFile => require(path.join(DIR_PATH, `${locale}.json`));
 
 const createHTMLCard = (title: string, html: string): HTMLCardEntity => {
   const probandContactConsent = new HTMLCardEntity();
@@ -50,7 +41,7 @@ export class HTMLCardService {
     await checkLocaleValidity(this.prisma, locale);
 
     const texts = getLocalizedTextsFile(locale);
-    const commonItems = getCommonTextsFile();
+    const commonTexts = getCommonTextsFile();
 
     const html = `
       <p style="margin-top: 0">${texts.probandContact.consent.text1}</p>
@@ -62,18 +53,18 @@ export class HTMLCardService {
       <p>${texts.probandContact.consent.text4}</p>
       <div>${texts.probandContact.consent.list}</div>
       <ul style="margin: 0">
-      <li>${texts.probandContact.consent.listItem1} <u>${commonItems.probandContact.consent.mafilEmail}</u>,</li>
+      <li>${texts.probandContact.consent.listItem1} <u>${commonTexts.probandContact.consent.mafilEmail}</u>,</li>
       <li>${texts.probandContact.consent.listItem2}</li>
       <li>${texts.probandContact.consent.listItem3}</li>
       <li>${texts.probandContact.consent.listItem4}</li>
-      <li>${texts.probandContact.consent.listItem5Part1} <u>${commonItems.probandContact.consent.uoouSite}</u>, ${texts.probandContact.consent.listItem5Part2} <u>${commonItems.probandContact.consent.uoouEmail}</u>.</li>
+      <li>${texts.probandContact.consent.listItem5Part1} <u>${commonTexts.probandContact.consent.uoouSite}</u>, ${texts.probandContact.consent.listItem5Part2} <u>${commonTexts.probandContact.consent.uoouEmail}</u>.</li>
       </ul>
       <p style="margin-bottom: 0">
-        ${texts.probandContact.consent.text5Part1} <u>${commonItems.probandContact.consent.poverenecEmail}</u>.
+        ${texts.probandContact.consent.text5Part1} <u>${commonTexts.probandContact.consent.poverenecEmail}</u>.
         <br />${texts.probandContact.consent.text5Part2}
-        <br /><u>${commonItems.probandContact.consent.personalInfoProtectionSite}</u>.
+        <br /><u>${commonTexts.probandContact.consent.personalInfoProtectionSite}</u>.
         <br />${texts.probandContact.consent.text5Part3}
-        <br /><u>${commonItems.probandContact.consent.applicationOfDataSubjectRightsSite}</u>.
+        <br /><u>${commonTexts.probandContact.consent.applicationOfDataSubjectRightsSite}</u>.
       </p>
     `;
 
