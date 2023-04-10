@@ -4,6 +4,7 @@ import { IsEnum, IsString } from "class-validator";
 export enum PDFType {
   PROBAND,
   OPERATOR,
+  PHANTOM,
 }
 
 registerEnumType(PDFType, {
@@ -15,6 +16,9 @@ registerEnumType(PDFType, {
     },
     OPERATOR: {
       description: "PDF for the operator.",
+    },
+    PHANTOM: {
+      description: "Phantom PDF.",
     },
   },
 });
