@@ -1,4 +1,19 @@
 {
+  "inputTitles": {
+    "project": "Project",
+    "measurementDate": "Date of measurement",
+    "phantom": "Phantom",
+    "name": "Name",
+    "surname": "Surname",
+    "personalId": "Personal ID",
+    "birthdate": "Birthdate",
+    "gender": "Gender",
+    "nativeLanguage": "Native language",
+    "height": "Height",
+    "weight": "Weight",
+    "visualCorrection": "Visual correction",
+    "handedness": "Handedness"
+  },
   "probandContact": {
     "request": {
       "title": "Request for transfer of measured data",

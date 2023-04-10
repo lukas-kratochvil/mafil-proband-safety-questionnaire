@@ -1,4 +1,19 @@
 {
+  "inputTitles": {
+    "project": "Projekt",
+    "measurementDate": "Datum měření",
+    "phantom": "Fantom",
+    "name": "Jméno",
+    "surname": "Příjmění",
+    "personalId": "Rodné číslo",
+    "birthdate": "Datum narození",
+    "gender": "Pohlaví",
+    "nativeLanguage": "Mateřský jazyk",
+    "height": "Výška",
+    "weight": "Váha",
+    "visualCorrection": "Zraková korekce",
+    "handedness": "Stranová dominance"
+  },
   "probandContact": {
     "request": {
       "title": "Žádost o předání naměřených dat",
