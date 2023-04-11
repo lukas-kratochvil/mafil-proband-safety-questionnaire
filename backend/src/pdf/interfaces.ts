@@ -16,11 +16,11 @@ export interface IPdfData {
   handedness: string;
   email?: string;
   phone?: string;
-  answers?: IQuestionAnswer[];
+  answers: IQuestionAnswer[];
 }
 
 interface IQuestionAnswer {
   questionText: string;
   answer: string;
-  comment: string;
+  comment?: string;
 }
