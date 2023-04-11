@@ -11,7 +11,7 @@ import {
   getLocalizedTextsFile,
   LocalizedTextsFile,
 } from "@app/utils/assets-loaders";
-import { IPdfData } from "./interfaces";
+import { IPDFData } from "./interfaces";
 
 type PDFDoc = typeof PDFDocument;
 
@@ -52,7 +52,7 @@ const addTitleValueRows = (doc: PDFDoc, rows: ITitleValueRow[], x: number, y: nu
   rows.forEach(({ title, value }, i) => addTitleValue(doc, title, value, x, i === 0 ? y : undefined));
 };
 
-const addProbandContactRequest = (doc: PDFDoc, texts: LocalizedProbandContactRequest, data: IPdfData): void => {
+const addProbandContactRequest = (doc: PDFDoc, texts: LocalizedProbandContactRequest, data: IPDFData): void => {
   doc.font(MEDIUM_FONT, HEADING_FONT_SIZE).text(texts.title, { align: "center" });
   doc
     .font(REGULAR_FONT, TEXT_FONT_SIZE)
@@ -116,7 +116,7 @@ const streamToString = (stream: Readable): Promise<string | never> => {
   });
 };
 
-export const generatePDF = async (pdfType: PDFType, data: IPdfData, locale: string): Promise<string | never> => {
+export const generatePDF = async (pdfType: PDFType, data: IPDFData, locale: string): Promise<string | never> => {
   const texts = getLocalizedTextsFile(locale);
   const commonTexts = getCommonTextsFile();
 

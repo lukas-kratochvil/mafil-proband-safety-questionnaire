@@ -1,6 +1,6 @@
 import { AnswerOption } from "@prisma/client";
 
-export interface IPdfData {
+export interface IPDFData {
   // phantom visit has operator name instead of the signature field
   finalizerId?: string;
   visitId: string;

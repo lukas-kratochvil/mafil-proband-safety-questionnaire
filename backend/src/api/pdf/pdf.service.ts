@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { generatePDF } from "@app/pdf/generate";
-import { IPdfData } from "@app/pdf/interfaces";
+import { IPDFData } from "@app/pdf/interfaces";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { GeneratePDFsArgs } from "./dto/generate-pdf.args";
 import { PDFEntity, PDFType } from "./entities/pdf.entity";
@@ -74,7 +74,7 @@ export class PDFService {
     const pdfName = `${generatePDFsInput.visitId}_${generatePDFsInput.surname}_${generatePDFsInput.name}`;
 
     // Set phantom data
-    const phantomData: IPdfData = {
+    const phantomData: IPDFData = {
       visitId: generatePDFsInput.visitId,
       projectAcronym: generatePDFsInput.projectAcronym,
       measurementDate: generatePDFsInput.measuredAt,
@@ -128,7 +128,7 @@ export class PDFService {
     );
 
     // Set operator data
-    const operatorData: IPdfData = {
+    const operatorData: IPDFData = {
       ...phantomData,
       email: generatePDFsInput.email,
       phone: generatePDFsInput.phone,
@@ -153,7 +153,7 @@ export class PDFService {
           });
 
     // Set proband data
-    const probandData: IPdfData
+    const probandData: IPDFData
       = probandLanguage.code === operatorLanguage.code
         ? operatorData
         : {
