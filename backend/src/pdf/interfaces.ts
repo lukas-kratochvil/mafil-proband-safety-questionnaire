@@ -1,3 +1,5 @@
+import { AnswerOption } from "@prisma/client";
+
 export interface IPdfData {
   // phantom visit has operator name instead of the signature field
   finalizerId?: string;
@@ -21,6 +23,6 @@ export interface IPdfData {
 
 interface IQuestionAnswer {
   questionText: string;
-  answer: string;
+  answer: AnswerOption;
   comment?: string;
 }
