@@ -109,6 +109,15 @@ query GetEntryInfo($locale: String!) {
 }
 `;
 
+export const GET_SAFETY_INFO = `
+query GetSafetyInfo($locale: String!) {
+  safetyInfo(locale: $locale) {
+    title
+    html
+  }
+}
+`;
+
 export const GET_PROBAND_CONTACT_REQUEST = `
 query GetProbandContactRequest($locale: String!, $name: String!, $surname: String!, $birthdateStr: String!, $currentDateStr: String!) {
   probandContactRequest(locale: $locale, name: $name, surname: $surname, birthdateStr: $birthdateStr, currentDateStr: $currentDateStr) {

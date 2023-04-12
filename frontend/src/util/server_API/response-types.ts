@@ -65,6 +65,8 @@ export type QuestionResponse = DataErrorsResponse<{ question: IQuestionDTO }>;
 
 export type EntryInfoResponse = DataErrorsResponse<{ entryInfo: IHTMLCardDTO }>;
 
+export type SafetyInfoResponse = DataErrorsResponse<{ safetyInfo: IHTMLCardDTO }>;
+
 export type ProbandContactRequestResponse = DataErrorsResponse<{ probandContactRequest: IHTMLCardDTO }>;
 
 export type ProbandContactConsentResponse = DataErrorsResponse<{ probandContactConsent: IHTMLCardDTO }>;

@@ -12,6 +12,11 @@ export class HTMLCardResolver {
     return this.htmlCardService.getEntryInfo(locale);
   }
 
+  @Query(() => HTMLCardEntity, { name: "safetyInfo" })
+  getSafetyInfo(@Args("locale", { type: () => String }) locale: string): Promise<HTMLCardEntity> {
+    return this.htmlCardService.getSafetyInfo(locale);
+  }
+
   @Query(() => HTMLCardEntity, { name: "probandContactRequest" })
   getProbandContactRequest(@Args() probandContactRequest: ProbandContactRequestArgs): Promise<HTMLCardEntity> {
     return this.htmlCardService.getProbandContactRequest(probandContactRequest.locale, probandContactRequest);

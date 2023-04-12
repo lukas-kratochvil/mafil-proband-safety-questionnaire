@@ -99,10 +99,6 @@
         "measuredAt": "Measurement date",
         "phantomInfoStripe": "Phantom"
       },
-      "safetyInfo": {
-        "title": "Safety information",
-        "text": "Please read the following questions and tick the correct answer. Answering our questions truthfully is very important for your safety."
-      },
       "safetyQuestions": {
         "title": "Safety questions",
         "titlePart1": "Safety questions - part 1",

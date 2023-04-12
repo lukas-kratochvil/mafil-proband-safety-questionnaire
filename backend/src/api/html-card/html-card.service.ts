@@ -40,6 +40,14 @@ export class HTMLCardService {
     return createHTMLCard(texts.entryInfo.title, html);
   }
 
+  async getSafetyInfo(locale: string): Promise<HTMLCardEntity | never> {
+    await checkLocaleValidity(this.prisma, locale);
+
+    const texts = getLocalizedTextsFile(locale);
+
+    return createHTMLCard(texts.entryInfo.title, texts.safetyInfo.text);
+  }
+
   async getProbandContactRequest(locale: string, data: ProbandContactRequestArgs): Promise<HTMLCardEntity | never> {
     await checkLocaleValidity(this.prisma, locale);
 

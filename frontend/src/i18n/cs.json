@@ -99,10 +99,6 @@
         "measuredAt": "Datum měření",
         "phantomInfoStripe": "Fantom"
       },
-      "safetyInfo": {
-        "title": "Bezpečnostní informace",
-        "text": "Přečtěte si, prosím, následující otázky a zatrhněte správnou odpověď. Pravdivé zodpovězení našich dotazů je velmi důležité pro Vaši bezpečnost."
-      },
       "safetyQuestions": {
         "title": "Bezpečnostní otázky",
         "titlePart1": "Bezpečnostní otázky - část 1",

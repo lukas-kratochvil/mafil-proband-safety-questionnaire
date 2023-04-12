@@ -31,6 +31,7 @@ import {
   GET_PROBAND_CONTACT_CONSENT,
   GET_PROBAND_CONTACT_REQUEST,
   GET_QUESTION,
+  GET_SAFETY_INFO,
   GET_WAITING_ROOM_TABLE_VISIT_FORMS,
   GET_WAITING_ROOM_VISIT_FORM,
 } from "./queries";
@@ -47,6 +48,7 @@ import {
   ProbandContactConsentResponse,
   ProbandContactRequestResponse,
   QuestionResponse,
+  SafetyInfoResponse,
   UpdateVisitFormResponse,
   WaitingRoomTableVisitFormsResponse,
   WaitingRoomVisitFormResponse,
@@ -94,6 +96,15 @@ export const fetchEntryInfo = async (locale: LocalizationKeys): Promise<IHTMLCar
     variables,
   });
   return data.data.entryInfo;
+};
+
+export const fetchSafetyInfo = async (locale: LocalizationKeys): Promise<IHTMLCardDTO> => {
+  const variables = { locale };
+  const { data } = await axiosConfig.serverApi.post<SafetyInfoResponse>("", {
+    query: GET_SAFETY_INFO,
+    variables,
+  });
+  return data.data.safetyInfo;
 };
 
 export const fetchProbandContactRequest = async (
