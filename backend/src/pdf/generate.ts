@@ -28,17 +28,29 @@ type CommonProbandContactConsent = Pick<
   "consent"
 >["consent"];
 
+//--------------------------------------
 // PDF properties
+//--------------------------------------
+// Page margins
+const PAGE_MARGIN = 60;
+
+// Fonts
 const REGULAR_FONT = "Roboto-regular";
 const MEDIUM_FONT = "Roboto-medium";
+
+// Font sizes
 const HEADING_FONT_SIZE = 20;
 const CHAPTER_FONT_SIZE = 16;
 const TEXT_FONT_SIZE = 12;
-const PAGE_MARGIN = 60;
+
+// Gaps
 const TITLE_VALUE_GAP = 10;
 const DEFAULT_DOC_LINE_GAP = 10;
 const LINE_GAP_INSIDE_PARAGRAPH = 2;
+
+// Date format
 const DATE_FORMAT = "d.M.y";
+//--------------------------------------
 
 interface ITitleValueRow {
   title: string;
