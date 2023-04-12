@@ -110,29 +110,34 @@ export class PDFService {
     }
 
     // Get questions translations
-    const questions = await Promise.all(
-      generatePDFsInput.answers.map((answer) =>
-        this.prisma.question.findFirstOrThrow({
-          where: {
-            id: answer.questionId,
-          },
-          include: {
-            translations: {
-              include: {
-                language: true,
+    const questions = (
+      await Promise.all(
+        generatePDFsInput.answers.map((answer) =>
+          this.prisma.question.findFirstOrThrow({
+            where: {
+              id: answer.questionId,
+            },
+            include: {
+              hiddenByGenders: true,
+              translations: {
+                include: {
+                  language: true,
+                },
               },
             },
-          },
-        })
+          })
+        )
       )
-    );
+    ).filter((question) => !question.hiddenByGenders.map((hbg) => hbg.genderCode).includes(gender.code));
+    const questionsIds = questions.map((question) => question.id);
+    const answers = generatePDFsInput.answers.filter((answer) => questionsIds.includes(answer.questionId));
 
     // Set operator data
     const operatorData: IPDFData = {
       ...phantomData,
       email: generatePDFsInput.email,
       phone: generatePDFsInput.phone,
-      answers: generatePDFsInput.answers.map((answer) => ({
+      answers: answers.map((answer) => ({
         questionText:
           questions
             .find((question) => question.id === answer.questionId)
@@ -163,7 +168,7 @@ export class PDFService {
               nativeLanguage.translations.find((trans) => trans.language.code === probandLanguage.code)?.text || "",
             handedness:
               handedness.translations.find((trans) => trans.language.code === probandLanguage.code)?.text || "",
-            answers: generatePDFsInput.answers.map((answer) => ({
+            answers: answers.map((answer) => ({
               questionText:
                 questions
                   .find((question) => question.id === answer.questionId)
