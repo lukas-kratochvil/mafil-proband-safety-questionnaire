@@ -39,12 +39,12 @@ const REGULAR_FONT = "Roboto-regular";
 const MEDIUM_FONT = "Roboto-medium";
 
 // Font sizes
-const HEADING_FONT_SIZE = 20;
-const CHAPTER_FONT_SIZE = 16;
+const HEADING_FONT_SIZE = 18;
+const CHAPTER_FONT_SIZE = 14;
 const TEXT_FONT_SIZE = 12;
 
 // Gaps
-const CHAPTER_GAP = 25;
+const CHAPTER_GAP = 20;
 const TITLE_VALUE_GAP = 10;
 const DEFAULT_DOC_LINE_GAP = 10;
 const LINE_GAP_INSIDE_PARAGRAPH = 2;
