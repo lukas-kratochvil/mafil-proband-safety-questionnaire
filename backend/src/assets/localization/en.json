@@ -73,7 +73,9 @@
       "listItem5Part2": "email address",
       "text5Part1": "Contact for the personal data protection officer: Iva Zlatušková, telephone 54949 1030, e-mail",
       "text5Part2": "Information on the processing of personal data at Masaryk University is available on the official board at",
-      "text5Part3": "Information for data subjects to exercise their rights is available on the official board at"
+      "text5Part3": "Information for data subjects to exercise their rights is available on the official board at",
+      "inBrnoOn": "In Brno on",
+      "signature": "Signature of patient/research project participant"
     }
   }
 }
