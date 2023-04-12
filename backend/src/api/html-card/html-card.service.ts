@@ -27,6 +27,19 @@ const createHTMLCard = (title: string, html: string): HTMLCardEntity => {
 export class HTMLCardService {
   constructor(private readonly prisma: PrismaService) {}
 
+  async getEntryInfo(locale: string): Promise<HTMLCardEntity | never> {
+    await checkLocaleValidity(this.prisma, locale);
+
+    const texts = getLocalizedTextsFile(locale);
+
+    const html = `
+      <p style="margin-top: 0">${texts.entryInfo.text1}</p>
+      <p style="margin-bottom: 0">${texts.entryInfo.text2}</p>
+    `;
+
+    return createHTMLCard(texts.entryInfo.title, html);
+  }
+
   async getProbandContactRequest(locale: string, data: ProbandContactRequestArgs): Promise<HTMLCardEntity | never> {
     await checkLocaleValidity(this.prisma, locale);
 

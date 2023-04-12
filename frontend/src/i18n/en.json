@@ -43,11 +43,6 @@
         "title": "Disapproval",
         "reason": "Reason"
       },
-      "entryInfo": {
-        "title": "Introductory information",
-        "text1": "Welcome to the magnetic resonance (MR) workplace. It is a modern imaging method used in medicine, which, unlike X-ray examination, does not use ionizing radiation. The principle of the method is to monitor the behavior of tissues and organs in a very strong magnetic field. The measurement is accompanied by increased noise. The examination is not painful, but electronics or metal material in the body or on its surface can damage your health due to the magnetic field. Therefore, from the safety point of view, it is very important to follow the instructions of the MR device operator and to fill out the following questionnaire truthfully. If you have any questions or ambiguities, please contact the operator of the MR device.",
-        "text2": "During the examination, it is important to follow the laboratory technician's instructions. In particular, try to minimize any movement during the measurement."
-      },
       "examinationConsent": {
         "title": "Consent to examination in the Multimodal and Functional Imaging Laboratory",
         "text1": "I declare that I have read the information on the MR examination and understand its meaning. I declare that I have filled out this questionnaire truthfully. I declare that I have been informed about the research study to which this examination belongs by a member of the research team and through separate informed consent and I agree to the implementation of the examination.",

@@ -24,6 +24,7 @@ import {
   GET_APPROVAL_ROOM_TABLE_VISIT_FORMS,
   GET_APPROVAL_ROOM_VISIT_FORM,
   GET_CURRENT_QUESTIONS,
+  GET_ENTRY_INFO,
   GET_GENDERS,
   GET_HANDEDNESSES,
   GET_NATIVE_LANGUAGES,
@@ -39,6 +40,7 @@ import {
   AuthenticateOperatorResponse,
   CreateVisitFormResponse,
   CurrentQuestionsResponse,
+  EntryInfoResponse,
   GendersResponse,
   HandednessesResponse,
   NativeLanguagesResponse,
@@ -83,6 +85,15 @@ export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO> =
   const variables = { id: questionId };
   const { data } = await axiosConfig.serverApi.post<QuestionResponse>("", { query: GET_QUESTION, variables });
   return data.data.question;
+};
+
+export const fetchEntryInfo = async (locale: LocalizationKeys): Promise<IHTMLCardDTO> => {
+  const variables = { locale };
+  const { data } = await axiosConfig.serverApi.post<EntryInfoResponse>("", {
+    query: GET_ENTRY_INFO,
+    variables,
+  });
+  return data.data.entryInfo;
 };
 
 export const fetchProbandContactRequest = async (

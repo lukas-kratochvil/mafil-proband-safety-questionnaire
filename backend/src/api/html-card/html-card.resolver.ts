@@ -7,6 +7,11 @@ import { HTMLCardService } from "./html-card.service";
 export class HTMLCardResolver {
   constructor(private readonly htmlCardService: HTMLCardService) {}
 
+  @Query(() => HTMLCardEntity, { name: "entryInfo" })
+  getEntryInfo(@Args("locale", { type: () => String }) locale: string): Promise<HTMLCardEntity> {
+    return this.htmlCardService.getEntryInfo(locale);
+  }
+
   @Query(() => HTMLCardEntity, { name: "probandContactRequest" })
   getProbandContactRequest(@Args() probandContactRequest: ProbandContactRequestArgs): Promise<HTMLCardEntity> {
     return this.htmlCardService.getProbandContactRequest(probandContactRequest.locale, probandContactRequest);

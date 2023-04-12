@@ -43,11 +43,6 @@
         "title": "Neschválení",
         "reason": "Důvod"
       },
-      "entryInfo": {
-        "title": "Úvodní informace",
-        "text1": "Vítáme Vás na pracovišti magnetické rezonance (MR). Jde o moderní zobrazovací metodu používanou v medicíně, která na rozdíl od RTG vyšetření nepoužívá ionizující záření. Principem metody je sledování chování tkání a orgánů ve velmi silném magnetickém poli. Měření je doprovázeno zvýšeným hlukem. Vyšetření není bolestivé, ale elektronika nebo kovový materiál v těle či na jeho povrchu může vlivem magnetického pole poškodit Vaše zdraví. Proto je z hlediska vaší bezpečnosti velmi důležité dbát pokynů obsluhy MR přístroje a pravdivě vyplnit následující dotazník. Pokud budete mít nějaké dotazy nebo nejasnosti, obraťte se na obsluhu MR přístroje.",
-        "text2": "V průběhu vyšetření je důležité dbát pokynů laboranta. Zejména, snažit se minimalizovat jakýkoliv pohyb v průběhu měření."
-      },
       "examinationConsent": {
         "title": "Souhlas s vyšetřením v Laboratoři multimodálního a funkčního zobrazování",
         "text1": "Prohlašuji, že jsem četl/a informace k MR vyšetření a porozuměl/a jsem jejich smyslu. Prohlašuji, že jsem pravdivě vyplnil/a tento dotazník. Prohlašuji, že jsem byl/a poučena o výzkumné studii, k níž toto vyšetření náleží, členem výzkumného týmu a prostřednictvím samostatného informovaného souhlasu a souhlasím s realizací vyšetření.",

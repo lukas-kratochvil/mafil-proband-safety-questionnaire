@@ -15,8 +15,8 @@ import {
  * Generic GraphQL API response type
  */
 // TODO: this one is correct - data is null if error occurs
-// type DataErrorsResponse<DataType> = {
-//   data: DataType | null;
+// type DataErrorsResponse<TData> = {
+//   data: TData | null;
 //   errors?: {
 //     message: string;
 //     extensions: {
@@ -28,8 +28,8 @@ import {
 //     };
 //   }[];
 // };
-type DataErrorsResponse<DataType> = {
-  data: DataType;
+type DataErrorsResponse<TData> = {
+  data: TData;
   errors?: {
     message: string;
     extensions: {
@@ -62,6 +62,8 @@ export type HandednessesResponse = DataErrorsResponse<{ handednesses: IHandednes
 export type CurrentQuestionsResponse = DataErrorsResponse<{ questions: IQuestionDTO[] }>;
 
 export type QuestionResponse = DataErrorsResponse<{ question: IQuestionDTO }>;
+
+export type EntryInfoResponse = DataErrorsResponse<{ entryInfo: IHTMLCardDTO }>;
 
 export type ProbandContactRequestResponse = DataErrorsResponse<{ probandContactRequest: IHTMLCardDTO }>;
 
