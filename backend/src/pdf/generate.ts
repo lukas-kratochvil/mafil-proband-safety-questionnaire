@@ -76,12 +76,22 @@ const addProbandContactRequest = (doc: PDFDoc, texts: LocalizedProbandContactReq
   doc
     .font(REGULAR_FONT, TEXT_FONT_SIZE)
     .text(
-      `${texts.text1}, ${data.name} ${data.surname} ${data.birthdate.toISOString()} ${
-        texts.text2
-      } ${data.measurementDate.toISOString()} ${texts.text3}:`,
-      { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 25 }
+      `${texts.text1}, ${data.name} ${data.surname} ${format(data.birthdate, DATE_FORMAT)} ${texts.text2} ${format(
+        data.measurementDate,
+        DATE_FORMAT
+      )} ${texts.text3}:`,
+      { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 }
     );
-  // TODO: add email and phone
+  doc
+    .font(MEDIUM_FONT, TEXT_FONT_SIZE)
+    .text(texts.emailAddress, { continued: true })
+    .font(REGULAR_FONT)
+    .text(` (${texts.emailAddressInfo}): ${data.email}`, { lineGap: 10 });
+  doc
+    .font(MEDIUM_FONT, TEXT_FONT_SIZE)
+    .text(texts.phoneNumber, { continued: true })
+    .font(REGULAR_FONT)
+    .text(` (${texts.phoneNumberInfo}): ${data.phone}`, { paragraphGap: 25 });
 };
 
 const addProbandContactConsent = (
