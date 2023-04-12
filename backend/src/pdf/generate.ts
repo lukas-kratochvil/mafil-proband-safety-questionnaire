@@ -36,6 +36,7 @@ const TEXT_FONT_SIZE = 14;
 const PAGE_MARGIN = 40;
 const TITLE_VALUE_GAP = 10;
 const DEFAULT_DOC_LINE_GAP = 10;
+const LINE_GAP_INSIDE_PARAGRAPH = 2;
 
 const addTitleValue = (doc: PDFDoc, title: string, value: string, x: number, y?: number): void => {
   const titleWidth = 150;
@@ -62,7 +63,7 @@ const addQuestions = (doc: PDFDoc, texts: LocalizedQuestions, questions: IQuesti
   questions.forEach(({ questionText, answer }) => {
     doc
       .font(REGULAR_FONT, TEXT_FONT_SIZE)
-      .text(`${questionText} `, { align: "justify", lineGap: 2, continued: true })
+      .text(`${questionText} `, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, continued: true })
       .font(MEDIUM_FONT, TEXT_FONT_SIZE)
       .text((answer === AnswerOption.YES ? texts.answerYes : texts.answerNo).toUpperCase(), { paragraphGap: 8 });
   });
@@ -76,7 +77,7 @@ const addProbandContactRequest = (doc: PDFDoc, texts: LocalizedProbandContactReq
       `${texts.text1}, ${data.name} ${data.surname} ${data.birthdate.toISOString()} ${
         texts.text2
       } ${data.measurementDate.toISOString()} ${texts.text3}:`,
-      { align: "justify", lineGap: 2, paragraphGap: 25 }
+      { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 25 }
     );
   // TODO: add email and phone
 };
@@ -87,36 +88,36 @@ const addProbandContactConsent = (
   commonTexts: CommonProbandContactConsent
 ): void => {
   doc.font(MEDIUM_FONT, HEADING_FONT_SIZE).text(texts.title, { align: "center" });
-  doc.font(REGULAR_FONT, TEXT_FONT_SIZE).text(texts.text1, { align: "justify", lineGap: 2, paragraphGap: 10 });
+  doc.font(REGULAR_FONT, TEXT_FONT_SIZE).text(texts.text1, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
   doc
-    .text(texts.text2, { align: "justify", lineGap: 2 })
-    .text(texts.text3, { align: "justify", lineGap: 2, paragraphGap: 10 });
-  doc.text(texts.text4, { align: "justify", lineGap: 2, paragraphGap: 10 });
-  doc.text(texts.list, { align: "justify", lineGap: 2, paragraphGap: 4 });
+    .text(texts.text2, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH })
+    .text(texts.text3, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
+  doc.text(texts.text4, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
+  doc.text(texts.list, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 4 });
   // List bullet indentation doesn't work
   doc.list([`${texts.listItem1} ${commonTexts.mafilEmail}`, texts.listItem2, texts.listItem3, texts.listItem4], {
     listType: "bullet",
     bulletRadius: 3,
     align: "justify",
-    lineGap: 2,
+    lineGap: LINE_GAP_INSIDE_PARAGRAPH,
   });
   // Workaround: the last list item must be added separately to create gap under the list
   doc.list([`${texts.listItem5Part1} ${commonTexts.uoouSite} ${texts.listItem5Part2} ${commonTexts.uoouEmail}.`], {
     listType: "bullet",
     bulletRadius: 3,
     align: "justify",
-    lineGap: 2,
+    lineGap: LINE_GAP_INSIDE_PARAGRAPH,
     paragraphGap: 10,
   });
   doc
     .text(`${texts.text5Part1} ${commonTexts.poverenecEmail}.`, {
       align: "justify",
-      lineGap: 2,
+      lineGap: LINE_GAP_INSIDE_PARAGRAPH,
     })
-    .text(`${texts.text5Part2} `, { align: "justify", lineGap: 2, continued: true })
+    .text(`${texts.text5Part2} `, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, continued: true })
     .text(commonTexts.personalInfoProtectionSite, { align: "justify", continued: true })
     .text(".")
-    .text(`${texts.text5Part3} `, { align: "justify", lineGap: 2, continued: true })
+    .text(`${texts.text5Part3} `, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, continued: true })
     .text(commonTexts.applicationOfDataSubjectRightsSite, {
       align: "justify",
       continued: true,
