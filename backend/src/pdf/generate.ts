@@ -44,6 +44,7 @@ const CHAPTER_FONT_SIZE = 16;
 const TEXT_FONT_SIZE = 12;
 
 // Gaps
+const CHAPTER_GAP = 25;
 const TITLE_VALUE_GAP = 10;
 const DEFAULT_DOC_LINE_GAP = 10;
 const LINE_GAP_INSIDE_PARAGRAPH = 2;
@@ -68,12 +69,18 @@ const addTitleValue = (doc: PDFDoc, row: ITitleValueRow, x: number, y?: number):
     .text(row.value, valueStartPosition, undefined, { paragraphGap: 4 });
 };
 
-const addTitleValueRows = (doc: PDFDoc, rows: ITitleValueRow[], x: number, y: number): void => {
+const addTitleValueRows = (doc: PDFDoc, x: number, y: number, rows: ITitleValueRow[]): void => {
   rows.forEach((row, i) => addTitleValue(doc, row, x, i === 0 ? y : undefined));
 };
 
-const addQuestions = (doc: PDFDoc, texts: LocalizedQuestions, questions: IQuestionAnswer[]): void => {
-  doc.font(MEDIUM_FONT, CHAPTER_FONT_SIZE).text(texts.title, PAGE_MARGIN, doc.y + 30);
+const addQuestions = (
+  doc: PDFDoc,
+  x: number,
+  y: number,
+  texts: LocalizedQuestions,
+  questions: IQuestionAnswer[]
+): void => {
+  doc.font(MEDIUM_FONT, CHAPTER_FONT_SIZE).text(texts.title, x, y);
   questions.forEach(({ questionText, answer }) => {
     doc
       .font(REGULAR_FONT, TEXT_FONT_SIZE)
@@ -83,8 +90,14 @@ const addQuestions = (doc: PDFDoc, texts: LocalizedQuestions, questions: IQuesti
   });
 };
 
-const addProbandContactRequest = (doc: PDFDoc, texts: LocalizedProbandContactRequest, data: IPDFData): void => {
-  doc.font(MEDIUM_FONT, HEADING_FONT_SIZE).text(texts.title, { align: "center" });
+const addProbandContactRequest = (
+  doc: PDFDoc,
+  x: number,
+  y: number,
+  texts: LocalizedProbandContactRequest,
+  data: IPDFData
+): void => {
+  doc.font(MEDIUM_FONT, HEADING_FONT_SIZE).text(texts.title, x, y, { align: "center" });
   doc
     .font(REGULAR_FONT, TEXT_FONT_SIZE)
     .text(
@@ -103,15 +116,17 @@ const addProbandContactRequest = (doc: PDFDoc, texts: LocalizedProbandContactReq
     .font(MEDIUM_FONT, TEXT_FONT_SIZE)
     .text(texts.phoneNumber, { continued: true })
     .font(REGULAR_FONT)
-    .text(` (${texts.phoneNumberInfo}): ${data.phone}`, { paragraphGap: 25 });
+    .text(` (${texts.phoneNumberInfo}): ${data.phone}`);
 };
 
 const addProbandContactConsent = (
   doc: PDFDoc,
+  x: number,
+  y: number,
   texts: LocalizedProbandContactConsent,
   commonTexts: CommonProbandContactConsent
 ): void => {
-  doc.font(MEDIUM_FONT, HEADING_FONT_SIZE).text(texts.title, { align: "center" });
+  doc.font(MEDIUM_FONT, HEADING_FONT_SIZE).text(texts.title, x, y, { align: "center" });
   doc
     .font(REGULAR_FONT, TEXT_FONT_SIZE)
     .text(texts.text1, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
@@ -212,7 +227,7 @@ export const generatePDF = async (pdfType: PDFType, data: IPDFData, locale: stri
     { title: texts.inputTitles.project, value: data.projectAcronym },
     { title: texts.inputTitles.measurementDate, value: format(data.measurementDate, DATE_FORMAT) },
   ];
-  addTitleValueRows(doc, visitInfoRows, imageWidth + 70, linePosition);
+  addTitleValueRows(doc, imageWidth + 70, linePosition, visitInfoRows);
 
   // Add proband information
   const probandInfoRows: ITitleValueRow[] = [
@@ -227,11 +242,11 @@ export const generatePDF = async (pdfType: PDFType, data: IPDFData, locale: stri
     { title: texts.inputTitles.visualCorrection, value: `${data.visualCorrectionDioptre} D` },
     { title: texts.inputTitles.handedness, value: data.handedness },
   ];
-  addTitleValueRows(doc, probandInfoRows, PAGE_MARGIN, linePositionUnderImage + 30);
+  addTitleValueRows(doc, PAGE_MARGIN, linePositionUnderImage + 30, probandInfoRows);
 
   if (pdfType !== PDFType.PHANTOM) {
     // Add safety questions
-    addQuestions(doc, texts.questions, data.answers);
+    addQuestions(doc, PAGE_MARGIN, doc.y + CHAPTER_GAP, texts.questions, data.answers);
 
     // TODO: maybe different layout for the proband and operator PDF
     // if (pdfType === PDFType.PROBAND) {
@@ -247,10 +262,16 @@ export const generatePDF = async (pdfType: PDFType, data: IPDFData, locale: stri
       doc.addPage();
 
       // Request
-      addProbandContactRequest(doc, texts.probandContact.request, data);
+      addProbandContactRequest(doc, PAGE_MARGIN, doc.y, texts.probandContact.request, data);
 
       // Consent
-      addProbandContactConsent(doc, texts.probandContact.consent, commonTexts.probandContact.consent);
+      addProbandContactConsent(
+        doc,
+        PAGE_MARGIN,
+        doc.y + CHAPTER_GAP,
+        texts.probandContact.consent,
+        commonTexts.probandContact.consent
+      );
     }
   }
 
