@@ -70,7 +70,9 @@ const addTitleValue = (doc: PDFDoc, row: ITitleValueRow, x: number, y?: number):
 };
 
 const addTitleValueRows = (doc: PDFDoc, x: number, y: number, rows: ITitleValueRow[]): void => {
+  doc.lineGap(LINE_GAP_INSIDE_PARAGRAPH);
   rows.forEach((row, i) => addTitleValue(doc, row, x, i === 0 ? y : undefined));
+  doc.lineGap(DEFAULT_DOC_LINE_GAP);
 };
 
 const addQuestions = (
