@@ -2,6 +2,7 @@ import fs from "fs";
 import { Readable } from "stream";
 import { AnswerOption } from "@prisma/client";
 import { Base64Encode } from "base64-stream";
+import { format } from "date-fns";
 import PDFDocument from "pdfkit";
 import { PDFType } from "@app/api/pdf/entities/pdf.entity";
 import {
@@ -37,6 +38,7 @@ const PAGE_MARGIN = 60;
 const TITLE_VALUE_GAP = 10;
 const DEFAULT_DOC_LINE_GAP = 10;
 const LINE_GAP_INSIDE_PARAGRAPH = 2;
+const DATE_FORMAT = "d.M.y";
 
 interface ITitleValueRow {
   title: string;
@@ -88,7 +90,9 @@ const addProbandContactConsent = (
   commonTexts: CommonProbandContactConsent
 ): void => {
   doc.font(MEDIUM_FONT, HEADING_FONT_SIZE).text(texts.title, { align: "center" });
-  doc.font(REGULAR_FONT, TEXT_FONT_SIZE).text(texts.text1, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
+  doc
+    .font(REGULAR_FONT, TEXT_FONT_SIZE)
+    .text(texts.text1, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
   doc
     .text(texts.text2, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH })
     .text(texts.text3, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
@@ -180,7 +184,7 @@ export const generatePDF = async (pdfType: PDFType, data: IPDFData, locale: stri
   const visitInfoRows: ITitleValueRow[] = [
     { title: "Visit ID", value: data.visitId },
     { title: texts.inputTitles.project, value: data.projectAcronym },
-    { title: texts.inputTitles.measurementDate, value: data.measurementDate.toDateString() },
+    { title: texts.inputTitles.measurementDate, value: format(data.measurementDate, DATE_FORMAT) },
   ];
   addTitleValueRows(doc, visitInfoRows, imageWidth + 70, linePosition);
 
@@ -189,7 +193,7 @@ export const generatePDF = async (pdfType: PDFType, data: IPDFData, locale: stri
     { title: texts.inputTitles.name, value: data.name },
     { title: texts.inputTitles.surname, value: data.surname },
     { title: texts.inputTitles.personalId, value: data.personalId },
-    { title: texts.inputTitles.birthdate, value: data.birthdate.toDateString() },
+    { title: texts.inputTitles.birthdate, value: format(data.birthdate, DATE_FORMAT) },
     { title: texts.inputTitles.gender, value: data.gender },
     { title: texts.inputTitles.nativeLanguage, value: data.nativeLanguage },
     { title: texts.inputTitles.height, value: `${data.heightCm} cm` },
