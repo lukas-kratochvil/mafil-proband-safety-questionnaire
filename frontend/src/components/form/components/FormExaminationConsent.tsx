@@ -1,20 +1,27 @@
-import { Typography } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
+import DOMPurify from "dompurify";
 import { useTranslation } from "react-i18next";
-import { defaultNS } from "@app/i18n";
+import { LocalizationKeys } from "@app/i18n";
+import { fetchExaminationConsent } from "@app/util/server_API/fetch";
 import { FormCardContainer } from "./FormCardContainer";
 
 export const FormExaminationConsent = () => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "form.examinationConsent" });
+  const { i18n } = useTranslation();
+  const { data } = useQuery({
+    queryKey: ["examinationConsent", i18n.language],
+    queryFn: () => fetchExaminationConsent(i18n.language as LocalizationKeys),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
+
+  if (data === undefined) {
+    return null;
+  }
 
   return (
-    <FormCardContainer title={t("title")}>
-      <Typography>{t("text1")}</Typography>
-      <Typography marginTop="1rem">{t("text2")}</Typography>
-      <Typography marginTop="1rem">{t("contactInfo")}:</Typography>
-      <Typography width="100%">{t("address")}</Typography>
-      <Typography width="100%">{t("contactPerson")}: Michal Mikl</Typography>
-      <Typography width="100%">{t("phone")}: + 420 54949 6099</Typography>
-      <Typography width="100%">{t("email")}: mafil@ceitec.muni.cz</Typography>
+    <FormCardContainer title={data.title}>
+      {/* eslint-disable-next-line react/no-danger */}
+      <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.html) }} />
     </FormCardContainer>
   );
 };

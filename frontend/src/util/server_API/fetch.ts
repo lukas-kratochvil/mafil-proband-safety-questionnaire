@@ -26,6 +26,7 @@ import {
   GET_BEFORE_EXAMINATION,
   GET_CURRENT_QUESTIONS,
   GET_ENTRY_INFO,
+  GET_EXAMINATION_CONSENT,
   GET_GENDERS,
   GET_HANDEDNESSES,
   GET_NATIVE_LANGUAGES,
@@ -44,6 +45,7 @@ import {
   CreateVisitFormResponse,
   CurrentQuestionsResponse,
   EntryInfoResponse,
+  ExaminationConsentResponse,
   GendersResponse,
   HandednessesResponse,
   NativeLanguagesResponse,
@@ -116,6 +118,15 @@ export const fetchBeforeExamination = async (locale: LocalizationKeys): Promise<
     variables,
   });
   return data.data.beforeExamination;
+};
+
+export const fetchExaminationConsent = async (locale: LocalizationKeys): Promise<IHTMLCardDTO> => {
+  const variables = { locale };
+  const { data } = await axiosConfig.serverApi.post<ExaminationConsentResponse>("", {
+    query: GET_EXAMINATION_CONSENT,
+    variables,
+  });
+  return data.data.examinationConsent;
 };
 
 export const fetchProbandContactRequest = async (

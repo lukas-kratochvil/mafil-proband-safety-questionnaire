@@ -22,6 +22,11 @@ export class HTMLCardResolver {
     return this.htmlCardService.getBeforeExamination(locale);
   }
 
+  @Query(() => HTMLCardEntity, { name: "examinationConsent" })
+  getExaminationConsent(@Args("locale", { type: () => String }) locale: string): Promise<HTMLCardEntity> {
+    return this.htmlCardService.getExaminationConsent(locale);
+  }
+
   @Query(() => HTMLCardEntity, { name: "probandContactRequest" })
   getProbandContactRequest(@Args() probandContactRequest: ProbandContactRequestArgs): Promise<HTMLCardEntity> {
     return this.htmlCardService.getProbandContactRequest(probandContactRequest.locale, probandContactRequest);

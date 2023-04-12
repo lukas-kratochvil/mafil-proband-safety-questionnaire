@@ -1,10 +1,9 @@
-import { Typography } from "@mui/material";
-import { Trans, useTranslation } from "react-i18next";
-import { LocalizationKeys, defaultNS } from "@app/i18n";
-import { FormCardContainer } from "./FormCardContainer";
-import { fetchBeforeExamination } from "@app/util/server_API/fetch";
 import { useQuery } from "@tanstack/react-query";
 import DOMPurify from "dompurify";
+import { useTranslation } from "react-i18next";
+import { LocalizationKeys } from "@app/i18n";
+import { fetchBeforeExamination } from "@app/util/server_API/fetch";
+import { FormCardContainer } from "./FormCardContainer";
 
 export const FormBeforeExamination = () => {
   const { i18n } = useTranslation();

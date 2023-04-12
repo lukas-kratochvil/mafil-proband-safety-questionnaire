@@ -127,6 +127,15 @@ query GetBeforeExamination($locale: String!) {
 }
 `;
 
+export const GET_EXAMINATION_CONSENT = `
+query GetExaminationConsent($locale: String!) {
+  examinationConsent(locale: $locale) {
+    title
+    html
+  }
+}
+`;
+
 export const GET_PROBAND_CONTACT_REQUEST = `
 query GetProbandContactRequest($locale: String!, $name: String!, $surname: String!, $birthdateStr: String!, $currentDateStr: String!) {
   probandContactRequest(locale: $locale, name: $name, surname: $surname, birthdateStr: $birthdateStr, currentDateStr: $currentDateStr) {

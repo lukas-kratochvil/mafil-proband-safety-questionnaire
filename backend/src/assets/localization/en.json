@@ -36,6 +36,17 @@
     "textPart4": "electrically conductive materials",
     "textPart5": "e.g. underwired bras, metal patches, functional underwear with silver content. The investigation is conducted for the purpose of scientific research. The purpose of the examination is not to provide health services or to determine your health status. The collected data will not be evaluated by a doctor, but by a scientist. In the event that a researcher suspects possible health complications, you have the right to be informed about this suspicion and subsequently to consult a doctor about the suspicion, which would be ensured by the researcher of the relevant study based on your informed consent decision."
   },
+  "examinationConsent": {
+    "title": "Consent to examination in the Multimodal and Functional Imaging Laboratory",
+    "text1": "I declare that I have read the information on the MR examination and understand its meaning. I declare that I have filled out this questionnaire truthfully. I declare that I have been informed about the research study to which this examination belongs by a member of the research team and through separate informed consent and I agree to the implementation of the examination.",
+    "text2": "I acknowledge that my personal data in the scope of name, surname, signature, birthdate, personal ID, gender, handedness, height, weight, visual correction, native language, security questions on MR examination contraindications from this questionnaire, measured data and contact data (in case of an accidental finding taken from the informed consent to the research study) will be stored in secure storage for 5 years based on the legitimate interest of the administrator - Masaryk University - in order to ensure the necessary security and legal requirements related to the examination in the Laboratory of Multimodal and Functional Imaging Masaryk University with limited access. After this period, all data stored in the Laboratory of Multimodal and Functional Imaging will be anonymized.",
+    "contactInfo": "Contact information",
+    "mafil": "Laboratory of multimodal and functional imaging",
+    "masarykUni": "Masaryk University",
+    "contactPerson": "contact person",
+    "phone": "phone",
+    "email": "e-mail"
+  },
   "probandContact": {
     "request": {
       "title": "Request for transfer of measured data",

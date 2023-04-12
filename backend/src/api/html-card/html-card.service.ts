@@ -58,6 +58,27 @@ export class HTMLCardService {
     return createHTMLCard(texts.beforeExamination.title, html);
   }
 
+  async getExaminationConsent(locale: string): Promise<HTMLCardEntity | never> {
+    await checkLocaleValidity(this.prisma, locale);
+
+    const texts = getLocalizedTextsFile(locale);
+    const commonTexts = getCommonTextsFile();
+
+    const html = `
+      <p style="margin-top: 0">${texts.examinationConsent.text1}</p>
+      <p>${texts.examinationConsent.text2}</p>
+      <p style="margin-bottom: 0">
+        ${texts.examinationConsent.contactInfo}:
+        <br />${texts.examinationConsent.mafil}, ${commonTexts.examinationConsent.ceitec}, ${texts.examinationConsent.masarykUni}, ${commonTexts.examinationConsent.mafilAddress}
+        <br />${texts.examinationConsent.contactPerson}: ${commonTexts.examinationConsent.contactPerson}
+        <br />${texts.examinationConsent.phone}: ${commonTexts.examinationConsent.phone}
+        <br />${texts.examinationConsent.email}: ${commonTexts.examinationConsent.email}
+      </p>
+    `;
+
+    return createHTMLCard(texts.examinationConsent.title, html);
+  }
+
   async getProbandContactRequest(locale: string, data: ProbandContactRequestArgs): Promise<HTMLCardEntity | never> {
     await checkLocaleValidity(this.prisma, locale);
 
@@ -78,8 +99,7 @@ export class HTMLCardService {
       <p style="margin-top: 0">${texts.probandContact.consent.text1}</p>
       <p>
         ${texts.probandContact.consent.text2}
-        <br />
-        ${texts.probandContact.consent.text3}
+        <br />${texts.probandContact.consent.text3}
       </p>
       <p>${texts.probandContact.consent.text4}</p>
       <div>${texts.probandContact.consent.list}</div>

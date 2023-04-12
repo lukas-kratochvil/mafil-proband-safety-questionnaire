@@ -1,4 +1,11 @@
 {
+  "examinationConsent": {
+    "ceitec": "CEITEC MU",
+    "mafilAddress": "Kamenice 5, 625 00 Brno",
+    "contactPerson": "Michal Mikl",
+    "phone": "+ 420 54949 6099",
+    "email": "mafil@ceitec.muni.cz"
+  },
   "probandContact": {
     "consent": {
       "mafilEmail": "mafil@ceitec.muni.cz",
