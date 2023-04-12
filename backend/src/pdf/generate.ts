@@ -174,6 +174,10 @@ export const generatePDF = async (pdfType: PDFType, data: IPDFData, locale: stri
   // Setup Base64 stream
   const stream = doc.pipe(new Base64Encode());
 
+  // TODO: delete - only for development purpose
+  const pdfFile = fs.createWriteStream(`output_${locale}_${Date.now()}.pdf`);
+  doc.pipe(pdfFile);
+
   // Set default line gap in the document
   doc.lineGap(DEFAULT_DOC_LINE_GAP);
 
@@ -253,5 +257,7 @@ export const generatePDF = async (pdfType: PDFType, data: IPDFData, locale: stri
   doc.end();
   const content = await streamToString(stream);
   stream.destroy();
+  // TODO: delete - only for development purpose
+  pdfFile.end();
   return content;
 };
