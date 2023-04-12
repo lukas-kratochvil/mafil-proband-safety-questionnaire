@@ -30,10 +30,10 @@ type CommonProbandContactConsent = Pick<
 // PDF properties
 const REGULAR_FONT = "Roboto-regular";
 const MEDIUM_FONT = "Roboto-medium";
-const HEADING_FONT_SIZE = 25;
-const CHAPTER_FONT_SIZE = 20;
-const TEXT_FONT_SIZE = 14;
-const PAGE_MARGIN = 40;
+const HEADING_FONT_SIZE = 20;
+const CHAPTER_FONT_SIZE = 16;
+const TEXT_FONT_SIZE = 12;
+const PAGE_MARGIN = 60;
 const TITLE_VALUE_GAP = 10;
 const DEFAULT_DOC_LINE_GAP = 10;
 const LINE_GAP_INSIDE_PARAGRAPH = 2;
@@ -59,7 +59,7 @@ const addTitleValueRows = (doc: PDFDoc, rows: ITitleValueRow[], x: number, y: nu
 };
 
 const addQuestions = (doc: PDFDoc, texts: LocalizedQuestions, questions: IQuestionAnswer[]): void => {
-  doc.font(MEDIUM_FONT, CHAPTER_FONT_SIZE).text(texts.title, PAGE_MARGIN + 20, doc.y + 30);
+  doc.font(MEDIUM_FONT, CHAPTER_FONT_SIZE).text(texts.title, PAGE_MARGIN, doc.y + 30);
   questions.forEach(({ questionText, answer }) => {
     doc
       .font(REGULAR_FONT, TEXT_FONT_SIZE)
@@ -163,8 +163,9 @@ export const generatePDF = async (pdfType: PDFType, data: IPDFData, locale: stri
       .fillAndStroke("#ab5", "black")
       .fill("white")
       .stroke()
-      .font(MEDIUM_FONT, 20)
-      .text(texts.inputTitles.phantom.toUpperCase(), { align: "center" });
+      .font(MEDIUM_FONT, CHAPTER_FONT_SIZE)
+      .text(texts.inputTitles.phantom.toUpperCase(), { align: "center" })
+      .fill("black"); // return back to the black font color
     linePosition = reactY + rectHeight + 25;
   } else {
     linePosition = 75;
@@ -196,7 +197,7 @@ export const generatePDF = async (pdfType: PDFType, data: IPDFData, locale: stri
     { title: texts.inputTitles.visualCorrection, value: `${data.visualCorrectionDioptre} D` },
     { title: texts.inputTitles.handedness, value: data.handedness },
   ];
-  addTitleValueRows(doc, probandInfoRows, PAGE_MARGIN + 20, linePositionUnderImage + 30);
+  addTitleValueRows(doc, probandInfoRows, PAGE_MARGIN, linePositionUnderImage + 30);
 
   if (pdfType !== PDFType.PHANTOM) {
     // Add safety questions
