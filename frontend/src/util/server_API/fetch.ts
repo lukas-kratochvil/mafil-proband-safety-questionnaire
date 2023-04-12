@@ -23,6 +23,7 @@ import {
   AUTHENTICATE_OPERATOR,
   GET_APPROVAL_ROOM_TABLE_VISIT_FORMS,
   GET_APPROVAL_ROOM_VISIT_FORM,
+  GET_BEFORE_EXAMINATION,
   GET_CURRENT_QUESTIONS,
   GET_ENTRY_INFO,
   GET_GENDERS,
@@ -39,6 +40,7 @@ import {
   ApprovalRoomTableVisitFormsResponse,
   ApprovalRoomVisitFormResponse,
   AuthenticateOperatorResponse,
+  BeforeExaminationResponse,
   CreateVisitFormResponse,
   CurrentQuestionsResponse,
   EntryInfoResponse,
@@ -105,6 +107,15 @@ export const fetchSafetyInfo = async (locale: LocalizationKeys): Promise<IHTMLCa
     variables,
   });
   return data.data.safetyInfo;
+};
+
+export const fetchBeforeExamination = async (locale: LocalizationKeys): Promise<IHTMLCardDTO> => {
+  const variables = { locale };
+  const { data } = await axiosConfig.serverApi.post<BeforeExaminationResponse>("", {
+    query: GET_BEFORE_EXAMINATION,
+    variables,
+  });
+  return data.data.beforeExamination;
 };
 
 export const fetchProbandContactRequest = async (

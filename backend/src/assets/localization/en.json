@@ -28,6 +28,14 @@
     "answerYes": "Yes",
     "answerNo": "No"
   },
+  "beforeExamination": {
+    "title": "Before examination",
+    "textPart1": "Before the examination, please",
+    "textPart2": "put away all electrically conductive/metallic objects",
+    "textPart3": "(jewellery, watches, rubber bands, clips, piercings) and clothing components that contain",
+    "textPart4": "electrically conductive materials",
+    "textPart5": "e.g. underwired bras, metal patches, functional underwear with silver content. The investigation is conducted for the purpose of scientific research. The purpose of the examination is not to provide health services or to determine your health status. The collected data will not be evaluated by a doctor, but by a scientist. In the event that a researcher suspects possible health complications, you have the right to be informed about this suspicion and subsequently to consult a doctor about the suspicion, which would be ensured by the researcher of the relevant study based on your informed consent decision."
+  },
   "probandContact": {
     "request": {
       "title": "Request for transfer of measured data",

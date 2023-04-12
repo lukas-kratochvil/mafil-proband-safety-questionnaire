@@ -45,7 +45,17 @@ export class HTMLCardService {
 
     const texts = getLocalizedTextsFile(locale);
 
-    return createHTMLCard(texts.entryInfo.title, texts.safetyInfo.text);
+    return createHTMLCard(texts.safetyInfo.title, texts.safetyInfo.text);
+  }
+
+  async getBeforeExamination(locale: string): Promise<HTMLCardEntity | never> {
+    await checkLocaleValidity(this.prisma, locale);
+
+    const texts = getLocalizedTextsFile(locale);
+
+    const html = `${texts.beforeExamination.textPart1} <strong>${texts.beforeExamination.textPart2}</strong> ${texts.beforeExamination.textPart3} <strong>${texts.beforeExamination.textPart4}</strong>, ${texts.beforeExamination.textPart5}`;
+
+    return createHTMLCard(texts.beforeExamination.title, html);
   }
 
   async getProbandContactRequest(locale: string, data: ProbandContactRequestArgs): Promise<HTMLCardEntity | never> {

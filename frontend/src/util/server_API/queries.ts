@@ -118,6 +118,15 @@ query GetSafetyInfo($locale: String!) {
 }
 `;
 
+export const GET_BEFORE_EXAMINATION = `
+query GetBeforeExamination($locale: String!) {
+  beforeExamination(locale: $locale) {
+    title
+    html
+  }
+}
+`;
+
 export const GET_PROBAND_CONTACT_REQUEST = `
 query GetProbandContactRequest($locale: String!, $name: String!, $surname: String!, $birthdateStr: String!, $currentDateStr: String!) {
   probandContactRequest(locale: $locale, name: $name, surname: $surname, birthdateStr: $birthdateStr, currentDateStr: $currentDateStr) {

@@ -28,6 +28,14 @@
     "answerYes": "Ano",
     "answerNo": "Ne"
   },
+  "beforeExamination": {
+    "title": "Před vyšetřením",
+    "textPart1": "Před vyšetřením si prosím",
+    "textPart2": "odložte všechny elektricky vodivé/kovové předměty",
+    "textPart3": "(šperky, hodinky, gumičky, sponky, piercing) a součásti oděvu, které obsahují",
+    "textPart4": "elektricky vodivé materiály",
+    "textPart5": "např. podprsenka s kovovými kosticemi, kovové nášivky, funkční prádlo s obsahem stříbra. Vyšetření probíhá za účelem vědeckého výzkumu. Účelem vyšetření není poskytování zdravotních služeb nebo zjišťování Vašeho zdravotního stavu. Sesbíraná data nebude vyhodnocovat lékař, ale vědecký pracovník. V případě, že by vědecký pracovník pojal podezření na možné zdravotní komplikace, máte právo být o tomto podezření informován/a a následně podezření zkonzultovat s lékařem, což by bylo zajištěno výzkumným pracovníkem příslušné studie na základě Vašeho rozhodnutí v informovaném souhlasu."
+  },
   "probandContact": {
     "request": {
       "title": "Žádost o předání naměřených dat",
