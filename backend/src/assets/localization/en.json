@@ -14,6 +14,11 @@
     "visualCorrection": "Visual correction",
     "handedness": "Handedness"
   },
+  "questions": {
+    "title": "Safety questions",
+    "answerYes": "Yes",
+    "answerNo": "No"
+  },
   "probandContact": {
     "request": {
       "title": "Request for transfer of measured data",

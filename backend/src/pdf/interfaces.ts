@@ -21,7 +21,7 @@ export interface IPDFData {
   answers: IQuestionAnswer[];
 }
 
-interface IQuestionAnswer {
+export interface IQuestionAnswer {
   questionText: string;
   answer: AnswerOption;
   comment?: string;

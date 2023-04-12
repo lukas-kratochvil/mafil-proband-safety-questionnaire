@@ -1,5 +1,6 @@
 import fs from "fs";
 import { Readable } from "stream";
+import { AnswerOption } from "@prisma/client";
 import { Base64Encode } from "base64-stream";
 import PDFDocument from "pdfkit";
 import { PDFType } from "@app/api/pdf/entities/pdf.entity";
@@ -11,10 +12,11 @@ import {
   getLocalizedTextsFile,
   LocalizedTextsFile,
 } from "@app/utils/assets-loaders";
-import { IPDFData } from "./interfaces";
+import { IPDFData, IQuestionAnswer } from "./interfaces";
 
 type PDFDoc = typeof PDFDocument;
 
+type LocalizedQuestions = Pick<LocalizedTextsFile, "questions">["questions"];
 type LocalizedProbandContact = Pick<LocalizedTextsFile, "probandContact">["probandContact"];
 type LocalizedProbandContactRequest = Pick<LocalizedProbandContact, "request">["request"];
 type LocalizedProbandContactConsent = Pick<LocalizedProbandContact, "consent">["consent"];
@@ -27,6 +29,7 @@ type CommonProbandContactConsent = Pick<
 const REGULAR_FONT = "Roboto-regular";
 const MEDIUM_FONT = "Roboto-medium";
 const HEADING_FONT_SIZE = 25;
+const CHAPTER_FONT_SIZE = 20;
 const TEXT_FONT_SIZE = 14;
 const PAGE_MARGIN = 40;
 const TITLE_VALUE_GAP = 10;
@@ -50,6 +53,17 @@ interface ITitleValueRow {
 
 const addTitleValueRows = (doc: PDFDoc, rows: ITitleValueRow[], x: number, y: number): void => {
   rows.forEach(({ title, value }, i) => addTitleValue(doc, title, value, x, i === 0 ? y : undefined));
+};
+
+const addQuestions = (doc: PDFDoc, texts: LocalizedQuestions, questions: IQuestionAnswer[]): void => {
+  doc.font(MEDIUM_FONT, CHAPTER_FONT_SIZE).text(texts.title, PAGE_MARGIN + 20, doc.y + 30);
+  questions.forEach(({ questionText, answer }) => {
+    doc
+      .font(REGULAR_FONT, TEXT_FONT_SIZE)
+      .text(`${questionText} `, { align: "justify", lineGap: 2, continued: true })
+      .font(MEDIUM_FONT, TEXT_FONT_SIZE)
+      .text((answer === AnswerOption.YES ? texts.answerYes : texts.answerNo).toUpperCase(), { paragraphGap: 8 });
+  });
 };
 
 const addProbandContactRequest = (doc: PDFDoc, texts: LocalizedProbandContactRequest, data: IPDFData): void => {
@@ -180,7 +194,10 @@ export const generatePDF = async (pdfType: PDFType, data: IPDFData, locale: stri
   addTitleValueRows(doc, probandInfoRows, PAGE_MARGIN + 20, linePositionUnderImage + 30);
 
   if (pdfType !== PDFType.PHANTOM) {
-    // TODO: Add safety questions
+    // Add safety questions
+    addQuestions(doc, texts.questions, data.answers);
+
+    // TODO: maybe different layout for the proband and operator PDF
     // if (pdfType === PDFType.PROBAND) {
     //   // TODO
     // } else if (pdfType === PDFType.OPERATOR) {
