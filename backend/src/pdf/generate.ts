@@ -14,8 +14,10 @@ import {
 } from "@app/utils/assets-loaders";
 import { IPDFData, IQuestionAnswer } from "./interfaces";
 
+// Type of PDF document
 type PDFDoc = typeof PDFDocument;
 
+// Localization file nested types
 type LocalizedQuestions = Pick<LocalizedTextsFile, "questions">["questions"];
 type LocalizedProbandContact = Pick<LocalizedTextsFile, "probandContact">["probandContact"];
 type LocalizedProbandContactRequest = Pick<LocalizedProbandContact, "request">["request"];
@@ -25,7 +27,7 @@ type CommonProbandContactConsent = Pick<
   "consent"
 >["consent"];
 
-// Setting default PDF properties
+// PDF properties
 const REGULAR_FONT = "Roboto-regular";
 const MEDIUM_FONT = "Roboto-medium";
 const HEADING_FONT_SIZE = 25;
@@ -33,7 +35,7 @@ const CHAPTER_FONT_SIZE = 20;
 const TEXT_FONT_SIZE = 14;
 const PAGE_MARGIN = 40;
 const TITLE_VALUE_GAP = 10;
-const LINE_GAP = 10;
+const DEFAULT_DOC_LINE_GAP = 10;
 
 const addTitleValue = (doc: PDFDoc, title: string, value: string, x: number, y?: number): void => {
   const titleWidth = 150;
@@ -76,6 +78,7 @@ const addProbandContactRequest = (doc: PDFDoc, texts: LocalizedProbandContactReq
       } ${data.measurementDate.toISOString()} ${texts.text3}:`,
       { align: "justify", lineGap: 2, paragraphGap: 25 }
     );
+  // TODO: add email and phone
 };
 
 const addProbandContactConsent = (
@@ -144,8 +147,12 @@ export const generatePDF = async (pdfType: PDFType, data: IPDFData, locale: stri
   // Setup Base64 stream
   const stream = doc.pipe(new Base64Encode());
 
+  // Set default line gap in the document
+  doc.lineGap(DEFAULT_DOC_LINE_GAP);
+
   let linePosition = 0;
 
+  // TODO: edit header as here: https://pspdfkit.com/blog/2019/generate-pdf-invoices-pdfkit-nodejs/
   // Add full-width border box with "Phantom" inside
   if (pdfType === PDFType.PHANTOM) {
     const reactY = 25;
@@ -166,9 +173,6 @@ export const generatePDF = async (pdfType: PDFType, data: IPDFData, locale: stri
   const imageWidth = 130;
   doc.image(getImagePath("mafil_brain_logo.png"), { width: imageWidth });
   const linePositionUnderImage = doc.y;
-
-  // Set text properties
-  doc.fill("black").font(REGULAR_FONT, TEXT_FONT_SIZE).lineGap(LINE_GAP);
 
   // Add visit information
   const visitInfoRows: ITitleValueRow[] = [
