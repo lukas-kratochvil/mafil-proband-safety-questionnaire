@@ -38,24 +38,24 @@ const TITLE_VALUE_GAP = 10;
 const DEFAULT_DOC_LINE_GAP = 10;
 const LINE_GAP_INSIDE_PARAGRAPH = 2;
 
-const addTitleValue = (doc: PDFDoc, title: string, value: string, x: number, y?: number): void => {
-  const titleWidth = 150;
-  const valueStartPosition = x + titleWidth + TITLE_VALUE_GAP;
-  doc
-    .font(MEDIUM_FONT)
-    .text(`${title}:`, x, y, { width: titleWidth })
-    .moveUp()
-    .font(REGULAR_FONT)
-    .text(value, valueStartPosition);
-};
-
 interface ITitleValueRow {
   title: string;
   value: string;
 }
 
+const addTitleValue = (doc: PDFDoc, row: ITitleValueRow, x: number, y?: number): void => {
+  const titleWidth = 150;
+  const valueStartPosition = x + titleWidth + TITLE_VALUE_GAP;
+  doc
+    .font(MEDIUM_FONT, TEXT_FONT_SIZE)
+    .text(`${row.title}:`, x, y, { width: titleWidth })
+    .moveUp()
+    .font(REGULAR_FONT, TEXT_FONT_SIZE)
+    .text(row.value, valueStartPosition, undefined, { paragraphGap: 4 });
+};
+
 const addTitleValueRows = (doc: PDFDoc, rows: ITitleValueRow[], x: number, y: number): void => {
-  rows.forEach(({ title, value }, i) => addTitleValue(doc, title, value, x, i === 0 ? y : undefined));
+  rows.forEach((row, i) => addTitleValue(doc, row, x, i === 0 ? y : undefined));
 };
 
 const addQuestions = (doc: PDFDoc, texts: LocalizedQuestions, questions: IQuestionAnswer[]): void => {
