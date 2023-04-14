@@ -55,7 +55,7 @@ export class HTMLCardService {
 
     const texts = getLocalizedTextsFile(locale);
 
-    const html = `${texts.beforeExamination.textPart1} <strong>${texts.beforeExamination.textPart2}</strong> ${texts.beforeExamination.textPart3} <strong>${texts.beforeExamination.textPart4}</strong>, ${texts.beforeExamination.textPart5}`;
+    const html = `${texts.beforeExamination.textPart1} <strong>${texts.beforeExamination.textPart2}</strong> ${texts.beforeExamination.textPart3} <strong>${texts.beforeExamination.textPart4}</strong>, ${texts.beforeExamination.textPart5} <u><strong>${texts.beforeExamination.textPart6}</strong></u> ${texts.beforeExamination.textPart7}`;
 
     return createHTMLCard(texts.beforeExamination.title, html);
   }
