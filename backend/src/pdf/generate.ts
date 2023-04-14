@@ -172,11 +172,19 @@ const addProbandContactConsent = (
   const inBrnoOnTextWidth = doc.widthOfString(inBrnoOnText);
   const inBrnoOnLineYCorrection = doc.heightOfString(inBrnoOnText) / 2;
   doc.text(inBrnoOnText);
-  doc.lineTo(doc.x + inBrnoOnTextWidth + 2, doc.y - inBrnoOnLineYCorrection).lineTo(doc.x + inBrnoOnTextWidth + 100, doc.y - inBrnoOnLineYCorrection).dash(2, { space: 3 }).stroke();
+  doc
+    .lineTo(doc.x + inBrnoOnTextWidth + 2, doc.y - inBrnoOnLineYCorrection)
+    .lineTo(doc.x + inBrnoOnTextWidth + 100, doc.y - inBrnoOnLineYCorrection)
+    .dash(2, { space: 3 })
+    .stroke();
 
   // Fill in signature
   const signatureLineY = doc.y + 20;
-  doc.lineTo(doc.x, signatureLineY).lineTo(doc.x + 200, signatureLineY).dash(2, { space: 3 }).stroke();
+  doc
+    .lineTo(doc.x, signatureLineY)
+    .lineTo(doc.x + 200, signatureLineY)
+    .dash(2, { space: 3 })
+    .stroke();
   doc.text(texts.signature, PAGE_MARGIN, signatureLineY + 2);
 };
 
