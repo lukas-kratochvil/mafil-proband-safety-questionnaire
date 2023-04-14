@@ -48,7 +48,9 @@
     "masarykUni": "Masaryk University",
     "contactPerson": "Contact person",
     "phone": "Phone",
-    "email": "Email"
+    "email": "Email",
+    "text3": "Information on MU Processing and Protection of Personal Data",
+    "personalInfoProtectionSite": "https://www.muni.cz/en/about-us/official-notice-board/personal-data-protection"
   },
   "probandContact": {
     "request": {

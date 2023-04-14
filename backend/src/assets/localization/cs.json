@@ -48,7 +48,9 @@
     "masarykUni": "Masarykova univerzita",
     "contactPerson": "Kontaktní osoba",
     "phone": "Telefon",
-    "email": "Email"
+    "email": "Email",
+    "text3": "Informace o zpracování a ochraně osobních údajů na MU",
+    "personalInfoProtectionSite": "https://www.muni.cz/o-univerzite/uredni-deska/ochrana-osobnich-udaju"
   },
   "probandContact": {
     "request": {

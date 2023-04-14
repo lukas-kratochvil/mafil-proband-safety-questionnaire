@@ -76,6 +76,10 @@ export class HTMLCardService {
         <br />${texts.examinationConsent.phone}: ${commonTexts.examinationConsent.phone}
         <br />${texts.examinationConsent.email}: ${commonTexts.examinationConsent.email}
       </p>
+      <p>
+        ${texts.examinationConsent.text3}:
+        <br /><u>${texts.examinationConsent.personalInfoProtectionSite}</u>
+      </p>
     `;
 
     return createHTMLCard(texts.examinationConsent.title, html);
