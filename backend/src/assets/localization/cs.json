@@ -21,7 +21,8 @@
   },
   "safetyInfo": {
     "title": "Bezpečnostní informace",
-    "text": "Přečtěte si, prosím, následující otázky a zatrhněte správnou odpověď. Pravdivé zodpovězení našich dotazů je velmi důležité pro Vaši bezpečnost."
+    "textPart1": "Přečtěte si, prosím, následující otázky a zatrhněte správnou odpověď.",
+    "textPart2": "Pravdivé zodpovězení našich dotazů je velmi důležité pro Vaši bezpečnost!"
   },
   "questions": {
     "title": "Bezpečnostní otázky",

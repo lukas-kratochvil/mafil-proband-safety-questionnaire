@@ -21,7 +21,8 @@
   },
   "safetyInfo": {
     "title": "Safety information",
-    "text": "Please read the following questions and tick the correct answer. Answering our questions truthfully is very important for your safety."
+    "textPart1": "Please read the following questions and mark the correct answers.",
+    "textPart2": "Answering the questions truthfully is very important for your safety!"
   },
   "questions": {
     "title": "Safety questions",

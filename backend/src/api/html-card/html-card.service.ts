@@ -45,7 +45,9 @@ export class HTMLCardService {
 
     const texts = getLocalizedTextsFile(locale);
 
-    return createHTMLCard(texts.safetyInfo.title, texts.safetyInfo.text);
+    const html = `${texts.safetyInfo.textPart1} <strong>${texts.safetyInfo.textPart2}</strong>`;
+
+    return createHTMLCard(texts.safetyInfo.title, html);
   }
 
   async getBeforeExamination(locale: string): Promise<HTMLCardEntity | never> {
