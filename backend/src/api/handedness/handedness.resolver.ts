@@ -9,7 +9,7 @@ import { HandednessService } from "./handedness.service";
 export class HandednessResolver {
   constructor(private readonly handednessService: HandednessService) {}
 
-  @Mutation(() => HandednessEntity)
+  // @Mutation(() => HandednessEntity)
   createHandedness(
     @Args("createHandednessInput") createHandednessInput: CreateHandednessInput
   ): Promise<HandednessEntity> {
@@ -26,14 +26,14 @@ export class HandednessResolver {
     return this.handednessService.findOne(id);
   }
 
-  @Mutation(() => HandednessEntity)
+  // @Mutation(() => HandednessEntity)
   updateHandedness(
     @Args("updateHandednessInput") updateHandednessInput: UpdateHandednessInput
   ): Promise<HandednessEntity> {
     return this.handednessService.update(updateHandednessInput.id, updateHandednessInput);
   }
 
-  @Mutation(() => HandednessEntity)
+  // @Mutation(() => HandednessEntity)
   removeHandedness(@Args("id", { type: () => UUID }) id: string): Promise<HandednessEntity> {
     return this.handednessService.remove(id);
   }

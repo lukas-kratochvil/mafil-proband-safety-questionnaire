@@ -9,7 +9,7 @@ import { NativeLanguageService } from "./native-language.service";
 export class NativeLanguageResolver {
   constructor(private readonly nativeLanguageService: NativeLanguageService) {}
 
-  @Mutation(() => NativeLanguageEntity)
+  // @Mutation(() => NativeLanguageEntity)
   createNativeLanguage(
     @Args("createNativeLanguageInput") createNativeLanguageInput: CreateNativeLanguageInput
   ): Promise<NativeLanguageEntity> {
@@ -26,14 +26,14 @@ export class NativeLanguageResolver {
     return this.nativeLanguageService.findOne(id);
   }
 
-  @Mutation(() => NativeLanguageEntity)
+  // @Mutation(() => NativeLanguageEntity)
   updateNativeLanguage(
     @Args("updateNativeLanguageInput") updateNativeLanguageInput: UpdateNativeLanguageInput
   ): Promise<NativeLanguageEntity> {
     return this.nativeLanguageService.update(updateNativeLanguageInput.id, updateNativeLanguageInput);
   }
 
-  @Mutation(() => NativeLanguageEntity)
+  // @Mutation(() => NativeLanguageEntity)
   removeNativeLanguage(@Args("id", { type: () => UUID }) id: string): Promise<NativeLanguageEntity> {
     return this.nativeLanguageService.remove(id);
   }

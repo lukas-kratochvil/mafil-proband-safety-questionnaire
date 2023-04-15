@@ -9,7 +9,7 @@ import { LanguageService } from "./language.service";
 export class LanguageResolver {
   constructor(private readonly languageService: LanguageService) {}
 
-  @Mutation(() => LanguageEntity)
+  // @Mutation(() => LanguageEntity)
   createLanguage(@Args("createLanguageInput") createLanguageInput: CreateLanguageInput): Promise<LanguageEntity> {
     return this.languageService.create(createLanguageInput);
   }
@@ -24,12 +24,12 @@ export class LanguageResolver {
     return this.languageService.findOne(id);
   }
 
-  @Mutation(() => LanguageEntity)
+  // @Mutation(() => LanguageEntity)
   updateLanguage(@Args("updateLanguageInput") updateLanguageInput: UpdateLanguageInput): Promise<LanguageEntity> {
     return this.languageService.update(updateLanguageInput.id, updateLanguageInput);
   }
 
-  @Mutation(() => LanguageEntity)
+  // @Mutation(() => LanguageEntity)
   removeLanguage(@Args("id", { type: () => UUID }) id: string): Promise<LanguageEntity> {
     return this.languageService.remove(id);
   }

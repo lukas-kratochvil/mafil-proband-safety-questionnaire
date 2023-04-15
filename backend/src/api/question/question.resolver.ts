@@ -10,7 +10,7 @@ import { QuestionService } from "./question.service";
 export class QuestionResolver {
   constructor(private readonly questionService: QuestionService) {}
 
-  @Mutation(() => QuestionEntity)
+  // @Mutation(() => QuestionEntity)
   createQuestion(@Args("createQuestionInput") createQuestionInput: CreateQuestionInput): Promise<QuestionEntity> {
     return this.questionService.create(createQuestionInput);
   }
@@ -25,19 +25,19 @@ export class QuestionResolver {
     return this.questionService.findOne(id);
   }
 
-  @Mutation(() => QuestionEntity)
+  // @Mutation(() => QuestionEntity)
   updateQuestion(@Args("updateQuestionInput") updateQuestionInput: UpdateQuestionInput): Promise<QuestionEntity> {
     return this.questionService.update(updateQuestionInput.id, updateQuestionInput);
   }
 
-  @Mutation(() => QuestionEntity)
+  // @Mutation(() => QuestionEntity)
   updateQuestionTexts(
     @Args("updateQuestionTextsInput") updateQuestionTextsInput: UpdateQuestionTextsInput
   ): Promise<QuestionEntity> {
     return this.questionService.updateTexts(updateQuestionTextsInput.id, updateQuestionTextsInput);
   }
 
-  @Mutation(() => QuestionEntity)
+  // @Mutation(() => QuestionEntity)
   removeQuestion(@Args("id", { type: () => UUID }) id: string): Promise<QuestionEntity> {
     return this.questionService.remove(id);
   }

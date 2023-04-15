@@ -15,7 +15,7 @@ export class OperatorResolver {
     return this.operatorService.authenticate(authenticateOperatorArgs);
   }
 
-  @Mutation(() => OperatorEntity)
+  // @Mutation(() => OperatorEntity)
   createOperator(@Args("createOperatorInput") createOperatorInput: CreateOperatorInput): Promise<OperatorEntity> {
     return this.operatorService.create(createOperatorInput);
   }
@@ -30,12 +30,12 @@ export class OperatorResolver {
     return this.operatorService.findOne(id);
   }
 
-  @Mutation(() => OperatorEntity)
+  // @Mutation(() => OperatorEntity)
   updateOperator(@Args("updateOperatorInput") updateOperatorInput: UpdateOperatorInput): Promise<OperatorEntity> {
     return this.operatorService.update(updateOperatorInput.id, updateOperatorInput);
   }
 
-  @Mutation(() => OperatorEntity)
+  // @Mutation(() => OperatorEntity)
   removeOperator(@Args("id", { type: () => UUID }) id: string): Promise<OperatorEntity> {
     return this.operatorService.remove(id);
   }

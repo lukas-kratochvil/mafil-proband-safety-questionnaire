@@ -9,7 +9,7 @@ import { GenderService } from "./gender.service";
 export class GenderResolver {
   constructor(private readonly genderService: GenderService) {}
 
-  @Mutation(() => GenderEntity)
+  // @Mutation(() => GenderEntity)
   createGender(@Args("createGenderInput") createGenderInput: CreateGenderInput): Promise<GenderEntity> {
     return this.genderService.create(createGenderInput);
   }
@@ -24,12 +24,12 @@ export class GenderResolver {
     return this.genderService.findOne(id);
   }
 
-  @Mutation(() => GenderEntity)
+  // @Mutation(() => GenderEntity)
   updateGender(@Args("updateGenderInput") updateGenderInput: UpdateGenderInput): Promise<GenderEntity> {
     return this.genderService.update(updateGenderInput.id, updateGenderInput);
   }
 
-  @Mutation(() => GenderEntity)
+  // @Mutation(() => GenderEntity)
   removeGender(@Args("id", { type: () => UUID }) id: string): Promise<GenderEntity> {
     return this.genderService.remove(id);
   }
