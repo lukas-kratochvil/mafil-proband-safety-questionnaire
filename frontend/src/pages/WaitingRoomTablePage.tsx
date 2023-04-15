@@ -3,12 +3,12 @@ import { compareAsc, format, parse } from "date-fns";
 import MaterialReactTable, { MRT_ColumnDef as MRTColumnDef, MRT_Row as MRTRow } from "material-react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { TranslatedTableRow } from "@app/components/table/TranslatedRow";
 import { WaitingRoomTableActionButtons } from "@app/components/table/actions/WaitingRoomTableActionButtons";
 import { defaultTableProps } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n";
 import { IWaitingRoomTableVisitFormDTO } from "@app/util/server_API/dto";
 import { fetchWaitingRoomTableVisitForms } from "@app/util/server_API/fetch";
-import { getTranslation } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
 
 const createdAtFormat = "d.M.y H:mm";
@@ -61,15 +61,21 @@ const WaitingRoomTablePage = () => {
         maxSize: 0,
       },
       {
-        accessorFn: (visit) => getTranslation(visit.gender.translations, "cs"),
         id: "gender",
         header: t("header.gender"),
+        // eslint-disable-next-line react/no-unstable-nested-components
+        Cell: ({ row }: { row: MRTRow<IWaitingRoomTableVisitFormDTO> }) => (
+          <TranslatedTableRow translations={row.original.gender.translations} />
+        ),
         maxSize: 0,
       },
       {
-        accessorFn: (visit) => getTranslation(visit.nativeLanguage.translations, "cs"),
         id: "nativeLanguage",
         header: t("header.nativeLanguage"),
+        // eslint-disable-next-line react/no-unstable-nested-components
+        Cell: ({ row }: { row: MRTRow<IWaitingRoomTableVisitFormDTO> }) => (
+          <TranslatedTableRow translations={row.original.nativeLanguage.translations} />
+        ),
         maxSize: 0,
       },
       {
