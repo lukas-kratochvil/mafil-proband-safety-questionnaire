@@ -14,6 +14,12 @@ interface INativeLanguage {
 
 const nativeLanguages: INativeLanguage[] = [
   {
+    code: "xx",
+    native: "Other",
+    enText: "Other",
+    csText: "Jiný",
+  },
+  {
     code: "aa",
     native: "Afar",
     enText: "Afar",
