@@ -38,7 +38,6 @@ export interface ITabProps {
   urlPrefix: RoutingPaths;
   onClick: () => void;
   Icon: SvgIconComponent;
-  showCount?: boolean;
 }
 
 export const getTabs = (navigate: NavigateFunction): ITabProps[] => [
@@ -47,14 +46,12 @@ export const getTabs = (navigate: NavigateFunction): ITabProps[] => [
     urlPrefix: RoutingPaths.WAITING_ROOM,
     onClick: () => navigate(RoutingPaths.WAITING_ROOM),
     Icon: PendingActionsIcon,
-    showCount: true,
   },
   {
     localizationKey: "approvalRoom",
     urlPrefix: RoutingPaths.APPROVAL_ROOM,
     onClick: () => navigate(RoutingPaths.APPROVAL_ROOM),
     Icon: ApprovalIcon,
-    showCount: true,
   },
   {
     localizationKey: "recentVisits",

@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n";
 import { getCommonTabSx, ITabProps } from "../common";
 
-export const NavigationMobileTab = ({ localizationKey, urlPrefix, onClick, Icon, showCount }: ITabProps) => {
+export const NavigationMobileTab = ({ localizationKey, urlPrefix, onClick, Icon }: ITabProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "common.navigation" });
   const location = useLocation();
 
@@ -29,8 +29,7 @@ export const NavigationMobileTab = ({ localizationKey, urlPrefix, onClick, Icon,
             item
             xs
           >
-            {/* TODO: number must be updated */}
-            {`${t(convertStringToLocalizationKey(localizationKey))}${showCount ? " (?)" : ""}`}
+            {t(convertStringToLocalizationKey(localizationKey))}
           </Grid>
         </Grid>
       </ListItemButton>

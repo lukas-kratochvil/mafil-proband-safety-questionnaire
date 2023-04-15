@@ -4,14 +4,13 @@ import { useLocation } from "react-router-dom";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n";
 import { getCommonTabSx, ITabProps } from "./common";
 
-export const NavigationTab = ({ localizationKey, urlPrefix, onClick, showCount }: ITabProps) => {
+export const NavigationTab = ({ localizationKey, urlPrefix, onClick }: ITabProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "common.navigation" });
   const location = useLocation();
 
   return (
     <Tab
-      // TODO: number must be updated
-      label={`${t(convertStringToLocalizationKey(localizationKey))}${showCount ? " (?)" : ""}`}
+      label={t(convertStringToLocalizationKey(localizationKey))}
       onClick={onClick}
       sx={{ ...getCommonTabSx(location, urlPrefix) }}
       data-testid="navTab"

@@ -34,7 +34,6 @@ const mockGetTabs = vi.fn().mockImplementation(() => [
     urlPrefix: "",
     onClick: () => ({}),
     Icon: undefined,
-    showCount: true,
   },
 ]);
 
