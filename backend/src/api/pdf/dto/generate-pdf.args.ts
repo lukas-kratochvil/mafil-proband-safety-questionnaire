@@ -12,7 +12,7 @@ class PDFAnswer extends IntersectionType(
 ) {}
 
 @ArgsType()
-export class GeneratePDFsArgs extends IntersectionType(
+export class GeneratePDFArgs extends IntersectionType(
   IntersectionType(
     PickType(VisitFormEntity, [
       "name",
@@ -52,13 +52,13 @@ export class GeneratePDFsArgs extends IntersectionType(
   handednessCode: string;
 
   // eslint-disable-next-line @darraghor/nestjs-typed/all-properties-have-explicit-defined
-  @ValidateIf((object: GeneratePDFsArgs) => !object.isPhantom)
+  @ValidateIf((object: GeneratePDFArgs) => !object.isPhantom)
   @MaxLength(5)
   @Field({ nullable: true })
   probandLanguageCode?: string;
 
   // eslint-disable-next-line @darraghor/nestjs-typed/all-properties-have-explicit-defined
-  @ValidateIf((object: GeneratePDFsArgs) => !object.isPhantom)
+  @ValidateIf((object: GeneratePDFArgs) => !object.isPhantom)
   @IsArray()
   @ArrayNotEmpty()
   @ArrayUnique<PDFAnswer>((elem) => elem.questionId)
