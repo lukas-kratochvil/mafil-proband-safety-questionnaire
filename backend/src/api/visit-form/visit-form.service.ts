@@ -98,9 +98,9 @@ export class VisitFormService {
     });
   }
 
-  async update(id: string, updateVisitFormInput: UpdateVisitFormInput): Promise<VisitFormInclude> {
+  async update(id: string, updateVisitFormInput: UpdateVisitFormInput): Promise<VisitFormInclude | never> {
     return await this.prisma.$transaction(async (tx) => {
-      // check if visit form state wasn't already updated by another user
+      // check if the visit form state wasn't already updated by another user
       if (updateVisitFormInput.state) {
         const visitForm = await tx.visitForm.findFirst({
           where: {
@@ -154,6 +154,7 @@ export class VisitFormService {
             ? {
                 upsert: {
                   create: {
+                    // properties are checked against undefined, so the values here are always non-undefined
                     projectId: updateVisitFormInput.additionalInfo.projectId || "",
                     projectAcronym: updateVisitFormInput.additionalInfo.projectAcronym || "",
                     deviceId: updateVisitFormInput.additionalInfo.deviceId || "",
