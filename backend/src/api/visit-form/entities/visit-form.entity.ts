@@ -27,7 +27,7 @@ import { AnswerEntity } from "./answer.entity";
 
 registerEnumType(VisitFormState, {
   name: "VisitFormState",
-  description: "The visit form states.",
+  description: "Visit form states.",
 });
 
 @ObjectType()

@@ -9,7 +9,7 @@ import { VisitFormEntity } from "./visit-form.entity";
 @ObjectType()
 export class AdditionalVisitFormInfoEntity extends BaseEntity implements AdditionalVisitFormInfo {
   @IsObject()
-  @Field(() => VisitFormEntity)
+  @HideField()
   visitForm: VisitFormEntity;
 
   @IsUUID()
@@ -23,6 +23,10 @@ export class AdditionalVisitFormInfoEntity extends BaseEntity implements Additio
   @IsUUID()
   @Field(() => UUID)
   finalizerId: string;
+
+  @IsDate()
+  @Field()
+  finalizedAt: Date;
 
   @MaxLength(35)
   @Field()
@@ -43,8 +47,4 @@ export class AdditionalVisitFormInfoEntity extends BaseEntity implements Additio
   @IsDate()
   @Field()
   measuredAt: Date;
-
-  @IsDate()
-  @Field()
-  finalizedAt: Date;
 }
