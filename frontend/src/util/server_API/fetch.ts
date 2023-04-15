@@ -281,7 +281,7 @@ export const createDuplicatedVisitFormForApproval = async (
   return data.data.createVisitForm.id;
 };
 
-export const sendVisitFormFromWaitingRoomForApproval = async (
+export const sendVisitFormForApproval = async (
   visitFormId: string,
   visitFormData: Partial<FormPropType>,
   finalizerId: string

@@ -14,7 +14,7 @@ import { VisitStateDEV } from "@app/model/visit";
 import { RoutingPaths } from "@app/routing-paths";
 import { updateDummyVisitState } from "@app/util/fetch.dev";
 import { QuestionPartNumber } from "@app/util/server_API/dto";
-import { fetchWaitingRoomVisitForm, sendVisitFormFromWaitingRoomForApproval } from "@app/util/server_API/fetch";
+import { fetchWaitingRoomVisitForm, sendVisitFormForApproval } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormFinalizeDialog } from "../components/FormFinalizeDialog";
@@ -158,7 +158,7 @@ export const WaitingRoomForm = () => {
       },
       measuredAt: data.measuredAt ?? new Date(),
     };
-    await sendVisitFormFromWaitingRoomForApproval(id || "", modifiedFields, operator?.id || "");
+    await sendVisitFormForApproval(id || "", modifiedFields, operator?.id || "");
     queryClient.invalidateQueries({ queryKey: ["waitingRoomVisitForms"], exact: true });
     setOpenFinalizeDialog(false);
     navigate(RoutingPaths.WAITING_ROOM);
