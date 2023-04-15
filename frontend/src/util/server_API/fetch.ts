@@ -1,6 +1,6 @@
 import axiosConfig from "@app/axios-config";
 import { OperatorDev } from "@app/hooks/auth/auth-dev";
-import i18n, { LocalizationKeys } from "@app/i18n";
+import i18n, { LanguageCode } from "@app/i18n";
 import { IOperatorAuthorization } from "@app/model/auth";
 import { AnswerOption, FormPropType } from "@app/model/form";
 import {
@@ -93,7 +93,7 @@ export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO> =
   return data.data.question;
 };
 
-export const fetchEntryInfo = async (locale: LocalizationKeys): Promise<IHTMLCardDTO> => {
+export const fetchEntryInfo = async (locale: LanguageCode): Promise<IHTMLCardDTO> => {
   const variables = { locale };
   const { data } = await axiosConfig.serverApi.post<EntryInfoResponse>("", {
     query: GET_ENTRY_INFO,
@@ -102,7 +102,7 @@ export const fetchEntryInfo = async (locale: LocalizationKeys): Promise<IHTMLCar
   return data.data.entryInfo;
 };
 
-export const fetchSafetyInfo = async (locale: LocalizationKeys): Promise<IHTMLCardDTO> => {
+export const fetchSafetyInfo = async (locale: LanguageCode): Promise<IHTMLCardDTO> => {
   const variables = { locale };
   const { data } = await axiosConfig.serverApi.post<SafetyInfoResponse>("", {
     query: GET_SAFETY_INFO,
@@ -111,7 +111,7 @@ export const fetchSafetyInfo = async (locale: LocalizationKeys): Promise<IHTMLCa
   return data.data.safetyInfo;
 };
 
-export const fetchBeforeExamination = async (locale: LocalizationKeys): Promise<IHTMLCardDTO> => {
+export const fetchBeforeExamination = async (locale: LanguageCode): Promise<IHTMLCardDTO> => {
   const variables = { locale };
   const { data } = await axiosConfig.serverApi.post<BeforeExaminationResponse>("", {
     query: GET_BEFORE_EXAMINATION,
@@ -120,7 +120,7 @@ export const fetchBeforeExamination = async (locale: LocalizationKeys): Promise<
   return data.data.beforeExamination;
 };
 
-export const fetchExaminationConsent = async (locale: LocalizationKeys): Promise<IHTMLCardDTO> => {
+export const fetchExaminationConsent = async (locale: LanguageCode): Promise<IHTMLCardDTO> => {
   const variables = { locale };
   const { data } = await axiosConfig.serverApi.post<ExaminationConsentResponse>("", {
     query: GET_EXAMINATION_CONSENT,
@@ -130,7 +130,7 @@ export const fetchExaminationConsent = async (locale: LocalizationKeys): Promise
 };
 
 export const fetchProbandContactRequest = async (
-  locale: LocalizationKeys,
+  locale: LanguageCode,
   name: string,
   surname: string,
   birthdateStr: string,
@@ -144,7 +144,7 @@ export const fetchProbandContactRequest = async (
   return data.data.probandContactRequest;
 };
 
-export const fetchProbandContactConsent = async (locale: LocalizationKeys): Promise<IHTMLCardDTO> => {
+export const fetchProbandContactConsent = async (locale: LanguageCode): Promise<IHTMLCardDTO> => {
   const variables = { locale };
   const { data } = await axiosConfig.serverApi.post<ProbandContactConsentResponse>("", {
     query: GET_PROBAND_CONTACT_CONSENT,
@@ -210,7 +210,7 @@ export const fetchApprovalRoomVisitForm = async (
 export const createProbandVisitForm = async (visitFormData: FormPropType): Promise<string> => {
   const variables: ICreateProbandVisitFormInput = {
     createVisitFormInput: {
-      probandLanguageCode: i18n.language as LocalizationKeys,
+      probandLanguageCode: i18n.language as LanguageCode,
       name: visitFormData.name,
       surname: visitFormData.surname,
       personalId: visitFormData.personalId,
@@ -266,7 +266,7 @@ export const createDuplicatedVisitFormForApproval = async (
         finalizerId: finalizerId ?? "",
         finalizedAt: new Date(),
       },
-      probandLanguageCode: i18n.language as LocalizationKeys,
+      probandLanguageCode: i18n.language as LanguageCode,
       answers: visitFormData.answers.map((answer) => ({
         questionId: answer.questionId,
         answer: answer.answer ?? AnswerOption.NO,

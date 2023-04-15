@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import DOMPurify from "dompurify";
 import { useTranslation } from "react-i18next";
-import { LocalizationKeys } from "@app/i18n";
+import { LanguageCode } from "@app/i18n";
 import { fetchBeforeExamination } from "@app/util/server_API/fetch";
 import { FormCardContainer } from "./FormCardContainer";
 
@@ -9,7 +9,7 @@ export const FormBeforeExamination = () => {
   const { i18n } = useTranslation();
   const { data } = useQuery({
     queryKey: ["beforeExamination", i18n.language],
-    queryFn: () => fetchBeforeExamination(i18n.language as LocalizationKeys),
+    queryFn: () => fetchBeforeExamination(i18n.language as LanguageCode),
     staleTime: Infinity,
     cacheTime: Infinity,
   });

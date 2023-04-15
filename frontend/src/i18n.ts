@@ -13,7 +13,7 @@ export const resources = {
   en,
 } as const;
 
-export type LocalizationKeys = keyof typeof resources;
+export type LanguageCode = keyof typeof resources;
 
 i18n
   // detect user language

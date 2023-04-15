@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import DOMPurify from "dompurify";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import i18n, { defaultNS, LocalizationKeys } from "@app/i18n";
+import i18n, { defaultNS, LanguageCode } from "@app/i18n";
 import { FormPropType } from "@app/model/form";
 import { fetchProbandContactRequest } from "@app/util/server_API/fetch";
 import { FormTextField } from "../inputs/FormTextField";
@@ -22,7 +22,7 @@ export const FormProbandContactRequest = () => {
   const { data } = useQuery({
     queryKey: ["probandContactRequest", i18n.language, name, surname, birthdateStr, currentDateStr],
     queryFn: () =>
-      fetchProbandContactRequest(i18n.language as LocalizationKeys, name, surname, birthdateStr, currentDateStr),
+      fetchProbandContactRequest(i18n.language as LanguageCode, name, surname, birthdateStr, currentDateStr),
     staleTime: Infinity,
     cacheTime: Infinity,
   });

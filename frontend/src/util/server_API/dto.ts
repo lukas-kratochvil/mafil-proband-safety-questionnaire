@@ -1,4 +1,4 @@
-import { LocalizationKeys } from "@app/i18n";
+import { LanguageCode } from "@app/i18n";
 import { AnswerOption } from "@app/model/form";
 
 export type OperatorRole = "MR" | "MR_HIGH_PERM";
@@ -144,7 +144,7 @@ type CreateProbandInfoInput = {
 type CreateVisitFormInput = CreateProbandInfoInput & {
   state: VisitFormState;
   additionalInfo: AdditionalInfo;
-  probandLanguageCode: LocalizationKeys;
+  probandLanguageCode: LanguageCode;
   answers: IOperatorAnswerDTO[];
 };
 

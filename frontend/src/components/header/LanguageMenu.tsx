@@ -14,9 +14,9 @@ import {
 } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import { bindPopper, bindToggle, usePopupState } from "material-ui-popup-state/hooks";
-import i18n, { LocalizationKeys } from "@app/i18n";
+import i18n, { LanguageCode } from "@app/i18n";
 
-const languageNativeNames: Record<LocalizationKeys, string> = {
+const languageNativeNames: Record<LanguageCode, string> = {
   cs: "Čeština",
   en: "English",
 };
@@ -57,7 +57,7 @@ export const LanguageMenu = () => {
           },
         }}
       >
-        {languageNativeNames[i18n.resolvedLanguage as LocalizationKeys]}
+        {languageNativeNames[i18n.resolvedLanguage as LanguageCode]}
       </Button>
       <Popper
         {...bindPopper(popupState)}
@@ -92,7 +92,7 @@ export const LanguageMenu = () => {
                         "&:focus-visible": { ...languageItemHoverFocus },
                       }}
                     >
-                      {languageNativeNames[language as LocalizationKeys]}
+                      {languageNativeNames[language as LanguageCode]}
                     </MenuItem>
                   ))}
                 </MenuList>
