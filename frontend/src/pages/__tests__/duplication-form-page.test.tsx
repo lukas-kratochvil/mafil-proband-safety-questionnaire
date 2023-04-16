@@ -15,6 +15,7 @@ import { render, screen, waitFor } from "@test-utils";
 const questionData: IQuestionDTO[] = [
   {
     id: "p1q01",
+    updatedAt: new Date(),
     partNumber: 1,
     mustBeApproved: false,
     translations: [
@@ -35,6 +36,7 @@ const questionData: IQuestionDTO[] = [
   },
   {
     id: "p1q02",
+    updatedAt: new Date(),
     partNumber: 1,
     mustBeApproved: false,
     translations: [
@@ -55,6 +57,7 @@ const questionData: IQuestionDTO[] = [
   },
   {
     id: "p2q01",
+    updatedAt: new Date(),
     partNumber: 2,
     mustBeApproved: true,
     translations: [
@@ -75,6 +78,7 @@ const questionData: IQuestionDTO[] = [
   },
   {
     id: "p2q02",
+    updatedAt: new Date(),
     partNumber: 2,
     mustBeApproved: true,
     translations: [

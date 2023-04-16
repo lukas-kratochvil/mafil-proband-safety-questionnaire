@@ -40,6 +40,7 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 const questionData: IQuestionDTO[] = [
   {
     id: "p1q01",
+    updatedAt: new Date(),
     partNumber: QuestionPartNumber.ONE,
     mustBeApproved: false,
     translations: [
@@ -60,6 +61,7 @@ const questionData: IQuestionDTO[] = [
   },
   {
     id: "p1q02",
+    updatedAt: new Date(),
     partNumber: QuestionPartNumber.ONE,
     mustBeApproved: false,
     translations: [
@@ -80,6 +82,7 @@ const questionData: IQuestionDTO[] = [
   },
   {
     id: "p2q01",
+    updatedAt: new Date(),
     partNumber: QuestionPartNumber.TWO,
     mustBeApproved: true,
     translations: [
@@ -100,6 +103,7 @@ const questionData: IQuestionDTO[] = [
   },
   {
     id: "p2q02",
+    updatedAt: new Date(),
     partNumber: QuestionPartNumber.TWO,
     mustBeApproved: true,
     translations: [

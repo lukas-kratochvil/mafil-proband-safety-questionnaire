@@ -14,6 +14,7 @@ vi.mock("react-hook-form", () => ({
 vi.mock("src/util/fetch", () => ({
   fetchQuestion: async (): Promise<IQuestionDTO> => ({
     id: "p1q01",
+    updatedAt: new Date(),
     partNumber: 1,
     mustBeApproved: false,
     translations: [

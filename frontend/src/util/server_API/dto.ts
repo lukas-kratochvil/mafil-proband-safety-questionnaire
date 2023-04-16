@@ -51,6 +51,7 @@ export enum QuestionPartNumber {
 
 export interface IQuestionDTO extends ITranslations {
   id: string;
+  updatedAt: Date;
   partNumber: QuestionPartNumber;
   mustBeApproved: boolean;
   hiddenByGenders: {

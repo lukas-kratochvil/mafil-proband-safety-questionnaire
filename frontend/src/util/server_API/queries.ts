@@ -126,6 +126,7 @@ export const GET_CURRENT_QUESTIONS = `
 query GetCurrentQuestions {
   questions {
     id
+    updatedAt
     partNumber
     mustBeApproved
     translations {
