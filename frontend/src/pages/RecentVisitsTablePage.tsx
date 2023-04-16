@@ -73,7 +73,7 @@ const RecentVisitsTablePage = () => {
         header: t("header.actions"),
         columnDefType: "display", // turns off data column features like sorting, filtering, etc.
         // eslint-disable-next-line react/no-unstable-nested-components
-        Cell: ({ row }: { row: MRTRow<IVisit> }) => <RecentVisitsTableActionButtons visitId={row.original.id} />,
+        Cell: ({ row }: { row: MRTRow<IVisit> }) => <RecentVisitsTableActionButtons visit={row.original} />,
         minSize: 300,
       },
     ],
