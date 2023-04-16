@@ -75,7 +75,7 @@ export const getModifiedFieldsOnly = (
   }
 
   const diffRest = updatedDiff(initialDataRest, submittedDataRest);
-  return { ...diffRest, answers: diffAnswers || submittedAnswers };
+  return { ...diffRest, answers: diffAnswers };
 };
 
 export const isVisitFormForApproval = (operator: OperatorDev, data: FormPropType) =>
