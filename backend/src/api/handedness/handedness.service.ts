@@ -50,10 +50,10 @@ export class HandednessService {
     });
   }
 
-  async findOne(id: string): Promise<HandednessIncludingTranslations> {
+  async findOne(code: string): Promise<HandednessIncludingTranslations> {
     return this.prisma.handedness.findUniqueOrThrow({
       where: {
-        id,
+        code,
       },
       include: handednessTranslations,
     });

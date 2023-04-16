@@ -55,10 +55,10 @@ export class NativeLanguageService {
     });
   }
 
-  async findOne(id: string): Promise<NativeLanguageIncludingTranslations> {
+  async findOne(code: string): Promise<NativeLanguageIncludingTranslations> {
     return this.prisma.nativeLanguage.findUniqueOrThrow({
       where: {
-        id,
+        code,
       },
       include: nativeLanguageTranslations,
     });

@@ -22,8 +22,8 @@ export class NativeLanguageResolver {
   }
 
   @Query(() => NativeLanguageEntity, { name: "nativeLanguage" })
-  findOne(@Args("id", { type: () => UUID }) id: string): Promise<NativeLanguageEntity> {
-    return this.nativeLanguageService.findOne(id);
+  findOne(@Args("code") code: string): Promise<NativeLanguageEntity> {
+    return this.nativeLanguageService.findOne(code);
   }
 
   // @Mutation(() => NativeLanguageEntity)

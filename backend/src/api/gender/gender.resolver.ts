@@ -20,8 +20,8 @@ export class GenderResolver {
   }
 
   @Query(() => GenderEntity, { name: "gender" })
-  findOne(@Args("id", { type: () => UUID }) id: string): Promise<GenderEntity> {
-    return this.genderService.findOne(id);
+  findOne(@Args("code") code: string): Promise<GenderEntity> {
+    return this.genderService.findOne(code);
   }
 
   // @Mutation(() => GenderEntity)

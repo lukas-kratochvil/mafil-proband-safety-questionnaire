@@ -50,10 +50,10 @@ export class GenderService {
     });
   }
 
-  async findOne(id: string): Promise<GenderIncludingTranslations> {
+  async findOne(code: string): Promise<GenderIncludingTranslations> {
     return this.prisma.gender.findUniqueOrThrow({
       where: {
-        id,
+        code,
       },
       include: genderTranslations,
     });

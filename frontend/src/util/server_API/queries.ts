@@ -40,6 +40,22 @@ query GetGenders {
 }
 `;
 
+export const GET_GENDER = `
+query GetGender($code: String!) {
+  gender(code: $code) {
+    id
+    code
+    translations {
+      text
+      language {
+        code
+        name
+      }
+    }
+  }
+}
+`;
+
 export const GET_NATIVE_LANGUAGES = `
 query GetNativeLanguages {
   nativeLanguages {
@@ -57,9 +73,42 @@ query GetNativeLanguages {
 }
 `;
 
+export const GET_NATIVE_LANGUAGE = `
+query GetNativeLanguage($code: String!) {
+  nativeLanguage(code: $code) {
+    id
+    code
+    order
+    translations {
+      text
+      language {
+        code
+        name
+      }
+    }
+  }
+}
+`;
+
 export const GET_HANDEDNESSES = `
 query GetHandednesses {
   handednesses {
+    id
+    code
+    translations {
+      text
+      language {
+        code
+        name
+      }
+    }
+  }
+}
+`;
+
+export const GET_HANDEDNESS = `
+query GetHandedness($code: String!) {
+  handedness(code: $code) {
     id
     code
     translations {

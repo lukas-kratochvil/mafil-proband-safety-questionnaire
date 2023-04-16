@@ -49,9 +49,15 @@ export type OperatorResponse = DataErrorsResponse<{ operator: IOperatorDTO }>;
 
 export type GendersResponse = DataErrorsResponse<{ genders: IGenderDTO[] }>;
 
+export type GenderResponse = DataErrorsResponse<{ gender: IGenderDTO }>;
+
 export type NativeLanguagesResponse = DataErrorsResponse<{ nativeLanguages: INativeLanguageDTO[] }>;
 
+export type NativeLanguageResponse = DataErrorsResponse<{ nativeLanguage: INativeLanguageDTO }>;
+
 export type HandednessesResponse = DataErrorsResponse<{ handednesses: IHandednessDTO[] }>;
+
+export type HandednessResponse = DataErrorsResponse<{ handedness: IHandednessDTO }>;
 
 export type CurrentQuestionsResponse = DataErrorsResponse<{ questions: IQuestionDTO[] }>;
 

@@ -22,8 +22,8 @@ export class HandednessResolver {
   }
 
   @Query(() => HandednessEntity, { name: "handedness" })
-  findOne(@Args("id", { type: () => UUID }) id: string): Promise<HandednessEntity> {
-    return this.handednessService.findOne(id);
+  findOne(@Args("code") code: string): Promise<HandednessEntity> {
+    return this.handednessService.findOne(code);
   }
 
   // @Mutation(() => HandednessEntity)

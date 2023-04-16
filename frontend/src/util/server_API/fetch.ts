@@ -27,8 +27,11 @@ import {
   GET_CURRENT_QUESTIONS,
   GET_ENTRY_INFO,
   GET_EXAMINATION_CONSENT,
+  GET_GENDER,
   GET_GENDERS,
+  GET_HANDEDNESS,
   GET_HANDEDNESSES,
+  GET_NATIVE_LANGUAGE,
   GET_NATIVE_LANGUAGES,
   GET_OPERATOR,
   GET_PROBAND_CONTACT_CONSENT,
@@ -47,8 +50,11 @@ import {
   CurrentQuestionsResponse,
   EntryInfoResponse,
   ExaminationConsentResponse,
+  GenderResponse,
   GendersResponse,
+  HandednessResponse,
   HandednessesResponse,
+  NativeLanguageResponse,
   NativeLanguagesResponse,
   OperatorResponse,
   ProbandContactConsentResponse,
@@ -80,14 +86,32 @@ export const fetchGenders = async (): Promise<IGenderDTO[]> => {
   return data.data.genders;
 };
 
+export const fetchGender = async (code: string): Promise<IGenderDTO> => {
+  const variables = { code };
+  const { data } = await axiosConfig.serverApi.post<GenderResponse>("", { query: GET_GENDER, variables });
+  return data.data.gender;
+};
+
 export const fetchNativeLanguages = async (): Promise<INativeLanguageDTO[]> => {
   const { data } = await axiosConfig.serverApi.post<NativeLanguagesResponse>("", { query: GET_NATIVE_LANGUAGES });
   return data.data.nativeLanguages;
 };
 
+export const fetchNativeLanguage = async (code: string): Promise<INativeLanguageDTO> => {
+  const variables = { code };
+  const { data } = await axiosConfig.serverApi.post<NativeLanguageResponse>("", { query: GET_NATIVE_LANGUAGE, variables });
+  return data.data.nativeLanguage;
+};
+
 export const fetchHandednesses = async (): Promise<IHandednessDTO[]> => {
   const { data } = await axiosConfig.serverApi.post<HandednessesResponse>("", { query: GET_HANDEDNESSES });
   return data.data.handednesses;
+};
+
+export const fetchHandedness = async (code: string): Promise<IHandednessDTO> => {
+  const variables = { code };
+  const { data } = await axiosConfig.serverApi.post<HandednessResponse>("", { query: GET_HANDEDNESS, variables });
+  return data.data.handedness;
 };
 
 export const fetchCurrentQuestions = async (): Promise<IQuestionDTO[]> => {
