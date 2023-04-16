@@ -48,10 +48,10 @@ export class OperatorService {
     return this.prisma.operator.findMany();
   }
 
-  async findOne(id: string): Promise<Operator> {
+  async findOne(uco: string): Promise<Operator> {
     return this.prisma.operator.findUniqueOrThrow({
       where: {
-        id,
+        uco,
       },
     });
   }

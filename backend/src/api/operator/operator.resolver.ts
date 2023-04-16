@@ -10,8 +10,8 @@ import { OperatorService } from "./operator.service";
 export class OperatorResolver {
   constructor(private readonly operatorService: OperatorService) {}
 
-  @Query(() => OperatorEntity, { nullable: true })
-  authenticateOperator(@Args() authenticateOperatorArgs: AuthenticateOperatorArgs): Promise<OperatorEntity | null> {
+  @Query(() => OperatorEntity)
+  authenticateOperator(@Args() authenticateOperatorArgs: AuthenticateOperatorArgs): Promise<OperatorEntity> {
     return this.operatorService.authenticate(authenticateOperatorArgs);
   }
 
@@ -25,9 +25,9 @@ export class OperatorResolver {
     return this.operatorService.findAll();
   }
 
-  @Query(() => OperatorEntity, { name: "operator", nullable: true })
-  findOne(@Args("id", { type: () => UUID }) id: string): Promise<OperatorEntity> {
-    return this.operatorService.findOne(id);
+  @Query(() => OperatorEntity, { name: "operator" })
+  findOne(@Args("uco") uco: string): Promise<OperatorEntity> {
+    return this.operatorService.findOne(uco);
   }
 
   // @Mutation(() => OperatorEntity)
