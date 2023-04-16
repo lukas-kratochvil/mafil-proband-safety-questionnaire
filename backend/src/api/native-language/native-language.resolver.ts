@@ -1,4 +1,4 @@
-import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { Args, Query, Resolver } from "@nestjs/graphql";
 import { UUID } from "@app/api/utils/scalars/uuid-scalar";
 import { CreateNativeLanguageInput } from "./dto/create-native-language.input";
 import { UpdateNativeLanguageInput } from "./dto/update-native-language.input";
