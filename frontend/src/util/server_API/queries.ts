@@ -178,6 +178,7 @@ query GetWaitingRoomVisitForms($state: VisitFormState) {
     birthdate
     gender {
       id
+      code
       translations {
         text
         language {
@@ -187,6 +188,7 @@ query GetWaitingRoomVisitForms($state: VisitFormState) {
     }
     nativeLanguage {
       id
+      code
       translations {
         text
         language {
@@ -199,6 +201,7 @@ query GetWaitingRoomVisitForms($state: VisitFormState) {
     visualCorrectionDioptre
     handedness {
       id
+      code
       translations {
         text
         language {
@@ -221,6 +224,7 @@ query GetWaitingRoomVisitForm($id: UUID!) {
     birthdate
     gender {
       id
+      code
       translations {
         text
         language {
@@ -230,6 +234,7 @@ query GetWaitingRoomVisitForm($id: UUID!) {
     }
     nativeLanguage {
       id
+      code
       translations {
         text
         language {
@@ -242,6 +247,7 @@ query GetWaitingRoomVisitForm($id: UUID!) {
     visualCorrectionDioptre
     handedness {
       id
+      code
       translations {
         text
         language {
@@ -270,6 +276,7 @@ query GetWaitingRoomVisitForms($state: VisitFormState) {
     birthdate
     gender {
       id
+      code
       translations {
         text
         language {
@@ -279,6 +286,7 @@ query GetWaitingRoomVisitForms($state: VisitFormState) {
     }
     nativeLanguage {
       id
+      code
       translations {
         text
         language {
@@ -291,6 +299,7 @@ query GetWaitingRoomVisitForms($state: VisitFormState) {
     visualCorrectionDioptre
     handedness {
       id
+      code
       translations {
         text
         language {
@@ -320,6 +329,7 @@ query GetApprovalRoomVisitForm($id: UUID!) {
     birthdate
     gender {
       id
+      code
       translations {
         text
         language {
@@ -329,6 +339,7 @@ query GetApprovalRoomVisitForm($id: UUID!) {
     }
     nativeLanguage {
       id
+      code
       translations {
         text
         language {
@@ -341,6 +352,7 @@ query GetApprovalRoomVisitForm($id: UUID!) {
     visualCorrectionDioptre
     handedness {
       id
+      code
       translations {
         text
         language {
