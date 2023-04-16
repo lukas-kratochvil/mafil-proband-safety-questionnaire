@@ -73,11 +73,11 @@ export const loadFormDefaultValuesFromApprovalRoomVisitForm = (
 
 // Autocomplete component default value must be one of the options provided or null
 export const loadFormDefaultValuesVisitDuplication = (visit: IVisitIncludingQuestions): FormPropType => ({
+  ...visit,
   project: null,
   device: null,
-  measuredAt: visit.projectInfo.measuredAt ?? new Date(),
-  disapprovalReason: visit.projectInfo.disapprovalReason,
-  ...visit,
-  visualCorrection: getOption(visualCorrectionOptions, visit.visualCorrection),
+  measuredAt: new Date(),
+  disapprovalReason: null,
+  visualCorrection: getOption(visualCorrectionOptions, visit.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES),
   answers: visit.answersIncludingQuestions.map((answer) => ({ ...answer })),
 });
