@@ -1,10 +1,10 @@
 import userEvent from "@testing-library/user-event";
 import { format } from "date-fns";
 import { getProjectText } from "@app/components/form/util/utils";
-import { devicesDev, projectsDev } from "@app/data/form_data";
 import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import i18n from "@app/i18n";
 import PhantomFormPage from "@app/pages/PhantomFormPage";
+import { devicesDev, projectsDev } from "@app/util/mafildb_API/data.dev";
 import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
 import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IQuestionDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor } from "@test-utils";

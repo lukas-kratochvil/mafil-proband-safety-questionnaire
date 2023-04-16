@@ -1,8 +1,8 @@
 import axiosConfig from "@app/axios-config";
-import { devicesDev, projectsDev } from "@app/data/form_data";
 import { dummyVisits } from "@app/data/visit_data";
 import { AnswerOption, FormPropType } from "@app/model/form";
 import { IVisit, IVisitIncludingQuestions, VisitStateDEV } from "@app/model/visit";
+import { devicesDev, projectsDev } from "@app/util/mafildb_API/data.dev";
 import { VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import { fetchQuestion } from "../server_API/fetch";
 import { IDeviceDTO, IProjectDTO, VisitState } from "./dto";
