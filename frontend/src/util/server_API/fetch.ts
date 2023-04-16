@@ -1,5 +1,4 @@
 import axiosConfig from "@app/axios-config";
-import { OperatorDev } from "@app/hooks/auth/auth-dev";
 import i18n, { LanguageCode } from "@app/i18n";
 import { IOperatorAuthorization } from "@app/model/auth";
 import { AnswerOption, FormPropType } from "@app/model/form";
@@ -12,6 +11,7 @@ import {
   IHandednessDTO,
   IHTMLCardDTO,
   INativeLanguageDTO,
+  IOperatorDTO,
   IQuestionDTO,
   ISendVisitFormFromWaitingRoomForApprovalInput,
   IWaitingRoomTableVisitFormDTO,
@@ -30,6 +30,7 @@ import {
   GET_GENDERS,
   GET_HANDEDNESSES,
   GET_NATIVE_LANGUAGES,
+  GET_OPERATOR,
   GET_PROBAND_CONTACT_CONSENT,
   GET_PROBAND_CONTACT_REQUEST,
   GET_QUESTION,
@@ -49,6 +50,7 @@ import {
   GendersResponse,
   HandednessesResponse,
   NativeLanguagesResponse,
+  OperatorResponse,
   ProbandContactConsentResponse,
   ProbandContactRequestResponse,
   QuestionResponse,
@@ -58,13 +60,19 @@ import {
   WaitingRoomVisitFormResponse,
 } from "./response-types";
 
-export const authenticateOperator = async (loggingOperator: IOperatorAuthorization): Promise<OperatorDev> => {
+export const authenticateOperator = async (loggingOperator: IOperatorAuthorization): Promise<IOperatorDTO> => {
   const variables: IOperatorAuthorization = { ...loggingOperator };
   const { data } = await axiosConfig.serverApi.post<AuthenticateOperatorResponse>("", {
     query: AUTHENTICATE_OPERATOR,
     variables,
   });
   return data.data.authenticateOperator;
+};
+
+export const fetchOperator = async (uco: string): Promise<IOperatorDTO> => {
+  const variables = { uco };
+  const { data } = await axiosConfig.serverApi.post<OperatorResponse>("", { query: GET_OPERATOR, variables });
+  return data.data.operator;
 };
 
 export const fetchGenders = async (): Promise<IGenderDTO[]> => {
@@ -329,6 +337,7 @@ export const sendVisitFormForApproval = async (
 
 export const deleteVisitForm = async (visitFormId: string): Promise<void> => {
   const variables = { id: visitFormId };
+  // TODO: remove the 'await' here?
   await axiosConfig.serverApi.post<null>("", {
     query: DELETE_VISIT_FORM,
     variables,

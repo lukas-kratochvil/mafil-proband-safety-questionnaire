@@ -5,6 +5,7 @@ import {
   IHandednessDTO,
   IHTMLCardDTO,
   INativeLanguageDTO,
+  IOperatorDTO,
   IQuestionDTO,
   IWaitingRoomTableVisitFormDTO,
   IWaitingRoomVisitFormDTO,
@@ -42,16 +43,9 @@ type DataErrorsResponse<TData> = {
   }[];
 };
 
-export type AuthenticateOperatorResponse = DataErrorsResponse<{
-  authenticateOperator: {
-    id: string;
-    name: string;
-    surname: string;
-    uco: string;
-    email: string;
-    role: OperatorRole;
-  };
-}>;
+export type AuthenticateOperatorResponse = DataErrorsResponse<{ authenticateOperator: IOperatorDTO }>;
+
+export type OperatorResponse = DataErrorsResponse<{ operator: IOperatorDTO }>;
 
 export type GendersResponse = DataErrorsResponse<{ genders: IGenderDTO[] }>;
 

@@ -11,6 +11,19 @@ query AuthenticateOperator($name: String!, $surname: String!, $uco: String!, $em
 }
 `;
 
+export const GET_OPERATOR = `
+query GetOperator($uco: String!) {
+  operator(uco: $uco) {
+    id
+    name
+    surname
+    uco
+    email
+    role
+  }
+}
+`;
+
 export const GET_GENDERS = `
 query GetGenders {
   genders {
