@@ -21,7 +21,7 @@ model Operator {
 
   name    String       @db.VarChar(200)
   surname String       @db.VarChar(200)
-  uco     String       @unique @db.VarChar(8)
+  uco     String       @unique
   email   String       @unique
   role    OperatorRole @default(MR)
   isValid Boolean      @default(true)

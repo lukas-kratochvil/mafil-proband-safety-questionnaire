@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Operator" ALTER COLUMN "uco" SET DATA TYPE TEXT;
