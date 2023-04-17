@@ -364,8 +364,7 @@ export const sendVisitFormForApproval = async (
 
 export const deleteVisitForm = async (visitFormId: string): Promise<void> => {
   const variables = { id: visitFormId };
-  // TODO: remove the 'await' here?
-  await axiosConfig.serverApi.post<null>("", {
+  axiosConfig.serverApi.post<null>("", {
     query: DELETE_VISIT_FORM,
     variables,
   });
