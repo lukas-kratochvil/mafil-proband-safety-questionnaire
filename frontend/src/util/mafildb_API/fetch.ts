@@ -35,15 +35,17 @@ export const fetchDevices = async (): Promise<IDeviceDTO[]> => {
   return data.rows;
 };
 
-// TODO: get visits from MAFIL DB – all the visits with assigned visitId are fetched from MAFIL DB
 export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> => {
   if (import.meta.env.DEV) {
-    const [projects, devices] = await Promise.all([fetchProjects(), fetchDevices()]);
+    const [projects, devices, finalizer] = await Promise.all([
+      fetchProjects(),
+      fetchDevices(),
+      fetchOperator(dummyVisits[0].finalizer_uco),
+    ]);
     const visits: IRecentVisitsTableVisit[] = [];
-    dummyVisits.forEach(async (visit) => {
+    dummyVisits.forEach((visit) => {
       const project = projects.find((proj) => proj.id === visit.project_id);
       const device = devices.find((dev) => dev.id === visit.device_id);
-      const finalizer = await fetchOperator(visit.finalizer_uco);
 
       // if project or device don't exist we skip the visit
       if (project !== undefined && device !== undefined) {
@@ -114,7 +116,6 @@ const fetchVisit = async (visitId: string | undefined): Promise<IVisitDTO | neve
   return data.rows[0];
 };
 
-// TODO: get visit from MAFILDB DB
 export const fetchDuplicatedVisit = async (
   visitId: string | undefined
 ): Promise<IDuplicatedVisitIncludingQuestions | undefined> => {

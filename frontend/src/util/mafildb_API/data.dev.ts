@@ -33,20 +33,23 @@ const idCounter = {
   freeId: "1",
 };
 
-const generateVisitId = (): string => {
+export const generateVisitId = (): string => {
   const id = idCounter.freeId;
   idCounter.freeId = `${+id + 1}`;
   return id;
 };
 
 const createDummyVisits = (initialVisit: IVisitDTO, state: VisitState, count: number): IVisitDTO[] => {
-  const visits = [];
+  const visits: IVisitDTO[] = [];
 
   for (let i = 0; i < count; i++) {
     visits.push({
       ...initialVisit,
       visit_name: generateVisitId(),
       state,
+      is_phantom: state === VisitState.PHANTOM_DONE,
+      project_id: projectsDev[i % 2].id,
+      device_id: devicesDev[i % 2].id,
     });
   }
 
@@ -59,8 +62,8 @@ const initialDummyVisit: IVisitDTO = {
   state: VisitState.APPROVED,
   is_phantom: false,
   proband_language_code: "cs",
-  project_id: "",
-  device_id: "",
+  project_id: projectsDev[0].id,
+  device_id: devicesDev[0].id,
   measurement_date: new Date(),
   finalizer_uco: "123456",
   name: "Karel",

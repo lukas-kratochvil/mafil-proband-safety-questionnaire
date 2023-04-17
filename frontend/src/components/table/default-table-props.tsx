@@ -11,7 +11,7 @@ export const defaultTableProps = <T extends Record<string, any>>(
   isError: boolean
 ): MaterialReactTableProps<T> => ({
   columns,
-  data: data ?? [],
+  data: data || [],
   enableDensityToggle: false,
   enableEditing: false,
   enableColumnFilters: false,
