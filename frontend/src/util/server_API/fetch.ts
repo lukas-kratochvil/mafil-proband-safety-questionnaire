@@ -10,6 +10,7 @@ import {
   IGenderDTO,
   IHandednessDTO,
   IHTMLCardDTO,
+  IMarkVisitFormAsSentToMafilDbInput,
   INativeLanguageDTO,
   IOperatorDTO,
   IQuestionDTO,
@@ -360,6 +361,19 @@ export const sendVisitFormForApproval = async (
     variables,
   });
   return data.data.updateVisitForm.id;
+};
+
+export const markVisitFormAsSentToMafilDb = async (visitFormId: string): Promise<void> => {
+  const variables: IMarkVisitFormAsSentToMafilDbInput = {
+    updateVisitFormInput: {
+      id: visitFormId,
+      state: "SENT_TO_MAFILDB",
+    },
+  };
+  axiosConfig.serverApi.post<UpdateVisitFormResponse>("", {
+    query: UPDATE_VISIT_FORM,
+    variables,
+  });
 };
 
 export const deleteVisitForm = async (visitFormId: string): Promise<void> => {

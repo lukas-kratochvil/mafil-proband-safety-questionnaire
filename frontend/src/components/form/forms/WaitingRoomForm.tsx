@@ -14,7 +14,11 @@ import { RoutingPaths } from "@app/routing-paths";
 import { VisitState } from "@app/util/mafildb_API/dto";
 import { createVisit } from "@app/util/mafildb_API/fetch";
 import { QuestionPartNumber } from "@app/util/server_API/dto";
-import { fetchWaitingRoomVisitForm, sendVisitFormForApproval } from "@app/util/server_API/fetch";
+import {
+  fetchWaitingRoomVisitForm,
+  markVisitFormAsSentToMafilDb,
+  sendVisitFormForApproval,
+} from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormFinalizeDialog } from "../components/FormFinalizeDialog";
@@ -90,6 +94,7 @@ export const WaitingRoomForm = () => {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
           onClick: async (data: FormPropType) => {
             await createVisit(data, VisitState.DISAPPROVED, operator?.uco, new Date(), visitForm?.probandLanguageCode);
+            await markVisitFormAsSentToMafilDb(visitForm?.id || "");
             navigate(RoutingPaths.WAITING_ROOM);
           },
           showErrorColor: true,
@@ -120,6 +125,7 @@ export const WaitingRoomForm = () => {
                 new Date(),
                 visitForm?.probandLanguageCode
               );
+              await markVisitFormAsSentToMafilDb(visitForm?.id || "");
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
             }
           },
@@ -155,6 +161,7 @@ export const WaitingRoomForm = () => {
     setValue,
     trigger,
     valuesBeforeEditing,
+    visitForm?.id,
     visitForm?.probandLanguageCode,
   ]);
 

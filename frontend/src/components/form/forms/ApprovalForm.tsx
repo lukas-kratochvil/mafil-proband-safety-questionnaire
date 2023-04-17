@@ -14,7 +14,7 @@ import { RoutingPaths } from "@app/routing-paths";
 import { VisitState } from "@app/util/mafildb_API/dto";
 import { createVisit } from "@app/util/mafildb_API/fetch";
 import { QuestionPartNumber } from "@app/util/server_API/dto";
-import { fetchApprovalRoomVisitForm } from "@app/util/server_API/fetch";
+import { fetchApprovalRoomVisitForm, markVisitFormAsSentToMafilDb } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormContainer } from "./FormContainer";
@@ -91,6 +91,7 @@ export const ApprovalForm = () => {
                 new Date(),
                 visitForm?.probandLanguageCode
               );
+              await markVisitFormAsSentToMafilDb(visitForm?.id || "");
               navigate(RoutingPaths.APPROVAL_ROOM);
             },
             showErrorColor: true,
@@ -117,6 +118,7 @@ export const ApprovalForm = () => {
                 new Date(),
                 visitForm?.probandLanguageCode
               );
+              await markVisitFormAsSentToMafilDb(visitForm?.id || "");
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
             },
           },
@@ -159,6 +161,7 @@ export const ApprovalForm = () => {
     setValue,
     trigger,
     valuesBeforeEditing,
+    visitForm?.id,
     visitForm?.probandLanguageCode,
   ]);
 
