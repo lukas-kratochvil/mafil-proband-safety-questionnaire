@@ -90,7 +90,7 @@ export const WaitingRoomForm = () => {
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
           onClick: async (data: FormPropType) => {
-            createVisit(data, VisitState.DISAPPROVED, operator?.uco, new Date(), visitForm?.probandLanguageCode);
+            await createVisit(data, VisitState.DISAPPROVED, operator?.uco, new Date(), visitForm?.probandLanguageCode);
             navigate(RoutingPaths.WAITING_ROOM);
           },
           showErrorColor: true,
@@ -114,8 +114,8 @@ export const WaitingRoomForm = () => {
               // open warning dialog that the visit form has to be approved by an operator with higher permissions
               setOpenFinalizeDialog(true);
             } else {
-              createVisit(data, VisitState.APPROVED, operator?.uco, new Date(), visitForm?.probandLanguageCode);
-              navigate(`${RoutingPaths.RECENT_VISITS}/visit/${id}`);
+              const visitId = await createVisit(data, VisitState.APPROVED, operator?.uco, new Date(), visitForm?.probandLanguageCode);
+              navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
             }
           },
         },

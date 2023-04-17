@@ -67,7 +67,7 @@ export const DuplicationForm = () => {
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.finalize",
           onClick: async (data: FormPropType) => {
-            const visitId = createVisit(data, VisitState.PHANTOM_DONE, operator?.uco, new Date());
+            const visitId = await createVisit(data, VisitState.PHANTOM_DONE, operator?.uco, new Date());
             navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
           },
         },
@@ -127,7 +127,7 @@ export const DuplicationForm = () => {
               // open warning dialog that the visit form has to be approved by an operator with higher permissions
               setOpenFinalizeDialog(true);
             } else {
-              const visitId = createVisit(
+              const visitId = await createVisit(
                 data,
                 VisitState.APPROVED,
                 operator?.uco,
