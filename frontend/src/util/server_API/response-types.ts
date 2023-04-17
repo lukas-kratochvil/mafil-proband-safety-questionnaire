@@ -9,7 +9,6 @@ import {
   IQuestionDTO,
   IWaitingRoomTableVisitFormDTO,
   IWaitingRoomVisitFormDTO,
-  OperatorRole,
 } from "./dto";
 
 /**

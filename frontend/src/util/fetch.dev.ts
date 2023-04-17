@@ -1,6 +1,6 @@
 import { IQuestionDataDev, questions } from "@app/data/question_data";
-import { dummyVisits } from "@app/data/visit_data";
-import { VisitStateDEV } from "@app/model/visit";
+import { dummyVisits } from "./mafildb_API/data.dev";
+import { VisitState } from "./mafildb_API/dto";
 
 /**
  * TODO: functions in this file must be deleted!
@@ -8,8 +8,8 @@ import { VisitStateDEV } from "@app/model/visit";
 
 export const getDummyVisitCurrentQuestions = (): IQuestionDataDev[] => questions;
 
-export const updateDummyVisitState = (visitId: string | undefined, newState: VisitStateDEV): void => {
-  const visit = dummyVisits.find((visit) => visit.id === visitId);
+export const updateDummyVisitState = (visitId: string | undefined, newState: VisitState): void => {
+  const visit = dummyVisits.find((dummyVisit) => dummyVisit.visit_name === visitId);
 
   if (visit !== undefined) {
     visit.state = newState;

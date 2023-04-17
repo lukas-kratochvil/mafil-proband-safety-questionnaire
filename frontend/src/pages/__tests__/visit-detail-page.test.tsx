@@ -1,44 +1,20 @@
 import userEvent from "@testing-library/user-event";
-import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import i18n from "@app/i18n";
-import { IVisit, VisitStateDEV, VisualCorrection } from "@app/model/visit";
+import { IVisitDetail } from "@app/model/visit";
 import VisitDetailPage from "@app/pages/VisitDetailPage";
+import { VisitState } from "@app/util/mafildb_API/dto";
 import * as mafildbFetchers from "@app/util/mafildb_API/fetch";
 import { render, screen } from "@test-utils";
 
 //----------------------------------------------------------------------
-// Default visit
+// Default visit detail
 //----------------------------------------------------------------------
 const id = "ID1";
-const defaultVisit: IVisit = {
-  id,
-  createdAt: new Date(),
+const defaultVisit: IVisitDetail = {
   visitId: "VisitId1",
-  state: VisitStateDEV.NEW,
-  name: "Name",
-  surname: "Surname",
-  personalId: "123456",
-  birthdate: new Date(),
-  gender: genders[2],
-  heightCm: 179,
-  weightKg: 81,
-  nativeLanguage: nativeLanguages[2],
-  handedness: handednesses[3],
-  visualCorrection: VisualCorrection.NO,
-  visualCorrectionDioptre: 0,
-  email: "",
-  phone: "",
-  pdf: "",
-  projectInfo: {
-    projectAcronym: "Proj1",
-    projectId: "ProjectId1",
-    deviceName: "Device1",
-    deviceId: "DeviceId1",
-    isPhantom: false,
-    measuredAt: new Date(),
-    disapprovalReason: null,
-  },
-  answers: [],
+  state: VisitState.APPROVED,
+  isPhantom: false,
+  pdfContent: "",
 };
 
 //----------------------------------------------------------------------
@@ -81,9 +57,9 @@ describe("visit detail page", () => {
   });
 
   test("is disapproved", async () => {
-    const disapprovedVisit: IVisit = {
+    const disapprovedVisit: IVisitDetail = {
       ...defaultVisit,
-      state: VisitStateDEV.DISAPPROVED,
+      state: VisitState.DISAPPROVED,
     };
     vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => disapprovedVisit);
     setup();
@@ -97,9 +73,9 @@ describe("visit detail page", () => {
   });
 
   test("is approved", async () => {
-    const approvedVisit: IVisit = {
+    const approvedVisit: IVisitDetail = {
       ...defaultVisit,
-      state: VisitStateDEV.APPROVED,
+      state: VisitState.APPROVED,
     };
     vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => approvedVisit);
     setup();
@@ -118,10 +94,10 @@ describe("visit detail page", () => {
     expect(backButton).toBeInTheDocument();
   });
 
-  test("is for signature", async () => {
-    const forSignatureVisit: IVisit = {
+  test("is for signature physically", async () => {
+    const forSignatureVisit: IVisitDetail = {
       ...defaultVisit,
-      state: VisitStateDEV.FOR_SIGNATURE,
+      state: VisitState.FOR_SIGNATURE_PHYSICALLY,
     };
     vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => forSignatureVisit);
     setup();
@@ -136,10 +112,28 @@ describe("visit detail page", () => {
     expect(backButton).toBeInTheDocument();
   });
 
-  test("is signed", async () => {
-    const signedVisit: IVisit = {
+  test("is for signature electronically", async () => {
+    const forSignatureVisit: IVisitDetail = {
       ...defaultVisit,
-      state: VisitStateDEV.SIGNED,
+      state: VisitState.FOR_SIGNATURE_ELECTRONICALLY,
+    };
+    vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => forSignatureVisit);
+    setup();
+
+    expect(await screen.findByText(`visitDetailPage.title: ${forSignatureVisit.visitId}`)).toBeDefined();
+    await screen.findByText(/visitDetailPage.infoStripes.waitingForSignatureConfirmation/);
+    const iframe = screen.getByTitle("Visit detail");
+    expect(iframe).toBeInTheDocument();
+    const confirmSignatureButton = await screen.findByText(/visitDetailPage.buttons.confirmSignature/);
+    expect(confirmSignatureButton).toBeInTheDocument();
+    const backButton = await screen.findByText(/common.backButton/);
+    expect(backButton).toBeInTheDocument();
+  });
+
+  test("is signed physically", async () => {
+    const signedVisit: IVisitDetail = {
+      ...defaultVisit,
+      state: VisitState.SIGNED_PHYSICALLY,
     };
     vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => signedVisit);
     setup();
@@ -154,14 +148,29 @@ describe("visit detail page", () => {
     expect(backButton).toBeInTheDocument();
   });
 
-  test("is phantom signed", async () => {
-    const signedPhantomVisit: IVisit = {
+  test("is signed electronically", async () => {
+    const signedVisit: IVisitDetail = {
       ...defaultVisit,
-      state: VisitStateDEV.SIGNED,
-      projectInfo: {
-        ...defaultVisit.projectInfo,
-        isPhantom: true,
-      },
+      state: VisitState.SIGNED_ELECTRONICALLY,
+    };
+    vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => signedVisit);
+    setup();
+
+    expect(await screen.findByText(`visitDetailPage.title: ${signedVisit.visitId}`)).toBeDefined();
+    await screen.findByText(/visitDetailPage.infoStripes.signed/);
+    const iframe = screen.getByTitle("Visit detail");
+    expect(iframe).toBeInTheDocument();
+    const downloadPDFButton = await screen.findByText(/visitDetailPage.buttons.downloadPDF/);
+    expect(downloadPDFButton).toBeInTheDocument();
+    const backButton = await screen.findByText(/common.backButton/);
+    expect(backButton).toBeInTheDocument();
+  });
+
+  test("is phantom done", async () => {
+    const signedPhantomVisit: IVisitDetail = {
+      ...defaultVisit,
+      state: VisitState.PHANTOM_DONE,
+      isPhantom: true,
     };
     vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => signedPhantomVisit);
     setup();
@@ -177,9 +186,9 @@ describe("visit detail page", () => {
   });
 
   test("switches from approved to for-signature state", async () => {
-    const approvedVisit: IVisit = {
+    const approvedVisit: IVisitDetail = {
       ...defaultVisit,
-      state: VisitStateDEV.APPROVED,
+      state: VisitState.APPROVED,
     };
     vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => approvedVisit);
     setup();
@@ -196,9 +205,9 @@ describe("visit detail page", () => {
   });
 
   test("switches from for-signature to signed state", async () => {
-    const forSignatureVisit: IVisit = {
+    const forSignatureVisit: IVisitDetail = {
       ...defaultVisit,
-      state: VisitStateDEV.FOR_SIGNATURE,
+      state: VisitState.FOR_SIGNATURE_PHYSICALLY,
     };
     vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => forSignatureVisit);
     setup();
@@ -212,13 +221,10 @@ describe("visit detail page", () => {
   });
 
   test("switches phantom from for-signature to signed state", async () => {
-    const forSignaturePhantomVisit: IVisit = {
+    const forSignaturePhantomVisit: IVisitDetail = {
       ...defaultVisit,
-      state: VisitStateDEV.FOR_SIGNATURE,
-      projectInfo: {
-        ...defaultVisit.projectInfo,
-        isPhantom: true,
-      },
+      state: VisitState.FOR_SIGNATURE_PHYSICALLY,
+      isPhantom: true,
     };
     vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => forSignaturePhantomVisit);
     setup();

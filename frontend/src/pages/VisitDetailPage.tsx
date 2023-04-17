@@ -11,8 +11,8 @@ import {
 } from "@app/components/informative/ColoredInfoStripe";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n";
-import { IVisit, VisitStateDEV } from "@app/model/visit";
-import { fetchVisitDetail } from "@app/util/mafildb_API/fetch";
+import { VisitState } from "@app/util/mafildb_API/dto";
+import { fetchVisitDetail, updateVisitState } from "@app/util/mafildb_API/fetch";
 import { getBackButtonProps, IButtonProps } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
 
@@ -20,31 +20,31 @@ interface IVisitDetailButtonProps extends IButtonProps {
   disabled?: boolean;
 }
 
-const getColoredInfoStripe = (
-  visitState: VisitStateDEV | undefined,
-  visit: IVisit | undefined
-): IColoredInfoStripeProps | undefined => {
+const getColoredInfoStripe = (visitState: VisitState | undefined): IColoredInfoStripeProps | undefined => {
   switch (visitState) {
-    case VisitStateDEV.APPROVED:
+    case VisitState.APPROVED:
       return {
         textLocalizationKey: "visitDetailPage.infoStripes.signatureChoice",
         color: ColoredInfoStripeColors.BLUE,
       };
-    case VisitStateDEV.DISAPPROVED:
+    case VisitState.DISAPPROVED:
       return {
         textLocalizationKey: "visitDetailPage.infoStripes.disapproved",
         color: ColoredInfoStripeColors.RED,
       };
-    case VisitStateDEV.FOR_SIGNATURE:
+    case VisitState.FOR_SIGNATURE_PHYSICALLY || VisitState.FOR_SIGNATURE_ELECTRONICALLY:
       return {
         textLocalizationKey: "visitDetailPage.infoStripes.waitingForSignatureConfirmation",
         color: ColoredInfoStripeColors.ORANGE,
       };
-    case VisitStateDEV.SIGNED:
+    case VisitState.SIGNED_PHYSICALLY || VisitState.SIGNED_ELECTRONICALLY:
       return {
-        textLocalizationKey: visit?.projectInfo.isPhantom
-          ? "visitDetailPage.infoStripes.completed"
-          : "visitDetailPage.infoStripes.signed",
+        textLocalizationKey: "visitDetailPage.infoStripes.signed",
+        color: ColoredInfoStripeColors.GREEN,
+      };
+    case VisitState.PHANTOM_DONE:
+      return {
+        textLocalizationKey: "visitDetailPage.infoStripes.completed",
         color: ColoredInfoStripeColors.GREEN,
       };
     default:
@@ -52,45 +52,52 @@ const getColoredInfoStripe = (
   }
 };
 
-const getButtons = (
-  visitState: VisitStateDEV | undefined,
-  setVisitState: React.Dispatch<React.SetStateAction<VisitStateDEV | undefined>>
-): IVisitDetailButtonProps[] => {
+const getButtons = (visitId: string | undefined, visitState: VisitState | undefined): IVisitDetailButtonProps[] => {
   switch (visitState) {
-    case VisitStateDEV.APPROVED:
+    case VisitState.APPROVED:
       return [
         {
           titleLocalizationKey: "visitDetailPage.buttons.downloadPDFAndPhysicallySign",
-          onClick: () => {
+          onClick: async () => {
             /**
              * TODO:
              *  - PDF will be generated and stored in DB on the server
              *  - open system download window, so the auth user can choose where to store it (or show the print windows instead?)
              *  - check my Firefox bookmarks for some interesting websites!!!
              */
-            setVisitState(VisitStateDEV.FOR_SIGNATURE);
+            await updateVisitState(visitId, VisitState.FOR_SIGNATURE_PHYSICALLY);
           },
         },
         {
           titleLocalizationKey: "visitDetailPage.buttons.signElectronically",
-          onClick: () => {
+          onClick: async () => {
             // TODO: PDF will be generated and stored in DB on the server
-            setVisitState(VisitStateDEV.FOR_SIGNATURE);
+            await updateVisitState(visitId, VisitState.FOR_SIGNATURE_ELECTRONICALLY);
           },
           disabled: true,
         },
       ];
-    case VisitStateDEV.FOR_SIGNATURE:
+    case VisitState.FOR_SIGNATURE_PHYSICALLY:
       return [
         {
           titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
-          onClick: () => {
+          onClick: async () => {
             // TODO: store the state in DB
-            setVisitState(VisitStateDEV.SIGNED);
+            await updateVisitState(visitId, VisitState.SIGNED_PHYSICALLY);
           },
         },
       ];
-    case VisitStateDEV.SIGNED:
+    case VisitState.FOR_SIGNATURE_ELECTRONICALLY:
+      return [
+        {
+          titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
+          onClick: async () => {
+            // TODO: store the state in DB
+            await updateVisitState(visitId, VisitState.SIGNED_ELECTRONICALLY);
+          },
+        },
+      ];
+    case VisitState.SIGNED_PHYSICALLY || VisitState.SIGNED_ELECTRONICALLY || VisitState.PHANTOM_DONE:
       return [
         {
           titleLocalizationKey: "visitDetailPage.buttons.downloadPDF",
@@ -115,20 +122,15 @@ const VisitDetailPage = () => {
   } = useQuery({ queryKey: ["visit", id], queryFn: () => fetchVisitDetail(id) });
   const navigate = useNavigate();
 
-  const [visitState, setVisitState] = useState<VisitStateDEV>();
   const [coloredInfoStripe, setColoredInfoStripe] = useState<IColoredInfoStripeProps>();
   const [buttons, setButtons] = useState<IVisitDetailButtonProps[]>();
 
   useEffect(() => {
-    if (visit !== undefined && visitState === undefined) {
-      setVisitState(visit.state);
-    }
-
-    setColoredInfoStripe(getColoredInfoStripe(visitState, visit));
-    const stateButtons = getButtons(visitState, setVisitState);
+    setColoredInfoStripe(getColoredInfoStripe(visit?.state));
+    const stateButtons = getButtons(visit?.visitId, visit?.state);
     stateButtons.push(getBackButtonProps(navigate));
     setButtons(stateButtons);
-  }, [navigate, visit, visitState]);
+  }, [navigate, visit]);
 
   if (isError) {
     return (
@@ -163,7 +165,7 @@ const VisitDetailPage = () => {
           {coloredInfoStripe && <ColoredInfoStripe {...coloredInfoStripe} />}
           {/* TODO: set width of <iframe> so that there's not so much space on the sides - depends on the generated PDF width */}
           <iframe
-            src={`${visit?.pdf}#view=fitH`}
+            src={`${visit?.pdfContent}#view=fitH`}
             title="Visit detail"
             height="770px"
             width="100%"

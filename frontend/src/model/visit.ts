@@ -1,26 +1,34 @@
+import { LanguageCode } from "@app/i18n";
+import { IDeviceDTO, IProjectDTO, VisitState } from "@app/util/mafildb_API/dto";
 import {
   IGenderDTO,
   IHandednessDTO,
   INativeLanguageDTO,
+  IOperatorDTO,
   VisitFormAnswerIncludingQuestion,
 } from "../util/server_API/dto";
-import { FormAnswer } from "./form";
+import { AnswerOption } from "./form";
 
-export enum VisitStateDEV {
-  NEW = "Nové",
-  IN_APPROVAL = "Ve schvalování",
-  APPROVED = "Schváleno, nepodepsáno",
-  DISAPPROVED = "Neschváleno",
-  FOR_SIGNATURE = "K podpisu",
-  SIGNED = "Podepsáno",
-  DELETED = "Smazáno",
+export enum VisualCorrection {
+  YES,
+  NO,
 }
 
-export interface IVisit {
-  id: string;
-  createdAt: Date;
+interface IAnswer {
+  questionId: string;
+  answer: AnswerOption;
+  comment: string;
+}
+
+interface IVisit {
+  date: Date;
   visitId: string;
-  state: VisitStateDEV;
+  state: VisitState;
+  isPhantom: boolean;
+  probandLanguageCode: LanguageCode;
+  projectId: string;
+  deviceId: string;
+  measurementDate: Date;
   name: string;
   surname: string;
   personalId: string;
@@ -29,31 +37,24 @@ export interface IVisit {
   weightKg: number;
   gender: IGenderDTO;
   nativeLanguage: INativeLanguageDTO;
-  visualCorrection: VisualCorrection;
   visualCorrectionDioptre: number;
   handedness: IHandednessDTO;
   email: string;
   phone: string;
-  pdf: string;
-  projectInfo: IProjectInfo;
-  answers: FormAnswer[];
+  answers: IAnswer[];
 }
 
-interface IProjectInfo {
-  projectId: string | null;
-  projectAcronym: string | null;
-  deviceId: string | null;
-  deviceName: string | null;
-  isPhantom: boolean;
-  measuredAt: Date | null;
-  disapprovalReason: string | null;
+export interface IRecentVisitsTableVisit
+  extends Omit<IVisit, "projectId" | "deviceId" | "gender" | "nativeLanguage" | "handedness"> {
+  project: IProjectDTO;
+  device: IDeviceDTO;
+  finalizer: IOperatorDTO;
 }
 
-export enum VisualCorrection {
-  YES,
-  NO,
-}
-
-export interface IVisitIncludingQuestions extends Omit<IVisit, "answers"> {
+export interface IDuplicatedVisitIncludingQuestions extends Omit<IVisit, "projectId" | "deviceId" | "answers"> {
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
+}
+
+export interface IVisitDetail extends Pick<IVisit, "visitId" | "state" | "isPhantom"> {
+  pdfContent: string; // Base64 encoded PDF content
 }

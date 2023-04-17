@@ -52,8 +52,8 @@ import {
   ExaminationConsentResponse,
   GenderResponse,
   GendersResponse,
-  HandednessResponse,
   HandednessesResponse,
+  HandednessResponse,
   NativeLanguageResponse,
   NativeLanguagesResponse,
   OperatorResponse,
@@ -99,7 +99,10 @@ export const fetchNativeLanguages = async (): Promise<INativeLanguageDTO[]> => {
 
 export const fetchNativeLanguage = async (code: string): Promise<INativeLanguageDTO> => {
   const variables = { code };
-  const { data } = await axiosConfig.serverApi.post<NativeLanguageResponse>("", { query: GET_NATIVE_LANGUAGE, variables });
+  const { data } = await axiosConfig.serverApi.post<NativeLanguageResponse>("", {
+    query: GET_NATIVE_LANGUAGE,
+    variables,
+  });
   return data.data.nativeLanguage;
 };
 

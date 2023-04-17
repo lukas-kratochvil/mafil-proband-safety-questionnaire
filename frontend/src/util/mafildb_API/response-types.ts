@@ -1,4 +1,4 @@
-import { IDeviceDTO, IProjectDTO } from "./dto";
+import { IDeviceDTO, IProjectDTO, IVisitDTO, IVisitPdfDTO } from "./dto";
 
 export type ProjectsResponse = {
   rows: IProjectDTO[];
@@ -14,4 +14,12 @@ export type CreateVisitResponse = {
 
 export type UpdateVisitStateResponse = {
   visit_name: string;
+};
+
+export type VisitsResponse = {
+  rows: IVisitDTO[];
+};
+
+export type VisitPdfResponse = {
+  file: IVisitPdfDTO;
 };

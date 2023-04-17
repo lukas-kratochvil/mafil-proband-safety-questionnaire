@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { RecentVisitsTableActionButtons } from "@app/components/table/actions/RecentVisitsTableActionButtons";
 import { defaultTableProps } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n";
-import { IVisit } from "@app/model/visit";
+import { IRecentVisitsTableVisit } from "@app/model/visit";
 import { fetchRecentVisits } from "@app/util/mafildb_API/fetch";
 import { PageContainer } from "./PageContainer";
 
@@ -21,7 +21,7 @@ const RecentVisitsTablePage = () => {
     isError,
   } = useQuery({ queryKey: ["recentVisitsTablePage"], queryFn: fetchRecentVisits });
 
-  const columns = useMemo<MRTColumnDef<IVisit>[]>(
+  const columns = useMemo<MRTColumnDef<IRecentVisitsTableVisit>[]>(
     () => [
       {
         accessorKey: "visitId",
@@ -35,18 +35,17 @@ const RecentVisitsTablePage = () => {
         minSize: 150,
       },
       {
-        accessorKey: "projectInfo.projectAcronym",
+        accessorKey: "project.acronym",
         header: t("header.project"),
         minSize: 300,
       },
       {
-        accessorKey: "projectInfo.deviceName",
+        accessorKey: "device.name",
         header: t("header.device"),
         maxSize: 0,
       },
       {
-        // TODO: change 'visit.createdAt' for some other attribute - firstly, we need to solve which attribute should be created for this purpose
-        accessorFn: (visit) => format(visit.createdAt, processedDateFormat),
+        accessorFn: (visit) => format(visit.date, processedDateFormat),
         id: "processedDate",
         header: t("header.processedDate"),
         sortingFn: (rowA, rowB, columnId) =>
@@ -57,13 +56,13 @@ const RecentVisitsTablePage = () => {
         maxSize: 0,
       },
       {
-        accessorFn: () => "MUNI_operator",
+        accessorFn: (visit) => `${visit.finalizer.surname}, ${visit.finalizer.name}`,
         id: "processUser",
         header: t("header.operatorProcessed"),
         maxSize: 0,
       },
       {
-        accessorFn: (visit) => (visit.projectInfo.isPhantom ? "Dokončeno" : visit.state),
+        accessorFn: (visit) => (visit.isPhantom ? "Dokončeno" : visit.state),
         id: "state",
         header: t("header.state"),
         maxSize: 0,
@@ -73,7 +72,9 @@ const RecentVisitsTablePage = () => {
         header: t("header.actions"),
         columnDefType: "display", // turns off data column features like sorting, filtering, etc.
         // eslint-disable-next-line react/no-unstable-nested-components
-        Cell: ({ row }: { row: MRTRow<IVisit> }) => <RecentVisitsTableActionButtons visit={row.original} />,
+        Cell: ({ row }: { row: MRTRow<IRecentVisitsTableVisit> }) => (
+          <RecentVisitsTableActionButtons visit={row.original} />
+        ),
         minSize: 300,
       },
     ],

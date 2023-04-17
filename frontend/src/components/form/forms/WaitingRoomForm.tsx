@@ -10,9 +10,9 @@ import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesFromWaitingRoomVisitForm } from "@app/components/form/util/loaders";
 import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { FormPropType, FormQac } from "@app/model/form";
-import { VisitStateDEV } from "@app/model/visit";
 import { RoutingPaths } from "@app/routing-paths";
 import { updateDummyVisitState } from "@app/util/fetch.dev";
+import { VisitState } from "@app/util/mafildb_API/dto";
 import { QuestionPartNumber } from "@app/util/server_API/dto";
 import { fetchWaitingRoomVisitForm, sendVisitFormForApproval } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
@@ -90,7 +90,7 @@ export const WaitingRoomForm = () => {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
           onClick: async (data: FormPropType) => {
             // TODO: create DISAPPROVED visit in the MAFILDB
-            updateDummyVisitState(id, VisitStateDEV.DISAPPROVED);
+            updateDummyVisitState(id, VisitState.DISAPPROVED);
             navigate(RoutingPaths.WAITING_ROOM);
           },
           showErrorColor: true,
@@ -115,7 +115,7 @@ export const WaitingRoomForm = () => {
               setOpenFinalizeDialog(true);
             } else {
               // TODO: create APPROVED visit in the MAFILDB
-              updateDummyVisitState(id, VisitStateDEV.APPROVED);
+              updateDummyVisitState(id, VisitState.APPROVED);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${id}`);
             }
           },

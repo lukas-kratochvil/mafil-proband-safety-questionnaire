@@ -8,14 +8,12 @@ import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo
 import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo";
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesVisitDuplication } from "@app/components/form/util/loaders";
-import { createNewVisitFromFormData } from "@app/components/form/util/utils.dev";
-import { dummyVisits } from "@app/data/visit_data";
 import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { FormPropType, FormQac } from "@app/model/form";
-import { VisitStateDEV } from "@app/model/visit";
 import { RoutingPaths } from "@app/routing-paths";
 import { updateDummyVisitState } from "@app/util/fetch.dev";
-import { fetchVisitForDuplication } from "@app/util/mafildb_API/fetch";
+import { VisitState } from "@app/util/mafildb_API/dto";
+import { createVisit, fetchDuplicatedVisit } from "@app/util/mafildb_API/fetch";
 import { QuestionPartNumber } from "@app/util/server_API/dto";
 import { createDuplicatedVisitFormForApproval } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
@@ -32,7 +30,7 @@ export const DuplicationForm = () => {
     isError,
   } = useQuery({
     queryKey: ["visit", id],
-    queryFn: () => fetchVisitForDuplication(id),
+    queryFn: () => fetchDuplicatedVisit(id),
     staleTime: Infinity,
     cacheTime: Infinity,
   });
@@ -59,7 +57,7 @@ export const DuplicationForm = () => {
         setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
       });
 
-      setIsPhantom(visit.projectInfo.isPhantom);
+      setIsPhantom(visit.isPhantom);
     }
   }, [visit, setValue]);
 
@@ -69,10 +67,8 @@ export const DuplicationForm = () => {
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.finalize",
           onClick: async (data: FormPropType) => {
-            // TODO: create PHANTOM_DONE visit in the MAFILDB
-            const newPhantomVisit = createNewVisitFromFormData(data, VisitStateDEV.SIGNED);
-            dummyVisits.push(newPhantomVisit);
-            navigate(`${RoutingPaths.RECENT_VISITS}/visit/${newPhantomVisit.id}`);
+            const visitId = createVisit(data, VisitState.PHANTOM_DONE, operator?.uco, new Date());
+            navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
           },
         },
         buttonsProps: [getBackButtonProps(navigate, "form.common.buttons.cancel")],
@@ -107,7 +103,7 @@ export const DuplicationForm = () => {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
           onClick: async (data: FormPropType) => {
             // TODO: create DISAPPROVED visit in the MAFILDB
-            updateDummyVisitState(id, VisitStateDEV.DISAPPROVED);
+            updateDummyVisitState(id, VisitState.DISAPPROVED);
             navigate(RoutingPaths.RECENT_VISITS);
           },
           showErrorColor: true,
@@ -131,10 +127,14 @@ export const DuplicationForm = () => {
               // open warning dialog that the visit form has to be approved by an operator with higher permissions
               setOpenFinalizeDialog(true);
             } else {
-              // TODO: create APPROVED visit in the MAFILDB
-              const approvedVisit = createNewVisitFromFormData(data, VisitStateDEV.APPROVED);
-              dummyVisits.push(approvedVisit);
-              navigate(`${RoutingPaths.RECENT_VISITS}/visit/${approvedVisit.id}`);
+              const visitId = createVisit(
+                data,
+                VisitState.APPROVED,
+                operator?.uco,
+                new Date(),
+                visit?.probandLanguageCode
+              );
+              navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
             }
           },
         },
@@ -160,7 +160,19 @@ export const DuplicationForm = () => {
         ],
       });
     }
-  }, [getValues, id, isDisapproved, isEditing, isPhantom, navigate, operator, setValue, trigger, valuesBeforeEditing]);
+  }, [
+    getValues,
+    id,
+    isDisapproved,
+    isEditing,
+    isPhantom,
+    navigate,
+    operator,
+    setValue,
+    trigger,
+    valuesBeforeEditing,
+    visit?.probandLanguageCode,
+  ]);
 
   const createVisitFormInApprovalRoom = async (data: FormPropType) => {
     createDuplicatedVisitFormForApproval(data, operator?.id);

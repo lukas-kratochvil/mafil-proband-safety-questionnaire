@@ -2,10 +2,10 @@ import { format } from "date-fns";
 import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import i18n from "@app/i18n";
 import { AnswerOption } from "@app/model/form";
-import { IVisitIncludingQuestions, VisitStateDEV, VisualCorrection } from "@app/model/visit";
+import { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
 import { devicesDev, projectsDev } from "@app/util/mafildb_API/data.dev";
-import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
+import { IDeviceDTO, IProjectDTO, VisitState } from "@app/util/mafildb_API/dto";
 import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IOperatorDTO, IQuestionDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor } from "@test-utils";
 
@@ -102,11 +102,13 @@ const questionData: IQuestionDTO[] = [
 const id = "ID1";
 const comment = "Comment";
 
-const visit: IVisitIncludingQuestions = {
-  id,
-  createdAt: new Date(),
+const visit: IDuplicatedVisitIncludingQuestions = {
+  date: new Date(),
   visitId: "VisitId1",
-  state: VisitStateDEV.SIGNED,
+  isPhantom: false,
+  measurementDate: new Date(),
+  probandLanguageCode: "en",
+  state: VisitState.SIGNED_PHYSICALLY,
   name: "John",
   surname: "Wick",
   personalId: "0123456789",
@@ -116,20 +118,9 @@ const visit: IVisitIncludingQuestions = {
   weightKg: 75,
   nativeLanguage: nativeLanguages[0],
   handedness: handednesses[0],
-  visualCorrection: VisualCorrection.NO,
   visualCorrectionDioptre: 0,
   email: "",
   phone: "",
-  pdf: "",
-  projectInfo: {
-    projectAcronym: "Proj1",
-    projectId: "projectId1",
-    deviceName: "device1",
-    deviceId: "deviceId1",
-    isPhantom: false,
-    measuredAt: new Date(),
-    disapprovalReason: null,
-  },
   answersIncludingQuestions: questionData.map((question, index) => ({
     ...question,
     questionId: question.id,
@@ -201,7 +192,7 @@ vi.mock("@app/util/mafildb_API/fetch", async () => ({
   ...((await vi.importActual("@app/util/mafildb_API/fetch")) as Record<string, unknown>),
   fetchProjects: async (): Promise<IProjectDTO[]> => projectsDev,
   fetchDevices: async (): Promise<IDeviceDTO[]> => devicesDev,
-  fetchVisitForDuplication: async (): Promise<IVisitIncludingQuestions> => visit,
+  fetchVisitForDuplication: async (): Promise<IDuplicatedVisitIncludingQuestions> => visit,
 }));
 
 //----------------------------------------------------------------------

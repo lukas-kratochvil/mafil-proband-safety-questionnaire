@@ -1,6 +1,7 @@
 import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import { AnswerOption } from "@app/model/form";
-import { IVisitIncludingQuestions, VisitStateDEV, VisualCorrection } from "@app/model/visit";
+import { IDuplicatedVisitIncludingQuestions, VisualCorrection } from "@app/model/visit";
+import { VisitState } from "@app/util/mafildb_API/dto";
 import {
   IApprovalRoomVisitFormIncludingQuestionsDTO,
   IWaitingRoomVisitFormIncludingQuestionsDTO,
@@ -30,9 +31,10 @@ const waitingRoomVisitForm: IWaitingRoomVisitFormIncludingQuestionsDTO = {
   phone: "123456789",
   answersIncludingQuestions: [
     {
+      questionId: "1",
+      updatedAt: new Date(),
       answer: AnswerOption.NO,
       comment: "",
-      questionId: "1",
       partNumber: 1,
       mustBeApproved: false,
       hiddenByGenders: [],
@@ -56,12 +58,13 @@ const approvalRoomVisitForm: IApprovalRoomVisitFormIncludingQuestionsDTO = {
   },
 };
 
-const visit: IVisitIncludingQuestions = {
-  id: "1",
-  createdAt: new Date(),
+const visit: IDuplicatedVisitIncludingQuestions = {
   visitId: "1",
-  pdf: "pdf",
-  state: VisitStateDEV.APPROVED,
+  date: new Date(),
+  isPhantom: false,
+  state: VisitState.APPROVED,
+  measurementDate: new Date(),
+  probandLanguageCode: "cs",
   name: "Name",
   surname: "Surname",
   personalId: "000000",
@@ -70,23 +73,14 @@ const visit: IVisitIncludingQuestions = {
   nativeLanguage: nativeLanguages[2],
   heightCm: 180,
   weightKg: 80,
-  visualCorrection: VisualCorrection.YES,
   visualCorrectionDioptre: 1,
   handedness: handednesses[3],
   email: "name.surname@email.com",
   phone: "123456789",
-  projectInfo: {
-    projectAcronym: "Proj1",
-    projectId: "1",
-    deviceName: "Device",
-    deviceId: "1",
-    isPhantom: true,
-    measuredAt: new Date(),
-    disapprovalReason: null,
-  },
   answersIncludingQuestions: [
     {
       questionId: "1",
+      updatedAt: new Date(),
       partNumber: QuestionPartNumber.ONE,
       mustBeApproved: false,
       answer: AnswerOption.NO,
@@ -97,12 +91,13 @@ const visit: IVisitIncludingQuestions = {
   ],
 };
 
-const visitNotCompleted: IVisitIncludingQuestions = {
-  id: "1",
-  createdAt: new Date(),
+const visitNotCompleted: IDuplicatedVisitIncludingQuestions = {
   visitId: "1",
-  pdf: "pdf",
-  state: VisitStateDEV.APPROVED,
+  date: new Date(),
+  isPhantom: false,
+  state: VisitState.APPROVED,
+  probandLanguageCode: "cs",
+  measurementDate: new Date(),
   name: "Name",
   surname: "Surname",
   personalId: "000000",
@@ -111,23 +106,14 @@ const visitNotCompleted: IVisitIncludingQuestions = {
   nativeLanguage: nativeLanguages[2],
   heightCm: 180,
   weightKg: 80,
-  visualCorrection: VisualCorrection.NO,
   visualCorrectionDioptre: 0,
   handedness: handednesses[3],
   email: "",
   phone: "",
-  projectInfo: {
-    projectAcronym: "",
-    projectId: "",
-    deviceName: "",
-    deviceId: "",
-    isPhantom: true,
-    measuredAt: null,
-    disapprovalReason: null,
-  },
   answersIncludingQuestions: [
     {
       questionId: "1",
+      updatedAt: new Date(),
       partNumber: QuestionPartNumber.ONE,
       mustBeApproved: false,
       answer: AnswerOption.NO,
@@ -247,7 +233,7 @@ describe("form loaders", () => {
 
       expect(formDefaultValuesVisitDuplication.project).toBeNull();
       expect(formDefaultValuesVisitDuplication.device).toBeNull();
-      expect(formDefaultValuesVisitDuplication.measuredAt).toEqual(visit.projectInfo.measuredAt);
+      expect(formDefaultValuesVisitDuplication.measuredAt).toEqual(visit.measurementDate);
       expect(formDefaultValuesVisitDuplication.name).toEqual(visit.name);
       expect(formDefaultValuesVisitDuplication.surname).toEqual(visit.surname);
       expect(formDefaultValuesVisitDuplication.personalId).toEqual(visit.personalId);
@@ -257,7 +243,9 @@ describe("form loaders", () => {
       expect(formDefaultValuesVisitDuplication.heightCm).toEqual(visit.heightCm);
       expect(formDefaultValuesVisitDuplication.weightKg).toEqual(visit.weightKg);
       expect(formDefaultValuesVisitDuplication.handedness?.id).toEqual(visit.handedness.id);
-      expect(formDefaultValuesVisitDuplication.visualCorrection?.value).toEqual(visit.visualCorrection);
+      expect(formDefaultValuesVisitDuplication.visualCorrection?.value).toEqual(
+        visit.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
+      );
       expect(formDefaultValuesVisitDuplication.visualCorrectionDioptre).toEqual(visit.visualCorrectionDioptre);
       expect(formDefaultValuesVisitDuplication.email).toEqual(visit.email);
       expect(formDefaultValuesVisitDuplication.phone).toEqual(visit.phone);
@@ -288,7 +276,9 @@ describe("form loaders", () => {
       expect(formDefaultValuesVisitDuplication.heightCm).toEqual(visitNotCompleted.heightCm);
       expect(formDefaultValuesVisitDuplication.weightKg).toEqual(visitNotCompleted.weightKg);
       expect(formDefaultValuesVisitDuplication.handedness?.id).toEqual(visitNotCompleted.handedness.id);
-      expect(formDefaultValuesVisitDuplication.visualCorrection?.value).toEqual(visitNotCompleted.visualCorrection);
+      expect(formDefaultValuesVisitDuplication.visualCorrection?.value).toEqual(
+        visitNotCompleted.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
+      );
       expect(formDefaultValuesVisitDuplication.visualCorrectionDioptre).toEqual(
         visitNotCompleted.visualCorrectionDioptre
       );
