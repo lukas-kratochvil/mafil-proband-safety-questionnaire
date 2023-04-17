@@ -99,7 +99,7 @@ export type QuestionHiddenByGendersWithoutId = Omit<IQuestionDTO, "id">;
 export type VisitFormAnswerIncludingQuestion = IOperatorAnswerDTO & QuestionHiddenByGendersWithoutId;
 
 export interface IWaitingRoomVisitFormIncludingQuestions extends IWaitingRoomTableVisitFormDTO {
-  probandLanguageCode: LanguageCode,
+  probandLanguageCode: LanguageCode;
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
 }
 

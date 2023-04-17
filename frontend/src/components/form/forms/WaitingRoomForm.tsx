@@ -11,8 +11,8 @@ import { loadFormDefaultValuesFromWaitingRoomVisitForm } from "@app/components/f
 import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { FormPropType, FormQac } from "@app/model/form";
 import { RoutingPaths } from "@app/routing-paths";
-import { updateDummyVisitState } from "@app/util/fetch.dev";
 import { VisitState } from "@app/util/mafildb_API/dto";
+import { createVisit } from "@app/util/mafildb_API/fetch";
 import { QuestionPartNumber } from "@app/util/server_API/dto";
 import { fetchWaitingRoomVisitForm, sendVisitFormForApproval } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
@@ -20,7 +20,6 @@ import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormFinalizeDialog } from "../components/FormFinalizeDialog";
 import { getModifiedFieldsOnly, isVisitFormForApproval } from "../util/utils";
 import { FormContainer } from "./FormContainer";
-import { createVisit } from "@app/util/mafildb_API/fetch";
 
 export const WaitingRoomForm = () => {
   const { id } = useParams();
@@ -114,7 +113,13 @@ export const WaitingRoomForm = () => {
               // open warning dialog that the visit form has to be approved by an operator with higher permissions
               setOpenFinalizeDialog(true);
             } else {
-              const visitId = await createVisit(data, VisitState.APPROVED, operator?.uco, new Date(), visitForm?.probandLanguageCode);
+              const visitId = await createVisit(
+                data,
+                VisitState.APPROVED,
+                operator?.uco,
+                new Date(),
+                visitForm?.probandLanguageCode
+              );
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
             }
           },
@@ -141,7 +146,17 @@ export const WaitingRoomForm = () => {
         ],
       });
     }
-  }, [getValues, id, isDisapproved, isEditing, navigate, operator, setValue, trigger, valuesBeforeEditing]);
+  }, [
+    getValues,
+    isDisapproved,
+    isEditing,
+    navigate,
+    operator,
+    setValue,
+    trigger,
+    valuesBeforeEditing,
+    visitForm?.probandLanguageCode,
+  ]);
 
   const moveVisitFormToApprovalRoom = async (data: FormPropType) => {
     const modifiedFields: Partial<FormPropType> = {

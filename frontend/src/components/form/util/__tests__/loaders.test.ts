@@ -17,6 +17,7 @@ import {
 
 const waitingRoomVisitForm: IWaitingRoomVisitFormIncludingQuestions = {
   id: "123",
+  probandLanguageCode: "cs",
   name: "Name",
   surname: "Surname",
   personalId: "000000",
