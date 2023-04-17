@@ -11,7 +11,6 @@ import { loadFormDefaultValuesVisitDuplication } from "@app/components/form/util
 import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { FormPropType, FormQac } from "@app/model/form";
 import { RoutingPaths } from "@app/routing-paths";
-import { updateDummyVisitState } from "@app/util/fetch.dev";
 import { VisitState } from "@app/util/mafildb_API/dto";
 import { createVisit, fetchDuplicatedVisit } from "@app/util/mafildb_API/fetch";
 import { QuestionPartNumber } from "@app/util/server_API/dto";
@@ -102,8 +101,7 @@ export const DuplicationForm = () => {
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
           onClick: async (data: FormPropType) => {
-            // TODO: create DISAPPROVED visit in the MAFILDB
-            updateDummyVisitState(id, VisitState.DISAPPROVED);
+            await createVisit(data, VisitState.DISAPPROVED, operator?.uco, new Date(), visit?.probandLanguageCode);
             navigate(RoutingPaths.RECENT_VISITS);
           },
           showErrorColor: true,
@@ -162,7 +160,6 @@ export const DuplicationForm = () => {
     }
   }, [
     getValues,
-    id,
     isDisapproved,
     isEditing,
     isPhantom,
