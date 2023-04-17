@@ -71,7 +71,6 @@ const getButtons = (visitId: string | undefined, visitState: VisitState | undefi
         {
           titleLocalizationKey: "visitDetailPage.buttons.signElectronically",
           onClick: async () => {
-            // TODO: PDF will be generated and stored in DB on the server
             await updateVisitState(visitId, VisitState.FOR_SIGNATURE_ELECTRONICALLY);
           },
           disabled: true,
@@ -82,7 +81,6 @@ const getButtons = (visitId: string | undefined, visitState: VisitState | undefi
         {
           titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
           onClick: async () => {
-            // TODO: store the state in DB
             await updateVisitState(visitId, VisitState.SIGNED_PHYSICALLY);
           },
         },
@@ -92,7 +90,6 @@ const getButtons = (visitId: string | undefined, visitState: VisitState | undefi
         {
           titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
           onClick: async () => {
-            // TODO: store the state in DB
             await updateVisitState(visitId, VisitState.SIGNED_ELECTRONICALLY);
           },
         },

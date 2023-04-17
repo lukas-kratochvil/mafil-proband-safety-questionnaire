@@ -1,8 +1,8 @@
 import axiosConfig from "@app/axios-config";
 import { LanguageCode } from "@app/i18n";
-import { FormPropType } from "@app/model/form";
+import { AnswerOption, FormPropType } from "@app/model/form";
 import { IDuplicatedVisitIncludingQuestions, IRecentVisitsTableVisit, IVisitDetail } from "@app/model/visit";
-import { devicesDev, dummyVisits, projectsDev } from "@app/util/mafildb_API/data.dev";
+import { devicesDev, dummyVisits, generateVisitId, projectsDev } from "@app/util/mafildb_API/data.dev";
 import { VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import { fetchGender, fetchHandedness, fetchNativeLanguage, fetchOperator, fetchQuestion } from "../server_API/fetch";
 import { IDeviceDTO, IProjectDTO, IVisitDTO, IVisitPdfDTO, VisitState } from "./dto";
@@ -237,8 +237,34 @@ export const createVisit = async (
   }
 
   if (import.meta.env.DEV) {
-    // TODO
-    dummyVisits.push();
+    dummyVisits.push({
+      ...visitFormData,
+      state,
+      visit_name: generateVisitId(),
+      date: new Date(),
+      is_phantom: state === VisitState.PHANTOM_DONE,
+      proband_language_code: probandLanguageCode || "cs",
+      finalizer_uco: finalizerUco || "",
+      measurement_date: visitFormData.measuredAt || new Date(),
+      project_id: visitFormData.project?.id || "",
+      device_id: visitFormData.device?.id || "",
+      personal_id: visitFormData.personalId,
+      birthdate: visitFormData.birthdate ?? new Date(),
+      gender_code: visitFormData.gender?.code || "",
+      native_language_code: visitFormData.nativeLanguage?.code || "",
+      height_cm: typeof visitFormData.heightCm === "string" ? +visitFormData.heightCm : visitFormData.heightCm,
+      weight_kg: typeof visitFormData.weightKg === "string" ? +visitFormData.weightKg : visitFormData.weightKg,
+      visual_correction_dioptre:
+        typeof visitFormData.visualCorrectionDioptre === "string"
+          ? +visitFormData.visualCorrectionDioptre
+          : visitFormData.visualCorrectionDioptre,
+      handedness_code: visitFormData.handedness?.code || "",
+      answers: visitFormData.answers.map((answer) => ({
+        question_id: answer.questionId,
+        answer: answer.answer ?? AnswerOption.NO,
+        comment: answer.comment,
+      })),
+    });
     return undefined;
   }
 
