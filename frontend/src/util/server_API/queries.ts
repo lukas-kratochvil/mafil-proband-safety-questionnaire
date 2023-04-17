@@ -268,6 +268,9 @@ query GetWaitingRoomVisitForms($state: VisitFormState) {
 export const GET_WAITING_ROOM_VISIT_FORM = `
 query GetWaitingRoomVisitForm($id: UUID!) {
   visitForm(id: $id) {
+    probandLanguage {
+      code
+    }
     name
     surname
     personalId

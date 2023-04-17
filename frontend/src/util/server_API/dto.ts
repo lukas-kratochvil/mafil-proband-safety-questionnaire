@@ -88,6 +88,9 @@ export interface IWaitingRoomTableVisitFormDTO {
 }
 
 export interface IWaitingRoomVisitFormDTO extends IWaitingRoomTableVisitFormDTO {
+  probandLanguage: {
+    code: LanguageCode;
+  };
   answers: IProbandAnswerDTO[];
 }
 
@@ -95,7 +98,8 @@ export type QuestionHiddenByGendersWithoutId = Omit<IQuestionDTO, "id">;
 
 export type VisitFormAnswerIncludingQuestion = IOperatorAnswerDTO & QuestionHiddenByGendersWithoutId;
 
-export interface IWaitingRoomVisitFormIncludingQuestionsDTO extends IWaitingRoomTableVisitFormDTO {
+export interface IWaitingRoomVisitFormIncludingQuestions extends IWaitingRoomTableVisitFormDTO {
+  probandLanguageCode: LanguageCode,
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
 }
 

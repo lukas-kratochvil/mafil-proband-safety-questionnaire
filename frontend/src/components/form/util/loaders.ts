@@ -2,7 +2,7 @@ import { FormPropType } from "@app/model/form";
 import { IDuplicatedVisitIncludingQuestions, VisualCorrection } from "@app/model/visit";
 import {
   IApprovalRoomVisitFormIncludingQuestionsDTO,
-  IWaitingRoomVisitFormIncludingQuestionsDTO,
+  IWaitingRoomVisitFormIncludingQuestions,
 } from "@app/util/server_API/dto";
 import { getOption, visualCorrectionOptions } from "./options";
 
@@ -37,7 +37,7 @@ export const loadPhantomFormDefaultValues = (): FormPropType => ({
 
 // Autocomplete component default value must be one of the options provided or null
 export const loadFormDefaultValuesFromWaitingRoomVisitForm = (
-  visitForm: IWaitingRoomVisitFormIncludingQuestionsDTO
+  visitForm: IWaitingRoomVisitFormIncludingQuestions
 ): FormPropType => ({
   project: null,
   device: null,

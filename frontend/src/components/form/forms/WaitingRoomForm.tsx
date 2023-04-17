@@ -20,6 +20,7 @@ import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormFinalizeDialog } from "../components/FormFinalizeDialog";
 import { getModifiedFieldsOnly, isVisitFormForApproval } from "../util/utils";
 import { FormContainer } from "./FormContainer";
+import { createVisit } from "@app/util/mafildb_API/fetch";
 
 export const WaitingRoomForm = () => {
   const { id } = useParams();
@@ -89,8 +90,7 @@ export const WaitingRoomForm = () => {
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
           onClick: async (data: FormPropType) => {
-            // TODO: create DISAPPROVED visit in the MAFILDB
-            updateDummyVisitState(id, VisitState.DISAPPROVED);
+            createVisit(data, VisitState.DISAPPROVED, operator?.uco, new Date(), visitForm?.probandLanguageCode);
             navigate(RoutingPaths.WAITING_ROOM);
           },
           showErrorColor: true,
@@ -114,8 +114,7 @@ export const WaitingRoomForm = () => {
               // open warning dialog that the visit form has to be approved by an operator with higher permissions
               setOpenFinalizeDialog(true);
             } else {
-              // TODO: create APPROVED visit in the MAFILDB
-              updateDummyVisitState(id, VisitState.APPROVED);
+              createVisit(data, VisitState.APPROVED, operator?.uco, new Date(), visitForm?.probandLanguageCode);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${id}`);
             }
           },

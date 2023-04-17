@@ -15,7 +15,7 @@ import {
   IQuestionDTO,
   ISendVisitFormFromWaitingRoomForApprovalInput,
   IWaitingRoomTableVisitFormDTO,
-  IWaitingRoomVisitFormIncludingQuestionsDTO,
+  IWaitingRoomVisitFormIncludingQuestions,
   VisitFormAnswerIncludingQuestion,
 } from "@app/util/server_API/dto";
 import { CREATE_VISIT_FORM, DELETE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
@@ -199,7 +199,7 @@ export const fetchWaitingRoomTableVisitForms = async (): Promise<IWaitingRoomTab
 
 export const fetchWaitingRoomVisitForm = async (
   visitId: string | undefined
-): Promise<IWaitingRoomVisitFormIncludingQuestionsDTO | undefined> => {
+): Promise<IWaitingRoomVisitFormIncludingQuestions | undefined> => {
   const variables = { id: visitId };
   const { data } = await axiosConfig.serverApi.post<WaitingRoomVisitFormResponse>("", {
     query: GET_WAITING_ROOM_VISIT_FORM,
@@ -212,7 +212,7 @@ export const fetchWaitingRoomVisitForm = async (
       return { ...answer, ...question, comment: "" };
     })
   );
-  return { ...visitForm, answersIncludingQuestions };
+  return { ...visitForm, probandLanguageCode: visitForm.probandLanguage.code, answersIncludingQuestions };
 };
 
 export const fetchApprovalRoomTableVisitForms = async (): Promise<IApprovalRoomTableVisitFormDTO[]> => {

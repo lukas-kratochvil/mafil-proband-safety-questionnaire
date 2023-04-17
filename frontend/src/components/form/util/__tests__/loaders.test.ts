@@ -4,7 +4,7 @@ import { IDuplicatedVisitIncludingQuestions, VisualCorrection } from "@app/model
 import { VisitState } from "@app/util/mafildb_API/dto";
 import {
   IApprovalRoomVisitFormIncludingQuestionsDTO,
-  IWaitingRoomVisitFormIncludingQuestionsDTO,
+  IWaitingRoomVisitFormIncludingQuestions,
   QuestionPartNumber,
 } from "@app/util/server_API/dto";
 import {
@@ -15,7 +15,7 @@ import {
   loadPhantomFormDefaultValues,
 } from "../loaders";
 
-const waitingRoomVisitForm: IWaitingRoomVisitFormIncludingQuestionsDTO = {
+const waitingRoomVisitForm: IWaitingRoomVisitFormIncludingQuestions = {
   id: "123",
   name: "Name",
   surname: "Surname",
