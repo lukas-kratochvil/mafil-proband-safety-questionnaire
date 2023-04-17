@@ -114,10 +114,14 @@ export interface IApprovalRoomTableVisitFormDTO extends IWaitingRoomTableVisitFo
 }
 
 export interface IApprovalRoomVisitFormDTO extends IApprovalRoomTableVisitFormDTO {
+  probandLanguage: {
+    code: LanguageCode;
+  };
   answers: IOperatorAnswerDTO[];
 }
 
 export interface IApprovalRoomVisitFormIncludingQuestionsDTO extends IApprovalRoomTableVisitFormDTO {
+  probandLanguageCode: LanguageCode;
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
 }
 

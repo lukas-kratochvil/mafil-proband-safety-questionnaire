@@ -11,8 +11,8 @@ import { loadFormDefaultValuesFromApprovalRoomVisitForm } from "@app/components/
 import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { FormPropType, FormQac } from "@app/model/form";
 import { RoutingPaths } from "@app/routing-paths";
-import { updateDummyVisitState } from "@app/util/fetch.dev";
 import { VisitState } from "@app/util/mafildb_API/dto";
+import { createVisit } from "@app/util/mafildb_API/fetch";
 import { QuestionPartNumber } from "@app/util/server_API/dto";
 import { fetchApprovalRoomVisitForm } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
@@ -84,8 +84,13 @@ export const ApprovalForm = () => {
           submitButtonProps: {
             titleLocalizationKey: "form.common.buttons.confirmDisapproval",
             onClick: async (data: FormPropType) => {
-              // TODO: create DISAPPROVED visit in the MAFILDB
-              updateDummyVisitState(id, VisitState.DISAPPROVED);
+              await createVisit(
+                data,
+                VisitState.DISAPPROVED,
+                operator?.uco,
+                new Date(),
+                visitForm?.probandLanguageCode
+              );
               navigate(RoutingPaths.APPROVAL_ROOM);
             },
             showErrorColor: true,
@@ -105,9 +110,14 @@ export const ApprovalForm = () => {
           submitButtonProps: {
             titleLocalizationKey: "form.common.buttons.approve",
             onClick: async (data: FormPropType) => {
-              // TODO: create APPROVED visit in the MAFILDB
-              updateDummyVisitState(id, VisitState.APPROVED);
-              navigate(`${RoutingPaths.RECENT_VISITS}/visit/${id}`);
+              const visitId = await createVisit(
+                data,
+                VisitState.DISAPPROVED,
+                operator?.uco,
+                new Date(),
+                visitForm?.probandLanguageCode
+              );
+              navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
             },
           },
           buttonsProps: [
@@ -139,7 +149,18 @@ export const ApprovalForm = () => {
         buttonsProps: [getBackButtonProps(navigate)],
       });
     }
-  }, [getValues, id, isDisapproved, isEditing, navigate, operator?.role, setValue, trigger, valuesBeforeEditing]);
+  }, [
+    getValues,
+    isDisapproved,
+    isEditing,
+    navigate,
+    operator?.role,
+    operator?.uco,
+    setValue,
+    trigger,
+    valuesBeforeEditing,
+    visitForm?.probandLanguageCode,
+  ]);
 
   return (
     <FormContainer

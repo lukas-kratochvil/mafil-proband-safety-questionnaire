@@ -239,7 +239,7 @@ export const fetchApprovalRoomVisitForm = async (
       return { ...answer, ...question };
     })
   );
-  return { ...visitForm, answersIncludingQuestions };
+  return { ...visitForm, probandLanguageCode: visitForm.probandLanguage.code, answersIncludingQuestions };
 };
 
 export const createProbandVisitForm = async (visitFormData: FormPropType): Promise<string> => {
