@@ -19,6 +19,7 @@ export const PhantomForm = () => {
       titleLocalizationKey: "form.common.buttons.finalize",
       onClick: async (data: FormPropType) => {
         const visitId = await createVisit(data, VisitState.PHANTOM_DONE, operator?.uco, new Date());
+        // TODO: generate PDF and send it to MAFILDB
         navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
       },
     },

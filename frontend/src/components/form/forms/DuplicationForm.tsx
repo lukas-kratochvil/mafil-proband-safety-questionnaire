@@ -67,6 +67,7 @@ export const DuplicationForm = () => {
           titleLocalizationKey: "form.common.buttons.finalize",
           onClick: async (data: FormPropType) => {
             const visitId = await createVisit(data, VisitState.PHANTOM_DONE, operator?.uco, new Date());
+            // TODO: generate PDF and send it to MAFILDB
             navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
           },
         },
@@ -102,6 +103,7 @@ export const DuplicationForm = () => {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
           onClick: async (data: FormPropType) => {
             await createVisit(data, VisitState.DISAPPROVED, operator?.uco, new Date(), visit?.probandLanguageCode);
+            // TODO: generate PDF and send it to MAFILDB
             navigate(RoutingPaths.RECENT_VISITS);
           },
           showErrorColor: true,
@@ -132,6 +134,7 @@ export const DuplicationForm = () => {
                 new Date(),
                 visit?.probandLanguageCode
               );
+              // TODO: generate PDF and send it to MAFILDB
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
             }
           },

@@ -92,6 +92,7 @@ export const ApprovalForm = () => {
                 visitForm?.probandLanguageCode
               );
               await markVisitFormAsSentToMafilDb(visitForm?.id || "");
+              // TODO: generate PDF and send it to MAFILDB
               navigate(RoutingPaths.APPROVAL_ROOM);
             },
             showErrorColor: true,
@@ -119,6 +120,7 @@ export const ApprovalForm = () => {
                 visitForm?.probandLanguageCode
               );
               await markVisitFormAsSentToMafilDb(visitForm?.id || "");
+              // TODO: generate PDF and send it to MAFILDB
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
             },
           },

@@ -95,6 +95,7 @@ export const WaitingRoomForm = () => {
           onClick: async (data: FormPropType) => {
             await createVisit(data, VisitState.DISAPPROVED, operator?.uco, new Date(), visitForm?.probandLanguageCode);
             await markVisitFormAsSentToMafilDb(visitForm?.id || "");
+            // TODO: generate PDF and send it to MAFILDB
             navigate(RoutingPaths.WAITING_ROOM);
           },
           showErrorColor: true,
@@ -126,6 +127,7 @@ export const WaitingRoomForm = () => {
                 visitForm?.probandLanguageCode
               );
               await markVisitFormAsSentToMafilDb(visitForm?.id || "");
+              // TODO: generate PDF and send it to MAFILDB
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
             }
           },
