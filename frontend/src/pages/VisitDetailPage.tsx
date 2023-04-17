@@ -1,5 +1,5 @@
 import { Button, Grid, Skeleton, Stack } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
@@ -15,6 +15,8 @@ import { VisitState } from "@app/util/mafildb_API/dto";
 import { fetchVisitDetail, updateVisitState } from "@app/util/mafildb_API/fetch";
 import { getBackButtonProps, IButtonProps } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
+
+const getVisitDetailQueryKey = (visitId: string | undefined) => ["visit", visitId];
 
 interface IVisitDetailButtonProps extends IButtonProps {
   disabled?: boolean;
@@ -52,7 +54,11 @@ const getColoredInfoStripe = (visitState: VisitState | undefined): IColoredInfoS
   }
 };
 
-const getButtons = (visitId: string | undefined, visitState: VisitState | undefined): IVisitDetailButtonProps[] => {
+const getButtons = (
+  queryClient: QueryClient,
+  visitId: string | undefined,
+  visitState: VisitState | undefined
+): IVisitDetailButtonProps[] => {
   switch (visitState) {
     case VisitState.APPROVED:
       return [
@@ -66,6 +72,7 @@ const getButtons = (visitId: string | undefined, visitState: VisitState | undefi
              *  - check my Firefox bookmarks for some interesting websites!!!
              */
             await updateVisitState(visitId, VisitState.FOR_SIGNATURE_PHYSICALLY);
+            queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitId), exact: true });
           },
         },
         {
@@ -82,6 +89,7 @@ const getButtons = (visitId: string | undefined, visitState: VisitState | undefi
           titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
           onClick: async () => {
             await updateVisitState(visitId, VisitState.SIGNED_PHYSICALLY);
+            queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitId), exact: true });
           },
         },
       ];
@@ -91,6 +99,7 @@ const getButtons = (visitId: string | undefined, visitState: VisitState | undefi
           titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
           onClick: async () => {
             await updateVisitState(visitId, VisitState.SIGNED_ELECTRONICALLY);
+            queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitId), exact: true });
           },
         },
       ];
@@ -112,11 +121,12 @@ const getButtons = (visitId: string | undefined, visitState: VisitState | undefi
 const VisitDetailPage = () => {
   const { t } = useTranslation(defaultNS);
   const { id } = useParams();
+  const queryClient = useQueryClient();
   const {
     data: visit,
     isLoading,
     isError,
-  } = useQuery({ queryKey: ["visit", id], queryFn: () => fetchVisitDetail(id) });
+  } = useQuery({ queryKey: getVisitDetailQueryKey(id), queryFn: () => fetchVisitDetail(id) });
   const navigate = useNavigate();
 
   const [coloredInfoStripe, setColoredInfoStripe] = useState<IColoredInfoStripeProps>();
@@ -124,10 +134,10 @@ const VisitDetailPage = () => {
 
   useEffect(() => {
     setColoredInfoStripe(getColoredInfoStripe(visit?.state));
-    const stateButtons = getButtons(visit?.visitId, visit?.state);
+    const stateButtons = getButtons(queryClient, visit?.visitId, visit?.state);
     stateButtons.push(getBackButtonProps(navigate));
     setButtons(stateButtons);
-  }, [navigate, visit]);
+  }, [queryClient, navigate, visit]);
 
   if (isError) {
     return (
