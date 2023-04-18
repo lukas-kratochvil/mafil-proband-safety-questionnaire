@@ -319,7 +319,7 @@ query GetWaitingRoomVisitForm($id: UUID!) {
 `;
 
 export const GET_APPROVAL_ROOM_TABLE_VISIT_FORMS = `
-query GetWaitingRoomVisitForms($state: VisitFormState) {
+query GetApprovalRoomVisitForms($state: VisitFormState) {
   visitForms(state: $state) {
     id
     createdAt
