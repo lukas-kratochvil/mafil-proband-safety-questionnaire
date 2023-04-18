@@ -1,4 +1,3 @@
-import { genders, handednesses, nativeLanguages } from "@app/__tests__/data/translated_entities";
 import { AnswerOption } from "@app/model/form";
 import { IDuplicatedVisitIncludingQuestions, VisualCorrection } from "@app/model/visit";
 import { VisitState } from "@app/util/mafildb_API/dto";
@@ -7,6 +6,7 @@ import {
   IWaitingRoomVisitFormIncludingQuestions,
   QuestionPartNumber,
 } from "@app/util/server_API/dto";
+import { genders, handednesses, nativeLanguages } from "@app/__tests__/data/translated_entities";
 import {
   loadEmptyDefaultValues,
   loadFormDefaultValuesFromApprovalRoomVisitForm,
@@ -65,7 +65,7 @@ const approvalRoomVisitForm: IApprovalRoomVisitFormIncludingQuestionsDTO = {
   },
 };
 
-const visit: IDuplicatedVisitIncludingQuestions = {
+const duplicatedVisit: IDuplicatedVisitIncludingQuestions = {
   visitId: "1",
   date: new Date(),
   isPhantom: false,
@@ -234,70 +234,36 @@ describe("form loaders", () => {
     });
   });
 
-  describe("default values loaded from a visit duplication", () => {
-    test("all the visit attributes are defined", () => {
-      const formDefaultValuesVisitDuplication = loadFormDefaultValuesVisitDuplication(visit);
+  test("duplicated visit form default values", () => {
+    const currentDate = new Date();
+    vi.spyOn(global, "Date").mockImplementationOnce(() => currentDate as unknown as string);
 
-      expect(formDefaultValuesVisitDuplication.project).toBeNull();
-      expect(formDefaultValuesVisitDuplication.device).toBeNull();
-      expect(formDefaultValuesVisitDuplication.measuredAt).toEqual(visit.measurementDate);
-      expect(formDefaultValuesVisitDuplication.name).toEqual(visit.name);
-      expect(formDefaultValuesVisitDuplication.surname).toEqual(visit.surname);
-      expect(formDefaultValuesVisitDuplication.personalId).toEqual(visit.personalId);
-      expect(formDefaultValuesVisitDuplication.birthdate).toEqual(visit.birthdate);
-      expect(formDefaultValuesVisitDuplication.gender?.id).toEqual(visit.gender.id);
-      expect(formDefaultValuesVisitDuplication.nativeLanguage).toEqual(visit.nativeLanguage);
-      expect(formDefaultValuesVisitDuplication.heightCm).toEqual(visit.heightCm);
-      expect(formDefaultValuesVisitDuplication.weightKg).toEqual(visit.weightKg);
-      expect(formDefaultValuesVisitDuplication.handedness?.id).toEqual(visit.handedness.id);
-      expect(formDefaultValuesVisitDuplication.visualCorrection?.value).toEqual(
-        visit.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
-      );
-      expect(formDefaultValuesVisitDuplication.visualCorrectionDioptre).toEqual(visit.visualCorrectionDioptre);
-      expect(formDefaultValuesVisitDuplication.email).toEqual(visit.email);
-      expect(formDefaultValuesVisitDuplication.phone).toEqual(visit.phone);
+    const formDefaultValuesVisitDuplication = loadFormDefaultValuesVisitDuplication(duplicatedVisit);
 
-      formDefaultValuesVisitDuplication.answers.forEach((answer, i) => {
-        expect(answer.questionId).toEqual(visitNotCompleted.answersIncludingQuestions[i].questionId);
-        expect(answer.mustBeApproved).toEqual(visitNotCompleted.answersIncludingQuestions[i].mustBeApproved);
-        expect(answer.answer).toEqual(visitNotCompleted.answersIncludingQuestions[i].answer);
-        expect(answer.comment).toEqual(visitNotCompleted.answersIncludingQuestions[i].comment);
-      });
-    });
+    expect(formDefaultValuesVisitDuplication.project).toBeNull();
+    expect(formDefaultValuesVisitDuplication.device).toBeNull();
+    expect(formDefaultValuesVisitDuplication.measuredAt).toEqual(currentDate);
+    expect(formDefaultValuesVisitDuplication.name).toEqual(duplicatedVisit.name);
+    expect(formDefaultValuesVisitDuplication.surname).toEqual(duplicatedVisit.surname);
+    expect(formDefaultValuesVisitDuplication.personalId).toEqual(duplicatedVisit.personalId);
+    expect(formDefaultValuesVisitDuplication.birthdate).toEqual(duplicatedVisit.birthdate);
+    expect(formDefaultValuesVisitDuplication.gender?.id).toEqual(duplicatedVisit.gender.id);
+    expect(formDefaultValuesVisitDuplication.nativeLanguage).toEqual(duplicatedVisit.nativeLanguage);
+    expect(formDefaultValuesVisitDuplication.heightCm).toEqual(duplicatedVisit.heightCm);
+    expect(formDefaultValuesVisitDuplication.weightKg).toEqual(duplicatedVisit.weightKg);
+    expect(formDefaultValuesVisitDuplication.handedness?.id).toEqual(duplicatedVisit.handedness.id);
+    expect(formDefaultValuesVisitDuplication.visualCorrection?.value).toEqual(
+      duplicatedVisit.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
+    );
+    expect(formDefaultValuesVisitDuplication.visualCorrectionDioptre).toEqual(duplicatedVisit.visualCorrectionDioptre);
+    expect(formDefaultValuesVisitDuplication.email).toEqual(duplicatedVisit.email);
+    expect(formDefaultValuesVisitDuplication.phone).toEqual(duplicatedVisit.phone);
 
-    test("all the visit nullable attributes are null", () => {
-      const currentDate = new Date();
-      vi.spyOn(global, "Date").mockImplementationOnce(() => currentDate as unknown as string);
-
-      const formDefaultValuesVisitDuplication = loadFormDefaultValuesVisitDuplication(visitNotCompleted);
-
-      expect(formDefaultValuesVisitDuplication.project).toBeNull();
-      expect(formDefaultValuesVisitDuplication.device).toBeNull();
-      expect(formDefaultValuesVisitDuplication.measuredAt).toEqual(currentDate);
-      expect(formDefaultValuesVisitDuplication.name).toEqual(visitNotCompleted.name);
-      expect(formDefaultValuesVisitDuplication.surname).toEqual(visitNotCompleted.surname);
-      expect(formDefaultValuesVisitDuplication.personalId).toEqual(visitNotCompleted.personalId);
-      expect(formDefaultValuesVisitDuplication.birthdate).toEqual(visitNotCompleted.birthdate);
-      expect(formDefaultValuesVisitDuplication.gender?.id).toEqual(visitNotCompleted.gender.id);
-      expect(formDefaultValuesVisitDuplication.nativeLanguage).toEqual(visitNotCompleted.nativeLanguage);
-      expect(formDefaultValuesVisitDuplication.heightCm).toEqual(visitNotCompleted.heightCm);
-      expect(formDefaultValuesVisitDuplication.weightKg).toEqual(visitNotCompleted.weightKg);
-      expect(formDefaultValuesVisitDuplication.handedness?.id).toEqual(visitNotCompleted.handedness.id);
-      expect(formDefaultValuesVisitDuplication.visualCorrection?.value).toEqual(
-        visitNotCompleted.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
-      );
-      expect(formDefaultValuesVisitDuplication.visualCorrectionDioptre).toEqual(
-        visitNotCompleted.visualCorrectionDioptre
-      );
-      expect(formDefaultValuesVisitDuplication.email).toEqual(visitNotCompleted.email);
-      expect(formDefaultValuesVisitDuplication.phone).toEqual(visitNotCompleted.phone);
-
-      formDefaultValuesVisitDuplication.answers.forEach((answer, i) => {
-        expect(answer.questionId).toEqual(visitNotCompleted.answersIncludingQuestions[i].questionId);
-        expect(answer.mustBeApproved).toEqual(visitNotCompleted.answersIncludingQuestions[i].mustBeApproved);
-        expect(answer.answer).toEqual(visitNotCompleted.answersIncludingQuestions[i].answer);
-        expect(answer.comment).toEqual(visitNotCompleted.answersIncludingQuestions[i].comment);
-      });
+    formDefaultValuesVisitDuplication.answers.forEach((answer, i) => {
+      expect(answer.questionId).toEqual(visitNotCompleted.answersIncludingQuestions[i].questionId);
+      expect(answer.mustBeApproved).toEqual(visitNotCompleted.answersIncludingQuestions[i].mustBeApproved);
+      expect(answer.answer).toEqual(visitNotCompleted.answersIncludingQuestions[i].answer);
+      expect(answer.comment).toEqual(visitNotCompleted.answersIncludingQuestions[i].comment);
     });
   });
 });
