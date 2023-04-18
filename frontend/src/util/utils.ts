@@ -1,7 +1,5 @@
 import { NavigateFunction } from "react-router-dom";
-import { LanguageCode } from "@app/i18n";
 import { FormPropType } from "@app/model/form";
-import { ITranslation } from "./server_API/dto";
 
 export interface IButtonProps {
   titleLocalizationKey: string;
@@ -17,11 +15,3 @@ export const getBackButtonProps = (navigate: NavigateFunction, customTitleLocali
   titleLocalizationKey: customTitleLocalizationKey ?? "common.backButton",
   onClick: () => navigate(-1),
 });
-
-export const getTranslation = (translations: ITranslation[], languageCode: LanguageCode): string => {
-  if (translations.length === 0) {
-    return "";
-  }
-
-  return translations.find((trans) => trans.language.code === languageCode)?.text || translations[0].text;
-};
