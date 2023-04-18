@@ -4,6 +4,7 @@ import { useFormContext } from "react-hook-form";
 import { FormButtons, IFormButtonsProps } from "@app/components/form/components/FormButtons";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { FormPropType } from "@app/model/form";
+import { getValidatedFormData } from "../util/utils";
 import { FormSkeleton } from "./FormSkeleton";
 
 interface IFormContainerProps {
@@ -16,8 +17,10 @@ export const FormContainer = ({ children, isLoading, isError, buttons }: PropsWi
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const { handleSubmit } = useFormContext<FormPropType>();
 
-  // eslint-disable-next-line no-return-await
-  const onValid = async (data: FormPropType) => await buttons?.submitButtonProps?.onClick(data);
+  const onValid = async (data: FormPropType) => {
+    const validatedFormData = getValidatedFormData(data);
+    await buttons?.submitButtonProps?.onClick(validatedFormData);
+  };
 
   if (isError) {
     return <ErrorAlert />;

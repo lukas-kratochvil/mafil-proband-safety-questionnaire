@@ -1,5 +1,5 @@
 import axiosConfig from "@app/axios-config";
-import { AnswerOption, FormPropType } from "@app/model/form";
+import { ValidatedFormData } from "@app/model/form";
 import {
   IDuplicatedVisitIncludingQuestions,
   IRecentVisitsTableVisit,
@@ -241,7 +241,7 @@ export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVi
 };
 
 export const createVisit = async (
-  visitFormData: FormPropType,
+  visitFormData: ValidatedFormData,
   state: VisitState,
   finalizerUco: string | undefined,
   finalizedAt: Date,
@@ -260,26 +260,22 @@ export const createVisit = async (
       visit_name: generateVisitId(),
       date: new Date(),
       is_phantom: state === VisitState.PHANTOM_DONE,
-      proband_language_code: probandLanguageCode || "",
-      finalizer_uco: finalizerUco || "",
-      measurement_date: visitFormData.measuredAt || new Date(),
-      project_id: visitFormData.project?.id || "",
-      device_id: visitFormData.device?.id || "",
+      proband_language_code: probandLanguageCode ?? "",
+      finalizer_uco: finalizerUco,
+      measurement_date: visitFormData.measuredAt ?? new Date(),
+      project_id: visitFormData.project?.id ?? "",
+      device_id: visitFormData.device?.id ?? "",
       personal_id: visitFormData.personalId,
-      birthdate: visitFormData.birthdate ?? new Date(),
-      gender_code: visitFormData.gender?.code || "",
-      native_language_code: visitFormData.nativeLanguage?.code || "",
-      height_cm: typeof visitFormData.heightCm === "string" ? +visitFormData.heightCm : visitFormData.heightCm,
-      weight_kg: typeof visitFormData.weightKg === "string" ? +visitFormData.weightKg : visitFormData.weightKg,
-      visual_correction_dioptre:
-        typeof visitFormData.visualCorrectionDioptre === "string"
-          ? +visitFormData.visualCorrectionDioptre
-          : visitFormData.visualCorrectionDioptre,
-      handedness_code: visitFormData.handedness?.code || "",
+      birthdate: visitFormData.birthdate,
+      gender_code: visitFormData.gender.code,
+      native_language_code: visitFormData.nativeLanguage.code,
+      height_cm: visitFormData.heightCm,
+      weight_kg: visitFormData.weightKg,
+      visual_correction_dioptre: visitFormData.visualCorrectionDioptre,
+      handedness_code: visitFormData.handedness.code,
       answers: visitFormData.answers.map((answer) => ({
+        ...answer,
         question_id: answer.questionId,
-        answer: answer.answer ?? AnswerOption.NO,
-        comment: answer.comment,
       })),
     });
     return dummyVisits[dummyVisits.length - 1].visit_name;
@@ -288,35 +284,31 @@ export const createVisit = async (
   const createData: ICreateVisitInput = {
     state,
     is_phantom: state === VisitState.PHANTOM_DONE,
-    proband_language_code: probandLanguageCode || "",
+    proband_language_code: probandLanguageCode ?? "",
     project_id: visitFormData.project?.id ?? "",
     device_id: visitFormData.device?.id ?? "",
-    measurement_date: visitFormData.measuredAt || new Date(),
+    measurement_date: visitFormData.measuredAt ?? new Date(),
     name: visitFormData.name,
     surname: visitFormData.surname,
     personal_id: visitFormData.personalId,
-    birthdate: visitFormData.birthdate || new Date(),
-    gender_code: visitFormData.gender?.code || "",
-    native_language_code: visitFormData.nativeLanguage?.code || "",
-    height_cm: typeof visitFormData.heightCm === "string" ? +visitFormData.heightCm : visitFormData.heightCm,
-    weight_kg: typeof visitFormData.weightKg === "string" ? +visitFormData.weightKg : visitFormData.weightKg,
-    handedness_code: visitFormData.handedness?.code || "",
-    visual_correction_dioptre:
-      typeof visitFormData.visualCorrectionDioptre === "string"
-        ? +visitFormData.visualCorrectionDioptre
-        : visitFormData.visualCorrectionDioptre,
+    birthdate: visitFormData.birthdate,
+    gender_code: visitFormData.gender.code,
+    native_language_code: visitFormData.nativeLanguage.code,
+    height_cm: visitFormData.heightCm,
+    weight_kg: visitFormData.weightKg,
+    handedness_code: visitFormData.handedness.code,
+    visual_correction_dioptre: visitFormData.visualCorrectionDioptre,
     email: visitFormData.email,
     phone: visitFormData.phone,
     answers: visitFormData.answers.map((answer) => ({
+      ...answer,
       question_id: answer.questionId,
-      answer: answer.answer ?? AnswerOption.NO,
-      comment: answer.comment,
     })),
     finalizer_uco: finalizerUco,
     finalization_date: finalizedAt,
-    approver_uco: approverUco || "",
+    approver_uco: approverUco ?? "",
     approval_date: approvedAt,
-    disapproval_reason: visitFormData.disapprovalReason || "",
+    disapproval_reason: visitFormData.disapprovalReason ?? "",
   };
   const { data } = await axiosConfig.mafildbApi.post<CreateVisitResponse>("visit", createData);
   return data.visit_name;

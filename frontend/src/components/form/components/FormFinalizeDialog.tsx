@@ -12,18 +12,24 @@ import { SetStateAction } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n";
-import { FormPropType } from "@app/model/form";
+import { FormPropType, ValidatedFormData } from "@app/model/form";
+import { getValidatedFormData } from "../util/utils";
 
 interface IFormFinalizeDialogProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
-  onContinue: (data: FormPropType) => Promise<void>;
+  onContinue: (data: ValidatedFormData) => Promise<void>;
 }
 
 export const FormFinalizeDialog = ({ isOpen, setIsOpen, onContinue }: IFormFinalizeDialogProps) => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.finalizeDialog" });
   const { handleSubmit } = useFormContext<FormPropType>();
+
+  const onValid = async (data: FormPropType) => {
+    const validatedFormData = getValidatedFormData(data);
+    await onContinue(validatedFormData);
+  };
 
   return (
     <Dialog
@@ -36,7 +42,7 @@ export const FormFinalizeDialog = ({ isOpen, setIsOpen, onContinue }: IFormFinal
         <Typography>{t("text")}</Typography>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => handleSubmit(onContinue)()}>{t("buttons.continue")}</Button>
+        <Button onClick={() => handleSubmit(onValid)()}>{t("buttons.continue")}</Button>
         <Button onClick={() => setIsOpen(false)}>{t("buttons.cancel")}</Button>
       </DialogActions>
     </Dialog>

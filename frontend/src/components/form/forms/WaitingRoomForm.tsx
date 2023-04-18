@@ -9,7 +9,7 @@ import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesFromWaitingRoomVisitForm } from "@app/components/form/util/loaders";
 import { useAuthDev } from "@app/hooks/auth/auth-dev";
-import { FormPropType, FormQac } from "@app/model/form";
+import { FormPropType, FormQac, ValidatedFormData } from "@app/model/form";
 import { RoutingPaths } from "@app/routing-paths";
 import { VisitState } from "@app/util/mafildb_API/dto";
 import { createVisit } from "@app/util/mafildb_API/fetch";
@@ -68,7 +68,7 @@ export const WaitingRoomForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.saveChanges",
-          onClick: async (_data: FormPropType) => setIsEditing(false),
+          onClick: async (_data: ValidatedFormData) => setIsEditing(false),
         },
         buttonsProps: [
           {
@@ -92,7 +92,7 @@ export const WaitingRoomForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
-          onClick: async (data: FormPropType) => {
+          onClick: async (data) => {
             await createVisit(data, VisitState.DISAPPROVED, operator?.uco, new Date(), visitForm?.probandLanguageCode);
             await markVisitFormAsSentToMafilDb(visitForm?.id ?? "");
             // TODO: generate PDF and send it to MAFILDB
@@ -114,7 +114,7 @@ export const WaitingRoomForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.finalize",
-          onClick: async (data: FormPropType) => {
+          onClick: async (data) => {
             if (isVisitFormForApproval(operator, data)) {
               // open warning dialog that the visit form has to be approved by an operator with higher permissions
               setOpenFinalizeDialog(true);
@@ -167,9 +167,9 @@ export const WaitingRoomForm = () => {
     visitForm?.probandLanguageCode,
   ]);
 
-  const moveVisitFormToApprovalRoom = async (data: FormPropType) => {
-    const modifiedFields: Partial<FormPropType> = {
-      ...getModifiedFieldsOnly(initialFormData, data),
+  const moveVisitFormToApprovalRoom = async (data: ValidatedFormData) => {
+    const modifiedFields: Partial<ValidatedFormData> = {
+      ...(getModifiedFieldsOnly(initialFormData, data) ?? {}),
       device: {
         id: data.device?.id ?? "",
         name: data.device?.name ?? "",

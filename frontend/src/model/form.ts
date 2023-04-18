@@ -54,6 +54,42 @@ export type FormPropType = {
   email: string;
   phone: string;
 
-  // Visit-form approval
+  // Visit form disapproval
   disapprovalReason: string | null;
+};
+
+export type ValidatedFormAnswer = {
+  questionId: string;
+  mustBeApproved: boolean;
+  answer: AnswerOption;
+  comment: string;
+};
+
+export type ValidatedFormData = {
+  // Project info
+  project: IProjectDTO | null;
+  device: IDeviceDTO | null;
+  measuredAt: Date | null;
+
+  // Proband info
+  name: string;
+  surname: string;
+  personalId: string;
+  birthdate: Date;
+  gender: IGenderDTO;
+  nativeLanguage: INativeLanguageDTO;
+  heightCm: number;
+  weightKg: number;
+  handedness: IHandednessDTO;
+  visualCorrectionDioptre: number;
+
+  // Safety questions
+  answers: ValidatedFormAnswer[];
+
+  // Proband contacts
+  email: string;
+  phone: string;
+
+  // Visit form disapproval
+  disapprovalReason: string;
 };

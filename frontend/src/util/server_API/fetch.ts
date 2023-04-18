@@ -1,7 +1,7 @@
 import axiosConfig from "@app/axios-config";
 import i18n, { LanguageCode } from "@app/i18n";
 import { IOperatorAuthorization } from "@app/model/auth";
-import { AnswerOption, FormPropType } from "@app/model/form";
+import { ValidatedFormData } from "@app/model/form";
 import {
   IApprovalRoomTableVisitFormDTO,
   IApprovalRoomVisitFormIncludingQuestionsDTO,
@@ -251,27 +251,23 @@ export const fetchApprovalRoomVisitForm = async (
   return { ...visitForm, probandLanguageCode: visitForm.probandLanguage.code, answersIncludingQuestions };
 };
 
-export const createProbandVisitForm = async (visitFormData: FormPropType): Promise<string> => {
+export const createProbandVisitForm = async (visitFormData: ValidatedFormData): Promise<string> => {
   const variables: ICreateProbandVisitFormInput = {
     createVisitFormInput: {
       probandLanguageCode: i18n.language as LanguageCode,
       name: visitFormData.name,
       surname: visitFormData.surname,
       personalId: visitFormData.personalId,
-      birthdate: visitFormData.birthdate ?? new Date(),
-      genderId: visitFormData.gender?.id ?? "",
-      nativeLanguageId: visitFormData.nativeLanguage?.id ?? "",
-      heightCm: typeof visitFormData.heightCm === "number" ? visitFormData.heightCm : 0,
-      weightKg: typeof visitFormData.weightKg === "number" ? visitFormData.weightKg : 0,
-      visualCorrectionDioptre:
-        typeof visitFormData.visualCorrectionDioptre === "number" ? visitFormData.visualCorrectionDioptre : 0,
-      handednessId: visitFormData.handedness?.id ?? "",
+      birthdate: visitFormData.birthdate,
+      genderId: visitFormData.gender.id,
+      nativeLanguageId: visitFormData.nativeLanguage.id,
+      heightCm: visitFormData.heightCm,
+      weightKg: visitFormData.weightKg,
+      visualCorrectionDioptre: visitFormData.visualCorrectionDioptre,
+      handednessId: visitFormData.handedness.id,
       email: visitFormData.email,
       phone: visitFormData.phone,
-      answers: visitFormData.answers.map((answer) => ({
-        questionId: answer.questionId,
-        answer: answer.answer ?? AnswerOption.NO,
-      })),
+      answers: visitFormData.answers.map((answer) => ({ ...answer })),
     },
   };
   const { data } = await axiosConfig.serverApi.post<CreateVisitFormResponse>("", {
@@ -282,7 +278,7 @@ export const createProbandVisitForm = async (visitFormData: FormPropType): Promi
 };
 
 export const createDuplicatedVisitFormForApproval = async (
-  visitFormData: FormPropType,
+  visitFormData: ValidatedFormData,
   finalizerId: string | undefined
 ): Promise<string> => {
   if (finalizerId === undefined) {
@@ -295,14 +291,13 @@ export const createDuplicatedVisitFormForApproval = async (
       name: visitFormData.name,
       surname: visitFormData.surname,
       personalId: visitFormData.personalId,
-      birthdate: visitFormData.birthdate ?? new Date(),
-      genderId: visitFormData.gender?.id ?? "",
-      nativeLanguageId: visitFormData.nativeLanguage?.id ?? "",
-      heightCm: typeof visitFormData.heightCm === "number" ? visitFormData.heightCm : 0,
-      weightKg: typeof visitFormData.weightKg === "number" ? visitFormData.weightKg : 0,
-      visualCorrectionDioptre:
-        typeof visitFormData.visualCorrectionDioptre === "number" ? visitFormData.visualCorrectionDioptre : 0,
-      handednessId: visitFormData.handedness?.id ?? "",
+      birthdate: visitFormData.birthdate,
+      genderId: visitFormData.gender.id,
+      nativeLanguageId: visitFormData.nativeLanguage.id,
+      heightCm: visitFormData.heightCm,
+      weightKg: visitFormData.weightKg,
+      visualCorrectionDioptre: visitFormData.visualCorrectionDioptre,
+      handednessId: visitFormData.handedness.id,
       email: visitFormData.email,
       phone: visitFormData.phone,
       additionalInfo: {
@@ -315,11 +310,7 @@ export const createDuplicatedVisitFormForApproval = async (
         finalizedAt: new Date(),
       },
       probandLanguageCode: i18n.language as LanguageCode,
-      answers: visitFormData.answers.map((answer) => ({
-        questionId: answer.questionId,
-        answer: answer.answer ?? AnswerOption.NO,
-        comment: answer.comment,
-      })),
+      answers: visitFormData.answers.map((answer) => ({ ...answer })),
     },
   };
   const { data } = await axiosConfig.serverApi.post<CreateVisitFormResponse>("", {
@@ -331,7 +322,7 @@ export const createDuplicatedVisitFormForApproval = async (
 
 export const sendVisitFormForApproval = async (
   visitFormId: string,
-  visitFormData: Partial<FormPropType>,
+  visitFormData: Partial<ValidatedFormData>,
   finalizerId: string
 ): Promise<string> => {
   const variables: ISendVisitFormFromWaitingRoomForApprovalInput = {
@@ -341,13 +332,12 @@ export const sendVisitFormForApproval = async (
       name: visitFormData.name === "" ? undefined : visitFormData.name,
       surname: visitFormData.surname === "" ? undefined : visitFormData.surname,
       personalId: visitFormData.personalId === "" ? undefined : visitFormData.personalId,
-      birthdate: visitFormData.birthdate ?? undefined,
+      birthdate: visitFormData.birthdate,
       genderId: visitFormData.gender?.id ?? undefined,
       nativeLanguageId: visitFormData.nativeLanguage?.id ?? undefined,
-      heightCm: typeof visitFormData.heightCm === "number" ? visitFormData.heightCm : undefined,
-      weightKg: typeof visitFormData.weightKg === "number" ? visitFormData.weightKg : undefined,
-      visualCorrectionDioptre:
-        typeof visitFormData.visualCorrectionDioptre === "number" ? visitFormData.visualCorrectionDioptre : undefined,
+      heightCm: visitFormData.heightCm,
+      weightKg: visitFormData.weightKg,
+      visualCorrectionDioptre: visitFormData.visualCorrectionDioptre,
       handednessId: visitFormData.handedness?.id ?? undefined,
       email: visitFormData.email,
       phone: visitFormData.phone,
@@ -360,12 +350,7 @@ export const sendVisitFormForApproval = async (
         finalizedAt: new Date(),
         finalizerId,
       },
-      answers:
-        visitFormData.answers?.map((answer) => ({
-          questionId: answer.questionId,
-          answer: answer.answer ?? undefined,
-          comment: answer.comment,
-        })) ?? [],
+      answers: visitFormData.answers?.map((answer) => ({ ...answer })),
     },
   };
   const { data } = await axiosConfig.serverApi.post<UpdateVisitFormResponse>("", {

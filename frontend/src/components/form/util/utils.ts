@@ -1,12 +1,12 @@
 import { updatedDiff } from "deep-object-diff";
 import { OperatorDev } from "@app/hooks/auth/auth-dev";
-import { AnswerOption, FormAnswer, FormPropType } from "@app/model/form";
+import { AnswerOption, FormPropType, ValidatedFormAnswer, ValidatedFormData } from "@app/model/form";
 import { IProjectDTO } from "@app/util/mafildb_API/dto";
 import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "@app/util/server_API/dto";
 import { IButtonProps } from "@app/util/utils";
 
 export interface IFormSubmitButtonProps extends Omit<IButtonProps, "onClick"> {
-  onClick: (data: FormPropType) => Promise<void>;
+  onClick: (data: ValidatedFormData) => Promise<void>;
 }
 
 export type GenderCode = "M" | "F" | "O";
@@ -56,16 +56,17 @@ export const getProjectText = (project: IProjectDTO): string => {
 
 export const getModifiedFieldsOnly = (
   initialData: FormPropType | undefined,
-  submittedData: FormPropType
-): Partial<FormPropType> => {
+  submittedData: ValidatedFormData
+): Partial<ValidatedFormData> | undefined => {
   if (initialData === undefined) {
-    return submittedData;
+    return undefined;
   }
 
-  const { answers: initialAnswers, ...initialDataRest } = initialData;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { answers: initialAnswers, visualCorrection, ...initialDataRest } = initialData;
   const { answers: submittedAnswers, ...submittedDataRest } = submittedData;
 
-  let diffAnswers: FormAnswer[] | undefined;
+  let diffAnswers: ValidatedFormAnswer[] | undefined;
   const sortedInitialAnswers = initialAnswers.sort();
   const sortedSubmittedAnswers = submittedAnswers.sort();
 
@@ -83,7 +84,31 @@ export const getModifiedFieldsOnly = (
   return { ...diffRest, answers: diffAnswers };
 };
 
-export const isVisitFormForApproval = (operator: OperatorDev, data: FormPropType) =>
+export const getValidatedFormData = (data: FormPropType): ValidatedFormData => ({
+  project: data.project,
+  device: data.device,
+  measuredAt: data.measuredAt,
+  name: data.name,
+  surname: data.surname,
+  personalId: data.personalId,
+  birthdate: data.birthdate as Date,
+  gender: data.gender as IGenderDTO,
+  nativeLanguage: data.nativeLanguage as INativeLanguageDTO,
+  heightCm: typeof data.heightCm === "string" ? +data.heightCm : data.heightCm,
+  weightKg: typeof data.weightKg === "string" ? +data.weightKg : data.weightKg,
+  handedness: data.handedness as IHandednessDTO,
+  visualCorrectionDioptre:
+    typeof data.visualCorrectionDioptre === "string" ? +data.visualCorrectionDioptre : data.visualCorrectionDioptre,
+  answers: data.answers.map((answer) => ({
+    ...answer,
+    answer: answer.answer as AnswerOption,
+  })),
+  email: data.email,
+  phone: data.phone,
+  disapprovalReason: data.disapprovalReason ?? "",
+});
+
+export const isVisitFormForApproval = (operator: OperatorDev, data: ValidatedFormData) =>
   operator === undefined
   || (operator.role !== "MR_HIGH_PERM"
     && data.answers.some((answer) => answer.mustBeApproved && answer.answer === AnswerOption.YES));

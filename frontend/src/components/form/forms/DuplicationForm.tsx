@@ -9,7 +9,7 @@ import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesVisitDuplication } from "@app/components/form/util/loaders";
 import { useAuthDev } from "@app/hooks/auth/auth-dev";
-import { FormPropType, FormQac } from "@app/model/form";
+import { FormPropType, FormQac, ValidatedFormData } from "@app/model/form";
 import { RoutingPaths } from "@app/routing-paths";
 import { VisitState } from "@app/util/mafildb_API/dto";
 import { createVisit, fetchDuplicatedVisit } from "@app/util/mafildb_API/fetch";
@@ -65,7 +65,7 @@ export const DuplicationForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.finalize",
-          onClick: async (data: FormPropType) => {
+          onClick: async (data) => {
             const visitId = await createVisit(data, VisitState.PHANTOM_DONE, operator?.uco, new Date());
             // TODO: generate PDF and send it to MAFILDB
             navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
@@ -77,7 +77,7 @@ export const DuplicationForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.saveChanges",
-          onClick: async (_data: FormPropType) => setIsEditing(false),
+          onClick: async (_data: ValidatedFormData) => setIsEditing(false),
         },
         buttonsProps: [
           {
@@ -101,7 +101,7 @@ export const DuplicationForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
-          onClick: async (data: FormPropType) => {
+          onClick: async (data) => {
             await createVisit(data, VisitState.DISAPPROVED, operator?.uco, new Date(), visit?.probandLanguageCode);
             // TODO: generate PDF and send it to MAFILDB
             navigate(RoutingPaths.RECENT_VISITS);
@@ -122,7 +122,7 @@ export const DuplicationForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.finalize",
-          onClick: async (data: FormPropType) => {
+          onClick: async (data) => {
             if (isVisitFormForApproval(operator, data)) {
               // open warning dialog that the visit form has to be approved by an operator with higher permissions
               setOpenFinalizeDialog(true);
@@ -174,7 +174,7 @@ export const DuplicationForm = () => {
     visit?.probandLanguageCode,
   ]);
 
-  const createVisitFormInApprovalRoom = async (data: FormPropType) => {
+  const createVisitFormInApprovalRoom = async (data: ValidatedFormData) => {
     createDuplicatedVisitFormForApproval(data, operator?.id);
     setOpenFinalizeDialog(false);
     navigate(RoutingPaths.RECENT_VISITS);

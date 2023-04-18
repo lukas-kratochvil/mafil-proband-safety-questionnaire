@@ -171,7 +171,7 @@ type UpdateVisitFormInput = Partial<CreateProbandInfoInput> & {
   id: string;
   state: Partial<Omit<VisitFormState, "NEW">>;
   additionalInfo: Partial<AdditionalInfo>;
-  answers: Partial<IOperatorAnswerDTO>[];
+  answers: Partial<IOperatorAnswerDTO>[] | undefined;
 };
 
 export interface ISendVisitFormFromWaitingRoomForApprovalInput {
