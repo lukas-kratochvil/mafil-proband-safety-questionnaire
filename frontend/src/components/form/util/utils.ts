@@ -73,9 +73,9 @@ export const getModifiedFieldsOnly = (
     initialAnswers.length === submittedAnswers.length
     && sortedInitialAnswers.every((answer, i) => answer.questionId === sortedSubmittedAnswers[i].questionId)
   ) {
-    diffAnswers = sortedInitialAnswers.filter(
+    diffAnswers = sortedSubmittedAnswers.filter(
       (answer, i) =>
-        answer.answer !== sortedSubmittedAnswers[i].answer || answer.comment !== sortedSubmittedAnswers[i].comment
+        answer.answer !== sortedInitialAnswers[i].answer || answer.comment !== sortedInitialAnswers[i].comment
     );
   }
 
