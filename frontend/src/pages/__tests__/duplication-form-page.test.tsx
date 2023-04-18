@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { gendersDev, handednessesDev, nativeLanguagesDev } from "@app/__tests__/data/translated_entities";
+import { gendersDev, handednessesDev, nativeLanguagesDev, questionDev } from "@app/__tests__/data/translated_entities";
 import i18n from "@app/i18n";
 import { AnswerOption } from "@app/model/form";
 import { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
@@ -12,93 +12,6 @@ import { render, screen, waitFor } from "@test-utils";
 //----------------------------------------------------------------------
 // Default data
 //----------------------------------------------------------------------
-const questionData: IQuestionDTO[] = [
-  {
-    id: "p1q01",
-    updatedAt: new Date(),
-    partNumber: 1,
-    mustBeApproved: false,
-    translations: [
-      {
-        text: "Otázka1",
-        language: {
-          code: "cs",
-        },
-      },
-      {
-        text: "Question1",
-        language: {
-          code: "en",
-        },
-      },
-    ],
-    hiddenByGenders: [],
-  },
-  {
-    id: "p1q02",
-    updatedAt: new Date(),
-    partNumber: 1,
-    mustBeApproved: false,
-    translations: [
-      {
-        text: "Otázka2",
-        language: {
-          code: "cs",
-        },
-      },
-      {
-        text: "Question2",
-        language: {
-          code: "en",
-        },
-      },
-    ],
-    hiddenByGenders: [],
-  },
-  {
-    id: "p2q01",
-    updatedAt: new Date(),
-    partNumber: 2,
-    mustBeApproved: true,
-    translations: [
-      {
-        text: "Otázka3",
-        language: {
-          code: "cs",
-        },
-      },
-      {
-        text: "Question3",
-        language: {
-          code: "en",
-        },
-      },
-    ],
-    hiddenByGenders: [],
-  },
-  {
-    id: "p2q02",
-    updatedAt: new Date(),
-    partNumber: 2,
-    mustBeApproved: true,
-    translations: [
-      {
-        text: "Otázka4",
-        language: {
-          code: "cs",
-        },
-      },
-      {
-        text: "Question4",
-        language: {
-          code: "en",
-        },
-      },
-    ],
-    hiddenByGenders: [],
-  },
-];
-
 const id = "ID1";
 const comment = "Comment";
 
@@ -121,7 +34,7 @@ const visit: IDuplicatedVisitIncludingQuestions = {
   visualCorrectionDioptre: 0,
   email: "",
   phone: "",
-  answersIncludingQuestions: questionData.map((question, index) => ({
+  answersIncludingQuestions: questionDev.map((question, index) => ({
     questionId: question.id,
     mustBeApproved: index % 2 === 0,
     answer: index % 2 === 0 ? AnswerOption.YES : AnswerOption.NO,
@@ -187,7 +100,7 @@ vi.mock("@app/util/server_API/fetch", async () => ({
   fetchGenders: async (): Promise<IGenderDTO[]> => gendersDev,
   fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesDev,
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesDev,
-  fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionData,
+  fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionDev,
   createDuplicatedVisitFormForApproval: async (): Promise<string> => newDuplicatedVisitFormId,
 }));
 
@@ -249,7 +162,7 @@ describe("duplication form page", () => {
     await waitFor(() => expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues));
 
     const questions = await screen.findAllByRole("radiogroup");
-    expect(questions.length).toEqual(questionData.length);
+    expect(questions.length).toEqual(questionDev.length);
 
     // TODO: correct safety questions checkbox tests
     // questions.forEach(async (question, index) => {

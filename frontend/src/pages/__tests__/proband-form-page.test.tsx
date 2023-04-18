@@ -1,14 +1,8 @@
 import userEvent from "@testing-library/user-event";
-import { gendersDev, handednessesDev, nativeLanguagesDev } from "@app/__tests__/data/translated_entities";
+import { gendersDev, handednessesDev, nativeLanguagesDev, questionDev } from "@app/__tests__/data/translated_entities";
 import i18n from "@app/i18n";
 import ProbandFormPage from "@app/pages/ProbandFormPage";
-import {
-  IGenderDTO,
-  IHandednessDTO,
-  INativeLanguageDTO,
-  IQuestionDTO,
-  QuestionPartNumber,
-} from "@app/util/server_API/dto";
+import { IGenderDTO, IHandednessDTO, IHTMLCardDTO, INativeLanguageDTO, IQuestionDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -37,93 +31,10 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 //----------------------------------------------------------------------
 // Mocking custom fetch methods
 //----------------------------------------------------------------------
-const questionData: IQuestionDTO[] = [
-  {
-    id: "p1q01",
-    updatedAt: new Date(),
-    partNumber: QuestionPartNumber.ONE,
-    mustBeApproved: false,
-    translations: [
-      {
-        text: "Otázka1",
-        language: {
-          code: "cs",
-        },
-      },
-      {
-        text: "Question1",
-        language: {
-          code: "en",
-        },
-      },
-    ],
-    hiddenByGenders: [],
-  },
-  {
-    id: "p1q02",
-    updatedAt: new Date(),
-    partNumber: QuestionPartNumber.ONE,
-    mustBeApproved: false,
-    translations: [
-      {
-        text: "Otázka2",
-        language: {
-          code: "cs",
-        },
-      },
-      {
-        text: "Question2",
-        language: {
-          code: "en",
-        },
-      },
-    ],
-    hiddenByGenders: [],
-  },
-  {
-    id: "p2q01",
-    updatedAt: new Date(),
-    partNumber: QuestionPartNumber.TWO,
-    mustBeApproved: true,
-    translations: [
-      {
-        text: "Otázka3",
-        language: {
-          code: "cs",
-        },
-      },
-      {
-        text: "Question3",
-        language: {
-          code: "en",
-        },
-      },
-    ],
-    hiddenByGenders: [],
-  },
-  {
-    id: "p2q02",
-    updatedAt: new Date(),
-    partNumber: QuestionPartNumber.TWO,
-    mustBeApproved: true,
-    translations: [
-      {
-        text: "Otázka4",
-        language: {
-          code: "cs",
-        },
-      },
-      {
-        text: "Question4",
-        language: {
-          code: "en",
-        },
-      },
-    ],
-    hiddenByGenders: [],
-  },
-];
-
+const htmlCard: IHTMLCardDTO = {
+  title: "",
+  html: "",
+};
 const newProbandVisitFormId = "id123";
 
 vi.mock("@app/util/server_API/fetch", async () => ({
@@ -131,10 +42,14 @@ vi.mock("@app/util/server_API/fetch", async () => ({
   fetchGenders: async (): Promise<IGenderDTO[]> => gendersDev,
   fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesDev,
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesDev,
-  fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionData,
+  fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionDev,
   createProbandVisitForm: async (): Promise<string> => newProbandVisitFormId,
-  fetchProbandContactRequest: async (): Promise<string> => "",
-  fetchProbandContactConsent: async (): Promise<string> => "",
+  fetchEntryInfo: async (): Promise<IHTMLCardDTO> => htmlCard,
+  fetchSafetyInfo: async (): Promise<IHTMLCardDTO> => htmlCard,
+  fetchBeforeExamination: async (): Promise<IHTMLCardDTO> => htmlCard,
+  fetchExaminationConsent: async (): Promise<IHTMLCardDTO> => htmlCard,
+  fetchProbandContactRequest: async (): Promise<IHTMLCardDTO> => htmlCard,
+  fetchProbandContactConsent: async (): Promise<IHTMLCardDTO> => htmlCard,
 }));
 
 //----------------------------------------------------------------------
@@ -183,7 +98,7 @@ describe("proband form page", () => {
       })
     );
     const questions = await screen.findAllByRole("radiogroup");
-    expect(questions.length).toEqual(questionData.length);
+    expect(questions.length).toEqual(questionDev.length);
   });
 
   test("birthdate and MALE gender is filled automatically from valid personal ID value", async () => {
