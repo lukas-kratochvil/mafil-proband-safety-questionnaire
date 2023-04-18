@@ -3,6 +3,11 @@ import { OperatorDev } from "@app/hooks/auth/auth-dev";
 import { AnswerOption, FormAnswer, FormPropType } from "@app/model/form";
 import { IProjectDTO } from "@app/util/mafildb_API/dto";
 import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "@app/util/server_API/dto";
+import { IButtonProps } from "@app/util/utils";
+
+export interface ISubmitButtonProps extends Omit<IButtonProps, "onClick"> {
+  onClick: (data: FormPropType) => Promise<void>;
+}
 
 export type GenderCode = "M" | "F" | "O";
 
