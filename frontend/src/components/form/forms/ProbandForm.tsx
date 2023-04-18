@@ -44,7 +44,7 @@ export const ProbandForm = () => {
   const contactsButtons: IFormButtonsProps = {
     submitButtonProps: {
       titleLocalizationKey: "form.common.buttons.complete",
-      onClick: async (data: FormPropType) => {
+      onClick: async (data) => {
         createProbandVisitForm(data);
         navigate(RoutingPaths.PROBAND_HOME);
       },
@@ -55,7 +55,7 @@ export const ProbandForm = () => {
   const contactsRequestButtons: IFormButtonsProps = {
     submitButtonProps: {
       titleLocalizationKey: "form.common.buttons.agree",
-      onClick: async (data: FormPropType) => {
+      onClick: async (data) => {
         let isValidationError = false;
 
         if (data.email === "") {
