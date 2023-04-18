@@ -1,4 +1,4 @@
-import { genders } from "@app/data/translated_entities_data";
+import { genders } from "@app/__tests__/data/translated_entities";
 import { CzechPersonalId, getPersonalIdPart } from "../personal-id";
 
 describe("personal ID", () => {

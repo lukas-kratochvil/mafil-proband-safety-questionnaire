@@ -1,7 +1,7 @@
 import userEvent from "@testing-library/user-event";
 import { format } from "date-fns";
+import { genders, handednesses, nativeLanguages } from "@app/__tests__/data/translated_entities";
 import { getProjectText } from "@app/components/form/util/utils";
-import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
 import i18n from "@app/i18n";
 import PhantomFormPage from "@app/pages/PhantomFormPage";
 import { devicesDev, projectsDev } from "@app/util/mafildb_API/data.dev";

@@ -1,4 +1,4 @@
-import { genders, handednesses, nativeLanguages } from "@app/data/translated_entities_data";
+import { genders, handednesses, nativeLanguages } from "@app/__tests__/data/translated_entities";
 import { AnswerOption } from "@app/model/form";
 import { IDuplicatedVisitIncludingQuestions, VisualCorrection } from "@app/model/visit";
 import { VisitState } from "@app/util/mafildb_API/dto";
