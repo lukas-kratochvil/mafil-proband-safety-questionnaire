@@ -1,5 +1,5 @@
-import { LanguageCode } from "@app/i18n";
 import { AnswerOption } from "@app/model/form";
+import { ProbandVisitLanguageCode } from "@app/model/visit";
 
 export interface IProjectDTO {
   id: string;
@@ -28,16 +28,13 @@ interface IAnswerDTO {
   comment: string;
 }
 
-export interface IVisitDTO {
-  visit_name: string;
-  date: Date; // TODO: not sure if this attribute is string or Date
+export interface ICreateVisitInput {
   state: VisitState;
   is_phantom: boolean;
-  proband_language_code: LanguageCode;
+  proband_language_code: ProbandVisitLanguageCode;
   project_id: string;
   device_id: string;
   measurement_date: Date; // TODO: not sure if this attribute is string or Date
-  finalizer_uco: string;
   name: string;
   surname: string;
   personal_id: string;
@@ -51,7 +48,20 @@ export interface IVisitDTO {
   email: string;
   phone: string;
   answers: IAnswerDTO[];
+  finalizer_uco: string;
+  finalization_date: Date;
+  approver_uco?: string;
+  approval_date?: Date;
+  disapproval_reason?: string;
 }
+
+export interface IVisitDTO
+  extends Omit<ICreateVisitInput, "finalization_date" | "approver_uco" | "approval_date" | "disapproval_reason"> {
+  visit_name: string;
+  date: Date; // TODO: not sure if this attribute is string or Date
+}
+
+export type IUpdateVisitStateInput = Pick<IVisitDTO, "visit_name" | "state">
 
 export interface IVisitPdfDTO {
   file_content: string; // Base64 encoded PDF content

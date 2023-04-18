@@ -14,6 +14,8 @@ export enum VisualCorrection {
   NO,
 }
 
+export type ProbandVisitLanguageCode = LanguageCode | "";
+
 interface IAnswer {
   questionId: string;
   answer: AnswerOption;
@@ -25,7 +27,7 @@ interface IVisit {
   visitId: string;
   state: VisitState;
   isPhantom: boolean;
-  probandLanguageCode: LanguageCode;
+  probandLanguageCode: ProbandVisitLanguageCode;
   projectId: string;
   deviceId: string;
   measurementDate: Date;

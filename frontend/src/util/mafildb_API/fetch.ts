@@ -1,11 +1,23 @@
 import axiosConfig from "@app/axios-config";
-import { LanguageCode } from "@app/i18n";
 import { AnswerOption, FormPropType } from "@app/model/form";
-import { IDuplicatedVisitIncludingQuestions, IRecentVisitsTableVisit, IVisitDetail } from "@app/model/visit";
+import {
+  IDuplicatedVisitIncludingQuestions,
+  IRecentVisitsTableVisit,
+  IVisitDetail,
+  ProbandVisitLanguageCode,
+} from "@app/model/visit";
 import { devicesDev, dummyVisits, generateVisitId, projectsDev } from "@app/util/mafildb_API/data.dev";
 import { VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import { fetchGender, fetchHandedness, fetchNativeLanguage, fetchOperator, fetchQuestion } from "../server_API/fetch";
-import { IDeviceDTO, IProjectDTO, IVisitDTO, IVisitPdfDTO, VisitState } from "./dto";
+import {
+  ICreateVisitInput,
+  IDeviceDTO,
+  IProjectDTO,
+  IUpdateVisitStateInput,
+  IVisitDTO,
+  IVisitPdfDTO,
+  VisitState,
+} from "./dto";
 import {
   CreateVisitResponse,
   DevicesResponse,
@@ -102,7 +114,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
   return visits;
 };
 
-const fetchVisit = async (visitId: string | undefined): Promise<IVisitDTO | never> => {
+const fetchVisit = async (visitId: string): Promise<IVisitDTO | never> => {
   const params = {
     filter: { visit_name: visitId },
   };
@@ -118,12 +130,16 @@ const fetchVisit = async (visitId: string | undefined): Promise<IVisitDTO | neve
 
 export const fetchDuplicatedVisit = async (
   visitId: string | undefined
-): Promise<IDuplicatedVisitIncludingQuestions | undefined> => {
+): Promise<IDuplicatedVisitIncludingQuestions | never> => {
+  if (visitId === undefined) {
+    throw new Error("Missing visit ID!");
+  }
+
   if (import.meta.env.DEV) {
     const visit = dummyVisits.find((dummyVisit) => dummyVisit.visit_name === visitId);
 
     if (visit === undefined) {
-      return undefined;
+      throw new Error("Visit not found!");
     }
 
     const [gender, nativeLanguage, handedness, answersIncludingQuestions] = await Promise.all([
@@ -195,9 +211,9 @@ const fetchVisitPDF = async (visitId: string): Promise<IVisitPdfDTO> => {
   return data.file;
 };
 
-export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVisitDetail | undefined> => {
+export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVisitDetail | never> => {
   if (visitId === undefined) {
-    return undefined;
+    throw new Error("Missing visit ID!");
   }
 
   if (import.meta.env.DEV) {
@@ -229,10 +245,10 @@ export const createVisit = async (
   state: VisitState,
   finalizerUco: string | undefined,
   finalizedAt: Date,
-  probandLanguageCode?: LanguageCode,
+  probandLanguageCode?: ProbandVisitLanguageCode,
   approverUco?: string,
   approvedAt?: Date
-): Promise<string | undefined> => {
+): Promise<string | never> => {
   if (finalizerUco === undefined) {
     throw new Error("Missing UCO of the operator who finalized the visit!");
   }
@@ -244,7 +260,7 @@ export const createVisit = async (
       visit_name: generateVisitId(),
       date: new Date(),
       is_phantom: state === VisitState.PHANTOM_DONE,
-      proband_language_code: probandLanguageCode || "cs",
+      proband_language_code: probandLanguageCode || "",
       finalizer_uco: finalizerUco || "",
       measurement_date: visitFormData.measuredAt || new Date(),
       project_id: visitFormData.project?.id || "",
@@ -266,44 +282,51 @@ export const createVisit = async (
         comment: answer.comment,
       })),
     });
-    return undefined;
+    return dummyVisits[dummyVisits.length - 1].visit_name;
   }
 
-  const createData = {
+  const createData: ICreateVisitInput = {
     state,
     is_phantom: state === VisitState.PHANTOM_DONE,
-    proband_language_code: probandLanguageCode,
-    project_id: visitFormData.project?.id,
-    device_id: visitFormData.device?.id,
-    measurement_date: visitFormData.measuredAt,
+    proband_language_code: probandLanguageCode || "",
+    project_id: visitFormData.project?.id ?? "",
+    device_id: visitFormData.device?.id ?? "",
+    measurement_date: visitFormData.measuredAt || new Date(),
     name: visitFormData.name,
     surname: visitFormData.surname,
     personal_id: visitFormData.personalId,
-    birthdate: visitFormData.birthdate,
-    gender_code: visitFormData.gender?.code,
-    native_language_code: visitFormData.nativeLanguage?.code,
-    height_cm: visitFormData.heightCm,
-    weight_kg: visitFormData.weightKg,
-    handedness_code: visitFormData.handedness?.code,
-    visual_correction_dioptre: visitFormData.visualCorrectionDioptre,
+    birthdate: visitFormData.birthdate || new Date(),
+    gender_code: visitFormData.gender?.code || "",
+    native_language_code: visitFormData.nativeLanguage?.code || "",
+    height_cm: typeof visitFormData.heightCm === "string" ? +visitFormData.heightCm : visitFormData.heightCm,
+    weight_kg: typeof visitFormData.weightKg === "string" ? +visitFormData.weightKg : visitFormData.weightKg,
+    handedness_code: visitFormData.handedness?.code || "",
+    visual_correction_dioptre:
+      typeof visitFormData.visualCorrectionDioptre === "string"
+        ? +visitFormData.visualCorrectionDioptre
+        : visitFormData.visualCorrectionDioptre,
     email: visitFormData.email,
     phone: visitFormData.phone,
     answers: visitFormData.answers.map((answer) => ({
       question_id: answer.questionId,
-      answer: answer.answer,
+      answer: answer.answer ?? AnswerOption.NO,
       comment: answer.comment,
     })),
-    disapproval_reason: visitFormData.disapprovalReason,
     finalizer_uco: finalizerUco,
     finalization_date: finalizedAt,
-    approver_uco: approverUco,
+    approver_uco: approverUco || "",
     approval_date: approvedAt,
+    disapproval_reason: visitFormData.disapprovalReason || "",
   };
   const { data } = await axiosConfig.mafildbApi.post<CreateVisitResponse>("visit", createData);
   return data.visit_name;
 };
 
-export const updateVisitState = async (visitId: string | undefined, state: VisitState): Promise<string | undefined> => {
+export const updateVisitState = async (visitId: string | undefined, state: VisitState): Promise<string | never> => {
+  if (visitId === undefined) {
+    throw new Error("Missing visit ID!");
+  }
+
   if (import.meta.env.DEV) {
     const visit = dummyVisits.find((dummyVisit) => dummyVisit.visit_name === visitId);
 
@@ -315,7 +338,7 @@ export const updateVisitState = async (visitId: string | undefined, state: Visit
     return visit.visit_name;
   }
 
-  const updateData = {
+  const updateData: IUpdateVisitStateInput = {
     visit_name: visitId,
     state,
   };

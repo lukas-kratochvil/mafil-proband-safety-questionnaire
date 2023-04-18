@@ -200,7 +200,11 @@ export const fetchWaitingRoomTableVisitForms = async (): Promise<IWaitingRoomTab
 
 export const fetchWaitingRoomVisitForm = async (
   visitId: string | undefined
-): Promise<IWaitingRoomVisitFormIncludingQuestions | undefined> => {
+): Promise<IWaitingRoomVisitFormIncludingQuestions | never> => {
+  if (visitId === undefined) {
+    throw new Error("Missing visit ID!");
+  }
+
   const variables = { id: visitId };
   const { data } = await axiosConfig.serverApi.post<WaitingRoomVisitFormResponse>("", {
     query: GET_WAITING_ROOM_VISIT_FORM,
@@ -227,7 +231,11 @@ export const fetchApprovalRoomTableVisitForms = async (): Promise<IApprovalRoomT
 
 export const fetchApprovalRoomVisitForm = async (
   visitId: string | undefined
-): Promise<IApprovalRoomVisitFormIncludingQuestionsDTO | undefined> => {
+): Promise<IApprovalRoomVisitFormIncludingQuestionsDTO | never> => {
+  if (visitId === undefined) {
+    throw new Error("Missing visit ID!");
+  }
+
   const variables = { id: visitId };
   const { data } = await axiosConfig.serverApi.post<ApprovalRoomVisitFormResponse>("", {
     query: GET_APPROVAL_ROOM_VISIT_FORM,
@@ -277,6 +285,10 @@ export const createDuplicatedVisitFormForApproval = async (
   visitFormData: FormPropType,
   finalizerId: string | undefined
 ): Promise<string> => {
+  if (finalizerId === undefined) {
+    throw new Error("Missing ID of the operator who finalized the visit!");
+  }
+
   const variables: ICreateDuplicatedVisitFormForApprovalInput = {
     createVisitFormInput: {
       state: "IN_APPROVAL",
@@ -299,7 +311,7 @@ export const createDuplicatedVisitFormForApproval = async (
         deviceId: visitFormData.device?.id ?? "",
         deviceName: visitFormData.device?.name ?? "",
         measuredAt: visitFormData.measuredAt ?? new Date(),
-        finalizerId: finalizerId ?? "",
+        finalizerId,
         finalizedAt: new Date(),
       },
       probandLanguageCode: i18n.language as LanguageCode,
