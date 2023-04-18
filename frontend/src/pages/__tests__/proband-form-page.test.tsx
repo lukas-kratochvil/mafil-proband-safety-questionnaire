@@ -1,5 +1,5 @@
 import userEvent from "@testing-library/user-event";
-import { genders, handednesses, nativeLanguages } from "@app/__tests__/data/translated_entities";
+import { gendersDev, handednessesDev, nativeLanguagesDev } from "@app/__tests__/data/translated_entities";
 import i18n from "@app/i18n";
 import ProbandFormPage from "@app/pages/ProbandFormPage";
 import {
@@ -128,9 +128,9 @@ const newProbandVisitFormId = "id123";
 
 vi.mock("@app/util/server_API/fetch", async () => ({
   ...((await vi.importActual("@app/util/server_API/fetch")) as Record<string, unknown>),
-  fetchGenders: async (): Promise<IGenderDTO[]> => genders,
-  fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguages,
-  fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednesses,
+  fetchGenders: async (): Promise<IGenderDTO[]> => gendersDev,
+  fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesDev,
+  fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesDev,
   fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionData,
   createProbandVisitForm: async (): Promise<string> => newProbandVisitFormId,
   fetchProbandContactRequest: async (): Promise<string> => "",
@@ -150,10 +150,10 @@ describe("proband form page", () => {
   });
 
   // Data
-  const genderMan = genders[0].translations[0].text;
-  const genderWoman = genders[1].translations[0].text;
-  const nativeLanguageCzech = nativeLanguages[0].translations[0].text;
-  const handednessUndetermined = handednesses[3].translations[0].text;
+  const genderMan = gendersDev[0].translations[0].text;
+  const genderWoman = gendersDev[1].translations[0].text;
+  const nativeLanguageCzech = nativeLanguagesDev[0].translations[0].text;
+  const handednessUndetermined = handednessesDev[3].translations[0].text;
 
   test("contains correct form buttons", async () => {
     setup();
@@ -232,7 +232,7 @@ describe("proband form page", () => {
   // test("auto-fill 0 for the visual correction value when visual correction is YES", async () => {
   //   setup();
   //   const user = userEvent.setup();
-  //   const visualCorrectionInput = screen.getByLabelText("visualCorrection");
+  //   const visualCorrectionInput = screen.getByRole("combobox", { name: "visualCorrection" });
   //   const visualCorrectionDioptreInput = screen.getByLabelText("visualCorrectionDioptre");
 
   //   await user.click(visualCorrectionInput);
@@ -262,7 +262,7 @@ describe("proband form page", () => {
     // gender is filled automatically
     const expectedGender = genderWoman;
 
-    await user.click(screen.getByLabelText("nativeLanguage"));
+    await user.click(screen.getByRole("combobox", { name: "nativeLanguage" }));
     const selectedNativeLanguage = nativeLanguageCzech;
     await user.click(screen.getByRole("option", { name: selectedNativeLanguage }));
 
@@ -272,7 +272,7 @@ describe("proband form page", () => {
     const typedWeight = "70";
     await user.type(screen.getByLabelText("weightKg"), typedWeight);
 
-    await user.click(screen.getByLabelText("visualCorrection"));
+    await user.click(screen.getByRole("combobox", { name: "visualCorrection" }));
     const selectedVisualCorrection = "form.enums.visualCorrection.YES";
     await user.click(screen.getByRole("option", { name: selectedVisualCorrection }));
 
@@ -280,7 +280,7 @@ describe("proband form page", () => {
     await user.clear(screen.getByLabelText("visualCorrectionDioptre"));
     await user.type(screen.getByLabelText("visualCorrectionDioptre"), typedVisualCorrectionDioptre);
 
-    await user.click(screen.getByLabelText("handedness"));
+    await user.click(screen.getByRole("combobox", { name: "handedness" }));
     const selectedHandedness = handednessUndetermined;
     await user.click(screen.getByRole("option", { name: selectedHandedness }));
 
@@ -349,7 +349,7 @@ describe("proband form page", () => {
     // gender is filled automatically
     const expectedGender = genderWoman;
 
-    await user.click(screen.getByLabelText("nativeLanguage"));
+    await user.click(screen.getByRole("combobox", { name: "nativeLanguage" }));
     const selectedNativeLanguage = nativeLanguageCzech;
     await user.click(screen.getByRole("option", { name: selectedNativeLanguage }));
 
@@ -359,7 +359,7 @@ describe("proband form page", () => {
     const typedWeight = "70";
     await user.type(screen.getByLabelText("weightKg"), typedWeight);
 
-    await user.click(screen.getByLabelText("visualCorrection"));
+    await user.click(screen.getByRole("combobox", { name: "visualCorrection" }));
     const selectedVisualCorrection = "form.enums.visualCorrection.YES";
     await user.click(screen.getByRole("option", { name: selectedVisualCorrection }));
 
@@ -367,7 +367,7 @@ describe("proband form page", () => {
     await user.clear(screen.getByLabelText("visualCorrectionDioptre"));
     await user.type(screen.getByLabelText("visualCorrectionDioptre"), typedVisualCorrectionDioptre);
 
-    await user.click(screen.getByLabelText("handedness"));
+    await user.click(screen.getByRole("combobox", { name: "handedness" }));
     const selectedHandedness = handednessUndetermined;
     await user.click(screen.getByRole("option", { name: selectedHandedness }));
 
@@ -418,7 +418,7 @@ describe("proband form page", () => {
     // gender is filled automatically
     const expectedGender = genderWoman;
 
-    await user.click(screen.getByLabelText("nativeLanguage"));
+    await user.click(screen.getByRole("combobox", { name: "nativeLanguage" }));
     const selectedNativeLanguage = nativeLanguageCzech;
     await user.click(screen.getByRole("option", { name: selectedNativeLanguage }));
 
@@ -428,7 +428,7 @@ describe("proband form page", () => {
     const typedWeight = "70";
     await user.type(screen.getByLabelText("weightKg"), typedWeight);
 
-    await user.click(screen.getByLabelText("visualCorrection"));
+    await user.click(screen.getByRole("combobox", { name: "visualCorrection" }));
     const selectedVisualCorrection = "form.enums.visualCorrection.YES";
     await user.click(screen.getByRole("option", { name: selectedVisualCorrection }));
 
@@ -436,7 +436,7 @@ describe("proband form page", () => {
     await user.clear(screen.getByLabelText("visualCorrectionDioptre"));
     await user.type(screen.getByLabelText("visualCorrectionDioptre"), typedVisualCorrectionDioptre);
 
-    await user.click(screen.getByLabelText("handedness"));
+    await user.click(screen.getByRole("combobox", { name: "handedness" }));
     const selectedHandedness = handednessUndetermined;
     await user.click(screen.getByRole("option", { name: selectedHandedness }));
 
@@ -498,7 +498,7 @@ describe("proband form page", () => {
     // gender is filled automatically
     const expectedGender = genderWoman;
 
-    await user.click(screen.getByLabelText("nativeLanguage"));
+    await user.click(screen.getByRole("combobox", { name: "nativeLanguage" }));
     const selectedNativeLanguage = nativeLanguageCzech;
     await user.click(screen.getByRole("option", { name: selectedNativeLanguage }));
 
@@ -508,7 +508,7 @@ describe("proband form page", () => {
     const typedWeight = "70";
     await user.type(screen.getByLabelText("weightKg"), typedWeight);
 
-    await user.click(screen.getByLabelText("visualCorrection"));
+    await user.click(screen.getByRole("combobox", { name: "visualCorrection" }));
     const selectedVisualCorrection = "form.enums.visualCorrection.YES";
     await user.click(screen.getByRole("option", { name: selectedVisualCorrection }));
 
@@ -516,7 +516,7 @@ describe("proband form page", () => {
     await user.clear(screen.getByLabelText("visualCorrectionDioptre"));
     await user.type(screen.getByLabelText("visualCorrectionDioptre"), typedVisualCorrectionDioptre);
 
-    await user.click(screen.getByLabelText("handedness"));
+    await user.click(screen.getByRole("combobox", { name: "handedness" }));
     const selectedHandedness = handednessUndetermined;
     await user.click(screen.getByRole("option", { name: selectedHandedness }));
 

@@ -1,4 +1,4 @@
-import { genders, handednesses, nativeLanguages } from "@app/__tests__/data/translated_entities";
+import { gendersDev, handednessesDev, nativeLanguagesDev } from "@app/__tests__/data/translated_entities";
 import { AnswerOption } from "@app/model/form";
 import { IDuplicatedVisitIncludingQuestions, VisualCorrection } from "@app/model/visit";
 import { VisitState } from "@app/util/mafildb_API/dto";
@@ -22,12 +22,12 @@ const waitingRoomVisitForm: IWaitingRoomVisitFormIncludingQuestions = {
   surname: "Surname",
   personalId: "000000",
   birthdate: new Date(),
-  gender: genders[0],
-  nativeLanguage: nativeLanguages[2],
+  gender: gendersDev[0],
+  nativeLanguage: nativeLanguagesDev[2],
   heightCm: 180,
   weightKg: 80,
   visualCorrectionDioptre: 1,
-  handedness: handednesses[3],
+  handedness: handednessesDev[3],
   email: "name.surname@email.com",
   phone: "123456789",
   answersIncludingQuestions: [
@@ -76,12 +76,12 @@ const duplicatedVisit: IDuplicatedVisitIncludingQuestions = {
   surname: "Surname",
   personalId: "000000",
   birthdate: new Date(),
-  gender: genders[0],
-  nativeLanguage: nativeLanguages[2],
+  gender: gendersDev[0],
+  nativeLanguage: nativeLanguagesDev[2],
   heightCm: 180,
   weightKg: 80,
   visualCorrectionDioptre: 1,
-  handedness: handednesses[3],
+  handedness: handednessesDev[3],
   email: "name.surname@email.com",
   phone: "123456789",
   answersIncludingQuestions: [
@@ -109,12 +109,12 @@ const visitNotCompleted: IDuplicatedVisitIncludingQuestions = {
   surname: "Surname",
   personalId: "000000",
   birthdate: new Date(),
-  gender: genders[0],
-  nativeLanguage: nativeLanguages[2],
+  gender: gendersDev[0],
+  nativeLanguage: nativeLanguagesDev[2],
   heightCm: 180,
   weightKg: 80,
   visualCorrectionDioptre: 0,
-  handedness: handednesses[3],
+  handedness: handednessesDev[3],
   email: "",
   phone: "",
   answersIncludingQuestions: [

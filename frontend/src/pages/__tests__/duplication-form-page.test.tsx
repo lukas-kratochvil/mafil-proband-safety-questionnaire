@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { genders, handednesses, nativeLanguages } from "@app/__tests__/data/translated_entities";
+import { gendersDev, handednessesDev, nativeLanguagesDev } from "@app/__tests__/data/translated_entities";
 import i18n from "@app/i18n";
 import { AnswerOption } from "@app/model/form";
 import { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
@@ -113,11 +113,11 @@ const visit: IDuplicatedVisitIncludingQuestions = {
   surname: "Wick",
   personalId: "0123456789",
   birthdate: new Date(1980, 8, 24),
-  gender: genders[0],
+  gender: gendersDev[0],
   heightCm: 179,
   weightKg: 75,
-  nativeLanguage: nativeLanguages[0],
-  handedness: handednesses[0],
+  nativeLanguage: nativeLanguagesDev[0],
+  handedness: handednessesDev[0],
   visualCorrectionDioptre: 0,
   email: "",
   phone: "",
@@ -184,9 +184,9 @@ const newDuplicatedVisitFormId = "id123";
 
 vi.mock("@app/util/server_API/fetch", async () => ({
   ...((await vi.importActual("@app/util/server_API/fetch")) as Record<string, unknown>),
-  fetchGenders: async (): Promise<IGenderDTO[]> => genders,
-  fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguages,
-  fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednesses,
+  fetchGenders: async (): Promise<IGenderDTO[]> => gendersDev,
+  fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesDev,
+  fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesDev,
   fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionData,
   createDuplicatedVisitFormForApproval: async (): Promise<string> => newDuplicatedVisitFormId,
 }));
@@ -195,7 +195,7 @@ vi.mock("@app/util/mafildb_API/fetch", async () => ({
   ...((await vi.importActual("@app/util/mafildb_API/fetch")) as Record<string, unknown>),
   fetchProjects: async (): Promise<IProjectDTO[]> => projectsDev,
   fetchDevices: async (): Promise<IDeviceDTO[]> => devicesDev,
-  fetchVisitForDuplication: async (): Promise<IDuplicatedVisitIncludingQuestions> => visit,
+  fetchDuplicatedVisit: async (): Promise<IDuplicatedVisitIncludingQuestions> => visit,
 }));
 
 //----------------------------------------------------------------------
