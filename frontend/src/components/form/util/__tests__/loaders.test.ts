@@ -47,8 +47,14 @@ const waitingRoomVisitForm: IWaitingRoomVisitFormIncludingQuestions = {
 const approvalRoomVisitForm: IApprovalRoomVisitFormIncludingQuestionsDTO = {
   ...waitingRoomVisitForm,
   answersIncludingQuestions: waitingRoomVisitForm.answersIncludingQuestions.map((answer) => ({
-    ...answer,
+    questionId: answer.questionId,
+    answer: answer.answer,
     comment: "comment",
+    hiddenByGenders: answer.hiddenByGenders,
+    mustBeApproved: answer.mustBeApproved,
+    partNumber: answer.partNumber,
+    translations: answer.translations,
+    updatedAt: answer.updatedAt,
   })),
   additionalInfo: {
     projectId: "1552314",

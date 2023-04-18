@@ -80,7 +80,7 @@ export const getModifiedFieldsOnly = (
     );
   }
 
-  const diffRest = updatedDiff(initialDataRest, submittedDataRest);
+  const diffRest: Partial<ValidatedFormData> = updatedDiff(initialDataRest, submittedDataRest);
   return { ...diffRest, answers: diffAnswers };
 };
 
@@ -100,8 +100,10 @@ export const getValidatedFormData = (data: FormPropType): ValidatedFormData => (
   visualCorrectionDioptre:
     typeof data.visualCorrectionDioptre === "string" ? +data.visualCorrectionDioptre : data.visualCorrectionDioptre,
   answers: data.answers.map((answer) => ({
-    ...answer,
+    questionId: answer.questionId,
+    mustBeApproved: answer.mustBeApproved,
     answer: answer.answer as AnswerOption,
+    comment: answer.comment,
   })),
   email: data.email,
   phone: data.phone,

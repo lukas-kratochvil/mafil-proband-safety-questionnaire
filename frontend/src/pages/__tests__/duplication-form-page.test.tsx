@@ -122,11 +122,14 @@ const visit: IDuplicatedVisitIncludingQuestions = {
   email: "",
   phone: "",
   answersIncludingQuestions: questionData.map((question, index) => ({
-    ...question,
     questionId: question.id,
     mustBeApproved: index % 2 === 0,
     answer: index % 2 === 0 ? AnswerOption.YES : AnswerOption.NO,
     comment: index % 2 === 0 ? comment : "",
+    hiddenByGenders: question.hiddenByGenders,
+    partNumber: question.partNumber,
+    translations: question.translations,
+    updatedAt: question.updatedAt,
   })),
 };
 

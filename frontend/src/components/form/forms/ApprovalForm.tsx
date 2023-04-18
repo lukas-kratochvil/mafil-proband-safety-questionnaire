@@ -43,7 +43,20 @@ export const ApprovalForm = () => {
 
   useEffect(() => {
     if (visitForm !== undefined) {
-      setQacs(visitForm.answersIncludingQuestions.map((answer, index) => ({ ...answer, index })));
+      setQacs(
+        visitForm.answersIncludingQuestions.map((answer, index) => ({
+          index,
+          questionId: answer.questionId,
+          answer: answer.answer,
+          comment: answer.comment,
+          hiddenByGenders: answer.hiddenByGenders,
+          mustBeApproved: answer.mustBeApproved,
+          partNumber: answer.partNumber,
+          translations: answer.translations,
+          updatedAt: answer.updatedAt,
+        }))
+      );
+
       // TODO: try if there's a need for isLoading flag due to the slow form initialization
       const defaultValues = loadFormDefaultValuesFromApprovalRoomVisitForm(visitForm);
       type DefaultValuesPropertyType = keyof typeof defaultValues;

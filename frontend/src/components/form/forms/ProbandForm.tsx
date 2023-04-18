@@ -94,11 +94,15 @@ export const ProbandForm = () => {
     if (questions !== undefined && step === ProbandFormStep.EXAMINATION) {
       setQacs(
         questions.map((question, index) => ({
-          ...question,
           index,
           questionId: question.id,
           answer: null,
           comment: "",
+          hiddenByGenders: question.hiddenByGenders,
+          mustBeApproved: question.mustBeApproved,
+          partNumber: question.partNumber,
+          translations: question.translations,
+          updatedAt: question.updatedAt,
         }))
       );
     }

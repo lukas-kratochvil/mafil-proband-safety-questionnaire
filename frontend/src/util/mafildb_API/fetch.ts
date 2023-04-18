@@ -74,7 +74,11 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
           heightCm: visit.height_cm,
           weightKg: visit.weight_kg,
           visualCorrectionDioptre: visit.visual_correction_dioptre,
-          answers: visit.answers.map((answer) => ({ ...answer, questionId: answer.question_id })),
+          answers: visit.answers.map((answer) => ({
+            questionId: answer.question_id,
+            answer: answer.answer,
+            comment: answer.comment,
+          })),
         });
       }
     });
@@ -107,7 +111,11 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
         heightCm: visit.height_cm,
         weightKg: visit.weight_kg,
         visualCorrectionDioptre: visit.visual_correction_dioptre,
-        answers: visit.answers.map((answer) => ({ ...answer, questionId: answer.question_id })),
+        answers: visit.answers.map((answer) => ({
+          questionId: answer.question_id,
+          answer: answer.answer,
+          comment: answer.comment,
+        })),
       });
     }
   });
@@ -149,7 +157,16 @@ export const fetchDuplicatedVisit = async (
       Promise.all(
         visit.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
           const question = await fetchQuestion(answer.question_id);
-          return { ...question, questionId: question.id, answer: answer.answer, comment: answer.comment };
+          return {
+            answer: answer.answer,
+            comment: answer.comment,
+            questionId: question.id,
+            mustBeApproved: question.mustBeApproved,
+            partNumber: question.partNumber,
+            hiddenByGenders: question.hiddenByGenders,
+            translations: question.translations,
+            updatedAt: question.updatedAt,
+          };
         })
       ),
     ]);
@@ -178,7 +195,16 @@ export const fetchDuplicatedVisit = async (
     Promise.all(
       visit.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
         const question = await fetchQuestion(answer.question_id);
-        return { ...question, questionId: question.id, answer: answer.answer, comment: answer.comment };
+        return {
+          answer: answer.answer,
+          comment: answer.comment,
+          questionId: question.id,
+          mustBeApproved: question.mustBeApproved,
+          partNumber: question.partNumber,
+          hiddenByGenders: question.hiddenByGenders,
+          translations: question.translations,
+          updatedAt: question.updatedAt,
+        };
       })
     ),
   ]);
@@ -274,8 +300,9 @@ export const createVisit = async (
       visual_correction_dioptre: visitFormData.visualCorrectionDioptre,
       handedness_code: visitFormData.handedness.code,
       answers: visitFormData.answers.map((answer) => ({
-        ...answer,
         question_id: answer.questionId,
+        answer: answer.answer,
+        comment: answer.comment,
       })),
     });
     return dummyVisits[dummyVisits.length - 1].visit_name;
@@ -301,8 +328,9 @@ export const createVisit = async (
     email: visitFormData.email,
     phone: visitFormData.phone,
     answers: visitFormData.answers.map((answer) => ({
-      ...answer,
       question_id: answer.questionId,
+      answer: answer.answer,
+      comment: answer.comment,
     })),
     finalizer_uco: finalizerUco,
     finalization_date: finalizedAt,

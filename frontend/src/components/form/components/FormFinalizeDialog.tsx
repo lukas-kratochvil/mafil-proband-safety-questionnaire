@@ -21,6 +21,7 @@ interface IFormFinalizeDialogProps {
   onContinue: (data: ValidatedFormData) => Promise<void>;
 }
 
+// Warning dialog that the visit form has to be approved by an operator with higher permissions
 export const FormFinalizeDialog = ({ isOpen, setIsOpen, onContinue }: IFormFinalizeDialogProps) => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.finalizeDialog" });
@@ -33,7 +34,6 @@ export const FormFinalizeDialog = ({ isOpen, setIsOpen, onContinue }: IFormFinal
 
   return (
     <Dialog
-      // Warning dialog that the visit form has to be approved by an operator with higher permissions
       open={isOpen}
       fullScreen={matchesDownSmBreakpoint}
     >

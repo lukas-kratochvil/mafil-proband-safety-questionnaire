@@ -214,7 +214,16 @@ export const fetchWaitingRoomVisitForm = async (
   const answersIncludingQuestions = await Promise.all(
     visitForm.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
       const question = await fetchQuestion(answer.questionId);
-      return { ...answer, ...question, comment: "" };
+      return {
+        answer: answer.answer,
+        comment: "",
+        questionId: question.id,
+        mustBeApproved: question.mustBeApproved,
+        partNumber: question.partNumber,
+        hiddenByGenders: question.hiddenByGenders,
+        translations: question.translations,
+        updatedAt: question.updatedAt,
+      };
     })
   );
   return { ...visitForm, probandLanguageCode: visitForm.probandLanguage.code, answersIncludingQuestions };
@@ -245,7 +254,16 @@ export const fetchApprovalRoomVisitForm = async (
   const answersIncludingQuestions = await Promise.all(
     visitForm.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
       const question = await fetchQuestion(answer.questionId);
-      return { ...answer, ...question };
+      return {
+        answer: answer.answer,
+        comment: answer.comment,
+        questionId: question.id,
+        mustBeApproved: question.mustBeApproved,
+        partNumber: question.partNumber,
+        hiddenByGenders: question.hiddenByGenders,
+        translations: question.translations,
+        updatedAt: question.updatedAt,
+      };
     })
   );
   return { ...visitForm, probandLanguageCode: visitForm.probandLanguage.code, answersIncludingQuestions };
@@ -267,7 +285,10 @@ export const createProbandVisitForm = async (visitFormData: ValidatedFormData): 
       handednessId: visitFormData.handedness.id,
       email: visitFormData.email,
       phone: visitFormData.phone,
-      answers: visitFormData.answers.map((answer) => ({ ...answer })),
+      answers: visitFormData.answers.map((answer) => ({
+        questionId: answer.questionId,
+        answer: answer.answer,
+      })),
     },
   };
   const { data } = await axiosConfig.serverApi.post<CreateVisitFormResponse>("", {
@@ -310,7 +331,11 @@ export const createDuplicatedVisitFormForApproval = async (
         finalizedAt: new Date(),
       },
       probandLanguageCode: i18n.language as LanguageCode,
-      answers: visitFormData.answers.map((answer) => ({ ...answer })),
+      answers: visitFormData.answers.map((answer) => ({
+        questionId: answer.questionId,
+        answer: answer.answer,
+        comment: answer.comment,
+      })),
     },
   };
   const { data } = await axiosConfig.serverApi.post<CreateVisitFormResponse>("", {
@@ -350,7 +375,11 @@ export const sendVisitFormForApproval = async (
         finalizedAt: new Date(),
         finalizerId,
       },
-      answers: visitFormData.answers?.map((answer) => ({ ...answer })),
+      answers: visitFormData.answers?.map((answer) => ({
+        questionId: answer.questionId,
+        answer: answer.answer,
+        comment: answer.comment,
+      })),
     },
   };
   const { data } = await axiosConfig.serverApi.post<UpdateVisitFormResponse>("", {
