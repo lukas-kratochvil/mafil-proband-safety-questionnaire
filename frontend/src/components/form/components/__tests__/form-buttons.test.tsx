@@ -1,6 +1,6 @@
 import { IButtonProps } from "@app/util/utils";
 import { render, screen } from "@test-utils";
-import { ISubmitButtonProps } from "../../util/utils";
+import { IFormSubmitButtonProps } from "../../util/utils";
 import { FormButtons } from "../FormButtons";
 
 describe("form buttons", () => {
@@ -17,7 +17,7 @@ describe("form buttons", () => {
 
   describe("submit button", () => {
     test("is visible", () => {
-      const submitButtonProps: ISubmitButtonProps = {
+      const submitButtonProps: IFormSubmitButtonProps = {
         onClick: vi.fn(),
         titleLocalizationKey: "",
       };
@@ -36,7 +36,7 @@ describe("form buttons", () => {
 
     test("has title", () => {
       const titleLocalizationKey = "submitButtonTitle";
-      const submitButtonProps: ISubmitButtonProps = {
+      const submitButtonProps: IFormSubmitButtonProps = {
         onClick: vi.fn(),
         titleLocalizationKey,
       };
@@ -110,7 +110,7 @@ describe("form buttons", () => {
 
   test("all buttons visible", () => {
     const submitButtonTitle = "submitButtonTitle";
-    const submitButtonProps: ISubmitButtonProps = {
+    const submitButtonProps: IFormSubmitButtonProps = {
       onClick: vi.fn(),
       titleLocalizationKey: submitButtonTitle,
     };

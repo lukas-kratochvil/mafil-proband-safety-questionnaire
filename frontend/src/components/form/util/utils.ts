@@ -5,7 +5,7 @@ import { IProjectDTO } from "@app/util/mafildb_API/dto";
 import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "@app/util/server_API/dto";
 import { IButtonProps } from "@app/util/utils";
 
-export interface ISubmitButtonProps extends Omit<IButtonProps, "onClick"> {
+export interface IFormSubmitButtonProps extends Omit<IButtonProps, "onClick"> {
   onClick: (data: FormPropType) => Promise<void>;
 }
 

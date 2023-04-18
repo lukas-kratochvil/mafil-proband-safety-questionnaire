@@ -2,10 +2,10 @@ import { Button, Grid, Theme, useMediaQuery } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n";
 import { IButtonProps } from "@app/util/utils";
-import { ISubmitButtonProps } from "../util/utils";
+import { IFormSubmitButtonProps } from "../util/utils";
 
 export interface IFormButtonsProps {
-  submitButtonProps: ISubmitButtonProps | undefined;
+  submitButtonProps: IFormSubmitButtonProps | undefined;
   buttonsProps: IButtonProps[];
 }
 
