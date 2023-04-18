@@ -3,11 +3,11 @@ import { LanguageCode } from "@app/i18n";
 import { ITranslation } from "@app/util/server_API/dto";
 import { getTranslation } from "@app/util/utils";
 
-interface ITranslatedTableCellProps {
+interface ITranslatedEntityTableCellProps {
   translations: ITranslation[];
 }
 
-export const TranslatedTableCell = ({ translations }: ITranslatedTableCellProps) => {
+export const TranslatedEntityTableCell = ({ translations }: ITranslatedEntityTableCellProps) => {
   const { i18n } = useTranslation();
   return <>{getTranslation(translations, i18n.language as LanguageCode)}</>;
 };
