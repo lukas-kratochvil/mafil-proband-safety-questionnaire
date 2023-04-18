@@ -37,6 +37,7 @@ export const DuplicationForm = () => {
   const { operator } = useAuthDev();
   const { getValues, setValue, trigger } = useFormContext<FormPropType>();
 
+  const [areDefaultValuesLoaded, setAreDefaultValuesLoaded] = useState<boolean>(false);
   const [isPhantom, setIsPhantom] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [valuesBeforeEditing, setValuesBeforeEditing] = useState<FormPropType>();
@@ -67,8 +68,8 @@ export const DuplicationForm = () => {
       Object.keys(defaultValues).forEach((propertyName) => {
         setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
       });
-
       setIsPhantom(visit.isPhantom);
+      setAreDefaultValuesLoaded(true);
     }
   }, [visit, setValue]);
 
@@ -194,7 +195,7 @@ export const DuplicationForm = () => {
 
   return (
     <FormContainer
-      isLoading={isLoading}
+      isLoading={isLoading || !areDefaultValuesLoaded}
       isError={isError}
       buttons={formButtons}
     >

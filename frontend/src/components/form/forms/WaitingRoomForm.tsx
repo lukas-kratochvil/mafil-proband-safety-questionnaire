@@ -42,6 +42,7 @@ export const WaitingRoomForm = () => {
   const { operator } = useAuthDev();
   const { getValues, setValue, trigger } = useFormContext<FormPropType>();
 
+  const [areDefaultValuesLoaded, setAreDefaultValuesLoaded] = useState<boolean>(false);
   const [initialFormData, setInitialFormData] = useState<FormPropType>();
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [valuesBeforeEditing, setValuesBeforeEditing] = useState<FormPropType>();
@@ -72,6 +73,7 @@ export const WaitingRoomForm = () => {
       Object.keys(defaultValues).forEach((propertyName) => {
         setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
       });
+      setAreDefaultValuesLoaded(true);
     }
   }, [visitForm, setValue]);
 
@@ -201,7 +203,7 @@ export const WaitingRoomForm = () => {
 
   return (
     <FormContainer
-      isLoading={isLoading}
+      isLoading={isLoading || !areDefaultValuesLoaded}
       isError={isError}
       buttons={formButtons}
     >

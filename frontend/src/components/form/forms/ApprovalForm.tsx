@@ -35,6 +35,7 @@ export const ApprovalForm = () => {
   const { operator } = useAuthDev();
   const { getValues, setValue, trigger } = useFormContext<FormPropType>();
 
+  const [areDefaultValuesLoaded, setAreDefaultValuesLoaded] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [valuesBeforeEditing, setValuesBeforeEditing] = useState<FormPropType>();
   const [isDisapproved, setIsDisapproved] = useState<boolean>(false);
@@ -56,13 +57,13 @@ export const ApprovalForm = () => {
           updatedAt: answer.updatedAt,
         }))
       );
-
       // TODO: try if there's a need for isLoading flag due to the slow form initialization
       const defaultValues = loadFormDefaultValuesFromApprovalRoomVisitForm(visitForm);
       type DefaultValuesPropertyType = keyof typeof defaultValues;
       Object.keys(defaultValues).forEach((propertyName) => {
         setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
       });
+      setAreDefaultValuesLoaded(true);
     }
   }, [visitForm, setValue]);
 
@@ -182,7 +183,7 @@ export const ApprovalForm = () => {
 
   return (
     <FormContainer
-      isLoading={isLoading}
+      isLoading={isLoading || !areDefaultValuesLoaded}
       isError={isError}
       buttons={formButtons}
     >
