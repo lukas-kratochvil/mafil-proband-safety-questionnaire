@@ -127,7 +127,7 @@ export const ApprovalForm = () => {
             onClick: async (data) => {
               const visitId = await createVisit(
                 data,
-                VisitState.DISAPPROVED,
+                VisitState.APPROVED,
                 operator?.uco,
                 new Date(),
                 visitForm?.probandLanguageCode
