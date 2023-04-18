@@ -167,6 +167,15 @@
     },
     "recentVisitsTablePage": {
       "title": "Poslední visity",
+      "visitState": {
+        "phantomDone": "Dokončeno",
+        "disapproved": "Neschváleno",
+        "approved": "Schváleno",
+        "forSignaturePhysically": "K fyzickému podpisu",
+        "forSignatureElectronically": "K elektronickému podpisu",
+        "signedPhysically": "Podepsáno fyzicky",
+        "signedElectronically": "Podepsáno elektronicky"
+      },
       "actions": {
         "showDetailButton": "Zobrazit detail",
         "duplicateButton": "Duplikovat"

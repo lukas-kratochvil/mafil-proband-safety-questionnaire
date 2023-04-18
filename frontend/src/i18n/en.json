@@ -167,6 +167,15 @@
     },
     "recentVisitsTablePage": {
       "title": "Recent visits",
+      "visitState": {
+        "phantomDone": "Completed",
+        "disapproved": "Disapproved",
+        "approved": "Approved",
+        "forSignaturePhysically": "For physical signature",
+        "forSignatureElectronically": "For electronic signature",
+        "signedPhysically": "Signed physically",
+        "signedElectronically": "Signed electronically"
+      },
       "actions": {
         "showDetailButton": "Show detail",
         "duplicateButton": "Duplicate"

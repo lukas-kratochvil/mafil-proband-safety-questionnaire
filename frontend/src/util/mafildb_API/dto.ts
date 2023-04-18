@@ -61,7 +61,7 @@ export interface IVisitDTO
   date: Date; // TODO: not sure if this attribute is string or Date
 }
 
-export type IUpdateVisitStateInput = Pick<IVisitDTO, "visit_name" | "state">
+export type IUpdateVisitStateInput = Pick<IVisitDTO, "visit_name" | "state">;
 
 export interface IVisitPdfDTO {
   file_content: string; // Base64 encoded PDF content

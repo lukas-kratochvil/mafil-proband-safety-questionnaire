@@ -3,14 +3,37 @@ import { compareAsc, format, parse } from "date-fns";
 import MaterialReactTable, { MRT_ColumnDef as MRTColumnDef, MRT_Row as MRTRow } from "material-react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { TranslatedTableCell } from "@app/components/table/TranslatedTableCell";
 import { RecentVisitsTableActionButtons } from "@app/components/table/actions/RecentVisitsTableActionButtons";
 import { defaultTableProps } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n";
 import { IRecentVisitsTableVisit } from "@app/model/visit";
+import { VisitState } from "@app/util/mafildb_API/dto";
 import { fetchRecentVisits } from "@app/util/mafildb_API/fetch";
 import { PageContainer } from "./PageContainer";
 
 const processedDateFormat = "d.M.y H:mm";
+
+const getStateLocalizationString = (state: VisitState): string | undefined => {
+  switch (state) {
+    case VisitState.PHANTOM_DONE:
+      return "phantomDone";
+    case VisitState.DISAPPROVED:
+      return "disapproved";
+    case VisitState.APPROVED:
+      return "approved";
+    case VisitState.FOR_SIGNATURE_PHYSICALLY:
+      return "forSignaturePhysically";
+    case VisitState.FOR_SIGNATURE_ELECTRONICALLY:
+      return "forSignatureElectronically";
+    case VisitState.SIGNED_PHYSICALLY:
+      return "signedPhysically";
+    case VisitState.SIGNED_ELECTRONICALLY:
+      return "signedElectronically";
+    default:
+      return undefined;
+  }
+};
 
 const RecentVisitsTablePage = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "recentVisitsTablePage" });
@@ -62,9 +85,15 @@ const RecentVisitsTablePage = () => {
         maxSize: 0,
       },
       {
-        accessorFn: (visit) => (visit.isPhantom ? "Dokončeno" : visit.state),
         id: "state",
         header: t("header.state"),
+        // eslint-disable-next-line react/no-unstable-nested-components
+        Cell: ({ row }: { row: MRTRow<IRecentVisitsTableVisit> }) => {
+          const stateLocalizationString = getStateLocalizationString(row.original.state);
+          return stateLocalizationString === undefined ? null : (
+            <TranslatedTableCell localizationKey={`recentVisitsTablePage.visitState.${stateLocalizationString}`} />
+          );
+        },
         maxSize: 0,
       },
       {
