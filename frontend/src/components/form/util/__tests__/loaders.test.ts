@@ -1,3 +1,4 @@
+import { genders, handednesses, nativeLanguages } from "@app/__tests__/data/translated_entities";
 import { AnswerOption } from "@app/model/form";
 import { IDuplicatedVisitIncludingQuestions, VisualCorrection } from "@app/model/visit";
 import { VisitState } from "@app/util/mafildb_API/dto";
@@ -6,7 +7,6 @@ import {
   IWaitingRoomVisitFormIncludingQuestions,
   QuestionPartNumber,
 } from "@app/util/server_API/dto";
-import { genders, handednesses, nativeLanguages } from "@app/__tests__/data/translated_entities";
 import {
   loadEmptyDefaultValues,
   loadFormDefaultValuesFromApprovalRoomVisitForm,

@@ -22,7 +22,7 @@ interface IVisitDetailButtonProps extends IButtonProps {
   disabled?: boolean;
 }
 
-const getColoredInfoStripe = (visitState: VisitState | undefined): IColoredInfoStripeProps | undefined => {
+const getColoredInfoStripe = (visitState: VisitState): IColoredInfoStripeProps | undefined => {
   switch (visitState) {
     case VisitState.APPROVED:
       return {
@@ -34,12 +34,14 @@ const getColoredInfoStripe = (visitState: VisitState | undefined): IColoredInfoS
         textLocalizationKey: "visitDetailPage.infoStripes.disapproved",
         color: ColoredInfoStripeColors.RED,
       };
-    case VisitState.FOR_SIGNATURE_PHYSICALLY || VisitState.FOR_SIGNATURE_ELECTRONICALLY:
+    case VisitState.FOR_SIGNATURE_PHYSICALLY:
+    case VisitState.FOR_SIGNATURE_ELECTRONICALLY:
       return {
         textLocalizationKey: "visitDetailPage.infoStripes.waitingForSignatureConfirmation",
         color: ColoredInfoStripeColors.ORANGE,
       };
-    case VisitState.SIGNED_PHYSICALLY || VisitState.SIGNED_ELECTRONICALLY:
+    case VisitState.SIGNED_PHYSICALLY:
+    case VisitState.SIGNED_ELECTRONICALLY:
       return {
         textLocalizationKey: "visitDetailPage.infoStripes.signed",
         color: ColoredInfoStripeColors.GREEN,
@@ -54,11 +56,7 @@ const getColoredInfoStripe = (visitState: VisitState | undefined): IColoredInfoS
   }
 };
 
-const getButtons = (
-  queryClient: QueryClient,
-  visitId: string | undefined,
-  visitState: VisitState | undefined
-): IVisitDetailButtonProps[] => {
+const getButtons = (queryClient: QueryClient, visitId: string, visitState: VisitState): IVisitDetailButtonProps[] => {
   switch (visitState) {
     case VisitState.APPROVED:
       return [
@@ -103,7 +101,9 @@ const getButtons = (
           },
         },
       ];
-    case VisitState.SIGNED_PHYSICALLY || VisitState.SIGNED_ELECTRONICALLY || VisitState.PHANTOM_DONE:
+    case VisitState.SIGNED_PHYSICALLY:
+    case VisitState.SIGNED_ELECTRONICALLY:
+    case VisitState.PHANTOM_DONE:
       return [
         {
           titleLocalizationKey: "visitDetailPage.buttons.downloadPDF",
@@ -133,8 +133,13 @@ const VisitDetailPage = () => {
   const [buttons, setButtons] = useState<IVisitDetailButtonProps[]>();
 
   useEffect(() => {
-    setColoredInfoStripe(getColoredInfoStripe(visit?.state));
-    const stateButtons = getButtons(queryClient, visit?.visitId, visit?.state);
+    const stateButtons: IVisitDetailButtonProps[] = [];
+
+    if (visit !== undefined) {
+      setColoredInfoStripe(getColoredInfoStripe(visit.state));
+      stateButtons.push(...getButtons(queryClient, visit.visitId, visit.state));
+    }
+
     stateButtons.push(getBackButtonProps(navigate));
     setButtons(stateButtons);
   }, [queryClient, navigate, visit]);

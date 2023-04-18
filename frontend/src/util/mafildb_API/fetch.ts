@@ -342,11 +342,7 @@ export const createVisit = async (
   return data.visit_name;
 };
 
-export const updateVisitState = async (visitId: string | undefined, state: VisitState): Promise<string | never> => {
-  if (visitId === undefined) {
-    throw new Error("Missing visit ID!");
-  }
-
+export const updateVisitState = async (visitId: string, state: VisitState): Promise<string | never> => {
   if (import.meta.env.DEV) {
     const visit = dummyVisits.find((dummyVisit) => dummyVisit.visit_name === visitId);
 
