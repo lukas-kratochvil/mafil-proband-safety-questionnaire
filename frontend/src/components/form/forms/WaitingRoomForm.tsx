@@ -94,7 +94,7 @@ export const WaitingRoomForm = () => {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
           onClick: async (data: FormPropType) => {
             await createVisit(data, VisitState.DISAPPROVED, operator?.uco, new Date(), visitForm?.probandLanguageCode);
-            await markVisitFormAsSentToMafilDb(visitForm?.id || "");
+            await markVisitFormAsSentToMafilDb(visitForm?.id ?? "");
             // TODO: generate PDF and send it to MAFILDB
             navigate(RoutingPaths.WAITING_ROOM);
           },
@@ -126,7 +126,7 @@ export const WaitingRoomForm = () => {
                 new Date(),
                 visitForm?.probandLanguageCode
               );
-              await markVisitFormAsSentToMafilDb(visitForm?.id || "");
+              await markVisitFormAsSentToMafilDb(visitForm?.id ?? "");
               // TODO: generate PDF and send it to MAFILDB
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
             }
@@ -181,7 +181,7 @@ export const WaitingRoomForm = () => {
       },
       measuredAt: data.measuredAt ?? new Date(),
     };
-    await sendVisitFormForApproval(id || "", modifiedFields, operator?.id || "");
+    await sendVisitFormForApproval(id ?? "", modifiedFields, operator?.id ?? "");
     queryClient.invalidateQueries({ queryKey: ["waitingRoomVisitForms"], exact: true });
     setOpenFinalizeDialog(false);
     navigate(RoutingPaths.WAITING_ROOM);

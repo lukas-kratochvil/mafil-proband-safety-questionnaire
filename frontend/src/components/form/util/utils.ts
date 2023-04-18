@@ -30,8 +30,8 @@ export const compareNativeLanguages = (a: INativeLanguageDTO, b: INativeLanguage
     return 1;
   }
 
-  const aText = a.translations.find((trans) => trans.language.code === locale)?.text || undefined;
-  const bText = b.translations.find((trans) => trans.language.code === locale)?.text || undefined;
+  const aText = a.translations.find((trans) => trans.language.code === locale)?.text ?? undefined;
+  const bText = b.translations.find((trans) => trans.language.code === locale)?.text ?? undefined;
   return aText === undefined || bText === undefined ? -1 : new Intl.Collator(locale).compare(aText, bText);
 };
 

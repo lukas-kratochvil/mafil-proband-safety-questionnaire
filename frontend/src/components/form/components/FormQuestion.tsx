@@ -77,7 +77,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
         xs={1}
         sm
       >
-        <Typography>{qac.translations.find((trans) => trans.language.code === i18n.language)?.text || ""}</Typography>
+        <Typography>{qac.translations.find((trans) => trans.language.code === i18n.language)?.text ?? ""}</Typography>
       </Grid>
       <Grid
         item

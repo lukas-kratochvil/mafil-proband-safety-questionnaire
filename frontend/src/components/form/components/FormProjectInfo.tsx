@@ -30,7 +30,7 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
       const projectId = getValues("project.id");
 
       if (projectId !== null && projectId !== undefined && projectId !== "") {
-        const selectedProject = projects.data.find((project) => project.id === projectId) || null;
+        const selectedProject = projects.data.find((project) => project.id === projectId) ?? null;
         setValue("project", selectedProject, { shouldTouch: true });
       }
     }
@@ -42,7 +42,7 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
       const deviceId = getValues("device.id");
 
       if (deviceId !== null && deviceId !== undefined && deviceId !== "") {
-        const selectedDevice = devices.data.find((device) => device.id === deviceId) || null;
+        const selectedDevice = devices.data.find((device) => device.id === deviceId) ?? null;
         setValue("device", selectedDevice, { shouldTouch: true });
       }
     }

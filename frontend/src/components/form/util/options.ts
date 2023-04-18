@@ -31,7 +31,7 @@ const createOptions = <T>(entries: [key: string, value: string | T][], i18nPrefi
  */
 export const getOption = (options: IOption[], value: number): IOption | null =>
   // Autocomplete excepts option object or null
-  options.find((option) => option.value === value) || null;
+  options.find((option) => option.value === value) ?? null;
 
 export const visualCorrectionOptions = createOptions<VisualCorrection>(
   Object.entries(VisualCorrection),

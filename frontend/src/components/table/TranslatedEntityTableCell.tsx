@@ -7,7 +7,7 @@ const getTranslation = (translations: ITranslation[], languageCode: LanguageCode
     return "";
   }
 
-  return translations.find((trans) => trans.language.code === languageCode)?.text || "";
+  return translations.find((trans) => trans.language.code === languageCode)?.text ?? "";
 };
 
 interface ITranslatedEntityTableCellProps {
