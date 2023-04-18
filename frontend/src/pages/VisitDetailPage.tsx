@@ -170,9 +170,8 @@ const VisitDetailPage = () => {
           padding="1rem"
         >
           {coloredInfoStripe && <ColoredInfoStripe {...coloredInfoStripe} />}
-          {/* TODO: set width of <iframe> so that there's not so much space on the sides - depends on the generated PDF width */}
           <iframe
-            src={`${visit?.pdfContent}#view=fitH`}
+            src={`data:application/pdf;base64,${visit?.pdfContent}#view=fitH`}
             title="Visit detail"
             height="770px"
             width="100%"

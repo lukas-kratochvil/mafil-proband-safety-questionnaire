@@ -6,7 +6,7 @@ import {
   IVisitDetail,
   ProbandVisitLanguageCode,
 } from "@app/model/visit";
-import { devicesDev, dummyVisits, generateVisitId, projectsDev } from "@app/util/mafildb_API/data.dev";
+import { devicesDev, dummyVisits, generateVisitId, PDF_CONTENT, projectsDev } from "@app/util/mafildb_API/data.dev";
 import { VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import { fetchGender, fetchHandedness, fetchNativeLanguage, fetchOperator, fetchQuestion } from "../server_API/fetch";
 import {
@@ -227,7 +227,7 @@ export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVi
       ...visit,
       visitId: visit.visit_name,
       isPhantom: visit.is_phantom,
-      pdfContent: "",
+      pdfContent: PDF_CONTENT,
     };
   }
 
