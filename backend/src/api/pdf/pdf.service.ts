@@ -1,15 +1,13 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { generatePDF } from "@app/pdf/generate";
-import { IPDFData } from "@app/pdf/interfaces";
+import { AnswerOption } from "@prisma/client";
+import { generatePDF, PDF_OPERATOR_LANGUAGE_CODE } from "@app/pdf/generate";
+import { IPDFData, IPDFOperator, IPDFQuestionAnswer } from "@app/pdf/interfaces";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { GeneratePDFArgs } from "./dto/generate-pdf.args";
-import { PDFEntity, PDFType } from "./entities/pdf.entity";
+import { PDFEntity } from "./entities/pdf.entity";
 
-const OPERATOR_LANGUAGE_CODE = "cs";
-
-const createPDF = (type: PDFType, name: string, content: string): PDFEntity => {
+const createPDF = (name: string, content: string): PDFEntity => {
   const pdf = new PDFEntity();
-  pdf.type = type;
   pdf.name = name;
   pdf.extension = "pdf";
   pdf.content = content;
@@ -20,23 +18,167 @@ const createPDF = (type: PDFType, name: string, content: string): PDFEntity => {
 export class PDFService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async generate(generatePDFInput: GeneratePDFArgs): Promise<PDFEntity[]> {
-    // Get operator language
-    const operatorLanguage = await this.prisma.language.findFirstOrThrow({
+  async generate(generatePDFInput: GeneratePDFArgs): Promise<PDFEntity> {
+    // Get operator who finalized the visit
+    const operatorFinalizer: IPDFOperator = await this.prisma.operator.findUniqueOrThrow({
       where: {
-        code: OPERATOR_LANGUAGE_CODE,
+        uco: generatePDFInput.finalizerUco,
+      },
+      select: {
+        name: true,
+        surname: true,
       },
     });
+
+    // Set PDF name
+    const pdfName = `${generatePDFInput.visitId}_${generatePDFInput.surname}_${generatePDFInput.name}`;
+
+    if (generatePDFInput.isPhantom) {
+      // Get gender translations
+      const gender = await this.prisma.gender.findFirstOrThrow({
+        where: {
+          code: generatePDFInput.genderCode,
+        },
+        select: {
+          translations: {
+            where: {
+              language: {
+                code: PDF_OPERATOR_LANGUAGE_CODE,
+              },
+            },
+            select: {
+              text: true,
+            },
+          },
+        },
+      });
+
+      // Get native language translations
+      const nativeLanguage = await this.prisma.nativeLanguage.findFirstOrThrow({
+        where: {
+          code: generatePDFInput.nativeLanguageCode,
+        },
+        select: {
+          translations: {
+            where: {
+              language: {
+                code: PDF_OPERATOR_LANGUAGE_CODE,
+              },
+            },
+            select: {
+              text: true,
+            },
+          },
+        },
+      });
+
+      // Get handedness translations
+      const handedness = await this.prisma.handedness.findFirstOrThrow({
+        where: {
+          code: generatePDFInput.handednessCode,
+        },
+        select: {
+          translations: {
+            where: {
+              language: {
+                code: PDF_OPERATOR_LANGUAGE_CODE,
+              },
+            },
+            select: {
+              text: true,
+            },
+          },
+        },
+      });
+
+      // Set phantom data
+      const phantomData: IPDFData = {
+        isPhantom: true,
+        useSecondaryLanguage: false,
+        visitId: generatePDFInput.visitId,
+        projectAcronym: generatePDFInput.projectAcronym,
+        measurementDate: generatePDFInput.measuredAt,
+        operatorFinalizer,
+        name: generatePDFInput.name,
+        surname: generatePDFInput.surname,
+        personalId: generatePDFInput.personalId,
+        birthdate: generatePDFInput.birthdate,
+        gender: { text: gender.translations[0].text },
+        nativeLanguage: { text: nativeLanguage.translations[0].text },
+        heightCm: generatePDFInput.heightCm,
+        weightKg: generatePDFInput.weightKg,
+        visualCorrectionDioptre: generatePDFInput.visualCorrectionDioptre,
+        handedness: { text: handedness.translations[0].text },
+        answers: [],
+      };
+
+      // Generate content and return it in a response
+      const content = await generatePDF(phantomData, PDF_OPERATOR_LANGUAGE_CODE);
+      return createPDF(pdfName, content);
+    }
+
+    // Proband language code is required for proband PDF
+    if (generatePDFInput.probandLanguageCode === undefined) {
+      throw new BadRequestException("Proband language code is required!");
+    }
+
+    // Answers are required for proband PDF
+    if (generatePDFInput.answers === undefined || generatePDFInput.answers.length === 0) {
+      throw new BadRequestException("Answers are required!");
+    }
+
+    // Get operator who approved the visit
+    let operatorApprover: IPDFOperator | undefined;
+
+    if (generatePDFInput.approverUco) {
+      operatorApprover = await this.prisma.operator.findUniqueOrThrow({
+        where: {
+          uco: generatePDFInput.approverUco,
+        },
+        select: {
+          name: true,
+          surname: true,
+        },
+      });
+    }
+
+    const languageCodes = [generatePDFInput.probandLanguageCode];
+    const useSecondaryLanguage = generatePDFInput.probandLanguageCode !== PDF_OPERATOR_LANGUAGE_CODE;
+    const translationTextIndex
+      = !useSecondaryLanguage || generatePDFInput.probandLanguageCode < PDF_OPERATOR_LANGUAGE_CODE ? 0 : 1;
+    const translationSecondaryTextIndex = !useSecondaryLanguage ? undefined : translationTextIndex === 0 ? 1 : 0;
+
+    if (useSecondaryLanguage) {
+      languageCodes.push(PDF_OPERATOR_LANGUAGE_CODE);
+    }
 
     // Get gender translations
     const gender = await this.prisma.gender.findFirstOrThrow({
       where: {
         code: generatePDFInput.genderCode,
       },
-      include: {
+      select: {
+        code: true,
         translations: {
-          include: {
-            language: true,
+          where: {
+            language: {
+              code: {
+                in: languageCodes,
+              },
+            },
+          },
+          select: {
+            text: true,
+            language: {
+              select: {
+                code: true,
+              },
+            },
+          },
+          orderBy: {
+            language: {
+              code: "asc",
+            },
           },
         },
       },
@@ -47,10 +189,27 @@ export class PDFService {
       where: {
         code: generatePDFInput.nativeLanguageCode,
       },
-      include: {
+      select: {
         translations: {
-          include: {
-            language: true,
+          where: {
+            language: {
+              code: {
+                in: languageCodes,
+              },
+            },
+          },
+          select: {
+            text: true,
+            language: {
+              select: {
+                code: true,
+              },
+            },
+          },
+          orderBy: {
+            language: {
+              code: "asc",
+            },
           },
         },
       },
@@ -61,128 +220,124 @@ export class PDFService {
       where: {
         code: generatePDFInput.handednessCode,
       },
-      include: {
+      select: {
         translations: {
-          include: {
-            language: true,
+          where: {
+            language: {
+              code: {
+                in: languageCodes,
+              },
+            },
+          },
+          select: {
+            text: true,
+            language: {
+              select: {
+                code: true,
+              },
+            },
+          },
+          orderBy: {
+            language: {
+              code: "asc",
+            },
           },
         },
       },
     });
 
-    // Set PDF name
-    const pdfName = `${generatePDFInput.visitId}_${generatePDFInput.surname}_${generatePDFInput.name}`;
-
-    // Set phantom data
-    const phantomData: IPDFData = {
-      visitId: generatePDFInput.visitId,
-      projectAcronym: generatePDFInput.projectAcronym,
-      measurementDate: generatePDFInput.measuredAt,
-      finalizerId: generatePDFInput.finalizerId,
-      name: generatePDFInput.name,
-      surname: generatePDFInput.surname,
-      personalId: generatePDFInput.personalId,
-      birthdate: generatePDFInput.birthdate,
-      gender: gender.translations.find((trans) => trans.language.code === operatorLanguage.code)?.text || "",
-      nativeLanguage:
-        nativeLanguage.translations.find((trans) => trans.language.code === operatorLanguage.code)?.text || "",
-      heightCm: generatePDFInput.heightCm,
-      weightKg: generatePDFInput.weightKg,
-      visualCorrectionDioptre: generatePDFInput.visualCorrectionDioptre,
-      handedness: handedness.translations.find((trans) => trans.language.code === operatorLanguage.code)?.text || "",
-      answers: [],
-    };
-
-    if (generatePDFInput.isPhantom) {
-      // Generate content and return it in a response
-      const content = await generatePDF(PDFType.PHANTOM, phantomData, operatorLanguage.code);
-      return [createPDF(PDFType.OPERATOR, pdfName, content)];
-    }
-
-    // Answers are required for proband/operator PDFs
-    if (generatePDFInput.probandLanguageCode === undefined) {
-      throw new BadRequestException("Proband language code is required!");
-    }
-
-    // Answers are required for proband/operator PDFs
-    if (generatePDFInput.answers === undefined) {
-      throw new BadRequestException("Answers are required!");
-    }
-
-    // Get questions translations
-    const questions = (
+    // Get answers with questions texts
+    const answers: IPDFQuestionAnswer[] = (
       await Promise.all(
         generatePDFInput.answers.map((answer) =>
           this.prisma.question.findFirstOrThrow({
             where: {
               id: answer.questionId,
             },
-            include: {
+            select: {
               hiddenByGenders: true,
               translations: {
-                include: {
-                  language: true,
+                where: {
+                  language: {
+                    code: {
+                      in: languageCodes,
+                    },
+                  },
+                },
+                select: {
+                  text: true,
+                  language: {
+                    select: {
+                      code: true,
+                    },
+                  },
+                },
+                orderBy: {
+                  language: {
+                    code: "asc",
+                  },
                 },
               },
             },
           })
         )
       )
-    ).filter((question) => !question.hiddenByGenders.map((hbg) => hbg.genderCode).includes(gender.code));
-    const questionsIds = questions.map((question) => question.id);
-    const answers = generatePDFInput.answers.filter((answer) => questionsIds.includes(answer.questionId));
+    )
+      .filter((question) => !question.hiddenByGenders.map((hbg) => hbg.genderCode).includes(gender.code))
+      .map((question, i) => ({
+        questionText: question.translations[translationTextIndex].text,
+        questionSecondaryText: translationSecondaryTextIndex
+          ? question.translations[translationSecondaryTextIndex].text
+          : undefined,
+        answer: generatePDFInput.answers?.at(i)?.answer as AnswerOption,
+        comment: generatePDFInput.answers?.at(i)?.comment,
+      }));
 
-    // Set operator data
-    const operatorData: IPDFData = {
-      ...phantomData,
+    // Set data
+    const data: IPDFData = {
+      isPhantom: false,
+      useSecondaryLanguage,
+      visitId: generatePDFInput.visitId,
+      projectAcronym: generatePDFInput.projectAcronym,
+      measurementDate: generatePDFInput.measuredAt,
+      operatorFinalizer,
+      operatorApprover,
+      name: generatePDFInput.name,
+      surname: generatePDFInput.surname,
+      personalId: generatePDFInput.personalId,
+      birthdate: generatePDFInput.birthdate,
+      gender: {
+        text: gender.translations[translationTextIndex].text,
+        secondaryText: translationSecondaryTextIndex
+          ? gender.translations[translationSecondaryTextIndex].text
+          : undefined,
+      },
+      nativeLanguage: {
+        text: nativeLanguage.translations[translationTextIndex].text,
+        secondaryText: translationSecondaryTextIndex
+          ? nativeLanguage.translations[translationSecondaryTextIndex].text
+          : undefined,
+      },
+      heightCm: generatePDFInput.heightCm,
+      weightKg: generatePDFInput.weightKg,
+      visualCorrectionDioptre: generatePDFInput.visualCorrectionDioptre,
+      handedness: {
+        text: handedness.translations[translationTextIndex].text,
+        secondaryText: translationSecondaryTextIndex
+          ? handedness.translations[translationSecondaryTextIndex].text
+          : undefined,
+      },
       email: generatePDFInput.email,
       phone: generatePDFInput.phone,
-      answers: answers.map((answer) => ({
-        questionText:
-          questions
-            .find((question) => question.id === answer.questionId)
-            ?.translations.find((trans) => trans.language.code === operatorLanguage.code)?.text || "",
-        answer: answer.answer,
-        comment: answer.comment,
-      })),
+      answers,
     };
 
-    // Get proband language
-    const probandLanguage
-      = generatePDFInput.probandLanguageCode === operatorLanguage.code
-        ? operatorLanguage
-        : await this.prisma.language.findFirstOrThrow({
-            where: {
-              code: generatePDFInput.probandLanguageCode,
-            },
-          });
-
-    // Set proband data
-    const probandData: IPDFData
-      = probandLanguage.code === operatorLanguage.code
-        ? operatorData
-        : {
-            ...operatorData,
-            gender: gender.translations.find((trans) => trans.language.code === probandLanguage.code)?.text || "",
-            nativeLanguage:
-              nativeLanguage.translations.find((trans) => trans.language.code === probandLanguage.code)?.text || "",
-            handedness:
-              handedness.translations.find((trans) => trans.language.code === probandLanguage.code)?.text || "",
-            answers: answers.map((answer) => ({
-              questionText:
-                questions
-                  .find((question) => question.id === answer.questionId)
-                  ?.translations.find((trans) => trans.language.code === probandLanguage.code)?.text || "",
-              answer: answer.answer,
-              comment: answer.comment,
-            })),
-          };
-
     // Generate content and return it in a response
-    const [probandContent, operatorContent] = await Promise.all([
-      generatePDF(PDFType.PROBAND, probandData, probandLanguage.code),
-      generatePDF(PDFType.OPERATOR, operatorData, operatorLanguage.code),
-    ]);
-    return [createPDF(PDFType.PROBAND, pdfName, probandContent), createPDF(PDFType.OPERATOR, pdfName, operatorContent)];
+    const content = await generatePDF(
+      data,
+      generatePDFInput.probandLanguageCode,
+      useSecondaryLanguage ? PDF_OPERATOR_LANGUAGE_CODE : undefined
+    );
+    return createPDF(pdfName, content);
   }
 }

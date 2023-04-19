@@ -4,7 +4,6 @@ import { AnswerOption } from "@prisma/client";
 import { Base64Encode } from "base64-stream";
 import { format } from "date-fns";
 import PDFDocument from "pdfkit";
-import { PDFType } from "@app/api/pdf/entities/pdf.entity";
 import {
   CommonTextsFile,
   getCommonTextsFile,
@@ -13,7 +12,10 @@ import {
   getLocalizedTextsFile,
   LocalizedTextsFile,
 } from "@app/utils/assets-loaders";
-import { IPDFData, IQuestionAnswer } from "./interfaces";
+import { IPDFData, IPDFQuestionAnswer } from "./interfaces";
+
+// Default language for all the operator text translations
+export const PDF_OPERATOR_LANGUAGE_CODE = "cs";
 
 // Type of PDF document
 type PDFDoc = typeof PDFDocument;
@@ -80,7 +82,7 @@ const addQuestions = (
   x: number,
   y: number,
   texts: LocalizedQuestions,
-  questions: IQuestionAnswer[]
+  questions: IPDFQuestionAnswer[]
 ): void => {
   doc.font(MEDIUM_FONT, CHAPTER_FONT_SIZE).text(texts.title, x, y);
   questions.forEach(({ questionText, answer }) => {
@@ -197,7 +199,11 @@ const streamToString = (stream: Readable): Promise<string | never> => {
   });
 };
 
-export const generatePDF = async (pdfType: PDFType, data: IPDFData, locale: string): Promise<string | never> => {
+export const generatePDF = async (
+  data: IPDFData,
+  locale: string,
+  secondaryLocale?: string
+): Promise<string | never> => {
   const texts = getLocalizedTextsFile(locale);
   const commonTexts = getCommonTextsFile();
 
@@ -222,7 +228,7 @@ export const generatePDF = async (pdfType: PDFType, data: IPDFData, locale: stri
 
   // TODO: edit header as here: https://pspdfkit.com/blog/2019/generate-pdf-invoices-pdfkit-nodejs/
   // Add full-width border box with "Phantom" inside
-  if (pdfType === PDFType.PHANTOM) {
+  if (data.isPhantom) {
     const reactY = 25;
     const rectHeight = 50;
     doc
@@ -257,27 +263,18 @@ export const generatePDF = async (pdfType: PDFType, data: IPDFData, locale: stri
     { title: texts.inputTitles.surname, value: data.surname },
     { title: texts.inputTitles.personalId, value: data.personalId },
     { title: texts.inputTitles.birthdate, value: format(data.birthdate, DATE_FORMAT) },
-    { title: texts.inputTitles.gender, value: data.gender },
-    { title: texts.inputTitles.nativeLanguage, value: data.nativeLanguage },
+    { title: texts.inputTitles.gender, value: data.gender.text },
+    { title: texts.inputTitles.nativeLanguage, value: data.nativeLanguage.text },
     { title: texts.inputTitles.height, value: `${data.heightCm} cm` },
     { title: texts.inputTitles.weight, value: `${data.weightKg} kg` },
     { title: texts.inputTitles.visualCorrection, value: `${data.visualCorrectionDioptre} D` },
-    { title: texts.inputTitles.handedness, value: data.handedness },
+    { title: texts.inputTitles.handedness, value: data.handedness.text },
   ];
   addTitleValueRows(doc, PAGE_MARGIN, linePositionUnderImage + 30, probandInfoRows);
 
-  if (pdfType !== PDFType.PHANTOM) {
+  if (!data.isPhantom) {
     // Add safety questions
     addQuestions(doc, PAGE_MARGIN, doc.y + CHAPTER_GAP, texts.questions, data.answers);
-
-    // TODO: maybe different layout for the proband and operator PDF
-    // if (pdfType === PDFType.PROBAND) {
-    //   // TODO
-    // } else if (pdfType === PDFType.OPERATOR) {
-    //   // TODO
-    //   const questionsPartOne = data.answers.filter((answer) => answer.partNumber === 1);
-    //   const questionsPartTwo = data.answers.filter((answer) => answer.partNumber === 2);
-    // }
 
     // Add proband contact consent if proband requested sending research results via email and phone
     if (data.email && data.phone) {

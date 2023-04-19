@@ -1,5 +1,14 @@
 import { ArgsType, Field, InputType, IntersectionType, PartialType, PickType } from "@nestjs/graphql";
-import { ArrayNotEmpty, ArrayUnique, IsArray, IsBoolean, IsString, MaxLength, ValidateIf } from "class-validator";
+import {
+  ArrayNotEmpty,
+  ArrayUnique,
+  IsArray,
+  IsBoolean,
+  IsOptional,
+  IsString,
+  MaxLength,
+  ValidateIf,
+} from "class-validator";
 import { AdditionalVisitFormInfoEntity } from "@app/api/visit-form/entities/additional-visit-form-info.entity";
 import { AnswerEntity } from "@app/api/visit-form/entities/answer.entity";
 import { VisitFormEntity } from "@app/api/visit-form/entities/visit-form.entity";
@@ -13,22 +22,18 @@ class PDFAnswer extends IntersectionType(
 
 @ArgsType()
 export class GeneratePDFArgs extends IntersectionType(
-  IntersectionType(
-    PickType(VisitFormEntity, [
-      "name",
-      "surname",
-      "personalId",
-      "birthdate",
-      "heightCm",
-      "weightKg",
-      "visualCorrectionDioptre",
-    ] as const),
-    PartialType(PickType(VisitFormEntity, ["email", "phone"] as const))
-  ),
-  // finalizerId
-  // - it's the operator who finalized this proband visit
-  // - it's the operator who created this phantom visit
-  PickType(AdditionalVisitFormInfoEntity, ["projectAcronym", "measuredAt", "finalizerId"] as const),
+  PickType(VisitFormEntity, [
+    "name",
+    "surname",
+    "personalId",
+    "birthdate",
+    "heightCm",
+    "weightKg",
+    "visualCorrectionDioptre",
+    "email",
+    "phone",
+  ] as const),
+  PickType(AdditionalVisitFormInfoEntity, ["projectAcronym", "measuredAt"] as const),
   ArgsType
 ) {
   @IsString()
@@ -50,6 +55,17 @@ export class GeneratePDFArgs extends IntersectionType(
   @IsString()
   @Field()
   handednessCode: string;
+
+  // In the MAFILDB is stored operator's UCO
+  @IsString()
+  @Field()
+  finalizerUco: string;
+
+  // In the MAFILDB is stored operator's UCO
+  @IsOptional()
+  @IsString()
+  @Field({ nullable: true })
+  approverUco?: string;
 
   // eslint-disable-next-line @darraghor/nestjs-typed/all-properties-have-explicit-defined
   @ValidateIf((object: GeneratePDFArgs) => !object.isPhantom)

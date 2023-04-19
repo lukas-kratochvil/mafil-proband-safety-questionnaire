@@ -7,8 +7,8 @@ import { PDFService } from "./pdf.service";
 export class PDFResolver {
   constructor(private readonly pdfService: PDFService) {}
 
-  @Query(() => [PDFEntity])
-  generatePDF(@Args() generatePDFInput: GeneratePDFArgs): Promise<PDFEntity[]> {
+  @Query(() => PDFEntity)
+  generatePDF(@Args() generatePDFInput: GeneratePDFArgs): Promise<PDFEntity> {
     return this.pdfService.generate(generatePDFInput);
   }
 }

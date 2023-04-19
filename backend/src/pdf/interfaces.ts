@@ -1,8 +1,19 @@
-import { AnswerOption } from "@prisma/client";
+import { AnswerOption, Operator } from "@prisma/client";
+
+export type IPDFOperator = Pick<Operator, "name" | "surname">
+
+export interface IPDFQuestionAnswer {
+  questionText: string;
+  questionSecondaryText?: string;
+  answer: AnswerOption;
+  comment?: string;
+}
 
 export interface IPDFData {
-  // phantom visit has operator name instead of the signature field
-  finalizerId?: string;
+  isPhantom: boolean;
+  useSecondaryLanguage: boolean; // indicates whether the PDF will be bilingual - proband and operator use different language
+  operatorFinalizer: IPDFOperator;
+  operatorApprover?: IPDFOperator;
   visitId: string;
   projectAcronym: string;
   measurementDate: Date;
@@ -10,19 +21,22 @@ export interface IPDFData {
   surname: string;
   personalId: string;
   birthdate: Date;
-  gender: string;
-  nativeLanguage: string;
+  gender: {
+    text: string;
+    secondaryText?: string;
+  };
+  nativeLanguage: {
+    text: string;
+    secondaryText?: string;
+  };
   heightCm: number;
   weightKg: number;
   visualCorrectionDioptre: number;
-  handedness: string;
+  handedness: {
+    text: string;
+    secondaryText?: string;
+  };
   email?: string;
   phone?: string;
-  answers: IQuestionAnswer[];
-}
-
-export interface IQuestionAnswer {
-  questionText: string;
-  answer: AnswerOption;
-  comment?: string;
+  answers: IPDFQuestionAnswer[];
 }
