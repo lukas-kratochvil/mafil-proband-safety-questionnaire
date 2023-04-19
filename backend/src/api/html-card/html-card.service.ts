@@ -74,7 +74,7 @@ export class HTMLCardService {
         <br />${texts.examinationConsent.mafil}, ${commonTexts.examinationConsent.ceitec}, ${texts.examinationConsent.masarykUni}, ${commonTexts.examinationConsent.mafilAddress}
         <br />${texts.examinationConsent.contactPerson}: ${commonTexts.examinationConsent.contactPerson}
         <br />${texts.examinationConsent.phone}: ${commonTexts.examinationConsent.phone}
-        <br />${texts.examinationConsent.email}: ${commonTexts.examinationConsent.email}
+        <br />${texts.examinationConsent.email}: ${commonTexts.examinationConsent.mafilEmail}
       </p>
       <p>
         ${texts.examinationConsent.text3}:
@@ -114,14 +114,14 @@ export class HTMLCardService {
       <li>${texts.probandContact.consent.listItem2}</li>
       <li>${texts.probandContact.consent.listItem3}</li>
       <li>${texts.probandContact.consent.listItem4}</li>
-      <li>${texts.probandContact.consent.listItem5Part1} <u>${commonTexts.probandContact.consent.uoouSite}</u>, ${texts.probandContact.consent.listItem5Part2} <u>${commonTexts.probandContact.consent.uoouEmail}</u>.</li>
+      <li>${texts.probandContact.consent.listItem5Part1} <u>${texts.probandContact.consent.listItem5UoouSite}</u>, ${texts.probandContact.consent.listItem5Part2} <u>${commonTexts.probandContact.consent.uoouEmail}</u>.</li>
       </ul>
       <p style="margin-bottom: 0">
         ${texts.probandContact.consent.text5Part1} <u>${commonTexts.probandContact.consent.poverenecEmail}</u>.
         <br />${texts.probandContact.consent.text5Part2}
-        <br /><u>${commonTexts.probandContact.consent.personalInfoProtectionSite}</u>.
+        <br /><u>${texts.probandContact.consent.text5Part2PersonalInfoProtectionSite}</u>.
         <br />${texts.probandContact.consent.text5Part3}
-        <br /><u>${commonTexts.probandContact.consent.applicationOfDataSubjectRightsSite}</u>.
+        <br /><u>${texts.probandContact.consent.text5Part3ApplicationOfDataSubjectRightsSite}</u>.
       </p>
     `;
 
