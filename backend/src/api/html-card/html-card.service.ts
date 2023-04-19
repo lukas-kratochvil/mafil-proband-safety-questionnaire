@@ -70,8 +70,8 @@ export class HTMLCardService {
       <p style="margin-top: 0">${texts.examinationConsent.text1}</p>
       <p>${texts.examinationConsent.text2}</p>
       <p style="margin-bottom: 0">
-        ${texts.examinationConsent.contactInfo}:
-        <br />${texts.examinationConsent.mafil}, ${commonTexts.examinationConsent.ceitec}, ${texts.examinationConsent.masarykUni}, ${commonTexts.examinationConsent.mafilAddress}
+        ${texts.examinationConsent.contactDetailsTitle}:
+        <br />${texts.examinationConsent.contactDetails}
         <br />${texts.examinationConsent.contactPerson}: ${commonTexts.examinationConsent.contactPerson}
         <br />${texts.examinationConsent.phone}: ${commonTexts.examinationConsent.phone}
         <br />${texts.examinationConsent.email}: ${commonTexts.examinationConsent.mafilEmail}
