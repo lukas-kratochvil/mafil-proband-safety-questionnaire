@@ -430,11 +430,18 @@ export const generatePDF = async (
     // Add entry info
     addEntryInfo(doc, doc.page.margins.left, doc.y + CHAPTER_GAP, texts);
 
+    // Compute whether there's enough space for some question, otherwise place questions on the new page
+    let questionsY = doc.y + CHAPTER_GAP;
+    if (doc.y + CHAPTER_GAP + 50 > doc.page.height - (doc.page.margins.top + doc.page.margins.bottom)) {
+      doc.addPage();
+      questionsY = doc.y;
+    }
+
     // Add safety questions
     addQuestions(
       doc,
       PAGE_MARGIN,
-      doc.y + CHAPTER_GAP,
+      questionsY,
       texts.pdf.questions,
       secondaryTexts?.pdf.questions,
       data.answers
