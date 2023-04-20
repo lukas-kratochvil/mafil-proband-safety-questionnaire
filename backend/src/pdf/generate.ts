@@ -54,12 +54,13 @@ const TEXT_FONT_SIZE = 12;
 const SECONDARY_TEXT_FONT_SIZE = 9;
 
 // Gaps
-const CHAPTER_GAP = 20;
-const TITLE_VALUE_GAP = 10;
 const DEFAULT_DOC_LINE_GAP = 10;
+const GAP_BEFORE_CHAPTER = 20;
+const GAP_AFTER_HEADING = 10;
 const LINE_GAP_INSIDE_PARAGRAPH = 1;
-const INPUTS_GAP = 4;
+const TEXT_PARAGRAPHS_GAP = 10;
 const SECONDARY_TEXT_GAP = 1;
+const INPUT_ROWS_GAP = 4;
 
 // Indents
 const PARAGRAPH_INDENT = 20;
@@ -76,7 +77,7 @@ interface ITitleValueRow {
 }
 
 const addChapterTitle = (doc: PDFDoc, x: number, y: number, title: string, secondaryTitle?: string): void => {
-  const gapAfterChapterTitle = INPUTS_GAP + 4;
+  const gapAfterChapterTitle = INPUT_ROWS_GAP + 4;
 
   if (secondaryTitle) {
     doc
@@ -93,7 +94,7 @@ const addChapterTitle = (doc: PDFDoc, x: number, y: number, title: string, secon
 const addTitleValue = (doc: PDFDoc, row: ITitleValueRow, x: number, y?: number): void => {
   const title = `${row.title}:`;
   const titleWidth = 150;
-  const valueStartPosition = x + titleWidth + TITLE_VALUE_GAP;
+  const valueStartPosition = x + titleWidth + 10;
 
   if (row.secondaryTitle) {
     const secondaryTitle = `(${row.secondaryTitle})`;
@@ -104,7 +105,7 @@ const addTitleValue = (doc: PDFDoc, row: ITitleValueRow, x: number, y?: number):
       doc.fontSize(TEXT_FONT_SIZE).text(title, x, y, { width: titleWidth });
       doc.moveUp().text(row.value, valueStartPosition, y, { lineGap: SECONDARY_TEXT_GAP });
       doc.fontSize(SECONDARY_TEXT_FONT_SIZE).text(secondaryTitle, x, undefined, { width: titleWidth });
-      doc.moveUp().text(secondaryValue, valueStartPosition, undefined, { paragraphGap: INPUTS_GAP });
+      doc.moveUp().text(secondaryValue, valueStartPosition, undefined, { paragraphGap: INPUT_ROWS_GAP });
       return;
     }
 
@@ -112,12 +113,12 @@ const addTitleValue = (doc: PDFDoc, row: ITitleValueRow, x: number, y?: number):
     doc.moveUp().text(row.value, valueStartPosition, y, { lineGap: SECONDARY_TEXT_GAP });
     doc
       .fontSize(SECONDARY_TEXT_FONT_SIZE)
-      .text(secondaryTitle, x, undefined, { width: titleWidth, paragraphGap: INPUTS_GAP });
+      .text(secondaryTitle, x, undefined, { width: titleWidth, paragraphGap: INPUT_ROWS_GAP });
     return;
   }
 
   doc.fontSize(TEXT_FONT_SIZE).text(title, x, y, { width: titleWidth });
-  doc.moveUp().text(row.value, valueStartPosition, y, { paragraphGap: INPUTS_GAP });
+  doc.moveUp().text(row.value, valueStartPosition, y, { paragraphGap: INPUT_ROWS_GAP });
 };
 
 const addTitleValueRows = (
@@ -131,7 +132,6 @@ const addTitleValueRows = (
   addChapterTitle(doc, x, y, title, secondaryTitle);
   doc.font(REGULAR_FONT, TEXT_FONT_SIZE).lineGap(LINE_GAP_INSIDE_PARAGRAPH);
   rows.forEach((row, i) => addTitleValue(doc, row, x, i === 0 ? doc.y : undefined));
-  doc.lineGap(DEFAULT_DOC_LINE_GAP);
 };
 
 const addVisitData = (
@@ -235,7 +235,7 @@ const addQuestions = (
       .text(`${questionText} `, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, continued: true })
       .font(MEDIUM_FONT, TEXT_FONT_SIZE)
       .text((answer === AnswerOption.YES ? texts.answerYes : texts.answerNo).toUpperCase(), {
-        paragraphGap: questionSecondaryText || comment ? SECONDARY_TEXT_GAP : INPUTS_GAP,
+        paragraphGap: questionSecondaryText || comment ? SECONDARY_TEXT_GAP : INPUT_ROWS_GAP,
       });
 
     if (secondaryTexts && questionSecondaryText) {
@@ -244,7 +244,7 @@ const addQuestions = (
         .text(`(${questionSecondaryText} `, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, continued: true })
         .font(MEDIUM_FONT, SECONDARY_TEXT_FONT_SIZE)
         .text(`${(answer === AnswerOption.YES ? secondaryTexts.answerYes : secondaryTexts.answerNo).toUpperCase()})`, {
-          paragraphGap: comment ? 2 : INPUTS_GAP,
+          paragraphGap: comment ? 2 : INPUT_ROWS_GAP,
         });
     }
 
@@ -255,7 +255,7 @@ const addQuestions = (
           .text(`${texts.comment} (${secondaryTexts.comment}): ${comment}`, {
             align: "justify",
             lineGap: LINE_GAP_INSIDE_PARAGRAPH,
-            paragraphGap: INPUTS_GAP,
+            paragraphGap: INPUT_ROWS_GAP,
           });
         return;
       }
@@ -263,7 +263,7 @@ const addQuestions = (
       doc.font(REGULAR_FONT, SECONDARY_TEXT_FONT_SIZE).text(`${texts.comment}: ${comment}`, {
         align: "justify",
         lineGap: LINE_GAP_INSIDE_PARAGRAPH,
-        paragraphGap: INPUTS_GAP,
+        paragraphGap: INPUT_ROWS_GAP,
       });
     }
   });
@@ -301,17 +301,20 @@ const addExaminationConsent = (
 ): void => {
   doc
     .font(MEDIUM_FONT, HEADING_FONT_SIZE)
-    .text(texts.title, x, y, { align: "center", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
+    .text(texts.title, x, y, { align: "center", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: GAP_AFTER_HEADING });
   doc
     .font(REGULAR_FONT, TEXT_FONT_SIZE)
-    .text(texts.text1, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
-  doc.text(texts.text2, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
+    .text(texts.text1, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: TEXT_PARAGRAPHS_GAP });
+  doc.text(texts.text2, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: TEXT_PARAGRAPHS_GAP });
   doc
     .text(`${texts.contactDetailsTitle}:`, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH })
     .text(texts.contactDetails, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
     .text(`${texts.contactPerson}: ${commonTexts.contactPerson}`, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
     .text(`${texts.phone}: ${commonTexts.phone}`, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
-    .text(`${texts.email}: ${commonTexts.mafilEmail}`, { lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
+    .text(`${texts.email}: ${commonTexts.mafilEmail}`, {
+      lineGap: LINE_GAP_INSIDE_PARAGRAPH,
+      paragraphGap: TEXT_PARAGRAPHS_GAP,
+    });
   doc
     .text(`${texts.text3}:`, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH })
     .text(texts.personalInfoProtectionSite);
@@ -326,7 +329,7 @@ const addProbandContactRequest = (
 ): void => {
   doc
     .font(MEDIUM_FONT, HEADING_FONT_SIZE)
-    .text(texts.title, x, y, { align: "center", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
+    .text(texts.title, x, y, { align: "center", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: GAP_AFTER_HEADING });
   doc
     .font(REGULAR_FONT, TEXT_FONT_SIZE)
     .text(
@@ -334,7 +337,7 @@ const addProbandContactRequest = (
         data.measurementDate,
         DATE_FORMAT
       )} ${texts.text3}:`,
-      { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 }
+      { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: TEXT_PARAGRAPHS_GAP }
     );
   doc
     .font(MEDIUM_FONT, TEXT_FONT_SIZE)
@@ -357,14 +360,14 @@ const addProbandContactConsent = (
 ): void => {
   doc
     .font(MEDIUM_FONT, HEADING_FONT_SIZE)
-    .text(texts.title, x, y, { align: "center", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
+    .text(texts.title, x, y, { align: "center", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: GAP_AFTER_HEADING });
   doc
     .font(REGULAR_FONT, TEXT_FONT_SIZE)
-    .text(texts.text1, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
+    .text(texts.text1, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: TEXT_PARAGRAPHS_GAP });
   doc
     .text(texts.text2, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH })
-    .text(texts.text3, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
-  doc.text(texts.text4, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
+    .text(texts.text3, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: TEXT_PARAGRAPHS_GAP });
+  doc.text(texts.text4, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: TEXT_PARAGRAPHS_GAP });
   doc.text(texts.list, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 4 });
   // List bullet indentation doesn't work
   doc.list([`${texts.listItem1} ${commonTexts.mafilEmail}`, texts.listItem2, texts.listItem3, texts.listItem4], {
@@ -379,7 +382,7 @@ const addProbandContactConsent = (
     bulletRadius: 3,
     align: "justify",
     lineGap: LINE_GAP_INSIDE_PARAGRAPH,
-    paragraphGap: 10,
+    paragraphGap: TEXT_PARAGRAPHS_GAP,
   });
   doc
     .text(`${texts.text5Part1} ${commonTexts.poverenecEmail}.`, {
@@ -485,7 +488,7 @@ export const generatePDF = async (
   addPersonalData(
     doc,
     doc.page.margins.left,
-    doc.y + CHAPTER_GAP,
+    doc.y + GAP_BEFORE_CHAPTER,
     texts.pdf.personalData,
     secondaryTexts?.pdf.personalData,
     data
@@ -493,11 +496,11 @@ export const generatePDF = async (
 
   if (!data.isPhantom) {
     // Add entry info
-    addEntryInfo(doc, doc.page.margins.left, doc.y + CHAPTER_GAP, texts);
+    addEntryInfo(doc, doc.page.margins.left, doc.y + GAP_BEFORE_CHAPTER, texts);
 
     // Compute whether there's enough space for some question, otherwise place questions on the new page
-    let questionsY = doc.y + CHAPTER_GAP;
-    if (doc.y + CHAPTER_GAP + 50 > doc.page.height - (doc.page.margins.top + doc.page.margins.bottom)) {
+    let questionsY = doc.y + GAP_BEFORE_CHAPTER;
+    if (doc.y + GAP_BEFORE_CHAPTER + 50 > doc.page.height - (doc.page.margins.top + doc.page.margins.bottom)) {
       doc.addPage();
       questionsY = doc.y;
     }
@@ -513,7 +516,7 @@ export const generatePDF = async (
     );
 
     // Add before examination info
-    addBeforeExaminationInfo(doc, doc.page.margins.left, doc.y + CHAPTER_GAP, texts.beforeExamination);
+    addBeforeExaminationInfo(doc, doc.page.margins.left, doc.y + GAP_BEFORE_CHAPTER, texts.beforeExamination);
 
     // Add examination consent
     doc.addPage();
@@ -530,7 +533,7 @@ export const generatePDF = async (
       addProbandContactConsent(
         doc,
         doc.page.margins.left,
-        doc.y + CHAPTER_GAP,
+        doc.y + GAP_BEFORE_CHAPTER,
         texts.probandContact.consent,
         commonTexts.probandContact.consent
       );
