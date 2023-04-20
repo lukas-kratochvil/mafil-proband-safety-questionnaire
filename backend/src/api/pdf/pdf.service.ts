@@ -169,11 +169,6 @@ export class PDFService {
           },
           select: {
             text: true,
-            language: {
-              select: {
-                code: true,
-              },
-            },
           },
           orderBy: {
             language: {
@@ -200,11 +195,6 @@ export class PDFService {
           },
           select: {
             text: true,
-            language: {
-              select: {
-                code: true,
-              },
-            },
           },
           orderBy: {
             language: {
@@ -231,11 +221,6 @@ export class PDFService {
           },
           select: {
             text: true,
-            language: {
-              select: {
-                code: true,
-              },
-            },
           },
           orderBy: {
             language: {
