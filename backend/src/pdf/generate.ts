@@ -22,6 +22,8 @@ type PDFDoc = typeof PDFDocument;
 
 // Localization file nested types
 type LocalizedQuestions = Pick<LocalizedTextsFile, "questions">["questions"];
+type LocalizedVisitData = Pick<Pick<LocalizedTextsFile, "pdf">["pdf"], "visitData">["visitData"];
+type LocalizedPersonalData = Pick<Pick<LocalizedTextsFile, "pdf">["pdf"], "personalData">["personalData"];
 type LocalizedProbandContact = Pick<LocalizedTextsFile, "probandContact">["probandContact"];
 type LocalizedProbandContactRequest = Pick<LocalizedProbandContact, "request">["request"];
 type LocalizedProbandContactConsent = Pick<LocalizedProbandContact, "consent">["consent"];
@@ -50,6 +52,7 @@ const CHAPTER_GAP = 20;
 const TITLE_VALUE_GAP = 10;
 const DEFAULT_DOC_LINE_GAP = 10;
 const LINE_GAP_INSIDE_PARAGRAPH = 2;
+const INPUTS_GAP = LINE_GAP_INSIDE_PARAGRAPH * 2;
 
 // Date format
 const DATE_FORMAT = "d.M.y";
@@ -64,17 +67,47 @@ const addTitleValue = (doc: PDFDoc, row: ITitleValueRow, x: number, y?: number):
   const titleWidth = 150;
   const valueStartPosition = x + titleWidth + TITLE_VALUE_GAP;
   doc
-    .font(MEDIUM_FONT, TEXT_FONT_SIZE)
     .text(`${row.title}:`, x, y, { width: titleWidth })
     .moveUp()
-    .font(REGULAR_FONT, TEXT_FONT_SIZE)
-    .text(row.value, valueStartPosition, undefined, { paragraphGap: 4 });
+    .text(row.value, valueStartPosition, undefined, { paragraphGap: INPUTS_GAP });
 };
 
-const addTitleValueRows = (doc: PDFDoc, x: number, y: number, rows: ITitleValueRow[]): void => {
-  doc.lineGap(LINE_GAP_INSIDE_PARAGRAPH);
-  rows.forEach((row, i) => addTitleValue(doc, row, x, i === 0 ? y : undefined));
+const addTitleValueRows = (doc: PDFDoc, x: number, y: number, title: string, rows: ITitleValueRow[]): void => {
+  doc.font(MEDIUM_FONT, CHAPTER_FONT_SIZE).text(title, x, y);
+  doc.font(REGULAR_FONT, TEXT_FONT_SIZE).lineGap(LINE_GAP_INSIDE_PARAGRAPH);
+  rows.forEach((row, i) => addTitleValue(doc, row, x, i === 0 ? doc.y : undefined));
   doc.lineGap(DEFAULT_DOC_LINE_GAP);
+};
+
+const addVisitData = (doc: PDFDoc, x: number, y: number, texts: LocalizedVisitData, data: IPDFData): void => {
+  const visitInfoRows: ITitleValueRow[] = [
+    { title: "Visit ID", value: data.visitId },
+    { title: texts.project, value: data.projectAcronym },
+    { title: texts.measurementDate, value: format(data.measurementDate, DATE_FORMAT) },
+  ];
+
+  // Add phantom row if the visit is phantom
+  if (data.isPhantom) {
+    visitInfoRows.push({ title: texts.phantom, value: texts.phantomYes });
+  }
+
+  addTitleValueRows(doc, x, y, texts.title, visitInfoRows);
+};
+
+const addPersonalData = (doc: PDFDoc, x: number, y: number, texts: LocalizedPersonalData, data: IPDFData): void => {
+  const probandInfoRows: ITitleValueRow[] = [
+    { title: texts.name, value: data.name },
+    { title: texts.surname, value: data.surname },
+    { title: texts.personalId, value: data.personalId },
+    { title: texts.birthdate, value: format(data.birthdate, DATE_FORMAT) },
+    { title: texts.gender, value: data.gender.text },
+    { title: texts.nativeLanguage, value: data.nativeLanguage.text },
+    { title: texts.height, value: `${data.heightCm} cm` },
+    { title: texts.weight, value: `${data.weightKg} kg` },
+    { title: texts.visualCorrection, value: `${data.visualCorrectionDioptre} D` },
+    { title: texts.handedness, value: data.handedness.text },
+  ];
+  addTitleValueRows(doc, x, y, texts.title, probandInfoRows);
 };
 
 const addQuestions = (
@@ -90,7 +123,9 @@ const addQuestions = (
       .font(REGULAR_FONT, TEXT_FONT_SIZE)
       .text(`${questionText} `, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, continued: true })
       .font(MEDIUM_FONT, TEXT_FONT_SIZE)
-      .text((answer === AnswerOption.YES ? texts.answerYes : texts.answerNo).toUpperCase(), { paragraphGap: 8 });
+      .text((answer === AnswerOption.YES ? texts.answerYes : texts.answerNo).toUpperCase(), {
+        paragraphGap: INPUTS_GAP,
+      });
   });
 };
 
@@ -224,53 +259,24 @@ export const generatePDF = async (
   // Set default line gap in the document
   doc.lineGap(DEFAULT_DOC_LINE_GAP);
 
-  let linePosition = 0;
-
-  // TODO: edit header as here: https://pspdfkit.com/blog/2019/generate-pdf-invoices-pdfkit-nodejs/
-  // Add full-width border box with "Phantom" inside
-  if (data.isPhantom) {
-    const rectY = 25;
-    const rectHeight = 35;
-    doc
-      .rect(200, rectY, 200, rectHeight)
-      .fillAndStroke("#ab5", "black")
-      .moveUp()
-      .font(MEDIUM_FONT, CHAPTER_FONT_SIZE)
-      .fill("white")
-      .text(texts.inputTitles.phantom.toUpperCase(), { align: "center" })
-      .fill("black"); // return back to the black font color
-    linePosition = rectY + rectHeight + 25;
-  } else {
-    linePosition = 75;
-  }
-
   // Add MAFIL logo
   const imageWidth = 90;
   doc.image(getImagePath("mafil_brain_logo.png"), { width: imageWidth });
+  const onMafilLogoRightContentX = imageWidth + 110;
   const linePositionUnderImage = doc.y;
 
+  // Add MAFIL info
+  doc
+    .font(MEDIUM_FONT, CHAPTER_FONT_SIZE)
+    .text(commonTexts.mafil.ceitec, onMafilLogoRightContentX, PAGE_MARGIN + 30, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
+    .text(texts.pdf.mafil.name, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
+    .text(texts.pdf.mafil.workplace, { paragraphGap: 10 });
+
   // Add visit information
-  const visitInfoRows: ITitleValueRow[] = [
-    { title: "Visit ID", value: data.visitId },
-    { title: texts.inputTitles.project, value: data.projectAcronym },
-    { title: texts.inputTitles.measurementDate, value: format(data.measurementDate, DATE_FORMAT) },
-  ];
-  addTitleValueRows(doc, imageWidth + 110, linePosition, visitInfoRows);
+  addVisitData(doc, PAGE_MARGIN, linePositionUnderImage + 30, texts.pdf.visitData, data);
 
   // Add proband information
-  const probandInfoRows: ITitleValueRow[] = [
-    { title: texts.inputTitles.name, value: data.name },
-    { title: texts.inputTitles.surname, value: data.surname },
-    { title: texts.inputTitles.personalId, value: data.personalId },
-    { title: texts.inputTitles.birthdate, value: format(data.birthdate, DATE_FORMAT) },
-    { title: texts.inputTitles.gender, value: data.gender.text },
-    { title: texts.inputTitles.nativeLanguage, value: data.nativeLanguage.text },
-    { title: texts.inputTitles.height, value: `${data.heightCm} cm` },
-    { title: texts.inputTitles.weight, value: `${data.weightKg} kg` },
-    { title: texts.inputTitles.visualCorrection, value: `${data.visualCorrectionDioptre} D` },
-    { title: texts.inputTitles.handedness, value: data.handedness.text },
-  ];
-  addTitleValueRows(doc, PAGE_MARGIN, linePositionUnderImage + 30, probandInfoRows);
+  addPersonalData(doc, PAGE_MARGIN, doc.y + CHAPTER_GAP, texts.pdf.personalData, data);
 
   if (!data.isPhantom) {
     // Add safety questions

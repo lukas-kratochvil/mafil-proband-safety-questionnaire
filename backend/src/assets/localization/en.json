@@ -1,18 +1,29 @@
 {
-  "inputTitles": {
-    "project": "Project",
-    "measurementDate": "Date of measurement",
-    "phantom": "Phantom",
-    "name": "Name",
-    "surname": "Surname",
-    "personalId": "Personal ID",
-    "birthdate": "Birthdate",
-    "gender": "Gender",
-    "nativeLanguage": "Native language",
-    "height": "Height",
-    "weight": "Weight",
-    "visualCorrection": "Visual correction",
-    "handedness": "Handedness"
+  "pdf": {
+    "mafil": {
+      "name": "Multimodal and Functional Imaging Laboratory",
+      "workplace": "Magnetic Resonance Imaging Workplace"
+    },
+    "personalData": {
+      "title": "Personal data",
+      "name": "Name",
+      "surname": "Surname",
+      "personalId": "Personal ID",
+      "birthdate": "Birthdate",
+      "gender": "Gender",
+      "nativeLanguage": "Native language",
+      "height": "Height",
+      "weight": "Weight",
+      "visualCorrection": "Visual correction",
+      "handedness": "Handedness"
+    },
+    "visitData": {
+      "title": "Information about the visit",
+      "project": "Project",
+      "measurementDate": "Date of measurement",
+      "phantom": "Phantom",
+      "phantomYes": "Yes"
+    }
   },
   "entryInfo": {
     "title": "Introductory information",

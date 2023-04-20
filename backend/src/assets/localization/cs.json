@@ -1,18 +1,29 @@
 {
-  "inputTitles": {
-    "project": "Projekt",
-    "measurementDate": "Datum měření",
-    "phantom": "Fantom",
-    "name": "Jméno",
-    "surname": "Příjmění",
-    "personalId": "Rodné číslo",
-    "birthdate": "Datum narození",
-    "gender": "Pohlaví",
-    "nativeLanguage": "Mateřský jazyk",
-    "height": "Výška",
-    "weight": "Váha",
-    "visualCorrection": "Zraková korekce",
-    "handedness": "Stranová dominance"
+  "pdf": {
+    "mafil": {
+      "name": "Laboratoř multimodálního a funkčního zobrazování",
+      "workplace": "Pracoviště Magnetické rezonance"
+    },
+    "personalData": {
+      "title": "Osobní údaje",
+      "name": "Jméno",
+      "surname": "Příjmění",
+      "personalId": "Rodné číslo",
+      "birthdate": "Datum narození",
+      "gender": "Pohlaví",
+      "nativeLanguage": "Mateřský jazyk",
+      "height": "Výška",
+      "weight": "Váha",
+      "visualCorrection": "Zraková korekce",
+      "handedness": "Stranová dominance"
+    },
+    "visitData": {
+      "title": "Informace o visitě",
+      "project": "Projekt",
+      "measurementDate": "Datum měření",
+      "phantom": "Fantom",
+      "phantomYes": "Ano"
+    }
   },
   "entryInfo": {
     "title": "Úvodní informace",
