@@ -23,6 +23,12 @@
       "measurementDate": "Datum měření",
       "phantom": "Fantom",
       "phantomYes": "Ano"
+    },
+    "questions": {
+      "title": "Bezpečnostní otázky",
+      "answerYes": "Ano",
+      "answerNo": "Ne",
+      "comment": "Komentář operátora"
     }
   },
   "entryInfo": {
@@ -34,11 +40,6 @@
     "title": "Bezpečnostní informace",
     "textPart1": "Přečtěte si, prosím, následující otázky a zatrhněte správnou odpověď.",
     "textPart2": "Pravdivé zodpovězení našich dotazů je velmi důležité pro Vaši bezpečnost!"
-  },
-  "questions": {
-    "title": "Bezpečnostní otázky",
-    "answerYes": "Ano",
-    "answerNo": "Ne"
   },
   "beforeExamination": {
     "title": "Před vyšetřením",

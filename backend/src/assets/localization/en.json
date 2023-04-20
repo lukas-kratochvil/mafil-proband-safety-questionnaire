@@ -23,6 +23,12 @@
       "measurementDate": "Date of measurement",
       "phantom": "Phantom",
       "phantomYes": "Yes"
+    },
+    "questions": {
+      "title": "Safety questions",
+      "answerYes": "Yes",
+      "answerNo": "No",
+      "comment": "Operator comment"
     }
   },
   "entryInfo": {
@@ -34,11 +40,6 @@
     "title": "Safety information",
     "textPart1": "Please read the following questions and mark the correct answers.",
     "textPart2": "Answering the questions truthfully is very important for your safety!"
-  },
-  "questions": {
-    "title": "Safety questions",
-    "answerYes": "Yes",
-    "answerNo": "No"
   },
   "beforeExamination": {
     "title": "Before examination",

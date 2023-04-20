@@ -21,9 +21,9 @@ export const PDF_OPERATOR_LANGUAGE_CODE = "cs";
 type PDFDoc = typeof PDFDocument;
 
 // Localization file nested types
-type LocalizedQuestions = Pick<LocalizedTextsFile, "questions">["questions"];
 type LocalizedVisitData = Pick<Pick<LocalizedTextsFile, "pdf">["pdf"], "visitData">["visitData"];
 type LocalizedPersonalData = Pick<Pick<LocalizedTextsFile, "pdf">["pdf"], "personalData">["personalData"];
+type LocalizedQuestions = Pick<Pick<LocalizedTextsFile, "pdf">["pdf"], "questions">["questions"];
 type LocalizedProbandContact = Pick<LocalizedTextsFile, "probandContact">["probandContact"];
 type LocalizedProbandContactRequest = Pick<LocalizedProbandContact, "request">["request"];
 type LocalizedProbandContactConsent = Pick<LocalizedProbandContact, "consent">["consent"];
@@ -52,8 +52,8 @@ const SECONDARY_TEXT_FONT_SIZE = 9;
 const CHAPTER_GAP = 20;
 const TITLE_VALUE_GAP = 10;
 const DEFAULT_DOC_LINE_GAP = 10;
-const LINE_GAP_INSIDE_PARAGRAPH = 2;
-const INPUTS_GAP = LINE_GAP_INSIDE_PARAGRAPH * 2;
+const LINE_GAP_INSIDE_PARAGRAPH = 1;
+const INPUTS_GAP = 4;
 
 // Date format
 const DATE_FORMAT = "d.M.y";
@@ -176,17 +176,47 @@ const addQuestions = (
   x: number,
   y: number,
   texts: LocalizedQuestions,
+  secondaryTexts: LocalizedQuestions | undefined,
   questions: IPDFQuestionAnswer[]
 ): void => {
   doc.font(MEDIUM_FONT, CHAPTER_FONT_SIZE).text(texts.title, x, y);
-  questions.forEach(({ questionText, answer }) => {
+  questions.forEach(({ questionText, questionSecondaryText, answer, comment }) => {
     doc
       .font(REGULAR_FONT, TEXT_FONT_SIZE)
       .text(`${questionText} `, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, continued: true })
       .font(MEDIUM_FONT, TEXT_FONT_SIZE)
       .text((answer === AnswerOption.YES ? texts.answerYes : texts.answerNo).toUpperCase(), {
+        paragraphGap: questionSecondaryText || comment ? 1 : INPUTS_GAP,
+      });
+
+    if (secondaryTexts && questionSecondaryText) {
+      doc
+        .font(REGULAR_FONT, SECONDARY_TEXT_FONT_SIZE)
+        .text(`(${questionSecondaryText} `, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, continued: true })
+        .font(MEDIUM_FONT, SECONDARY_TEXT_FONT_SIZE)
+        .text(`${(answer === AnswerOption.YES ? secondaryTexts.answerYes : secondaryTexts.answerNo).toUpperCase()})`, {
+          paragraphGap: comment ? 2 : INPUTS_GAP,
+        });
+    }
+
+    if (comment) {
+      if (secondaryTexts) {
+        doc
+          .font(REGULAR_FONT, SECONDARY_TEXT_FONT_SIZE)
+          .text(`${texts.comment} (${secondaryTexts.comment}): ${comment}`, {
+            align: "justify",
+            lineGap: LINE_GAP_INSIDE_PARAGRAPH,
+            paragraphGap: INPUTS_GAP,
+          });
+        return;
+      }
+
+      doc.font(REGULAR_FONT, SECONDARY_TEXT_FONT_SIZE).text(`${texts.comment}: ${comment}`, {
+        align: "justify",
+        lineGap: LINE_GAP_INSIDE_PARAGRAPH,
         paragraphGap: INPUTS_GAP,
       });
+    }
   });
 };
 
@@ -353,7 +383,14 @@ export const generatePDF = async (
 
   if (!data.isPhantom) {
     // Add safety questions
-    addQuestions(doc, PAGE_MARGIN, doc.y + CHAPTER_GAP, texts.questions, data.answers);
+    addQuestions(
+      doc,
+      PAGE_MARGIN,
+      doc.y + CHAPTER_GAP,
+      texts.pdf.questions,
+      secondaryTexts?.pdf.questions,
+      data.answers
+    );
 
     // Add proband contact consent if proband requested sending research results via email and phone
     if (data.email && data.phone) {
