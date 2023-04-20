@@ -23,6 +23,7 @@ type PDFDoc = typeof PDFDocument;
 // Localization file nested types
 type LocalizedVisitData = Pick<Pick<LocalizedTextsFile, "pdf">["pdf"], "visitData">["visitData"];
 type LocalizedPersonalData = Pick<Pick<LocalizedTextsFile, "pdf">["pdf"], "personalData">["personalData"];
+type LocalizedEntryInfoAndSafetyInfo = Pick<LocalizedTextsFile, "entryInfo" | "safetyInfo">;
 type LocalizedQuestions = Pick<Pick<LocalizedTextsFile, "pdf">["pdf"], "questions">["questions"];
 type LocalizedProbandContact = Pick<LocalizedTextsFile, "probandContact">["probandContact"];
 type LocalizedProbandContactRequest = Pick<LocalizedProbandContact, "request">["request"];
@@ -55,6 +56,9 @@ const DEFAULT_DOC_LINE_GAP = 10;
 const LINE_GAP_INSIDE_PARAGRAPH = 1;
 const INPUTS_GAP = 4;
 const SECONDARY_TEXT_GAP = 1;
+
+// Indents
+const PARAGRAPH_INDENT = 20;
 
 // Date format
 const DATE_FORMAT = "d.M.y";
@@ -192,6 +196,24 @@ const addPersonalData = (
     },
   ];
   addTitleValueRows(doc, x, y, texts.title, secondaryTexts?.title, probandInfoRows);
+};
+
+const addEntryInfo = (doc: PDFDoc, x: number, y: number, texts: LocalizedEntryInfoAndSafetyInfo): void => {
+  doc
+    .font(REGULAR_FONT, TEXT_FONT_SIZE)
+    .text(texts.entryInfo.text1, x, y, {
+      indent: PARAGRAPH_INDENT,
+      align: "justify",
+      lineGap: LINE_GAP_INSIDE_PARAGRAPH,
+    })
+    .text(texts.entryInfo.text2, { indent: PARAGRAPH_INDENT, align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH })
+    .text(`${texts.safetyInfo.textPart1} `, {
+      indent: PARAGRAPH_INDENT,
+      align: "justify",
+      lineGap: LINE_GAP_INSIDE_PARAGRAPH,
+    })
+    .font(MEDIUM_FONT)
+    .text(texts.safetyInfo.textPart2, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH });
 };
 
 const addQuestions = (
@@ -405,6 +427,9 @@ export const generatePDF = async (
   );
 
   if (!data.isPhantom) {
+    // Add entry info
+    addEntryInfo(doc, doc.page.margins.left, doc.y + CHAPTER_GAP, texts);
+
     // Add safety questions
     addQuestions(
       doc,
