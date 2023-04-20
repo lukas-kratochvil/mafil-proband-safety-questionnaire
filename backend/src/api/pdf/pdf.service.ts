@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { AnswerOption } from "@prisma/client";
+import { AnswerOption, Prisma } from "@prisma/client";
 import { generatePDF, PDF_OPERATOR_LANGUAGE_CODE } from "@app/pdf/generate";
 import { IPDFData, IPDFOperator, IPDFQuestionAnswer } from "@app/pdf/interfaces";
 import { PrismaService } from "@app/prisma/prisma.service";
@@ -144,13 +144,15 @@ export class PDFService {
 
     const languageCodes = [generatePDFInput.probandLanguageCode];
     const useSecondaryLanguage = generatePDFInput.probandLanguageCode !== PDF_OPERATOR_LANGUAGE_CODE;
-    const translationTextIndex
-      = !useSecondaryLanguage || generatePDFInput.probandLanguageCode < PDF_OPERATOR_LANGUAGE_CODE ? 0 : 1;
-    const translationSecondaryTextIndex = !useSecondaryLanguage ? undefined : translationTextIndex === 0 ? 1 : 0;
 
     if (useSecondaryLanguage) {
       languageCodes.push(PDF_OPERATOR_LANGUAGE_CODE);
     }
+
+    const languageOrderBy = Prisma.validator<Prisma.LanguageOrderByWithAggregationInput>()({ code: "asc" });
+    const translationTextIndex
+    = !useSecondaryLanguage || generatePDFInput.probandLanguageCode < PDF_OPERATOR_LANGUAGE_CODE ? 0 : 1;
+    const translationSecondaryTextIndex = !useSecondaryLanguage ? undefined : translationTextIndex === 0 ? 1 : 0;
 
     // Get gender translations
     const gender = await this.prisma.gender.findFirstOrThrow({
@@ -171,9 +173,7 @@ export class PDFService {
             text: true,
           },
           orderBy: {
-            language: {
-              code: "asc",
-            },
+            language: languageOrderBy,
           },
         },
       },
@@ -197,9 +197,7 @@ export class PDFService {
             text: true,
           },
           orderBy: {
-            language: {
-              code: "asc",
-            },
+            language: languageOrderBy,
           },
         },
       },
@@ -223,9 +221,7 @@ export class PDFService {
             text: true,
           },
           orderBy: {
-            language: {
-              code: "asc",
-            },
+            language: languageOrderBy,
           },
         },
       },
@@ -258,9 +254,7 @@ export class PDFService {
                   },
                 },
                 orderBy: {
-                  language: {
-                    code: "asc",
-                  },
+                  language: languageOrderBy,
                 },
               },
             },
