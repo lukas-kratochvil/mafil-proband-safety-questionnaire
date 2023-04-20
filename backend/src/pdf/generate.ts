@@ -54,6 +54,7 @@ const TITLE_VALUE_GAP = 10;
 const DEFAULT_DOC_LINE_GAP = 10;
 const LINE_GAP_INSIDE_PARAGRAPH = 1;
 const INPUTS_GAP = 4;
+const SECONDARY_TEXT_GAP = 1;
 
 // Date format
 const DATE_FORMAT = "d.M.y";
@@ -78,14 +79,14 @@ const addTitleValue = (doc: PDFDoc, row: ITitleValueRow, x: number, y?: number):
       const secondaryValue = `(${row.secondaryValue})`;
 
       doc.fontSize(TEXT_FONT_SIZE).text(title, x, y, { width: titleWidth });
-      doc.moveUp().text(row.value, valueStartPosition, y, { lineGap: 1 });
+      doc.moveUp().text(row.value, valueStartPosition, y, { lineGap: SECONDARY_TEXT_GAP });
       doc.fontSize(SECONDARY_TEXT_FONT_SIZE).text(secondaryTitle, x, undefined, { width: titleWidth });
       doc.moveUp().text(secondaryValue, valueStartPosition, undefined, { paragraphGap: INPUTS_GAP });
       return;
     }
 
     doc.fontSize(TEXT_FONT_SIZE).text(title, x, y, { width: titleWidth });
-    doc.moveUp().text(row.value, valueStartPosition, y, { lineGap: 1 });
+    doc.moveUp().text(row.value, valueStartPosition, y, { lineGap: SECONDARY_TEXT_GAP });
     doc
       .fontSize(SECONDARY_TEXT_FONT_SIZE)
       .text(secondaryTitle, x, undefined, { width: titleWidth, paragraphGap: INPUTS_GAP });
@@ -186,7 +187,7 @@ const addQuestions = (
       .text(`${questionText} `, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, continued: true })
       .font(MEDIUM_FONT, TEXT_FONT_SIZE)
       .text((answer === AnswerOption.YES ? texts.answerYes : texts.answerNo).toUpperCase(), {
-        paragraphGap: questionSecondaryText || comment ? 1 : INPUTS_GAP,
+        paragraphGap: questionSecondaryText || comment ? SECONDARY_TEXT_GAP : INPUTS_GAP,
       });
 
     if (secondaryTexts && questionSecondaryText) {
