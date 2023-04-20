@@ -67,6 +67,21 @@ interface ITitleValueRow {
   secondaryValue?: string;
 }
 
+const addChapterTitle = (doc: PDFDoc, x: number, y: number, title: string, secondaryTitle?: string): void => {
+  const gapAfterChapterTitle = INPUTS_GAP + 4;
+
+  if (secondaryTitle) {
+    doc
+      .font(MEDIUM_FONT, CHAPTER_FONT_SIZE)
+      .text(title, x, y, { continued: true })
+      .font(REGULAR_FONT)
+      .text(` (${secondaryTitle})`, { lineGap: gapAfterChapterTitle });
+    return;
+  }
+
+  doc.font(MEDIUM_FONT, CHAPTER_FONT_SIZE).text(title, x, y, { lineGap: gapAfterChapterTitle });
+};
+
 const addTitleValue = (doc: PDFDoc, row: ITitleValueRow, x: number, y?: number): void => {
   const title = `${row.title}:`;
   const titleWidth = 150;
@@ -97,8 +112,15 @@ const addTitleValue = (doc: PDFDoc, row: ITitleValueRow, x: number, y?: number):
   doc.moveUp().text(row.value, valueStartPosition, y, { paragraphGap: INPUTS_GAP });
 };
 
-const addTitleValueRows = (doc: PDFDoc, x: number, y: number, title: string, rows: ITitleValueRow[]): void => {
-  doc.font(MEDIUM_FONT, CHAPTER_FONT_SIZE).text(title, x, y);
+const addTitleValueRows = (
+  doc: PDFDoc,
+  x: number,
+  y: number,
+  title: string,
+  secondaryTitle: string | undefined,
+  rows: ITitleValueRow[]
+): void => {
+  addChapterTitle(doc, x, y, title, secondaryTitle);
   doc.font(REGULAR_FONT, TEXT_FONT_SIZE).lineGap(LINE_GAP_INSIDE_PARAGRAPH);
   rows.forEach((row, i) => addTitleValue(doc, row, x, i === 0 ? doc.y : undefined));
   doc.lineGap(DEFAULT_DOC_LINE_GAP);
@@ -127,7 +149,7 @@ const addVisitData = (
     visitInfoRows.push({ title: texts.phantom, value: texts.phantomYes });
   }
 
-  addTitleValueRows(doc, x, y, texts.title, visitInfoRows);
+  addTitleValueRows(doc, x, y, texts.title, secondaryTexts?.title, visitInfoRows);
 };
 
 const addPersonalData = (
@@ -169,7 +191,7 @@ const addPersonalData = (
       secondaryValue: data.handedness.secondaryText,
     },
   ];
-  addTitleValueRows(doc, x, y, texts.title, probandInfoRows);
+  addTitleValueRows(doc, x, y, texts.title, secondaryTexts?.title, probandInfoRows);
 };
 
 const addQuestions = (
@@ -180,7 +202,7 @@ const addQuestions = (
   secondaryTexts: LocalizedQuestions | undefined,
   questions: IPDFQuestionAnswer[]
 ): void => {
-  doc.font(MEDIUM_FONT, CHAPTER_FONT_SIZE).text(texts.title, x, y);
+  addChapterTitle(doc, x, y, texts.title, secondaryTexts?.title);
   questions.forEach(({ questionText, questionSecondaryText, answer, comment }) => {
     doc
       .font(REGULAR_FONT, TEXT_FONT_SIZE)
