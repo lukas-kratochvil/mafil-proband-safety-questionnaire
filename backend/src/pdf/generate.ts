@@ -218,7 +218,7 @@ export const generatePDF = async (
   const stream = doc.pipe(new Base64Encode());
 
   // TODO: delete - only for development purpose
-  const pdfFile = fs.createWriteStream(`output_${locale}_${Date.now()}.pdf`);
+  const pdfFile = fs.createWriteStream(`output_${Date.now()}.pdf`);
   doc.pipe(pdfFile);
 
   // Set default line gap in the document
@@ -229,23 +229,23 @@ export const generatePDF = async (
   // TODO: edit header as here: https://pspdfkit.com/blog/2019/generate-pdf-invoices-pdfkit-nodejs/
   // Add full-width border box with "Phantom" inside
   if (data.isPhantom) {
-    const reactY = 25;
-    const rectHeight = 50;
+    const rectY = 25;
+    const rectHeight = 35;
     doc
-      .rect(200, reactY, 200, rectHeight)
+      .rect(200, rectY, 200, rectHeight)
       .fillAndStroke("#ab5", "black")
-      .fill("white")
-      .stroke()
+      .moveUp()
       .font(MEDIUM_FONT, CHAPTER_FONT_SIZE)
+      .fill("white")
       .text(texts.inputTitles.phantom.toUpperCase(), { align: "center" })
       .fill("black"); // return back to the black font color
-    linePosition = reactY + rectHeight + 25;
+    linePosition = rectY + rectHeight + 25;
   } else {
     linePosition = 75;
   }
 
   // Add MAFIL logo
-  const imageWidth = 130;
+  const imageWidth = 90;
   doc.image(getImagePath("mafil_brain_logo.png"), { width: imageWidth });
   const linePositionUnderImage = doc.y;
 
@@ -255,7 +255,7 @@ export const generatePDF = async (
     { title: texts.inputTitles.project, value: data.projectAcronym },
     { title: texts.inputTitles.measurementDate, value: format(data.measurementDate, DATE_FORMAT) },
   ];
-  addTitleValueRows(doc, imageWidth + 70, linePosition, visitInfoRows);
+  addTitleValueRows(doc, imageWidth + 110, linePosition, visitInfoRows);
 
   // Add proband information
   const probandInfoRows: ITitleValueRow[] = [

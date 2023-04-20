@@ -1,6 +1,6 @@
 import { AnswerOption, Operator } from "@prisma/client";
 
-export type IPDFOperator = Pick<Operator, "name" | "surname">
+export type IPDFOperator = Pick<Operator, "name" | "surname">;
 
 export interface IPDFQuestionAnswer {
   questionText: string;
