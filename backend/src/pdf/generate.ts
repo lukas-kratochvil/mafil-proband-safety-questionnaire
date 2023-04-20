@@ -26,9 +26,12 @@ type LocalizedPersonalData = Pick<Pick<LocalizedTextsFile, "pdf">["pdf"], "perso
 type LocalizedEntryInfoAndSafetyInfo = Pick<LocalizedTextsFile, "entryInfo" | "safetyInfo">;
 type LocalizedQuestions = Pick<Pick<LocalizedTextsFile, "pdf">["pdf"], "questions">["questions"];
 type LocalizedBeforeExaminationInfo = Pick<LocalizedTextsFile, "beforeExamination">["beforeExamination"];
+type LocalizedExaminationConsent = Pick<LocalizedTextsFile, "examinationConsent">["examinationConsent"];
 type LocalizedProbandContact = Pick<LocalizedTextsFile, "probandContact">["probandContact"];
 type LocalizedProbandContactRequest = Pick<LocalizedProbandContact, "request">["request"];
 type LocalizedProbandContactConsent = Pick<LocalizedProbandContact, "consent">["consent"];
+
+type CommonExaminationConsent = Pick<CommonTextsFile, "examinationConsent">["examinationConsent"];
 type CommonProbandContactConsent = Pick<
   Pick<CommonTextsFile, "probandContact">["probandContact"],
   "consent"
@@ -289,6 +292,31 @@ const addBeforeExaminationInfo = (doc: PDFDoc, x: number, y: number, texts: Loca
     .text(texts.textPart7, doc.x + 2, undefined, { underline: false });
 };
 
+const addExaminationConsent = (
+  doc: PDFDoc,
+  x: number,
+  y: number,
+  texts: LocalizedExaminationConsent,
+  commonTexts: CommonExaminationConsent
+): void => {
+  doc
+    .font(MEDIUM_FONT, HEADING_FONT_SIZE)
+    .text(texts.title, x, y, { align: "center", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
+  doc
+    .font(REGULAR_FONT, TEXT_FONT_SIZE)
+    .text(texts.text1, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
+  doc.text(texts.text2, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
+  doc
+    .text(`${texts.contactDetailsTitle}:`, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH })
+    .text(texts.contactDetails, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
+    .text(`${texts.contactPerson}: ${commonTexts.contactPerson}`, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
+    .text(`${texts.phone}: ${commonTexts.phone}`, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
+    .text(`${texts.email}: ${commonTexts.mafilEmail}`, { lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
+  doc
+    .text(`${texts.text3}:`, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH })
+    .text(texts.personalInfoProtectionSite);
+};
+
 const addProbandContactRequest = (
   doc: PDFDoc,
   x: number,
@@ -482,6 +510,10 @@ export const generatePDF = async (
 
     // Add before examination info
     addBeforeExaminationInfo(doc, doc.page.margins.left, doc.y + CHAPTER_GAP, texts.beforeExamination);
+
+    // Add examination consent
+    doc.addPage();
+    addExaminationConsent(doc, doc.page.margins.left, doc.y, texts.examinationConsent, commonTexts.examinationConsent);
 
     // Add proband contact consent if proband requested sending research results via email and phone
     if (data.email && data.phone) {
