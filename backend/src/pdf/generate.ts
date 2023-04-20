@@ -324,7 +324,9 @@ const addProbandContactRequest = (
   texts: LocalizedProbandContactRequest,
   data: IPDFData
 ): void => {
-  doc.font(MEDIUM_FONT, HEADING_FONT_SIZE).text(texts.title, x, y, { align: "center" });
+  doc
+    .font(MEDIUM_FONT, HEADING_FONT_SIZE)
+    .text(texts.title, x, y, { align: "center", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
   doc
     .font(REGULAR_FONT, TEXT_FONT_SIZE)
     .text(
@@ -353,7 +355,9 @@ const addProbandContactConsent = (
   texts: LocalizedProbandContactConsent,
   commonTexts: CommonProbandContactConsent
 ): void => {
-  doc.font(MEDIUM_FONT, HEADING_FONT_SIZE).text(texts.title, x, y, { align: "center" });
+  doc
+    .font(MEDIUM_FONT, HEADING_FONT_SIZE)
+    .text(texts.title, x, y, { align: "center", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
   doc
     .font(REGULAR_FONT, TEXT_FONT_SIZE)
     .text(texts.text1, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 10 });
