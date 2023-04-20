@@ -358,7 +358,7 @@ const addProbandContactConsent = (
     .lineTo(doc.x + 200, signatureLineY)
     .dash(2, { space: 3 })
     .stroke();
-  doc.text(texts.signature, PAGE_MARGIN, signatureLineY + 2);
+  doc.text(texts.signature, doc.page.margins.left, signatureLineY + 2);
 };
 
 const streamToString = (stream: Readable): Promise<string | never> => {
@@ -409,17 +409,26 @@ export const generatePDF = async (
   // Add MAFIL info
   doc
     .font(MEDIUM_FONT, CHAPTER_FONT_SIZE)
-    .text(commonTexts.mafil.ceitec, onMafilLogoRightContentX, PAGE_MARGIN + 30, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
+    .text(commonTexts.mafil.ceitec, onMafilLogoRightContentX, doc.page.margins.top + 30, {
+      lineGap: LINE_GAP_INSIDE_PARAGRAPH,
+    })
     .text(texts.pdf.mafil.name, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
-    .text(texts.pdf.mafil.workplace, { paragraphGap: 10 });
+    .text(texts.pdf.mafil.workplace);
 
   // Add visit information
-  addVisitData(doc, PAGE_MARGIN, linePositionUnderImage + 30, texts.pdf.visitData, secondaryTexts?.pdf.visitData, data);
+  addVisitData(
+    doc,
+    doc.page.margins.left,
+    linePositionUnderImage + 30,
+    texts.pdf.visitData,
+    secondaryTexts?.pdf.visitData,
+    data
+  );
 
   // Add proband information
   addPersonalData(
     doc,
-    PAGE_MARGIN,
+    doc.page.margins.left,
     doc.y + CHAPTER_GAP,
     texts.pdf.personalData,
     secondaryTexts?.pdf.personalData,
@@ -440,7 +449,7 @@ export const generatePDF = async (
     // Add safety questions
     addQuestions(
       doc,
-      PAGE_MARGIN,
+      doc.page.margins.left,
       questionsY,
       texts.pdf.questions,
       secondaryTexts?.pdf.questions,
@@ -452,12 +461,12 @@ export const generatePDF = async (
       doc.addPage();
 
       // Request
-      addProbandContactRequest(doc, PAGE_MARGIN, doc.y, texts.probandContact.request, data);
+      addProbandContactRequest(doc, doc.page.margins.left, doc.y, texts.probandContact.request, data);
 
       // Consent
       addProbandContactConsent(
         doc,
-        PAGE_MARGIN,
+        doc.page.margins.left,
         doc.y + CHAPTER_GAP,
         texts.probandContact.consent,
         commonTexts.probandContact.consent
