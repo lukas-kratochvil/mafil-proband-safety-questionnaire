@@ -46,6 +46,7 @@ const MEDIUM_FONT = "Roboto-medium";
 const HEADING_FONT_SIZE = 18;
 const CHAPTER_FONT_SIZE = 14;
 const TEXT_FONT_SIZE = 12;
+const SECONDARY_TEXT_FONT_SIZE = 9;
 
 // Gaps
 const CHAPTER_GAP = 20;
@@ -60,16 +61,39 @@ const DATE_FORMAT = "d.M.y";
 
 interface ITitleValueRow {
   title: string;
+  secondaryTitle?: string;
   value: string;
+  secondaryValue?: string;
 }
 
 const addTitleValue = (doc: PDFDoc, row: ITitleValueRow, x: number, y?: number): void => {
+  const title = `${row.title}:`;
   const titleWidth = 150;
   const valueStartPosition = x + titleWidth + TITLE_VALUE_GAP;
-  doc
-    .text(`${row.title}:`, x, y, { width: titleWidth })
-    .moveUp()
-    .text(row.value, valueStartPosition, undefined, { paragraphGap: INPUTS_GAP });
+
+  if (row.secondaryTitle) {
+    const secondaryTitle = `(${row.secondaryTitle})`;
+
+    if (row.secondaryValue) {
+      const secondaryValue = `(${row.secondaryValue})`;
+
+      doc.fontSize(TEXT_FONT_SIZE).text(title, x, y, { width: titleWidth });
+      doc.moveUp().text(row.value, valueStartPosition, y, { lineGap: 1 });
+      doc.fontSize(SECONDARY_TEXT_FONT_SIZE).text(secondaryTitle, x, undefined, { width: titleWidth });
+      doc.moveUp().text(secondaryValue, valueStartPosition, undefined, { paragraphGap: INPUTS_GAP });
+      return;
+    }
+
+    doc.fontSize(TEXT_FONT_SIZE).text(title, x, y, { width: titleWidth });
+    doc.moveUp().text(row.value, valueStartPosition, y, { lineGap: 1 });
+    doc
+      .fontSize(SECONDARY_TEXT_FONT_SIZE)
+      .text(secondaryTitle, x, undefined, { width: titleWidth, paragraphGap: INPUTS_GAP });
+    return;
+  }
+
+  doc.fontSize(TEXT_FONT_SIZE).text(title, x, y, { width: titleWidth });
+  doc.moveUp().text(row.value, valueStartPosition, y, { paragraphGap: INPUTS_GAP });
 };
 
 const addTitleValueRows = (doc: PDFDoc, x: number, y: number, title: string, rows: ITitleValueRow[]): void => {
@@ -79,11 +103,22 @@ const addTitleValueRows = (doc: PDFDoc, x: number, y: number, title: string, row
   doc.lineGap(DEFAULT_DOC_LINE_GAP);
 };
 
-const addVisitData = (doc: PDFDoc, x: number, y: number, texts: LocalizedVisitData, data: IPDFData): void => {
+const addVisitData = (
+  doc: PDFDoc,
+  x: number,
+  y: number,
+  texts: LocalizedVisitData,
+  secondaryTexts: LocalizedVisitData | undefined,
+  data: IPDFData
+): void => {
   const visitInfoRows: ITitleValueRow[] = [
     { title: "Visit ID", value: data.visitId },
-    { title: texts.project, value: data.projectAcronym },
-    { title: texts.measurementDate, value: format(data.measurementDate, DATE_FORMAT) },
+    { title: texts.project, secondaryTitle: secondaryTexts?.project, value: data.projectAcronym },
+    {
+      title: texts.measurementDate,
+      secondaryTitle: secondaryTexts?.measurementDate,
+      value: format(data.measurementDate, DATE_FORMAT),
+    },
   ];
 
   // Add phantom row if the visit is phantom
@@ -94,18 +129,44 @@ const addVisitData = (doc: PDFDoc, x: number, y: number, texts: LocalizedVisitDa
   addTitleValueRows(doc, x, y, texts.title, visitInfoRows);
 };
 
-const addPersonalData = (doc: PDFDoc, x: number, y: number, texts: LocalizedPersonalData, data: IPDFData): void => {
+const addPersonalData = (
+  doc: PDFDoc,
+  x: number,
+  y: number,
+  texts: LocalizedPersonalData,
+  secondaryTexts: LocalizedPersonalData | undefined,
+  data: IPDFData
+): void => {
   const probandInfoRows: ITitleValueRow[] = [
-    { title: texts.name, value: data.name },
-    { title: texts.surname, value: data.surname },
-    { title: texts.personalId, value: data.personalId },
-    { title: texts.birthdate, value: format(data.birthdate, DATE_FORMAT) },
-    { title: texts.gender, value: data.gender.text },
-    { title: texts.nativeLanguage, value: data.nativeLanguage.text },
-    { title: texts.height, value: `${data.heightCm} cm` },
-    { title: texts.weight, value: `${data.weightKg} kg` },
-    { title: texts.visualCorrection, value: `${data.visualCorrectionDioptre} D` },
-    { title: texts.handedness, value: data.handedness.text },
+    { title: texts.name, secondaryTitle: secondaryTexts?.name, value: data.name },
+    { title: texts.surname, secondaryTitle: secondaryTexts?.surname, value: data.surname },
+    { title: texts.personalId, secondaryTitle: secondaryTexts?.personalId, value: data.personalId },
+    { title: texts.birthdate, secondaryTitle: secondaryTexts?.birthdate, value: format(data.birthdate, DATE_FORMAT) },
+    {
+      title: texts.gender,
+      secondaryTitle: secondaryTexts?.gender,
+      value: data.gender.text,
+      secondaryValue: data.gender.secondaryText,
+    },
+    {
+      title: texts.nativeLanguage,
+      secondaryTitle: secondaryTexts?.nativeLanguage,
+      value: data.nativeLanguage.text,
+      secondaryValue: data.nativeLanguage.secondaryText,
+    },
+    { title: texts.height, secondaryTitle: secondaryTexts?.height, value: `${data.heightCm} cm` },
+    { title: texts.weight, secondaryTitle: secondaryTexts?.weight, value: `${data.weightKg} kg` },
+    {
+      title: texts.visualCorrection,
+      secondaryTitle: secondaryTexts?.visualCorrection,
+      value: `${data.visualCorrectionDioptre} D`,
+    },
+    {
+      title: texts.handedness,
+      secondaryTitle: secondaryTexts?.handedness,
+      value: data.handedness.text,
+      secondaryValue: data.handedness.secondaryText,
+    },
   ];
   addTitleValueRows(doc, x, y, texts.title, probandInfoRows);
 };
@@ -240,7 +301,12 @@ export const generatePDF = async (
   secondaryLocale?: string
 ): Promise<string | never> => {
   const texts = getLocalizedTextsFile(locale);
+  let secondaryTexts: LocalizedTextsFile | undefined = undefined;
   const commonTexts = getCommonTextsFile();
+
+  if (secondaryLocale) {
+    secondaryTexts = getLocalizedTextsFile(secondaryLocale);
+  }
 
   // Create PDF document
   const doc = new PDFDocument({ size: "A4", margin: PAGE_MARGIN });
@@ -273,10 +339,17 @@ export const generatePDF = async (
     .text(texts.pdf.mafil.workplace, { paragraphGap: 10 });
 
   // Add visit information
-  addVisitData(doc, PAGE_MARGIN, linePositionUnderImage + 30, texts.pdf.visitData, data);
+  addVisitData(doc, PAGE_MARGIN, linePositionUnderImage + 30, texts.pdf.visitData, secondaryTexts?.pdf.visitData, data);
 
   // Add proband information
-  addPersonalData(doc, PAGE_MARGIN, doc.y + CHAPTER_GAP, texts.pdf.personalData, data);
+  addPersonalData(
+    doc,
+    PAGE_MARGIN,
+    doc.y + CHAPTER_GAP,
+    texts.pdf.personalData,
+    secondaryTexts?.pdf.personalData,
+    data
+  );
 
   if (!data.isPhantom) {
     // Add safety questions
