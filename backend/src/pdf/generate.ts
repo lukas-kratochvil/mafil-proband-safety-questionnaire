@@ -25,6 +25,7 @@ type LocalizedVisitData = Pick<Pick<LocalizedTextsFile, "pdf">["pdf"], "visitDat
 type LocalizedPersonalData = Pick<Pick<LocalizedTextsFile, "pdf">["pdf"], "personalData">["personalData"];
 type LocalizedEntryInfoAndSafetyInfo = Pick<LocalizedTextsFile, "entryInfo" | "safetyInfo">;
 type LocalizedQuestions = Pick<Pick<LocalizedTextsFile, "pdf">["pdf"], "questions">["questions"];
+type LocalizedBeforeExaminationInfo = Pick<LocalizedTextsFile, "beforeExamination">["beforeExamination"];
 type LocalizedProbandContact = Pick<LocalizedTextsFile, "probandContact">["probandContact"];
 type LocalizedProbandContactRequest = Pick<LocalizedProbandContact, "request">["request"];
 type LocalizedProbandContactConsent = Pick<LocalizedProbandContact, "consent">["consent"];
@@ -265,6 +266,29 @@ const addQuestions = (
   });
 };
 
+const addBeforeExaminationInfo = (doc: PDFDoc, x: number, y: number, texts: LocalizedBeforeExaminationInfo): void => {
+  doc
+    .font(REGULAR_FONT, TEXT_FONT_SIZE)
+    .text(`${texts.textPart1} `, x, y, {
+      align: "justify",
+      lineGap: LINE_GAP_INSIDE_PARAGRAPH,
+      continued: true,
+    })
+    .font(MEDIUM_FONT)
+    .text(`${texts.textPart2} `, { continued: true })
+    .font(REGULAR_FONT)
+    .text(`${texts.textPart3} `, { continued: true })
+    .font(MEDIUM_FONT)
+    .text(texts.textPart4, { continued: true })
+    .font(REGULAR_FONT)
+    .text(`, ${texts.textPart5} `, { continued: true })
+    .font(MEDIUM_FONT)
+    .text(texts.textPart6, { underline: true, continued: true })
+    .font(REGULAR_FONT)
+    // Workaround to add space before the text - doing ` ${text}` doesn't add space on the beginning of the line for some reason
+    .text(texts.textPart7, doc.x + 2, undefined, { underline: false });
+};
+
 const addProbandContactRequest = (
   doc: PDFDoc,
   x: number,
@@ -455,6 +479,9 @@ export const generatePDF = async (
       secondaryTexts?.pdf.questions,
       data.answers
     );
+
+    // Add before examination info
+    addBeforeExaminationInfo(doc, doc.page.margins.left, doc.y + CHAPTER_GAP, texts.beforeExamination);
 
     // Add proband contact consent if proband requested sending research results via email and phone
     if (data.email && data.phone) {
