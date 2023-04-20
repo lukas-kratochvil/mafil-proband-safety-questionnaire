@@ -6,17 +6,17 @@ import { PrismaService } from "@app/prisma/prisma.service";
 import { GeneratePDFArgs } from "./dto/generate-pdf.args";
 import { PDFEntity } from "./entities/pdf.entity";
 
-const createPDF = (name: string, content: string): PDFEntity => {
-  const pdf = new PDFEntity();
-  pdf.name = name;
-  pdf.extension = "pdf";
-  pdf.content = content;
-  return pdf;
-};
-
 @Injectable()
 export class PDFService {
   constructor(private readonly prisma: PrismaService) {}
+
+  private createPDF(name: string, content: string): PDFEntity {
+    const pdf = new PDFEntity();
+    pdf.name = name;
+    pdf.extension = "pdf";
+    pdf.content = content;
+    return pdf;
+  };
 
   async generate(generatePDFInput: GeneratePDFArgs): Promise<PDFEntity> {
     // Get operator who finalized the visit
@@ -114,7 +114,7 @@ export class PDFService {
 
       // Generate content and return it in a response
       const content = await generatePDF(phantomData, PDF_OPERATOR_LANGUAGE_CODE);
-      return createPDF(pdfName, content);
+      return this.createPDF(pdfName, content);
     }
 
     // Proband language code is required for proband PDF
@@ -323,6 +323,6 @@ export class PDFService {
       generatePDFInput.probandLanguageCode,
       useSecondaryLanguage ? PDF_OPERATOR_LANGUAGE_CODE : undefined
     );
-    return createPDF(pdfName, content);
+    return this.createPDF(pdfName, content);
   }
 }
