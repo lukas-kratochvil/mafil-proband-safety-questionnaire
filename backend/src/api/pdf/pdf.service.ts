@@ -225,9 +225,10 @@ export class PDFService {
       .filter((question) => !question.hiddenByGenders.map((hbg) => hbg.genderCode).includes(gender.code))
       .map((question, i) => ({
         questionText: question.translations[translationTextIndex].text,
-        questionSecondaryText: translationSecondaryTextIndex
-          ? question.translations[translationSecondaryTextIndex].text
-          : undefined,
+        questionSecondaryText:
+          translationSecondaryTextIndex === undefined
+            ? undefined
+            : question.translations[translationSecondaryTextIndex].text,
         answer: generatePDFInput.answers?.at(i)?.answer as AnswerOption,
         comment: generatePDFInput.answers?.at(i)?.comment,
       }));
@@ -261,24 +262,27 @@ export class PDFService {
       birthdate: generatePDFInput.birthdate,
       gender: {
         text: gender.translations[translationTextIndex].text,
-        secondaryText: translationSecondaryTextIndex
-          ? gender.translations[translationSecondaryTextIndex].text
-          : undefined,
+        secondaryText:
+          translationSecondaryTextIndex === undefined
+            ? undefined
+            : gender.translations[translationSecondaryTextIndex].text,
       },
       nativeLanguage: {
         text: nativeLanguage.translations[translationTextIndex].text,
-        secondaryText: translationSecondaryTextIndex
-          ? nativeLanguage.translations[translationSecondaryTextIndex].text
-          : undefined,
+        secondaryText:
+          translationSecondaryTextIndex === undefined
+            ? undefined
+            : nativeLanguage.translations[translationSecondaryTextIndex].text,
       },
       heightCm: generatePDFInput.heightCm,
       weightKg: generatePDFInput.weightKg,
       visualCorrectionDioptre: generatePDFInput.visualCorrectionDioptre,
       handedness: {
         text: handedness.translations[translationTextIndex].text,
-        secondaryText: translationSecondaryTextIndex
-          ? handedness.translations[translationSecondaryTextIndex].text
-          : undefined,
+        secondaryText:
+          translationSecondaryTextIndex === undefined
+            ? undefined
+            : handedness.translations[translationSecondaryTextIndex].text,
       },
       email: generatePDFInput.email,
       phone: generatePDFInput.phone,
