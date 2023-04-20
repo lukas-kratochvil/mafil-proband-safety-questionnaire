@@ -211,13 +211,11 @@ const addEntryInfo = (doc: PDFDoc, x: number, y: number, texts: LocalizedEntryIn
       lineGap: LINE_GAP_INSIDE_PARAGRAPH,
     })
     .text(texts.entryInfo.text2, { indent: PARAGRAPH_INDENT, align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH })
-    .text(`${texts.safetyInfo.textPart1} `, {
+    .text(`${texts.safetyInfo.textPart1} ${texts.safetyInfo.textPart2}`, {
       indent: PARAGRAPH_INDENT,
       align: "justify",
       lineGap: LINE_GAP_INSIDE_PARAGRAPH,
-    })
-    .font(MEDIUM_FONT)
-    .text(texts.safetyInfo.textPart2, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH });
+    });
 };
 
 const addQuestions = (
@@ -272,24 +270,15 @@ const addQuestions = (
 const addBeforeExaminationInfo = (doc: PDFDoc, x: number, y: number, texts: LocalizedBeforeExaminationInfo): void => {
   doc
     .font(REGULAR_FONT, TEXT_FONT_SIZE)
-    .text(`${texts.textPart1} `, x, y, {
-      align: "justify",
-      lineGap: LINE_GAP_INSIDE_PARAGRAPH,
-      continued: true,
-    })
-    .font(MEDIUM_FONT)
-    .text(`${texts.textPart2} `, { continued: true })
-    .font(REGULAR_FONT)
-    .text(`${texts.textPart3} `, { continued: true })
-    .font(MEDIUM_FONT)
-    .text(texts.textPart4, { continued: true })
-    .font(REGULAR_FONT)
-    .text(`, ${texts.textPart5} `, { continued: true })
-    .font(MEDIUM_FONT)
-    .text(texts.textPart6, { underline: true, continued: true })
-    .font(REGULAR_FONT)
-    // Workaround to add space before the text - doing ` ${text}` doesn't add space on the beginning of the line for some reason
-    .text(texts.textPart7, doc.x + 2, undefined, { underline: false });
+    .text(
+      `${texts.textPart1} ${texts.textPart2} ${texts.textPart3} ${texts.textPart4}, ${texts.textPart5} ${texts.textPart6} ${texts.textPart7}`,
+      x,
+      y,
+      {
+        align: "justify",
+        lineGap: LINE_GAP_INSIDE_PARAGRAPH,
+      }
+    );
 };
 
 const addExaminationConsent = (
