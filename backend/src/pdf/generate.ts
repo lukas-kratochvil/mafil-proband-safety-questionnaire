@@ -333,10 +333,9 @@ const addProbandContactRequest = (
   doc
     .font(REGULAR_FONT, TEXT_FONT_SIZE)
     .text(
-      `${texts.text1}, ${data.name} ${data.surname} ${format(data.birthdate, DATE_FORMAT)} ${texts.text2} ${format(
-        data.measurementDate,
-        DATE_FORMAT
-      )} ${texts.text3}:`,
+      `${texts.text1Part1}, ${data.name} ${data.surname}, ${texts.text1Part2} ${format(data.birthdate, DATE_FORMAT)}, ${
+        texts.text2
+      } ${format(data.measurementDate, DATE_FORMAT)} ${texts.text3}:`,
       { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: TEXT_PARAGRAPHS_GAP }
     );
   doc

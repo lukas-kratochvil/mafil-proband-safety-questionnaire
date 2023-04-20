@@ -90,7 +90,7 @@ export class HTMLCardService {
 
     const texts = getLocalizedTextsFile(locale);
 
-    const html = `${texts.probandContact.request.text1}, ${data.name} ${data.surname} ${data.birthdateStr}, ${texts.probandContact.request.text2} ${data.currentDateStr} ${texts.probandContact.request.text3}:`;
+    const html = `${texts.probandContact.request.text1Part1}, ${data.name} ${data.surname}, ${texts.probandContact.request.text1Part2} ${data.birthdateStr}, ${texts.probandContact.request.text2} ${data.currentDateStr} ${texts.probandContact.request.text3}:`;
 
     return createHTMLCard(texts.probandContact.request.title, html);
   }

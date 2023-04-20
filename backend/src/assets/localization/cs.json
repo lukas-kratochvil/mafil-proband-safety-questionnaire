@@ -66,7 +66,8 @@
   "probandContact": {
     "request": {
       "title": "Žádost o předání naměřených dat",
-      "text1": "Já",
+      "text1Part1": "Já",
+      "text1Part2": "narozen/a",
       "text2": "tímto žádám o předání naměřených dat v laboratoři MAFIL-CEITEC, ze dne",
       "text3": "elektronickou cestou na",
       "emailAddress": "Emailová adresa",
