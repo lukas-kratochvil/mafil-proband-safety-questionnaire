@@ -58,7 +58,7 @@ const DEFAULT_DOC_LINE_GAP = 10;
 const GAP_BEFORE_CHAPTER = 20;
 const GAP_AFTER_HEADING = 10;
 const LINE_GAP_INSIDE_PARAGRAPH = 1;
-const TEXT_PARAGRAPHS_GAP = 10;
+const TEXT_PARAGRAPHS_GAP = 8;
 const SECONDARY_TEXT_GAP = 1;
 const INPUT_ROWS_GAP = 4;
 
@@ -335,7 +335,7 @@ const addProbandContactRequest = (
     .font(MEDIUM_FONT, TEXT_FONT_SIZE)
     .text(texts.emailAddress, { continued: true })
     .font(REGULAR_FONT)
-    .text(` (${texts.emailAddressInfo}): ${data.email}`, { lineGap: 10 });
+    .text(` (${texts.emailAddressInfo}): ${data.email}`, { lineGap: TEXT_PARAGRAPHS_GAP });
   doc
     .font(MEDIUM_FONT, TEXT_FONT_SIZE)
     .text(texts.phoneNumber, { continued: true })
@@ -347,8 +347,9 @@ const addProbandContactConsent = (
   doc: PDFDoc,
   x: number,
   y: number,
+  commonTexts: CommonProbandContactConsent,
   texts: LocalizedProbandContactConsent,
-  commonTexts: CommonProbandContactConsent
+  secondaryTexts?: LocalizedProbandContactConsent
 ): void => {
   doc
     .font(MEDIUM_FONT, HEADING_FONT_SIZE)
@@ -386,6 +387,9 @@ const addProbandContactConsent = (
     lineGap: LINE_GAP_INSIDE_PARAGRAPH,
     paragraphGap: TEXT_PARAGRAPHS_GAP,
   });
+
+  const gapBetweenParagraphs = 25;
+
   doc
     .text(`${texts.text5Part1} ${commonTexts.poverenecEmail}.`, {
       align: "justify",
@@ -399,27 +403,27 @@ const addProbandContactConsent = (
       align: "justify",
       continued: true,
     })
-    .text(".", { paragraphGap: 25 });
+    .text(".", { paragraphGap: gapBetweenParagraphs });
 
-  // Fill in date
-  const inBrnoOnText = `${texts.inBrnoOn} `;
-  const inBrnoOnTextWidth = doc.widthOfString(inBrnoOnText);
-  const inBrnoOnLineYCorrection = doc.heightOfString(inBrnoOnText) / 2;
-  doc.text(inBrnoOnText);
-  doc
-    .lineTo(doc.x + inBrnoOnTextWidth + 2, doc.y - inBrnoOnLineYCorrection)
-    .lineTo(doc.x + inBrnoOnTextWidth + 100, doc.y - inBrnoOnLineYCorrection)
-    .dash(2, { space: 3 })
-    .stroke();
+  const inBrnoDashes = "_ _ _ _ _ _ _ _ _ _ _ _";
+  const signatureDashes = "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _";
 
-  // Fill in signature
-  const signatureLineY = doc.y + 20;
-  doc
-    .lineTo(doc.x, signatureLineY)
-    .lineTo(doc.x + 200, signatureLineY)
-    .dash(2, { space: 3 })
-    .stroke();
-  doc.text(texts.signature, doc.page.margins.left, signatureLineY + 2);
+  if (secondaryTexts) {
+    doc
+      .text(`${texts.inBrnoOn} ${inBrnoDashes}`, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
+      .fontSize(SECONDARY_TEXT_FONT_SIZE)
+      .text(`(${secondaryTexts.inBrnoOn})`, { paragraphGap: gapBetweenParagraphs });
+    doc
+      .fontSize(TEXT_FONT_SIZE)
+      .text(signatureDashes, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
+      .text(texts.signature, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
+      .fontSize(SECONDARY_TEXT_FONT_SIZE)
+      .text(`(${secondaryTexts.signature})`);
+    return;
+  }
+
+  doc.text(`${texts.inBrnoOn} ${inBrnoDashes}`, { paragraphGap: gapBetweenParagraphs });
+  doc.text(signatureDashes, { lineGap: LINE_GAP_INSIDE_PARAGRAPH }).text(texts.signature);
 };
 
 const streamToString = (stream: Readable): Promise<string | never> => {
@@ -536,8 +540,9 @@ export const generatePDF = async (
         doc,
         doc.page.margins.left,
         doc.y + GAP_BEFORE_CHAPTER,
+        commonTexts.probandContact.consent,
         texts.probandContact.consent,
-        commonTexts.probandContact.consent
+        secondaryTexts?.probandContact.consent
       );
     }
   }
