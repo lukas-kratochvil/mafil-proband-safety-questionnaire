@@ -69,7 +69,8 @@ const PARAGRAPH_INDENT = 20;
 const DATE_FORMAT = "d.M.y";
 
 // List options
-const BULLET_RADIUS = 3;
+const LIST_BULLET_RADIUS = 3;
+const LIST_BASELINE = "hanging";
 //--------------------------------------
 
 interface ITitleValueRow {
@@ -370,16 +371,18 @@ const addProbandContactConsent = (
     ],
     {
       listType: "bullet",
-      bulletRadius: BULLET_RADIUS,
+      bulletRadius: LIST_BULLET_RADIUS,
       align: "justify",
+      baseline: LIST_BASELINE,
       lineGap: LINE_GAP_INSIDE_PARAGRAPH,
     }
   );
   // Workaround: the last list item must be added separately to create gap under the list
   doc.list([`${texts.listItem5Part1} ${texts.listItem5UoouSite} ${texts.listItem5Part2} ${commonTexts.uoouEmail}.`], {
     listType: "bullet",
-    bulletRadius: BULLET_RADIUS,
+    bulletRadius: LIST_BULLET_RADIUS,
     align: "justify",
+    baseline: LIST_BASELINE,
     lineGap: LINE_GAP_INSIDE_PARAGRAPH,
     paragraphGap: TEXT_PARAGRAPHS_GAP,
   });
