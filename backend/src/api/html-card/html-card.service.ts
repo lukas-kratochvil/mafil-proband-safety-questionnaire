@@ -111,9 +111,9 @@ export class HTMLCardService {
       <div>${texts.probandContact.consent.list}</div>
       <ul style="margin: 0">
       <li>${texts.probandContact.consent.listItem1} <u>${commonTexts.probandContact.consent.mafilEmail}</u>,</li>
-      <li>${texts.probandContact.consent.listItem2}</li>
-      <li>${texts.probandContact.consent.listItem3}</li>
-      <li>${texts.probandContact.consent.listItem4}</li>
+      <li>${texts.probandContact.consent.listItem2},</li>
+      <li>${texts.probandContact.consent.listItem3},</li>
+      <li>${texts.probandContact.consent.listItem4},</li>
       <li>${texts.probandContact.consent.listItem5Part1} <u>${texts.probandContact.consent.listItem5UoouSite}</u>, ${texts.probandContact.consent.listItem5Part2} <u>${commonTexts.probandContact.consent.uoouEmail}</u>.</li>
       </ul>
       <p style="margin-bottom: 0">
