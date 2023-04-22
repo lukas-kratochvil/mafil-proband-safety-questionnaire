@@ -1,10 +1,13 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { AnswerOption, Prisma } from "@prisma/client";
-import { generatePDF, PDF_OPERATOR_LANGUAGE_CODE } from "@app/pdf/generate";
+import { generatePDF } from "@app/pdf/generate";
 import { IPDFData, IPDFOperator, IPDFQuestionAnswer } from "@app/pdf/interfaces";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { GeneratePDFArgs } from "./dto/generate-pdf.args";
 import { PDFEntity } from "./entities/pdf.entity";
+
+// Default language for all the operator text translations
+const PDF_OPERATOR_LANGUAGE_CODE = "cs";
 
 type GenerateProbandPDFArgs = Required<Omit<GeneratePDFArgs, "approverUco">> & Pick<GeneratePDFArgs, "approverUco">;
 

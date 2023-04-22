@@ -14,9 +14,6 @@ import {
 } from "@app/utils/assets-loaders";
 import { IPDFData, IPDFQuestionAnswer } from "./interfaces";
 
-// Default language for all the operator text translations
-export const PDF_OPERATOR_LANGUAGE_CODE = "cs";
-
 // Type of PDF document
 type PDFDoc = typeof PDFDocument;
 
