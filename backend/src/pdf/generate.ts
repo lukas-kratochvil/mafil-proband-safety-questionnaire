@@ -271,37 +271,34 @@ const addQuestions = (
 ): void => {
   addBlockTitle(doc, x, y, CHAPTER_FONT_SIZE, GAP_AFTER_CHAPTER_TITLE, texts.title, secondaryTexts?.title);
   questions.forEach(({ questionText, questionSecondaryText, answer, comment }) => {
+    const answerText = (answer === AnswerOption.YES ? texts.answerYes : texts.answerNo).toUpperCase();
+    const answerSecondaryText = (
+      answer === AnswerOption.YES ? secondaryTexts?.answerYes : secondaryTexts?.answerNo
+    )?.toUpperCase();
+    const commentText = comment
+      ? secondaryTexts
+        ? `${texts.comment} (${secondaryTexts.comment}): ${comment}`
+        : `${texts.comment}: ${comment}`
+      : undefined;
+
     doc
       .font(REGULAR_FONT, TEXT_FONT_SIZE)
       .text(`${questionText} `, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, continued: true })
       .font(MEDIUM_FONT, TEXT_FONT_SIZE)
-      .text((answer === AnswerOption.YES ? texts.answerYes : texts.answerNo).toUpperCase(), {
-        paragraphGap: questionSecondaryText || comment ? SECONDARY_TEXT_GAP : INPUT_ROWS_GAP,
-      });
+      .text(answerText, { paragraphGap: questionSecondaryText || comment ? SECONDARY_TEXT_GAP : INPUT_ROWS_GAP });
 
-    if (secondaryTexts && questionSecondaryText) {
+    if (questionSecondaryText && answerSecondaryText) {
       doc
         .font(REGULAR_FONT, SECONDARY_TEXT_FONT_SIZE)
         .text(`(${questionSecondaryText} `, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, continued: true })
-        .font(MEDIUM_FONT, SECONDARY_TEXT_FONT_SIZE)
-        .text(`${(answer === AnswerOption.YES ? secondaryTexts.answerYes : secondaryTexts.answerNo).toUpperCase()})`, {
-          paragraphGap: comment ? 2 : INPUT_ROWS_GAP,
-        });
+        .font(MEDIUM_FONT)
+        .text(answerSecondaryText, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, continued: true })
+        .font(REGULAR_FONT)
+        .text(")", { paragraphGap: comment ? 2 : INPUT_ROWS_GAP });
     }
 
-    if (comment) {
-      if (secondaryTexts) {
-        doc
-          .font(REGULAR_FONT, SECONDARY_TEXT_FONT_SIZE)
-          .text(`${texts.comment} (${secondaryTexts.comment}): ${comment}`, {
-            align: "justify",
-            lineGap: LINE_GAP_INSIDE_PARAGRAPH,
-            paragraphGap: INPUT_ROWS_GAP,
-          });
-        return;
-      }
-
-      doc.font(REGULAR_FONT, SECONDARY_TEXT_FONT_SIZE).text(`${texts.comment}: ${comment}`, {
+    if (commentText) {
+      doc.font(REGULAR_FONT, SECONDARY_TEXT_FONT_SIZE).text(commentText, {
         align: "justify",
         lineGap: LINE_GAP_INSIDE_PARAGRAPH,
         paragraphGap: INPUT_ROWS_GAP,
