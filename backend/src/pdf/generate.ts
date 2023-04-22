@@ -261,6 +261,25 @@ const addEntryInfo = (doc: PDFDoc, x: number, y: number, texts: LocalizedEntryIn
     });
 };
 
+const doesQuestionFitOnPage = (
+  doc: PDFDoc,
+  questionAnswerText: string,
+  questionAnswerSecondaryText: string | undefined,
+  comment: string | undefined
+): boolean => {
+  let textHeight = doc.font(REGULAR_FONT, TEXT_FONT_SIZE).heightOfString(questionAnswerText);
+
+  if (questionAnswerSecondaryText) {
+    textHeight += doc.font(REGULAR_FONT, SECONDARY_TEXT_FONT_SIZE).heightOfString(questionAnswerSecondaryText);
+  }
+
+  if (comment) {
+    textHeight += doc.font(REGULAR_FONT, SECONDARY_TEXT_FONT_SIZE).heightOfString(comment);
+  }
+
+  return textHeight <= doc.page.height - doc.y - doc.page.margins.bottom;
+};
+
 const addQuestions = (
   doc: PDFDoc,
   x: number,
@@ -280,6 +299,17 @@ const addQuestions = (
         ? `${texts.comment} (${secondaryTexts.comment}): ${comment}`
         : `${texts.comment}: ${comment}`
       : undefined;
+
+    if (
+      !doesQuestionFitOnPage(
+        doc,
+        `${questionText} ${answerText}`,
+        questionSecondaryText && answerSecondaryText ? `${questionSecondaryText} ${answerSecondaryText}` : undefined,
+        comment
+      )
+    ) {
+      doc.addPage();
+    }
 
     doc
       .font(REGULAR_FONT, TEXT_FONT_SIZE)
