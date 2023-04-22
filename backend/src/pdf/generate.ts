@@ -545,7 +545,7 @@ const addProbandContactConsent = (
   });
 
   doc
-    .text(`${texts.text5Part1} ${commonTexts.poverenecEmail}.`, {
+    .text(`${texts.text5Part1} ${commonTexts.trusteeEmail}.`, {
       align: "justify",
       lineGap: LINE_GAP_INSIDE_PARAGRAPH,
     })

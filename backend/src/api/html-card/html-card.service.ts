@@ -117,7 +117,7 @@ export class HTMLCardService {
       <li>${texts.probandContact.consent.listItem5Part1} <u>${texts.probandContact.consent.listItem5UoouSite}</u>, ${texts.probandContact.consent.listItem5Part2} <u>${commonTexts.probandContact.consent.uoouEmail}</u>.</li>
       </ul>
       <p style="margin-bottom: 0">
-        ${texts.probandContact.consent.text5Part1} <u>${commonTexts.probandContact.consent.poverenecEmail}</u>.
+        ${texts.probandContact.consent.text5Part1} <u>${commonTexts.probandContact.consent.trusteeEmail}</u>.
         <br />${texts.probandContact.consent.text5Part2}
         <br /><u>${texts.probandContact.consent.text5Part2PersonalInfoProtectionSite}</u>.
         <br />${texts.probandContact.consent.text5Part3}

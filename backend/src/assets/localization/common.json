@@ -12,7 +12,7 @@
     "consent": {
       "mafilEmail": "mafil@ceitec.muni.cz",
       "uoouEmail": "posta@uoou.cz",
-      "poverenecEmail": "poverenec@muni.cz"
+      "trusteeEmail": "poverenec@muni.cz"
     }
   }
 }
