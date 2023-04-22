@@ -228,7 +228,6 @@ export class PDFService {
         )
       )
     )
-      .filter((question) => !question.hiddenByGenders.map((hbg) => hbg.genderCode).includes(gender.code))
       .map((question, i) => ({
         questionText: question.translations[translationTextIndex].text,
         questionSecondaryText:
@@ -237,7 +236,15 @@ export class PDFService {
             : question.translations[translationSecondaryTextIndex].text,
         answer: generatePDFInput.answers?.at(i)?.answer as AnswerOption,
         comment: generatePDFInput.answers?.at(i)?.comment,
-      }));
+        hiddenByGenders: question.hiddenByGenders,
+      }))
+      // We need to firstly assign all the values and then filter the questions, otherwise the values will be incorrectly assigned to different questions
+      .filter((question) => !question.hiddenByGenders.map((hbg) => hbg.genderCode).includes(gender.code))
+      .map((question) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { hiddenByGenders, ...rest } = question;
+        return rest;
+      });
 
     // Get operator who approved the visit
     let operatorApprover: IPDFOperator | undefined;
