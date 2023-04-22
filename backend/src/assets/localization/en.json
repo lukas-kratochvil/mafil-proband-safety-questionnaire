@@ -61,7 +61,14 @@
     "phone": "Phone",
     "email": "Email",
     "text3": "Information on MU Processing and Protection of Personal Data",
-    "personalInfoProtectionSite": "https://www.muni.cz/en/about-us/official-notice-board/personal-data-protection"
+    "personalInfoProtectionSite": "https://www.muni.cz/en/about-us/official-notice-board/personal-data-protection",
+    "studyParticipantTitle": "Research study participant",
+    "firstAndLastName": "First and last name",
+    "signature": "Signature",
+    "inBrnoDate": "In Brno, date",
+    "laboratoryStaffTitle": "Laboratory staff / research team member",
+    "laboratoryStaffText": "I declare that the research study participant was instructed on all aspects of the measurement and had the opportunity to express any concerns and questions. I further declare that I have reviewed the form.",
+    "approverText": "Safety questions approved by"
   },
   "probandContact": {
     "request": {

@@ -61,7 +61,14 @@
     "phone": "Telefon",
     "email": "Email",
     "text3": "Informace o zpracování a ochraně osobních údajů na MU",
-    "personalInfoProtectionSite": "https://www.muni.cz/o-univerzite/uredni-deska/ochrana-osobnich-udaju"
+    "personalInfoProtectionSite": "https://www.muni.cz/o-univerzite/uredni-deska/ochrana-osobnich-udaju",
+    "studyParticipantTitle": "Účastník studie",
+    "firstAndLastName": "Jméno a přijmení",
+    "signature": "Podpis",
+    "inBrnoDate": "V Brně, dne",
+    "laboratoryStaffTitle": "Vyplní obsluha laboratoře / člen řešitelského týmu",
+    "laboratoryStaffText": "Prohlašuji, že účastník výzkumné studie byl poučen o všech aspektech měření a měl možnost se zeptat na případné nejasnosti a dotazy. Dále prohlašuji, že jsem zkontroloval vyplnění formuláře.",
+    "approverText": "Bezpečnostní otázky schválil/a"
   },
   "probandContact": {
     "request": {

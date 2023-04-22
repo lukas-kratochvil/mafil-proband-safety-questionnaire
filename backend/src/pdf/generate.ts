@@ -56,11 +56,13 @@ const SECONDARY_TEXT_FONT_SIZE = 9;
 // Gaps
 const DEFAULT_DOC_LINE_GAP = 10;
 const GAP_BEFORE_CHAPTER = 20;
-const GAP_AFTER_HEADING = 10;
+const GAP_AFTER_HEADING_TITLE = 10;
 const LINE_GAP_INSIDE_PARAGRAPH = 1;
 const TEXT_PARAGRAPHS_GAP = 8;
 const SECONDARY_TEXT_GAP = 1;
 const INPUT_ROWS_GAP = 4;
+const GAP_AFTER_CHAPTER_TITLE = INPUT_ROWS_GAP + 4;
+const GAP_AROUND_SIGNATURE_BLOCKS = 25;
 
 // Indents
 const PARAGRAPH_INDENT = 20;
@@ -71,6 +73,10 @@ const DATE_FORMAT = "d.M.y";
 // List options
 const LIST_BULLET_RADIUS = 3;
 const LIST_BASELINE = "hanging";
+
+// Dashes
+const IN_BRNO_ON_DASHES = "_ _ _ _ _ _ _ _ _ _ _ _";
+const SIGNATURE_DASHES = "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _";
 //--------------------------------------
 
 interface ITitleValueRow {
@@ -80,19 +86,27 @@ interface ITitleValueRow {
   secondaryValue?: string;
 }
 
-const addChapterTitle = (doc: PDFDoc, x: number, y: number, title: string, secondaryTitle?: string): void => {
-  const gapAfterChapterTitle = INPUT_ROWS_GAP + 4;
-
+const addBlockTitle = (
+  doc: PDFDoc,
+  x: number,
+  y: number,
+  fontSize: number,
+  gapAfterTitle: number,
+  title: string,
+  secondaryTitle?: string
+): void => {
   if (secondaryTitle) {
     doc
-      .font(MEDIUM_FONT, CHAPTER_FONT_SIZE)
-      .text(title, x, y, { continued: true })
+      .font(MEDIUM_FONT, fontSize)
+      .text(title, x, y, { lineGap: LINE_GAP_INSIDE_PARAGRAPH, continued: true })
       .font(REGULAR_FONT)
-      .text(` (${secondaryTitle})`, { lineGap: gapAfterChapterTitle });
+      .text(` (${secondaryTitle})`, { lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: gapAfterTitle });
     return;
   }
 
-  doc.font(MEDIUM_FONT, CHAPTER_FONT_SIZE).text(title, x, y, { lineGap: gapAfterChapterTitle });
+  doc
+    .font(MEDIUM_FONT, fontSize)
+    .text(title, x, y, { lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: gapAfterTitle });
 };
 
 const addTitleValue = (doc: PDFDoc, row: ITitleValueRow, x: number, y?: number): void => {
@@ -133,7 +147,7 @@ const addTitleValueRows = (
   secondaryTitle: string | undefined,
   rows: ITitleValueRow[]
 ): void => {
-  addChapterTitle(doc, x, y, title, secondaryTitle);
+  addBlockTitle(doc, x, y, CHAPTER_FONT_SIZE, GAP_AFTER_CHAPTER_TITLE, title, secondaryTitle);
   doc.font(REGULAR_FONT, TEXT_FONT_SIZE).lineGap(LINE_GAP_INSIDE_PARAGRAPH);
   rows.forEach((row, i) => addTitleValue(doc, row, x, i === 0 ? doc.y : undefined));
 };
@@ -230,7 +244,7 @@ const addQuestions = (
   secondaryTexts: LocalizedQuestions | undefined,
   questions: IPDFQuestionAnswer[]
 ): void => {
-  addChapterTitle(doc, x, y, texts.title, secondaryTexts?.title);
+  addBlockTitle(doc, x, y, CHAPTER_FONT_SIZE, GAP_AFTER_CHAPTER_TITLE, texts.title, secondaryTexts?.title);
   questions.forEach(({ questionText, questionSecondaryText, answer, comment }) => {
     doc
       .font(REGULAR_FONT, TEXT_FONT_SIZE)
@@ -289,12 +303,16 @@ const addExaminationConsent = (
   doc: PDFDoc,
   x: number,
   y: number,
+  commonTexts: CommonExaminationConsent,
   texts: LocalizedExaminationConsent,
-  commonTexts: CommonExaminationConsent
+  secondaryTexts: LocalizedExaminationConsent | undefined,
+  data: IPDFData
 ): void => {
-  doc
-    .font(MEDIUM_FONT, HEADING_FONT_SIZE)
-    .text(texts.title, x, y, { align: "center", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: GAP_AFTER_HEADING });
+  doc.font(MEDIUM_FONT, HEADING_FONT_SIZE).text(texts.title, x, y, {
+    align: "center",
+    lineGap: LINE_GAP_INSIDE_PARAGRAPH,
+    paragraphGap: GAP_AFTER_HEADING_TITLE,
+  });
   doc
     .font(REGULAR_FONT, TEXT_FONT_SIZE)
     .text(texts.text1, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: TEXT_PARAGRAPHS_GAP });
@@ -308,9 +326,118 @@ const addExaminationConsent = (
       lineGap: LINE_GAP_INSIDE_PARAGRAPH,
       paragraphGap: TEXT_PARAGRAPHS_GAP,
     });
+
   doc
     .text(`${texts.text3}:`, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH })
-    .text(texts.personalInfoProtectionSite);
+    .text(texts.personalInfoProtectionSite, { paragraphGap: GAP_AROUND_SIGNATURE_BLOCKS });
+
+  if (secondaryTexts) {
+    doc.addPage();
+  }
+
+  const titleTextGap = 4;
+  const inBrnoOnText = `${texts.inBrnoDate}: ${IN_BRNO_ON_DASHES}`;
+  const signatureText = `${texts.signature}: ${SIGNATURE_DASHES}`;
+
+  addBlockTitle(
+    doc,
+    doc.x,
+    doc.y,
+    CHAPTER_FONT_SIZE,
+    titleTextGap,
+    texts.studyParticipantTitle,
+    secondaryTexts?.studyParticipantTitle
+  );
+  doc.font(REGULAR_FONT, TEXT_FONT_SIZE);
+
+  if (secondaryTexts) {
+    const secondarySignatureTextX = doc.page.width - doc.page.margins.right - doc.widthOfString(signatureText);
+    doc
+      .font(REGULAR_FONT, TEXT_FONT_SIZE)
+      .text(`${texts.firstAndLastName}: ${data.name} ${data.surname}`, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
+      .fontSize(SECONDARY_TEXT_FONT_SIZE)
+      .text(`(${secondaryTexts.firstAndLastName})`, { lineGap: GAP_AROUND_SIGNATURE_BLOCKS })
+      .fontSize(TEXT_FONT_SIZE)
+      .text(inBrnoOnText, { continued: true })
+      .text(signatureText, { align: "right", lineGap: LINE_GAP_INSIDE_PARAGRAPH })
+      .fontSize(SECONDARY_TEXT_FONT_SIZE)
+      .text(`(${secondaryTexts.inBrnoDate})`)
+      .moveUp()
+      .text(`(${secondaryTexts.signature})`, secondarySignatureTextX, undefined, {
+        paragraphGap: GAP_AROUND_SIGNATURE_BLOCKS,
+      });
+  } else {
+    doc
+      .font(REGULAR_FONT, TEXT_FONT_SIZE)
+      .text(`${texts.firstAndLastName}: ${data.name} ${data.surname}`, { lineGap: GAP_AROUND_SIGNATURE_BLOCKS })
+      .text(inBrnoOnText, { continued: true })
+      .text(signatureText, { align: "right", paragraphGap: GAP_AROUND_SIGNATURE_BLOCKS });
+  }
+
+  addBlockTitle(
+    doc,
+    x,
+    doc.y,
+    CHAPTER_FONT_SIZE,
+    titleTextGap,
+    texts.laboratoryStaffTitle,
+    secondaryTexts?.laboratoryStaffTitle
+  );
+  doc.font(REGULAR_FONT, TEXT_FONT_SIZE);
+
+  if (secondaryTexts) {
+    const secondarySignatureTextX = doc.page.width - doc.page.margins.right - doc.widthOfString(signatureText);
+    doc
+      .font(REGULAR_FONT, TEXT_FONT_SIZE)
+      .text(texts.laboratoryStaffText, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
+      .fontSize(SECONDARY_TEXT_FONT_SIZE)
+      .text(`(${secondaryTexts.laboratoryStaffText})`, {
+        lineGap: LINE_GAP_INSIDE_PARAGRAPH,
+        paragraphGap: GAP_AROUND_SIGNATURE_BLOCKS,
+      })
+      .fontSize(TEXT_FONT_SIZE)
+      .text(`${texts.firstAndLastName}: ${data.operatorFinalizer.name} ${data.operatorFinalizer.surname}`, {
+        lineGap: LINE_GAP_INSIDE_PARAGRAPH,
+      })
+      .fontSize(SECONDARY_TEXT_FONT_SIZE)
+      .text(`(${secondaryTexts.firstAndLastName})`, { lineGap: GAP_AROUND_SIGNATURE_BLOCKS })
+      .fontSize(TEXT_FONT_SIZE)
+      .text(inBrnoOnText, { continued: true })
+      .text(signatureText, { align: "right", lineGap: LINE_GAP_INSIDE_PARAGRAPH })
+      .fontSize(SECONDARY_TEXT_FONT_SIZE)
+      .text(`(${secondaryTexts.inBrnoDate})`)
+      .moveUp()
+      .text(`(${secondaryTexts.signature})`, secondarySignatureTextX, undefined, {
+        paragraphGap: GAP_AROUND_SIGNATURE_BLOCKS,
+      });
+  } else {
+    doc
+      .font(REGULAR_FONT, TEXT_FONT_SIZE)
+      .text(texts.laboratoryStaffText, {
+        lineGap: LINE_GAP_INSIDE_PARAGRAPH,
+        paragraphGap: GAP_AROUND_SIGNATURE_BLOCKS,
+      })
+      .text(`${texts.firstAndLastName}: ${data.operatorFinalizer.name} ${data.operatorFinalizer.surname}`, {
+        lineGap: GAP_AROUND_SIGNATURE_BLOCKS,
+      })
+      .text(inBrnoOnText, { continued: true })
+      .text(signatureText, {
+        align: "right",
+        paragraphGap: data.operatorApprover ? GAP_AROUND_SIGNATURE_BLOCKS : undefined,
+      });
+  }
+
+  if (data.operatorApprover) {
+    doc
+      .font(REGULAR_FONT, TEXT_FONT_SIZE)
+      .text(`${texts.approverText}: ${data.operatorApprover?.name} ${data.operatorApprover?.surname}`, x, undefined, {
+        lineGap: LINE_GAP_INSIDE_PARAGRAPH,
+      });
+
+    if (secondaryTexts) {
+      doc.fontSize(SECONDARY_TEXT_FONT_SIZE).text(`(${secondaryTexts.approverText})`);
+    }
+  }
 };
 
 const addProbandContactRequest = (
@@ -320,9 +447,11 @@ const addProbandContactRequest = (
   texts: LocalizedProbandContactRequest,
   data: IPDFData
 ): void => {
-  doc
-    .font(MEDIUM_FONT, HEADING_FONT_SIZE)
-    .text(texts.title, x, y, { align: "center", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: GAP_AFTER_HEADING });
+  doc.font(MEDIUM_FONT, HEADING_FONT_SIZE).text(texts.title, x, y, {
+    align: "center",
+    lineGap: LINE_GAP_INSIDE_PARAGRAPH,
+    paragraphGap: GAP_AFTER_HEADING_TITLE,
+  });
   doc
     .font(REGULAR_FONT, TEXT_FONT_SIZE)
     .text(
@@ -349,11 +478,13 @@ const addProbandContactConsent = (
   y: number,
   commonTexts: CommonProbandContactConsent,
   texts: LocalizedProbandContactConsent,
-  secondaryTexts?: LocalizedProbandContactConsent
+  secondaryTexts: LocalizedProbandContactConsent | undefined
 ): void => {
-  doc
-    .font(MEDIUM_FONT, HEADING_FONT_SIZE)
-    .text(texts.title, x, y, { align: "center", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: GAP_AFTER_HEADING });
+  doc.font(MEDIUM_FONT, HEADING_FONT_SIZE).text(texts.title, x, y, {
+    align: "center",
+    lineGap: LINE_GAP_INSIDE_PARAGRAPH,
+    paragraphGap: GAP_AFTER_HEADING_TITLE,
+  });
   doc
     .font(REGULAR_FONT, TEXT_FONT_SIZE)
     .text(texts.text1, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: TEXT_PARAGRAPHS_GAP });
@@ -388,8 +519,6 @@ const addProbandContactConsent = (
     paragraphGap: TEXT_PARAGRAPHS_GAP,
   });
 
-  const gapBetweenParagraphs = 25;
-
   doc
     .text(`${texts.text5Part1} ${commonTexts.poverenecEmail}.`, {
       align: "justify",
@@ -403,27 +532,24 @@ const addProbandContactConsent = (
       align: "justify",
       continued: true,
     })
-    .text(".", { paragraphGap: gapBetweenParagraphs });
-
-  const inBrnoDashes = "_ _ _ _ _ _ _ _ _ _ _ _";
-  const signatureDashes = "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _";
+    .text(".", { paragraphGap: GAP_AROUND_SIGNATURE_BLOCKS });
 
   if (secondaryTexts) {
     doc
-      .text(`${texts.inBrnoOn} ${inBrnoDashes}`, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
+      .text(`${texts.inBrnoOn} ${IN_BRNO_ON_DASHES}`, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
       .fontSize(SECONDARY_TEXT_FONT_SIZE)
-      .text(`(${secondaryTexts.inBrnoOn})`, { paragraphGap: gapBetweenParagraphs });
+      .text(`(${secondaryTexts.inBrnoOn})`, { paragraphGap: GAP_AROUND_SIGNATURE_BLOCKS });
     doc
       .fontSize(TEXT_FONT_SIZE)
-      .text(signatureDashes, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
+      .text(SIGNATURE_DASHES, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
       .text(texts.signature, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
       .fontSize(SECONDARY_TEXT_FONT_SIZE)
       .text(`(${secondaryTexts.signature})`);
     return;
   }
 
-  doc.text(`${texts.inBrnoOn} ${inBrnoDashes}`, { paragraphGap: gapBetweenParagraphs });
-  doc.text(signatureDashes, { lineGap: LINE_GAP_INSIDE_PARAGRAPH }).text(texts.signature);
+  doc.text(`${texts.inBrnoOn} ${IN_BRNO_ON_DASHES}`, { paragraphGap: GAP_AROUND_SIGNATURE_BLOCKS });
+  doc.text(SIGNATURE_DASHES, { lineGap: LINE_GAP_INSIDE_PARAGRAPH }).text(texts.signature);
 };
 
 const streamToString = (stream: Readable): Promise<string | never> => {
@@ -526,7 +652,15 @@ export const generatePDF = async (
 
     // Add examination consent
     doc.addPage();
-    addExaminationConsent(doc, doc.page.margins.left, doc.y, texts.examinationConsent, commonTexts.examinationConsent);
+    addExaminationConsent(
+      doc,
+      doc.page.margins.left,
+      doc.y,
+      commonTexts.examinationConsent,
+      texts.examinationConsent,
+      secondaryTexts?.examinationConsent,
+      data
+    );
 
     // Add proband contact consent if proband requested sending research results via email and phone
     if (data.email && data.phone) {
