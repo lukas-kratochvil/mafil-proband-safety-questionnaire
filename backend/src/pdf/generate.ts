@@ -600,11 +600,15 @@ export const generatePDF = async (
   }
 
   // Create PDF document
-  const doc = new PDFDocument({ size: "A4", margin: PAGE_MARGIN });
-
-  // Register and use Roboto font family that supports UNICODE characters
-  doc.registerFont(REGULAR_FONT, getFontPath("roboto/Roboto-Regular.ttf"));
-  doc.registerFont(MEDIUM_FONT, getFontPath("roboto/Roboto-Medium.ttf"));
+  const doc = new PDFDocument({
+    size: "A4",
+    margin: PAGE_MARGIN,
+    info: {
+      Title: `Visit ${data.visitId}`,
+      Author: "MAFIL",
+      Keywords: "visit",
+    },
+  });
 
   // Setup Base64 stream
   const stream = doc.pipe(new Base64Encode());
@@ -612,6 +616,10 @@ export const generatePDF = async (
   // TODO: delete - only for development purpose
   const pdfFile = fs.createWriteStream(`output_${Date.now()}.pdf`);
   doc.pipe(pdfFile);
+
+  // Register and use Roboto font family that supports UNICODE characters
+  doc.registerFont(REGULAR_FONT, getFontPath("roboto/Roboto-Regular.ttf"));
+  doc.registerFont(MEDIUM_FONT, getFontPath("roboto/Roboto-Medium.ttf"));
 
   // Set default line gap in the document
   doc.lineGap(DEFAULT_DOC_LINE_GAP);
