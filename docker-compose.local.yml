@@ -63,6 +63,7 @@ services:
       - THROTTLE_TTL=${THROTTLE_TTL}
       - THROTTLE_LIMIT=${THROTTLE_LIMIT}
       - API_KEY_FOR_WEB=${SERVER_API_KEY_FOR_WEB}
+      - PDF_OPERATOR_LANGUAGE_CODE=${PDF_OPERATOR_LANGUAGE_CODE}
       - WEB_URL=${WEB_URL}
     restart: unless-stopped
     depends_on:

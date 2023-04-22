@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { AnswerOption, Prisma } from "@prisma/client";
 import { generatePDF } from "@app/pdf/generate";
 import { IPDFData, IPDFOperator, IPDFQuestionAnswer } from "@app/pdf/interfaces";
@@ -6,14 +7,16 @@ import { PrismaService } from "@app/prisma/prisma.service";
 import { GeneratePDFArgs } from "./dto/generate-pdf.args";
 import { PDFEntity } from "./entities/pdf.entity";
 
-// Default language for all the operator text translations
-const PDF_OPERATOR_LANGUAGE_CODE = "cs";
-
 type GenerateProbandPDFArgs = Required<Omit<GeneratePDFArgs, "approverUco">> & Pick<GeneratePDFArgs, "approverUco">;
 
 @Injectable()
 export class PDFService {
-  constructor(private readonly prisma: PrismaService) {}
+  // Default language for all the operator text translations
+  private operatorLanguageCode: string;
+
+  constructor(config: ConfigService, private readonly prisma: PrismaService) {
+    this.operatorLanguageCode = config.get<string>("PDF_OPERATOR_LANGUAGE_CODE") ?? "cs";
+  }
 
   private createPDFName(generatePDFInput: GeneratePDFArgs): string {
     return `${generatePDFInput.visitId}_${generatePDFInput.surname}_${generatePDFInput.name}`;
@@ -32,7 +35,7 @@ export class PDFService {
         translations: {
           where: {
             language: {
-              code: PDF_OPERATOR_LANGUAGE_CODE,
+              code: this.operatorLanguageCode,
             },
           },
           select: {
@@ -51,7 +54,7 @@ export class PDFService {
         translations: {
           where: {
             language: {
-              code: PDF_OPERATOR_LANGUAGE_CODE,
+              code: this.operatorLanguageCode,
             },
           },
           select: {
@@ -70,7 +73,7 @@ export class PDFService {
         translations: {
           where: {
             language: {
-              code: PDF_OPERATOR_LANGUAGE_CODE,
+              code: this.operatorLanguageCode,
             },
           },
           select: {
@@ -109,12 +112,12 @@ export class PDFService {
     const languageCodes = [generatePDFInput.probandLanguageCode];
 
     if (useSecondaryLanguage) {
-      languageCodes.push(PDF_OPERATOR_LANGUAGE_CODE);
+      languageCodes.push(this.operatorLanguageCode);
     }
 
     const languageOrderBy = Prisma.validator<Prisma.LanguageOrderByWithAggregationInput>()({ code: "asc" });
     const translationTextIndex
-      = !useSecondaryLanguage || generatePDFInput.probandLanguageCode < PDF_OPERATOR_LANGUAGE_CODE ? 0 : 1;
+      = !useSecondaryLanguage || generatePDFInput.probandLanguageCode < this.operatorLanguageCode ? 0 : 1;
     const translationSecondaryTextIndex = !useSecondaryLanguage ? undefined : translationTextIndex === 0 ? 1 : 0;
 
     // Get gender translations
@@ -320,7 +323,7 @@ export class PDFService {
       const phantomData = await this.getPhantomPDFData(generatePDFInput, operatorFinalizer);
 
       // Generate content and return it in the response
-      const content = await generatePDF(phantomData, PDF_OPERATOR_LANGUAGE_CODE);
+      const content = await generatePDF(phantomData, this.operatorLanguageCode);
       return this.createPDF(pdfName, content);
     }
 
@@ -334,7 +337,7 @@ export class PDFService {
       throw new BadRequestException("Answers are required!");
     }
 
-    const useSecondaryLanguage = generatePDFInput.probandLanguageCode !== PDF_OPERATOR_LANGUAGE_CODE;
+    const useSecondaryLanguage = generatePDFInput.probandLanguageCode !== this.operatorLanguageCode;
     const data = await this.getProbandPDFData(
       {
         ...generatePDFInput,
@@ -349,7 +352,7 @@ export class PDFService {
     const content = await generatePDF(
       data,
       generatePDFInput.probandLanguageCode,
-      useSecondaryLanguage ? PDF_OPERATOR_LANGUAGE_CODE : undefined
+      useSecondaryLanguage ? this.operatorLanguageCode : undefined
     );
     return this.createPDF(pdfName, content);
   }
