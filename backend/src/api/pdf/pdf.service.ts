@@ -13,9 +13,12 @@ type GenerateProbandPDFArgs = Required<Omit<GeneratePDFArgs, "approverUco">> & P
 export class PDFService {
   // Default language for all the operator text translations
   private operatorLanguageCode: string;
+  // TODO: delete 'isDevelopment' property - only for development purposes
+  private isDevelopment: boolean;
 
   constructor(config: ConfigService, private readonly prisma: PrismaService) {
     this.operatorLanguageCode = config.get<string>("PDF_OPERATOR_LANGUAGE_CODE") ?? "cs";
+    this.isDevelopment = config.get<string>("NODE_ENV") === "development";
   }
 
   private createPDFName(generatePDFInput: GeneratePDFArgs): string {
@@ -330,7 +333,7 @@ export class PDFService {
       const phantomData = await this.getPhantomPDFData(generatePDFInput, operatorFinalizer);
 
       // Generate content and return it in the response
-      const content = await generatePDF(phantomData, this.operatorLanguageCode);
+      const content = await generatePDF(this.isDevelopment, phantomData, this.operatorLanguageCode);
       return this.createPDF(pdfName, content);
     }
 
@@ -357,6 +360,7 @@ export class PDFService {
 
     // Generate content and return it in the response
     const content = await generatePDF(
+      this.isDevelopment,
       data,
       generatePDFInput.probandLanguageCode,
       useSecondaryLanguage ? this.operatorLanguageCode : undefined

@@ -614,6 +614,7 @@ const streamToString = (stream: Readable): Promise<string | never> => {
 };
 
 export const generatePDF = async (
+  isDevelopment: boolean, // TODO: delete 'isDevelopment' property - only for development purposes
   data: IPDFData,
   locale: string,
   secondaryLocale?: string
@@ -641,8 +642,13 @@ export const generatePDF = async (
   const stream = doc.pipe(new Base64Encode());
 
   // TODO: delete - only for development purpose
-  const pdfFile = fs.createWriteStream(`output_${Date.now()}.pdf`);
-  doc.pipe(pdfFile);
+  let pdfFile: fs.WriteStream | undefined;
+
+  // TODO: delete this - only for development purposes
+  if (isDevelopment) {
+    pdfFile = fs.createWriteStream(`output_${Date.now()}.pdf`);
+    doc.pipe(pdfFile);
+  }
 
   // Register and use Roboto font family that supports UNICODE characters
   doc.registerFont(REGULAR_FONT, getFontPath("roboto/Roboto-Regular.ttf"));
@@ -748,7 +754,11 @@ export const generatePDF = async (
   doc.end();
   const content = await streamToString(stream);
   stream.destroy();
-  // TODO: delete - only for development purpose
-  pdfFile.end();
+
+  // TODO: delete this - only for development purpose
+  if (pdfFile) {
+    pdfFile.end();
+  }
+
   return content;
 };
