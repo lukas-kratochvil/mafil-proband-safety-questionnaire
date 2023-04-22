@@ -155,12 +155,13 @@ const addVisitData = (
   doc: PDFDoc,
   x: number,
   y: number,
+  visitIdTitle: string,
   texts: LocalizedVisitData,
   secondaryTexts: LocalizedVisitData | undefined,
   data: IPDFData
 ): void => {
   const visitInfoRows: ITitleValueRow[] = [
-    { title: "Visit ID", value: data.visitId },
+    { title: visitIdTitle, value: data.visitId },
     { title: texts.project, secondaryTitle: secondaryTexts?.project, value: data.projectAcronym },
     {
       title: texts.measurementDate,
@@ -613,6 +614,7 @@ export const generatePDF = async (
     doc,
     doc.page.margins.left,
     linePositionUnderImage + 30,
+    commonTexts.visitId,
     texts.pdf.visitData,
     secondaryTexts?.pdf.visitData,
     data
