@@ -171,7 +171,10 @@ const addVisitData = (
 
   // Add phantom row if the visit is phantom
   if (data.isPhantom) {
-    visitInfoRows.push({ title: texts.phantom, value: texts.phantomYes, isRowBold: true });
+    visitInfoRows.push(
+      { title: texts.phantom, value: texts.phantomYes, isRowBold: true },
+      { title: texts.phantomFinalizedBy, value: `${data.operatorFinalizer.name} ${data.operatorFinalizer.surname}`},
+    );
   }
 
   addTitleValueRows(doc, x, y, texts.title, secondaryTexts?.title, visitInfoRows);

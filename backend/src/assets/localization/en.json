@@ -4,6 +4,14 @@
       "name": "Multimodal and Functional Imaging Laboratory",
       "workplace": "Magnetic Resonance Imaging Workplace"
     },
+    "visitData": {
+      "title": "Information about the visit",
+      "project": "Project",
+      "measurementDate": "Date of measurement",
+      "phantom": "Phantom",
+      "phantomYes": "Yes",
+      "phantomFinalizedBy": "Finalized by"
+    },
     "personalData": {
       "title": "Personal data",
       "name": "Name",
@@ -16,13 +24,6 @@
       "weight": "Weight",
       "visualCorrection": "Visual correction",
       "handedness": "Handedness"
-    },
-    "visitData": {
-      "title": "Information about the visit",
-      "project": "Project",
-      "measurementDate": "Date of measurement",
-      "phantom": "Phantom",
-      "phantomYes": "Yes"
     },
     "questions": {
       "title": "Safety questions",

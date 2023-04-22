@@ -4,6 +4,14 @@
       "name": "Laboratoř multimodálního a funkčního zobrazování",
       "workplace": "Pracoviště Magnetické rezonance"
     },
+    "visitData": {
+      "title": "Informace o visitě",
+      "project": "Projekt",
+      "measurementDate": "Datum měření",
+      "phantom": "Fantom",
+      "phantomYes": "Ano",
+      "phantomFinalizedBy": "Finalizoval/a"
+    },
     "personalData": {
       "title": "Osobní údaje",
       "name": "Jméno",
@@ -16,13 +24,6 @@
       "weight": "Váha",
       "visualCorrection": "Zraková korekce",
       "handedness": "Stranová dominance"
-    },
-    "visitData": {
-      "title": "Informace o visitě",
-      "project": "Projekt",
-      "measurementDate": "Datum měření",
-      "phantom": "Fantom",
-      "phantomYes": "Ano"
     },
     "questions": {
       "title": "Bezpečnostní otázky",
