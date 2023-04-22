@@ -81,6 +81,7 @@ interface ITitleValueRow {
   secondaryTitle?: string;
   value: string;
   secondaryValue?: string;
+  isRowBold?: boolean;
 }
 
 const addBlockTitle = (
@@ -110,6 +111,7 @@ const addTitleValue = (doc: PDFDoc, row: ITitleValueRow, x: number, y?: number):
   const title = `${row.title}:`;
   const titleWidth = 150;
   const valueStartPosition = x + titleWidth + 10;
+  const titleFont = row.isRowBold ? MEDIUM_FONT : REGULAR_FONT;
 
   if (row.secondaryTitle) {
     const secondaryTitle = `(${row.secondaryTitle})`;
@@ -117,14 +119,14 @@ const addTitleValue = (doc: PDFDoc, row: ITitleValueRow, x: number, y?: number):
     if (row.secondaryValue) {
       const secondaryValue = `(${row.secondaryValue})`;
 
-      doc.fontSize(TEXT_FONT_SIZE).text(title, x, y, { width: titleWidth });
+      doc.font(titleFont, TEXT_FONT_SIZE).text(title, x, y, { width: titleWidth });
       doc.moveUp().text(row.value, valueStartPosition, y, { lineGap: SECONDARY_TEXT_GAP });
       doc.fontSize(SECONDARY_TEXT_FONT_SIZE).text(secondaryTitle, x, undefined, { width: titleWidth });
       doc.moveUp().text(secondaryValue, valueStartPosition, undefined, { paragraphGap: INPUT_ROWS_GAP });
       return;
     }
 
-    doc.fontSize(TEXT_FONT_SIZE).text(title, x, y, { width: titleWidth });
+    doc.font(titleFont, TEXT_FONT_SIZE).text(title, x, y, { width: titleWidth });
     doc.moveUp().text(row.value, valueStartPosition, y, { lineGap: SECONDARY_TEXT_GAP });
     doc
       .fontSize(SECONDARY_TEXT_FONT_SIZE)
@@ -132,7 +134,7 @@ const addTitleValue = (doc: PDFDoc, row: ITitleValueRow, x: number, y?: number):
     return;
   }
 
-  doc.fontSize(TEXT_FONT_SIZE).text(title, x, y, { width: titleWidth });
+  doc.font(titleFont, TEXT_FONT_SIZE).text(title, x, y, { width: titleWidth });
   doc.moveUp().text(row.value, valueStartPosition, y, { paragraphGap: INPUT_ROWS_GAP });
 };
 
@@ -140,11 +142,11 @@ const addTitleValueRows = (
   doc: PDFDoc,
   x: number,
   y: number,
-  title: string,
-  secondaryTitle: string | undefined,
+  blockTitle: string,
+  secondaryBlockTitle: string | undefined,
   rows: ITitleValueRow[]
 ): void => {
-  addBlockTitle(doc, x, y, CHAPTER_FONT_SIZE, GAP_AFTER_CHAPTER_TITLE, title, secondaryTitle);
+  addBlockTitle(doc, x, y, CHAPTER_FONT_SIZE, GAP_AFTER_CHAPTER_TITLE, blockTitle, secondaryBlockTitle);
   doc.font(REGULAR_FONT, TEXT_FONT_SIZE).lineGap(LINE_GAP_INSIDE_PARAGRAPH);
   rows.forEach((row, i) => addTitleValue(doc, row, x, i === 0 ? doc.y : undefined));
 };
@@ -169,7 +171,7 @@ const addVisitData = (
 
   // Add phantom row if the visit is phantom
   if (data.isPhantom) {
-    visitInfoRows.push({ title: texts.phantom, value: texts.phantomYes });
+    visitInfoRows.push({ title: texts.phantom, value: texts.phantomYes, isRowBold: true });
   }
 
   addTitleValueRows(doc, x, y, texts.title, secondaryTexts?.title, visitInfoRows);
