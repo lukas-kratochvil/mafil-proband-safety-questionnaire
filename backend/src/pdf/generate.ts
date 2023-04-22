@@ -84,6 +84,28 @@ interface ITitleValueRow {
   isRowBold?: boolean;
 }
 
+const onNewPageAdded = (doc: PDFDoc, visitIdTitle: string, visitIdValue: string) => {
+  const docX = doc.x;
+  const docY = doc.y;
+
+  doc.fontSize(TEXT_FONT_SIZE);
+  const title = `${visitIdTitle}: `;
+  const value = visitIdValue;
+  const textX
+    = doc.page.width
+    - doc.page.margins.right
+    - doc.font(MEDIUM_FONT).widthOfString(title)
+    - doc.font(REGULAR_FONT).widthOfString(value);
+  doc
+    .font(MEDIUM_FONT)
+    .text(title, textX, doc.page.margins.top / 2, { continued: true })
+    .font(REGULAR_FONT)
+    .text(value);
+
+  doc.x = docX;
+  doc.y = docY;
+};
+
 const addBlockTitle = (
   doc: PDFDoc,
   x: number,
@@ -174,7 +196,7 @@ const addVisitData = (
   if (data.isPhantom) {
     visitInfoRows.push(
       { title: texts.phantom, value: texts.phantomYes, isRowBold: true },
-      { title: texts.phantomFinalizedBy, value: `${data.operatorFinalizer.name} ${data.operatorFinalizer.surname}`},
+      { title: texts.phantomFinalizedBy, value: `${data.operatorFinalizer.name} ${data.operatorFinalizer.surname}` }
     );
   }
 
@@ -593,6 +615,9 @@ export const generatePDF = async (
 
   // Set default line gap in the document
   doc.lineGap(DEFAULT_DOC_LINE_GAP);
+
+  // Add Visit ID on every new page (except the first one)
+  doc.on("pageAdded", () => onNewPageAdded(doc, commonTexts.visitId, data.visitId));
 
   // Add MAFIL logo
   const imageWidth = 90;
