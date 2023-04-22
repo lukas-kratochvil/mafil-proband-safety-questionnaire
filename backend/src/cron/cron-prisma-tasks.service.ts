@@ -42,9 +42,9 @@ export class CronPrismaTasksService {
   }
 
   @Cron(CronExpression.EVERY_DAY_AT_3AM)
-  async deleteSentToMafilDbVisitForms() {
+  async deletePdfGeneratedVisitForms() {
     const sameTimeAsYesterday = new Date(Date.now() - MILLISECONDS_IN_DAY).toISOString();
-    const sentToMafilDbState = VisitFormState.SENT_TO_MAFILDB;
+    const sentToMafilDbState = VisitFormState.PDF_GENERATED;
 
     const { count } = await this.prisma.visitForm.deleteMany({
       where: {
