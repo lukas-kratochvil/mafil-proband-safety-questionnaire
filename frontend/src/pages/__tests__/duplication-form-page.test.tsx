@@ -1,11 +1,10 @@
 import { format } from "date-fns";
-import { operatorMRHigPermDev } from "@app/__tests__/data/operators";
-import { pdfDev } from "@app/__tests__/data/pdf";
 import { gendersDev } from "@app/__tests__/data/genders";
 import { handednessesDev } from "@app/__tests__/data/handednesses";
 import { nativeLanguagesDev } from "@app/__tests__/data/nativeLanguages";
+import { operatorMRHigPermDev } from "@app/__tests__/data/operators";
+import { pdfDev } from "@app/__tests__/data/pdf";
 import { questionsDev } from "@app/__tests__/data/questions";
-import i18n from "@app/i18n";
 import { AnswerOption } from "@app/model/form";
 import { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
@@ -110,10 +109,6 @@ describe("duplication form page", () => {
   const setup = () => {
     render(<DuplicationFormPage />);
   };
-
-  beforeEach(async () => {
-    await i18n.changeLanguage("cimode");
-  });
 
   test("contains correct form buttons", async () => {
     setup();

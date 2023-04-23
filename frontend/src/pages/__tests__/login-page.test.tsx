@@ -1,4 +1,3 @@
-import i18n from "@app/i18n";
 import LoginPage from "@app/pages/LoginPage";
 import { render } from "@test-utils";
 
@@ -13,10 +12,6 @@ vi.mock("@app/components/header/LanguageMenu", () => ({
 // Tests
 //----------------------------------------------------------------------
 describe("login page", () => {
-  beforeEach(async () => {
-    await i18n.changeLanguage("cimode");
-  });
-
   test("contains translations", () => {
     const { container } = render(<LoginPage />);
 

@@ -1,4 +1,3 @@
-import i18n from "@app/i18n";
 import { IQuestionDTO } from "@app/util/server_API/dto";
 import { render } from "@test-utils";
 import { FormQuestions } from "../FormQuestions";
@@ -36,10 +35,6 @@ vi.mock("src/util/fetch", () => ({
 }));
 
 describe("form questions", () => {
-  beforeEach(async () => {
-    await i18n.changeLanguage("cimode");
-  });
-
   test("contains translated title", async () => {
     const title = "title";
 

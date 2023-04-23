@@ -1,4 +1,3 @@
-import i18n from "@app/i18n";
 import { render, screen } from "@test-utils";
 import { FormProbandContact } from "../FormProbandContact";
 
@@ -11,10 +10,6 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 }));
 
 describe("form proband contact", () => {
-  beforeEach(async () => {
-    await i18n.changeLanguage("cimode");
-  });
-
   test("contains translations", () => {
     const { container } = render(<FormProbandContact />);
 

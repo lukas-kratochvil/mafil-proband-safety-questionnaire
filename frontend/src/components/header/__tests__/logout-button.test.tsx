@@ -1,5 +1,4 @@
 import userEvent from "@testing-library/user-event";
-import i18n from "@app/i18n";
 import { render, screen } from "@test-utils";
 import { LogOutButton } from "../LogOutButton";
 
@@ -12,10 +11,6 @@ vi.mock("@app/hooks/auth/auth-dev", () => ({
 }));
 
 describe("logout button", () => {
-  beforeEach(async () => {
-    await i18n.changeLanguage("cimode");
-  });
-
   test("has title", () => {
     render(<LogOutButton />);
 

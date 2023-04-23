@@ -1,4 +1,3 @@
-import i18n from "@app/i18n";
 import { IVisitDetail } from "@app/model/visit";
 import VisitDetailPage from "@app/pages/VisitDetailPage";
 import { PDF_CONTENT } from "@app/util/mafildb_API/data.dev";
@@ -37,10 +36,6 @@ describe("visit detail page", () => {
   const setup = () => {
     render(<VisitDetailPage />);
   };
-
-  beforeEach(async () => {
-    await i18n.changeLanguage("cimode");
-  });
 
   test("contains translations", async () => {
     vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => defaultVisit);

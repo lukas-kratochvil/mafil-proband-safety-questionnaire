@@ -3,7 +3,6 @@ import { gendersDev } from "@app/__tests__/data/genders";
 import { handednessesDev } from "@app/__tests__/data/handednesses";
 import { nativeLanguagesDev } from "@app/__tests__/data/nativeLanguages";
 import { questionsDev } from "@app/__tests__/data/questions";
-import i18n from "@app/i18n";
 import ProbandFormPage from "@app/pages/ProbandFormPage";
 import { IGenderDTO, IHandednessDTO, IHTMLCardDTO, INativeLanguageDTO, IQuestionDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
@@ -54,10 +53,6 @@ describe("proband form page", () => {
   const setup = () => {
     render(<ProbandFormPage />);
   };
-
-  beforeEach(async () => {
-    await i18n.changeLanguage("cimode");
-  });
 
   // Data
   const genderMan = gendersDev[0].translations[0].text;

@@ -1,12 +1,11 @@
 import userEvent from "@testing-library/user-event";
 import { format } from "date-fns";
-import { operatorMRDev } from "@app/__tests__/data/operators";
-import { pdfDev } from "@app/__tests__/data/pdf";
 import { gendersDev } from "@app/__tests__/data/genders";
 import { handednessesDev } from "@app/__tests__/data/handednesses";
 import { nativeLanguagesDev } from "@app/__tests__/data/nativeLanguages";
+import { operatorMRDev } from "@app/__tests__/data/operators";
+import { pdfDev } from "@app/__tests__/data/pdf";
 import { getProjectText } from "@app/components/form/util/utils";
-import i18n from "@app/i18n";
 import PhantomFormPage from "@app/pages/PhantomFormPage";
 import { devicesDev, projectsDev } from "@app/util/mafildb_API/data.dev";
 import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
@@ -62,10 +61,6 @@ describe("phantom form page", () => {
   const setup = () => {
     render(<PhantomFormPage />);
   };
-
-  beforeEach(async () => {
-    await i18n.changeLanguage("cimode");
-  });
 
   // Data
   const genderOther = gendersDev[2].translations[0].text;

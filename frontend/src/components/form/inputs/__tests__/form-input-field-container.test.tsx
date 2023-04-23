@@ -1,4 +1,3 @@
-import i18n from "@app/i18n";
 import { render } from "@test-utils";
 import { FormInputFieldContainer } from "../FormInputFieldContainer";
 
@@ -7,10 +6,6 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 }));
 
 describe("form input field container", () => {
-  beforeEach(() => {
-    i18n.changeLanguage("cimode");
-  });
-
   test("required field contains only label", () => {
     const label = "Label";
 

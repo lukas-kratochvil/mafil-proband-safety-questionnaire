@@ -1,4 +1,3 @@
-import i18n from "@app/i18n";
 import { render, screen, waitFor } from "@test-utils";
 import { FormProjectInfo } from "../FormProjectInfo";
 
@@ -15,10 +14,6 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 }));
 
 describe("form project info", () => {
-  beforeEach(async () => {
-    await i18n.changeLanguage("cimode");
-  });
-
   test("contains translations", async () => {
     const { container } = render(<FormProjectInfo />);
 

@@ -1,5 +1,4 @@
 import userEvent from "@testing-library/user-event";
-import i18n from "@app/i18n";
 import HomePage from "@app/pages/HomePage";
 import { RoutingPaths } from "@app/routing-paths";
 import { render, screen } from "@test-utils";
@@ -24,10 +23,6 @@ vi.mock("react-router-dom", async () => ({
 // Tests
 //----------------------------------------------------------------------
 describe("home page", () => {
-  beforeEach(async () => {
-    await i18n.changeLanguage("cimode");
-  });
-
   test("contains translations", () => {
     const { container } = render(<HomePage />);
 
