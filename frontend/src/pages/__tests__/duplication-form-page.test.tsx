@@ -1,12 +1,10 @@
 import { format } from "date-fns";
-import {
-  gendersDev,
-  handednessesDev,
-  nativeLanguagesDev,
-  operatorMRHigPermDev,
-  pdfDev,
-  questionDev,
-} from "@app/__tests__/data/translated_entities";
+import { operatorMRHigPermDev } from "@app/__tests__/data/operators";
+import { pdfDev } from "@app/__tests__/data/pdf";
+import { gendersDev } from "@app/__tests__/data/genders";
+import { handednessesDev } from "@app/__tests__/data/handednesses";
+import { nativeLanguagesDev } from "@app/__tests__/data/nativeLanguages";
+import { questionsDev } from "@app/__tests__/data/questions";
 import i18n from "@app/i18n";
 import { AnswerOption } from "@app/model/form";
 import { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
@@ -41,7 +39,7 @@ const visit: IDuplicatedVisitIncludingQuestions = {
   visualCorrectionDioptre: 0,
   email: "",
   phone: "",
-  answersIncludingQuestions: questionDev.map((question, index) => ({
+  answersIncludingQuestions: questionsDev.map((question, index) => ({
     questionId: question.id,
     mustBeApproved: index % 2 === 0,
     answer: index % 2 === 0 ? AnswerOption.YES : AnswerOption.NO,
@@ -90,7 +88,7 @@ vi.mock("@app/util/server_API/fetch", async () => ({
   fetchGenders: async (): Promise<IGenderDTO[]> => gendersDev,
   fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesDev,
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesDev,
-  fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionDev,
+  fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionsDev,
   createDuplicatedVisitFormForApproval: async (): Promise<string> => newDuplicatedVisitFormId,
   generateProbandPdf: async (): Promise<IPdfDTO> => pdfDev,
   generatePhantomPdf: async (): Promise<IPdfDTO> => pdfDev,
@@ -156,7 +154,7 @@ describe("duplication form page", () => {
     await waitFor(() => expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues));
 
     const questions = await screen.findAllByRole("radiogroup");
-    expect(questions.length).toEqual(questionDev.length);
+    expect(questions.length).toEqual(questionsDev.length);
 
     questions.forEach(async (question, index) => {
       const yesRadio = await within(question).findByRole("radio", { name: "form.safetyQuestions.yes" });

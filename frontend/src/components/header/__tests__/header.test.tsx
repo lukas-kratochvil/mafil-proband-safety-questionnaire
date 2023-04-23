@@ -1,5 +1,5 @@
 import ScienceIcon from "@mui/icons-material/Science";
-import { operatorMRDev } from "@app/__tests__/data/translated_entities";
+import { operatorMRDev } from "@app/__tests__/data/operators";
 import { RoutingPaths } from "@app/routing-paths";
 import { IOperatorDTO } from "@app/util/server_API/dto";
 import { render, screen, within } from "@test-utils";

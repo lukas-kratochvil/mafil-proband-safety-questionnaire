@@ -1,5 +1,8 @@
 import userEvent from "@testing-library/user-event";
-import { gendersDev, handednessesDev, nativeLanguagesDev, questionDev } from "@app/__tests__/data/translated_entities";
+import { gendersDev } from "@app/__tests__/data/genders";
+import { handednessesDev } from "@app/__tests__/data/handednesses";
+import { nativeLanguagesDev } from "@app/__tests__/data/nativeLanguages";
+import { questionsDev } from "@app/__tests__/data/questions";
 import i18n from "@app/i18n";
 import ProbandFormPage from "@app/pages/ProbandFormPage";
 import { IGenderDTO, IHandednessDTO, IHTMLCardDTO, INativeLanguageDTO, IQuestionDTO } from "@app/util/server_API/dto";
@@ -34,7 +37,7 @@ vi.mock("@app/util/server_API/fetch", async () => ({
   fetchGenders: async (): Promise<IGenderDTO[]> => gendersDev,
   fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesDev,
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesDev,
-  fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionDev,
+  fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionsDev,
   createProbandVisitForm: async (): Promise<string> => newProbandVisitFormId,
   fetchEntryInfo: async (): Promise<IHTMLCardDTO> => htmlCard,
   fetchSafetyInfo: async (): Promise<IHTMLCardDTO> => htmlCard,
@@ -90,7 +93,7 @@ describe("proband form page", () => {
       })
     );
     const questions = await screen.findAllByRole("radiogroup");
-    expect(questions.length).toEqual(questionDev.length);
+    expect(questions.length).toEqual(questionsDev.length);
   });
 
   describe("auto-fills", () => {

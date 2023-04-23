@@ -1,12 +1,10 @@
 import userEvent from "@testing-library/user-event";
 import { format } from "date-fns";
-import {
-  gendersDev,
-  handednessesDev,
-  nativeLanguagesDev,
-  operatorMRDev,
-  pdfDev,
-} from "@app/__tests__/data/translated_entities";
+import { operatorMRDev } from "@app/__tests__/data/operators";
+import { pdfDev } from "@app/__tests__/data/pdf";
+import { gendersDev } from "@app/__tests__/data/genders";
+import { handednessesDev } from "@app/__tests__/data/handednesses";
+import { nativeLanguagesDev } from "@app/__tests__/data/nativeLanguages";
 import { getProjectText } from "@app/components/form/util/utils";
 import i18n from "@app/i18n";
 import PhantomFormPage from "@app/pages/PhantomFormPage";
