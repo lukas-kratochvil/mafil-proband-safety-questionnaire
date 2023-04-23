@@ -171,18 +171,7 @@ export const WaitingRoomForm = () => {
         ],
       });
     }
-  }, [
-    getValues,
-    isDisapproved,
-    isEditing,
-    navigate,
-    operator,
-    setValue,
-    trigger,
-    valuesBeforeEditing,
-    visitForm?.id,
-    visitForm?.probandLanguageCode,
-  ]);
+  }, [getValues, isDisapproved, isEditing, navigate, operator, setValue, trigger, valuesBeforeEditing, visitForm]);
 
   const moveVisitFormToApprovalRoom = async (data: ValidatedFormData) => {
     const modifiedFields: Partial<ValidatedFormData> = {

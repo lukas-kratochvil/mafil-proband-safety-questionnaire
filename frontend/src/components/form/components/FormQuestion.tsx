@@ -33,7 +33,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
     setValue(`answers.${qac.index}.mustBeApproved`, qac.mustBeApproved);
     setValue(`answers.${qac.index}.answer`, qac.answer);
     setValue(`answers.${qac.index}.comment`, qac.comment);
-  }, [qac.answer, qac.comment, qac.index, qac.mustBeApproved, qac.questionId, setValue]);
+  }, [qac, setValue]);
 
   // Hide question when specified genders are selected
   useEffect(() => {
@@ -44,7 +44,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
       setValue(`answers.${qac.index}.answer`, qac.answer);
       setHideQuestion(false);
     }
-  }, [qac.answer, qac.index, qac.hiddenByGenders, selectedGender, setValue]);
+  }, [qac, selectedGender, setValue]);
 
   // Reset comment if the current answer is 'NO'
   useEffect(() => {

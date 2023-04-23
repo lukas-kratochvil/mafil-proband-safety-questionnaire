@@ -181,21 +181,7 @@ export const ApprovalForm = () => {
         buttonsProps: [getBackButtonProps(navigate)],
       });
     }
-  }, [
-    getValues,
-    isDisapproved,
-    isEditing,
-    navigate,
-    operator?.role,
-    operator?.uco,
-    setValue,
-    trigger,
-    valuesBeforeEditing,
-    visitForm?.additionalInfo.finalizer.uco,
-    visitForm?.additionalInfo.finalizedAt,
-    visitForm?.id,
-    visitForm?.probandLanguageCode,
-  ]);
+  }, [getValues, isDisapproved, isEditing, navigate, operator, setValue, trigger, valuesBeforeEditing, visitForm]);
 
   return (
     <FormContainer
