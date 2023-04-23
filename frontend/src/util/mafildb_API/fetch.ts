@@ -186,7 +186,7 @@ export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<stri
     file_content: pdf.content,
   };
   // TODO: add endpoint
-  const { data } = await axiosConfig.mafildbApi.post<AddPdfToVisitResponse>("TODO", addPdfToVisitData);
+  const { data } = await axiosConfig.mafildbApi.post<AddPdfToVisitResponse>("files", addPdfToVisitData);
   return data.file_id;
 };
 
