@@ -68,7 +68,7 @@ interface IOperatorAnswerDTO extends IProbandAnswerDTO {
   comment: string;
 }
 
-type VisitFormState = "NEW" | "IN_APPROVAL" | "SENT_TO_MAFILDB";
+export type VisitFormState = "NEW" | "IN_APPROVAL" | "SENT_TO_MAFILDB" | "PDF_GENERATED";
 
 export interface IWaitingRoomTableVisitFormDTO {
   id: string;
@@ -180,7 +180,7 @@ export interface ISendVisitFormFromWaitingRoomForApprovalInput {
   };
 }
 
-export interface IMarkVisitFormAsSentToMafilDbInput {
+export interface IUpdateVisitFormStateInput {
   updateVisitFormInput: Pick<UpdateVisitFormInput, "id" | "state">;
 }
 

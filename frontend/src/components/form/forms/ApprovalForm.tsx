@@ -17,6 +17,7 @@ import { QuestionPartNumber } from "@app/util/server_API/dto";
 import {
   fetchApprovalRoomVisitForm,
   generateProbandPdf,
+  markVisitFormAsPdfGenerated,
   markVisitFormAsSentToMafilDb,
 } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
@@ -137,9 +138,10 @@ export const ApprovalForm = () => {
                 new Date(),
                 visitForm?.probandLanguageCode
               );
-              await markVisitFormAsSentToMafilDb(visitForm?.id ?? "");
+              await markVisitFormAsSentToMafilDb(visitForm?.id);
               const pdf = await generateProbandPdf(visitId, data, "TODO", visitForm?.probandLanguageCode, operator.uco);
               await addPdfToVisit(visitId, pdf);
+              await markVisitFormAsPdfGenerated(visitForm?.id);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
             },
           },

@@ -12,15 +12,16 @@ import {
   IGeneratePdfInput,
   IHandednessDTO,
   IHTMLCardDTO,
-  IMarkVisitFormAsSentToMafilDbInput,
   INativeLanguageDTO,
   IOperatorDTO,
   IPdfDTO,
   IQuestionDTO,
   ISendVisitFormFromWaitingRoomForApprovalInput,
+  IUpdateVisitFormStateInput,
   IWaitingRoomTableVisitFormDTO,
   IWaitingRoomVisitFormIncludingQuestions,
   VisitFormAnswerIncludingQuestion,
+  VisitFormState,
 } from "@app/util/server_API/dto";
 import { CREATE_VISIT_FORM, DELETE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
 import {
@@ -394,11 +395,15 @@ export const sendVisitFormForApproval = async (
   return data.data.updateVisitForm.id;
 };
 
-export const markVisitFormAsSentToMafilDb = async (visitFormId: string): Promise<void> => {
-  const variables: IMarkVisitFormAsSentToMafilDbInput = {
+const updateVisitFormState = async (visitFormId: string | undefined, state: VisitFormState): Promise<void | never> => {
+  if (visitFormId === undefined) {
+    throw new Error("Visit form id is undefined!");
+  }
+
+  const variables: IUpdateVisitFormStateInput = {
     updateVisitFormInput: {
       id: visitFormId,
-      state: "SENT_TO_MAFILDB",
+      state,
     },
   };
   axiosConfig.serverApi.post<UpdateVisitFormResponse>("", {
@@ -406,6 +411,12 @@ export const markVisitFormAsSentToMafilDb = async (visitFormId: string): Promise
     variables,
   });
 };
+
+export const markVisitFormAsSentToMafilDb = async (visitFormId: string | undefined): Promise<void> =>
+  updateVisitFormState(visitFormId, "SENT_TO_MAFILDB");
+
+export const markVisitFormAsPdfGenerated = async (visitFormId: string | undefined): Promise<void> =>
+  updateVisitFormState(visitFormId, "PDF_GENERATED");
 
 export const deleteVisitForm = async (visitFormId: string): Promise<void> => {
   const variables = { id: visitFormId };
