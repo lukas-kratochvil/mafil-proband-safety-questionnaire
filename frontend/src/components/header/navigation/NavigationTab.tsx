@@ -13,7 +13,6 @@ export const NavigationTab = ({ localizationKey, urlPrefix, onClick }: ITabProps
       label={t(convertStringToLocalizationKey(localizationKey))}
       onClick={onClick}
       sx={{ ...getCommonTabSx(location, urlPrefix) }}
-      data-testid="navTab"
     />
   );
 };

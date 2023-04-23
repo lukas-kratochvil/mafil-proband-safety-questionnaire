@@ -1,45 +1,49 @@
+import ScienceIcon from "@mui/icons-material/Science";
+import { operatorMRDev } from "@app/__tests__/data/translated_entities";
+import { RoutingPaths } from "@app/routing-paths";
+import { IOperatorDTO } from "@app/util/server_API/dto";
 import { render, screen, within } from "@test-utils";
 import { Header } from "../Header";
+import { ITabProps } from "../navigation/common";
 
 //----------------------------------------------------------------------
-// Mocking react-router-dom useLocation() and useNavigate() hooks
+// Mocking custom authentication
 //----------------------------------------------------------------------
-const mockUseLocation = vi.fn();
-const mockUseNavigate = vi.fn();
+let mockOperator: IOperatorDTO | undefined;
 
-vi.mock("react-router-dom", async () => ({
-  ...((await vi.importActual("react-router-dom")) as Record<string, unknown>),
-  useLocation: () => mockUseLocation,
-  useNavigate: () => mockUseNavigate,
-}));
-
-//----------------------------------------------------------------------
-// Mocking custom useAuth() hook
-//----------------------------------------------------------------------
-let mockOperator: string | undefined;
-
-vi.mock("@app/hooks/auth/auth", () => ({
-  useAuth: () => ({
+vi.mock("@app/hooks/auth/auth-dev", () => ({
+  useAuthDev: () => ({
     operator: mockOperator,
   }),
 }));
 
 //----------------------------------------------------------------------
-// Mocking custom getTabs() and isTabSelected() function
+// Mocking common header navigation functions
 //----------------------------------------------------------------------
-const mockIsTabSelected = vi.fn();
-const mockGetTabs = vi.fn().mockImplementation(() => [
+const tabs: ITabProps[] = [
   {
-    localizationKey: "waitingRoom",
-    urlPrefix: "",
+    localizationKey: "1",
+    urlPrefix: RoutingPaths.WAITING_ROOM,
     onClick: () => ({}),
-    Icon: undefined,
+    Icon: ScienceIcon,
   },
-]);
+  {
+    localizationKey: "2",
+    urlPrefix: RoutingPaths.APPROVAL_ROOM,
+    onClick: () => ({}),
+    Icon: ScienceIcon,
+  },
+  {
+    localizationKey: "3",
+    urlPrefix: RoutingPaths.RECENT_VISITS,
+    onClick: () => ({}),
+    Icon: ScienceIcon,
+  },
+];
 
-vi.mock("@app/components/header/navigation/common", () => ({
-  isTabSelected: () => mockIsTabSelected,
-  getTabs: () => mockGetTabs,
+vi.mock("@app/components/header/navigation/common", async () => ({
+  getTabs: () => tabs,
+  getCommonTabSx: () => ({}),
 }));
 
 //----------------------------------------------------------------------
@@ -67,21 +71,20 @@ describe("header", () => {
       mockOperator = undefined;
 
       const { container } = render(<Header />);
-      const tabsInHeader = within(container).queryByTestId("navTab");
+      const headerTabs = within(container).queryAllByRole("tab");
 
-      expect(tabsInHeader).toBeNull();
+      expect(headerTabs.length).toBe(0);
     });
   });
 
-  describe.todo("auth user is logged in");
+  describe("auth user is logged in", () => {
+    test("contains all tabs", () => {
+      mockOperator = operatorMRDev;
 
-  // TODO: correct the test
-  // test("auth user is logged in - contains all tabs", () => {
-  //   mockOperator = "Username";
+      const { container } = render(<Header />);
+      const headerTabs = within(container).getAllByRole("tab");
 
-  //   const { container } = render(<Header />);
-  //   const tabsInHeader = within(container).getAllByTestId("navTab");
-
-  //   expect(tabsInHeader.length).toBe(5);
-  // });
+      expect(headerTabs.length).toBe(tabs.length);
+    });
+  });
 });
