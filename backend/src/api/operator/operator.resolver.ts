@@ -11,32 +11,32 @@ export class OperatorResolver {
   constructor(private readonly operatorService: OperatorService) {}
 
   @Query(() => OperatorEntity)
-  authenticateOperator(@Args() authenticateOperatorArgs: AuthenticateOperatorArgs): Promise<OperatorEntity> {
+  async authenticateOperator(@Args() authenticateOperatorArgs: AuthenticateOperatorArgs) {
     return this.operatorService.authenticate(authenticateOperatorArgs);
   }
 
   // @Mutation(() => OperatorEntity)
-  createOperator(@Args("createOperatorInput") createOperatorInput: CreateOperatorInput): Promise<OperatorEntity> {
+  async createOperator(@Args("createOperatorInput") createOperatorInput: CreateOperatorInput) {
     return this.operatorService.create(createOperatorInput);
   }
 
   @Query(() => [OperatorEntity], { name: "operators" })
-  findAll(): Promise<OperatorEntity[]> {
+  async getOperators() {
     return this.operatorService.findAll();
   }
 
   @Query(() => OperatorEntity, { name: "operator" })
-  findOne(@Args("uco") uco: string): Promise<OperatorEntity> {
+  async getOperator(@Args("uco") uco: string) {
     return this.operatorService.findOne(uco);
   }
 
   // @Mutation(() => OperatorEntity)
-  updateOperator(@Args("updateOperatorInput") updateOperatorInput: UpdateOperatorInput): Promise<OperatorEntity> {
+  async updateOperator(@Args("updateOperatorInput") updateOperatorInput: UpdateOperatorInput) {
     return this.operatorService.update(updateOperatorInput.id, updateOperatorInput);
   }
 
   // @Mutation(() => OperatorEntity)
-  removeOperator(@Args("id", { type: () => UUID }) id: string): Promise<OperatorEntity> {
+  async removeOperator(@Args("id", { type: () => UUID }) id: string) {
     return this.operatorService.remove(id);
   }
 }

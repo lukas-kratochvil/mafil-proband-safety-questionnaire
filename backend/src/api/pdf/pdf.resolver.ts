@@ -8,7 +8,7 @@ export class PDFResolver {
   constructor(private readonly pdfService: PDFService) {}
 
   @Query(() => PDFEntity)
-  generatePDF(@Args() generatePDFInput: GeneratePDFArgs): Promise<PDFEntity> {
+  async generatePDF(@Args() generatePDFInput: GeneratePDFArgs) {
     return this.pdfService.generate(generatePDFInput);
   }
 }

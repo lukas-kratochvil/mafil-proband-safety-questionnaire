@@ -10,31 +10,27 @@ export class NativeLanguageResolver {
   constructor(private readonly nativeLanguageService: NativeLanguageService) {}
 
   // @Mutation(() => NativeLanguageEntity)
-  createNativeLanguage(
-    @Args("createNativeLanguageInput") createNativeLanguageInput: CreateNativeLanguageInput
-  ): Promise<NativeLanguageEntity> {
+  async createNativeLanguage(@Args("createNativeLanguageInput") createNativeLanguageInput: CreateNativeLanguageInput) {
     return this.nativeLanguageService.create(createNativeLanguageInput);
   }
 
   @Query(() => [NativeLanguageEntity], { name: "nativeLanguages" })
-  findAll(): Promise<NativeLanguageEntity[]> {
+  async getNativeLanguages() {
     return this.nativeLanguageService.findAll();
   }
 
   @Query(() => NativeLanguageEntity, { name: "nativeLanguage" })
-  findOne(@Args("code") code: string): Promise<NativeLanguageEntity> {
+  async getNativeLanguage(@Args("code") code: string) {
     return this.nativeLanguageService.findOne(code);
   }
 
   // @Mutation(() => NativeLanguageEntity)
-  updateNativeLanguage(
-    @Args("updateNativeLanguageInput") updateNativeLanguageInput: UpdateNativeLanguageInput
-  ): Promise<NativeLanguageEntity> {
+  async updateNativeLanguage(@Args("updateNativeLanguageInput") updateNativeLanguageInput: UpdateNativeLanguageInput) {
     return this.nativeLanguageService.update(updateNativeLanguageInput.id, updateNativeLanguageInput);
   }
 
   // @Mutation(() => NativeLanguageEntity)
-  removeNativeLanguage(@Args("id", { type: () => UUID }) id: string): Promise<NativeLanguageEntity> {
+  async removeNativeLanguage(@Args("id", { type: () => UUID }) id: string) {
     return this.nativeLanguageService.remove(id);
   }
 }

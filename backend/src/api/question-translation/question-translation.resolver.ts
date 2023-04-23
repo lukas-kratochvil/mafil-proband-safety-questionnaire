@@ -9,16 +9,16 @@ export class QuestionTranslationResolver {
   constructor(private readonly questionTranslationService: QuestionTranslationService) {}
 
   @Mutation(() => QuestionTranslationEntity)
-  createQuestionTranslation(
+  async createQuestionTranslation(
     @Args("createQuestionTranslationInput") createQuestionTranslationInput: CreateQuestionTranslationInput
-  ): Promise<QuestionTranslationEntity> {
+  ) {
     return this.questionTranslationService.create(createQuestionTranslationInput);
   }
 
   @Mutation(() => QuestionTranslationEntity)
-  updateQuestionTranslation(
+  async updateQuestionTranslation(
     @Args("updateQuestionTranslationInput") updateQuestionTranslationInput: UpdateQuestionTranslationInput
-  ): Promise<QuestionTranslationEntity> {
+  ) {
     return this.questionTranslationService.update(updateQuestionTranslationInput.id, updateQuestionTranslationInput);
   }
 }

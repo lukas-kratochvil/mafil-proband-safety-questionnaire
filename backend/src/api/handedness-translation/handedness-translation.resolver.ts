@@ -9,16 +9,16 @@ export class HandednessTranslationResolver {
   constructor(private readonly handednessTranslationService: HandednessTranslationService) {}
 
   @Mutation(() => HandednessTranslationEntity)
-  createHandednessTranslation(
+  async createHandednessTranslation(
     @Args("createHandednessTranslationInput") createHandednessTranslationInput: CreateHandednessTranslationInput
-  ): Promise<HandednessTranslationEntity> {
+  ) {
     return this.handednessTranslationService.create(createHandednessTranslationInput);
   }
 
   @Mutation(() => HandednessTranslationEntity)
-  updateHandednessTranslation(
+  async updateHandednessTranslation(
     @Args("updateHandednessTranslationInput") updateHandednessTranslationInput: UpdateHandednessTranslationInput
-  ): Promise<HandednessTranslationEntity> {
+  ) {
     return this.handednessTranslationService.update(
       updateHandednessTranslationInput.id,
       updateHandednessTranslationInput

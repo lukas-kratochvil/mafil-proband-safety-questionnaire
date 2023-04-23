@@ -10,27 +10,27 @@ export class LanguageResolver {
   constructor(private readonly languageService: LanguageService) {}
 
   // @Mutation(() => LanguageEntity)
-  createLanguage(@Args("createLanguageInput") createLanguageInput: CreateLanguageInput): Promise<LanguageEntity> {
+  async createLanguage(@Args("createLanguageInput") createLanguageInput: CreateLanguageInput) {
     return this.languageService.create(createLanguageInput);
   }
 
   @Query(() => [LanguageEntity], { name: "languages" })
-  findAll(): Promise<LanguageEntity[]> {
+  async getLanguages() {
     return this.languageService.findAll();
   }
 
   @Query(() => LanguageEntity, { name: "language" })
-  findOne(@Args("id", { type: () => UUID }) id: string): Promise<LanguageEntity> {
+  async getLanguage(@Args("id", { type: () => UUID }) id: string) {
     return this.languageService.findOne(id);
   }
 
   // @Mutation(() => LanguageEntity)
-  updateLanguage(@Args("updateLanguageInput") updateLanguageInput: UpdateLanguageInput): Promise<LanguageEntity> {
+  async updateLanguage(@Args("updateLanguageInput") updateLanguageInput: UpdateLanguageInput) {
     return this.languageService.update(updateLanguageInput.id, updateLanguageInput);
   }
 
   // @Mutation(() => LanguageEntity)
-  removeLanguage(@Args("id", { type: () => UUID }) id: string): Promise<LanguageEntity> {
+  async removeLanguage(@Args("id", { type: () => UUID }) id: string) {
     return this.languageService.remove(id);
   }
 }

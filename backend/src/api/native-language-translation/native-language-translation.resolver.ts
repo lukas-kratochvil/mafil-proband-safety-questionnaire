@@ -9,18 +9,18 @@ export class NativeLanguageTranslationResolver {
   constructor(private readonly nativeLanguageTranslationService: NativeLanguageTranslationService) {}
 
   @Mutation(() => NativeLanguageTranslationEntity)
-  createNativeLanguageTranslation(
+  async createNativeLanguageTranslation(
     @Args("createNativeLanguageTranslationInput")
     createNativeLanguageTranslationInput: CreateNativeLanguageTranslationInput
-  ): Promise<NativeLanguageTranslationEntity> {
+  ) {
     return this.nativeLanguageTranslationService.create(createNativeLanguageTranslationInput);
   }
 
   @Mutation(() => NativeLanguageTranslationEntity)
-  updateNativeLanguageTranslation(
+  async updateNativeLanguageTranslation(
     @Args("updateNativeLanguageTranslationInput")
     updateNativeLanguageTranslationInput: UpdateNativeLanguageTranslationInput
-  ): Promise<NativeLanguageTranslationEntity> {
+  ) {
     return this.nativeLanguageTranslationService.update(
       updateNativeLanguageTranslationInput.id,
       updateNativeLanguageTranslationInput

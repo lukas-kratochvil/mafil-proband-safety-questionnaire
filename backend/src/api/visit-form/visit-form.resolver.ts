@@ -12,27 +12,27 @@ export class VisitFormResolver {
   constructor(private readonly visitFormService: VisitFormService) {}
 
   @Mutation(() => VisitFormEntity)
-  createVisitForm(@Args("createVisitFormInput") createVisitFormInput: CreateVisitFormInput) {
+  async createVisitForm(@Args("createVisitFormInput") createVisitFormInput: CreateVisitFormInput) {
     return this.visitFormService.create(createVisitFormInput);
   }
 
   @Query(() => [VisitFormEntity], { name: "visitForms" })
-  findAll(@Args("state", { type: () => VisitFormState, nullable: true }) state?: VisitFormState) {
+  async getVisitForms(@Args("state", { type: () => VisitFormState, nullable: true }) state?: VisitFormState) {
     return this.visitFormService.findAll(state);
   }
 
   @Query(() => VisitFormEntity, { name: "visitForm" })
-  findOne(@Args("id", { type: () => UUID }) id: string) {
+  async getVisitForm(@Args("id", { type: () => UUID }) id: string) {
     return this.visitFormService.findOne(id);
   }
 
   @Mutation(() => VisitFormEntity)
-  updateVisitForm(@Args("updateVisitFormInput") updateVisitFormInput: UpdateVisitFormInput) {
+  async updateVisitForm(@Args("updateVisitFormInput") updateVisitFormInput: UpdateVisitFormInput) {
     return this.visitFormService.update(updateVisitFormInput.id, updateVisitFormInput);
   }
 
   @Mutation(() => Void, { nullable: true })
-  removeVisitForm(@Args("id", { type: () => UUID }) id: string) {
+  async removeVisitForm(@Args("id", { type: () => UUID }) id: string) {
     return this.visitFormService.remove(id);
   }
 }

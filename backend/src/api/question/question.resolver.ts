@@ -11,34 +11,32 @@ export class QuestionResolver {
   constructor(private readonly questionService: QuestionService) {}
 
   // @Mutation(() => QuestionEntity)
-  createQuestion(@Args("createQuestionInput") createQuestionInput: CreateQuestionInput): Promise<QuestionEntity> {
+  async createQuestion(@Args("createQuestionInput") createQuestionInput: CreateQuestionInput) {
     return this.questionService.create(createQuestionInput);
   }
 
   @Query(() => [QuestionEntity], { name: "questions" })
-  findAll(): Promise<QuestionEntity[]> {
+  async getQuestions() {
     return this.questionService.findAll();
   }
 
   @Query(() => QuestionEntity, { name: "question" })
-  findOne(@Args("id", { type: () => UUID }) id: string): Promise<QuestionEntity> {
+  async getQuestion(@Args("id", { type: () => UUID }) id: string) {
     return this.questionService.findOne(id);
   }
 
   // @Mutation(() => QuestionEntity)
-  updateQuestion(@Args("updateQuestionInput") updateQuestionInput: UpdateQuestionInput): Promise<QuestionEntity> {
+  async updateQuestion(@Args("updateQuestionInput") updateQuestionInput: UpdateQuestionInput) {
     return this.questionService.update(updateQuestionInput.id, updateQuestionInput);
   }
 
   // @Mutation(() => QuestionEntity)
-  updateQuestionTexts(
-    @Args("updateQuestionTextsInput") updateQuestionTextsInput: UpdateQuestionTextsInput
-  ): Promise<QuestionEntity> {
+  async updateQuestionTexts(@Args("updateQuestionTextsInput") updateQuestionTextsInput: UpdateQuestionTextsInput) {
     return this.questionService.updateTexts(updateQuestionTextsInput.id, updateQuestionTextsInput);
   }
 
   // @Mutation(() => QuestionEntity)
-  removeQuestion(@Args("id", { type: () => UUID }) id: string): Promise<QuestionEntity> {
+  async removeQuestion(@Args("id", { type: () => UUID }) id: string) {
     return this.questionService.remove(id);
   }
 }

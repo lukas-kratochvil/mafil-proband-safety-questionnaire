@@ -10,31 +10,27 @@ export class HandednessResolver {
   constructor(private readonly handednessService: HandednessService) {}
 
   // @Mutation(() => HandednessEntity)
-  createHandedness(
-    @Args("createHandednessInput") createHandednessInput: CreateHandednessInput
-  ): Promise<HandednessEntity> {
+  async createHandedness(@Args("createHandednessInput") createHandednessInput: CreateHandednessInput) {
     return this.handednessService.create(createHandednessInput);
   }
 
   @Query(() => [HandednessEntity], { name: "handednesses" })
-  findAll(): Promise<HandednessEntity[]> {
+  async getHandednesses() {
     return this.handednessService.findAll();
   }
 
   @Query(() => HandednessEntity, { name: "handedness" })
-  findOne(@Args("code") code: string): Promise<HandednessEntity> {
+  async getHandedness(@Args("code") code: string) {
     return this.handednessService.findOne(code);
   }
 
   // @Mutation(() => HandednessEntity)
-  updateHandedness(
-    @Args("updateHandednessInput") updateHandednessInput: UpdateHandednessInput
-  ): Promise<HandednessEntity> {
+  async updateHandedness(@Args("updateHandednessInput") updateHandednessInput: UpdateHandednessInput) {
     return this.handednessService.update(updateHandednessInput.id, updateHandednessInput);
   }
 
   // @Mutation(() => HandednessEntity)
-  removeHandedness(@Args("id", { type: () => UUID }) id: string): Promise<HandednessEntity> {
+  async removeHandedness(@Args("id", { type: () => UUID }) id: string) {
     return this.handednessService.remove(id);
   }
 }

@@ -10,27 +10,27 @@ export class GenderResolver {
   constructor(private readonly genderService: GenderService) {}
 
   // @Mutation(() => GenderEntity)
-  createGender(@Args("createGenderInput") createGenderInput: CreateGenderInput): Promise<GenderEntity> {
+  async createGender(@Args("createGenderInput") createGenderInput: CreateGenderInput) {
     return this.genderService.create(createGenderInput);
   }
 
   @Query(() => [GenderEntity], { name: "genders" })
-  findAll(): Promise<GenderEntity[]> {
+  async getGenders() {
     return this.genderService.findAll();
   }
 
   @Query(() => GenderEntity, { name: "gender" })
-  findOne(@Args("code") code: string): Promise<GenderEntity> {
+  async getGender(@Args("code") code: string) {
     return this.genderService.findOne(code);
   }
 
   // @Mutation(() => GenderEntity)
-  updateGender(@Args("updateGenderInput") updateGenderInput: UpdateGenderInput): Promise<GenderEntity> {
+  async updateGender(@Args("updateGenderInput") updateGenderInput: UpdateGenderInput) {
     return this.genderService.update(updateGenderInput.id, updateGenderInput);
   }
 
   // @Mutation(() => GenderEntity)
-  removeGender(@Args("id", { type: () => UUID }) id: string): Promise<GenderEntity> {
+  async removeGender(@Args("id", { type: () => UUID }) id: string) {
     return this.genderService.remove(id);
   }
 }
