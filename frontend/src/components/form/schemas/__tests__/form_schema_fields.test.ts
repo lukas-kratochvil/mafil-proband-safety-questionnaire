@@ -70,11 +70,15 @@ describe("form schemas", () => {
     });
 
     test.each([
+      ["", false],
       ["email", false],
       ["name.surname@email", false],
       ["name.surname@email.", false],
       ["name.surname@.c", false],
-      ["name.surname@email.c", true],
+      ["name.surname@e.c", false],
+      ["name.surname@email.c", false],
+      ["name.surname@email.com.c", false],
+      ["name.surname@email.com..com", false],
       ["name.surname@email.com", true],
       [" name.surname@email.com ", true],
     ])("email: '%s' -> %s", (input: string, isValid: boolean) => {
