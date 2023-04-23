@@ -110,8 +110,7 @@ export const ApprovalForm = () => {
                 new Date(),
                 visitForm?.probandLanguageCode
               );
-              await markVisitFormAsSentToMafilDb(visitForm?.id ?? "");
-              // TODO: generate PDF and send it to MAFILDB
+              // TODO: mark visitForm as DELETED / DISAPPROVED?
               navigate(RoutingPaths.APPROVAL_ROOM);
             },
             showErrorColor: true,

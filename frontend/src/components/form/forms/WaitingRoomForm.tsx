@@ -110,8 +110,7 @@ export const WaitingRoomForm = () => {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
           onClick: async (data) => {
             await createVisit(data, VisitState.DISAPPROVED, operator?.uco, new Date(), visitForm?.probandLanguageCode);
-            await markVisitFormAsSentToMafilDb(visitForm?.id ?? "");
-            // TODO: generate PDF and send it to MAFILDB
+            // TODO: mark visitForm as DELETED / DISAPPROVED?
             navigate(RoutingPaths.WAITING_ROOM);
           },
           showErrorColor: true,
