@@ -1,13 +1,20 @@
 import { format } from "date-fns";
-import { gendersDev, handednessesDev, nativeLanguagesDev, questionDev } from "@app/__tests__/data/translated_entities";
+import {
+  gendersDev,
+  handednessesDev,
+  nativeLanguagesDev,
+  operatorMRHigPermDev,
+  pdfDev,
+  questionDev,
+} from "@app/__tests__/data/translated_entities";
 import i18n from "@app/i18n";
 import { AnswerOption } from "@app/model/form";
 import { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
 import { devicesDev, projectsDev } from "@app/util/mafildb_API/data.dev";
 import { IDeviceDTO, IProjectDTO, VisitState } from "@app/util/mafildb_API/dto";
-import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IOperatorDTO, IQuestionDTO } from "@app/util/server_API/dto";
-import { render, screen, waitFor } from "@test-utils";
+import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IPdfDTO, IQuestionDTO } from "@app/util/server_API/dto";
+import { render, screen, waitFor, within } from "@test-utils";
 
 //----------------------------------------------------------------------
 // Default data
@@ -59,13 +66,6 @@ vi.mock("react-router-dom", async () => ({
 }));
 
 //----------------------------------------------------------------------
-// Mocking LanguageMenu due to undefined i18n instance that is used inside this component
-//----------------------------------------------------------------------
-vi.mock("@app/components/header/LanguageMenu", () => ({
-  LanguageMenu: () => <div />,
-}));
-
-//----------------------------------------------------------------------
 // Mocking custom ErrorMessage component
 //----------------------------------------------------------------------
 vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
@@ -75,18 +75,9 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 //----------------------------------------------------------------------
 // Mocking custom authentication
 //----------------------------------------------------------------------
-const operator: IOperatorDTO = {
-  id: "1",
-  name: "Peter",
-  surname: "Pan",
-  uco: "123456",
-  email: "peter.pan@gmail.com",
-  role: "MR_HIGH_PERM",
-};
-
-vi.mock("@app/hooks/auth/auth", () => ({
-  useAuth: () => ({
-    operator,
+vi.mock("@app/hooks/auth/auth-dev", () => ({
+  useAuthDev: () => ({
+    operator: operatorMRHigPermDev,
   }),
 }));
 
@@ -96,19 +87,22 @@ vi.mock("@app/hooks/auth/auth", () => ({
 const newDuplicatedVisitFormId = "id123";
 
 vi.mock("@app/util/server_API/fetch", async () => ({
-  ...((await vi.importActual("@app/util/server_API/fetch")) as Record<string, unknown>),
   fetchGenders: async (): Promise<IGenderDTO[]> => gendersDev,
   fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesDev,
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesDev,
   fetchCurrentQuestions: async (): Promise<IQuestionDTO[]> => questionDev,
   createDuplicatedVisitFormForApproval: async (): Promise<string> => newDuplicatedVisitFormId,
+  generateProbandPdf: async (): Promise<IPdfDTO> => pdfDev,
+  generatePhantomPdf: async (): Promise<IPdfDTO> => pdfDev,
 }));
 
 vi.mock("@app/util/mafildb_API/fetch", async () => ({
-  ...((await vi.importActual("@app/util/mafildb_API/fetch")) as Record<string, unknown>),
   fetchProjects: async (): Promise<IProjectDTO[]> => projectsDev,
   fetchDevices: async (): Promise<IDeviceDTO[]> => devicesDev,
   fetchDuplicatedVisit: async (): Promise<IDuplicatedVisitIncludingQuestions> => visit,
+  createFinalizedVisit: async (): Promise<string> => "visitId",
+  createPhantomVisit: async (): Promise<string> => "visitId",
+  addPdfToVisit: async (): Promise<string> => "fileId",
 }));
 
 //----------------------------------------------------------------------
@@ -164,20 +158,20 @@ describe("duplication form page", () => {
     const questions = await screen.findAllByRole("radiogroup");
     expect(questions.length).toEqual(questionDev.length);
 
-    // TODO: correct safety questions checkbox tests
-    // questions.forEach(async (question, index) => {
-    //   const yesRadio = await within(question).findByRole("radio", { name: "form.safetyQuestions.yes" });
-    //   const noRadio = await within(question).findByRole("radio", { name: "form.safetyQuestions.no" });
+    questions.forEach(async (question, index) => {
+      const yesRadio = await within(question).findByRole("radio", { name: "form.safetyQuestions.yes" });
+      const noRadio = await within(question).findByRole("radio", { name: "form.safetyQuestions.no" });
 
-    //   if (index % 2 === 0) {
-    //     // expect(yesRadio).toBeChecked();
-    //     expect(noRadio).not.toBeChecked();
-    //     expect(screen.getByLabelText(`answers.${index}.comment`)).toHaveTextContent(comment);
-    //   } else {
-    //     expect(yesRadio).not.toBeChecked();
-    //     // expect(noRadio).toBeChecked();
-    //     expect(screen.queryByLabelText(`answers.${index}.comment`)).toBeNull();
-    //   }
-    // });
+      if (index % 2 === 0) {
+        expect(yesRadio).toBeChecked();
+        expect(noRadio).not.toBeChecked();
+        // TODO: correct comment check
+        // expect(screen.getByLabelText(`answers.${index}.comment`)).toHaveTextContent(comment);
+      } else {
+        expect(yesRadio).not.toBeChecked();
+        expect(noRadio).toBeChecked();
+        expect(screen.queryByLabelText(`answers.${index}.comment`)).toBeNull();
+      }
+    });
   });
 });

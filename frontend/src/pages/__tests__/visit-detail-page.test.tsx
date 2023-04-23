@@ -31,13 +31,6 @@ vi.mock("react-router-dom", async () => ({
 }));
 
 //----------------------------------------------------------------------
-// Mocking LanguageMenu due to undefined i18n instance that is used inside this component
-//----------------------------------------------------------------------
-vi.mock("@app/components/header/LanguageMenu", () => ({
-  LanguageMenu: () => <div />,
-}));
-
-//----------------------------------------------------------------------
 // Tests
 //----------------------------------------------------------------------
 describe("visit detail page", () => {
@@ -186,38 +179,40 @@ describe("visit detail page", () => {
   });
 
   // TODO: repair these tests that switch visit detail state
-  // test("switches from approved to for-signature state", async () => {
-  //   const approvedVisit: IVisitDetail = {
-  //     ...defaultVisit,
-  //     state: VisitState.APPROVED,
-  //   };
-  //   vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => approvedVisit);
-  //   setup();
-  //   const user = userEvent.setup();
+  // describe("state switching", () => {
+  //   test("switches from approved to for-signature state", async () => {
+  //     const approvedVisit: IVisitDetail = {
+  //       ...defaultVisit,
+  //       state: VisitState.APPROVED,
+  //     };
+  //     vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => approvedVisit);
+  //     setup();
+  //     const user = userEvent.setup();
 
-  //   const downloadPDFAndPhysicallySignButton = await screen.findByText(
-  //     /visitDetailPage.buttons.downloadPDFAndPhysicallySign/
-  //   );
-  //   await user.click(downloadPDFAndPhysicallySignButton);
+  //     const downloadPDFAndPhysicallySignButton = await screen.findByText(
+  //       /visitDetailPage.buttons.downloadPDFAndPhysicallySign/
+  //     );
+  //     await user.click(downloadPDFAndPhysicallySignButton);
 
-  //   expect(await screen.findByText(/visitDetailPage.infoStripes.waitingForSignatureConfirmation/)).toBeInTheDocument();
-  //   expect(await screen.findByText(/visitDetailPage.buttons.confirmSignature/)).toBeInTheDocument();
-  //   expect(await screen.findByText(/common.backButton/)).toBeInTheDocument();
-  // });
+  //     expect(await screen.findByText(/visitDetailPage.infoStripes.waitingForSignatureConfirmation/)).toBeInTheDocument();
+  //     expect(await screen.findByText(/visitDetailPage.buttons.confirmSignature/)).toBeInTheDocument();
+  //     expect(await screen.findByText(/common.backButton/)).toBeInTheDocument();
+  //   });
 
-  // test("switches from for-signature to signed state", async () => {
-  //   const forSignatureVisit: IVisitDetail = {
-  //     ...defaultVisit,
-  //     state: VisitState.FOR_SIGNATURE_PHYSICALLY,
-  //   };
-  //   vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => forSignatureVisit);
-  //   setup();
+  //   test("switches from for-signature to signed state", async () => {
+  //     const forSignatureVisit: IVisitDetail = {
+  //       ...defaultVisit,
+  //       state: VisitState.FOR_SIGNATURE_PHYSICALLY,
+  //     };
+  //     vi.spyOn(mafildbFetchers, "fetchVisitDetail").mockImplementationOnce(async () => forSignatureVisit);
+  //     setup();
 
-  //   const confirmSignatureButton = await screen.findByText(/visitDetailPage.buttons.confirmSignature/);
-  //   await userEvent.click(confirmSignatureButton);
+  //     const confirmSignatureButton = await screen.findByText(/visitDetailPage.buttons.confirmSignature/);
+  //     await userEvent.click(confirmSignatureButton);
 
-  //   expect(await screen.findByText(/visitDetailPage.infoStripes.signed/)).toBeInTheDocument();
-  //   expect(await screen.findByText(/visitDetailPage.buttons.downloadPDF/)).toBeInTheDocument();
-  //   expect(await screen.findByText(/common.backButton/)).toBeInTheDocument();
+  //     expect(await screen.findByText(/visitDetailPage.infoStripes.signed/)).toBeInTheDocument();
+  //     expect(await screen.findByText(/visitDetailPage.buttons.downloadPDF/)).toBeInTheDocument();
+  //     expect(await screen.findByText(/common.backButton/)).toBeInTheDocument();
+  //   });
   // });
 });
