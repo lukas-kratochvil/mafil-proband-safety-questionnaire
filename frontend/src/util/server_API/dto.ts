@@ -183,3 +183,36 @@ export interface ISendVisitFormFromWaitingRoomForApprovalInput {
 export interface IMarkVisitFormAsSentToMafilDbInput {
   updateVisitFormInput: Pick<UpdateVisitFormInput, "id" | "state">;
 }
+
+export interface IPdfDTO {
+  name: string;
+  extension: string;
+  content: string;
+}
+
+export interface IGeneratePdfInput {
+  visitId: string;
+  isPhantom: boolean;
+  probandLanguageCode?: LanguageCode;
+  projectAcronym: string;
+  measuredAt: Date;
+  finalizerUco: string;
+  approverUco?: string;
+  name: string;
+  surname: string;
+  personalId: string;
+  birthdate: Date;
+  genderCode: string;
+  nativeLanguageCode: string;
+  heightCm: number;
+  weightKg: number;
+  visualCorrectionDioptre: number;
+  handednessCode: string;
+  email: string;
+  phone: string;
+  answers?: {
+    questionId: string;
+    answer: AnswerOption;
+    comment: string | undefined;
+  }[];
+}

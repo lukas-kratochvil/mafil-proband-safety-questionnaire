@@ -6,6 +6,7 @@ import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { RoutingPaths } from "@app/routing-paths";
 import { VisitState } from "@app/util/mafildb_API/dto";
 import { createVisit } from "@app/util/mafildb_API/fetch";
+import { generatePhantomPdf } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormContainer } from "./FormContainer";
 
@@ -18,7 +19,7 @@ export const PhantomForm = () => {
       titleLocalizationKey: "form.common.buttons.finalize",
       onClick: async (data) => {
         const visitId = await createVisit(data, VisitState.PHANTOM_DONE, operator?.uco, new Date());
-        // TODO: generate PDF and send it to MAFILDB
+        const pdf = await generatePhantomPdf(visitId, data, operator?.uco);
         navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
       },
     },

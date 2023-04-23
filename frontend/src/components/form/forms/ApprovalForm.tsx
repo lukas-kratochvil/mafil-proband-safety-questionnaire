@@ -14,7 +14,11 @@ import { RoutingPaths } from "@app/routing-paths";
 import { VisitState } from "@app/util/mafildb_API/dto";
 import { createVisit } from "@app/util/mafildb_API/fetch";
 import { QuestionPartNumber } from "@app/util/server_API/dto";
-import { fetchApprovalRoomVisitForm, markVisitFormAsSentToMafilDb } from "@app/util/server_API/fetch";
+import {
+  fetchApprovalRoomVisitForm,
+  generateProbandPdf,
+  markVisitFormAsSentToMafilDb,
+} from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormContainer } from "./FormContainer";
@@ -134,7 +138,7 @@ export const ApprovalForm = () => {
                 visitForm?.probandLanguageCode
               );
               await markVisitFormAsSentToMafilDb(visitForm?.id ?? "");
-              // TODO: generate PDF and send it to MAFILDB
+              const pdf = await generateProbandPdf(visitId, data, "TODO", visitForm?.probandLanguageCode, operator.uco);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
             },
           },

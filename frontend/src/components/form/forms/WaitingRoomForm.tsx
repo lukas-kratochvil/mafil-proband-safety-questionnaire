@@ -16,6 +16,7 @@ import { createVisit } from "@app/util/mafildb_API/fetch";
 import { QuestionPartNumber } from "@app/util/server_API/dto";
 import {
   fetchWaitingRoomVisitForm,
+  generateProbandPdf,
   markVisitFormAsSentToMafilDb,
   sendVisitFormForApproval,
 } from "@app/util/server_API/fetch";
@@ -141,7 +142,7 @@ export const WaitingRoomForm = () => {
                 visitForm?.probandLanguageCode
               );
               await markVisitFormAsSentToMafilDb(visitForm?.id ?? "");
-              // TODO: generate PDF and send it to MAFILDB
+              const pdf = await generateProbandPdf(visitId, data, operator?.uco, visitForm?.probandLanguageCode);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
             }
           },

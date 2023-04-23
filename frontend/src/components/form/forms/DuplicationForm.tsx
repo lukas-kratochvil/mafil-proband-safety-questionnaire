@@ -14,7 +14,11 @@ import { RoutingPaths } from "@app/routing-paths";
 import { VisitState } from "@app/util/mafildb_API/dto";
 import { createVisit, fetchDuplicatedVisit } from "@app/util/mafildb_API/fetch";
 import { QuestionPartNumber } from "@app/util/server_API/dto";
-import { createDuplicatedVisitFormForApproval } from "@app/util/server_API/fetch";
+import {
+  createDuplicatedVisitFormForApproval,
+  generatePhantomPdf,
+  generateProbandPdf,
+} from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormFinalizeDialog } from "../components/FormFinalizeDialog";
@@ -80,7 +84,7 @@ export const DuplicationForm = () => {
           titleLocalizationKey: "form.common.buttons.finalize",
           onClick: async (data) => {
             const visitId = await createVisit(data, VisitState.PHANTOM_DONE, operator?.uco, new Date());
-            // TODO: generate PDF and send it to MAFILDB
+            const pdf = await generatePhantomPdf(visitId, data, operator?.uco);
             navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
           },
         },
@@ -116,7 +120,6 @@ export const DuplicationForm = () => {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
           onClick: async (data) => {
             await createVisit(data, VisitState.DISAPPROVED, operator?.uco, new Date(), visit?.probandLanguageCode);
-            // TODO: generate PDF and send it to MAFILDB
             navigate(RoutingPaths.RECENT_VISITS);
           },
           showErrorColor: true,
@@ -147,7 +150,7 @@ export const DuplicationForm = () => {
                 new Date(),
                 visit?.probandLanguageCode
               );
-              // TODO: generate PDF and send it to MAFILDB
+              const pdf = await generateProbandPdf(visitId, data, operator?.uco, visit?.probandLanguageCode);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
             }
           },

@@ -2,17 +2,20 @@ import axiosConfig from "@app/axios-config";
 import i18n, { LanguageCode } from "@app/i18n";
 import { IOperatorAuthorization } from "@app/model/auth";
 import { ValidatedFormData } from "@app/model/form";
+import { ProbandVisitLanguageCode } from "@app/model/visit";
 import {
   IApprovalRoomTableVisitFormDTO,
   IApprovalRoomVisitFormIncludingQuestionsDTO,
   ICreateDuplicatedVisitFormForApprovalInput,
   ICreateProbandVisitFormInput,
   IGenderDTO,
+  IGeneratePdfInput,
   IHandednessDTO,
   IHTMLCardDTO,
   IMarkVisitFormAsSentToMafilDbInput,
   INativeLanguageDTO,
   IOperatorDTO,
+  IPdfDTO,
   IQuestionDTO,
   ISendVisitFormFromWaitingRoomForApprovalInput,
   IWaitingRoomTableVisitFormDTO,
@@ -22,6 +25,7 @@ import {
 import { CREATE_VISIT_FORM, DELETE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
 import {
   AUTHENTICATE_OPERATOR,
+  GENERATE_PDF,
   GET_APPROVAL_ROOM_TABLE_VISIT_FORMS,
   GET_APPROVAL_ROOM_VISIT_FORM,
   GET_BEFORE_EXAMINATION,
@@ -53,6 +57,7 @@ import {
   ExaminationConsentResponse,
   GenderResponse,
   GendersResponse,
+  GeneratePdfResponse,
   HandednessesResponse,
   HandednessResponse,
   NativeLanguageResponse,
@@ -409,3 +414,69 @@ export const deleteVisitForm = async (visitFormId: string): Promise<void> => {
     variables,
   });
 };
+
+const generatePdf = async (
+  isPhantom: boolean,
+  visitId: string,
+  visitFormData: ValidatedFormData,
+  finalizerUco: string | undefined,
+  probandLanguageCode?: LanguageCode,
+  approverUco?: string
+): Promise<IPdfDTO> => {
+  if (finalizerUco === undefined) {
+    throw new Error("Missing UCO of the operator who finalized the visit!");
+  }
+
+  const variables: IGeneratePdfInput = {
+    isPhantom,
+    visitId,
+    probandLanguageCode,
+    projectAcronym: visitFormData.project?.acronym ?? "",
+    measuredAt: visitFormData.measuredAt ?? new Date(),
+    finalizerUco,
+    approverUco,
+    name: visitFormData.name,
+    surname: visitFormData.surname,
+    personalId: visitFormData.personalId,
+    birthdate: visitFormData.birthdate,
+    genderCode: visitFormData.gender.code,
+    nativeLanguageCode: visitFormData.nativeLanguage.code,
+    heightCm: visitFormData.heightCm,
+    weightKg: visitFormData.weightKg,
+    visualCorrectionDioptre: visitFormData.visualCorrectionDioptre,
+    handednessCode: visitFormData.handedness.code,
+    email: visitFormData.email,
+    phone: visitFormData.phone,
+    answers: visitFormData.answers.map((answer) => ({
+      questionId: answer.questionId,
+      answer: answer.answer,
+      comment: answer.comment,
+    })),
+  };
+
+  const { data } = await axiosConfig.serverApi.post<GeneratePdfResponse>("", {
+    query: GENERATE_PDF,
+    variables,
+  });
+  return data.data.generatePDF;
+};
+
+export const generateProbandPdf = async (
+  visitId: string,
+  visitFormData: ValidatedFormData,
+  finalizerUco: string | undefined,
+  probandLanguageCode: ProbandVisitLanguageCode | undefined,
+  approverUco?: string
+): Promise<IPdfDTO> => {
+  if (probandLanguageCode === undefined || probandLanguageCode === "") {
+    throw new Error("Proband language code is undefined!");
+  }
+
+  return generatePdf(false, visitId, visitFormData, finalizerUco, probandLanguageCode, approverUco);
+};
+
+export const generatePhantomPdf = async (
+  visitId: string,
+  visitFormData: ValidatedFormData,
+  finalizerUco: string | undefined
+): Promise<IPdfDTO> => generatePdf(true, visitId, visitFormData, finalizerUco);

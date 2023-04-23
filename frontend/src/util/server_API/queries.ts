@@ -431,3 +431,13 @@ query GetApprovalRoomVisitForm($id: UUID!) {
   }
 }
 `;
+
+export const GENERATE_PDF = `
+query GeneratePDF($name: String!, $surname: String!, $personalId: String!, $birthdate: DateTime!, $heightCm: Float!, $weightKg: Float!, $visualCorrectionDioptre: Float!, $email: String!, $phone: String!, $probandLanguageCode: String, $finalizerUco: String!, $approverUco: String, $projectAcronym: String!, $measuredAt: DateTime!, $visitId: String!, $isPhantom: Boolean!, $genderCode: String!, $nativeLanguageCode: String!, $handednessCode: String!, $answers: [PDFAnswer!]){
+  generatePDF(name: $name, surname: $surname, personalId: $personalId, birthdate: $birthdate, heightCm: $heightCm, weightKg: $weightKg, visualCorrectionDioptre: $visualCorrectionDioptre, email: $email, phone: $phone, probandLanguageCode: $probandLanguageCode, finalizerUco: $finalizerUco, approverUco: $approverUco, projectAcronym: $projectAcronym, measuredAt: $measuredAt, visitId: $visitId, isPhantom: $isPhantom, genderCode: $genderCode, nativeLanguageCode: $nativeLanguageCode, handednessCode: $handednessCode, answers: $answers) {
+    name
+    extension
+    content
+  }
+}
+`;

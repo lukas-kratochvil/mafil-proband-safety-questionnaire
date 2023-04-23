@@ -6,6 +6,7 @@ import {
   IHTMLCardDTO,
   INativeLanguageDTO,
   IOperatorDTO,
+  IPdfDTO,
   IQuestionDTO,
   IWaitingRoomTableVisitFormDTO,
   IWaitingRoomVisitFormDTO,
@@ -93,3 +94,5 @@ export type UpdateVisitFormResponse = DataErrorsResponse<{
     id: string;
   };
 }>;
+
+export type GeneratePdfResponse = DataErrorsResponse<{ generatePDF: IPdfDTO }>;
