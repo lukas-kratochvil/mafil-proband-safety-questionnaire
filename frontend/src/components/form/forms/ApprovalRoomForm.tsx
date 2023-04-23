@@ -24,7 +24,7 @@ import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormContainer } from "./FormContainer";
 
-export const ApprovalForm = () => {
+export const ApprovalRoomForm = () => {
   const { id } = useParams();
   const {
     data: visitForm,
