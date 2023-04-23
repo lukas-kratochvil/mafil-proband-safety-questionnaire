@@ -12,7 +12,7 @@ import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { FormPropType, FormQac, ValidatedFormData } from "@app/model/form";
 import { RoutingPaths } from "@app/routing-paths";
 import { VisitState } from "@app/util/mafildb_API/dto";
-import { createVisit } from "@app/util/mafildb_API/fetch";
+import { addPdfToVisit, createVisit } from "@app/util/mafildb_API/fetch";
 import { QuestionPartNumber } from "@app/util/server_API/dto";
 import {
   fetchWaitingRoomVisitForm,
@@ -143,6 +143,7 @@ export const WaitingRoomForm = () => {
               );
               await markVisitFormAsSentToMafilDb(visitForm?.id ?? "");
               const pdf = await generateProbandPdf(visitId, data, operator?.uco, visitForm?.probandLanguageCode);
+              await addPdfToVisit(visitId, pdf);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
             }
           },

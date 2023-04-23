@@ -7,9 +7,10 @@ import {
   ProbandVisitLanguageCode,
 } from "@app/model/visit";
 import { devicesDev, dummyVisits, generateVisitId, PDF_CONTENT, projectsDev } from "@app/util/mafildb_API/data.dev";
-import { VisitFormAnswerIncludingQuestion } from "../server_API/dto";
+import { IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import { fetchGender, fetchHandedness, fetchNativeLanguage, fetchOperator, fetchQuestion } from "../server_API/fetch";
 import {
+  IAddPdfToVisitInput,
   ICreateVisitInput,
   IDeviceDTO,
   IProjectDTO,
@@ -19,6 +20,7 @@ import {
   VisitState,
 } from "./dto";
 import {
+  AddPdfToVisitResponse,
   CreateVisitResponse,
   DevicesResponse,
   ProjectsResponse,
@@ -340,6 +342,23 @@ export const createVisit = async (
   };
   const { data } = await axiosConfig.mafildbApi.post<CreateVisitResponse>("visit", createData);
   return data.visit_name;
+};
+
+export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<string> => {
+  if (import.meta.env.DEV) {
+    return "file_ID";
+  }
+
+  const addPdfToVisitData: IAddPdfToVisitInput = {
+    visit_name: visitId,
+    file_type: "REGISTRATION_PDF",
+    file_name: pdf.name,
+    file_extension: pdf.extension,
+    file_content: pdf.content,
+  };
+  // TODO: add endpoint
+  const { data } = await axiosConfig.mafildbApi.post<AddPdfToVisitResponse>("TODO", addPdfToVisitData);
+  return data.file_id;
 };
 
 export const updateVisitState = async (visitId: string, state: VisitState): Promise<string | never> => {

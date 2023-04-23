@@ -20,6 +20,10 @@ export type VisitsResponse = {
   rows: IVisitDTO[];
 };
 
+export type AddPdfToVisitResponse = {
+  file_id: string;
+};
+
 export type VisitPdfResponse = {
   file: IVisitPdfDTO;
 };

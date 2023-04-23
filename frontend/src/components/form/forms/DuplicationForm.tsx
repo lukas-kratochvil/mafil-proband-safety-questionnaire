@@ -12,7 +12,7 @@ import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { FormPropType, FormQac, ValidatedFormData } from "@app/model/form";
 import { RoutingPaths } from "@app/routing-paths";
 import { VisitState } from "@app/util/mafildb_API/dto";
-import { createVisit, fetchDuplicatedVisit } from "@app/util/mafildb_API/fetch";
+import { addPdfToVisit, createVisit, fetchDuplicatedVisit } from "@app/util/mafildb_API/fetch";
 import { QuestionPartNumber } from "@app/util/server_API/dto";
 import {
   createDuplicatedVisitFormForApproval,
@@ -85,6 +85,7 @@ export const DuplicationForm = () => {
           onClick: async (data) => {
             const visitId = await createVisit(data, VisitState.PHANTOM_DONE, operator?.uco, new Date());
             const pdf = await generatePhantomPdf(visitId, data, operator?.uco);
+            await addPdfToVisit(visitId, pdf);
             navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
           },
         },
@@ -151,6 +152,7 @@ export const DuplicationForm = () => {
                 visit?.probandLanguageCode
               );
               const pdf = await generateProbandPdf(visitId, data, operator?.uco, visit?.probandLanguageCode);
+              await addPdfToVisit(visitId, pdf);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
             }
           },
