@@ -147,10 +147,10 @@ export const WaitingRoomForm = () => {
                 new Date(),
                 visitForm?.probandLanguageCode
               );
-              await markVisitFormAsSentToMafilDb(visitForm?.id);
+              await markVisitFormAsSentToMafilDb(id);
               const pdf = await generateProbandPdf(visitId, data, operator?.uco, visitForm?.probandLanguageCode);
               await addPdfToVisit(visitId, pdf);
-              await markVisitFormAsPdfGenerated(visitForm?.id);
+              await markVisitFormAsPdfGenerated(id);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
             }
           },
@@ -177,7 +177,7 @@ export const WaitingRoomForm = () => {
         ],
       });
     }
-  }, [getValues, isDisapproved, isEditing, navigate, operator, setValue, trigger, valuesBeforeEditing, visitForm]);
+  }, [getValues, id, isDisapproved, isEditing, navigate, operator, setValue, trigger, valuesBeforeEditing, visitForm]);
 
   const moveVisitFormToApprovalRoom = async (data: ValidatedFormData) => {
     const modifiedFields: Partial<ValidatedFormData> = {

@@ -141,7 +141,7 @@ export const ApprovalRoomForm = () => {
                 operator.uco,
                 new Date()
               );
-              await markVisitFormAsSentToMafilDb(visitForm?.id);
+              await markVisitFormAsSentToMafilDb(id);
               const pdf = await generateProbandPdf(
                 visitId,
                 data,
@@ -150,7 +150,7 @@ export const ApprovalRoomForm = () => {
                 operator.uco
               );
               await addPdfToVisit(visitId, pdf);
-              await markVisitFormAsPdfGenerated(visitForm?.id);
+              await markVisitFormAsPdfGenerated(id);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
             },
           },
@@ -183,7 +183,7 @@ export const ApprovalRoomForm = () => {
         buttonsProps: [getBackButtonProps(navigate)],
       });
     }
-  }, [getValues, isDisapproved, isEditing, navigate, operator, setValue, trigger, valuesBeforeEditing, visitForm]);
+  }, [getValues, id, isDisapproved, isEditing, navigate, operator, setValue, trigger, valuesBeforeEditing, visitForm]);
 
   return (
     <FormContainer
