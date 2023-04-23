@@ -422,6 +422,10 @@ query GetApprovalRoomVisitForm($id: UUID!) {
       projectId
       deviceId
       measuredAt
+      finalizer {
+        uco
+      }
+      finalizedAt
     }
     answers {
       questionId

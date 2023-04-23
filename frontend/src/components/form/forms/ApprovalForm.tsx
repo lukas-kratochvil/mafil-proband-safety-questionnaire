@@ -134,12 +134,20 @@ export const ApprovalForm = () => {
               const visitId = await createVisit(
                 data,
                 VisitState.APPROVED,
-                operator?.uco,
-                new Date(),
-                visitForm?.probandLanguageCode
+                visitForm?.additionalInfo.finalizer.uco,
+                visitForm?.additionalInfo.finalizedAt,
+                visitForm?.probandLanguageCode,
+                operator.uco,
+                new Date()
               );
               await markVisitFormAsSentToMafilDb(visitForm?.id);
-              const pdf = await generateProbandPdf(visitId, data, "TODO", visitForm?.probandLanguageCode, operator.uco);
+              const pdf = await generateProbandPdf(
+                visitId,
+                data,
+                visitForm?.additionalInfo.finalizer.uco,
+                visitForm?.probandLanguageCode,
+                operator.uco
+              );
               await addPdfToVisit(visitId, pdf);
               await markVisitFormAsPdfGenerated(visitForm?.id);
               navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
@@ -184,6 +192,8 @@ export const ApprovalForm = () => {
     setValue,
     trigger,
     valuesBeforeEditing,
+    visitForm?.additionalInfo.finalizer.uco,
+    visitForm?.additionalInfo.finalizedAt,
     visitForm?.id,
     visitForm?.probandLanguageCode,
   ]);

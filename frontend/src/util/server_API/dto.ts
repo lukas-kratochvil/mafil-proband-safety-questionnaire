@@ -110,6 +110,8 @@ export interface IApprovalRoomTableVisitFormDTO extends IWaitingRoomTableVisitFo
     deviceId: string;
     deviceName: string;
     measuredAt: Date;
+    finalizer: Pick<IOperatorDTO, "uco">;
+    finalizedAt: Date;
   };
 }
 

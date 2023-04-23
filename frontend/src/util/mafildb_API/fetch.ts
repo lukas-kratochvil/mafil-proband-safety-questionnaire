@@ -53,13 +53,17 @@ export const createVisit = async (
   visitFormData: ValidatedFormData,
   state: VisitState,
   finalizerUco: string | undefined,
-  finalizedAt: Date,
+  finalizedAt: Date | undefined,
   probandLanguageCode?: ProbandVisitLanguageCode,
   approverUco?: string,
   approvedAt?: Date
 ): Promise<string | never> => {
   if (finalizerUco === undefined) {
     throw new Error("Missing UCO of the operator who finalized the visit!");
+  }
+
+  if (finalizedAt === undefined) {
+    throw new Error("Missing visit finalization date!");
   }
 
   if (import.meta.env.DEV) {
@@ -119,7 +123,7 @@ export const createVisit = async (
     finalization_date: finalizedAt,
     approver_uco: approverUco ?? "",
     approval_date: approvedAt,
-    disapproval_reason: visitFormData.disapprovalReason ?? "",
+    disapproval_reason: visitFormData.disapprovalReason,
   };
   const { data } = await axiosConfig.mafildbApi.post<CreateVisitResponse>("visit", createData);
   return data.visit_name;
