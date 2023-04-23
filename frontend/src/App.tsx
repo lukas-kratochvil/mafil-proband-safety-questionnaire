@@ -7,7 +7,7 @@ import { RoutingPaths } from "./routing-paths";
 
 const HomePage = lazy(() => import("@app/pages/HomePage"));
 const LoginPage = lazy(() => import("@app/pages/LoginPage"));
-const ApprovalFormPage = lazy(() => import("@app/pages/ApprovalFormPage"));
+const ApprovalRoomFormPage = lazy(() => import("@app/pages/ApprovalRoomFormPage"));
 const DuplicationFormPage = lazy(() => import("@app/pages/DuplicationFormPage"));
 const PhantomFormPage = lazy(() => import("@app/pages/PhantomFormPage"));
 const ProbandFormPage = lazy(() => import("@app/pages/ProbandFormPage"));
@@ -66,7 +66,7 @@ export const App = () => {
             />
             <Route
               path={`${RoutingPaths.APPROVAL_ROOM}/form/:id`}
-              element={<ApprovalFormPage />}
+              element={<ApprovalRoomFormPage />}
             />
             <Route
               path={RoutingPaths.RECENT_VISITS}
