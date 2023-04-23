@@ -6,7 +6,11 @@ import { CreateVisitFormInput } from "./dto/create-visit-form.input";
 import { UpdateVisitFormInput } from "./dto/update-visit-form.input";
 
 const visitFormInclude = Prisma.validator<Prisma.VisitFormInclude>()({
-  additionalInfo: true,
+  additionalInfo: {
+    include: {
+      finalizer: true,
+    },
+  },
   probandLanguage: true,
   answers: true,
   gender: {
