@@ -49,7 +49,7 @@ export const fetchDevices = async (): Promise<IDeviceDTO[]> => {
   return data.rows;
 };
 
-export const createVisit = async (
+const createVisit = async (
   visitFormData: ValidatedFormData,
   state: VisitState,
   finalizerUco: string | undefined,
@@ -128,6 +128,50 @@ export const createVisit = async (
   const { data } = await axiosConfig.mafildbApi.post<CreateVisitResponse>("visit", createData);
   return data.visit_name;
 };
+
+export const createFinalizedVisit = async (
+  visitFormData: ValidatedFormData,
+  state: VisitState,
+  finalizerUco: string | undefined,
+  finalizedAt: Date | undefined,
+  probandLanguageCode: ProbandVisitLanguageCode | undefined
+): Promise<string | never> => {
+  if (probandLanguageCode === undefined) {
+    throw new Error("Missing proband language code!");
+  }
+
+  return createVisit(visitFormData, state, finalizerUco, finalizedAt, probandLanguageCode);
+};
+
+export const createVisitFromApproval = async (
+  visitFormData: ValidatedFormData,
+  state: VisitState,
+  finalizerUco: string | undefined,
+  finalizedAt: Date | undefined,
+  probandLanguageCode: ProbandVisitLanguageCode | undefined,
+  approverUco: string | undefined,
+  approvedAt: Date | undefined
+): Promise<string | never> => {
+  if (probandLanguageCode === undefined) {
+    throw new Error("Missing proband language code!");
+  }
+
+  if (approverUco === undefined) {
+    throw new Error("Proband language code is undefined!");
+  }
+
+  if (approvedAt === undefined) {
+    throw new Error("Proband language code is undefined!");
+  }
+
+  return createVisit(visitFormData, state, finalizerUco, finalizedAt, probandLanguageCode, approverUco, approvedAt);
+};
+
+export const createPhantomVisit = async (
+  visitFormData: ValidatedFormData,
+  finalizerUco: string | undefined,
+  finalizedAt: Date | undefined
+): Promise<string | never> => createVisit(visitFormData, VisitState.PHANTOM_DONE, finalizerUco, finalizedAt);
 
 export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<string> => {
   if (import.meta.env.DEV) {

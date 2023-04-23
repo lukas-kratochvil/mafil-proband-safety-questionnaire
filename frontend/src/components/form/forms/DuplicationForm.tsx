@@ -12,7 +12,12 @@ import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { FormPropType, FormQac, ValidatedFormData } from "@app/model/form";
 import { RoutingPaths } from "@app/routing-paths";
 import { VisitState } from "@app/util/mafildb_API/dto";
-import { addPdfToVisit, createVisit, fetchDuplicatedVisit } from "@app/util/mafildb_API/fetch";
+import {
+  addPdfToVisit,
+  createFinalizedVisit,
+  createPhantomVisit,
+  fetchDuplicatedVisit,
+} from "@app/util/mafildb_API/fetch";
 import { QuestionPartNumber } from "@app/util/server_API/dto";
 import {
   createDuplicatedVisitFormForApproval,
@@ -83,7 +88,7 @@ export const DuplicationForm = () => {
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.finalize",
           onClick: async (data) => {
-            const visitId = await createVisit(data, VisitState.PHANTOM_DONE, operator?.uco, new Date());
+            const visitId = await createPhantomVisit(data, operator?.uco, new Date());
             const pdf = await generatePhantomPdf(visitId, data, operator?.uco);
             await addPdfToVisit(visitId, pdf);
             navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
@@ -120,7 +125,13 @@ export const DuplicationForm = () => {
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
           onClick: async (data) => {
-            await createVisit(data, VisitState.DISAPPROVED, operator?.uco, new Date(), visit?.probandLanguageCode);
+            await createFinalizedVisit(
+              data,
+              VisitState.DISAPPROVED,
+              operator?.uco,
+              new Date(),
+              visit?.probandLanguageCode
+            );
             navigate(RoutingPaths.RECENT_VISITS);
           },
           showErrorColor: true,
@@ -144,7 +155,7 @@ export const DuplicationForm = () => {
               // open warning dialog that the visit form has to be approved by an operator with higher permissions
               setOpenFinalizeDialog(true);
             } else {
-              const visitId = await createVisit(
+              const visitId = await createFinalizedVisit(
                 data,
                 VisitState.APPROVED,
                 operator?.uco,

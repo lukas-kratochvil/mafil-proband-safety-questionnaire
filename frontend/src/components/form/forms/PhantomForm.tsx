@@ -4,8 +4,7 @@ import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo
 import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo";
 import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { RoutingPaths } from "@app/routing-paths";
-import { VisitState } from "@app/util/mafildb_API/dto";
-import { addPdfToVisit, createVisit } from "@app/util/mafildb_API/fetch";
+import { addPdfToVisit, createPhantomVisit } from "@app/util/mafildb_API/fetch";
 import { generatePhantomPdf } from "@app/util/server_API/fetch";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormContainer } from "./FormContainer";
@@ -18,7 +17,7 @@ export const PhantomForm = () => {
     submitButtonProps: {
       titleLocalizationKey: "form.common.buttons.finalize",
       onClick: async (data) => {
-        const visitId = await createVisit(data, VisitState.PHANTOM_DONE, operator?.uco, new Date());
+        const visitId = await createPhantomVisit(data, operator?.uco, new Date());
         const pdf = await generatePhantomPdf(visitId, data, operator?.uco);
         await addPdfToVisit(visitId, pdf);
         navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);

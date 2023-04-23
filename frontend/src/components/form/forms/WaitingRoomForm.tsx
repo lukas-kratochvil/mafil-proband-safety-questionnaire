@@ -12,7 +12,7 @@ import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { FormPropType, FormQac, ValidatedFormData } from "@app/model/form";
 import { RoutingPaths } from "@app/routing-paths";
 import { VisitState } from "@app/util/mafildb_API/dto";
-import { addPdfToVisit, createVisit } from "@app/util/mafildb_API/fetch";
+import { addPdfToVisit, createFinalizedVisit } from "@app/util/mafildb_API/fetch";
 import { QuestionPartNumber } from "@app/util/server_API/dto";
 import {
   fetchWaitingRoomVisitForm,
@@ -109,7 +109,13 @@ export const WaitingRoomForm = () => {
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.confirmDisapproval",
           onClick: async (data) => {
-            await createVisit(data, VisitState.DISAPPROVED, operator?.uco, new Date(), visitForm?.probandLanguageCode);
+            await createFinalizedVisit(
+              data,
+              VisitState.DISAPPROVED,
+              operator?.uco,
+              new Date(),
+              visitForm?.probandLanguageCode
+            );
             // TODO: mark visitForm as DELETED / DISAPPROVED?
             navigate(RoutingPaths.WAITING_ROOM);
           },
@@ -134,7 +140,7 @@ export const WaitingRoomForm = () => {
               // open warning dialog that the visit form has to be approved by an operator with higher permissions
               setOpenFinalizeDialog(true);
             } else {
-              const visitId = await createVisit(
+              const visitId = await createFinalizedVisit(
                 data,
                 VisitState.APPROVED,
                 operator?.uco,

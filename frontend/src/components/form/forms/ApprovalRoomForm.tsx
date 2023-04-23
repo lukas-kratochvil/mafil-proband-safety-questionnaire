@@ -12,7 +12,7 @@ import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { FormPropType, FormQac, ValidatedFormData } from "@app/model/form";
 import { RoutingPaths } from "@app/routing-paths";
 import { VisitState } from "@app/util/mafildb_API/dto";
-import { addPdfToVisit, createVisit } from "@app/util/mafildb_API/fetch";
+import { addPdfToVisit, createVisitFromApproval } from "@app/util/mafildb_API/fetch";
 import { QuestionPartNumber } from "@app/util/server_API/dto";
 import {
   fetchApprovalRoomVisitForm,
@@ -103,7 +103,7 @@ export const ApprovalRoomForm = () => {
           submitButtonProps: {
             titleLocalizationKey: "form.common.buttons.confirmDisapproval",
             onClick: async (data) => {
-              await createVisit(
+              await createVisitFromApproval(
                 data,
                 VisitState.DISAPPROVED,
                 visitForm?.additionalInfo.finalizer.uco,
@@ -132,7 +132,7 @@ export const ApprovalRoomForm = () => {
           submitButtonProps: {
             titleLocalizationKey: "form.common.buttons.approve",
             onClick: async (data) => {
-              const visitId = await createVisit(
+              const visitId = await createVisitFromApproval(
                 data,
                 VisitState.APPROVED,
                 visitForm?.additionalInfo.finalizer.uco,
