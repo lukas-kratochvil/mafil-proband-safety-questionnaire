@@ -106,9 +106,11 @@ export const ApprovalForm = () => {
               await createVisit(
                 data,
                 VisitState.DISAPPROVED,
+                visitForm?.additionalInfo.finalizer.uco,
+                visitForm?.additionalInfo.finalizedAt,
+                visitForm?.probandLanguageCode,
                 operator?.uco,
-                new Date(),
-                visitForm?.probandLanguageCode
+                new Date()
               );
               // TODO: mark visitForm as DELETED / DISAPPROVED?
               navigate(RoutingPaths.APPROVAL_ROOM);
