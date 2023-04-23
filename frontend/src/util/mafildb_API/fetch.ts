@@ -49,6 +49,99 @@ export const fetchDevices = async (): Promise<IDeviceDTO[]> => {
   return data.rows;
 };
 
+export const createVisit = async (
+  visitFormData: ValidatedFormData,
+  state: VisitState,
+  finalizerUco: string | undefined,
+  finalizedAt: Date,
+  probandLanguageCode?: ProbandVisitLanguageCode,
+  approverUco?: string,
+  approvedAt?: Date
+): Promise<string | never> => {
+  if (finalizerUco === undefined) {
+    throw new Error("Missing UCO of the operator who finalized the visit!");
+  }
+
+  if (import.meta.env.DEV) {
+    dummyVisits.push({
+      ...visitFormData,
+      state,
+      visit_name: generateVisitId(),
+      date: new Date(),
+      is_phantom: state === VisitState.PHANTOM_DONE,
+      proband_language_code: probandLanguageCode ?? "",
+      finalizer_uco: finalizerUco,
+      measurement_date: visitFormData.measuredAt ?? new Date(),
+      project_id: visitFormData.project?.id ?? "",
+      device_id: visitFormData.device?.id ?? "",
+      personal_id: visitFormData.personalId,
+      birthdate: visitFormData.birthdate,
+      gender_code: visitFormData.gender.code,
+      native_language_code: visitFormData.nativeLanguage.code,
+      height_cm: visitFormData.heightCm,
+      weight_kg: visitFormData.weightKg,
+      visual_correction_dioptre: visitFormData.visualCorrectionDioptre,
+      handedness_code: visitFormData.handedness.code,
+      answers: visitFormData.answers.map((answer) => ({
+        question_id: answer.questionId,
+        answer: answer.answer,
+        comment: answer.comment,
+      })),
+    });
+    return dummyVisits[dummyVisits.length - 1].visit_name;
+  }
+
+  const createData: ICreateVisitInput = {
+    state,
+    is_phantom: state === VisitState.PHANTOM_DONE,
+    proband_language_code: probandLanguageCode ?? "",
+    project_id: visitFormData.project?.id ?? "",
+    device_id: visitFormData.device?.id ?? "",
+    measurement_date: visitFormData.measuredAt ?? new Date(),
+    name: visitFormData.name,
+    surname: visitFormData.surname,
+    personal_id: visitFormData.personalId,
+    birthdate: visitFormData.birthdate,
+    gender_code: visitFormData.gender.code,
+    native_language_code: visitFormData.nativeLanguage.code,
+    height_cm: visitFormData.heightCm,
+    weight_kg: visitFormData.weightKg,
+    handedness_code: visitFormData.handedness.code,
+    visual_correction_dioptre: visitFormData.visualCorrectionDioptre,
+    email: visitFormData.email,
+    phone: visitFormData.phone,
+    answers: visitFormData.answers.map((answer) => ({
+      question_id: answer.questionId,
+      answer: answer.answer,
+      comment: answer.comment,
+    })),
+    finalizer_uco: finalizerUco,
+    finalization_date: finalizedAt,
+    approver_uco: approverUco ?? "",
+    approval_date: approvedAt,
+    disapproval_reason: visitFormData.disapprovalReason ?? "",
+  };
+  const { data } = await axiosConfig.mafildbApi.post<CreateVisitResponse>("visit", createData);
+  return data.visit_name;
+};
+
+export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<string> => {
+  if (import.meta.env.DEV) {
+    return "file_ID";
+  }
+
+  const addPdfToVisitData: IAddPdfToVisitInput = {
+    visit_name: visitId,
+    file_type: "REGISTRATION_PDF",
+    file_name: pdf.name,
+    file_extension: pdf.extension,
+    file_content: pdf.content,
+  };
+  // TODO: add endpoint
+  const { data } = await axiosConfig.mafildbApi.post<AddPdfToVisitResponse>("TODO", addPdfToVisitData);
+  return data.file_id;
+};
+
 export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> => {
   if (import.meta.env.DEV) {
     const [projects, devices, finalizer] = await Promise.all([
@@ -266,99 +359,6 @@ export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVi
     isPhantom: visit.is_phantom,
     pdfContent: visitPDF.file_content,
   };
-};
-
-export const createVisit = async (
-  visitFormData: ValidatedFormData,
-  state: VisitState,
-  finalizerUco: string | undefined,
-  finalizedAt: Date,
-  probandLanguageCode?: ProbandVisitLanguageCode,
-  approverUco?: string,
-  approvedAt?: Date
-): Promise<string | never> => {
-  if (finalizerUco === undefined) {
-    throw new Error("Missing UCO of the operator who finalized the visit!");
-  }
-
-  if (import.meta.env.DEV) {
-    dummyVisits.push({
-      ...visitFormData,
-      state,
-      visit_name: generateVisitId(),
-      date: new Date(),
-      is_phantom: state === VisitState.PHANTOM_DONE,
-      proband_language_code: probandLanguageCode ?? "",
-      finalizer_uco: finalizerUco,
-      measurement_date: visitFormData.measuredAt ?? new Date(),
-      project_id: visitFormData.project?.id ?? "",
-      device_id: visitFormData.device?.id ?? "",
-      personal_id: visitFormData.personalId,
-      birthdate: visitFormData.birthdate,
-      gender_code: visitFormData.gender.code,
-      native_language_code: visitFormData.nativeLanguage.code,
-      height_cm: visitFormData.heightCm,
-      weight_kg: visitFormData.weightKg,
-      visual_correction_dioptre: visitFormData.visualCorrectionDioptre,
-      handedness_code: visitFormData.handedness.code,
-      answers: visitFormData.answers.map((answer) => ({
-        question_id: answer.questionId,
-        answer: answer.answer,
-        comment: answer.comment,
-      })),
-    });
-    return dummyVisits[dummyVisits.length - 1].visit_name;
-  }
-
-  const createData: ICreateVisitInput = {
-    state,
-    is_phantom: state === VisitState.PHANTOM_DONE,
-    proband_language_code: probandLanguageCode ?? "",
-    project_id: visitFormData.project?.id ?? "",
-    device_id: visitFormData.device?.id ?? "",
-    measurement_date: visitFormData.measuredAt ?? new Date(),
-    name: visitFormData.name,
-    surname: visitFormData.surname,
-    personal_id: visitFormData.personalId,
-    birthdate: visitFormData.birthdate,
-    gender_code: visitFormData.gender.code,
-    native_language_code: visitFormData.nativeLanguage.code,
-    height_cm: visitFormData.heightCm,
-    weight_kg: visitFormData.weightKg,
-    handedness_code: visitFormData.handedness.code,
-    visual_correction_dioptre: visitFormData.visualCorrectionDioptre,
-    email: visitFormData.email,
-    phone: visitFormData.phone,
-    answers: visitFormData.answers.map((answer) => ({
-      question_id: answer.questionId,
-      answer: answer.answer,
-      comment: answer.comment,
-    })),
-    finalizer_uco: finalizerUco,
-    finalization_date: finalizedAt,
-    approver_uco: approverUco ?? "",
-    approval_date: approvedAt,
-    disapproval_reason: visitFormData.disapprovalReason ?? "",
-  };
-  const { data } = await axiosConfig.mafildbApi.post<CreateVisitResponse>("visit", createData);
-  return data.visit_name;
-};
-
-export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<string> => {
-  if (import.meta.env.DEV) {
-    return "file_ID";
-  }
-
-  const addPdfToVisitData: IAddPdfToVisitInput = {
-    visit_name: visitId,
-    file_type: "REGISTRATION_PDF",
-    file_name: pdf.name,
-    file_extension: pdf.extension,
-    file_content: pdf.content,
-  };
-  // TODO: add endpoint
-  const { data } = await axiosConfig.mafildbApi.post<AddPdfToVisitResponse>("TODO", addPdfToVisitData);
-  return data.file_id;
 };
 
 export const updateVisitState = async (visitId: string, state: VisitState): Promise<string | never> => {
