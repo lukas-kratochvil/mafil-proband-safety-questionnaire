@@ -1,4 +1,35 @@
-import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IQuestionDTO } from "@app/util/server_API/dto";
+import {
+  IGenderDTO,
+  IHandednessDTO,
+  INativeLanguageDTO,
+  IOperatorDTO,
+  IPdfDTO,
+  IQuestionDTO,
+} from "@app/util/server_API/dto";
+
+export const operatorMRDev: IOperatorDTO = {
+  id: "1",
+  name: "Operator",
+  surname: "MR",
+  email: "operator.mr@mail.com",
+  role: "MR",
+  uco: "123456",
+};
+
+export const operatorMRHigPermDev: IOperatorDTO = {
+  id: "2",
+  name: "Operator",
+  surname: "Special",
+  email: "operator.special@mail.com",
+  role: "MR_HIGH_PERM",
+  uco: "987654",
+};
+
+export const pdfDev: IPdfDTO = {
+  name: "name",
+  extension: "pdf",
+  content: "content",
+};
 
 export const gendersDev: IGenderDTO[] = [
   {
