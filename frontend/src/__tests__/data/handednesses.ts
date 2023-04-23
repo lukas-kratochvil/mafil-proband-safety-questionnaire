@@ -1,4 +1,5 @@
 import { IHandednessDTO } from "@app/util/server_API/dto";
+import { NEUTRAL_LANGUAGE_CODE } from "../neutral-language-code";
 
 export const handednessesDev: IHandednessDTO[] = [
   {
@@ -8,7 +9,7 @@ export const handednessesDev: IHandednessDTO[] = [
       {
         text: "Right-handed",
         language: {
-          code: "cimode",
+          code: NEUTRAL_LANGUAGE_CODE,
         },
       },
     ],
@@ -20,7 +21,7 @@ export const handednessesDev: IHandednessDTO[] = [
       {
         text: "Left-handed",
         language: {
-          code: "cimode",
+          code: NEUTRAL_LANGUAGE_CODE,
         },
       },
     ],
@@ -32,7 +33,7 @@ export const handednessesDev: IHandednessDTO[] = [
       {
         text: "Retrained left-handed",
         language: {
-          code: "cimode",
+          code: NEUTRAL_LANGUAGE_CODE,
         },
       },
     ],
@@ -44,7 +45,7 @@ export const handednessesDev: IHandednessDTO[] = [
       {
         text: "Undetermined",
         language: {
-          code: "cimode",
+          code: NEUTRAL_LANGUAGE_CODE,
         },
       },
     ],

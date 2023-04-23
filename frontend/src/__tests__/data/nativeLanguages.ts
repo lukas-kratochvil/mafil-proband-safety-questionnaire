@@ -1,4 +1,5 @@
 import { INativeLanguageDTO } from "@app/util/server_API/dto";
+import { NEUTRAL_LANGUAGE_CODE } from "../neutral-language-code";
 
 export const nativeLanguagesDev: INativeLanguageDTO[] = [
   {
@@ -9,7 +10,7 @@ export const nativeLanguagesDev: INativeLanguageDTO[] = [
       {
         text: "Czech",
         language: {
-          code: "cimode",
+          code: NEUTRAL_LANGUAGE_CODE,
         },
       },
     ],
@@ -22,7 +23,7 @@ export const nativeLanguagesDev: INativeLanguageDTO[] = [
       {
         text: "Slovak",
         language: {
-          code: "cimode",
+          code: NEUTRAL_LANGUAGE_CODE,
         },
       },
     ],
@@ -35,7 +36,7 @@ export const nativeLanguagesDev: INativeLanguageDTO[] = [
       {
         text: "English",
         language: {
-          code: "cimode",
+          code: NEUTRAL_LANGUAGE_CODE,
         },
       },
     ],

@@ -1,4 +1,5 @@
 import { IQuestionDTO } from "@app/util/server_API/dto";
+import { NEUTRAL_LANGUAGE_CODE } from "../neutral-language-code";
 
 export const questionsDev: IQuestionDTO[] = [
   {
@@ -10,7 +11,7 @@ export const questionsDev: IQuestionDTO[] = [
       {
         text: "Question1",
         language: {
-          code: "cimode",
+          code: NEUTRAL_LANGUAGE_CODE,
         },
       },
     ],
@@ -25,7 +26,7 @@ export const questionsDev: IQuestionDTO[] = [
       {
         text: "Question2",
         language: {
-          code: "cimode",
+          code: NEUTRAL_LANGUAGE_CODE,
         },
       },
     ],
@@ -40,7 +41,7 @@ export const questionsDev: IQuestionDTO[] = [
       {
         text: "Question3",
         language: {
-          code: "cimode",
+          code: NEUTRAL_LANGUAGE_CODE,
         },
       },
     ],
@@ -55,7 +56,7 @@ export const questionsDev: IQuestionDTO[] = [
       {
         text: "Question4",
         language: {
-          code: "cimode",
+          code: NEUTRAL_LANGUAGE_CODE,
         },
       },
     ],

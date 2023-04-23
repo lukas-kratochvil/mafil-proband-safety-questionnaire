@@ -1,4 +1,5 @@
 import { IGenderDTO } from "@app/util/server_API/dto";
+import { NEUTRAL_LANGUAGE_CODE } from "../neutral-language-code";
 
 export const gendersDev: IGenderDTO[] = [
   {
@@ -8,7 +9,7 @@ export const gendersDev: IGenderDTO[] = [
       {
         text: "Male",
         language: {
-          code: "cimode",
+          code: NEUTRAL_LANGUAGE_CODE,
         },
       },
     ],
@@ -20,7 +21,7 @@ export const gendersDev: IGenderDTO[] = [
       {
         text: "Female",
         language: {
-          code: "cimode",
+          code: NEUTRAL_LANGUAGE_CODE,
         },
       },
     ],
@@ -32,7 +33,7 @@ export const gendersDev: IGenderDTO[] = [
       {
         text: "Other",
         language: {
-          code: "cimode",
+          code: NEUTRAL_LANGUAGE_CODE,
         },
       },
     ],
