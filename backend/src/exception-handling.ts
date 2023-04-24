@@ -6,14 +6,16 @@ import { GraphQLErrorExtensions } from "graphql";
 
 export const VALIDATION_ERROR = "VALIDATION_ERROR";
 
-export type AppErrorExtensions = GraphQLErrorExtensions & {
+export type ValidationErrorExtensions = GraphQLErrorExtensions & {
   validationErrors: ValidationError[];
 };
 
-const createAppErrorExtensions = (errors: ValidationError[]): AppErrorExtensions => ({ validationErrors: errors });
+const createValidationErrorExtensions = (errors: ValidationError[]): ValidationErrorExtensions => ({
+  validationErrors: errors,
+});
 
 export const createUserInputError = (errors: ValidationError[]) =>
-  new UserInputError(VALIDATION_ERROR, { extensions: createAppErrorExtensions(errors) });
+  new UserInputError(VALIDATION_ERROR, { extensions: createValidationErrorExtensions(errors) });
 
 export interface ValidationFieldErrors {
   field: string;

@@ -5,7 +5,7 @@ import { ConfigService } from "@nestjs/config";
 import { GqlOptionsFactory } from "@nestjs/graphql";
 import { Request, Response } from "express";
 import { GraphQLFormattedError } from "graphql";
-import { AppErrorExtensions, ValidationFieldErrors, VALIDATION_ERROR } from "@app/exception-handling";
+import { ValidationErrorExtensions, ValidationFieldErrors, VALIDATION_ERROR } from "@app/exception-handling";
 import { UUID } from "./utils/scalars/uuid-scalar";
 import { Void } from "./utils/scalars/void-scalar";
 
@@ -22,10 +22,10 @@ export class GraphQLConfigService implements GqlOptionsFactory {
       // error formatting inspired by: https://github.com/nestjs/graphql/issues/1053#issuecomment-786972617
       formatError: (error: GraphQLFormattedError) => {
         if (error.message === VALIDATION_ERROR) {
-          const appErrorExtensions = error.extensions as AppErrorExtensions;
+          const validationErrorExtensions = error.extensions as ValidationErrorExtensions;
           const validationFieldErrors: ValidationFieldErrors[] = [];
 
-          appErrorExtensions.validationErrors.forEach((validationError) => {
+          validationErrorExtensions.validationErrors.forEach((validationError) => {
             if (validationError.constraints !== undefined) {
               validationFieldErrors.push({
                 field: validationError.property,
