@@ -123,7 +123,7 @@ const VisitDetailPage = () => {
   const { id } = useParams();
   const queryClient = useQueryClient();
   const {
-    data: visit,
+    data: visitDetail,
     isLoading,
     isError,
   } = useQuery({ queryKey: getVisitDetailQueryKey(id), queryFn: () => fetchVisitDetail(id) });
@@ -135,14 +135,14 @@ const VisitDetailPage = () => {
   useEffect(() => {
     const stateButtons: IVisitDetailButtonProps[] = [];
 
-    if (visit !== undefined) {
-      setColoredInfoStripe(getColoredInfoStripe(visit.state));
-      stateButtons.push(...getButtons(queryClient, visit.visitId, visit.state));
+    if (visitDetail !== undefined) {
+      setColoredInfoStripe(getColoredInfoStripe(visitDetail.state));
+      stateButtons.push(...getButtons(queryClient, visitDetail.visitId, visitDetail.state));
     }
 
     stateButtons.push(getBackButtonProps(navigate));
     setButtons(stateButtons);
-  }, [queryClient, navigate, visit]);
+  }, [queryClient, navigate, visitDetail]);
 
   if (isError) {
     return (
@@ -167,7 +167,7 @@ const VisitDetailPage = () => {
 
   return (
     <PageContainer>
-      <CardContainer title={`${t("visitDetailPage.title")}: ${visit?.visitId}`}>
+      <CardContainer title={`${t("visitDetailPage.title")}: ${visitDetail?.visitId}`}>
         <Stack
           spacing="1rem"
           justifyContent="center"
@@ -176,7 +176,7 @@ const VisitDetailPage = () => {
         >
           {coloredInfoStripe && <ColoredInfoStripe {...coloredInfoStripe} />}
           <iframe
-            src={`data:application/pdf;base64,${visit?.pdfContent}#view=fitH`}
+            src={`data:application/pdf;base64,${visitDetail?.pdfContent}#view=fitH`}
             title="Visit detail"
             height="770px"
             width="100%"
