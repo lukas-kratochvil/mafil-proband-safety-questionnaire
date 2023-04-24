@@ -10,7 +10,7 @@ const EMAIL_REGEX
   // eslint-disable-next-line no-useless-escape
   = /^$|^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  // phone number can be empty if proband does not want to fill in contact info
+// phone number can be empty if proband does not want to fill in contact info
 const PHONE_NUMBER_REGEX = /^$|^(\+|00)?[1-9]{1}[0-9]{3,}$/;
 
 export const answersSchema = object({

@@ -12,9 +12,7 @@ import {
   IWaitingRoomVisitFormDTO,
 } from "./dto";
 
-/**
- * Generic GraphQL API response type
- */
+// Server GraphQL API error type
 export type GraphQlError = {
   message: string;
   extensions: {
@@ -26,6 +24,7 @@ export type GraphQlError = {
   };
 };
 
+// Generic server GraphQL API response type
 type DataErrorsResponse<TData> = {
   data?: TData | null;
   errors?: GraphQlError[];
