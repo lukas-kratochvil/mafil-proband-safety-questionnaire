@@ -15,32 +15,20 @@ import {
 /**
  * Generic GraphQL API response type
  */
-// TODO: this one is correct - data is null if error occurs
-// type DataErrorsResponse<TData> = {
-//   data: TData | null;
-//   errors?: {
-//     message: string;
-//     extensions: {
-//       code: string;
-//       errors?: {
-//         field: string;
-//         errors: string[];
-//       }[];
-//     };
-//   }[];
-// };
+export type GraphQlError = {
+  message: string;
+  extensions: {
+    code: string;
+    errors?: {
+      field: string;
+      errors: string[];
+    }[];
+  };
+};
+
 type DataErrorsResponse<TData> = {
-  data: TData;
-  errors?: {
-    message: string;
-    extensions: {
-      code: string;
-      errors?: {
-        field: string;
-        errors: string[];
-      }[];
-    };
-  }[];
+  data?: TData | null;
+  errors?: GraphQlError[];
 };
 
 export type AuthenticateOperatorResponse = DataErrorsResponse<{ authenticateOperator: IOperatorDTO }>;

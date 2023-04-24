@@ -23,6 +23,7 @@ import {
   VisitFormAnswerIncludingQuestion,
   VisitFormState,
 } from "@app/util/server_API/dto";
+import { createServerApiCallError } from "./error-handling";
 import { CREATE_VISIT_FORM, DELETE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
 import {
   AUTHENTICATE_OPERATOR,
@@ -73,102 +74,172 @@ import {
   WaitingRoomVisitFormResponse,
 } from "./response-types";
 
-export const authenticateOperator = async (loggingOperator: IOperatorAuthorization): Promise<IOperatorDTO> => {
+export const authenticateOperator = async (loggingOperator: IOperatorAuthorization): Promise<IOperatorDTO | never> => {
   const variables: IOperatorAuthorization = { ...loggingOperator };
   const { data } = await axiosConfig.serverApi.post<AuthenticateOperatorResponse>("", {
     query: AUTHENTICATE_OPERATOR,
     variables,
   });
-  return data.data.authenticateOperator;
+
+  if (data.data) {
+    return data.data.authenticateOperator;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot authenticate operator");
 };
 
-export const fetchOperator = async (uco: string): Promise<IOperatorDTO> => {
+export const fetchOperator = async (uco: string): Promise<IOperatorDTO | never> => {
   const variables = { uco };
   const { data } = await axiosConfig.serverApi.post<OperatorResponse>("", { query: GET_OPERATOR, variables });
-  return data.data.operator;
+
+  if (data.data) {
+    return data.data.operator;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot fetch operator");
 };
 
-export const fetchGenders = async (): Promise<IGenderDTO[]> => {
+export const fetchGenders = async (): Promise<IGenderDTO[] | never> => {
   const { data } = await axiosConfig.serverApi.post<GendersResponse>("", { query: GET_GENDERS });
-  return data.data.genders;
+
+  // if (data.data) {
+  //   return data.data.genders;
+  // }
+
+  throw createServerApiCallError(data.errors, "cannot fetch genders");
 };
 
-export const fetchGender = async (code: string): Promise<IGenderDTO> => {
+export const fetchGender = async (code: string): Promise<IGenderDTO | never> => {
   const variables = { code };
   const { data } = await axiosConfig.serverApi.post<GenderResponse>("", { query: GET_GENDER, variables });
-  return data.data.gender;
+
+  if (data.data) {
+    return data.data.gender;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot fetch gender");
 };
 
-export const fetchNativeLanguages = async (): Promise<INativeLanguageDTO[]> => {
+export const fetchNativeLanguages = async (): Promise<INativeLanguageDTO[] | never> => {
   const { data } = await axiosConfig.serverApi.post<NativeLanguagesResponse>("", { query: GET_NATIVE_LANGUAGES });
-  return data.data.nativeLanguages;
+
+  if (data.data) {
+    return data.data.nativeLanguages;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot fetch native languages");
 };
 
-export const fetchNativeLanguage = async (code: string): Promise<INativeLanguageDTO> => {
+export const fetchNativeLanguage = async (code: string): Promise<INativeLanguageDTO | never> => {
   const variables = { code };
   const { data } = await axiosConfig.serverApi.post<NativeLanguageResponse>("", {
     query: GET_NATIVE_LANGUAGE,
     variables,
   });
-  return data.data.nativeLanguage;
+
+  if (data.data) {
+    return data.data.nativeLanguage;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot fetch native language");
 };
 
-export const fetchHandednesses = async (): Promise<IHandednessDTO[]> => {
+export const fetchHandednesses = async (): Promise<IHandednessDTO[] | never> => {
   const { data } = await axiosConfig.serverApi.post<HandednessesResponse>("", { query: GET_HANDEDNESSES });
-  return data.data.handednesses;
+
+  if (data.data) {
+    return data.data.handednesses;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot fetch handednesses");
 };
 
-export const fetchHandedness = async (code: string): Promise<IHandednessDTO> => {
+export const fetchHandedness = async (code: string): Promise<IHandednessDTO | never> => {
   const variables = { code };
   const { data } = await axiosConfig.serverApi.post<HandednessResponse>("", { query: GET_HANDEDNESS, variables });
-  return data.data.handedness;
+
+  if (data.data) {
+    return data.data.handedness;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot fetch handedness");
 };
 
-export const fetchCurrentQuestions = async (): Promise<IQuestionDTO[]> => {
+export const fetchCurrentQuestions = async (): Promise<IQuestionDTO[] | never> => {
   const { data } = await axiosConfig.serverApi.post<CurrentQuestionsResponse>("", { query: GET_CURRENT_QUESTIONS });
-  return data.data.questions;
+
+  if (data.data) {
+    return data.data.questions;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot fetch current questions");
 };
 
-export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO> => {
+export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO | never> => {
   const variables = { id: questionId };
   const { data } = await axiosConfig.serverApi.post<QuestionResponse>("", { query: GET_QUESTION, variables });
-  return data.data.question;
+
+  if (data.data) {
+    return data.data.question;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot fetch question");
 };
 
-export const fetchEntryInfo = async (locale: LanguageCode): Promise<IHTMLCardDTO> => {
+export const fetchEntryInfo = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
   const variables = { locale };
   const { data } = await axiosConfig.serverApi.post<EntryInfoResponse>("", {
     query: GET_ENTRY_INFO,
     variables,
   });
-  return data.data.entryInfo;
+
+  if (data.data) {
+    return data.data.entryInfo;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot fetch entry info text");
 };
 
-export const fetchSafetyInfo = async (locale: LanguageCode): Promise<IHTMLCardDTO> => {
+export const fetchSafetyInfo = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
   const variables = { locale };
   const { data } = await axiosConfig.serverApi.post<SafetyInfoResponse>("", {
     query: GET_SAFETY_INFO,
     variables,
   });
-  return data.data.safetyInfo;
+
+  if (data.data) {
+    return data.data.safetyInfo;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot fetch safety info text");
 };
 
-export const fetchBeforeExamination = async (locale: LanguageCode): Promise<IHTMLCardDTO> => {
+export const fetchBeforeExamination = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
   const variables = { locale };
   const { data } = await axiosConfig.serverApi.post<BeforeExaminationResponse>("", {
     query: GET_BEFORE_EXAMINATION,
     variables,
   });
-  return data.data.beforeExamination;
+
+  if (data.data) {
+    return data.data.beforeExamination;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot fetch before examination text");
 };
 
-export const fetchExaminationConsent = async (locale: LanguageCode): Promise<IHTMLCardDTO> => {
+export const fetchExaminationConsent = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
   const variables = { locale };
   const { data } = await axiosConfig.serverApi.post<ExaminationConsentResponse>("", {
     query: GET_EXAMINATION_CONSENT,
     variables,
   });
-  return data.data.examinationConsent;
+
+  if (data.data) {
+    return data.data.examinationConsent;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot fetch examination consent");
 };
 
 export const fetchProbandContactRequest = async (
@@ -177,31 +248,46 @@ export const fetchProbandContactRequest = async (
   surname: string,
   birthdateStr: string,
   currentDateStr: string
-): Promise<IHTMLCardDTO> => {
+): Promise<IHTMLCardDTO | never> => {
   const variables = { locale, name, surname, birthdateStr, currentDateStr };
   const { data } = await axiosConfig.serverApi.post<ProbandContactRequestResponse>("", {
     query: GET_PROBAND_CONTACT_REQUEST,
     variables,
   });
-  return data.data.probandContactRequest;
+
+  if (data.data) {
+    return data.data.probandContactRequest;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot fetch proband contact request");
 };
 
-export const fetchProbandContactConsent = async (locale: LanguageCode): Promise<IHTMLCardDTO> => {
+export const fetchProbandContactConsent = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
   const variables = { locale };
   const { data } = await axiosConfig.serverApi.post<ProbandContactConsentResponse>("", {
     query: GET_PROBAND_CONTACT_CONSENT,
     variables,
   });
-  return data.data.probandContactConsent;
+
+  if (data.data) {
+    return data.data.probandContactConsent;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot fetch proband contact consent");
 };
 
-export const fetchWaitingRoomTableVisitForms = async (): Promise<IWaitingRoomTableVisitFormDTO[]> => {
+export const fetchWaitingRoomTableVisitForms = async (): Promise<IWaitingRoomTableVisitFormDTO[] | never> => {
   const variables = { state: "NEW" };
   const { data } = await axiosConfig.serverApi.post<WaitingRoomTableVisitFormsResponse>("", {
     query: GET_WAITING_ROOM_TABLE_VISIT_FORMS,
     variables,
   });
-  return data.data.visitForms;
+
+  if (data.data) {
+    return data.data.visitForms;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot fetch waiting room table visit forms");
 };
 
 export const fetchWaitingRoomVisitForm = async (
@@ -216,6 +302,11 @@ export const fetchWaitingRoomVisitForm = async (
     query: GET_WAITING_ROOM_VISIT_FORM,
     variables,
   });
+
+  if (data.data === null || data.data === undefined) {
+    throw createServerApiCallError(data.errors, "cannot fetch waiting room visit form");
+  }
+
   const { visitForm } = data.data;
   const answersIncludingQuestions = await Promise.all(
     visitForm.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
@@ -235,13 +326,18 @@ export const fetchWaitingRoomVisitForm = async (
   return { ...visitForm, probandLanguageCode: visitForm.probandLanguage.code, answersIncludingQuestions };
 };
 
-export const fetchApprovalRoomTableVisitForms = async (): Promise<IApprovalRoomTableVisitFormDTO[]> => {
+export const fetchApprovalRoomTableVisitForms = async (): Promise<IApprovalRoomTableVisitFormDTO[] | never> => {
   const variables = { state: "IN_APPROVAL" };
   const { data } = await axiosConfig.serverApi.post<ApprovalRoomTableVisitFormsResponse>("", {
     query: GET_APPROVAL_ROOM_TABLE_VISIT_FORMS,
     variables,
   });
-  return data.data.visitForms;
+
+  if (data.data) {
+    return data.data.visitForms;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot fetch approval room table visit forms");
 };
 
 export const fetchApprovalRoomVisitForm = async (
@@ -256,6 +352,11 @@ export const fetchApprovalRoomVisitForm = async (
     query: GET_APPROVAL_ROOM_VISIT_FORM,
     variables,
   });
+
+  if (data.data === null || data.data === undefined) {
+    throw createServerApiCallError(data.errors, "cannot fetch approval room visit form");
+  }
+
   const { visitForm } = data.data;
   const answersIncludingQuestions = await Promise.all(
     visitForm.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
@@ -275,7 +376,7 @@ export const fetchApprovalRoomVisitForm = async (
   return { ...visitForm, probandLanguageCode: visitForm.probandLanguage.code, answersIncludingQuestions };
 };
 
-export const createProbandVisitForm = async (visitFormData: ValidatedFormData): Promise<string> => {
+export const createProbandVisitForm = async (visitFormData: ValidatedFormData): Promise<string | never> => {
   const variables: ICreateProbandVisitFormInput = {
     createVisitFormInput: {
       probandLanguageCode: i18n.language as LanguageCode,
@@ -301,13 +402,18 @@ export const createProbandVisitForm = async (visitFormData: ValidatedFormData): 
     query: CREATE_VISIT_FORM,
     variables,
   });
-  return data.data.createVisitForm.id;
+
+  if (data.data) {
+    return data.data.createVisitForm.id;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot create visit form");
 };
 
 export const createDuplicatedVisitFormForApproval = async (
   visitFormData: ValidatedFormData,
   finalizerId: string | undefined
-): Promise<string> => {
+): Promise<string | never> => {
   if (finalizerId === undefined) {
     throw new Error("Missing ID of the operator who finalized the visit!");
   }
@@ -348,14 +454,19 @@ export const createDuplicatedVisitFormForApproval = async (
     query: CREATE_VISIT_FORM,
     variables,
   });
-  return data.data.createVisitForm.id;
+
+  if (data.data) {
+    return data.data.createVisitForm.id;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot create visit form");
 };
 
 export const sendVisitFormForApproval = async (
   visitFormId: string,
   visitFormData: Partial<ValidatedFormData>,
   finalizerId: string
-): Promise<string> => {
+): Promise<string | never> => {
   const variables: ISendVisitFormFromWaitingRoomForApprovalInput = {
     updateVisitFormInput: {
       id: visitFormId,
@@ -392,7 +503,12 @@ export const sendVisitFormForApproval = async (
     query: UPDATE_VISIT_FORM,
     variables,
   });
-  return data.data.updateVisitForm.id;
+
+  if (data.data) {
+    return data.data.updateVisitForm.id;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot send visit form for approval");
 };
 
 const updateVisitFormState = async (visitFormId: string | undefined, state: VisitFormState): Promise<void | never> => {
@@ -406,10 +522,16 @@ const updateVisitFormState = async (visitFormId: string | undefined, state: Visi
       state,
     },
   };
-  axiosConfig.serverApi.post<UpdateVisitFormResponse>("", {
+  const { data } = await axiosConfig.serverApi.post<UpdateVisitFormResponse>("", {
     query: UPDATE_VISIT_FORM,
     variables,
   });
+
+  if (data.data) {
+    return;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot update visit form state");
 };
 
 export const markVisitFormAsSentToMafilDb = async (visitFormId: string | undefined): Promise<void> =>
@@ -418,7 +540,7 @@ export const markVisitFormAsSentToMafilDb = async (visitFormId: string | undefin
 export const markVisitFormAsPdfGenerated = async (visitFormId: string | undefined): Promise<void> =>
   updateVisitFormState(visitFormId, "PDF_GENERATED");
 
-export const deleteVisitForm = async (visitFormId: string): Promise<void> => {
+export const deleteVisitForm = async (visitFormId: string): Promise<void | never> => {
   const variables = { id: visitFormId };
   axiosConfig.serverApi.post<null>("", {
     query: DELETE_VISIT_FORM,
@@ -433,7 +555,7 @@ const generatePdf = async (
   finalizerUco: string | undefined,
   probandLanguageCode?: LanguageCode,
   approverUco?: string
-): Promise<IPdfDTO> => {
+): Promise<IPdfDTO | never> => {
   if (finalizerUco === undefined) {
     throw new Error("Missing UCO of the operator who finalized the visit!");
   }
@@ -469,7 +591,12 @@ const generatePdf = async (
     query: GENERATE_PDF,
     variables,
   });
-  return data.data.generatePDF;
+
+  if (data.data) {
+    return data.data.generatePDF;
+  }
+
+  throw createServerApiCallError(data.errors, "cannot generate visit PDF");
 };
 
 export const generateProbandPdf = async (
@@ -478,7 +605,7 @@ export const generateProbandPdf = async (
   finalizerUco: string | undefined,
   probandLanguageCode: ProbandVisitLanguageCode | undefined,
   approverUco?: string
-): Promise<IPdfDTO> => {
+): Promise<IPdfDTO | never> => {
   if (probandLanguageCode === undefined || probandLanguageCode === "") {
     throw new Error("Proband language code is undefined!");
   }
