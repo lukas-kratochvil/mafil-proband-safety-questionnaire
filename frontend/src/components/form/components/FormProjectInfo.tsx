@@ -76,7 +76,6 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
             label={t("project")}
             options={projects.data}
             isLoading={projects.isLoading}
-            isError={projects.isError}
             disabled={disableInputs}
           />
         </Grid>
@@ -91,7 +90,6 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
             label={t("device")}
             options={devices.data}
             isLoading={devices.isLoading}
-            isError={devices.isError}
             disabled={disableInputs}
           />
         </Grid>

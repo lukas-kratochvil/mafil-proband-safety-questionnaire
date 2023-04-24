@@ -15,7 +15,6 @@ export const FormAutocompleteHandednesses = ({
   disabled,
   options,
   isLoading,
-  isError,
 }: IFormAsyncAutocompleteProps<IHandednessDTO>) => {
   const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
 

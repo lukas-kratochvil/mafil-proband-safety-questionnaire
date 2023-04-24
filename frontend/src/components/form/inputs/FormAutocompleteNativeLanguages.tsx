@@ -15,7 +15,6 @@ export const FormAutocompleteNativeLanguages = ({
   disabled,
   options,
   isLoading,
-  isError,
 }: IFormAsyncAutocompleteProps<INativeLanguageDTO>) => {
   const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
 

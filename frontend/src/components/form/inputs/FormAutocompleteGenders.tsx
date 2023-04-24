@@ -15,7 +15,6 @@ export const FormAutocompleteGenders = ({
   disabled,
   options,
   isLoading,
-  isError,
 }: IFormAsyncAutocompleteProps<IGenderDTO>) => {
   const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
 

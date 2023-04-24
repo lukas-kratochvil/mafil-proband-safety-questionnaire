@@ -7,5 +7,4 @@ export interface IFormDefaultInputProps extends IFormInputFieldContainerProps {
 export interface IFormAsyncAutocompleteProps<T> extends IFormDefaultInputProps {
   options: T[] | undefined;
   isLoading: boolean;
-  isError: boolean;
 }

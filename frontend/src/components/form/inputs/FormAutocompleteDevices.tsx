@@ -14,7 +14,6 @@ export const FormAutocompleteDevices = ({
   disabled,
   options,
   isLoading,
-  isError,
 }: IFormAsyncAutocompleteProps<IDeviceDTO>) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
 
