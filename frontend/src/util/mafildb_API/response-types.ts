@@ -1,5 +1,7 @@
 import { IDeviceDTO, IProjectDTO, IVisitDTO, IVisitPdfDTO } from "./dto";
 
+// TODO: correct MAFILDB response types
+
 export type ProjectsResponse = {
   rows: IProjectDTO[];
 };

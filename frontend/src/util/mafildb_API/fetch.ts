@@ -7,7 +7,7 @@ import {
   ProbandVisitLanguageCode,
 } from "@app/model/visit";
 import { devicesDev, dummyVisits, generateVisitId, PDF_CONTENT, projectsDev } from "@app/util/mafildb_API/data.dev";
-import { IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
+import { IOperatorDTO, IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import { fetchGender, fetchHandedness, fetchNativeLanguage, fetchOperator, fetchQuestion } from "../server_API/fetch";
 import {
   IAddPdfToVisitInput,
@@ -36,6 +36,7 @@ export const fetchProjects = async (): Promise<IProjectDTO[]> => {
     return projectsDev;
   }
 
+  // TODO: add correct MAFILDB endpoint
   const { data } = await axiosConfig.mafildbApi.get<ProjectsResponse>("projects.json");
   return data.rows;
 };
@@ -45,6 +46,7 @@ export const fetchDevices = async (): Promise<IDeviceDTO[]> => {
     return devicesDev;
   }
 
+  // TODO: add correct MAFILDB endpoint
   const { data } = await axiosConfig.mafildbApi.get<DevicesResponse>("devices.json");
   return data.rows;
 };
@@ -125,6 +127,7 @@ const createVisit = async (
     approval_date: approvedAt,
     disapproval_reason: visitFormData.disapprovalReason,
   };
+  // TODO: add correct MAFILDB endpoint
   const { data } = await axiosConfig.mafildbApi.post<CreateVisitResponse>("visit", createData);
   return data.visit_name;
 };
@@ -185,7 +188,7 @@ export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<stri
     file_extension: pdf.extension,
     file_content: pdf.content,
   };
-  // TODO: add endpoint
+  // TODO: add correct MAFILDB endpoint
   const { data } = await axiosConfig.mafildbApi.post<AddPdfToVisitResponse>("files", addPdfToVisitData);
   return data.file_id;
 };
@@ -229,6 +232,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
   }
 
   const [{ data }, projects, devices] = await Promise.all([
+    // TODO: add correct MAFILDB endpoint
     axiosConfig.mafildbApi.get<VisitsResponse>("visits.json"),
     fetchProjects(),
     fetchDevices(),
@@ -237,10 +241,16 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
   data.rows.forEach(async (visit) => {
     const project = projects.find((proj) => proj.id === visit.project_id);
     const device = devices.find((dev) => dev.id === visit.device_id);
-    const finalizer = await fetchOperator(visit.finalizer_uco);
+    let finalizer: IOperatorDTO | undefined;
+
+    try {
+      finalizer = await fetchOperator(visit.finalizer_uco);
+    } catch (e) {
+      // TODO: what to do when finalizer not found? Skip the visit?
+    }
 
     // if project or device don't exist we skip the visit
-    if (project !== undefined && device !== undefined) {
+    if (project !== undefined && device !== undefined && finalizer !== undefined) {
       visits.push({
         ...visit,
         visitId: visit.visit_name,
@@ -269,10 +279,10 @@ const fetchVisit = async (visitId: string): Promise<IVisitDTO | never> => {
   const params = {
     filter: { visit_name: visitId },
   };
+  // TODO: add correct MAFILDB endpoint
   const { data } = await axiosConfig.mafildbApi.get<VisitsResponse>("visits.json", { params });
 
   if (data.rows.length !== 1) {
-    // TODO: translate error message
     throw new Error("Visit not found!");
   }
 
@@ -375,7 +385,7 @@ const fetchVisitPDF = async (visitId: string): Promise<IVisitPdfDTO> => {
       file_type: PDF_FILE_TYPE,
     },
   };
-  // TODO: correct the endpoint and response object type
+  // TODO: correct the MAFILDB endpoint and response object type
   const { data } = await axiosConfig.mafildbApi.get<VisitPdfResponse>("files.json", { params });
   return data.file;
 };
@@ -393,18 +403,18 @@ export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVi
     }
 
     return {
-      ...visit,
       visitId: visit.visit_name,
       isPhantom: visit.is_phantom,
+      state: visit.state,
       pdfContent: PDF_CONTENT,
     };
   }
 
   const [visit, visitPDF] = await Promise.all([fetchVisit(visitId), fetchVisitPDF(visitId)]);
   return {
-    ...visit,
     visitId: visit.visit_name,
     isPhantom: visit.is_phantom,
+    state: visit.state,
     pdfContent: visitPDF.file_content,
   };
 };
@@ -425,6 +435,7 @@ export const updateVisitState = async (visitId: string, state: VisitState): Prom
     visit_name: visitId,
     state,
   };
+  // TODO: add correct MAFILDB endpoint
   const { data } = await axiosConfig.mafildbApi.patch<UpdateVisitStateResponse>("visit", updateData);
   return data.visit_name;
 };
