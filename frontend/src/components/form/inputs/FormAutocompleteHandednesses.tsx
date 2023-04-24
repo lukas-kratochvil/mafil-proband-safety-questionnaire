@@ -6,12 +6,7 @@ import { IHandednessDTO } from "@app/util/server_API/dto";
 import { compareHandednesses } from "../util/utils";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import { IFormDefaultInputProps } from "./interfaces/input-props";
-
-interface IFormAutocompleteHandednessesProps extends IFormDefaultInputProps {
-  options: IHandednessDTO[] | undefined;
-  isLoading: boolean;
-}
+import { IFormAsyncAutocompleteProps } from "./interfaces/input-props";
 
 export const FormAutocompleteHandednesses = ({
   name,
@@ -20,7 +15,8 @@ export const FormAutocompleteHandednesses = ({
   disabled,
   options,
   isLoading,
-}: IFormAutocompleteHandednessesProps) => {
+  isError,
+}: IFormAsyncAutocompleteProps<IHandednessDTO>) => {
   const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
 
   return (

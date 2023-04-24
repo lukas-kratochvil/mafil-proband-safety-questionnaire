@@ -6,12 +6,7 @@ import { IGenderDTO } from "@app/util/server_API/dto";
 import { compareGenders } from "../util/utils";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import { IFormDefaultInputProps } from "./interfaces/input-props";
-
-interface IFormAutocompleteGendersProps extends IFormDefaultInputProps {
-  options: IGenderDTO[] | undefined;
-  isLoading: boolean;
-}
+import { IFormAsyncAutocompleteProps } from "./interfaces/input-props";
 
 export const FormAutocompleteGenders = ({
   name,
@@ -20,7 +15,8 @@ export const FormAutocompleteGenders = ({
   disabled,
   options,
   isLoading,
-}: IFormAutocompleteGendersProps) => {
+  isError,
+}: IFormAsyncAutocompleteProps<IGenderDTO>) => {
   const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
 
   return (

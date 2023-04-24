@@ -5,12 +5,7 @@ import { defaultNS } from "@app/i18n";
 import { IProjectDTO } from "@app/util/mafildb_API/dto";
 import { getProjectText } from "../util/utils";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import { IFormDefaultInputProps } from "./interfaces/input-props";
-
-interface IFormAutocompleteProjectsProps extends IFormDefaultInputProps {
-  options: IProjectDTO[] | undefined;
-  isLoading: boolean;
-}
+import { IFormAsyncAutocompleteProps } from "./interfaces/input-props";
 
 export const FormAutocompleteProjects = ({
   name,
@@ -19,7 +14,7 @@ export const FormAutocompleteProjects = ({
   disabled,
   options,
   isLoading,
-}: IFormAutocompleteProjectsProps) => {
+}: IFormAsyncAutocompleteProps<IProjectDTO>) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 

@@ -5,12 +5,7 @@ import { defaultNS } from "@app/i18n";
 import { IDeviceDTO } from "@app/util/mafildb_API/dto";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import { IFormDefaultInputProps } from "./interfaces/input-props";
-
-interface IFormAutocompleteDevicesProps extends IFormDefaultInputProps {
-  options: IDeviceDTO[] | undefined;
-  isLoading: boolean;
-}
+import { IFormAsyncAutocompleteProps } from "./interfaces/input-props";
 
 export const FormAutocompleteDevices = ({
   name,
@@ -19,7 +14,8 @@ export const FormAutocompleteDevices = ({
   disabled,
   options,
   isLoading,
-}: IFormAutocompleteDevicesProps) => {
+  isError,
+}: IFormAsyncAutocompleteProps<IDeviceDTO>) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
 
   return (

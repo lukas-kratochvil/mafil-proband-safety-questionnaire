@@ -6,12 +6,7 @@ import { INativeLanguageDTO } from "@app/util/server_API/dto";
 import { compareNativeLanguages } from "../util/utils";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import { IFormDefaultInputProps } from "./interfaces/input-props";
-
-interface IFormAutocompleteNativeLanguagesProps extends IFormDefaultInputProps {
-  options: INativeLanguageDTO[] | undefined;
-  isLoading: boolean;
-}
+import { IFormAsyncAutocompleteProps } from "./interfaces/input-props";
 
 export const FormAutocompleteNativeLanguages = ({
   name,
@@ -20,7 +15,8 @@ export const FormAutocompleteNativeLanguages = ({
   disabled,
   options,
   isLoading,
-}: IFormAutocompleteNativeLanguagesProps) => {
+  isError,
+}: IFormAsyncAutocompleteProps<INativeLanguageDTO>) => {
   const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
 
   return (

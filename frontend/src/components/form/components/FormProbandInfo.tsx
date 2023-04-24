@@ -217,6 +217,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
             label={t("gender")}
             options={genders.data}
             isLoading={genders.isLoading}
+            isError={genders.isError}
             disabled={disableInputs || isPhantom}
           />
         </Grid>
@@ -231,6 +232,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
             label={t("nativeLanguage")}
             options={nativeLanguages.data}
             isLoading={nativeLanguages.isLoading}
+            isError={nativeLanguages.isError}
             disabled={disableInputs}
           />
         </Grid>
@@ -302,6 +304,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
             label={t("handedness")}
             options={handednesses.data}
             isLoading={handednesses.isLoading}
+            isError={handednesses.isError}
             disabled={disableInputs}
           />
         </Grid>
