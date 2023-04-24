@@ -33,6 +33,6 @@ export class VisitFormResolver {
 
   @Mutation(() => Void, { nullable: true })
   async removeVisitForm(@Args("id", { type: () => UUID }) id: string) {
-    return this.visitFormService.remove(id);
+    this.visitFormService.remove(id);
   }
 }

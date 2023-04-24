@@ -18,8 +18,8 @@ mutation UpdateVisitForm (
 }
 `;
 
-export const DELETE_VISIT_FORM = `
-mutation DeleteVisitForm($id: UUID!) {
+export const REMOVE_VISIT_FORM = `
+mutation RemoveVisitForm($id: UUID!) {
   removeVisitForm(id: $id)
 }
 `;

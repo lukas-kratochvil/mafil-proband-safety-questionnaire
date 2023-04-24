@@ -24,7 +24,7 @@ import {
   VisitFormState,
 } from "@app/util/server_API/dto";
 import { createServerApiCallError } from "./error-handling";
-import { CREATE_VISIT_FORM, DELETE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
+import { CREATE_VISIT_FORM, REMOVE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
 import {
   AUTHENTICATE_OPERATOR,
   GENERATE_PDF,
@@ -68,6 +68,7 @@ import {
   ProbandContactConsentResponse,
   ProbandContactRequestResponse,
   QuestionResponse,
+  RemoveVisitFormResponse,
   SafetyInfoResponse,
   UpdateVisitFormResponse,
   WaitingRoomTableVisitFormsResponse,
@@ -542,10 +543,14 @@ export const markVisitFormAsPdfGenerated = async (visitFormId: string | undefine
 
 export const deleteVisitForm = async (visitFormId: string): Promise<void | never> => {
   const variables = { id: visitFormId };
-  axiosConfig.serverApi.post<null>("", {
-    query: DELETE_VISIT_FORM,
+  const { data } = await axiosConfig.serverApi.post<RemoveVisitFormResponse>("", {
+    query: REMOVE_VISIT_FORM,
     variables,
   });
+
+  if (data.errors) {
+    throw createServerApiCallError(data.errors, "cannot delete visit form");
+  }
 };
 
 const generatePdf = async (

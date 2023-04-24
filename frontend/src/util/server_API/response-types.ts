@@ -82,4 +82,6 @@ export type UpdateVisitFormResponse = DataErrorsResponse<{
   };
 }>;
 
+export type RemoveVisitFormResponse = DataErrorsResponse<{ removeVisitForm: null }>;
+
 export type GeneratePdfResponse = DataErrorsResponse<{ generatePDF: IPdfDTO }>;
