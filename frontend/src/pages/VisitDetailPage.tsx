@@ -11,6 +11,7 @@ import {
 } from "@app/components/informative/ColoredInfoStripe";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n";
+import { IVisitDetail } from "@app/model/visit";
 import { VisitState } from "@app/util/mafildb_API/dto";
 import { fetchVisitDetail, updateVisitState } from "@app/util/mafildb_API/fetch";
 import { getBackButtonProps, IButtonProps } from "@app/util/utils";
@@ -56,8 +57,8 @@ const getColoredInfoStripe = (visitState: VisitState): IColoredInfoStripeProps |
   }
 };
 
-const getButtons = (queryClient: QueryClient, visitId: string, visitState: VisitState): IVisitDetailButtonProps[] => {
-  switch (visitState) {
+const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisitDetailButtonProps[] => {
+  switch (visitDetail.state) {
     case VisitState.APPROVED:
       return [
         {
@@ -69,14 +70,14 @@ const getButtons = (queryClient: QueryClient, visitId: string, visitState: Visit
              *  - open system download window, so the auth user can choose where to store it (or show the print windows instead?)
              *  - check my Firefox bookmarks for some interesting websites!!!
              */
-            await updateVisitState(visitId, VisitState.FOR_SIGNATURE_PHYSICALLY);
-            queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitId), exact: true });
+            await updateVisitState(visitDetail.visitId, VisitState.FOR_SIGNATURE_PHYSICALLY);
+            queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitDetail.visitId), exact: true });
           },
         },
         {
           titleLocalizationKey: "visitDetailPage.buttons.signElectronically",
           onClick: async () => {
-            await updateVisitState(visitId, VisitState.FOR_SIGNATURE_ELECTRONICALLY);
+            await updateVisitState(visitDetail.visitId, VisitState.FOR_SIGNATURE_ELECTRONICALLY);
           },
           disabled: true,
         },
@@ -86,8 +87,8 @@ const getButtons = (queryClient: QueryClient, visitId: string, visitState: Visit
         {
           titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
           onClick: async () => {
-            await updateVisitState(visitId, VisitState.SIGNED_PHYSICALLY);
-            queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitId), exact: true });
+            await updateVisitState(visitDetail.visitId, VisitState.SIGNED_PHYSICALLY);
+            queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitDetail.visitId), exact: true });
           },
         },
       ];
@@ -96,8 +97,8 @@ const getButtons = (queryClient: QueryClient, visitId: string, visitState: Visit
         {
           titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
           onClick: async () => {
-            await updateVisitState(visitId, VisitState.SIGNED_ELECTRONICALLY);
-            queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitId), exact: true });
+            await updateVisitState(visitDetail.visitId, VisitState.SIGNED_ELECTRONICALLY);
+            queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitDetail.visitId), exact: true });
           },
         },
       ];
@@ -137,7 +138,7 @@ const VisitDetailPage = () => {
 
     if (visitDetail !== undefined) {
       setColoredInfoStripe(getColoredInfoStripe(visitDetail.state));
-      stateButtons.push(...getButtons(queryClient, visitDetail.visitId, visitDetail.state));
+      stateButtons.push(...getButtons(queryClient, visitDetail));
     }
 
     stateButtons.push(getBackButtonProps(navigate));
