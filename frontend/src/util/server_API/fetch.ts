@@ -103,9 +103,9 @@ export const fetchOperator = async (uco: string): Promise<IOperatorDTO | never> 
 export const fetchGenders = async (): Promise<IGenderDTO[] | never> => {
   const { data } = await axiosConfig.serverApi.post<GendersResponse>("", { query: GET_GENDERS });
 
-  // if (data.data) {
-  //   return data.data.genders;
-  // }
+  if (data.data) {
+    return data.data.genders;
+  }
 
   throw createServerApiCallError(data.errors, "cannot fetch genders");
 };
