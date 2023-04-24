@@ -57,6 +57,19 @@ const getColoredInfoStripe = (visitState: VisitState): IColoredInfoStripeProps |
   }
 };
 
+const createBase64EncodedPdfDataUrl = (base64PdfContent: string) => `data:application/pdf;base64,${base64PdfContent}`;
+
+const downloadPdf = (base64PdfContent: string): void => {
+  const pdfName = "some_name.pdf"; // TODO: set original PDF name
+  const downloadLink = document.createElement("a");
+  downloadLink.href = createBase64EncodedPdfDataUrl(base64PdfContent);
+  downloadLink.download = pdfName;
+  downloadLink.style.display = "none";
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
+  document.body.removeChild(downloadLink);
+};
+
 const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisitDetailButtonProps[] => {
   switch (visitDetail.state) {
     case VisitState.APPROVED:
@@ -70,6 +83,7 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
              *  - open system download window, so the auth user can choose where to store it (or show the print windows instead?)
              *  - check my Firefox bookmarks for some interesting websites!!!
              */
+            downloadPdf(visitDetail.pdfContent);
             await updateVisitState(visitDetail.visitId, VisitState.FOR_SIGNATURE_PHYSICALLY);
             queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitDetail.visitId), exact: true });
           },
@@ -108,10 +122,7 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
       return [
         {
           titleLocalizationKey: "visitDetailPage.buttons.downloadPDF",
-          onClick: () => {
-            // TODO: open system download window, so the auth user can choose where to store it (or show the print windows instead?)
-            alert("Funkcionalita bude brzy naimplementována.");
-          },
+          onClick: () => downloadPdf(visitDetail.pdfContent),
         },
       ];
     default:
@@ -168,7 +179,7 @@ const VisitDetailPage = () => {
 
   return (
     <PageContainer>
-      <CardContainer title={`${t("visitDetailPage.title")}: ${visitDetail?.visitId}`}>
+      <CardContainer title={`${t("visitDetailPage.title")}: ${visitDetail.visitId}`}>
         <Stack
           spacing="1rem"
           justifyContent="center"
@@ -177,7 +188,7 @@ const VisitDetailPage = () => {
         >
           {coloredInfoStripe && <ColoredInfoStripe {...coloredInfoStripe} />}
           <iframe
-            src={`data:application/pdf;base64,${visitDetail?.pdfContent}#view=fitH`}
+            src={`${createBase64EncodedPdfDataUrl(visitDetail.pdfContent)}#view=fitH`}
             title="Visit detail"
             height="770px"
             width="100%"
