@@ -1,9 +1,10 @@
-import { Autocomplete, CircularProgress, TextField, Theme, useMediaQuery } from "@mui/material";
+import { Autocomplete } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n";
 import { IProjectDTO } from "@app/util/mafildb_API/dto";
 import { getProjectText } from "../util/utils";
+import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormAsyncAutocompleteProps } from "./interfaces/input-props";
 
@@ -16,7 +17,6 @@ export const FormAutocompleteProjects = ({
   isLoading,
 }: IFormAsyncAutocompleteProps<IProjectDTO>) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
-  const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
   return (
     <FormInputFieldContainer
@@ -40,29 +40,11 @@ export const FormAutocompleteProjects = ({
             loadingText={`${t("loading")}…`}
             noOptionsText={t("noOptions")}
             renderInput={(params) => (
-              <TextField
-                {...params}
-                inputRef={field.ref}
-                name={field.name}
-                size={matchesDownSmBreakpoint ? "small" : "medium"}
-                InputProps={{
-                  ...params.InputProps,
-                  endAdornment: (
-                    <>
-                      {isLoading && (
-                        <CircularProgress
-                          color="inherit"
-                          size={20}
-                        />
-                      )}
-                      {params.InputProps.endAdornment}
-                    </>
-                  ),
-                }}
-                inputProps={{
-                  ...params.inputProps,
-                  "aria-label": name,
-                }}
+              <FormAutocompleteInputField
+                name={name}
+                isLoading={isLoading}
+                field={field}
+                params={params}
               />
             )}
           />
