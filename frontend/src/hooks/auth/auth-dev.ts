@@ -23,7 +23,7 @@ export const useAuthProviderDev = (): IAuthDev => {
     return storedOperator === null ? undefined : JSON.parse(storedOperator);
   });
 
-  const logIn = async (authMethod: IAuthMethodDev) => {
+  const logIn = async (authMethod: IAuthMethodDev): Promise<boolean> => {
     // TODO: call the actual MUNI authentication gate
     const loggingOperator: IOperatorAuthorization = {
       name: "Operator",
@@ -31,22 +31,27 @@ export const useAuthProviderDev = (): IAuthDev => {
       uco: authMethod === IAuthMethodDev.MUNI_HIGHER_PERMISSION ? "987654" : "123456",
       email: authMethod === IAuthMethodDev.MUNI_HIGHER_PERMISSION ? "987654@muni.cz" : "123456@muni.cz",
     };
-    const fetchedOperator = await authenticateOperator(loggingOperator);
 
-    if (fetchedOperator === undefined) {
+    try {
+      const fetchedOperator = await authenticateOperator(loggingOperator);
+
+      if (fetchedOperator === undefined) {
+        return false;
+      }
+
+      if (fetchedOperator !== undefined) {
+        setOperator(fetchedOperator);
+        window.sessionStorage.setItem("operator", JSON.stringify(fetchedOperator));
+      }
+    } catch {
       return false;
-    }
-
-    if (fetchedOperator !== undefined) {
-      setOperator(fetchedOperator);
-      window.sessionStorage.setItem("operator", JSON.stringify(fetchedOperator));
     }
 
     navigate(RoutingPaths.WAITING_ROOM);
     return true;
   };
 
-  const logOut = () => {
+  const logOut = (): void => {
     setOperator(undefined);
     window.sessionStorage.removeItem("operator");
     navigate(RoutingPaths.AUTH);
