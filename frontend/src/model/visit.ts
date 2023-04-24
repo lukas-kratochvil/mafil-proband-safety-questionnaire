@@ -58,5 +58,6 @@ export interface IDuplicatedVisitIncludingQuestions extends Omit<IVisit, "projec
 }
 
 export interface IVisitDetail extends Pick<IVisit, "visitId" | "state" | "isPhantom"> {
+  pdfName: string;
   pdfContent: string; // Base64 encoded PDF content
 }

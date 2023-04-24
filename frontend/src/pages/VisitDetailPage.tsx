@@ -59,8 +59,7 @@ const getColoredInfoStripe = (visitState: VisitState): IColoredInfoStripeProps |
 
 const createBase64EncodedPdfDataUrl = (base64PdfContent: string) => `data:application/pdf;base64,${base64PdfContent}`;
 
-const downloadPdf = (base64PdfContent: string): void => {
-  const pdfName = "some_name.pdf"; // TODO: set original PDF name
+const downloadPdf = (pdfName: string, base64PdfContent: string): void => {
   const downloadLink = document.createElement("a");
   downloadLink.href = createBase64EncodedPdfDataUrl(base64PdfContent);
   downloadLink.download = pdfName;
@@ -83,7 +82,7 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
              *  - open system download window, so the auth user can choose where to store it (or show the print windows instead?)
              *  - check my Firefox bookmarks for some interesting websites!!!
              */
-            downloadPdf(visitDetail.pdfContent);
+            downloadPdf(visitDetail.pdfName, visitDetail.pdfContent);
             await updateVisitState(visitDetail.visitId, VisitState.FOR_SIGNATURE_PHYSICALLY);
             queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitDetail.visitId), exact: true });
           },
@@ -122,7 +121,7 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
       return [
         {
           titleLocalizationKey: "visitDetailPage.buttons.downloadPDF",
-          onClick: () => downloadPdf(visitDetail.pdfContent),
+          onClick: () => downloadPdf(visitDetail.pdfName, visitDetail.pdfContent),
         },
       ];
     default:

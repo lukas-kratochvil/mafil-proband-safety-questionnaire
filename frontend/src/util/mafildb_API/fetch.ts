@@ -406,6 +406,7 @@ export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVi
       visitId: visit.visit_name,
       isPhantom: visit.is_phantom,
       state: visit.state,
+      pdfName: `${visit.visit_name}.pdf`,
       pdfContent: PDF_CONTENT,
     };
   }
@@ -415,6 +416,7 @@ export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVi
     visitId: visit.visit_name,
     isPhantom: visit.is_phantom,
     state: visit.state,
+    pdfName: `${visitPDF.file_name}.pdf`,
     pdfContent: visitPDF.file_content,
   };
 };

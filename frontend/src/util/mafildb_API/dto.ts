@@ -72,4 +72,4 @@ export type IAddPdfToVisitInput = Pick<IVisitDTO, "visit_name"> & {
   file_content: string; // Base64 encoded PDF content
 };
 
-export type IVisitPdfDTO = Pick<IAddPdfToVisitInput, "file_content">;
+export type IVisitPdfDTO = Pick<IAddPdfToVisitInput, "file_name" | "file_content">;
