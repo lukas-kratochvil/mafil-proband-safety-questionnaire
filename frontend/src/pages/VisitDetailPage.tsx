@@ -121,7 +121,7 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
       return [
         {
           titleLocalizationKey: "visitDetailPage.buttons.downloadPDF",
-          onClick: () => downloadPdf(visitDetail.pdfName, visitDetail.pdfContent),
+          onClick: async () => downloadPdf(visitDetail.pdfName, visitDetail.pdfContent),
         },
       ];
     default:
@@ -203,7 +203,7 @@ const VisitDetailPage = () => {
                 <Button
                   key={button.titleLocalizationKey}
                   variant="contained"
-                  onClick={button.onClick}
+                  onClick={async () => await button.onClick()}
                   disabled={button.disabled}
                 >
                   {t(convertStringToLocalizationKey(button.titleLocalizationKey))}

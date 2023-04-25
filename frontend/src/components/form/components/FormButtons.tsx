@@ -36,7 +36,7 @@ export const FormButtons = ({ submitButtonProps, buttonsProps }: IFormButtonsPro
           key={buttonProps.titleLocalizationKey}
           variant="contained"
           color={buttonProps.showErrorColor ? "error" : undefined}
-          onClick={buttonProps.onClick}
+          onClick={async () => await buttonProps.onClick()}
         >
           {t(convertStringToLocalizationKey(buttonProps.titleLocalizationKey))}
         </Button>

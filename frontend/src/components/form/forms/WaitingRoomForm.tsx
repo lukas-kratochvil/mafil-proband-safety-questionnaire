@@ -89,7 +89,7 @@ export const WaitingRoomForm = () => {
         buttonsProps: [
           {
             titleLocalizationKey: "form.common.buttons.cancel",
-            onClick: () => {
+            onClick: async () => {
               if (valuesBeforeEditing !== undefined) {
                 type ValuesBeforeEditingType = keyof typeof valuesBeforeEditing;
                 Object.keys(valuesBeforeEditing).forEach((propertyName) => {
@@ -124,7 +124,7 @@ export const WaitingRoomForm = () => {
         buttonsProps: [
           {
             titleLocalizationKey: "form.common.buttons.cancel",
-            onClick: () => {
+            onClick: async () => {
               setValue("disapprovalReason", null);
               setIsDisapproved(false);
             },
@@ -168,7 +168,7 @@ export const WaitingRoomForm = () => {
           },
           {
             titleLocalizationKey: "form.common.buttons.edit",
-            onClick: () => {
+            onClick: async () => {
               setValuesBeforeEditing(getValues());
               setIsEditing(true);
             },

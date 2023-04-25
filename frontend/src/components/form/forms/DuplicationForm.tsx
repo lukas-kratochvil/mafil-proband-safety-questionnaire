@@ -105,7 +105,7 @@ export const DuplicationForm = () => {
         buttonsProps: [
           {
             titleLocalizationKey: "form.common.buttons.cancel",
-            onClick: () => {
+            onClick: async () => {
               if (valuesBeforeEditing !== undefined) {
                 type ValuesBeforeEditingType = keyof typeof valuesBeforeEditing;
                 Object.keys(valuesBeforeEditing).forEach((propertyName) => {
@@ -139,7 +139,7 @@ export const DuplicationForm = () => {
         buttonsProps: [
           {
             titleLocalizationKey: "form.common.buttons.cancel",
-            onClick: () => {
+            onClick: async () => {
               setValue("disapprovalReason", null);
               setIsDisapproved(false);
             },
@@ -181,7 +181,7 @@ export const DuplicationForm = () => {
           },
           {
             titleLocalizationKey: "form.common.buttons.edit",
-            onClick: () => {
+            onClick: async () => {
               setValuesBeforeEditing(getValues());
               setIsEditing(true);
             },
