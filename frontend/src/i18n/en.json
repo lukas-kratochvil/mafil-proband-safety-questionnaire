@@ -10,7 +10,9 @@
         "createNewPhantomForm": "Create new phantom measurement",
         "openNewProbandForm": "Open new proband form"
       },
-      "errorAlert": "Error occurred! Please, contact a system administrator."
+      "errors": {
+        "contactAdmin": "An error occurred! Please contact the system administrator."
+      }
     },
     "form": {
       "common": {

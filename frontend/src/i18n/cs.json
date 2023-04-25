@@ -10,7 +10,9 @@
         "createNewPhantomForm": "Založit měření na Fantomu",
         "openNewProbandForm": "Otevřít formulář probanda"
       },
-      "errorAlert": "Nastala chyba! Kontaktujte, prosím, administrátora systému."
+      "errors": {
+        "contactAdmin": "Nastala chyba! Kontaktujte prosím administrátora systému."
+      }
     },
     "form": {
       "common": {

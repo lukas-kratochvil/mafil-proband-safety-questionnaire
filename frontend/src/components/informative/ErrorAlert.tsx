@@ -3,14 +3,14 @@ import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n";
 
 export const ErrorAlert = () => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "common" });
+  const { t } = useTranslation(defaultNS, { keyPrefix: "common.errors" });
 
   return (
     <Alert
       severity="error"
       variant="outlined"
     >
-      {t("errorAlert")}
+      {t("contactAdmin")}
     </Alert>
   );
 };
