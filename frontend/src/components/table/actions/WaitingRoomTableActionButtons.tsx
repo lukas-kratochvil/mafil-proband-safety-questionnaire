@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { defaultNS } from "@app/i18n";
 import { RoutingPaths } from "@app/routing-paths";
 import { deleteVisitForm } from "@app/util/server_API/calls";
+import { handleErrorsWithToast } from "@app/util/utils";
 import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
 interface IWaitingRoomTableActionButtonsProps {
@@ -32,7 +33,12 @@ export const WaitingRoomTableActionButtons = ({ visitFormId, queryKey }: IWaitin
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
 
   const onDelete = async () => {
-    await deleteVisitForm(visitFormId);
+    try {
+      await deleteVisitForm(visitFormId);
+    } catch (error) {
+      handleErrorsWithToast(error, t);
+    }
+
     void queryClient.invalidateQueries({ queryKey, exact: true });
     setOpenDeleteDialog(false);
   };

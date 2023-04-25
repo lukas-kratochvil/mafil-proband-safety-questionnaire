@@ -6,6 +6,7 @@ import { defaultNS } from "@app/i18n";
 import { IRecentVisitsTableVisit } from "@app/model/visit";
 import { RoutingPaths } from "@app/routing-paths";
 import { fetchCurrentQuestions } from "@app/util/server_API/calls";
+import { handleErrorsWithToast } from "@app/util/utils";
 import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
 interface IRecentVisitsTableActionButtonsProps {
@@ -29,25 +30,28 @@ export const RecentVisitsTableActionButtons = ({ visit }: IRecentVisitsTableActi
         size="small"
         variant="contained"
         onClick={async () => {
-          if (!visit.isPhantom) {
-            const currentQuestions = await fetchCurrentQuestions();
-            const visitQuestionIds = visit.answers.map((answer) => answer.questionId);
+          try {
+            if (!visit.isPhantom) {
+              const currentQuestions = await fetchCurrentQuestions();
+              const visitQuestionIds = visit.answers.map((answer) => answer.questionId);
 
-            // TODO: add error boundary around the action buttons to show the error
-            if (
-              currentQuestions.length !== visitQuestionIds.length
-              || currentQuestions.some(
-                (currentQuestion) =>
-                  !visitQuestionIds.includes(currentQuestion.id)
-                  || compareAsc(currentQuestion.updatedAt, visit.date) !== 1
-              )
-            ) {
-              // TODO: translate error message - firstly, try if this message is showed on the screen
-              throw new Error("Visit questions differs from current questions! Visit cannot be duplicated.");
+              if (
+                currentQuestions.length !== visitQuestionIds.length
+                || currentQuestions.some(
+                  (currentQuestion) =>
+                    !visitQuestionIds.includes(currentQuestion.id)
+                    || compareAsc(currentQuestion.updatedAt, visit.date) !== 1
+                )
+              ) {
+                // TODO: translate error message
+                throw new Error("Visit questions differs from current questions! Visit cannot be duplicated.");
+              }
             }
-          }
 
-          navigate(`${RoutingPaths.RECENT_VISITS}/duplicate/${visit.visitId}`);
+            navigate(`${RoutingPaths.RECENT_VISITS}/duplicate/${visit.visitId}`);
+          } catch (error) {
+            handleErrorsWithToast(error, t);
+          }
         }}
       >
         {t("duplicateButton")}
