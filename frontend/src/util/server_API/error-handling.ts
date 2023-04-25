@@ -21,9 +21,9 @@ export const createServerApiCallError = (errors: GraphQlError[] | undefined, mes
     });
 
     if (validationErrorMessage.length > 0) {
-      return new ServerApiValidationError(validationErrorMessage);
+      return new ServerApiValidationError(validationErrorMessage.trim());
     }
   }
 
-  return new Error(`Error occurred: ${message}! Please, contact a system administrator.`);
+  return new Error(`Error occurred: ${message}! Please contact the system administrator.`);
 };

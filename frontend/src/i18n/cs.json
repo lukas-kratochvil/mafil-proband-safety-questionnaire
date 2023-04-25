@@ -12,7 +12,9 @@
       },
       "errors": {
         "contactAdmin": "Nastala chyba! Kontaktujte prosím administrátora systému.",
-        "tryAgainLater": "Nastala chyba! Opakujte prosím akci později nebo kontaktujte administrátora systému."
+        "tryAgainLater": "Nastala chyba! Opakujte prosím akci později nebo kontaktujte administrátora systému.",
+        "serverValidationError": "Nastala chyba při validaci vstupu! Následující pole jsou chybná",
+        "serverCommunicationError": "Nastala interní chyba serveru! Kontaktujte prosím administrátora systému."
       }
     },
     "form": {
