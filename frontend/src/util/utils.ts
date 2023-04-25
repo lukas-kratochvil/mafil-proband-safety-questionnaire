@@ -1,4 +1,8 @@
+import { AxiosError } from "axios";
+import { TFunction } from "react-i18next";
+import toast from "react-hot-toast";
 import { NavigateFunction } from "react-router-dom";
+import { ServerApiValidationError } from "./server_API/error-handling";
 
 export interface IButtonProps {
   titleLocalizationKey: string;
@@ -10,3 +14,17 @@ export const getBackButtonProps = (navigate: NavigateFunction, customTitleLocali
   titleLocalizationKey: customTitleLocalizationKey ?? "common.backButton",
   onClick: async () => navigate(-1),
 });
+
+export const handleErrorsWithToast = (e: unknown, t: TFunction<"translation">): void => {
+  let errorMessage: string;
+
+  if (e instanceof ServerApiValidationError) {
+    errorMessage = `${t("common.errors.serverValidationError")}:\n${e.message}`;
+  } else if (e instanceof AxiosError) {
+    errorMessage = t("common.errors.serverCommunicationError");
+  } else {
+    errorMessage = t("common.errors.contactAdmin");
+  }
+
+  toast.error(errorMessage);
+}

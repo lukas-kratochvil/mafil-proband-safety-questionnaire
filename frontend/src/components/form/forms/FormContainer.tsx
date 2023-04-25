@@ -1,14 +1,12 @@
 import { Stack, Theme, useMediaQuery } from "@mui/material";
-import { AxiosError } from "axios";
 import { PropsWithChildren } from "react";
 import { useFormContext } from "react-hook-form";
-import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { FormButtons, IFormButtonsProps } from "@app/components/form/components/FormButtons";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { defaultNS } from "@app/i18n";
 import { FormPropType } from "@app/model/form";
-import { ServerApiValidationError } from "@app/util/server_API/error-handling";
+import { handleErrorsWithToast } from "@app/util/utils";
 import { getValidatedFormData } from "../util/utils";
 import { FormSkeleton } from "./FormSkeleton";
 
@@ -28,14 +26,8 @@ export const FormContainer = ({ children, isLoading, isError, buttons }: PropsWi
 
     try {
       await buttons?.submitButtonProps?.onClick(validatedFormData);
-    } catch (e) {
-      if (e instanceof ServerApiValidationError) {
-        toast.error(`${t("common.errors.serverValidationError")}:\n${e.message}`);
-      } else if (e instanceof AxiosError) {
-        toast.error(t("common.errors.serverCommunicationError"));
-      } else {
-        toast.error(t("common.errors.contactAdmin"));
-      }
+    } catch (error) {
+      handleErrorsWithToast(error, t);
     }
   };
 
