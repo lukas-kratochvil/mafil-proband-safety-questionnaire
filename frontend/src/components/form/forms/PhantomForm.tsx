@@ -4,8 +4,8 @@ import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo
 import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo";
 import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { RoutingPaths } from "@app/routing-paths";
-import { addPdfToVisit, createPhantomVisit } from "@app/util/mafildb_API/fetch";
-import { generatePhantomPdf } from "@app/util/server_API/fetch";
+import { addPdfToVisit, createPhantomVisit } from "@app/util/mafildb_API/calls";
+import { generatePhantomPdf } from "@app/util/server_API/calls";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormContainer } from "./FormContainer";
 

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { defaultNS } from "@app/i18n";
 import { IRecentVisitsTableVisit } from "@app/model/visit";
 import { RoutingPaths } from "@app/routing-paths";
-import { fetchCurrentQuestions } from "@app/util/server_API/fetch";
+import { fetchCurrentQuestions } from "@app/util/server_API/calls";
 import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
 interface IRecentVisitsTableActionButtonsProps {

@@ -11,19 +11,19 @@ import { loadFormDefaultValuesVisitDuplication } from "@app/components/form/util
 import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { FormPropType, FormQac, ValidatedFormData } from "@app/model/form";
 import { RoutingPaths } from "@app/routing-paths";
-import { VisitState } from "@app/util/mafildb_API/dto";
 import {
   addPdfToVisit,
   createFinalizedVisit,
   createPhantomVisit,
   fetchDuplicatedVisit,
-} from "@app/util/mafildb_API/fetch";
-import { QuestionPartNumber } from "@app/util/server_API/dto";
+} from "@app/util/mafildb_API/calls";
+import { VisitState } from "@app/util/mafildb_API/dto";
 import {
   createDuplicatedVisitFormForApproval,
   generatePhantomPdf,
   generateProbandPdf,
-} from "@app/util/server_API/fetch";
+} from "@app/util/server_API/calls";
+import { QuestionPartNumber } from "@app/util/server_API/dto";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormFinalizeDialog } from "../components/FormFinalizeDialog";

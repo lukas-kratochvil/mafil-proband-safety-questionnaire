@@ -6,7 +6,7 @@ import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import i18n, { defaultNS, LanguageCode } from "@app/i18n";
 import { FormPropType } from "@app/model/form";
-import { fetchProbandContactRequest } from "@app/util/server_API/fetch";
+import { fetchProbandContactRequest } from "@app/util/server_API/calls";
 import { FormTextField } from "../inputs/FormTextField";
 import { FormCardContainer } from "./FormCardContainer";
 

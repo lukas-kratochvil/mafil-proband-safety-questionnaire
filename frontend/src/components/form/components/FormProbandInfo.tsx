@@ -8,7 +8,7 @@ import { InfoTooltip } from "@app/components/informative/InfoTooltip";
 import { defaultNS } from "@app/i18n";
 import { FormPropType } from "@app/model/form";
 import { VisualCorrection } from "@app/model/visit";
-import { fetchGenders, fetchHandednesses, fetchNativeLanguages } from "@app/util/server_API/fetch";
+import { fetchGenders, fetchHandednesses, fetchNativeLanguages } from "@app/util/server_API/calls";
 import { FormAutocompleteGenders } from "../inputs/FormAutocompleteGenders";
 import { FormAutocompleteHandednesses } from "../inputs/FormAutocompleteHandednesses";
 import { FormAutocompleteNativeLanguages } from "../inputs/FormAutocompleteNativeLanguages";

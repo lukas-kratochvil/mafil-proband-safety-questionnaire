@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { ColoredInfoStripe, ColoredInfoStripeColors } from "@app/components/informative/ColoredInfoStripe";
 import { defaultNS } from "@app/i18n";
 import { FormPropType } from "@app/model/form";
-import { fetchDevices, fetchProjects } from "@app/util/mafildb_API/fetch";
+import { fetchDevices, fetchProjects } from "@app/util/mafildb_API/calls";
 import { FormAutocompleteDevices } from "../inputs/FormAutocompleteDevices";
 import { FormAutocompleteProjects } from "../inputs/FormAutocompleteProjects";
 import { FormDatePicker } from "../inputs/FormDatePicker";

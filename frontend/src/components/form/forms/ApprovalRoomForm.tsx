@@ -11,15 +11,15 @@ import { loadFormDefaultValuesFromApprovalRoomVisitForm } from "@app/components/
 import { useAuthDev } from "@app/hooks/auth/auth-dev";
 import { FormPropType, FormQac, ValidatedFormData } from "@app/model/form";
 import { RoutingPaths } from "@app/routing-paths";
+import { addPdfToVisit, createVisitFromApproval } from "@app/util/mafildb_API/calls";
 import { VisitState } from "@app/util/mafildb_API/dto";
-import { addPdfToVisit, createVisitFromApproval } from "@app/util/mafildb_API/fetch";
-import { QuestionPartNumber } from "@app/util/server_API/dto";
 import {
   fetchApprovalRoomVisitForm,
   generateProbandPdf,
   markVisitFormAsPdfGenerated,
   markVisitFormAsSentToMafilDb,
-} from "@app/util/server_API/fetch";
+} from "@app/util/server_API/calls";
+import { QuestionPartNumber } from "@app/util/server_API/dto";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormContainer } from "./FormContainer";

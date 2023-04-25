@@ -8,8 +8,8 @@ import { RecentVisitsTableActionButtons } from "@app/components/table/actions/Re
 import { defaultTableProps } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n";
 import { IRecentVisitsTableVisit } from "@app/model/visit";
+import { fetchRecentVisits } from "@app/util/mafildb_API/calls";
 import { VisitState } from "@app/util/mafildb_API/dto";
-import { fetchRecentVisits } from "@app/util/mafildb_API/fetch";
 import { PageContainer } from "./PageContainer";
 
 const processedDateFormat = "d.M.y H:mm";

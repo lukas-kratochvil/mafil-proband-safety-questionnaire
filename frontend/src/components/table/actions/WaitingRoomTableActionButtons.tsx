@@ -16,7 +16,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { defaultNS } from "@app/i18n";
 import { RoutingPaths } from "@app/routing-paths";
-import { deleteVisitForm } from "@app/util/server_API/fetch";
+import { deleteVisitForm } from "@app/util/server_API/calls";
 import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
 interface IWaitingRoomTableActionButtonsProps {

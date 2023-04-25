@@ -12,8 +12,8 @@ import {
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n";
 import { IVisitDetail } from "@app/model/visit";
+import { fetchVisitDetail, updateVisitState } from "@app/util/mafildb_API/calls";
 import { VisitState } from "@app/util/mafildb_API/dto";
-import { fetchVisitDetail, updateVisitState } from "@app/util/mafildb_API/fetch";
 import { getBackButtonProps, IButtonProps } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
 

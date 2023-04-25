@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import DOMPurify from "dompurify";
 import { useTranslation } from "react-i18next";
 import { LanguageCode } from "@app/i18n";
-import { fetchBeforeExamination } from "@app/util/server_API/fetch";
+import { fetchBeforeExamination } from "@app/util/server_API/calls";
 import { FormCardContainer } from "./FormCardContainer";
 
 export const FormBeforeExamination = () => {

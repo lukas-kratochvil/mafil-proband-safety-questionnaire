@@ -7,8 +7,8 @@ import { TranslatedEntityTableCell } from "@app/components/table/TranslatedEntit
 import { WaitingRoomTableActionButtons } from "@app/components/table/actions/WaitingRoomTableActionButtons";
 import { defaultTableProps } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n";
+import { fetchWaitingRoomTableVisitForms } from "@app/util/server_API/calls";
 import { IWaitingRoomTableVisitFormDTO } from "@app/util/server_API/dto";
-import { fetchWaitingRoomTableVisitForms } from "@app/util/server_API/fetch";
 import { PageContainer } from "./PageContainer";
 
 const createdAtFormat = "d.M.y H:mm";

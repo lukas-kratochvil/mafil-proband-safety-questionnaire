@@ -2,8 +2,8 @@ import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IAuthMethodDev, IOperatorAuthorization } from "@app/model/auth";
 import { RoutingPaths } from "@app/routing-paths";
+import { authenticateOperator } from "@app/util/server_API/calls";
 import { IOperatorDTO } from "@app/util/server_API/dto";
-import { authenticateOperator } from "@app/util/server_API/fetch";
 
 export type OperatorDev = IOperatorDTO | undefined;
 

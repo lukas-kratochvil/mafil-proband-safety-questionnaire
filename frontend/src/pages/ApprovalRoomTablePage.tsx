@@ -7,8 +7,8 @@ import { TranslatedEntityTableCell } from "@app/components/table/TranslatedEntit
 import { ApprovalRoomTableActionButtons } from "@app/components/table/actions/ApprovalRoomTableActionButtons";
 import { defaultTableProps } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n";
+import { fetchApprovalRoomTableVisitForms } from "@app/util/server_API/calls";
 import { IApprovalRoomTableVisitFormDTO } from "@app/util/server_API/dto";
-import { fetchApprovalRoomTableVisitForms } from "@app/util/server_API/fetch";
 import { PageContainer } from "./PageContainer";
 
 const createdAtFormat = "d.M.y H:mm";
