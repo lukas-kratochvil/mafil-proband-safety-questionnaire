@@ -24,7 +24,7 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 }));
 
 //----------------------------------------------------------------------
-// Mocking custom fetch methods
+// Mocking server API calls
 //----------------------------------------------------------------------
 const htmlCard: IHTMLCardDTO = {
   title: "title",
@@ -32,7 +32,7 @@ const htmlCard: IHTMLCardDTO = {
 };
 const newProbandVisitFormId = "id123";
 
-vi.mock("@app/util/server_API/fetch", async () => ({
+vi.mock("@app/util/server_API/calls", async () => ({
   fetchGenders: async (): Promise<IGenderDTO[]> => gendersDev,
   fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesDev,
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesDev,

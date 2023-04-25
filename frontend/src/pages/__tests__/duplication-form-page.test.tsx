@@ -79,11 +79,11 @@ vi.mock("@app/hooks/auth/auth-dev", () => ({
 }));
 
 //----------------------------------------------------------------------
-// Mocking custom fetch methods
+// Mocking server API calls
 //----------------------------------------------------------------------
 const newDuplicatedVisitFormId = "id123";
 
-vi.mock("@app/util/server_API/fetch", async () => ({
+vi.mock("@app/util/server_API/calls", async () => ({
   fetchGenders: async (): Promise<IGenderDTO[]> => gendersDev,
   fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesDev,
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesDev,
@@ -93,7 +93,10 @@ vi.mock("@app/util/server_API/fetch", async () => ({
   generatePhantomPdf: async (): Promise<IPdfDTO> => pdfDev,
 }));
 
-vi.mock("@app/util/mafildb_API/fetch", async () => ({
+//----------------------------------------------------------------------
+// Mocking MAFILDB API calls
+//----------------------------------------------------------------------
+vi.mock("@app/util/mafildb_API/calls", async () => ({
   fetchProjects: async (): Promise<IProjectDTO[]> => projectsDev,
   fetchDevices: async (): Promise<IDeviceDTO[]> => devicesDev,
   fetchDuplicatedVisit: async (): Promise<IDuplicatedVisitIncludingQuestions> => visit,
