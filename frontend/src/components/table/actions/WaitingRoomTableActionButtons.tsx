@@ -43,8 +43,6 @@ export const WaitingRoomTableActionButtons = ({ visitFormId, queryKey }: IWaitin
     setOpenDeleteDialog(false);
   };
 
-  const onCancel = () => setOpenDeleteDialog(false);
-
   return (
     <TableActionButtonsContainer>
       <Button
@@ -76,7 +74,7 @@ export const WaitingRoomTableActionButtons = ({ visitFormId, queryKey }: IWaitin
         </DialogContent>
         <DialogActions>
           <Button onClick={onDelete}>{t("clearIconDialogDelete")}</Button>
-          <Button onClick={onCancel}>{t("clearIconDialogCancel")}</Button>
+          <Button onClick={() => setOpenDeleteDialog(false)}>{t("clearIconDialogCancel")}</Button>
         </DialogActions>
       </Dialog>
     </TableActionButtonsContainer>

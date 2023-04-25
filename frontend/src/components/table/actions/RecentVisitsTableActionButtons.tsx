@@ -17,6 +17,30 @@ export const RecentVisitsTableActionButtons = ({ visit }: IRecentVisitsTableActi
   const { t } = useTranslation(defaultNS, { keyPrefix: "recentVisitsTablePage.actions" });
   const navigate = useNavigate();
 
+  const onDuplicate = async () => {
+    try {
+      if (!visit.isPhantom) {
+        const currentQuestions = await fetchCurrentQuestions();
+        const visitQuestionIds = visit.answers.map((answer) => answer.questionId);
+
+        if (
+          currentQuestions.length !== visitQuestionIds.length
+          || currentQuestions.some(
+            (currentQuestion) =>
+              !visitQuestionIds.includes(currentQuestion.id) || compareAsc(currentQuestion.updatedAt, visit.date) !== 1
+          )
+        ) {
+          // TODO: translate error message
+          throw new Error("Visit questions differs from current questions! Visit cannot be duplicated.");
+        }
+      }
+
+      navigate(`${RoutingPaths.RECENT_VISITS}/duplicate/${visit.visitId}`);
+    } catch (error) {
+      handleErrorsWithToast(error, t);
+    }
+  };
+
   return (
     <TableActionButtonsContainer>
       <Button
@@ -29,30 +53,7 @@ export const RecentVisitsTableActionButtons = ({ visit }: IRecentVisitsTableActi
       <Button
         size="small"
         variant="contained"
-        onClick={async () => {
-          try {
-            if (!visit.isPhantom) {
-              const currentQuestions = await fetchCurrentQuestions();
-              const visitQuestionIds = visit.answers.map((answer) => answer.questionId);
-
-              if (
-                currentQuestions.length !== visitQuestionIds.length
-                || currentQuestions.some(
-                  (currentQuestion) =>
-                    !visitQuestionIds.includes(currentQuestion.id)
-                    || compareAsc(currentQuestion.updatedAt, visit.date) !== 1
-                )
-              ) {
-                // TODO: translate error message
-                throw new Error("Visit questions differs from current questions! Visit cannot be duplicated.");
-              }
-            }
-
-            navigate(`${RoutingPaths.RECENT_VISITS}/duplicate/${visit.visitId}`);
-          } catch (error) {
-            handleErrorsWithToast(error, t);
-          }
-        }}
+        onClick={onDuplicate}
       >
         {t("duplicateButton")}
       </Button>
