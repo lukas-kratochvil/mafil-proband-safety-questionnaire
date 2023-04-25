@@ -86,7 +86,7 @@ export const authenticateOperator = async (loggingOperator: IOperatorAuthorizati
     return data.data.authenticateOperator;
   }
 
-  throw createServerApiCallError(data.errors, "cannot authenticate operator");
+  throw createServerApiCallError(data.errors);
 };
 
 export const fetchOperator = async (uco: string): Promise<IOperatorDTO | never> => {
@@ -97,7 +97,7 @@ export const fetchOperator = async (uco: string): Promise<IOperatorDTO | never> 
     return data.data.operator;
   }
 
-  throw createServerApiCallError(data.errors, "cannot fetch operator");
+  throw createServerApiCallError(data.errors);
 };
 
 export const fetchGenders = async (): Promise<IGenderDTO[] | never> => {
@@ -107,7 +107,7 @@ export const fetchGenders = async (): Promise<IGenderDTO[] | never> => {
     return data.data.genders;
   }
 
-  throw createServerApiCallError(data.errors, "cannot fetch genders");
+  throw createServerApiCallError(data.errors);
 };
 
 export const fetchGender = async (code: string): Promise<IGenderDTO | never> => {
@@ -118,7 +118,7 @@ export const fetchGender = async (code: string): Promise<IGenderDTO | never> => 
     return data.data.gender;
   }
 
-  throw createServerApiCallError(data.errors, "cannot fetch gender");
+  throw createServerApiCallError(data.errors);
 };
 
 export const fetchNativeLanguages = async (): Promise<INativeLanguageDTO[] | never> => {
@@ -128,7 +128,7 @@ export const fetchNativeLanguages = async (): Promise<INativeLanguageDTO[] | nev
     return data.data.nativeLanguages;
   }
 
-  throw createServerApiCallError(data.errors, "cannot fetch native languages");
+  throw createServerApiCallError(data.errors);
 };
 
 export const fetchNativeLanguage = async (code: string): Promise<INativeLanguageDTO | never> => {
@@ -142,7 +142,7 @@ export const fetchNativeLanguage = async (code: string): Promise<INativeLanguage
     return data.data.nativeLanguage;
   }
 
-  throw createServerApiCallError(data.errors, "cannot fetch native language");
+  throw createServerApiCallError(data.errors);
 };
 
 export const fetchHandednesses = async (): Promise<IHandednessDTO[] | never> => {
@@ -152,7 +152,7 @@ export const fetchHandednesses = async (): Promise<IHandednessDTO[] | never> => 
     return data.data.handednesses;
   }
 
-  throw createServerApiCallError(data.errors, "cannot fetch handednesses");
+  throw createServerApiCallError(data.errors);
 };
 
 export const fetchHandedness = async (code: string): Promise<IHandednessDTO | never> => {
@@ -163,7 +163,7 @@ export const fetchHandedness = async (code: string): Promise<IHandednessDTO | ne
     return data.data.handedness;
   }
 
-  throw createServerApiCallError(data.errors, "cannot fetch handedness");
+  throw createServerApiCallError(data.errors);
 };
 
 export const fetchCurrentQuestions = async (): Promise<IQuestionDTO[] | never> => {
@@ -173,7 +173,7 @@ export const fetchCurrentQuestions = async (): Promise<IQuestionDTO[] | never> =
     return data.data.questions;
   }
 
-  throw createServerApiCallError(data.errors, "cannot fetch current questions");
+  throw createServerApiCallError(data.errors);
 };
 
 export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO | never> => {
@@ -184,7 +184,7 @@ export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO | 
     return data.data.question;
   }
 
-  throw createServerApiCallError(data.errors, "cannot fetch question");
+  throw createServerApiCallError(data.errors);
 };
 
 export const fetchEntryInfo = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
@@ -198,7 +198,7 @@ export const fetchEntryInfo = async (locale: LanguageCode): Promise<IHTMLCardDTO
     return data.data.entryInfo;
   }
 
-  throw createServerApiCallError(data.errors, "cannot fetch entry info text");
+  throw createServerApiCallError(data.errors);
 };
 
 export const fetchSafetyInfo = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
@@ -212,7 +212,7 @@ export const fetchSafetyInfo = async (locale: LanguageCode): Promise<IHTMLCardDT
     return data.data.safetyInfo;
   }
 
-  throw createServerApiCallError(data.errors, "cannot fetch safety info text");
+  throw createServerApiCallError(data.errors);
 };
 
 export const fetchBeforeExamination = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
@@ -226,7 +226,7 @@ export const fetchBeforeExamination = async (locale: LanguageCode): Promise<IHTM
     return data.data.beforeExamination;
   }
 
-  throw createServerApiCallError(data.errors, "cannot fetch before examination text");
+  throw createServerApiCallError(data.errors);
 };
 
 export const fetchExaminationConsent = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
@@ -240,7 +240,7 @@ export const fetchExaminationConsent = async (locale: LanguageCode): Promise<IHT
     return data.data.examinationConsent;
   }
 
-  throw createServerApiCallError(data.errors, "cannot fetch examination consent");
+  throw createServerApiCallError(data.errors);
 };
 
 export const fetchProbandContactRequest = async (
@@ -260,7 +260,7 @@ export const fetchProbandContactRequest = async (
     return data.data.probandContactRequest;
   }
 
-  throw createServerApiCallError(data.errors, "cannot fetch proband contact request");
+  throw createServerApiCallError(data.errors);
 };
 
 export const fetchProbandContactConsent = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
@@ -274,7 +274,7 @@ export const fetchProbandContactConsent = async (locale: LanguageCode): Promise<
     return data.data.probandContactConsent;
   }
 
-  throw createServerApiCallError(data.errors, "cannot fetch proband contact consent");
+  throw createServerApiCallError(data.errors);
 };
 
 export const fetchWaitingRoomTableVisitForms = async (): Promise<IWaitingRoomTableVisitFormDTO[] | never> => {
@@ -288,7 +288,7 @@ export const fetchWaitingRoomTableVisitForms = async (): Promise<IWaitingRoomTab
     return data.data.visitForms;
   }
 
-  throw createServerApiCallError(data.errors, "cannot fetch waiting room table visit forms");
+  throw createServerApiCallError(data.errors);
 };
 
 export const fetchWaitingRoomVisitForm = async (
@@ -305,7 +305,7 @@ export const fetchWaitingRoomVisitForm = async (
   });
 
   if (data.data === null || data.data === undefined) {
-    throw createServerApiCallError(data.errors, "cannot fetch waiting room visit form");
+    throw createServerApiCallError(data.errors);
   }
 
   const { visitForm } = data.data;
@@ -338,7 +338,7 @@ export const fetchApprovalRoomTableVisitForms = async (): Promise<IApprovalRoomT
     return data.data.visitForms;
   }
 
-  throw createServerApiCallError(data.errors, "cannot fetch approval room table visit forms");
+  throw createServerApiCallError(data.errors);
 };
 
 export const fetchApprovalRoomVisitForm = async (
@@ -355,7 +355,7 @@ export const fetchApprovalRoomVisitForm = async (
   });
 
   if (data.data === null || data.data === undefined) {
-    throw createServerApiCallError(data.errors, "cannot fetch approval room visit form");
+    throw createServerApiCallError(data.errors);
   }
 
   const { visitForm } = data.data;
@@ -408,7 +408,7 @@ export const createProbandVisitForm = async (visitFormData: ValidatedFormData): 
     return data.data.createVisitForm.id;
   }
 
-  throw createServerApiCallError(data.errors, "cannot create visit form");
+  throw createServerApiCallError(data.errors);
 };
 
 export const createDuplicatedVisitFormForApproval = async (
@@ -460,7 +460,7 @@ export const createDuplicatedVisitFormForApproval = async (
     return data.data.createVisitForm.id;
   }
 
-  throw createServerApiCallError(data.errors, "cannot create visit form");
+  throw createServerApiCallError(data.errors);
 };
 
 export const sendVisitFormForApproval = async (
@@ -509,7 +509,7 @@ export const sendVisitFormForApproval = async (
     return data.data.updateVisitForm.id;
   }
 
-  throw createServerApiCallError(data.errors, "cannot send visit form for approval");
+  throw createServerApiCallError(data.errors);
 };
 
 const updateVisitFormState = async (visitFormId: string | undefined, state: VisitFormState): Promise<void | never> => {
@@ -532,7 +532,7 @@ const updateVisitFormState = async (visitFormId: string | undefined, state: Visi
     return;
   }
 
-  throw createServerApiCallError(data.errors, "cannot update visit form state");
+  throw createServerApiCallError(data.errors);
 };
 
 export const markVisitFormAsSentToMafilDb = async (visitFormId: string | undefined): Promise<void> =>
@@ -549,7 +549,7 @@ export const deleteVisitForm = async (visitFormId: string): Promise<void | never
   });
 
   if (data.errors) {
-    throw createServerApiCallError(data.errors, "cannot delete visit form");
+    throw createServerApiCallError(data.errors);
   }
 };
 
@@ -601,7 +601,7 @@ const generatePdf = async (
     return data.data.generatePDF;
   }
 
-  throw createServerApiCallError(data.errors, "cannot generate visit PDF");
+  throw createServerApiCallError(data.errors);
 };
 
 export const generateProbandPdf = async (
