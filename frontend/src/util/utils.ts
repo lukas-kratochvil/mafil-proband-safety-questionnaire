@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
-import { TFunction } from "react-i18next";
 import toast from "react-hot-toast";
+import { TFunction } from "react-i18next";
 import { NavigateFunction } from "react-router-dom";
 import { ServerApiValidationError } from "./server_API/error-handling";
 
@@ -27,4 +27,4 @@ export const handleErrorsWithToast = (e: unknown, t: TFunction<"translation">): 
   }
 
   toast.error(errorMessage);
-}
+};
