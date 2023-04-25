@@ -247,6 +247,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
       finalizer = await fetchOperator(visit.finalizer_uco);
     } catch (e) {
       // TODO: what to do when finalizer not found? Skip the visit?
+      return;
     }
 
     // if project or device don't exist we skip the visit

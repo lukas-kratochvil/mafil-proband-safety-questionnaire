@@ -179,7 +179,7 @@ export const ApprovalRoomForm = () => {
     } else {
       setFormButtons({
         submitButtonProps: undefined,
-        // Even though the 'Back button' is the only button in the form, it doesn't have 'submit' type because MUI uses <span> for buttons
+        // Even though the 'Back button' is the only button in the form, it doesn't have 'submit' type because MUI uses HTML span element for buttons
         buttonsProps: [getBackButtonProps(navigate)],
       });
     }
