@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { defaultNS } from "@app/i18n";
 import { IRecentVisitsTableVisit } from "@app/model/visit";
 import { RoutingPaths } from "@app/routing-paths";
+import { LocalizedError } from "@app/util/error-handling/LocalizedError";
 import { fetchCurrentQuestions } from "@app/util/server_API/calls";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
@@ -30,8 +31,7 @@ export const RecentVisitsTableActionButtons = ({ visit }: IRecentVisitsTableActi
               !visitQuestionIds.includes(currentQuestion.id) || compareAsc(currentQuestion.updatedAt, visit.date) !== 1
           )
         ) {
-          // TODO: translate error message
-          throw new Error("Visit questions differs from current questions! Visit cannot be duplicated.");
+          throw new LocalizedError("cannotDuplicateVisitDueToDifferentSafetyQuestions");
         }
       }
 

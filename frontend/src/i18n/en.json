@@ -14,7 +14,8 @@
         "contactAdmin": "An error occurred! Please contact the system administrator.",
         "tryAgainLater": "An error occurred! Please try again later or contact the system administrator.",
         "serverValidationError": "An error occurred while validating the input! The following fields are incorrect",
-        "serverCommunicationError": "An internal server error has occurred! Please contact your system administrator."
+        "serverCommunicationError": "An internal server error has occurred! Please contact your system administrator.",
+        "cannotDuplicateVisitDueToDifferentSafetyQuestions": "Visit safety questions differs from the current safety questions! Visit cannot be duplicated."
       }
     },
     "form": {

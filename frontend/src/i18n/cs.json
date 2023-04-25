@@ -14,7 +14,8 @@
         "contactAdmin": "Nastala chyba! Kontaktujte prosím správce systému.",
         "tryAgainLater": "Nastala chyba! Opakujte prosím akci později nebo kontaktujte správce systému.",
         "serverValidationError": "Nastala chyba při validaci vstupu! Následující pole jsou chybná",
-        "serverCommunicationError": "Nastala interní chyba serveru! Kontaktujte prosím správce systému."
+        "serverCommunicationError": "Nastala interní chyba serveru! Kontaktujte prosím správce systému.",
+        "cannotDuplicateVisitDueToDifferentSafetyQuestions": "Bezpečnostní otázky návštěvy se liší od aktuálních bezpečnostních otázek! Návštěvu nelze duplikovat."
       }
     },
     "form": {
