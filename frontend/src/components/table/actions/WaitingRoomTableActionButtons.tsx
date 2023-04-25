@@ -33,7 +33,7 @@ export const WaitingRoomTableActionButtons = ({ visitFormId, queryKey }: IWaitin
 
   const onDelete = async () => {
     await deleteVisitForm(visitFormId);
-    queryClient.invalidateQueries({ queryKey, exact: true });
+    void queryClient.invalidateQueries({ queryKey, exact: true });
     setOpenDeleteDialog(false);
   };
 

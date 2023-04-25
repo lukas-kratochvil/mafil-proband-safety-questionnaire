@@ -194,7 +194,7 @@ export const WaitingRoomForm = () => {
       measuredAt: data.measuredAt ?? new Date(),
     };
     await sendVisitFormForApproval(id ?? "", modifiedFields, operator?.id ?? "");
-    queryClient.invalidateQueries({ queryKey: ["waitingRoomVisitForms"], exact: true });
+    void queryClient.invalidateQueries({ queryKey: ["waitingRoomVisitForms"], exact: true });
     setOpenFinalizeDialog(false);
     navigate(RoutingPaths.WAITING_ROOM);
   };

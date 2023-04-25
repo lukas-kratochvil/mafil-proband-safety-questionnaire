@@ -34,7 +34,7 @@ export const LanguageMenu = () => {
   });
 
   const selectedLanguageOnClick = (language: string) => {
-    i18n.changeLanguage(language);
+    void i18n.changeLanguage(language);
     popupState.close();
   };
 

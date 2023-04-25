@@ -84,7 +84,7 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
              */
             downloadPdf(visitDetail.pdfName, visitDetail.pdfContent);
             await updateVisitState(visitDetail.visitId, VisitState.FOR_SIGNATURE_PHYSICALLY);
-            queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitDetail.visitId), exact: true });
+            void queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitDetail.visitId), exact: true });
           },
         },
         {
@@ -101,7 +101,7 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
           titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
           onClick: async () => {
             await updateVisitState(visitDetail.visitId, VisitState.SIGNED_PHYSICALLY);
-            queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitDetail.visitId), exact: true });
+            void queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitDetail.visitId), exact: true });
           },
         },
       ];
@@ -111,7 +111,7 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
           titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
           onClick: async () => {
             await updateVisitState(visitDetail.visitId, VisitState.SIGNED_ELECTRONICALLY);
-            queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitDetail.visitId), exact: true });
+            void queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitDetail.visitId), exact: true });
           },
         },
       ];

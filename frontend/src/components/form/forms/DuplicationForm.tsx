@@ -204,7 +204,7 @@ export const DuplicationForm = () => {
   ]);
 
   const createVisitFormInApprovalRoom = async (data: ValidatedFormData) => {
-    createDuplicatedVisitFormForApproval(data, operator?.id);
+    await createDuplicatedVisitFormForApproval(data, operator?.id);
     setOpenFinalizeDialog(false);
     navigate(RoutingPaths.RECENT_VISITS);
   };

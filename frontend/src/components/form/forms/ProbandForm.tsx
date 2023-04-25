@@ -45,7 +45,7 @@ export const ProbandForm = () => {
     submitButtonProps: {
       titleLocalizationKey: "form.common.buttons.complete",
       onClick: async (data) => {
-        createProbandVisitForm(data);
+        await createProbandVisitForm(data);
         navigate(RoutingPaths.PROBAND_HOME);
       },
     },
@@ -68,7 +68,7 @@ export const ProbandForm = () => {
         }
 
         if (!isValidationError) {
-          createProbandVisitForm(data);
+          await createProbandVisitForm(data);
           navigate(RoutingPaths.PROBAND_HOME);
         }
       },

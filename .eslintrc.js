@@ -28,6 +28,8 @@ module.exports = {
     "no-plusplus": "off",
     "no-shadow": "off",
     "no-use-before-define": "off",
+    "no-void": ["error", { "allowAsStatement": true }],
+    "@typescript-eslint/no-floating-promises": ["error"],
     "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/no-unused-vars": ["warn", { args: "all", argsIgnorePattern: "^_" }],
     "@typescript-eslint/no-use-before-define": "error",

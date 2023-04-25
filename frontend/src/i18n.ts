@@ -15,7 +15,7 @@ export const resources = {
 
 export type LanguageCode = keyof typeof resources;
 
-i18n
+void i18n
   // detect user language
   .use(LanguageDetector)
   // pass the i18n instance to react-i18next
