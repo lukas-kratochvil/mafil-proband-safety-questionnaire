@@ -1,7 +1,6 @@
 import { Button, Grid, Skeleton, Stack } from "@mui/material";
 import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { CardContainer } from "@app/components/card/CardContainer";
@@ -15,7 +14,7 @@ import { convertStringToLocalizationKey, defaultNS } from "@app/i18n";
 import { IVisitDetail } from "@app/model/visit";
 import { fetchVisitDetail, updateVisitState } from "@app/util/mafildb_API/calls";
 import { VisitState } from "@app/util/mafildb_API/dto";
-import { getBackButtonProps, IButtonProps } from "@app/util/utils";
+import { getBackButtonProps, handleErrorsWithToast, IButtonProps } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
 
 const getVisitDetailQueryKey = (visitId: string | undefined) => ["visit", visitId];
@@ -201,8 +200,8 @@ const VisitDetailPage = () => {
                   onClick={async () => {
                     try {
                       await button.onClick();
-                    } catch {
-                      toast.error(t("common.errors.tryAgainLater"));
+                    } catch (error) {
+                      handleErrorsWithToast(error, t);
                     }
                   }}
                   disabled={button.disabled}
