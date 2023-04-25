@@ -13,6 +13,7 @@ import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n";
 import { FormPropType, ValidatedFormData } from "@app/model/form";
+import { handleErrorsWithToast } from "@app/util/utils";
 import { getValidatedFormData } from "../util/utils";
 
 interface IFormFinalizeDialogProps {
@@ -29,7 +30,12 @@ export const FormFinalizeDialog = ({ isOpen, setIsOpen, onContinue }: IFormFinal
 
   const onValid = async (data: FormPropType) => {
     const validatedFormData = getValidatedFormData(data);
-    await onContinue(validatedFormData);
+
+    try {
+      await onContinue(validatedFormData);
+    } catch (error) {
+      handleErrorsWithToast(error, t);
+    }
   };
 
   return (
