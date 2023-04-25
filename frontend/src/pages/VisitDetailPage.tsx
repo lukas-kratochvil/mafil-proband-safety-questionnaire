@@ -77,12 +77,6 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
         {
           titleLocalizationKey: "visitDetailPage.buttons.downloadPDFAndPhysicallySign",
           onClick: async () => {
-            /**
-             * TODO:
-             *  - PDF will be generated and stored in DB on the server
-             *  - open system download window, so the auth user can choose where to store it (or show the print windows instead?)
-             *  - check my Firefox bookmarks for some interesting websites!!!
-             */
             downloadPdf(visitDetail.pdfName, visitDetail.pdfContent);
             await updateVisitState(visitDetail.visitId, VisitState.FOR_SIGNATURE_PHYSICALLY);
             void queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitDetail.visitId), exact: true });
