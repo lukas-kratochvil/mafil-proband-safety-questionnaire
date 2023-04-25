@@ -1,12 +1,5 @@
-import { GraphQlError } from "./response-types";
-
-export class ServerApiValidationError extends Error {
-  constructor(message: string) {
-    super(message);
-    // setting prototype because we are extending a built-in class
-    Object.setPrototypeOf(this, ServerApiValidationError.prototype);
-  }
-}
+import { GraphQlError } from "../server_API/response-types";
+import { ServerApiValidationError } from "./ServerApiValidationError";
 
 // show only validation errors and hide all the others (mostly internal server errors) under one customizable message
 export const createServerApiCallError = (errors: GraphQlError[] | undefined, message: string): Error => {

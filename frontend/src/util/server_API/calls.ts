@@ -23,7 +23,7 @@ import {
   VisitFormAnswerIncludingQuestion,
   VisitFormState,
 } from "@app/util/server_API/dto";
-import { createServerApiCallError } from "./error-handling";
+import { createServerApiCallError } from "../error-handling/server-utils";
 import { CREATE_VISIT_FORM, REMOVE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
 import {
   AUTHENTICATE_OPERATOR,
