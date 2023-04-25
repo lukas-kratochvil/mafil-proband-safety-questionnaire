@@ -1,5 +1,6 @@
 import { Stack } from "@mui/material";
 import { PropsWithChildren } from "react";
+import { Toaster } from "react-hot-toast";
 import { Header } from "@app/components/header/Header";
 import { useAuthDev } from "@app/hooks/auth/auth-dev";
 
@@ -14,6 +15,7 @@ export const PageContainer = ({ children, center, isTablePage }: PropsWithChildr
   return (
     <>
       <Header />
+      <Toaster />
       <main>
         <Stack
           spacing="1.5rem"
