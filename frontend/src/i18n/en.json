@@ -11,7 +11,8 @@
         "openNewProbandForm": "Open new proband form"
       },
       "errors": {
-        "contactAdmin": "An error occurred! Please contact the system administrator."
+        "contactAdmin": "An error occurred! Please contact the system administrator.",
+        "tryAgainLater": "An error occurred! Please try again later or contact the system administrator."
       }
     },
     "form": {

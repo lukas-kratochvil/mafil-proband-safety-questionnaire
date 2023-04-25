@@ -11,7 +11,8 @@
         "openNewProbandForm": "Otevřít formulář probanda"
       },
       "errors": {
-        "contactAdmin": "Nastala chyba! Kontaktujte prosím administrátora systému."
+        "contactAdmin": "Nastala chyba! Kontaktujte prosím administrátora systému.",
+        "tryAgainLater": "Nastala chyba! Opakujte prosím akci později nebo kontaktujte administrátora systému."
       }
     },
     "form": {

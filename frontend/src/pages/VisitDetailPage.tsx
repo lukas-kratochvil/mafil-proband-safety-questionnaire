@@ -1,6 +1,7 @@
 import { Button, Grid, Skeleton, Stack } from "@mui/material";
 import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { CardContainer } from "@app/components/card/CardContainer";
@@ -203,7 +204,13 @@ const VisitDetailPage = () => {
                 <Button
                   key={button.titleLocalizationKey}
                   variant="contained"
-                  onClick={async () => await button.onClick()}
+                  onClick={async () => {
+                    try {
+                      await button.onClick();
+                    } catch {
+                      toast.error(t("common.errors.tryAgainLater"));
+                    }
+                  }}
                   disabled={button.disabled}
                 >
                   {t(convertStringToLocalizationKey(button.titleLocalizationKey))}
