@@ -11,7 +11,7 @@
     "lint": "eslint \"src/**/*.{ts,tsx}\" --fix",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "test:ui": "vitest --ui",
+    "test:ui": "vitest --ui --api 9527",
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
