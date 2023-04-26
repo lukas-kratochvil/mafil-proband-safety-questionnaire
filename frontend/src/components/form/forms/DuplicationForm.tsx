@@ -55,6 +55,7 @@ export const DuplicationForm = () => {
   const [qacs, setQacs] = useState<FormQac[]>([]);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
 
+  // Setting default values
   useEffect(() => {
     if (visit !== undefined) {
       setQacs(
@@ -82,6 +83,7 @@ export const DuplicationForm = () => {
     }
   }, [visit, setValue]);
 
+  // Setting form buttons
   useEffect(() => {
     if (isPhantom) {
       setFormButtons({

@@ -47,6 +47,7 @@ export const ApprovalRoomForm = () => {
   const [qacs, setQacs] = useState<FormQac[]>([]);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
 
+  // Setting default values
   useEffect(() => {
     if (visitForm !== undefined) {
       setQacs(
@@ -72,6 +73,7 @@ export const ApprovalRoomForm = () => {
     }
   }, [visitForm, setValue]);
 
+  // Setting form buttons
   useEffect(() => {
     if (operator?.role === "MR_HIGH_PERM") {
       if (isEditing) {

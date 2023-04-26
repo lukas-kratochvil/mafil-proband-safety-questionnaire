@@ -53,6 +53,7 @@ export const WaitingRoomForm = () => {
   const [qacs, setQacs] = useState<FormQac[]>([]);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
 
+  // Setting default values
   useEffect(() => {
     if (visitForm !== undefined) {
       setQacs(
@@ -79,6 +80,7 @@ export const WaitingRoomForm = () => {
     }
   }, [visitForm, setValue]);
 
+  // Setting form buttons
   useEffect(() => {
     if (isEditing) {
       setFormButtons({

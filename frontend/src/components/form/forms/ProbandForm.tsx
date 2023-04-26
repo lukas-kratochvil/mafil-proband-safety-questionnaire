@@ -42,6 +42,7 @@ export const ProbandForm = () => {
     cacheTime: Infinity,
   });
 
+  // Setting questions
   useEffect(() => {
     if (questions !== undefined && step === ProbandFormStep.EXAMINATION) {
       setQacs(
@@ -60,6 +61,7 @@ export const ProbandForm = () => {
     }
   }, [questions, step]);
 
+  // Setting form buttons
   useEffect(() => {
     if (step === ProbandFormStep.EXAMINATION) {
       setFormButtons({
