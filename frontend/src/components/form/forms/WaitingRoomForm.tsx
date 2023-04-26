@@ -69,7 +69,6 @@ export const WaitingRoomForm = () => {
           updatedAt: answer.updatedAt,
         }))
       );
-      // TODO: try if there's a need for isLoading flag due to the slow form initialization
       const defaultValues = loadFormDefaultValuesFromWaitingRoomVisitForm(visitForm);
       setInitialFormData(defaultValues);
       type DefaultValuesPropertyType = keyof typeof defaultValues;

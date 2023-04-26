@@ -71,8 +71,6 @@ export const DuplicationForm = () => {
           updatedAt: answer.updatedAt,
         }))
       );
-
-      // TODO: try if there's a need for isLoading flag due to the slow form initialization
       const defaultValues = loadFormDefaultValuesVisitDuplication(visit);
       type DefaultValuesPropertyType = keyof typeof defaultValues;
       Object.keys(defaultValues).forEach((propertyName) => {

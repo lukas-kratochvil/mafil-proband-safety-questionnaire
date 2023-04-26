@@ -63,7 +63,6 @@ export const ApprovalRoomForm = () => {
           updatedAt: answer.updatedAt,
         }))
       );
-      // TODO: try if there's a need for isLoading flag due to the slow form initialization
       const defaultValues = loadFormDefaultValuesFromApprovalRoomVisitForm(visitForm);
       type DefaultValuesPropertyType = keyof typeof defaultValues;
       Object.keys(defaultValues).forEach((propertyName) => {
