@@ -24,10 +24,11 @@ enum ProbandFormStep {
 
 export const ProbandForm = () => {
   const navigate = useNavigate();
-  const { setError, setValue } = useFormContext<FormPropType>();
+  const { setError } = useFormContext<FormPropType>();
 
   const [step, setStep] = useState<ProbandFormStep>(ProbandFormStep.EXAMINATION);
   const [qacs, setQacs] = useState<FormQac[]>([]);
+  const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
   const [isContactsRequestShown, setIsContactsRequestShown] = useState<boolean>(false);
 
   const {
@@ -40,55 +41,6 @@ export const ProbandForm = () => {
     staleTime: Infinity,
     cacheTime: Infinity,
   });
-
-  const contactsButtons: IFormButtonsProps = {
-    submitButtonProps: {
-      titleLocalizationKey: "form.common.buttons.complete",
-      onClick: async (data) => {
-        await createProbandVisitForm(data);
-        navigate(RoutingPaths.PROBAND_HOME);
-      },
-    },
-    buttonsProps: [],
-  };
-
-  const contactsRequestButtons: IFormButtonsProps = {
-    submitButtonProps: {
-      titleLocalizationKey: "form.common.buttons.agree",
-      onClick: async (data) => {
-        let isValidationError = false;
-
-        if (data.email === "") {
-          setError("email", { message: "form.validation.probandContacts" }, { shouldFocus: true });
-          isValidationError = true;
-        }
-        if (data.phone === "") {
-          setError("phone", { message: "form.validation.probandContacts" }, { shouldFocus: !isValidationError });
-          isValidationError = true;
-        }
-
-        if (!isValidationError) {
-          await createProbandVisitForm(data);
-          navigate(RoutingPaths.PROBAND_HOME);
-        }
-      },
-    },
-    buttonsProps: [],
-  };
-
-  const examinationButtons: IFormButtonsProps = {
-    submitButtonProps: {
-      titleLocalizationKey: "form.common.buttons.agree",
-      onClick: async () => {
-        setStep(ProbandFormStep.CONTACTS);
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        setFormButtons(contactsButtons);
-      },
-    },
-    buttonsProps: [],
-  };
-
-  const [formButtons, setFormButtons] = useState<IFormButtonsProps>(examinationButtons);
 
   useEffect(() => {
     if (questions !== undefined && step === ProbandFormStep.EXAMINATION) {
@@ -109,10 +61,53 @@ export const ProbandForm = () => {
   }, [questions, step]);
 
   useEffect(() => {
-    if (step === ProbandFormStep.CONTACTS) {
-      setFormButtons(isContactsRequestShown ? contactsRequestButtons : contactsButtons);
+    if (step === ProbandFormStep.EXAMINATION) {
+      setFormButtons({
+        submitButtonProps: {
+          titleLocalizationKey: "form.common.buttons.agree",
+          onClick: async () => setStep(ProbandFormStep.CONTACTS),
+        },
+        buttonsProps: [],
+      });
+    } else if (step === ProbandFormStep.CONTACTS) {
+      if (isContactsRequestShown) {
+        setFormButtons({
+          submitButtonProps: {
+            titleLocalizationKey: "form.common.buttons.agree",
+            onClick: async (data) => {
+              let isValidationError = false;
+
+              if (data.email === "") {
+                setError("email", { message: "form.validation.probandContacts" }, { shouldFocus: true });
+                isValidationError = true;
+              }
+              if (data.phone === "") {
+                setError("phone", { message: "form.validation.probandContacts" }, { shouldFocus: !isValidationError });
+                isValidationError = true;
+              }
+
+              if (!isValidationError) {
+                await createProbandVisitForm(data);
+                navigate(RoutingPaths.PROBAND_HOME);
+              }
+            },
+          },
+          buttonsProps: [],
+        });
+      } else {
+        setFormButtons({
+          submitButtonProps: {
+            titleLocalizationKey: "form.common.buttons.complete",
+            onClick: async (data) => {
+              await createProbandVisitForm(data);
+              navigate(RoutingPaths.PROBAND_HOME);
+            },
+          },
+          buttonsProps: [],
+        });
+      }
     }
-  }, [isContactsRequestShown, step]);
+  }, [isContactsRequestShown, navigate, setError, step]);
 
   return (
     <FormContainer
