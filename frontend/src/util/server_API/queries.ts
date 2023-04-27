@@ -268,6 +268,7 @@ query GetWaitingRoomVisitForms($state: VisitFormState) {
 export const GET_WAITING_ROOM_VISIT_FORM = `
 query GetWaitingRoomVisitForm($id: UUID!) {
   visitForm(id: $id) {
+    id
     probandLanguage {
       code
     }
@@ -376,6 +377,7 @@ query GetApprovalRoomVisitForms($state: VisitFormState) {
 export const GET_APPROVAL_ROOM_VISIT_FORM = `
 query GetApprovalRoomVisitForm($id: UUID!) {
   visitForm(id: $id) {
+    id
     probandLanguage {
       code
     }
