@@ -3,6 +3,10 @@ upstream server_api {
   server server:${SERVER_PORT};
 }
 
+upstream mafildb_api {
+  server ${MAFILDB_API_URL};
+}
+
 server {
   # IPv4
   listen 80;
@@ -14,6 +18,18 @@ server {
 
   access_log /var/log/nginx/access.log;
   error_log /var/log/nginx/error.log;
+
+  # MAFILDB API calls
+  location /mafildb-api/ {
+    # rewrite any URI ending with '.../graphql' just to '/graphql'
+    rewrite ^/mafildb-api/(.*)$ /api/$1 break;
+    proxy_pass http://mafildb_api/;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_cache_bypass $http_upgrade;
+  }
 
   # Our backend server API calls
   location ~ /server-api$ {
