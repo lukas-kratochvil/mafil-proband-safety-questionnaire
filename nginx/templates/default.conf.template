@@ -1,5 +1,5 @@
 upstream server_api {
-  # 'server' is the name of our docker-compose backend API service
+  # 'server' is the name of our docker-compose backend API service that runs on the same machine as this Nginx reverse proxy
   server server:${SERVER_PORT};
 }
 
