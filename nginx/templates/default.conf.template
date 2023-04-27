@@ -15,7 +15,7 @@ server {
   access_log /var/log/nginx/access.log;
   error_log /var/log/nginx/error.log;
 
-  # API calls to our backend service are redirected to the 'server_api' upstream
+  # Our backend server API calls
   location ~ /server-api$ {
     # rewrite any URI ending with '.../graphql' just to '/graphql'
     rewrite ^ /graphql break;
