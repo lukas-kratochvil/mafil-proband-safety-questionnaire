@@ -3,7 +3,7 @@ import { transformDateStringToDate } from "./axios-transformers";
 
 /* SERVER instance */
 const serverApi = axios.create({
-  baseURL: import.meta.env.PROD ? "graphql" : `${import.meta.env.VITE_SERVER_URL}/graphql`,
+  baseURL: import.meta.env.PROD ? "server-api" : `${import.meta.env.VITE_SERVER_URL}/graphql`,
   headers: {
     "Content-Type": "application/json",
     "SERVER-API-KEY": import.meta.env.PROD ? undefined : import.meta.env.VITE_SERVER_API_KEY,
@@ -14,7 +14,7 @@ serverApi.interceptors.response.use(transformDateStringToDate);
 
 /* MAFILDB instance */
 const mafildbApi = axios.create({
-  baseURL: `${import.meta.env.VITE_MAFILDB_API_URL}/api`,
+  baseURL: import.meta.env.PROD ? "mafildb-api" : `${import.meta.env.VITE_MAFILDB_API_URL}/api`,
   headers: {
     "Content-Type": "application/json",
   },

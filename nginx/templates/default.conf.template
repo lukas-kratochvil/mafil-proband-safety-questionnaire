@@ -26,7 +26,7 @@ server {
   }
 
   # API calls to our backend service are redirected to the 'server_api' upstream
-  location ~ /graphql$ {
+  location ~ /server-api$ {
     # rewrite any URI ending with '.../graphql' just to '/graphql'
     rewrite ^ /graphql break;
     proxy_pass http://server_api;
