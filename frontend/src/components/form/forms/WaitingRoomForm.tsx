@@ -148,7 +148,12 @@ export const WaitingRoomForm = () => {
                 new Date(),
                 visitForm?.probandLanguageCode
               );
-              await markVisitFormAsSentToMafilDb(id);
+
+              // if something went wrong in the previous finalization, we don't want error to be thrown here if we try to update the already updated state
+              if (visitForm?.state !== "SENT_TO_MAFILDB") {
+                await markVisitFormAsSentToMafilDb(id);
+              }
+
               const pdf = await generateProbandPdf(visitId, data, operator?.uco, visitForm?.probandLanguageCode);
               await addPdfToVisit(visitId, pdf);
               await markVisitFormAsPdfGenerated(id);

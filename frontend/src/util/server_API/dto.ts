@@ -72,6 +72,7 @@ export type VisitFormState = "NEW" | "IN_APPROVAL" | "SENT_TO_MAFILDB" | "PDF_GE
 
 export interface IWaitingRoomTableVisitFormDTO {
   id: string;
+  state: VisitFormState;
   createdAt?: Date;
   name: string;
   surname: string;
