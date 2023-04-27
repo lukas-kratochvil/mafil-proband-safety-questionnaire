@@ -15,16 +15,6 @@ server {
   access_log /var/log/nginx/access.log;
   error_log /var/log/nginx/error.log;
 
-  location / {
-    # directory where the static content, mainly the index.html, is placed (the path is taken from the frontend/Dockerfile)
-    root /usr/share/nginx/html;
-
-    # setup fallback index.html file to use if it isn't found in the specified URI
-    # - React app has only one index.html -> so this always fallback to the root index.html for every URI requested
-    # - see also: https://linuxhint.com/use-nginx-try_files-directive/
-    try_files $uri /index.html;
-  }
-
   # API calls to our backend service are redirected to the 'server_api' upstream
   location ~ /server-api$ {
     # rewrite any URI ending with '.../graphql' just to '/graphql'
@@ -37,5 +27,15 @@ server {
     proxy_set_header Connection 'upgrade';
     proxy_set_header Host $host;
     proxy_cache_bypass $http_upgrade;
+  }
+
+  location / {
+    # directory where the static content, mainly the index.html, is placed (the path is taken from the frontend/Dockerfile)
+    root /usr/share/nginx/html;
+
+    # setup fallback index.html file to use if it isn't found in the specified URI
+    # - React app has only one index.html -> so this always fallback to the root index.html for every URI requested
+    # - see also: https://linuxhint.com/use-nginx-try_files-directive/
+    try_files $uri /index.html;
   }
 }
