@@ -157,7 +157,7 @@ export const WaitingRoomForm = () => {
               const pdf = await generateProbandPdf(visitId, data, operator?.uco, visitForm?.probandLanguageCode);
               await addPdfToVisit(visitId, pdf);
               await markVisitFormAsPdfGenerated(id);
-              navigate(`${RoutingPath.RECENT_VISITS}/visit/${visitId}`);
+              navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visitId}`);
             }
           },
         },

@@ -91,7 +91,7 @@ export const DuplicationForm = () => {
             const visitId = await createPhantomVisit(data, operator?.uco, new Date());
             const pdf = await generatePhantomPdf(visitId, data, operator?.uco);
             await addPdfToVisit(visitId, pdf);
-            navigate(`${RoutingPath.RECENT_VISITS}/visit/${visitId}`);
+            navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visitId}`);
           },
         },
         buttonsProps: [getBackButtonProps(navigate, "form.common.buttons.cancel")],
@@ -164,7 +164,7 @@ export const DuplicationForm = () => {
               );
               const pdf = await generateProbandPdf(visitId, data, operator?.uco, visit?.probandLanguageCode);
               await addPdfToVisit(visitId, pdf);
-              navigate(`${RoutingPath.RECENT_VISITS}/visit/${visitId}`);
+              navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visitId}`);
             }
           },
         },

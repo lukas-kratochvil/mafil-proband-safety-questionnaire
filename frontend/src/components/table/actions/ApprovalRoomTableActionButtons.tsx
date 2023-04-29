@@ -18,7 +18,7 @@ export const ApprovalRoomTableActionButtons = ({ visitFormId }: IApprovalRoomTab
       <Button
         size="small"
         variant="contained"
-        onClick={() => navigate(`${RoutingPath.APPROVAL_ROOM}/form/${visitFormId}`)}
+        onClick={() => navigate(`${RoutingPath.APPROVAL_ROOM_FORM}/${visitFormId}`)}
       >
         {t("showButton")}
       </Button>

@@ -48,7 +48,7 @@ export const WaitingRoomTableActionButtons = ({ visitFormId, queryKey }: IWaitin
       <Button
         size="small"
         variant="contained"
-        onClick={() => navigate(`${RoutingPath.WAITING_ROOM}/form/${visitFormId}`)}
+        onClick={() => navigate(`${RoutingPath.WAITING_ROOM_FORM}/${visitFormId}`)}
       >
         {t("processButton")}
       </Button>

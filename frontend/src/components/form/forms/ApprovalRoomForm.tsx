@@ -157,7 +157,7 @@ export const ApprovalRoomForm = () => {
               );
               await addPdfToVisit(visitId, pdf);
               await markVisitFormAsPdfGenerated(id);
-              navigate(`${RoutingPath.RECENT_VISITS}/visit/${visitId}`);
+              navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visitId}`);
             },
           },
           buttonsProps: [

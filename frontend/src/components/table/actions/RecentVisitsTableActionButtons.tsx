@@ -35,7 +35,7 @@ export const RecentVisitsTableActionButtons = ({ visit }: IRecentVisitsTableActi
         }
       }
 
-      navigate(`${RoutingPath.RECENT_VISITS}/duplicate/${visit.visitId}`);
+      navigate(`${RoutingPath.RECENT_VISITS_DUPLICATE}/${visit.visitId}`);
     } catch (error) {
       handleErrorsWithToast(error, t);
     }
@@ -46,7 +46,7 @@ export const RecentVisitsTableActionButtons = ({ visit }: IRecentVisitsTableActi
       <Button
         size="small"
         variant="contained"
-        onClick={() => navigate(`${RoutingPath.RECENT_VISITS}/visit/${visit.visitId}`)}
+        onClick={() => navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.visitId}`)}
       >
         {t("showDetailButton")}
       </Button>

@@ -56,7 +56,7 @@ export const App = () => (
           element={<WaitingRoomTablePage />}
         />
         <Route
-          path={`${RoutingPath.WAITING_ROOM}/form/:id`}
+          path={`${RoutingPath.WAITING_ROOM_FORM}/:id`}
           element={<WaitingRoomFormPage />}
         />
         <Route
@@ -64,7 +64,7 @@ export const App = () => (
           element={<ApprovalRoomTablePage />}
         />
         <Route
-          path={`${RoutingPath.APPROVAL_ROOM}/form/:id`}
+          path={`${RoutingPath.APPROVAL_ROOM_FORM}/:id`}
           element={<ApprovalRoomFormPage />}
         />
         <Route
@@ -72,11 +72,11 @@ export const App = () => (
           element={<RecentVisitsTablePage />}
         />
         <Route
-          path={`${RoutingPath.RECENT_VISITS}/duplicate/:id`}
+          path={`${RoutingPath.RECENT_VISITS_DUPLICATE}/:id`}
           element={<DuplicationFormPage />}
         />
         <Route
-          path={`${RoutingPath.RECENT_VISITS}/visit/:id`}
+          path={`${RoutingPath.RECENT_VISITS_VISIT}/:id`}
           element={<VisitDetailPage />}
         />
       </Route>
