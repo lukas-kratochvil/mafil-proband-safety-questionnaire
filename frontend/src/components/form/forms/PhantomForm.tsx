@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { IFormButtonsProps } from "@app/components/form/components/FormButtons";
 import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo";
 import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo";
-import { useAuthDev } from "@app/hooks/auth/auth-dev";
+import { useAuth } from "@app/hooks/auth/AuthProvider";
 import { RoutingPaths } from "@app/routing-paths";
 import { addPdfToVisit, createPhantomVisit } from "@app/util/mafildb_API/calls";
 import { generatePhantomPdf } from "@app/util/server_API/calls";
@@ -11,7 +11,7 @@ import { FormContainer } from "./FormContainer";
 
 export const PhantomForm = () => {
   const navigate = useNavigate();
-  const { operator } = useAuthDev();
+  const { operator } = useAuth();
 
   const formButtons: IFormButtonsProps = {
     submitButtonProps: {

@@ -2,7 +2,7 @@ import { Grid, Theme, Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useAuthDev } from "@app/hooks/auth/auth-dev";
+import { useAuth } from "@app/hooks/auth/AuthProvider";
 import { defaultNS } from "@app/i18n";
 import { AnswerOption, FormPropType, FormQac } from "@app/model/form";
 import { FormRadioGroup } from "../inputs/FormRadioGroup";
@@ -17,7 +17,7 @@ interface IFormQuestionProps extends IFormCardProps {
 export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuestionProps) => {
   const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.safetyQuestions" });
   const matchesUpSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
-  const { operator } = useAuthDev();
+  const { operator } = useAuth();
   const { setValue } = useFormContext<FormPropType>();
 
   const [hideQuestion, setHideQuestion] = useState<boolean>(false);

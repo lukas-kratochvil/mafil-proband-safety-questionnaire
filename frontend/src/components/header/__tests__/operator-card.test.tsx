@@ -14,8 +14,8 @@ const mockOperator: IOperatorDTO = {
   uco: "",
 };
 
-vi.mock("@app/hooks/auth/auth-dev", () => ({
-  useAuthDev: () => ({
+vi.mock("@app/hooks/auth/AuthProvider", () => ({
+  useAuth: () => ({
     operator: mockOperator,
   }),
 }));

@@ -8,7 +8,7 @@ import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo
 import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo";
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesFromApprovalRoomVisitForm } from "@app/components/form/util/loaders";
-import { useAuthDev } from "@app/hooks/auth/auth-dev";
+import { useAuth } from "@app/hooks/auth/AuthProvider";
 import { FormPropType, FormQac, ValidatedFormData } from "@app/model/form";
 import { RoutingPaths } from "@app/routing-paths";
 import { addPdfToVisit, createVisitFromApproval } from "@app/util/mafildb_API/calls";
@@ -37,7 +37,7 @@ export const ApprovalRoomForm = () => {
     cacheTime: Infinity,
   });
   const navigate = useNavigate();
-  const { operator } = useAuthDev();
+  const { operator } = useAuth();
   const { getValues, setValue, trigger } = useFormContext<FormPropType>();
 
   const [areDefaultValuesLoaded, setAreDefaultValuesLoaded] = useState<boolean>(false);

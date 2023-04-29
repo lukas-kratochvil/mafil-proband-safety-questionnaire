@@ -1,0 +1,59 @@
+import { UserManager, UserManagerSettings } from "oidc-client-ts";
+import { RoutingPaths } from "@app/routing-paths";
+import { authenticateOperator } from "@app/util/server_API/calls";
+import { IOperatorDTO } from "@app/util/server_API/dto";
+
+const config: UserManagerSettings = {
+  authority: "https://oidc.muni.cz/oidc/",
+  client_id: import.meta.env.VITE_JPM_CLIENT_ID,
+  redirect_uri: import.meta.env.VITE_JPM_REDIRECT_URI,
+  scope: import.meta.env.VITE_JPM_SCOPES,
+  post_logout_redirect_uri: `${window.location.origin}${RoutingPaths.AUTH}`,
+};
+
+const userManager = new UserManager(config);
+
+export const signIn = (): Promise<void> => userManager.signinRedirect();
+
+export const signOut = (): Promise<void> => userManager.signoutRedirect();
+
+export const completeSignIn = async (): Promise<IOperatorDTO | null> => {
+  try {
+    // TODO: specify optional URL or leave it undefined?
+    const jpmUser = await userManager.signinRedirectCallback(RoutingPaths.WAITING_ROOM);
+    return await authenticateOperator({
+      name: jpmUser.profile.given_name ?? "",
+      surname: jpmUser.profile.family_name ?? "",
+      email: jpmUser.profile.email ?? "",
+      uco: jpmUser.profile.preferred_username ?? "",
+    });
+  } catch {
+    await signOut();
+    return null;
+  }
+};
+
+export const completeSignOut = async (): Promise<void> => {
+  await userManager.signoutRedirectCallback();
+};
+
+// export const getOperator = async (): Promise<IOperatorDTO | null> => {
+//   const jpmUser = await userManager.getUser();
+
+//   if (!jpmUser) {
+//     await signIn();
+//     return null;
+//   }
+
+//   try {
+//     return await authenticateOperator({
+//       name: jpmUser.profile.given_name ?? "",
+//       surname: jpmUser.profile.family_name ?? "",
+//       email: jpmUser.profile.email ?? "",
+//       uco: jpmUser.profile.preferred_username ?? "",
+//     });
+//   } catch {
+//     await signOut();
+//     return null;
+//   }
+// };

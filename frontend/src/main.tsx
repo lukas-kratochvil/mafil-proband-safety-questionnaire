@@ -6,7 +6,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { App } from "@app/App";
-import { AuthProviderDev } from "@app/hooks/auth/AuthProviderDev";
+import { AuthProvider } from "./hooks/auth/AuthProvider";
 
 const queryClient = new QueryClient();
 
@@ -58,7 +58,7 @@ const theme = createTheme({
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProviderDev>
+      <AuthProvider>
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={false} />
           <ThemeProvider theme={theme}>
@@ -66,7 +66,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
             <App />
           </ThemeProvider>
         </QueryClientProvider>
-      </AuthProviderDev>
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

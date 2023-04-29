@@ -72,8 +72,8 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 //----------------------------------------------------------------------
 // Mocking custom authentication
 //----------------------------------------------------------------------
-vi.mock("@app/hooks/auth/auth-dev", () => ({
-  useAuthDev: () => ({
+vi.mock("@app/hooks/auth/AuthProvider", () => ({
+  useAuth: () => ({
     operator: operatorMRHigPermDev,
   }),
 }));

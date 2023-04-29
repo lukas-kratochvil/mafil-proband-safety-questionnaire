@@ -11,8 +11,8 @@ import { ITabProps } from "../navigation/common";
 //----------------------------------------------------------------------
 let mockOperator: IOperatorDTO | undefined;
 
-vi.mock("@app/hooks/auth/auth-dev", () => ({
-  useAuthDev: () => ({
+vi.mock("@app/hooks/auth/AuthProvider", () => ({
+  useAuth: () => ({
     operator: mockOperator,
   }),
 }));

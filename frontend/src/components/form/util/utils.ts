@@ -1,5 +1,5 @@
 import { updatedDiff } from "deep-object-diff";
-import { OperatorDev } from "@app/hooks/auth/auth-dev";
+import { Operator } from "@app/hooks/auth/AuthProvider";
 import { AnswerOption, FormPropType, ValidatedFormAnswer, ValidatedFormData } from "@app/model/form";
 import { IProjectDTO } from "@app/util/mafildb_API/dto";
 import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "@app/util/server_API/dto";
@@ -110,7 +110,7 @@ export const getValidatedFormData = (data: FormPropType): ValidatedFormData => (
   disapprovalReason: data.disapprovalReason ?? "",
 });
 
-export const isVisitFormForApproval = (operator: OperatorDev, data: ValidatedFormData) =>
+export const isVisitFormForApproval = (operator: Operator, data: ValidatedFormData) =>
   operator === undefined
   || (operator.role !== "MR_HIGH_PERM"
     && data.answers.some((answer) => answer.mustBeApproved && answer.answer === AnswerOption.YES));

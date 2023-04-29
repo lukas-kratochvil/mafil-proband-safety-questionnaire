@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import { PropsWithChildren } from "react";
 import { Toaster } from "react-hot-toast";
 import { Header } from "@app/components/header/Header";
-import { useAuthDev } from "@app/hooks/auth/auth-dev";
+import { useAuth } from "@app/hooks/auth/AuthProvider";
 
 interface IPageContainerProps {
   center?: boolean;
@@ -10,7 +10,7 @@ interface IPageContainerProps {
 }
 
 export const PageContainer = ({ children, center, isTablePage }: PropsWithChildren<IPageContainerProps>) => {
-  const { operator } = useAuthDev();
+  const { operator } = useAuth();
 
   return (
     <>
