@@ -36,24 +36,3 @@ export const completeSignIn = async (): Promise<IOperatorDTO | null> => {
 export const completeSignOut = async (): Promise<void> => {
   await userManager.signoutRedirectCallback();
 };
-
-// export const getOperator = async (): Promise<IOperatorDTO | null> => {
-//   const jpmUser = await userManager.getUser();
-
-//   if (!jpmUser) {
-//     await signIn();
-//     return null;
-//   }
-
-//   try {
-//     return await authenticateOperator({
-//       name: jpmUser.profile.given_name ?? "",
-//       surname: jpmUser.profile.family_name ?? "",
-//       email: jpmUser.profile.email ?? "",
-//       uco: jpmUser.profile.preferred_username ?? "",
-//     });
-//   } catch {
-//     await signOut();
-//     return null;
-//   }
-// };
