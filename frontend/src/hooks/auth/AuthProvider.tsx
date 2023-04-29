@@ -6,14 +6,12 @@ export type Operator = IOperatorDTO | undefined;
 
 interface IAuth {
   logIn: () => Promise<void>;
-  logOut: () => void;
+  logOut: () => Promise<void>;
   operator: Operator;
 }
 
 // defaultValue argument is only used when a component does not have a matching Provider above it in the tree – helpful for testing components in isolation
 const authContext = createContext<IAuth>({} as IAuth);
-
-export const useAuth = () => useContext(authContext);
 
 const useAuthProvider = () => {
   const [operator, setOperator] = useState<IOperatorDTO>();
@@ -37,6 +35,8 @@ const useAuthProvider = () => {
 
   return { logIn, logOut, operator };
 };
+
+export const useAuth = () => useContext(authContext);
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const auth = useAuthProvider();
