@@ -1,3 +1,4 @@
+import { operatorMRDev } from "@app/__tests__/data/operators";
 import { IVisitDetail } from "@app/model/visit";
 import VisitDetailPage from "@app/pages/VisitDetailPage";
 import * as mafildbCalls from "@app/util/mafildb_API/calls";
@@ -27,6 +28,15 @@ vi.mock("react-router-dom", async () => ({
   useNavigate: () => mockedUseNavigate,
   useParams: () => ({
     id,
+  }),
+}));
+
+//----------------------------------------------------------------------
+// Mocking custom authentication
+//----------------------------------------------------------------------
+vi.mock("@app/hooks/auth/AuthProvider", () => ({
+  useAuth: () => ({
+    operator: operatorMRDev,
   }),
 }));
 
