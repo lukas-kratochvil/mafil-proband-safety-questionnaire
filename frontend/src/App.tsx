@@ -40,7 +40,7 @@ export const App = () => (
         element={<ProbandFormPage />}
       />
       <Route
-        path={RoutingPath.AUTH}
+        path={RoutingPath.LOGIN}
         element={<LoginPage />}
       />
       <PrivateRoute

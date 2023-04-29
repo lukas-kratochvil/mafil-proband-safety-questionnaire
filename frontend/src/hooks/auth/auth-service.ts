@@ -8,7 +8,7 @@ const config: UserManagerSettings = {
   client_id: import.meta.env.VITE_JPM_CLIENT_ID,
   redirect_uri: import.meta.env.VITE_JPM_REDIRECT_URI,
   scope: import.meta.env.VITE_JPM_SCOPES,
-  post_logout_redirect_uri: `${window.location.origin}${RoutingPath.AUTH}`,
+  post_logout_redirect_uri: `${window.location.origin}${RoutingPath.LOGIN}`,
 };
 
 const userManager = new UserManager(config);

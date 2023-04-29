@@ -13,7 +13,7 @@ export const PrivateRoute = ({ Page, routeProps }: IPrivateRouteProps) => {
   const { operator } = useAuth();
 
   if (operator === undefined) {
-    navigate(RoutingPath.AUTH);
+    navigate(RoutingPath.LOGIN);
   }
 
   return (
