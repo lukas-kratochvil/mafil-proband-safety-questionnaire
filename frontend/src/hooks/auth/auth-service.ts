@@ -21,6 +21,7 @@ export const completeSignIn = async (): Promise<IOperatorDTO | null> => {
   try {
     // TODO: specify optional URL or leave it undefined?
     const jpmUser = await userManager.signinRedirectCallback(RoutingPath.WAITING_ROOM);
+    // Check that the user is registered in our app and should have access to the authenticated part of the app
     return await authenticateOperator({
       name: jpmUser.profile.given_name ?? "",
       surname: jpmUser.profile.family_name ?? "",
