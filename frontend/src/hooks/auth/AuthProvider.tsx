@@ -1,6 +1,6 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { IOperatorDTO } from "@app/util/server_API/dto";
-import { completeSignIn, signIn, signOut } from "./auth-service";
+import { completeSignIn, completeSignOut, signIn, signOut } from "./auth-service";
 
 export type Operator = IOperatorDTO | undefined;
 
@@ -17,7 +17,9 @@ const useAuthProvider = () => {
   const [operator, setOperator] = useState<IOperatorDTO>();
 
   const logIn = async (): Promise<void> => {
+    // Initiate the sign-in process
     await signIn();
+    // Complete the sign-in process
     const validOperator = await completeSignIn();
 
     if (validOperator) {
@@ -29,7 +31,10 @@ const useAuthProvider = () => {
   };
 
   const logOut = async (): Promise<void> => {
+    // Initiate the sign-out process
     await signOut();
+    // Complete the sign-out process
+    await completeSignOut();
     setOperator(undefined);
   };
 
