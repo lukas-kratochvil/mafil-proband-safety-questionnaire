@@ -1,15 +1,14 @@
-import { RoutingPath } from "@app/routing-paths";
-import { authenticateOperator } from "@app/util/server_API/calls";
-import { IOperatorDTO } from "@app/util/server_API/dto";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { IAuth } from "./AuthProvider";
+import { RoutingPath } from "@app/routing-paths";
+import { authenticateOperator } from "@app/util/server_API/calls";
+import { IAuth, Operator } from "./AuthProvider";
 
 const SESSION_STORAGE_OPERATOR_KEY = "operator";
 
 export const useAuthProviderDev = (): IAuth => {
   const navigate = useNavigate();
-  const [operator, setOperator] = useState<IOperatorDTO | undefined>(() => {
+  const [operator, setOperator] = useState<Operator>(() => {
     const storedOperator = window.sessionStorage.getItem(SESSION_STORAGE_OPERATOR_KEY);
     return storedOperator === null ? undefined : JSON.parse(storedOperator);
   });
