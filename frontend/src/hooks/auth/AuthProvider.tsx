@@ -11,7 +11,7 @@ interface IAuth {
 }
 
 // defaultValue argument is only used when a component does not have a matching Provider above it in the tree – helpful for testing components in isolation
-const authContext = createContext<IAuth>({} as IAuth);
+const authContext = createContext<IAuth>(undefined as unknown as IAuth);
 
 const useAuthProvider = () => {
   const [operator, setOperator] = useState<IOperatorDTO>();
