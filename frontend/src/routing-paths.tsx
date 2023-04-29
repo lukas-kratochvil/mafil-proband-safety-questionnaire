@@ -2,8 +2,9 @@ export enum RoutingPath {
   PROBAND_HOME = "/home",
   PROBAND_FORM = "/form",
   LOGIN = "/login",
-  PHANTOM_FORM = "/auth/phantom-form",
-  WAITING_ROOM = "/auth/waiting-room",
-  APPROVAL_ROOM = "/auth/approval-room",
-  RECENT_VISITS = "/auth/recent-visits",
+  AUTH = "/auth",
+  PHANTOM_FORM = `${AUTH}/phantom-form`,
+  WAITING_ROOM = `${AUTH}/waiting-room`,
+  APPROVAL_ROOM = `${AUTH}/approval-room`,
+  RECENT_VISITS = `${AUTH}/recent-visits`,
 }

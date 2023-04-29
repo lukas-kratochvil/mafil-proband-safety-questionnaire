@@ -43,38 +43,43 @@ export const App = () => (
         path={RoutingPath.LOGIN}
         element={<LoginPage />}
       />
-      <PrivateRoute
-        Page={PhantomFormPage}
-        routeProps={{ path: RoutingPath.PHANTOM_FORM }}
-      />
-      <PrivateRoute
-        Page={WaitingRoomTablePage}
-        routeProps={{ path: RoutingPath.WAITING_ROOM }}
-      />
-      <PrivateRoute
-        Page={WaitingRoomFormPage}
-        routeProps={{ path: `${RoutingPath.WAITING_ROOM}/form/:id` }}
-      />
-      <PrivateRoute
-        Page={ApprovalRoomTablePage}
-        routeProps={{ path: RoutingPath.APPROVAL_ROOM }}
-      />
-      <PrivateRoute
-        Page={ApprovalRoomFormPage}
-        routeProps={{ path: `${RoutingPath.APPROVAL_ROOM}/form/:id` }}
-      />
-      <PrivateRoute
-        Page={RecentVisitsTablePage}
-        routeProps={{ path: RoutingPath.RECENT_VISITS }}
-      />
-      <PrivateRoute
-        Page={DuplicationFormPage}
-        routeProps={{ path: `${RoutingPath.RECENT_VISITS}/duplicate/:id` }}
-      />
-      <PrivateRoute
-        Page={VisitDetailPage}
-        routeProps={{ path: `${RoutingPath.RECENT_VISITS}/visit/:id` }}
-      />
+      <Route
+        path={RoutingPath.AUTH}
+        element={<PrivateRoute />}
+      >
+        <Route
+          path={RoutingPath.PHANTOM_FORM}
+          element={<PhantomFormPage />}
+        />
+        <Route
+          path={RoutingPath.WAITING_ROOM}
+          element={<WaitingRoomTablePage />}
+        />
+        <Route
+          path={`${RoutingPath.WAITING_ROOM}/form/:id`}
+          element={<WaitingRoomFormPage />}
+        />
+        <Route
+          path={RoutingPath.APPROVAL_ROOM}
+          element={<ApprovalRoomTablePage />}
+        />
+        <Route
+          path={`${RoutingPath.APPROVAL_ROOM}/form/:id`}
+          element={<ApprovalRoomFormPage />}
+        />
+        <Route
+          path={RoutingPath.RECENT_VISITS}
+          element={<RecentVisitsTablePage />}
+        />
+        <Route
+          path={`${RoutingPath.RECENT_VISITS}/duplicate/:id`}
+          element={<DuplicationFormPage />}
+        />
+        <Route
+          path={`${RoutingPath.RECENT_VISITS}/visit/:id`}
+          element={<VisitDetailPage />}
+        />
+      </Route>
       <Route
         path="*"
         element={<NotFoundPage />}

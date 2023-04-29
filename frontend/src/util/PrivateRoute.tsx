@@ -1,25 +1,8 @@
-import { LazyExoticComponent } from "react";
-import { Route, RouteProps, useNavigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../hooks/auth/AuthProvider";
 import { RoutingPath } from "../routing-paths";
 
-interface IPrivateRouteProps {
-  Page: LazyExoticComponent<() => JSX.Element>;
-  routeProps: Omit<RouteProps, "element">;
-}
-
-export const PrivateRoute = ({ Page, routeProps }: IPrivateRouteProps) => {
-  const navigate = useNavigate();
+export const PrivateRoute = () => {
   const { operator } = useAuth();
-
-  if (operator === undefined) {
-    navigate(RoutingPath.LOGIN);
-  }
-
-  return (
-    <Route
-      {...routeProps}
-      element={<Page />}
-    />
-  );
+  return operator ? <Outlet /> : <Navigate to={RoutingPath.LOGIN} />;
 };
