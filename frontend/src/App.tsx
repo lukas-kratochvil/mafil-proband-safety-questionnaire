@@ -2,7 +2,7 @@ import { CircularProgress } from "@mui/material";
 import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { PageContainer } from "@app/pages/PageContainer";
-import { RoutingPaths } from "./routing-paths";
+import { RoutingPath } from "./routing-paths";
 import { PrivateRoute } from "./util/PrivateRoute";
 
 const HomePage = lazy(() => import("@app/pages/HomePage"));
@@ -29,51 +29,51 @@ export const App = () => (
     <Routes>
       <Route
         path="/"
-        element={<Navigate to={RoutingPaths.PROBAND_FORM} />}
+        element={<Navigate to={RoutingPath.PROBAND_FORM} />}
       />
       <Route
-        path={RoutingPaths.PROBAND_HOME}
+        path={RoutingPath.PROBAND_HOME}
         element={<HomePage />}
       />
       <Route
-        path={RoutingPaths.PROBAND_FORM}
+        path={RoutingPath.PROBAND_FORM}
         element={<ProbandFormPage />}
       />
       <Route
-        path={RoutingPaths.AUTH}
+        path={RoutingPath.AUTH}
         element={<LoginPage />}
       />
       <PrivateRoute
         Page={PhantomFormPage}
-        routeProps={{ path: RoutingPaths.PHANTOM_FORM }}
+        routeProps={{ path: RoutingPath.PHANTOM_FORM }}
       />
       <PrivateRoute
         Page={WaitingRoomTablePage}
-        routeProps={{ path: RoutingPaths.WAITING_ROOM }}
+        routeProps={{ path: RoutingPath.WAITING_ROOM }}
       />
       <PrivateRoute
         Page={WaitingRoomFormPage}
-        routeProps={{ path: `${RoutingPaths.WAITING_ROOM}/form/:id` }}
+        routeProps={{ path: `${RoutingPath.WAITING_ROOM}/form/:id` }}
       />
       <PrivateRoute
         Page={ApprovalRoomTablePage}
-        routeProps={{ path: RoutingPaths.APPROVAL_ROOM }}
+        routeProps={{ path: RoutingPath.APPROVAL_ROOM }}
       />
       <PrivateRoute
         Page={ApprovalRoomFormPage}
-        routeProps={{ path: `${RoutingPaths.APPROVAL_ROOM}/form/:id` }}
+        routeProps={{ path: `${RoutingPath.APPROVAL_ROOM}/form/:id` }}
       />
       <PrivateRoute
         Page={RecentVisitsTablePage}
-        routeProps={{ path: RoutingPaths.RECENT_VISITS }}
+        routeProps={{ path: RoutingPath.RECENT_VISITS }}
       />
       <PrivateRoute
         Page={DuplicationFormPage}
-        routeProps={{ path: `${RoutingPaths.RECENT_VISITS}/duplicate/:id` }}
+        routeProps={{ path: `${RoutingPath.RECENT_VISITS}/duplicate/:id` }}
       />
       <PrivateRoute
         Page={VisitDetailPage}
-        routeProps={{ path: `${RoutingPaths.RECENT_VISITS}/visit/:id` }}
+        routeProps={{ path: `${RoutingPath.RECENT_VISITS}/visit/:id` }}
       />
       <Route
         path="*"

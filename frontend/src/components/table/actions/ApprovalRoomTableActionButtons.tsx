@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { defaultNS } from "@app/i18n";
-import { RoutingPaths } from "@app/routing-paths";
+import { RoutingPath } from "@app/routing-paths";
 import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
 interface IApprovalRoomTableActionButtonsProps {
@@ -18,7 +18,7 @@ export const ApprovalRoomTableActionButtons = ({ visitFormId }: IApprovalRoomTab
       <Button
         size="small"
         variant="contained"
-        onClick={() => navigate(`${RoutingPaths.APPROVAL_ROOM}/form/${visitFormId}`)}
+        onClick={() => navigate(`${RoutingPath.APPROVAL_ROOM}/form/${visitFormId}`)}
       >
         {t("showButton")}
       </Button>

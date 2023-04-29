@@ -10,7 +10,7 @@ import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesFromWaitingRoomVisitForm } from "@app/components/form/util/loaders";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
 import { FormPropType, FormQac, ValidatedFormData } from "@app/model/form";
-import { RoutingPaths } from "@app/routing-paths";
+import { RoutingPath } from "@app/routing-paths";
 import { addPdfToVisit, createFinalizedVisit } from "@app/util/mafildb_API/calls";
 import { VisitState } from "@app/util/mafildb_API/dto";
 import {
@@ -118,7 +118,7 @@ export const WaitingRoomForm = () => {
               visitForm?.probandLanguageCode
             );
             // TODO: mark visitForm as DELETED / DISAPPROVED?
-            navigate(RoutingPaths.WAITING_ROOM);
+            navigate(RoutingPath.WAITING_ROOM);
           },
           showErrorColor: true,
         },
@@ -157,7 +157,7 @@ export const WaitingRoomForm = () => {
               const pdf = await generateProbandPdf(visitId, data, operator?.uco, visitForm?.probandLanguageCode);
               await addPdfToVisit(visitId, pdf);
               await markVisitFormAsPdfGenerated(id);
-              navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
+              navigate(`${RoutingPath.RECENT_VISITS}/visit/${visitId}`);
             }
           },
         },
@@ -202,7 +202,7 @@ export const WaitingRoomForm = () => {
     await sendVisitFormForApproval(id ?? "", modifiedFields, operator?.id ?? "");
     void queryClient.invalidateQueries({ queryKey: ["waitingRoomVisitForms"], exact: true });
     setOpenFinalizeDialog(false);
-    navigate(RoutingPaths.WAITING_ROOM);
+    navigate(RoutingPath.WAITING_ROOM);
   };
 
   return (

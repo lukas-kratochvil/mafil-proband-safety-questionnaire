@@ -3,7 +3,7 @@ import { IFormButtonsProps } from "@app/components/form/components/FormButtons";
 import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo";
 import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
-import { RoutingPaths } from "@app/routing-paths";
+import { RoutingPath } from "@app/routing-paths";
 import { addPdfToVisit, createPhantomVisit } from "@app/util/mafildb_API/calls";
 import { generatePhantomPdf } from "@app/util/server_API/calls";
 import { getBackButtonProps } from "@app/util/utils";
@@ -20,7 +20,7 @@ export const PhantomForm = () => {
         const visitId = await createPhantomVisit(data, operator?.uco, new Date());
         const pdf = await generatePhantomPdf(visitId, data, operator?.uco);
         await addPdfToVisit(visitId, pdf);
-        navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
+        navigate(`${RoutingPath.RECENT_VISITS}/visit/${visitId}`);
       },
     },
     buttonsProps: [getBackButtonProps(navigate, "form.common.buttons.cancel")],

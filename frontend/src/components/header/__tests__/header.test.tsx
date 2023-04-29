@@ -1,6 +1,6 @@
 import ScienceIcon from "@mui/icons-material/Science";
 import { operatorMRDev } from "@app/__tests__/data/operators";
-import { RoutingPaths } from "@app/routing-paths";
+import { RoutingPath } from "@app/routing-paths";
 import { IOperatorDTO } from "@app/util/server_API/dto";
 import { render, screen, within } from "@test-utils";
 import { Header } from "../Header";
@@ -23,19 +23,19 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
 const tabs: ITabProps[] = [
   {
     localizationKey: "1",
-    urlPrefix: RoutingPaths.WAITING_ROOM,
+    urlPrefix: RoutingPath.WAITING_ROOM,
     onClick: () => ({}),
     Icon: ScienceIcon,
   },
   {
     localizationKey: "2",
-    urlPrefix: RoutingPaths.APPROVAL_ROOM,
+    urlPrefix: RoutingPath.APPROVAL_ROOM,
     onClick: () => ({}),
     Icon: ScienceIcon,
   },
   {
     localizationKey: "3",
-    urlPrefix: RoutingPaths.RECENT_VISITS,
+    urlPrefix: RoutingPath.RECENT_VISITS,
     onClick: () => ({}),
     Icon: ScienceIcon,
   },

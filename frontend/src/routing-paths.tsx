@@ -1,4 +1,4 @@
-export enum RoutingPaths {
+export enum RoutingPath {
   PROBAND_HOME = "/home",
   PROBAND_FORM = "/form",
   AUTH = "/auth",

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { CardContainer } from "@app/components/card/CardContainer";
 import { defaultNS } from "@app/i18n";
-import { RoutingPaths } from "@app/routing-paths";
+import { RoutingPath } from "@app/routing-paths";
 import { PageContainer } from "./PageContainer";
 
 const HomePage = () => {
@@ -21,7 +21,7 @@ const HomePage = () => {
         >
           <Button
             variant="contained"
-            onClick={() => navigate(RoutingPaths.PROBAND_FORM)}
+            onClick={() => navigate(RoutingPath.PROBAND_FORM)}
           >
             {t("openNewFormButton")}
           </Button>

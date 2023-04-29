@@ -1,6 +1,6 @@
 import userEvent from "@testing-library/user-event";
 import HomePage from "@app/pages/HomePage";
-import { RoutingPaths } from "@app/routing-paths";
+import { RoutingPath } from "@app/routing-paths";
 import { render, screen } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -39,6 +39,6 @@ describe("home page", () => {
     await user.click(openNewForButton);
 
     expect(mockedUseNavigate).toHaveBeenCalledOnce();
-    expect(mockedUseNavigate).toHaveBeenLastCalledWith(RoutingPaths.PROBAND_FORM);
+    expect(mockedUseNavigate).toHaveBeenLastCalledWith(RoutingPath.PROBAND_FORM);
   });
 });

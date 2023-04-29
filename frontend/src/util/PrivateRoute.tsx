@@ -1,7 +1,7 @@
 import { LazyExoticComponent } from "react";
 import { Route, RouteProps, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/auth/AuthProvider";
-import { RoutingPaths } from "../routing-paths";
+import { RoutingPath } from "../routing-paths";
 
 interface IPrivateRouteProps {
   Page: LazyExoticComponent<() => JSX.Element>;
@@ -13,7 +13,7 @@ export const PrivateRoute = ({ Page, routeProps }: IPrivateRouteProps) => {
   const { operator } = useAuth();
 
   if (operator === undefined) {
-    navigate(RoutingPaths.AUTH);
+    navigate(RoutingPath.AUTH);
   }
 
   return (

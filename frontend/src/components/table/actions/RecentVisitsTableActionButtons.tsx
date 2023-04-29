@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { defaultNS } from "@app/i18n";
 import { IRecentVisitsTableVisit } from "@app/model/visit";
-import { RoutingPaths } from "@app/routing-paths";
+import { RoutingPath } from "@app/routing-paths";
 import { LocalizedError } from "@app/util/error-handling/LocalizedError";
 import { fetchCurrentQuestions } from "@app/util/server_API/calls";
 import { handleErrorsWithToast } from "@app/util/utils";
@@ -35,7 +35,7 @@ export const RecentVisitsTableActionButtons = ({ visit }: IRecentVisitsTableActi
         }
       }
 
-      navigate(`${RoutingPaths.RECENT_VISITS}/duplicate/${visit.visitId}`);
+      navigate(`${RoutingPath.RECENT_VISITS}/duplicate/${visit.visitId}`);
     } catch (error) {
       handleErrorsWithToast(error, t);
     }
@@ -46,7 +46,7 @@ export const RecentVisitsTableActionButtons = ({ visit }: IRecentVisitsTableActi
       <Button
         size="small"
         variant="contained"
-        onClick={() => navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visit.visitId}`)}
+        onClick={() => navigate(`${RoutingPath.RECENT_VISITS}/visit/${visit.visitId}`)}
       >
         {t("showDetailButton")}
       </Button>

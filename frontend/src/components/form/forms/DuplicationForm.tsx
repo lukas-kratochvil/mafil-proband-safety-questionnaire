@@ -10,7 +10,7 @@ import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesVisitDuplication } from "@app/components/form/util/loaders";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
 import { FormPropType, FormQac, ValidatedFormData } from "@app/model/form";
-import { RoutingPaths } from "@app/routing-paths";
+import { RoutingPath } from "@app/routing-paths";
 import {
   addPdfToVisit,
   createFinalizedVisit,
@@ -91,7 +91,7 @@ export const DuplicationForm = () => {
             const visitId = await createPhantomVisit(data, operator?.uco, new Date());
             const pdf = await generatePhantomPdf(visitId, data, operator?.uco);
             await addPdfToVisit(visitId, pdf);
-            navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
+            navigate(`${RoutingPath.RECENT_VISITS}/visit/${visitId}`);
           },
         },
         buttonsProps: [getBackButtonProps(navigate, "form.common.buttons.cancel")],
@@ -132,7 +132,7 @@ export const DuplicationForm = () => {
               new Date(),
               visit?.probandLanguageCode
             );
-            navigate(RoutingPaths.RECENT_VISITS);
+            navigate(RoutingPath.RECENT_VISITS);
           },
           showErrorColor: true,
         },
@@ -164,7 +164,7 @@ export const DuplicationForm = () => {
               );
               const pdf = await generateProbandPdf(visitId, data, operator?.uco, visit?.probandLanguageCode);
               await addPdfToVisit(visitId, pdf);
-              navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
+              navigate(`${RoutingPath.RECENT_VISITS}/visit/${visitId}`);
             }
           },
         },
@@ -206,7 +206,7 @@ export const DuplicationForm = () => {
   const createVisitFormInApprovalRoom = async (data: ValidatedFormData) => {
     await createDuplicatedVisitFormForApproval(data, operator?.id);
     setOpenFinalizeDialog(false);
-    navigate(RoutingPaths.RECENT_VISITS);
+    navigate(RoutingPath.RECENT_VISITS);
   };
 
   return (

@@ -10,7 +10,7 @@ import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesFromApprovalRoomVisitForm } from "@app/components/form/util/loaders";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
 import { FormPropType, FormQac, ValidatedFormData } from "@app/model/form";
-import { RoutingPaths } from "@app/routing-paths";
+import { RoutingPath } from "@app/routing-paths";
 import { addPdfToVisit, createVisitFromApproval } from "@app/util/mafildb_API/calls";
 import { VisitState } from "@app/util/mafildb_API/dto";
 import {
@@ -114,7 +114,7 @@ export const ApprovalRoomForm = () => {
                 new Date()
               );
               // TODO: mark visitForm as DELETED / DISAPPROVED?
-              navigate(RoutingPaths.APPROVAL_ROOM);
+              navigate(RoutingPath.APPROVAL_ROOM);
             },
             showErrorColor: true,
           },
@@ -157,7 +157,7 @@ export const ApprovalRoomForm = () => {
               );
               await addPdfToVisit(visitId, pdf);
               await markVisitFormAsPdfGenerated(id);
-              navigate(`${RoutingPaths.RECENT_VISITS}/visit/${visitId}`);
+              navigate(`${RoutingPath.RECENT_VISITS}/visit/${visitId}`);
             },
           },
           buttonsProps: [

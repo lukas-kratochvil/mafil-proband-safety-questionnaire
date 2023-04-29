@@ -15,7 +15,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { defaultNS } from "@app/i18n";
-import { RoutingPaths } from "@app/routing-paths";
+import { RoutingPath } from "@app/routing-paths";
 import { deleteVisitForm } from "@app/util/server_API/calls";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
@@ -48,7 +48,7 @@ export const WaitingRoomTableActionButtons = ({ visitFormId, queryKey }: IWaitin
       <Button
         size="small"
         variant="contained"
-        onClick={() => navigate(`${RoutingPaths.WAITING_ROOM}/form/${visitFormId}`)}
+        onClick={() => navigate(`${RoutingPath.WAITING_ROOM}/form/${visitFormId}`)}
       >
         {t("processButton")}
       </Button>

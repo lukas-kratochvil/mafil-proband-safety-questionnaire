@@ -10,7 +10,7 @@ import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { FormSafetyInfo } from "@app/components/form/components/FormSafetyInfo";
 import { FormPropType, FormQac } from "@app/model/form";
-import { RoutingPaths } from "@app/routing-paths";
+import { RoutingPath } from "@app/routing-paths";
 import { createProbandVisitForm, fetchCurrentQuestions } from "@app/util/server_API/calls";
 import { FormProbandContactCheckbox } from "../components/FormProbandContactCheckbox";
 import { FormProbandContactConsent } from "../components/FormProbandContactConsent";
@@ -90,7 +90,7 @@ export const ProbandForm = () => {
 
               if (!isValidationError) {
                 await createProbandVisitForm(data);
-                navigate(RoutingPaths.PROBAND_HOME);
+                navigate(RoutingPath.PROBAND_HOME);
               }
             },
           },
@@ -102,7 +102,7 @@ export const ProbandForm = () => {
             titleLocalizationKey: "form.common.buttons.complete",
             onClick: async (data) => {
               await createProbandVisitForm(data);
-              navigate(RoutingPaths.PROBAND_HOME);
+              navigate(RoutingPath.PROBAND_HOME);
             },
           },
           buttonsProps: [],
