@@ -1,8 +1,7 @@
-import { CircularProgress } from "@mui/material";
 import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { PageContainer } from "./pages/PageContainer";
 import { PrivateLayout } from "./pages/PrivateLayout";
+import { SuspensePage } from "./pages/SuspensePage";
 import { RoutingPath } from "./routing-paths";
 
 const HomePage = lazy(() => import("@app/pages/HomePage"));
@@ -19,13 +18,7 @@ const VisitDetailPage = lazy(() => import("@app/pages/VisitDetailPage"));
 const NotFoundPage = lazy(() => import("@app/pages/NotFoundPage"));
 
 export const App = () => (
-  <Suspense
-    fallback={
-      <PageContainer center>
-        <CircularProgress />
-      </PageContainer>
-    }
-  >
+  <Suspense fallback={<SuspensePage />}>
     <Routes>
       <Route
         path="/"
