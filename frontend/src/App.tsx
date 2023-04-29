@@ -3,7 +3,7 @@ import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { PageContainer } from "@app/pages/PageContainer";
 import { RoutingPath } from "./routing-paths";
-import { PrivateRoute } from "./util/PrivateRoute";
+import { PrivateLayout } from "./util/PrivateLayout";
 
 const HomePage = lazy(() => import("@app/pages/HomePage"));
 const LoginPage = lazy(() => import("@app/pages/LoginPage"));
@@ -45,7 +45,7 @@ export const App = () => (
       />
       <Route
         path={RoutingPath.AUTH}
-        element={<PrivateRoute />}
+        element={<PrivateLayout />}
       >
         <Route
           path={RoutingPath.PHANTOM_FORM}
