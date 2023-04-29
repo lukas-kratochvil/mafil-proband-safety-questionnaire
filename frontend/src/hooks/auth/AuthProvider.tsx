@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
+import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { IOperatorDTO } from "@app/util/server_API/dto";
 import { completeSignIn, signIn, signOut } from "./auth-service";
 
@@ -18,29 +18,21 @@ export const useAuth = () => useContext(authContext);
 const useAuthProvider = () => {
   const [operator, setOperator] = useState<IOperatorDTO>();
 
-  useEffect(() => {
-    const authenticate = async () => {
-      const validOperator = await completeSignIn();
-
-      if (validOperator) {
-        setOperator(validOperator);
-        return;
-      }
-
-      // TODO: what to do when the sign in is unsuccessful?
-      setOperator(undefined);
-    };
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    authenticate();
-  }, []);
-
   const logIn = async (): Promise<void> => {
     await signIn();
+    const validOperator = await completeSignIn();
+
+    if (validOperator) {
+      setOperator(validOperator);
+      return;
+    }
+
+    setOperator(undefined);
   };
 
   const logOut = async (): Promise<void> => {
     await signOut();
+    setOperator(undefined);
   };
 
   return { logIn, logOut, operator };
