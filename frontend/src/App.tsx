@@ -1,9 +1,9 @@
 import { CircularProgress } from "@mui/material";
 import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { PageContainer } from "@app/pages/PageContainer";
+import { PageContainer } from "./pages/PageContainer";
+import { PrivateLayout } from "./pages/PrivateLayout";
 import { RoutingPath } from "./routing-paths";
-import { PrivateLayout } from "./util/PrivateLayout";
 
 const HomePage = lazy(() => import("@app/pages/HomePage"));
 const LoginPage = lazy(() => import("@app/pages/LoginPage"));
