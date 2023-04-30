@@ -3,6 +3,11 @@ upstream server_api {
   server server:${SERVER_PORT};
 }
 
+upstream adminer {
+  # 'adminer' is the name of our docker-compose Adminer service that runs on the same machine as this Nginx reverse proxy
+  server adminer:${ADMINER_PORT};
+}
+
 upstream mafildb_api {
   server ${MAFILDB_API_URL};
 }
@@ -32,6 +37,12 @@ server {
     proxy_set_header Connection 'upgrade';
     proxy_set_header Host $host;
     proxy_cache_bypass $http_upgrade;
+  }
+
+  # Adminer - our database manager
+  location /adminer {
+    proxy_pass http://adminer/;
+    proxy_set_header Host $host;
   }
 
   # Our backend server API calls
