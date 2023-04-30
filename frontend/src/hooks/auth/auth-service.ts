@@ -11,31 +11,51 @@ const config: UserManagerSettings = {
   post_logout_redirect_uri: `${window.location.origin}${RoutingPath.LOGIN}`,
 };
 
-const userManager = new UserManager(config);
+export class AuthService {
+  private static instance: AuthService;
 
-export const signIn = (): Promise<void> => userManager.signinRedirect();
+  private userManager = new UserManager(config);
 
-export const signOut = (): Promise<void> => userManager.signoutRedirect();
+  /* eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-empty-function */
+  private constructor() {}
 
-export const completeSignIn = async (): Promise<IOperatorDTO | null> => {
-  try {
-    // TODO: specify optional URL or leave it undefined?
-    const jpmUser = await userManager.signinRedirectCallback(RoutingPath.WAITING_ROOM);
-    // Check that the user is registered in our app and should have access to the authenticated part of the app
-    return await authenticateOperator({
-      name: jpmUser.profile.given_name ?? "",
-      surname: jpmUser.profile.family_name ?? "",
-      email: jpmUser.profile.email ?? "",
-      uco: jpmUser.profile.preferred_username ?? "",
-    });
-  } catch {
-    await signOut();
-    return null;
+  public static getInstance(): AuthService {
+    if (!this.instance) {
+      this.instance = new AuthService();
+    }
+    return this.instance;
   }
-};
 
-export const completeSignOut = async (): Promise<void> => {
-  await userManager.signoutRedirectCallback();
-};
+  public async signIn(): Promise<void> {
+    return this.userManager.signinRedirect();
+  }
 
-export const getAuthUser = async (): Promise<User | null> => userManager.getUser();
+  public async signOut(): Promise<void> {
+    return this.userManager.signoutRedirect();
+  }
+
+  public async completeSignIn(): Promise<IOperatorDTO | null> {
+    try {
+      // TODO: specify optional URL or leave it undefined?
+      const jpmUser = await this.userManager.signinRedirectCallback(RoutingPath.WAITING_ROOM);
+      // Check that the user is registered in our app and should have access to the authenticated part of the app
+      return await authenticateOperator({
+        name: jpmUser.profile.given_name ?? "",
+        surname: jpmUser.profile.family_name ?? "",
+        email: jpmUser.profile.email ?? "",
+        uco: jpmUser.profile.preferred_username ?? "",
+      });
+    } catch {
+      await this.signOut();
+      return null;
+    }
+  }
+
+  public async completeSignOut(): Promise<void> {
+    await this.userManager.signoutRedirectCallback();
+  }
+
+  public async getAuthUser(): Promise<User | null> {
+    return this.userManager.getUser();
+  }
+}

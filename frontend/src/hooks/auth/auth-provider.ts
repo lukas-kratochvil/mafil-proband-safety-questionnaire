@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { IAuth, Operator } from "./AuthProvider";
-import { completeSignIn, completeSignOut, signIn, signOut } from "./auth-service";
+import { AuthService } from "./auth-service";
 
 export const useAuthProvider = (): IAuth => {
   const [operator, setOperator] = useState<Operator>();
 
   const logIn = async (): Promise<void> => {
+    const authService = AuthService.getInstance();
     // Initiate the sign-in process
-    await signIn();
+    await authService.signIn();
     // Complete the sign-in process
-    const validOperator = await completeSignIn();
+    const validOperator = await authService.completeSignIn();
 
     if (validOperator) {
       setOperator(validOperator);
@@ -20,10 +21,11 @@ export const useAuthProvider = (): IAuth => {
   };
 
   const logOut = async (): Promise<void> => {
+    const authService = AuthService.getInstance();
     // Initiate the sign-out process
-    await signOut();
+    await authService.signOut();
     // Complete the sign-out process
-    await completeSignOut();
+    await authService.completeSignOut();
     setOperator(undefined);
   };
 
