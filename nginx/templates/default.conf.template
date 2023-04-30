@@ -8,9 +8,12 @@ upstream mafildb_api {
 }
 
 server {
+  server_name ${WEB_DOMAIN};
+
   # IPv4
   listen 80;
   # listen 443 default_server ssl; # HTTPS
+
   # IPv6
   listen [::]:80;
   # listen [::]:443 default_server ssl; # HTTPS

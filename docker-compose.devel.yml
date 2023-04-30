@@ -66,6 +66,7 @@ services:
     environment:
       - NODE_ENV=production
       - TZ=${TIMEZONE}
+      - WEB_DOMAIN=${WEB_DOMAIN}
       - SERVER_PORT=${SERVER_PORT}
       - SERVER_API_KEY=${SERVER_API_KEY_FOR_WEB}
       - MAFILDB_API_URL=${MAFILDB_API_URL}
