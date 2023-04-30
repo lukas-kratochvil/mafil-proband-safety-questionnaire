@@ -38,13 +38,13 @@ async function bootstrap() {
 
   // TODO: use CORS? Origins 'localhost' and '127.0.0.1' are different.
   // CORS
-  // const webUrl = config.get<string>("WEB_URL");
-  // if (webUrl === undefined) {
+  // const webDomain = config.get<string>("WEB_DOMAIN");
+  // if (webDomain === undefined) {
   //   const errorMsg = "MAFIL-PSQ web app URL is not defined! Shutting down…";
   //   logger.error(errorMsg);
   //   throw new Error(errorMsg);
   // }
-  // app.enableCors({ origin: [webUrl] });
+  // app.enableCors({ origin: [webDomain] });
 
   // Setting up the port
   const port = config.get<number>("PORT");
