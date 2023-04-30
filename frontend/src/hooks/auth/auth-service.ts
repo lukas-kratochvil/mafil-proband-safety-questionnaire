@@ -1,4 +1,4 @@
-import { UserManager, UserManagerSettings } from "oidc-client-ts";
+import { User, UserManager, UserManagerSettings } from "oidc-client-ts";
 import { RoutingPath } from "@app/routing-paths";
 import { authenticateOperator } from "@app/util/server_API/calls";
 import { IOperatorDTO } from "@app/util/server_API/dto";
@@ -37,3 +37,5 @@ export const completeSignIn = async (): Promise<IOperatorDTO | null> => {
 export const completeSignOut = async (): Promise<void> => {
   await userManager.signoutRedirectCallback();
 };
+
+export const getAuthUser = async (): Promise<User | null> => userManager.getUser();

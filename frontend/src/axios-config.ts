@@ -1,5 +1,6 @@
 import axios from "axios";
 import { transformDateStringToDate } from "./axios-transformers";
+import { getAuthUser } from "./hooks/auth/auth-service";
 
 /* SERVER instance */
 const serverApi = axios.create({
@@ -23,6 +24,14 @@ const mafildbApi = axios.create({
   },
 });
 
+mafildbApi.interceptors.request.use(async (config) => {
+  const authUser = await getAuthUser();
+  if (authUser) {
+    // set Authorization header to user's OIDC access_token, so the request to the MAFILDB API will proceed
+    config.headers.Authorization = `Bearer ${authUser.access_token}`; // eslint-disable-line no-param-reassign
+  }
+  return config;
+});
 mafildbApi.interceptors.response.use(transformDateStringToDate);
 
 /* Exported instances */

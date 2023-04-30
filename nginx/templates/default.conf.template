@@ -36,6 +36,8 @@ server {
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection 'upgrade';
     proxy_set_header Host $host;
+    # Pass the HTTP Authorization header containing user's OIDC access_token to the MAFILDB API, so the request will proceed
+    proxy_set_header Authorization $http_authorization;
     proxy_cache_bypass $http_upgrade;
   }
 
