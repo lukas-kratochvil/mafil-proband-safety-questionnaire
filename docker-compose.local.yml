@@ -88,14 +88,14 @@ services:
       # – some packages may be platform specific so we always want to run 'npm i' in the container when new package is added
       - exclude-web:/usr/src/app/frontend/node_modules/
     ports:
-      - ${WEB_PORT}:${WEB_PORT}
+      - 3000:3000
     networks:
       - backend-network
       - frontend-network
     environment:
       - NODE_ENV=development
       - TZ=${TIMEZONE}
-      - PORT=${WEB_PORT}
+      - PORT=3000
       - VITE_SERVER_API_KEY=${SERVER_API_KEY_FOR_WEB}
       - VITE_SERVER_URL=${SERVER_URL}
       - VITE_MAFILDB_API_URL=${MAFILDB_API_URL}
