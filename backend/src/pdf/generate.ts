@@ -562,7 +562,7 @@ const addProbandContactConsent = (
     }
   );
   // Workaround: the last list item must be added separately to create gap under the list
-  doc.list([`${texts.listItem5Part1} ${texts.listItem5UoouSite} ${texts.listItem5Part2} ${commonTexts.uoouEmail}.`], {
+  doc.list([`${texts.listItem5Part1} ${texts.listItem5UoouSite}, ${texts.listItem5Part2} ${commonTexts.uoouEmail}.`], {
     listType: "bullet",
     bulletRadius: LIST_BULLET_RADIUS,
     align: "justify",
