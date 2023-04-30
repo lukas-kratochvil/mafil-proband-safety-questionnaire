@@ -58,7 +58,7 @@ jobs:
       run: npm test
 
   push_to_docker_registry:
-    name: Build and push Docker image to Docker Hub
+    name: Build and push Docker image to the GitHub Container registry
     if: ${{ github.event_name == 'push' }}
     needs: build
     runs-on: ubuntu-latest
