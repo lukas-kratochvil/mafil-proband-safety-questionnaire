@@ -1,14 +1,14 @@
-@startuml ProbandSafetyQuestionnaire
+@startuml ERD
 
 ' avoid problems with angled crows feet
 skinparam linetype ortho
 
 entity Operator {
-  * id: string <<UUID>>
+  * id: UUID <<generated>>
   ---
-  * createdAt: Date
-  * modifiedAt: Date
-  deletedAt: Date
+  * createdAt: date
+  * modifiedAt: date
+  deletedAt: date
   ---
   * name: string
   * surname: string
@@ -24,22 +24,22 @@ enum OperatorRole {
 }
 
 entity VisitForm {
-  * id: string <<UUID>>
+  * id: UUID <<generated>>
   ---
-  * probandLanguageId: string <<FK>>
-  * genderId: string <<FK>>
-  * handednessId: string <<FK>>
-  * nativeLanguageId: string <<FK>>
+  * probandLanguageId: UUID <<FK>>
+  * genderId: UUID <<FK>>
+  * handednessId: UUID <<FK>>
+  * nativeLanguageId: UUID <<FK>>
   ---
-  * createdAt: Date
-  * modifiedAt: Date
-  deletedAt: Date
+  * createdAt: date
+  * modifiedAt: date
+  deletedAt: date
   ---
   * state: VisitFormState
   * name: string
   * surname: string
   * personalId: string
-  * birthdate: Date
+  * birthdate: date
   * heightCm: float
   * weightKg: float
   * visualCorrectionDioptre: float
@@ -55,21 +55,21 @@ enum VisitFormState {
 }
 
 entity AdditionalVisitFormInfo {
-  * id: string <<UUID>>
+  * id: UUID <<generated>>
   ---
-  * visitFormId: string <<FK>>
-  * operatorId: string <<FK>>
+  * visitFormId: UUID <<FK>>
+  * operatorId: UUID <<FK>>
   ---
-  * createdAt: Date
-  * modifiedAt: Date
-  deletedAt: Date
+  * createdAt: date
+  * modifiedAt: date
+  deletedAt: date
   ---
-  * projectId: string <<UUID>>
+  * projectId: UUID
   * projectAcronym: string
-  * deviceId: string <<UUID>>
+  * deviceId: UUID
   * deviceName: string
-  * measuredAt: Date
-  * finalizedAt: Date
+  * measuredAt: date
+  * finalizedAt: date
 }
 
 enum AnswerOption {
@@ -78,27 +78,27 @@ enum AnswerOption {
 }
 
 entity Answer {
-  * id: string <<UUID>>
+  * id: UUID <<generated>>
   ---
-  * visitFormId: string <<FK>>
-  * questionId: string <<FK>>
+  * visitFormId: UUID <<FK>>
+  * questionId: UUID <<FK>>
   ---
-  * createdAt: Date
-  * modifiedAt: Date
-  deletedAt: Date
+  * createdAt: date
+  * modifiedAt: date
+  deletedAt: date
   ---
   * answer: AnswerOption
   comment: string
 }
 
 entity Question {
-  * id: string <<UUID>>
+  * id: UUID <<generated>>
   ---
-  previousQuestionId: string <<FK>>
+  previousQuestionId: UUID <<FK>>
   ---
-  * createdAt: Date
-  * modifiedAt: Date
-  deletedAt: Date
+  * createdAt: date
+  * modifiedAt: date
+  deletedAt: date
   ---
   * partNumber: int
   * mustBeApproved: boolean
@@ -106,105 +106,105 @@ entity Question {
 }
 
 entity QuestionTranslation {
-  * id: string <<UUID>>
+  * id: UUID <<generated>>
   ---
-  * questionId: string <<FK>>
-  * languageId: string <<FK>>
+  * questionId: UUID <<FK>>
+  * languageId: UUID <<FK>>
   ---
-  * createdAt: Date
-  * modifiedAt: Date
-  deletedAt: Date
+  * createdAt: date
+  * modifiedAt: date
+  deletedAt: date
   ---
   * text: string
 }
 
 entity GenderHiddenQuestion {
-  * id: string <<UUID>>
+  * id: UUID <<generated>>
   ---
-  * genderCode: string <<FK>>
-  * questionId: string <<FK>>
+  * genderCode: UUID <<FK>>
+  * questionId: UUID <<FK>>
   ---
-  * createdAt: Date
-  * modifiedAt: Date
-  deletedAt: Date
+  * createdAt: date
+  * modifiedAt: date
+  deletedAt: date
 }
 
 entity Gender {
-  * id: string <<UUID>>
+  * id: UUID <<generated>>
   ---
-  * createdAt: Date
-  * modifiedAt: Date
-  deletedAt: Date
+  * createdAt: date
+  * modifiedAt: date
+  deletedAt: date
   ---
   * code: string
 }
 
 entity GenderTranslation {
-  * id: string <<UUID>>
+  * id: UUID <<generated>>
   ---
-  * genderId: string <<FK>>
-  * languageId: string <<FK>>
+  * genderId: UUID <<FK>>
+  * languageId: UUID <<FK>>
   ---
-  * createdAt: Date
-  * modifiedAt: Date
-  deletedAt: Date
+  * createdAt: date
+  * modifiedAt: date
+  deletedAt: date
   ---
   * text: string
 }
 
 entity Handedness {
-  * id: string <<UUID>>
+  * id: UUID <<generated>>
   ---
-  * createdAt: Date
-  * modifiedAt: Date
-  deletedAt: Date
+  * createdAt: date
+  * modifiedAt: date
+  deletedAt: date
   ---
   * code: string
 }
 
 entity HandednessTranslation {
-  * id: string <<UUID>>
+  * id: UUID <<generated>>
   ---
-  * handednessId: string <<FK>>
-  * languageId: string <<FK>>
+  * handednessId: UUID <<FK>>
+  * languageId: UUID <<FK>>
   ---
-  * createdAt: Date
-  * modifiedAt: Date
-  deletedAt: Date
+  * createdAt: date
+  * modifiedAt: date
+  deletedAt: date
   ---
   * text: string
 }
 
 entity NativeLanguage {
-  * id: string <<UUID>>
+  * id: UUID <<generated>>
   ---
-  * createdAt: Date
-  * modifiedAt: Date
-  deletedAt: Date
+  * createdAt: date
+  * modifiedAt: date
+  deletedAt: date
   ---
   * code: string
   order: int
 }
 
 entity NativeLanguageTranslation {
-  * id: string <<UUID>>
+  * id: UUID <<generated>>
   ---
-  * nativeLanguageId: string <<FK>>
-  * languageId: string <<FK>>
+  * nativeLanguageId: UUID <<FK>>
+  * languageId: UUID <<FK>>
   ---
-  * createdAt: Date
-  * modifiedAt: Date
-  deletedAt: Date
+  * createdAt: date
+  * modifiedAt: date
+  deletedAt: date
   ---
   * text: string
 }
 
 entity Language {
-  * id: string <<UUID>>
+  * id: UUID <<generated>>
   ---
-  * createdAt: Date
-  * modifiedAt: Date
-  deletedAt: Date
+  * createdAt: date
+  * modifiedAt: date
+  deletedAt: date
   ---
   * code: string
   * name: string
