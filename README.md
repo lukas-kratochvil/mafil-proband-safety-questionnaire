@@ -1,5 +1,5 @@
 # MAFIL - Proband Safety Questionnaire
-Web application for ensuring the registration and safety of MR measurements in the [MAFIL laboratory (CEITEC)](https://mafil.ceitec.cz/).
+Web application for ensuring the registration and safety of MR measurements in the [MAFIL laboratory (CEITEC)](https://mafil.ceitec.cz/en/).
 
 ## Table of contents
 - [Installation](#installation)
