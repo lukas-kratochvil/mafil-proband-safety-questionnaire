@@ -36,7 +36,7 @@ The command will start the services listed below:
 
 To populate the database with initial data, the command below must be run inside the `server` container.
 ```node
-npm run seed
+docker exec -d server npm run seed
 ```
 
 ## Developers installation
