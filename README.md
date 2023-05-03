@@ -5,7 +5,6 @@ Web application for ensuring the registration and safety of MR measurements in t
 - [Installation](#installation)
 - [Developers installation](#developers-installation)
 - [Services update](#services-update)
-- [API endpoints](#api-endpoints)
 
 ## Installation
 
@@ -64,6 +63,3 @@ docker-compose -f docker-compose.ENV.yml up -d --force-recreate --build [SERVICE
 docker image prune -f
 ```
 It may be necessary to update `.env` variables before running the commands above.
-
-## API endpoints
-TODO
