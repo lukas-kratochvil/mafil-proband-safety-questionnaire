@@ -5,6 +5,7 @@ import react from "@vitejs/plugin-react";
 import * as path from "path";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { defineConfig } from "vite";
+import vitePluginEnvCompatible from "vite-plugin-env-compatible";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 // Vite: https://vitejs.dev/config/
@@ -16,6 +17,10 @@ export default defineConfig({
       fastRefresh: false,
     }),
     tsconfigPaths(), // gives Vite the ability to resolve imports using TypeScript's path mapping from tsconfig
+    vitePluginEnvCompatible({ // resolves all import.meta.env variables during the build time
+      prefix: "VITE",
+      mountedPath: "import.meta.env",
+    }),
   ],
   server: {
     host: true, // it's a must for Docker container port mapping to work
