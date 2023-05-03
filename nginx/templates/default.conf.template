@@ -51,7 +51,7 @@ server {
   location ~ /server-api$ {
     # rewrite any URI ending with '.../graphql' just to '/graphql'
     rewrite ^ /graphql break;
-    proxy_pass http://server_api/;
+    proxy_pass http://server_api;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection 'upgrade';
