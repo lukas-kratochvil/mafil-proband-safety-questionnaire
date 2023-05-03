@@ -36,6 +36,6 @@ FROM nginx:1.23.3-alpine AS production
 
 COPY --from=build /usr/src/app/frontend/dist /usr/share/nginx/html
 
-COPY ./nginx /etc/nginx
+COPY ./frontend/nginx /etc/nginx
 
 CMD ["nginx", "-g", "daemon off;"]
