@@ -5,7 +5,7 @@ import { IOperatorDTO } from "@app/util/server_API/dto";
 
 const config: UserManagerSettings = {
   authority: "https://oidc.muni.cz/oidc/",
-  client_id: "",
+  client_id: "TODO-add-client_id",
   redirect_uri: `${window.location.origin}${RoutingPath.WAITING_ROOM}`,
   scope: "openid profile email eduperson_entitlement",
   post_logout_redirect_uri: `${window.location.origin}${RoutingPath.LOGIN}`,
