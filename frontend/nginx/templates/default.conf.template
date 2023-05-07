@@ -8,10 +8,6 @@ upstream adminer {
   server adminer:${ADMINER_PORT};
 }
 
-upstream mafildb_api {
-  server ${MAFILDB_API_URL};
-}
-
 server {
   server_name ${WEB_DOMAIN};
 
@@ -42,7 +38,7 @@ server {
   location /mafildb-api/ {
     # rewrite any URI starting with 'mafildb-api' to start with '/api'
     rewrite ^/mafildb-api/(.*)$ /api/$1 break;
-    proxy_pass http://mafildb_api/;
+    proxy_pass ${MAFILDB_API_URL};
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection 'upgrade';
