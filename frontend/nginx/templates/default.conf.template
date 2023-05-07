@@ -31,7 +31,7 @@ server {
   location /oidc-auth/ {
     set $args_correct $args;
     if ($args ~* (.*)(^|&)client_id=[^&]+(.*)$) {
-      set $args_correct $1${2}client_id=$JPM_CLIENT_ID${3};
+      set $args_correct $1&client_id=$JPM_CLIENT_ID&$3;
     }
     rewrite ^/oidc-auth(.*)$ /oidc$1?$args_correct;
     proxy_pass https://oidc.muni.cz/;
