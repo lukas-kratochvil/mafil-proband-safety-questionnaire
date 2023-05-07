@@ -48,12 +48,14 @@ jobs:
     - name: Install frontend dependencies
       run: npm ci
 
+    # TODO: uncomment
     # - name: Lint the code
     #   run: npm run lint
 
     - name: Build
       run: npm run build
 
+    # TODO: uncomment
     # - name: Run the tests
     #   run: npm test
 

@@ -4,8 +4,10 @@ import { authenticateOperator } from "@app/util/server_API/calls";
 import { IOperatorDTO } from "@app/util/server_API/dto";
 
 const config: UserManagerSettings = {
-  authority: "https://oidc.muni.cz/oidc/",
-  client_id: "TODO-add-client_id",
+  // authority is correctly set in the Nginx configuration
+  authority: `${window.location.origin}/oidc-auth`,
+  // client_id is correctly set in the Nginx configuration
+  client_id: "client_id",
   redirect_uri: `${window.location.origin}${RoutingPath.WAITING_ROOM}`,
   scope: "openid profile email eduperson_entitlement",
   post_logout_redirect_uri: `${window.location.origin}${RoutingPath.LOGIN}`,

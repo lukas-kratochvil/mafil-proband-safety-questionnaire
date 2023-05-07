@@ -27,6 +27,17 @@ server {
   access_log /var/log/nginx/access.log;
   error_log /var/log/nginx/error.log;
 
+  # OIDC - Jednotné přihlášení MUNI
+  location /oidc-auth/ {
+    set $args_correct $args;
+    if ($args ~* (.*)(^|&)client_id=[^&]+(.*)$) {
+      set $args_correct $1${2}client_id=$JPM_CLIENT_ID${3};
+    }
+    rewrite ^/oidc-auth(.*)$ /oidc$1?$args_correct;
+    proxy_pass https://oidc.muni.cz/;
+    proxy_set_header Host $host;
+  }
+
   # MAFILDB API calls
   location /mafildb-api/ {
     # rewrite any URI starting with 'mafildb-api' to start with '/api'
@@ -49,7 +60,7 @@ server {
 
   # Our backend server API calls
   location ~ /server-api$ {
-    # rewrite any URI ending with '.../graphql' just to '/graphql'
+    # rewrite any URI ending with '.../server-api' just to '/graphql'
     rewrite ^ /graphql break;
     # proxy_pass must end without the trailing slash '/' to make the location regex rewrite work
     proxy_pass http://server_api;
