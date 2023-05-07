@@ -25,13 +25,13 @@ server {
 
   # OIDC - Jednotné přihlášení MUNI
   location /oidc {
-    if ($args ~* (.*)(^|&)client_id=[^&]+(.*)$) {
-      set $args_correct $1&client_id=$JPM_CLIENT_ID&$3;
-      rewrite ^(.*)$ $1?$args_correct permanent;
-    }
+    # if ($args ~* (.*)(^|&)client_id=[^&]+(.*)$) {
+    #   set $args_correct $1&client_id=$JPM_CLIENT_ID&$3;
+    #   rewrite ^(.*)$ $1?$args_correct permanent;
+    # }
 
-    proxy_pass https://oidc.muni.cz;
-    proxy_set_header Host $host;
+    proxy_pass https://oidc.muni.cz/;
+    # proxy_set_header Host $host;
   }
 
   # MAFILDB API calls
