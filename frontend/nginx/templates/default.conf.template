@@ -28,7 +28,7 @@ server {
   error_log /var/log/nginx/error.log;
 
   # OIDC - Jednotné přihlášení MUNI
-  location /oidc-auth/ {
+  location ~ ^/oidc-auth {
     set $args_correct $args;
     if ($args ~* (.*)(^|&)client_id=[^&]+(.*)$) {
       set $args_correct $1&client_id=$JPM_CLIENT_ID&$3;
