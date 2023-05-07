@@ -5,7 +5,7 @@ import { IOperatorDTO } from "@app/util/server_API/dto";
 
 const config: UserManagerSettings = {
   // authority is correctly set in the Nginx configuration
-  authority: `${window.location.origin}/oidc-auth`,
+  authority: `${window.location.origin}/oidc`,
   // client_id is correctly set in the Nginx configuration
   client_id: "client_id",
   redirect_uri: `${window.location.origin}${RoutingPath.WAITING_ROOM}`,

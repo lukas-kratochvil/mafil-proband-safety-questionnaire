@@ -28,12 +28,12 @@ server {
   error_log /var/log/nginx/error.log;
 
   # OIDC - Jednotné přihlášení MUNI
-  location /oidc-auth {
-    set $args_correct $args;
+  location /oidc {
     if ($args ~* (.*)(^|&)client_id=[^&]+(.*)$) {
       set $args_correct $1&client_id=$JPM_CLIENT_ID&$3;
+      rewrite ^(.*)$ $1?$args_correct permanent;
     }
-    rewrite ^/oidc-auth(.*)$ /oidc$1?$args_correct permanent;
+
     proxy_pass https://oidc.muni.cz;
     proxy_set_header Host $host;
   }
