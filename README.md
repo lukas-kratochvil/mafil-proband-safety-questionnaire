@@ -59,7 +59,7 @@ npm run seed:local
 To update services run these commands in the server app directory:
 ```bash
 docker-compose -f docker-compose.ENV.yml pull [SERVICE]
-docker-compose -f docker-compose.ENV.yml up -d --force-recreate --build [SERVICE]
+docker-compose -f docker-compose.ENV.yml up -d --force-recreate --no-deps [SERVICE]
 docker image prune -f
 ```
 It may be necessary to update `.env` variables before running the commands above.
