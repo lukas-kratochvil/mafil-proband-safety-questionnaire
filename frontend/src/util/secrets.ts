@@ -1,8 +1,6 @@
-import fs from "fs";
-
 type Secrets = {
   oidcClientId: string;
 }
 
-const secretsFile = fs.readFileSync("secrets.json", "utf8");
-export const secrets = JSON.parse(secretsFile) as Secrets;
+const secretsFile = await fetch("assets/secrets.json");
+export const secrets = (await secretsFile.json()) as Secrets;
