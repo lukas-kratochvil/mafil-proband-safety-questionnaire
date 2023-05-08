@@ -1,12 +1,11 @@
 import { User, UserManager, UserManagerSettings } from "oidc-client-ts";
 import { RoutingPath } from "@app/routing-paths";
-import { secrets } from "@app/util/secrets";
 import { authenticateOperator } from "@app/util/server_API/calls";
 import { IOperatorDTO } from "@app/util/server_API/dto";
 
 const config: UserManagerSettings = {
   authority: "https://oidc.muni.cz/oidc",
-  client_id: secrets.oidcClientId ?? "client_id_is_not_available",
+  client_id: "client_id", // TODO: add MUNI OIDC client ID
   redirect_uri: `${window.location.origin}${RoutingPath.WAITING_ROOM}`,
   scope: "openid profile email eduperson_entitlement",
   post_logout_redirect_uri: `${window.location.origin}${RoutingPath.LOGIN}`,
