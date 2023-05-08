@@ -23,19 +23,6 @@ server {
   access_log /var/log/nginx/access.log;
   error_log /var/log/nginx/error.log;
 
-  # OIDC - Jednotné přihlášení MUNI
-  location /oidc {
-    # if ($args ~* (.*)(^|&)client_id=[^&]+(.*)$) {
-    #   set $args_correct $1&client_id=$JPM_CLIENT_ID&$3;
-    #   rewrite ^(.*)$ $1?$args_correct permanent;
-    # }
-
-    proxy_pass https://oidc.muni.cz/;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-  }
-
   # MAFILDB API calls
   location /mafildb-api/ {
     # rewrite any URI starting with 'mafildb-api' to start with '/api'
