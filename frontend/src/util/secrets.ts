@@ -2,5 +2,13 @@ type Secrets = {
   oidcClientId: string;
 }
 
-const secretsFile = await fetch("assets/secrets.json");
-export const secrets = (await secretsFile.json()) as Secrets;
+let secrets: Secrets;
+
+const fetchSecrets = async (): Promise<void> => {
+  const secretsFile = await fetch("assets/secrets.json");
+  secrets = (await secretsFile.json()) as Secrets;
+}
+
+fetchSecrets();
+
+export { secrets };
