@@ -28,7 +28,7 @@ const LoginPage = () => {
                 <Avatar
                   variant="square"
                   alt="MUNI logo"
-                  src="/logo_muni.png"
+                  src="/logo_muni.svg"
                   sx={{
                     marginRight: "0.5rem",
                     width: "2rem",
