@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { TranslatedEntityTableCell } from "@app/components/table/TranslatedEntityTableCell";
 import { WaitingRoomTableActionButtons } from "@app/components/table/actions/WaitingRoomTableActionButtons";
-import { defaultTableProps } from "@app/components/table/default-table-props";
+import { DefaultSorting, defaultTableProps } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n";
 import { fetchWaitingRoomTableVisitForms } from "@app/util/server_API/calls";
 import { IWaitingRoomTableVisitFormDTO } from "@app/util/server_API/dto";
@@ -95,9 +95,13 @@ const WaitingRoomTablePage = () => {
     [t]
   );
 
+  const defaultSorting: DefaultSorting = [{ id: "createdAt", desc: false }];
+
   return (
     <PageContainer isTablePage>
-      <MaterialReactTable {...defaultTableProps(t("title"), columns, visitForms, isFetching, isLoading, isError)} />
+      <MaterialReactTable
+        {...defaultTableProps(t("title"), columns, visitForms, isFetching, isLoading, isError, defaultSorting)}
+      />
     </PageContainer>
   );
 };

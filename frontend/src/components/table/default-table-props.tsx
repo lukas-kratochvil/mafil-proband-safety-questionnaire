@@ -1,6 +1,11 @@
 import { Typography } from "@mui/material";
 import { MaterialReactTableProps, MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 
+export type DefaultSorting = {
+  id: string; // column id
+  desc: boolean;
+}[];
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const defaultTableProps = <T extends Record<string, any>>(
   title: string,
@@ -8,7 +13,8 @@ export const defaultTableProps = <T extends Record<string, any>>(
   data: T[] | undefined,
   isFetching: boolean,
   isLoading: boolean,
-  isError: boolean
+  isError: boolean,
+  defaultSorting?: DefaultSorting
 ): MaterialReactTableProps<T> => ({
   columns,
   data: data ?? [],
@@ -28,6 +34,7 @@ export const defaultTableProps = <T extends Record<string, any>>(
     isLoading,
     showAlertBanner: isError,
     showProgressBars: isFetching,
+    sorting: defaultSorting,
   },
   renderTopToolbarCustomActions: () => (
     <Typography
