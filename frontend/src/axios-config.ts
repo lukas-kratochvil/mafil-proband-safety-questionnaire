@@ -18,7 +18,7 @@ serverApi.interceptors.response.use(transformDateStringToDate);
 /* MAFILDB instance */
 const mafildbApi = axios.create({
   // 'mafildb-api' URL is rewritten in the Nginx conf to the correct URL
-  baseURL: import.meta.env.PROD ? "mafildb-api" : `${import.meta.env.VITE_MAFILDB_API_URL}/api`,
+  baseURL: import.meta.env.PROD ? "mafildb-api" : undefined,
   headers: {
     "Content-Type": "application/json",
   },

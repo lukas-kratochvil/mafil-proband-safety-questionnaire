@@ -98,7 +98,6 @@ services:
       - PORT=3000
       - VITE_SERVER_API_KEY=${SERVER_API_KEY_FOR_WEB}
       - VITE_SERVER_URL=http://127.0.0.1:${SERVER_PORT}
-      - VITE_MAFILDB_API_URL=${MAFILDB_API_URL}
     restart: unless-stopped
     depends_on:
       - server

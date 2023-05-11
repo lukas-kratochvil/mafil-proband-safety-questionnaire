@@ -20,22 +20,33 @@ const LoginPage = () => {
           }}
         >
           <Typography>{t("loginText")}</Typography>
-          <Stack spacing="0.5rem">
+          <Stack
+            spacing="0.5rem"
+            sx={{ paddingX: "2.75rem" }}
+          >
             <Button
               variant="outlined"
               onClick={logIn}
               startIcon={
                 <Avatar
-                  variant="square"
+                  variant="rounded"
                   alt="MUNI logo"
-                  src="/logo_muni.png"
+                  src="/logo_muni.svg"
                   sx={{
-                    marginRight: "0.5rem",
-                    width: "2rem",
+                    marginRight: "1rem",
+                    width: "auto",
                     height: "2rem",
                   }}
                 />
               }
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                textTransform: "none",
+                color: "unset",
+                fontWeight: "unset",
+                lineHeight: "1rem",
+              }}
             >
               MUNI
             </Button>
