@@ -19,14 +19,14 @@ Running the script will download files essential to run the app.
 Edit `.env` configuration variables with your values.
 
 Then transfer the directory to the server. You can use this command template:
-```bash
+```sh
 scp -r -i SSH_PRIVATE_KEY_FILE_PATH LOCAL_DIR_PATH USER@SERVER:REMOTE_DIR_PATH
 ```
 
 In the app directory on the remote server create the `certs` directory and store there the SSL certificate `certificate.pem` and the corresponding private key `private_key.pem`.
 
 Start all the services using this command:
-```bash
+```
 docker-compose -f docker-compose.ENV.yml up -d
 ```
 
@@ -36,8 +36,8 @@ The command will start the services listed below:
 * Server - app server
 * Web – app client
 
-To populate the database with initial data, the command below must be run inside the `server` container.
-```bash
+To populate the database with initial data (genders, native languages, handednesses and safety questions), the command below must be run inside the `server` container.
+```
 docker-compose -f docker-compose.ENV.yml exec server npm run seed
 ```
 
@@ -46,20 +46,20 @@ Create a `.env` configuration file inspired by `.env.example`.
 
 The docker-compose configuration file to use for the development is called `docker-compose.local.yml`.
 Start all the services with the command below:
-```bash
+```
 docker-compose -f docker-compose.local.yml up -d
 ```
 
 Source code directories and `package.json` are mapped as volumes in the corresponding container file system.
 
-To populate the local database with initial data, the command below must be run inside the `server` container.
-```node
+To populate the local database with initial data (genders, native languages, handednesses and safety questions), the command below must be run inside the `server` container.
+```
 npm run seed:local
 ```
 
 ## Services update
 To update services run these commands in the server app directory:
-```bash
+```
 docker-compose -f docker-compose.ENV.yml pull [SERVICE]
 docker-compose -f docker-compose.ENV.yml up -d --force-recreate --no-deps [SERVICE]
 docker image prune -f
