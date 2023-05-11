@@ -7,13 +7,13 @@ import { CreateQuestionInput } from "./dto/create-question.input";
 import { UpdateQuestionTextsInput } from "./dto/update-question-texts.input";
 import { UpdateQuestionInput } from "./dto/update-question.input";
 
-const questionTranslations = Prisma.validator<Prisma.QuestionInclude>()({
+const questionInclude = Prisma.validator<Prisma.QuestionInclude>()({
   ...translationsIncludeSchema,
   hiddenByGenders: true,
 });
 
 const questionTranslationsArgs = Prisma.validator<Prisma.QuestionArgs>()({
-  include: questionTranslations,
+  include: questionInclude,
 });
 
 type QuestionIncludingTranslations = Prisma.QuestionGetPayload<typeof questionTranslationsArgs>;
@@ -40,7 +40,7 @@ export class QuestionService {
             },
           },
         },
-        include: questionTranslations,
+        include: questionInclude,
       });
     }
 
@@ -53,7 +53,7 @@ export class QuestionService {
         isValid: true,
         deletedAt: null,
       },
-      include: questionTranslations,
+      include: questionInclude,
     });
   }
 
@@ -62,7 +62,7 @@ export class QuestionService {
       where: {
         id,
       },
-      include: questionTranslations,
+      include: questionInclude,
     });
   }
 
@@ -72,7 +72,7 @@ export class QuestionService {
         id,
       },
       data: updateQuestionInput,
-      include: questionTranslations,
+      include: questionInclude,
     });
   }
 
@@ -90,6 +90,7 @@ export class QuestionService {
         data: {
           isValid: false,
         },
+        include: questionInclude,
       });
       return this.prisma.question.create({
         data: {
@@ -103,6 +104,11 @@ export class QuestionService {
               id: previousQuestion.id,
             },
           },
+          hiddenByGenders: previousQuestion.hiddenByGenders.length === 0 ? undefined : {
+            createMany: {
+              data: previousQuestion.hiddenByGenders.map((hbg) => ({ genderCode: hbg.genderCode })),
+            },
+          },
           translations: {
             createMany: {
               data: updateQuestionTextsInput.translations.map((translation) => ({
@@ -112,7 +118,7 @@ export class QuestionService {
             },
           },
         },
-        include: questionTranslations,
+        include: questionInclude,
       });
     }
 
@@ -128,7 +134,7 @@ export class QuestionService {
         deletedAt: new Date(),
         isValid: false,
       },
-      include: questionTranslations,
+      include: questionInclude,
     });
   }
 }
