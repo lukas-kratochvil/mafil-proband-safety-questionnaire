@@ -20,10 +20,12 @@ Edit `.env` configuration variables with your values.
 
 Then transfer the directory to the server. You can use this command template:
 ```bash
-scp -r DOWNLOADED_DIR USER@SERVER:APP_DIR -i SSH_PRIVATE_KEY_FILE_PATH
+scp -r -i SSH_PRIVATE_KEY_FILE_PATH LOCAL_DIR_PATH USER@SERVER:REMOTE_DIR_PATH
 ```
 
-In the server app directory start all the services using this command:
+In the app directory on the remote server create the `certs` directory and store there the SSL certificate `certificate.pem` and the corresponding private key `private_key.pem`.
+
+Start all the services using this command:
 ```bash
 docker-compose -f docker-compose.ENV.yml up -d
 ```

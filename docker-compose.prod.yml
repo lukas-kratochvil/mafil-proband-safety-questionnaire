@@ -71,6 +71,8 @@ services:
       - ADMINER_PORT=${ADMINER_PORT}
       - SERVER_API_KEY=${SERVER_API_KEY_FOR_WEB}
       - MAFILDB_API_URL=${MAFILDB_API_URL}
+    volumes:
+      - ./certs:/etc/nginx/certs
     restart: unless-stopped
     depends_on:
       - server
