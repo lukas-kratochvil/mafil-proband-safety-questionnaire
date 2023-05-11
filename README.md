@@ -19,8 +19,8 @@ Running the script will download files essential to run the app.
 Edit `.env` configuration variables with your values.
 
 Then transfer the directory to the server. You can use this command template:
-```
-scp -r DOWNLOADED_DIR USER@SERVER:APP_DIR -i PRIVATE_KEY_FILE_PATH
+```bash
+scp -r DOWNLOADED_DIR USER@SERVER:APP_DIR -i SSH_PRIVATE_KEY_FILE_PATH
 ```
 
 In the server app directory start all the services using this command:
@@ -35,8 +35,8 @@ The command will start the services listed below:
 * Web – app client
 
 To populate the database with initial data, the command below must be run inside the `server` container.
-```node
-docker exec -d server npm run seed
+```bash
+docker-compose -f docker-compose.ENV.yml exec server npm run seed
 ```
 
 ## Developers installation
