@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import genders from "./data/genders";
-import handedness from "./data/handedness";
+import handednesses from "./data/handednesses";
 import nativeLanguages from "./data/native-languages";
 import questions from "./data/questions";
 
@@ -58,16 +58,16 @@ async function seed() {
       })
   );
 
-  // Handedness
-  handedness.forEach(
-    async (hand) =>
+  // Handednesses
+  handednesses.forEach(
+    async (handedness) =>
       await prisma.handedness.create({
         data: {
-          code: hand.code,
-          order: hand.order,
+          code: handedness.code,
+          order: handedness.order,
           translations: {
             createMany: {
-              data: [createTranslation(cs.id, hand.csText), createTranslation(en.id, hand.enText)],
+              data: [createTranslation(cs.id, handedness.csText), createTranslation(en.id, handedness.enText)],
             },
           },
         },

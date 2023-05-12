@@ -5,32 +5,32 @@ interface IHandedness {
   enText: string;
 }
 
-const handedness: Omit<IHandedness, "order">[] = [
+const handednesses: Omit<IHandedness, "order">[] = [
   {
-    code: "r",
+    code: "R",
     csText: "Pravák",
     enText: "Right-handed",
   },
   {
-    code: "l",
+    code: "L",
     csText: "Levák",
     enText: "Left-handed",
   },
   {
-    code: "rl",
+    code: "RL",
     csText: "Přeučený levák",
     enText: "Retrained left-handed",
   },
   {
-    code: "u",
+    code: "U",
     csText: "Neurčeno",
     enText: "Undetermined",
   },
 ];
 
-const orderedHandednesses: IHandedness[] = handedness.map((handedness, i) => ({
+const orderedHandednesses: IHandedness[] = handednesses.map((handedness, i) => ({
   ...handedness,
   order: i + 1,
-}))
+}));
 
 export default orderedHandednesses;
