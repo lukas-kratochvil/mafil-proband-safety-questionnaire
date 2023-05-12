@@ -28,6 +28,6 @@ const genders: Omit<IGender, "order">[] = [
 const orderedGenders: IGender[] = genders.map((gender, i) => ({
   ...gender,
   order: i + 1,
-}))
+}));
 
 export default orderedGenders;

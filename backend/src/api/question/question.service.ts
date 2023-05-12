@@ -105,11 +105,14 @@ export class QuestionService {
               id: previousQuestion.id,
             },
           },
-          hiddenByGenders: previousQuestion.hiddenByGenders.length === 0 ? undefined : {
-            createMany: {
-              data: previousQuestion.hiddenByGenders.map((hbg) => ({ genderCode: hbg.genderCode })),
-            },
-          },
+          hiddenByGenders:
+            previousQuestion.hiddenByGenders.length === 0
+              ? undefined
+              : {
+                  createMany: {
+                    data: previousQuestion.hiddenByGenders.map((hbg) => ({ genderCode: hbg.genderCode })),
+                  },
+                },
           translations: {
             createMany: {
               data: updateQuestionTextsInput.translations.map((translation) => ({
