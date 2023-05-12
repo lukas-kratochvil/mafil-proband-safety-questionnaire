@@ -1,10 +1,11 @@
 interface IHandedness {
   code: string;
+  order: number;
   csText: string;
   enText: string;
 }
 
-const handedness: IHandedness[] = [
+const handedness: Omit<IHandedness, "order">[] = [
   {
     code: "r",
     csText: "Pravák",
@@ -27,4 +28,9 @@ const handedness: IHandedness[] = [
   },
 ];
 
-export default handedness;
+const orderedHandednesses: IHandedness[] = handedness.map((handedness, i) => ({
+  ...handedness,
+  order: i + 1,
+}))
+
+export default orderedHandednesses;

@@ -4,12 +4,13 @@ type PartNumberType = 1 | 2;
 
 interface IQuestion {
   partNumber: PartNumberType;
+  order: number;
   csText: string;
   enText: string;
   hiddenByGender?: GenderCode[];
 }
 
-const questions: IQuestion[] = [
+const questions: Omit<IQuestion, "order">[] = [
   {
     partNumber: 1,
     csText: "Jste těhotná?",
@@ -118,4 +119,9 @@ const questions: IQuestion[] = [
   },
 ];
 
-export default questions;
+const orderedQuestions: IQuestion[] = questions.map((question, i) => ({
+  ...question,
+  order: i + 1,
+}))
+
+export default orderedQuestions;

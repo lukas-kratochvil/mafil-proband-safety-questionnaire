@@ -48,6 +48,7 @@ async function seed() {
       await prisma.gender.create({
         data: {
           code: gender.code,
+          order: gender.order,
           translations: {
             createMany: {
               data: [createTranslation(cs.id, gender.csText), createTranslation(en.id, gender.enText)],
@@ -63,6 +64,7 @@ async function seed() {
       await prisma.handedness.create({
         data: {
           code: hand.code,
+          order: hand.order,
           translations: {
             createMany: {
               data: [createTranslation(cs.id, hand.csText), createTranslation(en.id, hand.enText)],
@@ -79,6 +81,7 @@ async function seed() {
         data: {
           partNumber: question.partNumber,
           mustBeApproved: question.partNumber === 2,
+          order: question.order,
           isValid: true,
           translations: {
             createMany: {

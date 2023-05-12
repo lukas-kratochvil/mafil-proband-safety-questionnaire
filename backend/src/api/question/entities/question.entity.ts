@@ -1,6 +1,6 @@
 import { Field, HideField, Int, ObjectType } from "@nestjs/graphql";
 import { GenderHiddenQuestion, Question } from "@prisma/client";
-import { IsArray, IsBoolean, IsDate, IsIn, IsInt, IsOptional, IsUUID } from "class-validator";
+import { IsArray, IsBoolean, IsDate, IsIn, IsInt, IsOptional, IsPositive, IsUUID } from "class-validator";
 import { TranslationBaseEntity } from "@app/api/utils/entities/translation-base.entity";
 import { GenderHiddenQuestionEntity } from "./genderHiddenQuestion";
 
@@ -24,6 +24,11 @@ export class QuestionEntity extends TranslationBaseEntity implements Question {
   @IsBoolean()
   @Field()
   mustBeApproved: boolean;
+
+  @IsInt()
+  @IsPositive()
+  @Field(() => Int)
+  order: number;
 
   @IsBoolean()
   @Field()

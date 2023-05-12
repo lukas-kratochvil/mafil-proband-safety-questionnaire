@@ -102,6 +102,7 @@ entity Question {
   ---
   * partNumber: int
   * mustBeApproved: boolean
+  * order: int
   * isValid: boolean
 }
 
@@ -137,6 +138,7 @@ entity Gender {
   deletedAt: date
   ---
   * code: string
+  * order: int
 }
 
 entity GenderTranslation {
@@ -160,6 +162,7 @@ entity Handedness {
   deletedAt: date
   ---
   * code: string
+  * order: int
 }
 
 entity HandednessTranslation {

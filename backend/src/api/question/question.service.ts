@@ -99,6 +99,7 @@ export class QuestionService {
             ? updateQuestionTextsInput.partNumber
             : previousQuestion.partNumber,
           mustBeApproved: updateQuestionTextsInput.partNumber === 2 ? true : previousQuestion.mustBeApproved,
+          order: previousQuestion.order,
           previousQuestion: {
             connect: {
               id: previousQuestion.id,
