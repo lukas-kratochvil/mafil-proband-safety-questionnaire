@@ -11,9 +11,9 @@ export interface IFormSubmitButtonProps extends Omit<IButtonProps, "onClick"> {
 
 export type GenderCode = "M" | "F" | "O";
 
-export type HandednessCode = "r" | "l" | "rl" | "u";
+type HandednessCode = "r" | "l" | "rl" | "u";
 
-export const compareGenders = (a: IGenderDTO, b: IGenderDTO, _locale: string): number => {
+export const compareGenders = (a: IGenderDTO, b: IGenderDTO): number => {
   const aCode = a.code as GenderCode;
   const bCode = b.code as GenderCode;
   return aCode === "M" || (aCode === "F" && bCode !== "M") ? -1 : 1;
@@ -35,7 +35,7 @@ export const compareNativeLanguages = (a: INativeLanguageDTO, b: INativeLanguage
   return aText === undefined || bText === undefined ? -1 : new Intl.Collator(locale).compare(aText, bText);
 };
 
-export const compareHandednesses = (a: IHandednessDTO, b: IHandednessDTO, _locale: string): number => {
+export const compareHandednesses = (a: IHandednessDTO, b: IHandednessDTO): number => {
   const aCode = a.code as HandednessCode;
   const bCode = b.code as HandednessCode;
 

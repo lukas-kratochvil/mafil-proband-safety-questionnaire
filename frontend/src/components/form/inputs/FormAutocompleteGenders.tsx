@@ -29,7 +29,7 @@ export const FormAutocompleteGenders = ({
         render={({ field }) => (
           <Autocomplete
             id={name}
-            options={options?.sort((a, b) => compareGenders(a, b, i18n.language)) ?? []}
+            options={options?.sort((a, b) => compareGenders(a, b)) ?? []}
             getOptionLabel={(option: IGenderDTO) =>
               option.translations.find((trans) => trans.language.code === i18n.language)?.text ?? ""
             }

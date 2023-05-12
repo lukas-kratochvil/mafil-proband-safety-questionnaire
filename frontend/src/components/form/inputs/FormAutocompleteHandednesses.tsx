@@ -29,7 +29,7 @@ export const FormAutocompleteHandednesses = ({
         render={({ field }) => (
           <Autocomplete
             id={name}
-            options={options?.sort((a, b) => compareHandednesses(a, b, i18n.language)) ?? []}
+            options={options?.sort((a, b) => compareHandednesses(a, b)) ?? []}
             getOptionLabel={(option: IHandednessDTO) =>
               option.translations.find((trans) => trans.language.code === i18n.language)?.text ?? ""
             }
