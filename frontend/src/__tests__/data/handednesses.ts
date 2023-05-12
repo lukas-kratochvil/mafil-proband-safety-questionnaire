@@ -50,4 +50,7 @@ export const handednessesDev: IHandednessDTO[] = [
       },
     ],
   },
-];
+].map((handedness, i) => ({
+  ...handedness,
+  order: i + 1,
+}));

@@ -62,9 +62,10 @@ export const WaitingRoomForm = () => {
           questionId: answer.questionId,
           answer: answer.answer,
           comment: answer.comment,
-          hiddenByGenders: answer.hiddenByGenders,
           mustBeApproved: answer.mustBeApproved,
           partNumber: answer.partNumber,
+          order: answer.order,
+          hiddenByGenders: answer.hiddenByGenders,
           translations: answer.translations,
           updatedAt: answer.updatedAt,
         }))

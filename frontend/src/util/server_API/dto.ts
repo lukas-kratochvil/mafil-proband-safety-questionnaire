@@ -26,6 +26,7 @@ interface ITranslations {
 export interface IGenderDTO extends ITranslations {
   id: string;
   code: string;
+  order: number;
 }
 
 export interface INativeLanguageDTO extends ITranslations {
@@ -37,6 +38,7 @@ export interface INativeLanguageDTO extends ITranslations {
 export interface IHandednessDTO extends ITranslations {
   id: string;
   code: string;
+  order: number;
 }
 
 export interface IHTMLCardDTO {
@@ -54,6 +56,7 @@ export interface IQuestionDTO extends ITranslations {
   updatedAt: Date;
   partNumber: QuestionPartNumber;
   mustBeApproved: boolean;
+  order: number;
   hiddenByGenders: {
     genderCode: string;
   }[];

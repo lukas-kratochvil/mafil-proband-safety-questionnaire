@@ -43,6 +43,7 @@ const visit: IDuplicatedVisitIncludingQuestions = {
     mustBeApproved: index % 2 === 0,
     answer: index % 2 === 0 ? AnswerOption.YES : AnswerOption.NO,
     comment: index % 2 === 0 ? comment : "",
+    order: question.order,
     hiddenByGenders: question.hiddenByGenders,
     partNumber: question.partNumber,
     translations: question.translations,

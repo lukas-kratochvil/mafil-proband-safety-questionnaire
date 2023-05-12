@@ -51,9 +51,10 @@ export const ProbandForm = () => {
           questionId: question.id,
           answer: null,
           comment: "",
-          hiddenByGenders: question.hiddenByGenders,
           mustBeApproved: question.mustBeApproved,
           partNumber: question.partNumber,
+          order: question.order,
+          hiddenByGenders: question.hiddenByGenders,
           translations: question.translations,
           updatedAt: question.updatedAt,
         }))

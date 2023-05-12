@@ -232,7 +232,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
   }
 
   const [{ data }, projects, devices] = await Promise.all([
-    // TODO: add correct MAFILDB endpoint
+    // TODO: add correct MAFILDB endpoint and fetch only visits newer than specified timestamp
     axiosConfig.mafildbApi.get<VisitsResponse>("visits.json"),
     fetchProjects(),
     fetchDevices(),
@@ -317,6 +317,7 @@ export const fetchDuplicatedVisit = async (
             questionId: question.id,
             mustBeApproved: question.mustBeApproved,
             partNumber: question.partNumber,
+            order: question.order,
             hiddenByGenders: question.hiddenByGenders,
             translations: question.translations,
             updatedAt: question.updatedAt,
@@ -355,6 +356,7 @@ export const fetchDuplicatedVisit = async (
           questionId: question.id,
           mustBeApproved: question.mustBeApproved,
           partNumber: question.partNumber,
+          order: question.order,
           hiddenByGenders: question.hiddenByGenders,
           translations: question.translations,
           updatedAt: question.updatedAt,

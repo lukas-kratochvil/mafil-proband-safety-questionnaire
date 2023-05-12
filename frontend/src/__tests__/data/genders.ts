@@ -38,4 +38,7 @@ export const gendersDev: IGenderDTO[] = [
       },
     ],
   },
-];
+].map((gender, i) => ({
+  ...gender,
+  order: i + 1,
+}));

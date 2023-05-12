@@ -9,6 +9,7 @@ import {
   IApprovalRoomVisitFormIncludingQuestionsDTO,
   IWaitingRoomVisitFormIncludingQuestions,
   QuestionPartNumber,
+  VisitFormAnswerIncludingQuestion,
 } from "@app/util/server_API/dto";
 import {
   loadEmptyDefaultValues,
@@ -17,6 +18,18 @@ import {
   loadFormDefaultValuesVisitDuplication,
   loadPhantomFormDefaultValues,
 } from "../loaders";
+
+const answerIncludingQuestion: VisitFormAnswerIncludingQuestion = {
+  questionId: "1",
+  updatedAt: new Date(),
+  answer: AnswerOption.NO,
+  comment: "",
+  partNumber: QuestionPartNumber.ONE,
+  mustBeApproved: false,
+  order: 1,
+  hiddenByGenders: [],
+  translations: [],
+};
 
 const waitingRoomVisitForm: IWaitingRoomVisitFormIncludingQuestions = {
   id: "123",
@@ -34,32 +47,12 @@ const waitingRoomVisitForm: IWaitingRoomVisitFormIncludingQuestions = {
   handedness: handednessesDev[3],
   email: "name.surname@email.com",
   phone: "123456789",
-  answersIncludingQuestions: [
-    {
-      questionId: "1",
-      updatedAt: new Date(),
-      answer: AnswerOption.NO,
-      comment: "",
-      partNumber: 1,
-      mustBeApproved: false,
-      hiddenByGenders: [],
-      translations: [],
-    },
-  ],
+  answersIncludingQuestions: [answerIncludingQuestion],
 };
 
 const approvalRoomVisitForm: IApprovalRoomVisitFormIncludingQuestionsDTO = {
   ...waitingRoomVisitForm,
-  answersIncludingQuestions: waitingRoomVisitForm.answersIncludingQuestions.map((answer) => ({
-    questionId: answer.questionId,
-    answer: answer.answer,
-    comment: "comment",
-    hiddenByGenders: answer.hiddenByGenders,
-    mustBeApproved: answer.mustBeApproved,
-    partNumber: answer.partNumber,
-    translations: answer.translations,
-    updatedAt: answer.updatedAt,
-  })),
+  answersIncludingQuestions: [{ ...answerIncludingQuestion, comment: "comment" }],
   additionalInfo: {
     projectId: "1552314",
     projectAcronym: "Proj1",
@@ -90,18 +83,7 @@ const duplicatedVisit: IDuplicatedVisitIncludingQuestions = {
   handedness: handednessesDev[3],
   email: "name.surname@email.com",
   phone: "123456789",
-  answersIncludingQuestions: [
-    {
-      questionId: "1",
-      updatedAt: new Date(),
-      partNumber: QuestionPartNumber.ONE,
-      mustBeApproved: false,
-      answer: AnswerOption.NO,
-      comment: "",
-      hiddenByGenders: [],
-      translations: [],
-    },
-  ],
+  answersIncludingQuestions: [answerIncludingQuestion],
 };
 
 const visitNotCompleted: IDuplicatedVisitIncludingQuestions = {
@@ -123,18 +105,7 @@ const visitNotCompleted: IDuplicatedVisitIncludingQuestions = {
   handedness: handednessesDev[3],
   email: "",
   phone: "",
-  answersIncludingQuestions: [
-    {
-      questionId: "1",
-      updatedAt: new Date(),
-      partNumber: QuestionPartNumber.ONE,
-      mustBeApproved: false,
-      answer: AnswerOption.NO,
-      comment: "",
-      hiddenByGenders: [],
-      translations: [],
-    },
-  ],
+  answersIncludingQuestions: [answerIncludingQuestion],
 };
 
 describe("form loaders", () => {

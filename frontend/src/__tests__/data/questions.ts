@@ -62,4 +62,7 @@ export const questionsDev: IQuestionDTO[] = [
     ],
     hiddenByGenders: [],
   },
-];
+].map((question, i) => ({
+  ...question,
+  order: i + 1,
+}));
