@@ -121,7 +121,7 @@ const questions: Omit<IQuestion, "order">[] = [
 
 const orderedQuestions: IQuestion[] = questions.map((question, i) => ({
   ...question,
-  order: i + 1,
-}))
+  order: (i + 1) * 10, // multiplying by 10 makes space for future additions
+}));
 
 export default orderedQuestions;
