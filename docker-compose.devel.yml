@@ -72,7 +72,7 @@ services:
       - SERVER_API_KEY=${SERVER_API_KEY_FOR_WEB}
       - MAFILDB_API_URL=${MAFILDB_API_URL}
     volumes:
-      - ./secrets.json:/usr/share/nginx/html/assets/secrets.json
+      - ./certs:/etc/nginx/certs
     restart: unless-stopped
     depends_on:
       - server
