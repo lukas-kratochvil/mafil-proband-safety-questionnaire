@@ -3,7 +3,6 @@ import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n";
 import { IHandednessDTO } from "@app/util/server_API/dto";
-import { compareHandednesses } from "../util/utils";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormAsyncAutocompleteProps } from "./interfaces/input-props";
@@ -29,7 +28,7 @@ export const FormAutocompleteHandednesses = ({
         render={({ field }) => (
           <Autocomplete
             id={name}
-            options={options?.sort((a, b) => compareHandednesses(a, b)) ?? []}
+            options={options?.sort((a, b) => a.order - b.order) ?? []}
             getOptionLabel={(option: IHandednessDTO) =>
               option.translations.find((trans) => trans.language.code === i18n.language)?.text ?? ""
             }

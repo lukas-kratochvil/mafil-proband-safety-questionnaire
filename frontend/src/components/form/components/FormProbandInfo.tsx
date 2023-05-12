@@ -18,7 +18,6 @@ import { FormTextField } from "../inputs/FormTextField";
 import { IPhantomFormCardProps } from "../interfaces/form-card";
 import { visualCorrectionOptions } from "../util/options";
 import { CzechPersonalId, getPersonalIdPart } from "../util/personal-id";
-import { GenderCode } from "../util/utils";
 import { FormCardContainer } from "./FormCardContainer";
 
 export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardProps) => {
@@ -98,7 +97,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
 
     // Phantom visit has strictly gender 'Other' - we do not change it here
     if (!isPhantom && genders.data !== undefined) {
-      let code: GenderCode | undefined;
+      let code: string | undefined;
 
       if (czechPersonalId.isMale()) {
         code = "M";

@@ -21,14 +21,16 @@ export const FormQuestions = ({ titleLocalizationKey, qacs, disableInputs, disab
         spacing="0.5rem"
         width="100%"
       >
-        {qacs.map((qac) => (
-          <FormQuestion
-            key={qac.questionId}
-            qac={qac}
-            disableInputs={disableInputs}
-            disableComment={disableComment}
-          />
-        ))}
+        {qacs
+          .sort((a, b) => a.order - b.order)
+          .map((qac) => (
+            <FormQuestion
+              key={qac.questionId}
+              qac={qac}
+              disableInputs={disableInputs}
+              disableComment={disableComment}
+            />
+          ))}
       </Stack>
     </FormCardContainer>
   );
