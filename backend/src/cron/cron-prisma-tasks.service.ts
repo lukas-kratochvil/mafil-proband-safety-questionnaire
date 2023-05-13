@@ -13,7 +13,7 @@ export class CronPrismaTasksService {
 
   @Cron(CronExpression.EVERY_DAY_AT_3AM)
   async deleteDeletedVisitForms() {
-    const sameTimeAsYesterday = new Date(Date.now() - MILLISECONDS_IN_DAY).toISOString();
+    const sameTimeYesterday = new Date(Date.now() - MILLISECONDS_IN_DAY).toISOString();
     const deletedState = VisitFormState.DELETED;
 
     const { count } = await this.prisma.visitForm.deleteMany({
@@ -21,7 +21,7 @@ export class CronPrismaTasksService {
         AND: [
           {
             deletedAt: {
-              lte: sameTimeAsYesterday,
+              lte: sameTimeYesterday,
             },
           },
           {
@@ -36,26 +36,26 @@ export class CronPrismaTasksService {
       this.logger.log(
         `Deleted ${count} visit form${isSingle ? "" : "s"} that ${
           isSingle ? "was" : "were"
-        } marked as ${deletedState} before ${sameTimeAsYesterday}.`
+        } marked as ${deletedState} before ${sameTimeYesterday}.`
       );
     }
   }
 
   @Cron(CronExpression.EVERY_DAY_AT_3AM)
   async deletePdfGeneratedVisitForms() {
-    const sameTimeAsYesterday = new Date(Date.now() - MILLISECONDS_IN_DAY).toISOString();
-    const sentToMafilDbState = VisitFormState.PDF_GENERATED;
+    const sameTimeYesterday = new Date(Date.now() - MILLISECONDS_IN_DAY).toISOString();
+    const pdfGeneratedState = VisitFormState.PDF_GENERATED;
 
     const { count } = await this.prisma.visitForm.deleteMany({
       where: {
         AND: [
           {
             deletedAt: {
-              lte: sameTimeAsYesterday,
+              lte: sameTimeYesterday,
             },
           },
           {
-            state: sentToMafilDbState,
+            state: pdfGeneratedState,
           },
         ],
       },
@@ -66,7 +66,7 @@ export class CronPrismaTasksService {
       this.logger.log(
         `Deleted ${count} visit form${isSingle ? "" : "s"} that ${
           isSingle ? "was" : "were"
-        } marked as ${sentToMafilDbState} before ${sameTimeAsYesterday}.`
+        } marked as ${pdfGeneratedState} before ${sameTimeYesterday}.`
       );
     }
   }
