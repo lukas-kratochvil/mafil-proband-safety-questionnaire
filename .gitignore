@@ -9,6 +9,9 @@ node_modules
 # Database
 database-storage
 
+# PlantUML diagram exports
+out
+
 # Generated GraphQL schema
 graphql-schema.gql
 
