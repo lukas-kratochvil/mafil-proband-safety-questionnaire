@@ -51,6 +51,7 @@ enum VisitFormState {
   NEW
   IN_APPROVAL
   SENT_TO_MAFILDB
+  PDF_GENERATED
   DELETED
 }
 
@@ -122,7 +123,7 @@ entity QuestionTranslation {
 entity GenderHiddenQuestion {
   * id: UUID <<generated>>
   ---
-  * genderCode: UUID <<FK>>
+  * genderCode: string <<FK>>
   * questionId: UUID <<FK>>
   ---
   * createdAt: date
@@ -213,17 +214,17 @@ entity Language {
   * name: string
 }
 
-Operator }o..|| OperatorRole
-Operator ||..o{ AdditionalVisitFormInfo : finalized by
-VisitForm }o..|| VisitFormState
-VisitForm ||..o| AdditionalVisitFormInfo
+Operator }o.|| OperatorRole
+Operator ||.o{ AdditionalVisitFormInfo : finalized by
+AdditionalVisitFormInfo |o..|| VisitForm
+VisitFormState ||.o{ VisitForm
 VisitForm ||..|{ Answer
 VisitForm }o..|| Language
 VisitForm }o..|| Gender
-VisitForm }o..|| Handedness
-VisitForm }o..|| NativeLanguage
+VisitForm }o...|| Handedness
+VisitForm }o...|| NativeLanguage
 Answer }o..|| Question
-Answer }o..|| AnswerOption
+AnswerOption ||.o{ Answer
 Question |o..|| Question
 Question ||..|{ QuestionTranslation
 QuestionTranslation }o..|| Language
