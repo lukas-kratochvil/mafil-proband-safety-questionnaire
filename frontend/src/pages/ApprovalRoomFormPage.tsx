@@ -1,6 +1,6 @@
 import { ApprovalRoomForm } from "@app/components/form/forms/ApprovalRoomForm";
 import { FormPageContainer } from "@app/components/form/forms/FormPageContainer";
-import { operatorApprovalFormSchema } from "@app/components/form/schemas/operator_approval_form_schema";
+import { operatorApprovalFormSchema } from "@app/components/form/schemas/operator-approval-form-schema";
 
 const ApprovalRoomFormPage = () => (
   <FormPageContainer

@@ -1,6 +1,6 @@
 import { gendersDev } from "@app/__tests__/data/genders";
 import { handednessesDev } from "@app/__tests__/data/handednesses";
-import { nativeLanguagesDev } from "@app/__tests__/data/nativeLanguages";
+import { nativeLanguagesDev } from "@app/__tests__/data/native-languages";
 import { operatorMRDev } from "@app/__tests__/data/operators";
 import { AnswerOption } from "@app/model/form";
 import { IDuplicatedVisitIncludingQuestions, VisualCorrection } from "@app/model/visit";

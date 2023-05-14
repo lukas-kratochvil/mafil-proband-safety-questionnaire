@@ -2,7 +2,7 @@ import userEvent from "@testing-library/user-event";
 import { format } from "date-fns";
 import { gendersDev } from "@app/__tests__/data/genders";
 import { handednessesDev } from "@app/__tests__/data/handednesses";
-import { nativeLanguagesDev } from "@app/__tests__/data/nativeLanguages";
+import { nativeLanguagesDev } from "@app/__tests__/data/native-languages";
 import { operatorMRDev } from "@app/__tests__/data/operators";
 import { pdfDev } from "@app/__tests__/data/pdf";
 import { getProjectText } from "@app/components/form/util/utils";

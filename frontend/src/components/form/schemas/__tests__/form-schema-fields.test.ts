@@ -1,5 +1,5 @@
 import { AnySchema } from "yup";
-import { probandFormSchema } from "../proband_form_schema";
+import { probandFormSchema } from "../proband-form-schema";
 
 describe("form schemas", () => {
   describe("proband form schema", () => {

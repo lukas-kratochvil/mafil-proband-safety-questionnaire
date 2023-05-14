@@ -1,5 +1,5 @@
 import { string } from "yup";
-import { operatorFinalizationFormSchema } from "./operator_finalization_form_schema";
+import { operatorFinalizationFormSchema } from "./operator-finalization-form-schema";
 
 export const operatorApprovalFormSchema = operatorFinalizationFormSchema.shape({
   disapprovalReason: string()

@@ -1,7 +1,7 @@
 import userEvent from "@testing-library/user-event";
 import { gendersDev } from "@app/__tests__/data/genders";
 import { handednessesDev } from "@app/__tests__/data/handednesses";
-import { nativeLanguagesDev } from "@app/__tests__/data/nativeLanguages";
+import { nativeLanguagesDev } from "@app/__tests__/data/native-languages";
 import { questionsDev } from "@app/__tests__/data/questions";
 import ProbandFormPage from "@app/pages/ProbandFormPage";
 import { IGenderDTO, IHandednessDTO, IHTMLCardDTO, INativeLanguageDTO, IQuestionDTO } from "@app/util/server_API/dto";

@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { gendersDev } from "@app/__tests__/data/genders";
 import { handednessesDev } from "@app/__tests__/data/handednesses";
-import { nativeLanguagesDev } from "@app/__tests__/data/nativeLanguages";
+import { nativeLanguagesDev } from "@app/__tests__/data/native-languages";
 import { operatorMRHigPermDev } from "@app/__tests__/data/operators";
 import { pdfDev } from "@app/__tests__/data/pdf";
 import { questionsDev } from "@app/__tests__/data/questions";
