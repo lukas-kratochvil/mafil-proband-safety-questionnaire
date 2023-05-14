@@ -48,16 +48,14 @@ jobs:
     - name: Install frontend dependencies
       run: npm ci
 
-    # TODO: uncomment
-    # - name: Lint the code
-    #   run: npm run lint
+    - name: Lint the code
+      run: npm run lint
 
     - name: Build
       run: npm run build
 
-    # TODO: uncomment
-    # - name: Run the tests
-    #   run: npm test
+    - name: Run the tests
+      run: npm test
 
   push_to_docker_registry:
     name: Build and push Docker image to the GitHub Container registry
