@@ -12,7 +12,7 @@ on:
     branches: [ "devel", "main" ]
     paths:
       - 'frontend/**'
-  # We can manually trigger this workflow
+  # Allowing to trigger this workflow manually
   workflow_dispatch:
 
 env:
@@ -57,7 +57,7 @@ jobs:
     - name: Run the tests
       run: npm test
 
-  push_to_docker_registry:
+  create_docker_image:
     name: Build and push Docker image to the GitHub Container registry
     if: ${{ github.event_name == 'push' }}
     needs: build
@@ -74,7 +74,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
-        id: meta
+        id: metadata
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}
@@ -90,5 +90,5 @@ jobs:
           context: .
           file: ./frontend/Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
