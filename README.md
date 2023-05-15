@@ -34,7 +34,7 @@ The command will start the services listed below:
 * Postgres - database
 * Adminer - database manager
 * Server - app server
-* Web – app client
+* Web – web server
 
 To populate the database with initial data (genders, native languages, handednesses and safety questions), the command below must be run inside the `server` container.
 ```
