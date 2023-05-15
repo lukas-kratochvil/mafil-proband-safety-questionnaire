@@ -18,6 +18,7 @@ serverApi.interceptors.response.use(transformDateStringToDate);
 /* MAFILDB instance */
 const mafildbApi = axios.create({
   // 'mafildb-api' URL is rewritten in the Nginx conf to the correct URL
+  // we do not communicate with MAFILDB API when developing locally
   baseURL: import.meta.env.PROD ? "mafildb-api" : undefined,
   headers: {
     "Content-Type": "application/json",
@@ -28,7 +29,7 @@ mafildbApi.interceptors.request.use(async (config) => {
   const authService = AuthService.getInstance();
   const authUser = await authService.getAuthUser();
   if (authUser) {
-    // set Authorization header to user's OIDC access_token, so the request to the MAFILDB API will proceed
+    // set Authorization header to user's OIDC access_token, so that a request to the MAFILDB API will proceed
     config.headers.Authorization = `Bearer ${authUser.access_token}`; // eslint-disable-line no-param-reassign
   }
   return config;
