@@ -32,7 +32,13 @@ void i18n
       transEmptyNodeValue: "",
       transSupportBasicHtmlNodes: true,
     },
-    // TODO: try to get {locale}.json files from the backend (https://www.i18next.com/overview/configuration-options#languages-namespaces-resources)
+    /**
+     * TODO: try to get {locale}.json files from the backend (https://www.i18next.com/how-to/add-or-load-translations)
+     * sources:
+     *    - https://stackoverflow.com/questions/56748722/how-can-we-load-translations-using-api-calls-instead-of-having-them-defined-in-s
+     *    - https://stackoverflow.com/questions/43415899/cannot-get-react-i18next-to-read-json-files-via-fetch-backend
+     *    - https://stackoverflow.com/questions/74774303/react-i18next-not-showing-translation-from-rest-api
+     */
     resources,
   });
 
