@@ -20,6 +20,7 @@ This repository contains the following most important directories and files:
   - *src* - source files including tests
   - *Dockerfile* - instructions for assembling client Docker image
 - *docs* – system documentation
+- *.env.example* - example of environment-specific variables configuration
 - *LICENSE* - system license
 - *README.md* - this README
 - *docker-compose.devel.yml* - development environment services configuration
