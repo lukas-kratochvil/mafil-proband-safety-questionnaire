@@ -2,9 +2,30 @@
 Web application for ensuring the registration and safety of MR measurements in the [MAFIL laboratory (CEITEC)](https://mafil.ceitec.cz/en/).
 
 ## Table of contents
+- [Repository structure](#repository-structure)
 - [Installation](#installation)
 - [Developers installation](#developers-installation)
 - [Services update](#services-update)
+
+## Repository structure
+This repository contains the following most important directories and files:
+- *backend* - server app
+  - *prisma* - Prisma schema and SQL migrations
+  - *src* - source files
+  - *test* - tests
+  - *Dockerfile* - instructions for assembling server Docker image
+- *frontend* - client app
+  - *nginx* - Nginx web server configuration
+  - *public* - static files
+  - *src* - source files including tests
+  - *Dockerfile* - instructions for assembling client Docker image
+- *docs* – system documentation
+- *LICENSE* - system license
+- *README.md* - this README
+- *docker-compose.devel.yml* - development environment services configuration
+- *docker-compose.local.yml* - local development environment services configuration
+- *docker-compose.prod.yml* - production environment services configuration
+- *download.sh* - script to download files for a deployment
 
 ## Installation
 
