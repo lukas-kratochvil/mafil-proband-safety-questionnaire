@@ -1,4 +1,4 @@
-import { Avatar, Button, Stack, Typography } from "@mui/material";
+import { Avatar, Button, Stack, Theme, Typography, useMediaQuery } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { CardContainer } from "@app/components/card/CardContainer";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
@@ -6,6 +6,7 @@ import { defaultNS } from "@app/i18n";
 import { PageContainer } from "./PageContainer";
 
 const LoginPage = () => {
+  const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const { t } = useTranslation(defaultNS, { keyPrefix: "loginPage" });
   const { logIn } = useAuth();
 
@@ -25,7 +26,7 @@ const LoginPage = () => {
           <Typography>{t("loginText")}</Typography>
           <Stack
             spacing="0.5rem"
-            sx={{ paddingX: "2.75rem" }}
+            sx={{ paddingX: matchesDownSmBreakpoint ? "1.5rem" : "2.75rem" }}
           >
             <Button
               variant="outlined"
