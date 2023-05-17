@@ -2,7 +2,7 @@ import { Autocomplete } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n";
-import { IHandednessDTO } from "@app/util/server_API/dto";
+import { IOrderedHandednessDTO } from "@app/util/server_API/dto";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormAsyncAutocompleteProps } from "./interfaces/input-props";
@@ -14,7 +14,7 @@ export const FormAutocompleteHandednesses = ({
   disabled,
   options,
   isLoading,
-}: IFormAsyncAutocompleteProps<IHandednessDTO>) => {
+}: IFormAsyncAutocompleteProps<IOrderedHandednessDTO>) => {
   const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
 
   return (
@@ -29,11 +29,11 @@ export const FormAutocompleteHandednesses = ({
           <Autocomplete
             id={name}
             options={options?.sort((a, b) => a.order - b.order) ?? []}
-            getOptionLabel={(option: IHandednessDTO) =>
+            getOptionLabel={(option: IOrderedHandednessDTO) =>
               option.translations.find((trans) => trans.language.code === i18n.language)?.text ?? ""
             }
             isOptionEqualToValue={(option, value) => option.id === value.id}
-            value={field.value as IHandednessDTO}
+            value={field.value as IOrderedHandednessDTO}
             onChange={(_event, val) => field.onChange(val)}
             onBlur={field.onBlur}
             disabled={disabled}

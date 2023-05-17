@@ -41,6 +41,9 @@ export interface INativeLanguageDTO extends ITranslations {
 export interface IHandednessDTO extends ITranslations {
   id: string;
   code: string;
+}
+
+export interface IOrderedHandednessDTO extends IHandednessDTO {
   order: number;
 }
 

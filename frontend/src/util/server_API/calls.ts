@@ -15,6 +15,7 @@ import {
   INativeLanguageDTO,
   IOperatorDTO,
   IOrderedGenderDTO,
+  IOrderedHandednessDTO,
   IPdfDTO,
   IQuestionDTO,
   ISendVisitFormFromWaitingRoomForApprovalInput,
@@ -146,7 +147,7 @@ export const fetchNativeLanguage = async (code: string): Promise<INativeLanguage
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchHandednesses = async (): Promise<IHandednessDTO[] | never> => {
+export const fetchHandednesses = async (): Promise<IOrderedHandednessDTO[] | never> => {
   const { data } = await axiosConfig.serverApi.post<HandednessesResponse>("", { query: GET_HANDEDNESSES });
 
   if (data.data) {

@@ -7,6 +7,7 @@ import {
   INativeLanguageDTO,
   IOperatorDTO,
   IOrderedGenderDTO,
+  IOrderedHandednessDTO,
   IPdfDTO,
   IQuestionDTO,
   IWaitingRoomTableVisitFormDTO,
@@ -43,7 +44,7 @@ export type NativeLanguagesResponse = DataErrorsResponse<{ nativeLanguages: INat
 
 export type NativeLanguageResponse = DataErrorsResponse<{ nativeLanguage: INativeLanguageDTO }>;
 
-export type HandednessesResponse = DataErrorsResponse<{ handednesses: IHandednessDTO[] }>;
+export type HandednessesResponse = DataErrorsResponse<{ handednesses: IOrderedHandednessDTO[] }>;
 
 export type HandednessResponse = DataErrorsResponse<{ handedness: IHandednessDTO }>;
 

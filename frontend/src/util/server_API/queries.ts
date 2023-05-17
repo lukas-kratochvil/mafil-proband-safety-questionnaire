@@ -96,6 +96,7 @@ query GetHandednesses {
   handednesses {
     id
     code
+    order
     translations {
       text
       language {
