@@ -15,7 +15,7 @@
         "tryAgainLater": "Nastala chyba! Opakujte prosím akci později nebo kontaktujte správce systému.",
         "serverValidationError": "Nastala chyba při validaci vstupu! Následující pole jsou chybná",
         "serverCommunicationError": "Nastala interní chyba serveru! Kontaktujte prosím správce systému.",
-        "cannotDuplicateVisitDueToDifferentSafetyQuestions": "Bezpečnostní otázky návštěvy se liší od aktuálních bezpečnostních otázek! Návštěvu nelze duplikovat."
+        "cannotDuplicateVisitDueToDifferentSafetyQuestions": "Bezpečnostní otázky visity se liší od aktuálních bezpečnostních otázek! Visitu nelze duplikovat."
       }
     },
     "form": {
