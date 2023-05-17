@@ -25,7 +25,7 @@ export const PageContainer = ({ children, center, isTablePage }: PropsWithChildr
             width: "100%",
             maxWidth: ({ breakpoints }) => (isTablePage ? "95%" : breakpoints.values.md),
             marginX: "auto",
-            marginY: "2rem",
+            marginY: center ? "auto" : "2rem",
             justifyContent: center ? "center" : undefined,
             alignItems: center ? "center" : undefined,
           }}
