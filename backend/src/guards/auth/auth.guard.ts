@@ -2,7 +2,6 @@ import { CanActivate, ExecutionContext, Injectable, Logger } from "@nestjs/commo
 import { ConfigService } from "@nestjs/config";
 import { Reflector } from "@nestjs/core";
 import { GqlContextType, GqlExecutionContext } from "@nestjs/graphql";
-import { IS_PUBLIC_KEY } from "./is-public";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -10,29 +9,18 @@ export class AuthGuard implements CanActivate {
 
   constructor(private readonly config: ConfigService, private reflector: Reflector) {}
 
-  // TODO: implement app authorization somehow
   async canActivate(exContext: ExecutionContext): Promise<boolean> {
     if (exContext.getType<GqlContextType>() !== "graphql") {
       this.logger.error(`Invalid execution context type '${exContext.getType()}'!`);
       return false;
     }
 
-    // Checking if the route is public
-    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
-      exContext.getHandler(),
-      exContext.getClass(),
-    ]);
-
-    if (isPublic) {
-      return true;
-    }
-
-    // Checking API key
     const gqlExContext = GqlExecutionContext.create(exContext);
     const gqlContext = gqlExContext.getContext();
     const request = gqlContext.req;
     const apiKey = request.headers["server-api-key"] || "";
 
+    // Checking web service API key. Other services will be denied access.
     if (apiKey === this.config.get("API_KEY_FOR_WEB")) {
       return true;
     }
