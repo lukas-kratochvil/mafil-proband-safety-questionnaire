@@ -125,6 +125,7 @@ export class VisitFormService {
         },
         data: {
           state: updateVisitFormInput.state,
+          sentToMafilDbAt: updateVisitFormInput.state === "SENT_TO_MAFILDB" ? new Date() : undefined,
           name: updateVisitFormInput.name,
           surname: updateVisitFormInput.surname,
           personalId: updateVisitFormInput.personalId,
