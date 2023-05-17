@@ -3,6 +3,7 @@ Web application for ensuring the registration and safety of MR measurements in t
 
 ## Table of contents
 - [Repository structure](#repository-structure)
+- [Base URL paths](#base-url-paths)
 - [Installation](#installation)
 - [Developers installation](#developers-installation)
 - [Services update](#services-update)
@@ -27,6 +28,10 @@ This repository contains the following most important directories and files:
 - *docker-compose.local.yml* - local development environment services configuration
 - *docker-compose.prod.yml* - production environment services configuration
 - *download.sh* - script to download files for deployment (you must specify the local path where the files will be downloaded)
+
+## Base URL paths
+- `/` - root path directs to the proband safety questionnaire
+- `/login` - this path directs to the login page
 
 ## Installation
 
