@@ -9,7 +9,7 @@ import { getProjectText } from "@app/components/form/util/utils";
 import PhantomFormPage from "@app/pages/PhantomFormPage";
 import { devicesDev, projectsDev } from "@app/util/mafildb_API/data.dev";
 import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
-import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IPdfDTO } from "@app/util/server_API/dto";
+import { INativeLanguageDTO, IOrderedGenderDTO, IOrderedHandednessDTO, IPdfDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -41,9 +41,9 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
 // Mocking server API calls
 //----------------------------------------------------------------------
 vi.mock("@app/util/server_API/calls", async () => ({
-  fetchGenders: async (): Promise<IGenderDTO[]> => gendersDev,
+  fetchGenders: async (): Promise<IOrderedGenderDTO[]> => gendersDev,
   fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesDev,
-  fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesDev,
+  fetchHandednesses: async (): Promise<IOrderedHandednessDTO[]> => handednessesDev,
   generatePhantomPdf: async (): Promise<IPdfDTO> => pdfDev,
 }));
 

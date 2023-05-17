@@ -1,7 +1,7 @@
-import { IGenderDTO } from "@app/util/server_API/dto";
+import { IOrderedGenderDTO } from "@app/util/server_API/dto";
 import { NEUTRAL_LANGUAGE_CODE } from "../neutral-language-code";
 
-export const gendersDev: IGenderDTO[] = [
+export const gendersDev: IOrderedGenderDTO[] = [
   {
     id: "1",
     code: "M",
