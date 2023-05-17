@@ -15,7 +15,7 @@ interface IRecentVisitsTableActionButtonsProps {
 }
 
 export const RecentVisitsTableActionButtons = ({ visit }: IRecentVisitsTableActionButtonsProps) => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "recentVisitsTablePage.actions" });
+  const { t } = useTranslation(defaultNS);
   const navigate = useNavigate();
 
   const onDuplicate = async () => {
@@ -49,14 +49,14 @@ export const RecentVisitsTableActionButtons = ({ visit }: IRecentVisitsTableActi
         variant="contained"
         onClick={() => navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.visitId}`)}
       >
-        {t("showDetailButton")}
+        {t("recentVisitsTablePage.actions.showDetailButton")}
       </Button>
       <Button
         size="small"
         variant="contained"
         onClick={onDuplicate}
       >
-        {t("duplicateButton")}
+        {t("recentVisitsTablePage.actions.duplicateButton")}
       </Button>
     </TableActionButtonsContainer>
   );
