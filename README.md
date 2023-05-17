@@ -26,7 +26,7 @@ This repository contains the following most important directories and files:
 - *docker-compose.devel.yml* - development environment services configuration
 - *docker-compose.local.yml* - local development environment services configuration
 - *docker-compose.prod.yml* - production environment services configuration
-- *download.sh* - script to download files for a deployment
+- *download.sh* - script to download files for deployment (you must specify the local path where the files will be downloaded)
 
 ## Installation
 

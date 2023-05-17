@@ -15,7 +15,7 @@ export interface IAuth {
 const authContext = createContext<IAuth>(undefined as unknown as IAuth);
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
-  // Ignoring the React hook rule because the code is resolved during build
+  // Ignoring the eslint React hook rule because the code is resolved during build
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const auth = import.meta.env.PROD ? useAuthProvider() : useAuthProviderDev();
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
