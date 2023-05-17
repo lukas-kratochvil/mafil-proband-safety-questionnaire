@@ -2,7 +2,7 @@ import { Autocomplete } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n";
-import { INativeLanguageDTO } from "@app/util/server_API/dto";
+import { IOrderedNativeLanguageDTO } from "@app/util/server_API/dto";
 import { compareNativeLanguages } from "../util/utils";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
@@ -15,7 +15,7 @@ export const FormAutocompleteNativeLanguages = ({
   disabled,
   options,
   isLoading,
-}: IFormAsyncAutocompleteProps<INativeLanguageDTO>) => {
+}: IFormAsyncAutocompleteProps<IOrderedNativeLanguageDTO>) => {
   const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
 
   return (
@@ -30,11 +30,11 @@ export const FormAutocompleteNativeLanguages = ({
           <Autocomplete
             id={name}
             options={options?.sort((a, b) => compareNativeLanguages(a, b, i18n.language)) ?? []}
-            getOptionLabel={(option: INativeLanguageDTO) =>
+            getOptionLabel={(option: IOrderedNativeLanguageDTO) =>
               option.translations.find((trans) => trans.language.code === i18n.language)?.text ?? ""
             }
             isOptionEqualToValue={(option, value) => option.id === value.id}
-            value={field.value as INativeLanguageDTO}
+            value={field.value as IOrderedNativeLanguageDTO}
             onChange={(_event, val) => field.onChange(val)}
             onBlur={field.onBlur}
             disabled={disabled}

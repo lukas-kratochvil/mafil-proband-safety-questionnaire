@@ -35,6 +35,9 @@ export interface IOrderedGenderDTO extends IGenderDTO {
 export interface INativeLanguageDTO extends ITranslations {
   id: string;
   code: string;
+}
+
+export interface IOrderedNativeLanguageDTO extends INativeLanguageDTO {
   order: number | null;
 }
 

@@ -8,6 +8,7 @@ import {
   IOperatorDTO,
   IOrderedGenderDTO,
   IOrderedHandednessDTO,
+  IOrderedNativeLanguageDTO,
   IOrderedQuestionDTO,
   IPdfDTO,
   IQuestionDTO,
@@ -41,7 +42,7 @@ export type GendersResponse = DataErrorsResponse<{ genders: IOrderedGenderDTO[] 
 
 export type GenderResponse = DataErrorsResponse<{ gender: IGenderDTO }>;
 
-export type NativeLanguagesResponse = DataErrorsResponse<{ nativeLanguages: INativeLanguageDTO[] }>;
+export type NativeLanguagesResponse = DataErrorsResponse<{ nativeLanguages: IOrderedNativeLanguageDTO[] }>;
 
 export type NativeLanguageResponse = DataErrorsResponse<{ nativeLanguage: INativeLanguageDTO }>;
 

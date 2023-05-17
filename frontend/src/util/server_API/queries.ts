@@ -79,7 +79,6 @@ query GetNativeLanguage($code: String!) {
   nativeLanguage(code: $code) {
     id
     code
-    order
     translations {
       text
       language {
