@@ -11,7 +11,10 @@ const LoginPage = () => {
 
   return (
     <PageContainer center>
-      <CardContainer title={t("title")}>
+      <CardContainer
+        title={t("title")}
+        maxWidth="25rem"
+      >
         <Stack
           spacing="1rem"
           sx={{

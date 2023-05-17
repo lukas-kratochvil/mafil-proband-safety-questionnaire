@@ -4,11 +4,14 @@ import { PropsWithChildren } from "react";
 
 interface ICardContainerProps {
   title: string;
+  maxWidth?: string;
 }
 
-export const CardContainer = ({ children, title }: PropsWithChildren<ICardContainerProps>) => (
+export const CardContainer = ({ children, title, maxWidth }: PropsWithChildren<ICardContainerProps>) => (
   <Card
     sx={{
+      width: "100%",
+      maxWidth: maxWidth || undefined,
       border: 1,
       borderColor: ({ palette }) => palette.grey[600],
     }}
