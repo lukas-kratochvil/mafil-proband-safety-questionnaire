@@ -36,7 +36,7 @@ entity VisitForm {
   deletedAt: date
   ---
   * state: VisitFormState
-  sentToMafilDbAt: boolean
+  sentToMafilDbAt: date
   * name: string
   * surname: string
   * personalId: string
