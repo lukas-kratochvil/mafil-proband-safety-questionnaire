@@ -24,6 +24,7 @@ export const RecentVisitsTableActionButtons = ({ visit }: IRecentVisitsTableActi
         const currentQuestions = await fetchCurrentQuestions();
         const visitQuestionIds = visit.answers.map((answer) => answer.questionId);
 
+        // Check that current questions weren't modified after this visit was created in the MAFILDB
         if (
           currentQuestions.length !== visitQuestionIds.length
           || currentQuestions.some(
