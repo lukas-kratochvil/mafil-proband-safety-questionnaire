@@ -29,7 +29,7 @@ const questions: Omit<IQuestion, "order">[] = [
   },
   {
     partNumber: 1,
-    csText: "Máte zavedenou nějakou svorku či stent (např. vtepně či žíle)?",
+    csText: "Máte zavedenou nějakou svorku či stent (např. v tepně či žíle)?",
     enText: "Do you have a clamp or stent inserted (e.g. in an artery or vein)?",
   },
   {
@@ -84,7 +84,7 @@ const questions: Omit<IQuestion, "order">[] = [
   },
   {
     partNumber: 2,
-    csText: "Máte/měl jste někdy zavedený jakýkoli stimulační implantát (např. kardiostimulátor, defibrilátor apod.)?",
+    csText: "Máte/měl(a) jste někdy zavedený jakýkoli stimulační implantát (např. kardiostimulátor, defibrilátor apod.)?",
     enText: "Do you/have you ever had any pacing implant (e.g. pacemaker, defibrillator, etc.) inserted?",
   },
   {
@@ -94,12 +94,12 @@ const questions: Omit<IQuestion, "order">[] = [
   },
   {
     partNumber: 2,
-    csText: "Máte/měl jste někdy zavedený kochleární implantát?",
+    csText: "Máte/měl(a) jste někdy zavedený kochleární implantát?",
     enText: "Do you have/have you ever had a cochlear implant?",
   },
   {
     partNumber: 2,
-    csText: "Máte/měl jste zavedené jakékoli jiné elektronické zařízení?",
+    csText: "Máte/měl(a) jste zavedené jakékoli jiné elektronické zařízení?",
     enText: "Do you have/have you installed any other electronic devices?",
   },
   {
@@ -121,7 +121,7 @@ const questions: Omit<IQuestion, "order">[] = [
 
 const orderedQuestions: IQuestion[] = questions.map((question, i) => ({
   ...question,
-  order: (i + 1) * 10, // multiplying by 10 makes space for future additions
+  order: (i + 1) * 10, // multiplying by 10 makes space for possible future additions
 }));
 
 export default orderedQuestions;
