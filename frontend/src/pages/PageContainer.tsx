@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 import { PropsWithChildren } from "react";
-import { Toaster } from "react-hot-toast";
+import toast, { ToastBar, Toaster } from "react-hot-toast";
 import { Header } from "@app/components/header/Header";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
 
@@ -15,7 +15,27 @@ export const PageContainer = ({ children, center, isTablePage }: PropsWithChildr
   return (
     <>
       <Header />
-      <Toaster />
+      {/* Toaster displays errors at the top of the page */}
+      <Toaster>
+        {(t) => (
+          <ToastBar toast={t}>
+            {({ icon, message }) => (
+              <>
+                {icon}
+                {message}
+                {t.type !== "loading" && (
+                  <button
+                    type="button"
+                    onClick={() => toast.dismiss(t.id)}
+                  >
+                    X
+                  </button>
+                )}
+              </>
+            )}
+          </ToastBar>
+        )}
+      </Toaster>
       <main>
         <Stack
           spacing="1.5rem"
