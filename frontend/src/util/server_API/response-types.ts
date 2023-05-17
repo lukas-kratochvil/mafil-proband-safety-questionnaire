@@ -6,6 +6,7 @@ import {
   IHTMLCardDTO,
   INativeLanguageDTO,
   IOperatorDTO,
+  IOrderedGenderDTO,
   IPdfDTO,
   IQuestionDTO,
   IWaitingRoomTableVisitFormDTO,
@@ -34,7 +35,7 @@ export type AuthenticateOperatorResponse = DataErrorsResponse<{ authenticateOper
 
 export type OperatorResponse = DataErrorsResponse<{ operator: IOperatorDTO }>;
 
-export type GendersResponse = DataErrorsResponse<{ genders: IGenderDTO[] }>;
+export type GendersResponse = DataErrorsResponse<{ genders: IOrderedGenderDTO[] }>;
 
 export type GenderResponse = DataErrorsResponse<{ gender: IGenderDTO }>;
 

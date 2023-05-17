@@ -14,6 +14,7 @@ import {
   IHTMLCardDTO,
   INativeLanguageDTO,
   IOperatorDTO,
+  IOrderedGenderDTO,
   IPdfDTO,
   IQuestionDTO,
   ISendVisitFormFromWaitingRoomForApprovalInput,
@@ -100,7 +101,7 @@ export const fetchOperator = async (uco: string): Promise<IOperatorDTO | never> 
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchGenders = async (): Promise<IGenderDTO[] | never> => {
+export const fetchGenders = async (): Promise<IOrderedGenderDTO[] | never> => {
   const { data } = await axiosConfig.serverApi.post<GendersResponse>("", { query: GET_GENDERS });
 
   if (data.data) {

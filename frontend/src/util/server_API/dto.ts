@@ -26,6 +26,9 @@ interface ITranslations {
 export interface IGenderDTO extends ITranslations {
   id: string;
   code: string;
+}
+
+export interface IOrderedGenderDTO extends IGenderDTO {
   order: number;
 }
 

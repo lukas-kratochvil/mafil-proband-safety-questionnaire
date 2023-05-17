@@ -29,6 +29,7 @@ query GetGenders {
   genders {
     id
     code
+    order
     translations {
       text
       language {
