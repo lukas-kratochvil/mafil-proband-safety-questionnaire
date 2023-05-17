@@ -47,7 +47,7 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - THROTTLE_TTL=${THROTTLE_TTL}
       - THROTTLE_LIMIT=${THROTTLE_LIMIT}
-      - API_KEY_FOR_WEB=${SERVER_API_KEY_FOR_WEB}
+      - WEB_API_KEY=${WEB_API_KEY}
       - PDF_OPERATOR_LANGUAGE_CODE=${PDF_OPERATOR_LANGUAGE_CODE}
       # - WEB_DOMAIN=${WEB_DOMAIN}
     restart: unless-stopped
@@ -69,7 +69,7 @@ services:
       - WEB_DOMAIN=${WEB_DOMAIN}
       - SERVER_PORT=${SERVER_PORT}
       - ADMINER_PORT=${ADMINER_PORT}
-      - SERVER_API_KEY=${SERVER_API_KEY_FOR_WEB}
+      - WEB_API_KEY=${WEB_API_KEY}
       - MAFILDB_API_URL=${MAFILDB_API_URL}
     volumes:
       - ./certs:/etc/nginx/certs

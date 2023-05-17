@@ -18,10 +18,11 @@ export class AuthGuard implements CanActivate {
     const gqlExContext = GqlExecutionContext.create(exContext);
     const gqlContext = gqlExContext.getContext();
     const request = gqlContext.req;
-    const apiKey = request.headers["server-api-key"] || "";
+    // api key HTTP header name must be in the lower case
+    const apiKey = request.headers["api-key"] || "";
 
     // Checking web service API key. Other services will be denied access.
-    if (apiKey === this.config.get("API_KEY_FOR_WEB")) {
+    if (apiKey === this.config.get("WEB_API_KEY")) {
       return true;
     }
 

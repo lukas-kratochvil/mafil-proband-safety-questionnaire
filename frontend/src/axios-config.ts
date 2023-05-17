@@ -8,8 +8,8 @@ const serverApi = axios.create({
   baseURL: import.meta.env.PROD ? "server-api" : `${import.meta.env.VITE_SERVER_URL}/graphql`,
   headers: {
     "Content-Type": "application/json",
-    // SERVER-API-KEY header is set in the Nginx conf for all the environments except the local development environment
-    "SERVER-API-KEY": import.meta.env.PROD ? undefined : import.meta.env.VITE_SERVER_API_KEY,
+    // API-KEY header is set in the Nginx conf for all the environments except the local development environment
+    "API-KEY": import.meta.env.PROD ? undefined : import.meta.env.VITE_WEB_API_KEY,
   },
 });
 

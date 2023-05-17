@@ -63,7 +63,7 @@ server {
     proxy_set_header Connection 'upgrade';
     proxy_set_header Host $host;
     # authorization header to access API methods
-    proxy_set_header SERVER-API-KEY "${SERVER_API_KEY}";
+    proxy_set_header API-KEY "${WEB_API_KEY}";
     proxy_cache_bypass $http_upgrade;
   }
 

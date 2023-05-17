@@ -62,7 +62,7 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - THROTTLE_TTL=${THROTTLE_TTL}
       - THROTTLE_LIMIT=${THROTTLE_LIMIT}
-      - API_KEY_FOR_WEB=${SERVER_API_KEY_FOR_WEB}
+      - WEB_API_KEY=${WEB_API_KEY}
       - PDF_OPERATOR_LANGUAGE_CODE=${PDF_OPERATOR_LANGUAGE_CODE}
       # - WEB_DOMAIN=${WEB_DOMAIN}
     restart: unless-stopped
@@ -96,7 +96,7 @@ services:
       - NODE_ENV=development
       - TZ=${TIMEZONE}
       - PORT=3000
-      - VITE_SERVER_API_KEY=${SERVER_API_KEY_FOR_WEB}
+      - VITE_WEB_API_KEY=${WEB_API_KEY}
       - VITE_SERVER_URL=http://127.0.0.1:${SERVER_PORT}
     restart: unless-stopped
     depends_on:
