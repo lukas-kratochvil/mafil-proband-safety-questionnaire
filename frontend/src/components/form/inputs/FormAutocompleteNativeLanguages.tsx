@@ -34,7 +34,7 @@ export const FormAutocompleteNativeLanguages = ({
               option.translations.find((trans) => trans.language.code === i18n.language)?.text ?? ""
             }
             isOptionEqualToValue={(option, value) => option.id === value.id}
-            value={field.value as IOrderedNativeLanguageDTO}
+            value={field.value}
             onChange={(_event, val) => field.onChange(val)}
             onBlur={field.onBlur}
             disabled={disabled}

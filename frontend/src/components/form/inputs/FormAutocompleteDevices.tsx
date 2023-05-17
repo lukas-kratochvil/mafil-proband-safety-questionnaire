@@ -31,7 +31,7 @@ export const FormAutocompleteDevices = ({
             options={options === undefined ? [] : options}
             getOptionLabel={(option: IDeviceDTO) => option.name}
             isOptionEqualToValue={(option, value) => option.id === value.id}
-            value={field.value as IDeviceDTO}
+            value={field.value}
             onChange={(_event, val) => field.onChange(val)}
             onBlur={field.onBlur}
             disabled={disabled}

@@ -32,7 +32,7 @@ export const FormAutocompleteProjects = ({
             options={options === undefined ? [] : options}
             getOptionLabel={(option: IProjectDTO) => getProjectText(option)}
             isOptionEqualToValue={(option, value) => option.id === value.id}
-            value={field.value as IProjectDTO}
+            value={field.value}
             onChange={(_event, val) => field.onChange(val)}
             onBlur={field.onBlur}
             disabled={disabled}
