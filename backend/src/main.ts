@@ -24,6 +24,8 @@ async function bootstrap() {
   });
   const config = app.get(ConfigService);
 
+  // TODO: check that all the required environment variables are defined!
+
   // Protection from some well-known web vulnerabilities by setting HTTP headers appropriately
   app.use(helmet(config.get<string>("NODE_ENV") === "development" ? devHelmetOptions : undefined));
 

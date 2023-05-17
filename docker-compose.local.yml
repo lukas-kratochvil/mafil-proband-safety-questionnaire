@@ -42,6 +42,7 @@ services:
       target: development
     command: npm run start:migrate:dev
     volumes:
+      # TODO: correct the volume mapping - do we need to map package.json when we map the whole backend directory?
       # changes in host's ./backend directory will be propagated to the container
       - ./backend:/usr/src/app/backend
       # this will let us add packages during development without rebuilding the image
@@ -78,6 +79,7 @@ services:
       target: development
     command: npm run dev
     volumes:
+      # TODO: correct the volume mapping - do we need to map package.json when we map the whole backend directory?
       # changes in host's ./frontend directory will be propagated to the container
       - ./frontend:/usr/src/app/frontend
       # this will let us add packages during development without rebuilding the image
