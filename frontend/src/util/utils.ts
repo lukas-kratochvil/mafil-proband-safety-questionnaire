@@ -30,5 +30,5 @@ export const handleErrorsWithToast = (e: unknown, t: TFunction<"translation">): 
     errorMessage = t("common.errors.contactAdmin");
   }
 
-  toast.error(errorMessage);
+  toast.error(errorMessage, { duration: 6000 });
 };
