@@ -68,6 +68,10 @@ export interface IQuestionDTO extends ITranslations {
   }[];
 }
 
+export interface IOrderedQuestionDTO extends IQuestionDTO {
+  order: number;
+}
+
 interface IProbandAnswerDTO {
   questionId: string;
   answer: AnswerOption;
@@ -104,7 +108,7 @@ export interface IWaitingRoomVisitFormDTO extends IWaitingRoomTableVisitFormDTO 
   answers: IProbandAnswerDTO[];
 }
 
-export type QuestionHiddenByGendersWithoutId = Omit<IQuestionDTO, "id">;
+export type QuestionHiddenByGendersWithoutId = Omit<IOrderedQuestionDTO, "id">;
 
 export type VisitFormAnswerIncludingQuestion = IOperatorAnswerDTO & QuestionHiddenByGendersWithoutId;
 

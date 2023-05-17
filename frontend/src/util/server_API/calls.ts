@@ -16,6 +16,7 @@ import {
   IOperatorDTO,
   IOrderedGenderDTO,
   IOrderedHandednessDTO,
+  IOrderedQuestionDTO,
   IPdfDTO,
   IQuestionDTO,
   ISendVisitFormFromWaitingRoomForApprovalInput,
@@ -168,7 +169,7 @@ export const fetchHandedness = async (code: string): Promise<IHandednessDTO | ne
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchCurrentQuestions = async (): Promise<IQuestionDTO[] | never> => {
+export const fetchCurrentQuestions = async (): Promise<IOrderedQuestionDTO[] | never> => {
   const { data } = await axiosConfig.serverApi.post<CurrentQuestionsResponse>("", { query: GET_CURRENT_QUESTIONS });
 
   if (data.data) {

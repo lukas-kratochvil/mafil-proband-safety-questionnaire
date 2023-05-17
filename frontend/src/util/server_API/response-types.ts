@@ -8,6 +8,7 @@ import {
   IOperatorDTO,
   IOrderedGenderDTO,
   IOrderedHandednessDTO,
+  IOrderedQuestionDTO,
   IPdfDTO,
   IQuestionDTO,
   IWaitingRoomTableVisitFormDTO,
@@ -48,7 +49,7 @@ export type HandednessesResponse = DataErrorsResponse<{ handednesses: IOrderedHa
 
 export type HandednessResponse = DataErrorsResponse<{ handedness: IHandednessDTO }>;
 
-export type CurrentQuestionsResponse = DataErrorsResponse<{ questions: IQuestionDTO[] }>;
+export type CurrentQuestionsResponse = DataErrorsResponse<{ questions: IOrderedQuestionDTO[] }>;
 
 export type QuestionResponse = DataErrorsResponse<{ question: IQuestionDTO }>;
 

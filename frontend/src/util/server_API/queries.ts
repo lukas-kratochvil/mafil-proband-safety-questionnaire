@@ -131,6 +131,7 @@ query GetCurrentQuestions {
     updatedAt
     partNumber
     mustBeApproved
+    order
     translations {
       text
       language {
