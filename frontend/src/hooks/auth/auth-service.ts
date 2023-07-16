@@ -9,9 +9,9 @@ const MFA_URL = "https://refeds.org/profile/mfa";
 const config: UserManagerSettings = {
   authority: "https://oidc.muni.cz/oidc",
   client_id: import.meta.env.VITE_JPM_CLIENT_ID,
-  redirect_uri: `${window.location.origin}${RoutingPath.WAITING_ROOM}`,
+  redirect_uri: `${window.location.origin}${RoutingPath.OIDC_LOGIN}`,
   scope: "openid profile email eduperson_entitlement",
-  post_logout_redirect_uri: `${window.location.origin}${RoutingPath.LOGIN}`,
+  post_logout_redirect_uri: `${window.location.origin}${RoutingPath.LOGOUT}`,
   acr_values: MFA_URL,
 };
 

@@ -37,6 +37,14 @@ export const App = () => (
         element={<LoginPage />}
       />
       <Route
+        path={RoutingPath.OIDC_LOGIN}
+        element={<Navigate to={RoutingPath.WAITING_ROOM} />}
+      />
+      <Route
+        path={RoutingPath.LOGOUT}
+        element={<Navigate to={RoutingPath.LOGIN} />}
+      />
+      <Route
         path={RoutingPath.AUTH}
         element={<PrivateLayout />}
       >

@@ -2,6 +2,8 @@ export enum RoutingPath {
   PROBAND_HOME = "/home",
   PROBAND_FORM = "/form",
   LOGIN = "/login",
+  OIDC_LOGIN = "/oidc-login",
+  LOGOUT = "/logout",
   AUTH = "/auth",
   PHANTOM_FORM = `${AUTH}/phantom-form`,
   WAITING_ROOM = `${AUTH}/waiting-room`,
