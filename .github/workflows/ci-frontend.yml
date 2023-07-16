@@ -52,6 +52,13 @@ jobs:
       run: npm run lint
 
     - name: Build
+      if: ${{ github.ref_name == 'devel' }}
+      run: npm run build
+      env:
+        VITE_JPM_CLIENT_ID: ${{ secrets.JPM_CLIENT_ID }}
+
+    - name: Build
+      if: ${{ github.ref_name == 'main' }}
       run: npm run build
       env:
         VITE_JPM_CLIENT_ID: ${{ secrets.JPM_CLIENT_ID }}
