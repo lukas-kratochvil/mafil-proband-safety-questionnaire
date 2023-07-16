@@ -8,7 +8,7 @@ const MFA_URL = "https://refeds.org/profile/mfa";
 
 const config: UserManagerSettings = {
   authority: "https://oidc.muni.cz/oidc",
-  client_id: "client_id", // TODO: add MUNI OIDC client ID
+  client_id: import.meta.env.VITE_JPM_CLIENT_ID,
   redirect_uri: `${window.location.origin}${RoutingPath.WAITING_ROOM}`,
   scope: "openid profile email eduperson_entitlement",
   post_logout_redirect_uri: `${window.location.origin}${RoutingPath.LOGIN}`,
