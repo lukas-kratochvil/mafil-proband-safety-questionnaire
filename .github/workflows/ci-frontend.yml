@@ -49,14 +49,14 @@ jobs:
 
     - name: Build
       if: ${{ github.ref_name == 'devel' }}
-      run: VITE_JPM_CLIENT_ID=$JPM_CLIENT_ID VITE_APP_BAR_COLOR=$APP_BAR_COLOR npm run build
+      run: VITE_JPM_CLIENT_ID="$JPM_CLIENT_ID" VITE_APP_BAR_COLOR="$APP_BAR_COLOR" npm run build
       env:
         JPM_CLIENT_ID: ${{ secrets.JPM_CLIENT_ID }}
         APP_BAR_COLOR: ${{ vars.DEV_APP_BAR_COLOR }}
 
     - name: Build
       if: ${{ github.ref_name == 'main' }}
-      run: VITE_JPM_CLIENT_ID=$JPM_CLIENT_ID npm run build
+      run: VITE_JPM_CLIENT_ID="$JPM_CLIENT_ID" npm run build
       env:
         JPM_CLIENT_ID: ${{ secrets.JPM_CLIENT_ID }}
 
