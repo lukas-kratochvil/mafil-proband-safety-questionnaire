@@ -15,10 +15,6 @@ on:
   # Allowing to trigger this workflow manually
   workflow_dispatch:
 
-env:
-  DOCKER_REGISTRY: ghcr.io
-  DOCKER_IMAGE_NAME: ${{ github.repository_owner }}/mafil-psq-server
-
 jobs:
   build:
     name: Build
@@ -62,6 +58,9 @@ jobs:
     if: ${{ github.event_name == 'push' }}
     needs: build
     runs-on: ubuntu-latest
+    env:
+      DOCKER_REGISTRY: ghcr.io
+      DOCKER_IMAGE_NAME: ${{ github.repository_owner }}/mafil-psq-server
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
