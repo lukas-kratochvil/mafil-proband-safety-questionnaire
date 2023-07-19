@@ -41,6 +41,9 @@ export class AuthService {
   public async completeSignIn(): Promise<IOperatorDTO | null> {
     try {
       const jpmUser = await this.userManager.signinRedirectCallback();
+      // TODO: delete logging to the console
+      console.log("jpmUser:");
+      console.log(jpmUser);
 
       // Check that the user used MFA to authenticate
       if (jpmUser.profile.acr !== MFA_URL) {
@@ -54,7 +57,9 @@ export class AuthService {
         email: jpmUser.profile.email ?? "",
         uco: jpmUser.profile.preferred_username ?? "",
       });
-    } catch {
+    } catch (error) {
+      // TODO: delete logging to the console
+      console.log(error);
       await this.signOut();
       return null;
     }
