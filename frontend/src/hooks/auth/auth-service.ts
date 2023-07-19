@@ -40,8 +40,7 @@ export class AuthService {
 
   public async completeSignIn(): Promise<IOperatorDTO | null> {
     try {
-      // TODO: specify optional URL or leave it undefined?
-      const jpmUser = await this.userManager.signinRedirectCallback(RoutingPath.WAITING_ROOM);
+      const jpmUser = await this.userManager.signinRedirectCallback();
 
       // Check that the user used MFA to authenticate
       if (jpmUser.profile.acr !== MFA_URL) {
