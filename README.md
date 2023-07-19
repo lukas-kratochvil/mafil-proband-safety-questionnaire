@@ -32,6 +32,7 @@ This repository contains the following most important directories and files:
 ## Base URL paths
 - `/` - root path directs to the proband safety questionnaire
 - `/login` - this path directs to the login page
+- `/adminer` - this path directs to the Adminer (database manager)
 
 ## Installation
 
@@ -67,6 +68,8 @@ To populate the database with initial data (genders, native languages, handednes
 ```
 docker-compose -f docker-compose.ENV.yml exec server npm run seed
 ```
+
+Then users that are eligible to access the authenticated part of the app must be defined. Login to the Adminer at `/adminer` URL path and create accounts in the `Operator` table in the database.
 
 ## Developers installation
 Create a `.env` configuration file inspired by `.env.example`.
