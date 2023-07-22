@@ -50,6 +50,8 @@ services:
       - WEB_API_KEY=${WEB_API_KEY}
       - PDF_OPERATOR_LANGUAGE_CODE=${PDF_OPERATOR_LANGUAGE_CODE}
       # - WEB_DOMAIN=${WEB_DOMAIN}
+    volumes:
+      - ./logs/server:/logs
     restart: unless-stopped
     depends_on:
       - postgres
@@ -73,6 +75,7 @@ services:
       - MAFILDB_API_URL=${MAFILDB_API_URL}
     volumes:
       - ./certs:/etc/nginx/certs
+      - ./logs/web:/var/log/nginx
     restart: unless-stopped
     depends_on:
       - server
