@@ -120,6 +120,9 @@
       "loginText": "Přihlásit se přes:",
       "alert": "Přihlášení se nezdařilo!"
     },
+    "oidcAuthCallbackPage": {
+      "processing": "Zpracovává se přihlášení..."
+    },
     "visitDetailPage": {
       "title": "Detail visity",
       "buttons": {

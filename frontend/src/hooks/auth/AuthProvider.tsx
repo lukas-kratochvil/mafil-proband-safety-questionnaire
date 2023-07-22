@@ -7,6 +7,7 @@ export type Operator = IOperatorDTO | undefined;
 
 export interface IAuth {
   logIn: () => Promise<void>;
+  logInCallback: () => Promise<void>;
   logOut: () => Promise<void>;
   operator: Operator;
 }

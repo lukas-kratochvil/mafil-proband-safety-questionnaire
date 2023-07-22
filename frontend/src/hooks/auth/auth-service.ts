@@ -34,10 +34,6 @@ export class AuthService {
     return this.userManager.signinRedirect();
   }
 
-  public async signOut(): Promise<void> {
-    return this.userManager.signoutRedirect();
-  }
-
   public async completeSignIn(): Promise<IOperatorDTO | null> {
     try {
       const jpmUser = await this.userManager.signinRedirectCallback();
@@ -63,6 +59,10 @@ export class AuthService {
       await this.signOut();
       return null;
     }
+  }
+
+  public async signOut(): Promise<void> {
+    return this.userManager.signoutRedirect();
   }
 
   public async completeSignOut(): Promise<void> {

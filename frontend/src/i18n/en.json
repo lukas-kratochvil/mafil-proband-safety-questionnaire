@@ -120,6 +120,9 @@
       "loginText": "Log in via:",
       "alert": "Login failed!"
     },
+    "oidcAuthCallbackPage": {
+      "processing": "Processing log in..."
+    },
     "visitDetailPage": {
       "title": "Detail of visit",
       "buttons": {
