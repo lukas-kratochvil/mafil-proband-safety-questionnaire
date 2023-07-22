@@ -38,7 +38,7 @@ export const App = () => (
       />
       <Route
         path={RoutingPath.OIDC_LOGIN}
-        element={<Navigate to={RoutingPath.WAITING_ROOM} />}
+        element={<Navigate to={RoutingPath.LOGIN} />}
       />
       <Route
         path={RoutingPath.LOGOUT}
