@@ -54,6 +54,7 @@ export const fetchDevices = async (): Promise<IDeviceDTO[]> => {
 const createVisit = async (
   visitFormData: ValidatedFormData,
   state: VisitState,
+  isPhantom: boolean,
   finalizerUco: string | undefined,
   finalizedAt: Date | undefined,
   probandLanguageCode?: ProbandVisitLanguageCode,
@@ -74,7 +75,7 @@ const createVisit = async (
       state,
       visit_name: generateVisitId(),
       date: new Date(),
-      is_phantom: state === VisitState.PHANTOM_DONE,
+      is_phantom: isPhantom,
       proband_language_code: probandLanguageCode ?? "",
       finalizer_uco: finalizerUco,
       measurement_date: visitFormData.measuredAt ?? new Date(),
@@ -99,7 +100,7 @@ const createVisit = async (
 
   const createData: ICreateVisitInput = {
     state,
-    is_phantom: state === VisitState.PHANTOM_DONE,
+    is_phantom: isPhantom,
     proband_language_code: probandLanguageCode ?? "",
     project_id: visitFormData.project?.id ?? "",
     device_id: visitFormData.device?.id ?? "",
@@ -143,7 +144,7 @@ export const createFinalizedVisit = async (
     throw new Error("Missing proband language code!");
   }
 
-  return createVisit(visitFormData, state, finalizerUco, finalizedAt, probandLanguageCode);
+  return createVisit(visitFormData, state, false, finalizerUco, finalizedAt, probandLanguageCode);
 };
 
 export const createVisitFromApproval = async (
@@ -167,14 +168,23 @@ export const createVisitFromApproval = async (
     throw new Error("Proband language code is undefined!");
   }
 
-  return createVisit(visitFormData, state, finalizerUco, finalizedAt, probandLanguageCode, approverUco, approvedAt);
+  return createVisit(
+    visitFormData,
+    state,
+    false,
+    finalizerUco,
+    finalizedAt,
+    probandLanguageCode,
+    approverUco,
+    approvedAt
+  );
 };
 
 export const createPhantomVisit = async (
   visitFormData: ValidatedFormData,
   finalizerUco: string | undefined,
   finalizedAt: Date | undefined
-): Promise<string | never> => createVisit(visitFormData, VisitState.PHANTOM_DONE, finalizerUco, finalizedAt);
+): Promise<string | never> => createVisit(visitFormData, VisitState.APPROVED, true, finalizerUco, finalizedAt);
 
 export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<string> => {
   if (import.meta.env.DEV) {

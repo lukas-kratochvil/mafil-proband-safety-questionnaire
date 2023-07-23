@@ -168,7 +168,7 @@ describe("visit detail page", () => {
   test("is phantom done", async () => {
     const signedPhantomVisit: IVisitDetail = {
       ...defaultVisit,
-      state: VisitState.PHANTOM_DONE,
+      state: VisitState.APPROVED,
       isPhantom: true,
     };
     vi.spyOn(mafildbCalls, "fetchVisitDetail").mockImplementationOnce(async () => signedPhantomVisit);

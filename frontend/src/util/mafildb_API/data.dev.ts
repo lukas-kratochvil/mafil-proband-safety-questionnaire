@@ -39,7 +39,12 @@ export const generateVisitId = (): string => {
   return id;
 };
 
-const createDummyVisits = (initialVisit: IVisitDTO, state: VisitState, count: number): IVisitDTO[] => {
+const createDummyVisits = (
+  initialVisit: IVisitDTO,
+  state: VisitState,
+  count: number,
+  isPhantom = false
+): IVisitDTO[] => {
   const visits: IVisitDTO[] = [];
 
   for (let i = 0; i < count; i++) {
@@ -47,7 +52,7 @@ const createDummyVisits = (initialVisit: IVisitDTO, state: VisitState, count: nu
       ...initialVisit,
       visit_name: generateVisitId(),
       state,
-      is_phantom: state === VisitState.PHANTOM_DONE,
+      is_phantom: isPhantom,
       project_id: projectsDev[i % 2].id,
       device_id: devicesDev[i % 2].id,
     });
@@ -86,7 +91,7 @@ export const dummyVisits: IVisitDTO[] = [
   ...createDummyVisits(initialDummyVisit, VisitState.DISAPPROVED, 2),
   ...createDummyVisits(initialDummyVisit, VisitState.APPROVED, 2),
   ...createDummyVisits(initialDummyVisit, VisitState.FOR_SIGNATURE_PHYSICALLY, 2),
-  ...createDummyVisits(initialDummyVisit, VisitState.PHANTOM_DONE, 2),
+  ...createDummyVisits(initialDummyVisit, VisitState.APPROVED, 2, true),
   ...createDummyVisits(initialDummyVisit, VisitState.SIGNED_PHYSICALLY, 6),
 ];
 
