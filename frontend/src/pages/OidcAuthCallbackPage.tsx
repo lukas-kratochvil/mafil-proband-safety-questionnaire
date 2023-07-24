@@ -9,17 +9,15 @@ import { PageContainer } from "./PageContainer";
 
 const OidcAuthCallbackPage = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "oidcAuthCallbackPage" });
-  const { logInCallback, operator } = useAuth();
+  const { logInCallback } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const callLogInCallback = async (): Promise<void> => {
-      await logInCallback();
-      navigate(operator ? RoutingPath.WAITING_ROOM : RoutingPath.LOGIN);
-    };
+    const callLogInCallback = async (): Promise<void> =>
+      navigate((await logInCallback()) ? RoutingPath.WAITING_ROOM : RoutingPath.LOGIN);
 
     void callLogInCallback();
-  }, [logInCallback, navigate, operator]);
+  }, [logInCallback, navigate]);
 
   return (
     <PageContainer center>

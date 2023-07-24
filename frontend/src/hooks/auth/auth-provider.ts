@@ -10,11 +10,14 @@ export const useAuthProvider = (): IAuth => {
   const logIn = async (): Promise<void> => authService.signIn();
 
   // Complete the sign-in process
-  const logInCallback = async (): Promise<void> => {
+  const logInCallback = async (): Promise<boolean> => {
     const validOperator = await authService.completeSignIn();
     if (validOperator) {
       setOperator(validOperator);
+      return true;
     }
+
+    return false;
   };
 
   const logOut = async (): Promise<void> => {

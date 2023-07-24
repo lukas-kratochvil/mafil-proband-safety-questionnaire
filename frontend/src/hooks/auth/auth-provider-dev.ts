@@ -29,8 +29,7 @@ export const useAuthProviderDev = (): IAuth => {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  const logInCallback = async (): Promise<void> => {};
+  const logInCallback = async (): Promise<boolean> => true;
 
   const logOut = async (): Promise<void> => {
     setOperator(undefined);
