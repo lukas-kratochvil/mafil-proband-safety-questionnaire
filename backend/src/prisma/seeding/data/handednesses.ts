@@ -7,19 +7,19 @@ interface IHandedness {
 
 const handednesses: Omit<IHandedness, "order">[] = [
   {
-    code: "R",
+    code: "RH",
     csText: "Pravák",
     enText: "Right-handed",
   },
   {
-    code: "L",
+    code: "LH",
     csText: "Levák",
     enText: "Left-handed",
   },
   {
-    code: "RL",
+    code: "FL",
     csText: "Přeučený levák",
-    enText: "Retrained left-handed",
+    enText: "Forced left-handed",
   },
   {
     code: "U",

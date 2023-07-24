@@ -12,7 +12,9 @@ const createTranslation = (languageId: string, text: string) => ({
 });
 
 async function seed() {
-  // Languages (locales)
+  /**
+   * Languages (locales) - ISO 639-1 (https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+   */
   const cs = await prisma.language.create({
     data: {
       code: "cs",
