@@ -77,7 +77,7 @@ services:
       - PDF_OPERATOR_LANGUAGE_CODE=${PDF_OPERATOR_LANGUAGE_CODE}
       # - WEB_DOMAIN=${WEB_DOMAIN}
     volumes:
-      - ./logs/server:/logs
+      - ./logs/server:/usr/src/app/logs
     restart: unless-stopped
     depends_on:
       - postgres
