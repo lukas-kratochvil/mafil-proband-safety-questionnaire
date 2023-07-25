@@ -39,9 +39,10 @@ export class AuthService {
       const jpmUser = await this.userManager.signinRedirectCallback();
 
       // Check that the user used MFA to authenticate
-      if (jpmUser.profile.acr !== MFA_URL) {
-        return null;
-      }
+      // TODO: uncomment and use MFA
+      // if (jpmUser.profile.acr !== MFA_URL) {
+      //   return null;
+      // }
 
       // Check that the user is registered in our app and should have access to the authenticated part of the app
       return await authenticateOperator({
