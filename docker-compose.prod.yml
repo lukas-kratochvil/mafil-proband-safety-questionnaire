@@ -19,7 +19,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     restart: unless-stopped
 
-  postgres-backups:
+  postgres-backup:
     container_name: postgres-backup
     image: prodrigestivill/postgres-backup-local:15-alpine-8d72d2d
     user: postgres:postgres
