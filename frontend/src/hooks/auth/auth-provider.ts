@@ -20,13 +20,14 @@ export const useAuthProvider = (): IAuth => {
     return false;
   };
 
-  const logOut = async (): Promise<void> => {
-    // Initiate the sign-out process
-    await authService.signOut();
-    // Complete the sign-out process
+  // Initiate the sign-out process
+  const logOut = async (): Promise<void> => authService.signOut();
+
+  // Complete the sign-out process
+  const logOutCallback = async (): Promise<void> => {
     await authService.completeSignOut();
     setOperator(undefined);
   };
 
-  return { logIn, logInCallback, logOut, operator };
+  return { logIn, logInCallback, logOut, logOutCallback, operator };
 };

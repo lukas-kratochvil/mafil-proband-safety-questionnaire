@@ -64,7 +64,10 @@ export class AuthService {
   }
 
   public async completeSignOut(): Promise<void> {
-    await this.userManager.signoutRedirectCallback();
+    const response = await this.userManager.signoutRedirectCallback();
+    // TODO: delete logging to the console
+    console.log("Sign out response:");
+    console.log(response);
   }
 
   public async getAuthUser(): Promise<User | null> {

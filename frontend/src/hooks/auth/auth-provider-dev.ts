@@ -37,5 +37,8 @@ export const useAuthProviderDev = (): IAuth => {
     navigate(RoutingPath.LOGIN);
   };
 
-  return { logIn, logInCallback, logOut, operator };
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const logOutCallback = async (): Promise<void> => {};
+
+  return { logIn, logInCallback, logOut, logOutCallback, operator };
 };

@@ -123,6 +123,9 @@
     "oidcAuthCallbackPage": {
       "processing": "Zpracovává se přihlášení..."
     },
+    "logoutPage": {
+      "processing": "Probíhá odhlášení..."
+    },
     "visitDetailPage": {
       "title": "Detail visity",
       "buttons": {

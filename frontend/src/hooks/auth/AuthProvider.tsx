@@ -9,6 +9,7 @@ export interface IAuth {
   logIn: () => Promise<void>;
   logInCallback: () => Promise<boolean>;
   logOut: () => Promise<void>;
+  logOutCallback: () => Promise<void>;
   operator: Operator;
 }
 
