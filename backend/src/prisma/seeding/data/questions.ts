@@ -84,7 +84,8 @@ const questions: Omit<IQuestion, "order">[] = [
   },
   {
     partNumber: 2,
-    csText: "Máte/měl(a) jste někdy zavedený jakýkoli stimulační implantát (např. kardiostimulátor, defibrilátor apod.)?",
+    csText:
+      "Máte/měl(a) jste někdy zavedený jakýkoli stimulační implantát (např. kardiostimulátor, defibrilátor apod.)?",
     enText: "Do you/have you ever had any pacing implant (e.g. pacemaker, defibrillator, etc.) inserted?",
   },
   {
