@@ -5,23 +5,30 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
 import { defaultNS } from "@app/i18n";
 import { RoutingPath } from "@app/routing-paths";
+import { handleErrorsWithToast } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
 
 const OidcAuthCallbackPage = () => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "oidcAuthCallbackPage" });
+  const { t } = useTranslation(defaultNS);
   const { logInCallback } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const callLogInCallback = async (): Promise<void> =>
-      navigate((await logInCallback()) ? RoutingPath.WAITING_ROOM : RoutingPath.LOGIN);
+    const callLogInCallback = async (): Promise<void> => {
+      try {
+        navigate((await logInCallback()) ? RoutingPath.WAITING_ROOM : RoutingPath.LOGIN);
+      } catch (error) {
+        handleErrorsWithToast(error, t);
+        navigate(RoutingPath.LOGIN);
+      }
+    };
 
     void callLogInCallback();
-  }, [logInCallback, navigate]);
+  }, [logInCallback, navigate, t]);
 
   return (
     <PageContainer center>
-      <Typography>{t("processing")}</Typography>
+      <Typography>{t("oidcAuthCallbackPage.processing")}</Typography>
     </PageContainer>
   );
 };

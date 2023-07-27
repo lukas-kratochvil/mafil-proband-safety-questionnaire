@@ -35,28 +35,21 @@ export class AuthService {
   }
 
   public async completeSignIn(): Promise<IOperatorDTO | null> {
-    try {
-      const jpmUser = await this.userManager.signinRedirectCallback();
+    const user = await this.userManager.signinRedirectCallback();
 
-      // Check that the user used MFA to authenticate
-      // TODO: uncomment and use MFA
-      // if (jpmUser.profile.acr !== MFA_URL) {
-      //   return null;
-      // }
+    // Check that the user used MFA to authenticate
+    // TODO: uncomment and use MFA
+    // if (user.profile.acr !== MFA_URL) {
+    //   return null;
+    // }
 
-      // Check that the user is registered in our app and should have access to the authenticated part of the app
-      return await authenticateOperator({
-        name: jpmUser.profile.given_name ?? "",
-        surname: jpmUser.profile.family_name ?? "",
-        email: jpmUser.profile.email ?? "",
-        uco: jpmUser.profile.preferred_username ?? "",
-      });
-    } catch (error) {
-      // TODO: delete logging to the console
-      console.log(error);
-      await this.signOut();
-      return null;
-    }
+    // Check that the user is registered in our app and should have access to the authenticated part of the app
+    return authenticateOperator({
+      name: user.profile.given_name ?? "",
+      surname: user.profile.family_name ?? "",
+      email: user.profile.email ?? "",
+      uco: user.profile.preferred_username ?? "",
+    });
   }
 
   public async signOut(): Promise<void> {
@@ -64,10 +57,7 @@ export class AuthService {
   }
 
   public async completeSignOut(): Promise<void> {
-    const response = await this.userManager.signoutRedirectCallback();
-    // TODO: delete logging to the console
-    console.log("Sign out response:");
-    console.log(response);
+    await this.userManager.signoutRedirectCallback();
   }
 
   public async getAuthUser(): Promise<User | null> {
