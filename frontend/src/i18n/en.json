@@ -11,6 +11,7 @@
         "openNewProbandForm": "Open new proband form"
       },
       "errors": {
+        "missingOidcClaims": "Missing some required OIDC claims!",
         "contactAdmin": "An error occurred! Please contact the system administrator.",
         "tryAgainLater": "An error occurred! Please try again later or contact the system administrator.",
         "serverValidationError": "An error occurred while validating the input! The following fields are incorrect",

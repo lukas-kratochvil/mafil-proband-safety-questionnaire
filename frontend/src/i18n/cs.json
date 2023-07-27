@@ -11,6 +11,7 @@
         "openNewProbandForm": "Otevřít formulář probanda"
       },
       "errors": {
+        "missingOidcClaims": "Chybí některé požadované nároky OIDC!",
         "contactAdmin": "Nastala chyba! Kontaktujte prosím správce systému.",
         "tryAgainLater": "Nastala chyba! Opakujte prosím akci později nebo kontaktujte správce systému.",
         "serverValidationError": "Nastala chyba při validaci vstupu! Následující pole jsou chybná",

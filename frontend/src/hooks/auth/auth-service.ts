@@ -1,5 +1,6 @@
 import { User, UserManager, UserManagerSettings } from "oidc-client-ts";
 import { RoutingPath } from "@app/routing-paths";
+import { LocalizedError } from "@app/util/error-handling/LocalizedError";
 import { authenticateOperator } from "@app/util/server_API/calls";
 import { IOperatorDTO } from "@app/util/server_API/dto";
 
@@ -37,6 +38,16 @@ export class AuthService {
   public async completeSignIn(): Promise<IOperatorDTO | null> {
     const user = await this.userManager.signinRedirectCallback();
 
+    // Check the presence of required OIDC claims
+    if (
+      user.profile.given_name === undefined
+      || user.profile.family_name === undefined
+      || user.profile.email === undefined
+      || user.profile.preferred_username === undefined
+    ) {
+      throw new LocalizedError("missingOidcClaims");
+    }
+
     // Check that the user used MFA to authenticate
     // TODO: uncomment and use MFA
     // if (user.profile.acr !== MFA_URL) {
@@ -45,10 +56,10 @@ export class AuthService {
 
     // Check that the user is registered in our app and should have access to the authenticated part of the app
     return authenticateOperator({
-      name: user.profile.given_name ?? "",
-      surname: user.profile.family_name ?? "",
-      email: user.profile.email ?? "",
-      uco: user.profile.preferred_username ?? "",
+      name: user.profile.given_name,
+      surname: user.profile.family_name,
+      email: user.profile.email,
+      uco: user.profile.preferred_username,
     });
   }
 
