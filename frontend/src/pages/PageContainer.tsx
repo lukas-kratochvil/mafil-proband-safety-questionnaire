@@ -18,6 +18,7 @@ export const PageContainer = ({ children, center, isTablePage }: PropsWithChildr
       {/* Toaster displays errors at the top of the page */}
       <Toaster>
         {(t) => (
+          // TODO: create good-looking toast
           <ToastBar toast={t}>
             {({ icon, message }) => (
               <>
