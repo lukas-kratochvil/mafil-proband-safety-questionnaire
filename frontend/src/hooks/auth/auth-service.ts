@@ -49,10 +49,9 @@ export class AuthService {
     }
 
     // Check that the user used MFA to authenticate
-    // TODO: uncomment and use MFA
-    // if (user.profile.acr !== MFA_URL) {
-    //   return null;
-    // }
+    if (user.profile.acr !== MFA_URL) {
+      throw new LocalizedError("missingMFA");
+    }
 
     // Check that the user is registered in our app and should have access to the authenticated part of the app
     return authenticateOperator({
