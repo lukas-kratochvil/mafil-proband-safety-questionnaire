@@ -16,8 +16,8 @@ export const useAuthProviderDev = (): IAuth => {
   const logIn = async (): Promise<void> => {
     try {
       const validOperator = await authenticateOperator({
-        name: "Operator",
-        surname: "Special",
+        name: "Jiří",
+        surname: "Svoboda",
         uco: "987654",
         email: "987654@muni.cz",
       });
