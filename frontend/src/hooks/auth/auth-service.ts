@@ -7,6 +7,7 @@ import { IOperatorDTO } from "@app/util/server_API/dto";
 // Multi-factor authentication - URL of the second factor authentication provider
 const MFA_URL = "https://refeds.org/profile/mfa";
 
+// Using OIDC Authorization Code Flow
 const config: UserManagerSettings = {
   authority: "https://oidc.muni.cz/oidc",
   client_id: import.meta.env.VITE_JPM_CLIENT_ID,
