@@ -23,13 +23,18 @@ interface IVisitDetailButtonProps extends IButtonProps {
   disabled?: boolean;
 }
 
-const getColoredInfoStripe = (visitState: VisitState): IColoredInfoStripeProps | undefined => {
-  switch (visitState) {
+const getColoredInfoStripe = (visitDetail: IVisitDetail): IColoredInfoStripeProps | undefined => {
+  switch (visitDetail.state) {
     case VisitState.APPROVED:
-      return {
-        textLocalizationKey: "visitDetailPage.infoStripes.signatureChoice",
-        color: ColoredInfoStripeColors.BLUE,
-      };
+      return visitDetail.isPhantom
+        ? {
+            textLocalizationKey: "visitDetailPage.infoStripes.completed",
+            color: ColoredInfoStripeColors.GREEN,
+          }
+        : {
+            textLocalizationKey: "visitDetailPage.infoStripes.signatureChoice",
+            color: ColoredInfoStripeColors.BLUE,
+          };
     case VisitState.DISAPPROVED:
       return {
         textLocalizationKey: "visitDetailPage.infoStripes.disapproved",
@@ -45,11 +50,6 @@ const getColoredInfoStripe = (visitState: VisitState): IColoredInfoStripeProps |
     case VisitState.SIGNED_ELECTRONICALLY:
       return {
         textLocalizationKey: "visitDetailPage.infoStripes.signed",
-        color: ColoredInfoStripeColors.GREEN,
-      };
-    case VisitState.PHANTOM_DONE:
-      return {
-        textLocalizationKey: "visitDetailPage.infoStripes.completed",
         color: ColoredInfoStripeColors.GREEN,
       };
     default:
@@ -72,23 +72,33 @@ const downloadPdf = (pdfName: string, base64PdfContent: string): void => {
 const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisitDetailButtonProps[] => {
   switch (visitDetail.state) {
     case VisitState.APPROVED:
-      return [
-        {
-          titleLocalizationKey: "visitDetailPage.buttons.downloadPDFAndPhysicallySign",
-          onClick: async () => {
-            downloadPdf(visitDetail.pdfName, visitDetail.pdfContent);
-            await updateVisitState(visitDetail.visitId, VisitState.FOR_SIGNATURE_PHYSICALLY);
-            void queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitDetail.visitId), exact: true });
-          },
-        },
-        {
-          titleLocalizationKey: "visitDetailPage.buttons.signElectronically",
-          onClick: async () => {
-            await updateVisitState(visitDetail.visitId, VisitState.FOR_SIGNATURE_ELECTRONICALLY);
-          },
-          disabled: true,
-        },
-      ];
+      return visitDetail.isPhantom
+        ? [
+            {
+              titleLocalizationKey: "visitDetailPage.buttons.downloadPDF",
+              onClick: async () => downloadPdf(visitDetail.pdfName, visitDetail.pdfContent),
+            },
+          ]
+        : [
+            {
+              titleLocalizationKey: "visitDetailPage.buttons.downloadPDFAndPhysicallySign",
+              onClick: async () => {
+                downloadPdf(visitDetail.pdfName, visitDetail.pdfContent);
+                await updateVisitState(visitDetail.visitId, VisitState.FOR_SIGNATURE_PHYSICALLY);
+                void queryClient.invalidateQueries({
+                  queryKey: getVisitDetailQueryKey(visitDetail.visitId),
+                  exact: true,
+                });
+              },
+            },
+            {
+              titleLocalizationKey: "visitDetailPage.buttons.signElectronically",
+              onClick: async () => {
+                await updateVisitState(visitDetail.visitId, VisitState.FOR_SIGNATURE_ELECTRONICALLY);
+              },
+              disabled: true,
+            },
+          ];
     case VisitState.FOR_SIGNATURE_PHYSICALLY:
       return [
         {
@@ -111,7 +121,6 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
       ];
     case VisitState.SIGNED_PHYSICALLY:
     case VisitState.SIGNED_ELECTRONICALLY:
-    case VisitState.PHANTOM_DONE:
       return [
         {
           titleLocalizationKey: "visitDetailPage.buttons.downloadPDF",
@@ -141,7 +150,7 @@ const VisitDetailPage = () => {
     const stateButtons: IVisitDetailButtonProps[] = [];
 
     if (visitDetail !== undefined) {
-      setColoredInfoStripe(getColoredInfoStripe(visitDetail.state));
+      setColoredInfoStripe(getColoredInfoStripe(visitDetail));
       stateButtons.push(...getButtons(queryClient, visitDetail));
     }
 

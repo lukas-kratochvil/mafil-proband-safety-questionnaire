@@ -13,11 +13,37 @@ services:
     environment:
       TZ: ${TIMEZONE}
       PGTZ: ${TIMEZONE}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
       PGPORT: ${DB_PORT}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     restart: unless-stopped
+
+  postgres-backup:
+    container_name: postgres-backup
+    image: prodrigestivill/postgres-backup-local:15-alpine-8d72d2d
+    user: postgres:postgres
+    networks:
+      - backend-network
+    volumes:
+      - ./database-backups:/backups
+    environment:
+      TZ: ${TIMEZONE}
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_PORT: ${DB_PORT}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_EXTRA_OPTS: "-Z6 --schema=public --blobs"
+      SCHEDULE: "@daily"
+      BACKUP_KEEP_DAYS: 7
+      BACKUP_KEEP_WEEKS: 4
+      BACKUP_KEEP_MONTHS: 6
+    restart: unless-stopped
+    links:
+      - postgres
+    depends_on:
+      - postgres
 
   adminer:
     container_name: adminer
@@ -50,6 +76,8 @@ services:
       - WEB_API_KEY=${WEB_API_KEY}
       - PDF_OPERATOR_LANGUAGE_CODE=${PDF_OPERATOR_LANGUAGE_CODE}
       # - WEB_DOMAIN=${WEB_DOMAIN}
+    volumes:
+      - ./logs/server:/usr/src/app/logs
     restart: unless-stopped
     depends_on:
       - postgres
@@ -73,6 +101,7 @@ services:
       - MAFILDB_API_URL=${MAFILDB_API_URL}
     volumes:
       - ./certs:/etc/nginx/certs
+      - ./logs/web:/var/log/nginx
     restart: unless-stopped
     depends_on:
       - server

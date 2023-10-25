@@ -29,11 +29,16 @@ export const useAuthProviderDev = (): IAuth => {
     }
   };
 
+  const logInCallback = async (): Promise<boolean> => true;
+
   const logOut = async (): Promise<void> => {
     setOperator(undefined);
     window.sessionStorage.removeItem(SESSION_STORAGE_OPERATOR_KEY);
     navigate(RoutingPath.LOGIN);
   };
 
-  return { logIn, logOut, operator };
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const logOutCallback = async (): Promise<void> => {};
+
+  return { logIn, logInCallback, logOut, logOutCallback, operator };
 };

@@ -11,6 +11,8 @@
         "openNewProbandForm": "Open new proband form"
       },
       "errors": {
+        "missingOidcClaims": "Missing some required OIDC claims!",
+        "missingMFA": "Authentication failed due to missing multifactor authentication (MFA)!",
         "contactAdmin": "An error occurred! Please contact the system administrator.",
         "tryAgainLater": "An error occurred! Please try again later or contact the system administrator.",
         "serverValidationError": "An error occurred while validating the input! The following fields are incorrect",
@@ -119,6 +121,12 @@
       "title": "Proband safety questionnaire",
       "loginText": "Log in via:",
       "alert": "Login failed!"
+    },
+    "oidcAuthCallbackPage": {
+      "processing": "Processing log in..."
+    },
+    "logoutPage": {
+      "processing": "Logging out..."
     },
     "visitDetailPage": {
       "title": "Detail of visit",

@@ -66,7 +66,7 @@ model VisitForm {
 enum VisitFormState {
   NEW
   IN_APPROVAL
-  // TODO: differentiate between 2 state from where is visit form sent to the MAFILDB – waiting room or approval room
+  // TODO: differentiate between 2 states from where is visit form sent to the MAFILDB – waiting room or approval room
   SENT_TO_MAFILDB
   PDF_GENERATED
   DELETED

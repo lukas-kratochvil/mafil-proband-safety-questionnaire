@@ -11,6 +11,8 @@
         "openNewProbandForm": "Otevřít formulář probanda"
       },
       "errors": {
+        "missingOidcClaims": "Chybí některé požadované nároky OIDC!",
+        "missingMFA": "Ověření se nezdařilo kvůli chybějícímu vícefázovému ověření (MFA)!",
         "contactAdmin": "Nastala chyba! Kontaktujte prosím správce systému.",
         "tryAgainLater": "Nastala chyba! Opakujte prosím akci později nebo kontaktujte správce systému.",
         "serverValidationError": "Nastala chyba při validaci vstupu! Následující pole jsou chybná",
@@ -119,6 +121,12 @@
       "title": "Bezpečnostní dotazník probanda",
       "loginText": "Přihlásit se přes:",
       "alert": "Přihlášení se nezdařilo!"
+    },
+    "oidcAuthCallbackPage": {
+      "processing": "Zpracovává se přihlášení..."
+    },
+    "logoutPage": {
+      "processing": "Probíhá odhlášení..."
     },
     "visitDetailPage": {
       "title": "Detail visity",

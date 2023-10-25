@@ -15,10 +15,6 @@ on:
   # Allowing to trigger this workflow manually
   workflow_dispatch:
 
-env:
-  DOCKER_REGISTRY: ghcr.io
-  DOCKER_IMAGE_NAME: ${{ github.repository_owner }}/mafil-psq-web
-
 jobs:
   build:
     name: Build
@@ -62,6 +58,9 @@ jobs:
     if: ${{ github.event_name == 'push' }}
     needs: build
     runs-on: ubuntu-latest
+    env:
+      DOCKER_REGISTRY: ghcr.io
+      DOCKER_IMAGE_NAME: ${{ github.repository_owner }}/mafil-psq-web
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -85,10 +84,26 @@ jobs:
             org.opencontainers.image.title=MAFIL - Proband Safety Questionnaire - web
 
       - name: Build and push the image to the GitHub Container registry
+        if: ${{ github.ref_name == 'devel' }}
         uses: docker/build-push-action@v4
         with:
           context: .
           file: ./frontend/Dockerfile
+          build-args: |
+            JPM_CLIENT_ID=${{ secrets.JPM_CLIENT_ID }}
+            APP_BAR_COLOR=${{ vars.DEV_APP_BAR_COLOR }}
+          push: true
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
+
+      - name: Build and push the image to the GitHub Container registry
+        if: ${{ github.ref_name == 'main' }}
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./frontend/Dockerfile
+          build-args: |
+            JPM_CLIENT_ID=${{ secrets.JPM_CLIENT_ID }}
           push: true
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}

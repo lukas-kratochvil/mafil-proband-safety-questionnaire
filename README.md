@@ -5,7 +5,9 @@ Web application for ensuring the registration and safety of MR measurements in t
 - [Repository structure](#repository-structure)
 - [Base URL paths](#base-url-paths)
 - [Installation](#installation)
+  - [Populating the database with initial data](#populating-the-database-with-initial-data)
 - [Developers installation](#developers-installation)
+  - [Populating the database with initial data](#populating-the-database-with-initial-data-1)
 - [Services update](#services-update)
 
 ## Repository structure
@@ -32,6 +34,7 @@ This repository contains the following most important directories and files:
 ## Base URL paths
 - `/` - root path directs to the proband safety questionnaire
 - `/login` - this path directs to the login page
+- `/adminer` - this path directs to the Adminer (database manager)
 
 ## Installation
 
@@ -40,8 +43,8 @@ Firstly, install Docker and docker-compose ([see the official Docker docs](https
 After that use `download.sh` script (located in the project root directory) and edit the `DEST_BASE_PATH` variable inside this file, so that a path corresponds with the actual location on your file system.
 
 Running the script will download files essential to run the app.
-* environment-specific docker-compose file
-* .env containing services configuration
+- environment-specific docker-compose file
+- .env containing services configuration
 
 Edit `.env` configuration variables with your values.
 
@@ -50,7 +53,7 @@ Then transfer the directory to the server. You can use this command template:
 scp -r -i SSH_PRIVATE_KEY_FILE_PATH LOCAL_DIR_PATH USER@SERVER:REMOTE_DIR_PATH
 ```
 
-In the app directory on the remote server create the `certs` directory and store there the SSL certificate `certificate.pem` and the corresponding private key `private_key.pem`.
+In the app root directory on the remote server create the `certs` directory and store there the SSL certificate `certificate.pem` and the corresponding private key `private_key.pem`.
 
 Start all the services using this command:
 ```
@@ -58,15 +61,26 @@ docker-compose -f docker-compose.ENV.yml up -d
 ```
 
 The command will start the services listed below:
-* Postgres - database
-* Adminer - database manager
-* Server - app server
-* Web – web server
+- *postgres* - database
+- *postgres-backup* - database backup service
+- *adminer* - database manager
+- *server* - app server
+- *web* – web server
 
-To populate the database with initial data (genders, native languages, handednesses and safety questions), the command below must be run inside the `server` container.
+These volumes will be created in the app root directory:
+- *database-storage* - database files
+- *database-backups* - periodic backups of the database
+- *logs*
+  - *server* - app server logs
+  - *web* - web server logs
+
+### Populating the database with initial data
+To populate the database with initial data (languages, genders, native languages, handednesses and safety questions), the command below must be run inside the `server` container.
 ```
 docker-compose -f docker-compose.ENV.yml exec server npm run seed
 ```
+
+Then users that are eligible to access the authenticated part of the app must be defined. Login to the Adminer at `/adminer` URL path and create accounts in the `Operator` table in the database.
 
 ## Developers installation
 Create a `.env` configuration file inspired by `.env.example`.
@@ -79,7 +93,8 @@ docker-compose -f docker-compose.local.yml up -d
 
 Source code directories and `package.json` are mapped as volumes in the corresponding container file system.
 
-To populate the local database with initial data (genders, native languages, handednesses and safety questions), the command below must be run inside the `server` container.
+### Populating the database with initial data
+To populate the local database with initial data (languages, genders, native languages, handednesses and safety questions), the command below must be run inside the `server` container.
 ```
 npm run seed:local
 ```

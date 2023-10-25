@@ -6,6 +6,8 @@ import { RoutingPath } from "./routing-paths";
 
 const HomePage = lazy(() => import("@app/pages/HomePage"));
 const LoginPage = lazy(() => import("@app/pages/LoginPage"));
+const OidcAuthCallbackPage = lazy(() => import("@app/pages/OidcAuthCallbackPage"));
+const LogoutPage = lazy(() => import("@app/pages/LogoutPage"));
 const ApprovalRoomFormPage = lazy(() => import("@app/pages/ApprovalRoomFormPage"));
 const DuplicationFormPage = lazy(() => import("@app/pages/DuplicationFormPage"));
 const PhantomFormPage = lazy(() => import("@app/pages/PhantomFormPage"));
@@ -35,6 +37,14 @@ export const App = () => (
       <Route
         path={RoutingPath.LOGIN}
         element={<LoginPage />}
+      />
+      <Route
+        path={RoutingPath.OIDC_LOGIN}
+        element={<OidcAuthCallbackPage />}
+      />
+      <Route
+        path={RoutingPath.LOGOUT}
+        element={<LogoutPage />}
       />
       <Route
         path={RoutingPath.AUTH}

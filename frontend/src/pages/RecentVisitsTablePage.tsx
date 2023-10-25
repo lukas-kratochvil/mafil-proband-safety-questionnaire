@@ -14,14 +14,12 @@ import { PageContainer } from "./PageContainer";
 
 const processedDateFormat = "d.M.y H:mm";
 
-const getStateLocalizationString = (state: VisitState): string | undefined => {
-  switch (state) {
-    case VisitState.PHANTOM_DONE:
-      return "phantomDone";
+const getStateLocalizationString = (visit: IRecentVisitsTableVisit): string | undefined => {
+  switch (visit.state) {
     case VisitState.DISAPPROVED:
       return "disapproved";
     case VisitState.APPROVED:
-      return "approved";
+      return visit.isPhantom ? "phantomDone" : "approved";
     case VisitState.FOR_SIGNATURE_PHYSICALLY:
       return "forSignaturePhysically";
     case VisitState.FOR_SIGNATURE_ELECTRONICALLY:
@@ -89,7 +87,7 @@ const RecentVisitsTablePage = () => {
         header: t("header.state"),
         // eslint-disable-next-line react/no-unstable-nested-components
         Cell: ({ row }: { row: MRTRow<IRecentVisitsTableVisit> }) => {
-          const stateLocalizationString = getStateLocalizationString(row.original.state);
+          const stateLocalizationString = getStateLocalizationString(row.original);
           return stateLocalizationString === undefined ? null : (
             <TranslatedTableCell localizationKey={`recentVisitsTablePage.visitState.${stateLocalizationString}`} />
           );

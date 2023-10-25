@@ -11,7 +11,12 @@ export const Header = () => {
   const matchesDownMdBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
 
   return (
-    <AppBar position="static">
+    <AppBar
+      position="static"
+      sx={{
+        backgroundColor: import.meta.env.VITE_APP_BAR_COLOR,
+      }}
+    >
       <Toolbar variant="dense">
         <Grid
           container
