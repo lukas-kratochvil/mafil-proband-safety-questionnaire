@@ -43,10 +43,19 @@ export class AuthService {
       // TODO: specify optional URL or leave it undefined?
       const jpmUser = await this.userManager.signinRedirectCallback(RoutingPath.WAITING_ROOM);
 
+      /**
+       * TODO: allow MFA
+       *
+       * Note: Disallowed due to the auth problem. This web app requires MFA on every user login, but the OIDC
+       *       provider Jednotné přihlášení MUNI provides the MFA only once per some period of time and remember that so
+       *       that the user does not need to undergo the second factor authentication on every login. So we cannot
+       *       check the MFA, because it is not provided on every user login and so the acr value is not provided in the
+       *       request header.
+       */
       // Check that the user used MFA to authenticate
-      if (jpmUser.profile.acr !== MFA_URL) {
-        return null;
-      }
+      // if (jpmUser.profile.acr !== MFA_URL) {
+      //   return null;
+      // }
 
       // Check that the user is registered in our app and should have access to the authenticated part of the app
       return await authenticateOperator({
