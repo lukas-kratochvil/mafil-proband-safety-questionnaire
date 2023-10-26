@@ -78,7 +78,7 @@ export class HTMLCardService {
       </p>
       <p>
         ${texts.examinationConsent.text3}:
-        <br /><u>${texts.examinationConsent.personalInfoProtectionSite}</u>
+        <br /><a href="${texts.examinationConsent.personalInfoProtectionSite}" target="_blank">${texts.examinationConsent.personalInfoProtectionSite}</a>
       </p>
     `;
 
