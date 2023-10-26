@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import DOMPurify from "dompurify";
 import { useTranslation } from "react-i18next";
 import { LanguageCode } from "@app/i18n";
+import { sanitizeHtml } from "@app/util/htmlSanitization";
 import { fetchBeforeExamination } from "@app/util/server_API/calls";
 import { FormCardContainer } from "./FormCardContainer";
 
@@ -18,18 +18,10 @@ export const FormBeforeExamination = () => {
     return null;
   }
 
-  // Set target=_blank in the <a> elements owning target
-  DOMPurify.addHook("afterSanitizeAttributes", node => {
-    if (node.tagName === "A" && "target" in node) {
-      node.setAttribute("target", "_blank");
-      node.setAttribute("rel", "noopener");
-    }
-  });
-
   return (
     <FormCardContainer title={data.title}>
       {/* eslint-disable-next-line react/no-danger */}
-      <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.html) }} />
+      <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(data.html) }} />
     </FormCardContainer>
   );
 };

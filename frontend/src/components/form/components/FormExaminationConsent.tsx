@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import DOMPurify from "dompurify";
 import { useTranslation } from "react-i18next";
 import { LanguageCode } from "@app/i18n";
+import { sanitizeHtml } from "@app/util/htmlSanitization";
 import { fetchExaminationConsent } from "@app/util/server_API/calls";
 import { FormCardContainer } from "./FormCardContainer";
 
@@ -21,7 +21,7 @@ export const FormExaminationConsent = () => {
   return (
     <FormCardContainer title={data.title}>
       {/* eslint-disable-next-line react/no-danger */}
-      <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.html) }} />
+      <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(data.html) }} />
     </FormCardContainer>
   );
 };

@@ -1,11 +1,11 @@
 import { Grid, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import DOMPurify from "dompurify";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import i18n, { defaultNS, LanguageCode } from "@app/i18n";
 import { FormPropType } from "@app/model/form";
+import { sanitizeHtml } from "@app/util/htmlSanitization";
 import { fetchProbandContactRequest } from "@app/util/server_API/calls";
 import { FormTextField } from "../inputs/FormTextField";
 import { FormCardContainer } from "./FormCardContainer";
@@ -44,7 +44,7 @@ export const FormProbandContactRequest = () => {
           xs={2}
         >
           {/* eslint-disable-next-line react/no-danger */}
-          <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.html) }} />
+          <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(data.html) }} />
         </Grid>
         <Grid
           item
