@@ -4,22 +4,22 @@ import { LocalizedError } from "@app/util/error-handling/LocalizedError";
 import { authenticateOperator } from "@app/util/server_API/calls";
 import { IOperatorDTO } from "@app/util/server_API/dto";
 
-// Multi-factor authentication - URL of the second factor authentication provider
-const MFA_URL = "https://refeds.org/profile/mfa";
-
 // Using OIDC Authorization Code Flow
 const config: UserManagerSettings = {
+  // Using "Jednotné přihlášení MUNI" OIDC provider
   authority: "https://oidc.muni.cz/oidc",
   client_id: import.meta.env.VITE_JPM_CLIENT_ID,
   redirect_uri: `${window.location.origin}${RoutingPath.OIDC_LOGIN}`,
   scope: "openid profile email eduperson_entitlement",
   /**
+   * Multi-factor authentication - URL of the second factor authentication provider.
+   *
    * This web app requires MFA on every user login, but the OIDC provider "Jednotné přihlášení MUNI" provides the MFA
    * attribute in the HTTP request header only once per some period of time because it remembers that the user had
    * logged in using MFA a moment ago so the user does not need to undergo the second factor authentication on every
    * login. Because of that we have to trust the OIDC provider that it manages the MFA correctly!
    */
-  acr_values: MFA_URL,
+  acr_values: "https://refeds.org/profile/mfa",
   post_logout_redirect_uri: `${window.location.origin}${RoutingPath.LOGOUT}`,
 };
 
