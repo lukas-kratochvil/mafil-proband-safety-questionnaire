@@ -85,7 +85,7 @@ docker-compose -f docker-compose.ENV.yml exec server npm run seed
 Then users that are eligible to access the authenticated part of the app must be defined. Login to the Adminer at `/adminer` URL path and create accounts in the `Operator` table in the database.
 
 ## Developers installation
-Create a `.env` configuration file inspired by `.env.example`.
+Create a `.env` configuration file inspired by `.env.example` in the root directory.
 
 The docker-compose configuration file to use for the development is called `docker-compose.local.yml`.
 Start all the services with the command below:
@@ -93,7 +93,7 @@ Start all the services with the command below:
 docker-compose -f docker-compose.local.yml up -d
 ```
 
-Source code directories and `package.json` are mapped as volumes in the corresponding container file system.
+The backend and frontend `package.json` and the source code directory are mapped as volumes in the corresponding container filesystem.
 
 ### Populating the database with initial data
 To populate the local database with initial data (languages, genders, native languages, handednesses and safety questions), the command below must be run inside the `server` container.
@@ -112,13 +112,14 @@ npx prisma migrate dev --name what-has-changed
 This command will generate new Prisma client code that corresponds to a current state of the `schema.prisma`.
 
 ## Services update
-To update services run these commands in the server app directory:
+It may be necessary to update `.env` variables according to `.env.example` before running the commands bellow.
+
+To update services run these commands in the root directory:
 ```
 docker-compose -f docker-compose.ENV.yml pull [SERVICE]
 docker-compose -f docker-compose.ENV.yml up -d --force-recreate --no-deps [SERVICE]
 docker image prune -f
 ```
-It may be necessary to update `.env` variables before running the commands above.
 
 ## Notes for the repository owner
 ### Repository secrets and variables
@@ -126,7 +127,7 @@ Repository secrets and variables are currently defined directly in the GitHub re
   * Secrets:
     * JPM_CLIENT_ID
       * Client ID of the service registered in the [Jednotné přihlášení MUNI](https://it.muni.cz/sluzby/jednotne-prihlaseni-na-muni) OIDC provider
-      * For the service admin: https://spreg.aai.muni.cz/
+      * OIDC service admin can manage the service here: https://spreg.aai.muni.cz/
   * Variables:
     * DEV_APP_BAR_COLOR
-      * App bar color for the development environment (passed in the source code of the `devel` branch)
+      * App bar color for the development environment (used in the build stage of the `devel` branch Docker image)
