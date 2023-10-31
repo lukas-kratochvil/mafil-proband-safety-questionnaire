@@ -9,6 +9,8 @@ Web application for ensuring the registration and safety of MR measurements in t
 - [Developers installation](#developers-installation)
   - [Populating the database with initial data](#populating-the-database-with-initial-data-1)
 - [Services update](#services-update)
+- [Notes for the repository owner](#notes-for-the-repository-owner)
+  - [Repository secrets and variables](#repository-secrets-and-variables)
 
 ## Repository structure
 This repository contains the following most important directories and files:
@@ -37,7 +39,6 @@ This repository contains the following most important directories and files:
 - `/adminer` - this path directs to the Adminer (database manager)
 
 ## Installation
-
 Firstly, install Docker and docker-compose ([see the official Docker docs](https://docs.docker.com/engine/install/)) on the system you want to run this app on.
 
 After that use `download.sh` script (located in the project root directory) and edit the `DEST_BASE_PATH` variable inside this file, so that a path corresponds with the actual location on your file system.
@@ -107,3 +108,14 @@ docker-compose -f docker-compose.ENV.yml up -d --force-recreate --no-deps [SERVI
 docker image prune -f
 ```
 It may be necessary to update `.env` variables before running the commands above.
+
+## Notes for the repository owner
+### Repository secrets and variables
+Repository secrets and variables are currently defined directly in the GitHub repository as GitHub secrets and GitHub variables. They are used in this project's GitHub Workflows to pass different values for different app environments.
+  * Secrets:
+    * JPM_CLIENT_ID
+      * Client ID of the service registered in the [Jednotné přihlášení MUNI](https://it.muni.cz/sluzby/jednotne-prihlaseni-na-muni) OIDC provider
+      * For the service admin: https://spreg.aai.muni.cz/
+  * Variables:
+    * DEV_APP_BAR_COLOR
+      * App bar color for the development environment (passed in the source code of the `devel` branch)
