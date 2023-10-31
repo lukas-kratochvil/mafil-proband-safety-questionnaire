@@ -11,7 +11,7 @@ const mockOperator: IOperatorDTO = {
   surname: operatorSurname,
   email: "",
   role: "MR",
-  uco: "",
+  username: "",
 };
 
 vi.mock("@app/hooks/auth/AuthProvider", () => ({

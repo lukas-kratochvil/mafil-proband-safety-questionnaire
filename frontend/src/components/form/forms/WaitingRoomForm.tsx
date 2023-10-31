@@ -114,7 +114,7 @@ export const WaitingRoomForm = () => {
             await createFinalizedVisit(
               data,
               VisitState.DISAPPROVED,
-              operator?.uco,
+              operator?.username,
               new Date(),
               visitForm?.probandLanguageCode
             );
@@ -145,7 +145,7 @@ export const WaitingRoomForm = () => {
               const visitId = await createFinalizedVisit(
                 data,
                 VisitState.APPROVED,
-                operator?.uco,
+                operator?.username,
                 new Date(),
                 visitForm?.probandLanguageCode
               );
@@ -155,7 +155,7 @@ export const WaitingRoomForm = () => {
                 await markVisitFormAsSentToMafilDb(id);
               }
 
-              const pdf = await generateProbandPdf(visitId, data, operator?.uco, visitForm?.probandLanguageCode);
+              const pdf = await generateProbandPdf(visitId, data, operator?.username, visitForm?.probandLanguageCode);
               await addPdfToVisit(visitId, pdf);
               await markVisitFormAsPdfGenerated(id);
               navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visitId}`);

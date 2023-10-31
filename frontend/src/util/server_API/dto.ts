@@ -7,7 +7,7 @@ export interface IOperatorDTO {
   id: string;
   name: string;
   surname: string;
-  uco: string;
+  username: string;
   email: string;
   role: OperatorRole;
 }
@@ -127,7 +127,7 @@ export interface IApprovalRoomTableVisitFormDTO extends IWaitingRoomTableVisitFo
     deviceId: string;
     deviceName: string;
     measuredAt: Date;
-    finalizer: Pick<IOperatorDTO, "uco">;
+    finalizer: Pick<IOperatorDTO, "username">;
     finalizedAt: Date;
   };
 }
@@ -215,8 +215,8 @@ export interface IGeneratePdfInput {
   probandLanguageCode?: LanguageCode;
   projectAcronym: string;
   measuredAt: Date;
-  finalizerUco: string;
-  approverUco?: string;
+  finalizerUsername: string;
+  approverUsername?: string;
   name: string;
   surname: string;
   personalId: string;

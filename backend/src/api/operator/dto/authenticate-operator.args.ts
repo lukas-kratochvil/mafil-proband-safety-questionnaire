@@ -4,6 +4,6 @@ import { OperatorEntity } from "@app/api/operator/entities/operator.entity";
 @ArgsType()
 export class AuthenticateOperatorArgs extends PickType(
   OperatorEntity,
-  ["name", "surname", "uco", "email"] as const,
+  ["name", "surname", "username", "email"] as const,
   ArgsType
 ) {}

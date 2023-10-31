@@ -55,14 +55,14 @@ const createVisit = async (
   visitFormData: ValidatedFormData,
   state: VisitState,
   isPhantom: boolean,
-  finalizerUco: string | undefined,
+  finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
   probandLanguageCode?: ProbandVisitLanguageCode,
-  approverUco?: string,
+  approverUsername?: string,
   approvedAt?: Date
 ): Promise<string | never> => {
-  if (finalizerUco === undefined) {
-    throw new Error("Missing UCO of the operator who finalized the visit!");
+  if (finalizerUsername === undefined) {
+    throw new Error("Missing username of the operator who finalized the visit!");
   }
 
   if (finalizedAt === undefined) {
@@ -77,7 +77,7 @@ const createVisit = async (
       date: new Date(),
       is_phantom: isPhantom,
       proband_language_code: probandLanguageCode ?? "",
-      finalizer_uco: finalizerUco,
+      finalizer_username: finalizerUsername,
       measurement_date: visitFormData.measuredAt ?? new Date(),
       project_id: visitFormData.project?.id ?? "",
       device_id: visitFormData.device?.id ?? "",
@@ -122,9 +122,9 @@ const createVisit = async (
       answer: answer.answer,
       comment: answer.comment,
     })),
-    finalizer_uco: finalizerUco,
+    finalizer_username: finalizerUsername,
     finalization_date: finalizedAt,
-    approver_uco: approverUco ?? "",
+    approver_username: approverUsername ?? "",
     approval_date: approvedAt,
     disapproval_reason: visitFormData.disapprovalReason,
   };
@@ -136,7 +136,7 @@ const createVisit = async (
 export const createFinalizedVisit = async (
   visitFormData: ValidatedFormData,
   state: VisitState,
-  finalizerUco: string | undefined,
+  finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
   probandLanguageCode: ProbandVisitLanguageCode | undefined
 ): Promise<string | never> => {
@@ -144,23 +144,23 @@ export const createFinalizedVisit = async (
     throw new Error("Missing proband language code!");
   }
 
-  return createVisit(visitFormData, state, false, finalizerUco, finalizedAt, probandLanguageCode);
+  return createVisit(visitFormData, state, false, finalizerUsername, finalizedAt, probandLanguageCode);
 };
 
 export const createVisitFromApproval = async (
   visitFormData: ValidatedFormData,
   state: VisitState,
-  finalizerUco: string | undefined,
+  finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
   probandLanguageCode: ProbandVisitLanguageCode | undefined,
-  approverUco: string | undefined,
+  approverUsername: string | undefined,
   approvedAt: Date | undefined
 ): Promise<string | never> => {
   if (probandLanguageCode === undefined) {
     throw new Error("Missing proband language code!");
   }
 
-  if (approverUco === undefined) {
+  if (approverUsername === undefined) {
     throw new Error("Proband language code is undefined!");
   }
 
@@ -172,19 +172,19 @@ export const createVisitFromApproval = async (
     visitFormData,
     state,
     false,
-    finalizerUco,
+    finalizerUsername,
     finalizedAt,
     probandLanguageCode,
-    approverUco,
+    approverUsername,
     approvedAt
   );
 };
 
 export const createPhantomVisit = async (
   visitFormData: ValidatedFormData,
-  finalizerUco: string | undefined,
+  finalizerUsername: string | undefined,
   finalizedAt: Date | undefined
-): Promise<string | never> => createVisit(visitFormData, VisitState.APPROVED, true, finalizerUco, finalizedAt);
+): Promise<string | never> => createVisit(visitFormData, VisitState.APPROVED, true, finalizerUsername, finalizedAt);
 
 export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<string> => {
   if (import.meta.env.DEV) {
@@ -208,7 +208,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
     const [projects, devices, finalizer] = await Promise.all([
       fetchProjects(),
       fetchDevices(),
-      fetchOperator(dummyVisits[0].finalizer_uco),
+      fetchOperator(dummyVisits[0].finalizer_username),
     ]);
     const visits: IRecentVisitsTableVisit[] = [];
     dummyVisits.forEach((visit) => {
@@ -254,7 +254,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
     let finalizer: IOperatorDTO | undefined;
 
     try {
-      finalizer = await fetchOperator(visit.finalizer_uco);
+      finalizer = await fetchOperator(visit.finalizer_username);
     } catch (e) {
       // TODO: what to do when finalizer not found? Skip the visit?
       return;

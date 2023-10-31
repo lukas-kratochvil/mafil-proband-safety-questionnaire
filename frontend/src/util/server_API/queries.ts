@@ -1,10 +1,10 @@
 export const AUTHENTICATE_OPERATOR = `
-query AuthenticateOperator($name: String!, $surname: String!, $uco: String!, $email: String!) {
-  authenticateOperator(name: $name, surname: $surname, uco: $uco, email: $email) {
+query AuthenticateOperator($name: String!, $surname: String!, $username: String!, $email: String!) {
+  authenticateOperator(name: $name, surname: $surname, username: $username, email: $email) {
     id
     name
     surname
-    uco
+    username
     email
     role
   }
@@ -12,12 +12,12 @@ query AuthenticateOperator($name: String!, $surname: String!, $uco: String!, $em
 `;
 
 export const GET_OPERATOR = `
-query GetOperator($uco: String!) {
-  operator(uco: $uco) {
+query GetOperator($username: String!) {
+  operator(username: $username) {
     id
     name
     surname
-    uco
+    username
     email
     role
   }
@@ -431,7 +431,7 @@ query GetApprovalRoomVisitForm($id: UUID!) {
       deviceId
       measuredAt
       finalizer {
-        uco
+        username
       }
       finalizedAt
     }
@@ -445,8 +445,8 @@ query GetApprovalRoomVisitForm($id: UUID!) {
 `;
 
 export const GENERATE_PDF = `
-query GeneratePDF($name: String!, $surname: String!, $personalId: String!, $birthdate: DateTime!, $heightCm: Float!, $weightKg: Float!, $visualCorrectionDioptre: Float!, $email: String!, $phone: String!, $probandLanguageCode: String, $finalizerUco: String!, $approverUco: String, $projectAcronym: String!, $measuredAt: DateTime!, $visitId: String!, $isPhantom: Boolean!, $genderCode: String!, $nativeLanguageCode: String!, $handednessCode: String!, $answers: [PDFAnswer!]){
-  generatePDF(name: $name, surname: $surname, personalId: $personalId, birthdate: $birthdate, heightCm: $heightCm, weightKg: $weightKg, visualCorrectionDioptre: $visualCorrectionDioptre, email: $email, phone: $phone, probandLanguageCode: $probandLanguageCode, finalizerUco: $finalizerUco, approverUco: $approverUco, projectAcronym: $projectAcronym, measuredAt: $measuredAt, visitId: $visitId, isPhantom: $isPhantom, genderCode: $genderCode, nativeLanguageCode: $nativeLanguageCode, handednessCode: $handednessCode, answers: $answers) {
+query GeneratePDF($name: String!, $surname: String!, $personalId: String!, $birthdate: DateTime!, $heightCm: Float!, $weightKg: Float!, $visualCorrectionDioptre: Float!, $email: String!, $phone: String!, $probandLanguageCode: String, $finalizerUsername: String!, $approverUsername: String, $projectAcronym: String!, $measuredAt: DateTime!, $visitId: String!, $isPhantom: Boolean!, $genderCode: String!, $nativeLanguageCode: String!, $handednessCode: String!, $answers: [PDFAnswer!]){
+  generatePDF(name: $name, surname: $surname, personalId: $personalId, birthdate: $birthdate, heightCm: $heightCm, weightKg: $weightKg, visualCorrectionDioptre: $visualCorrectionDioptre, email: $email, phone: $phone, probandLanguageCode: $probandLanguageCode, finalizerUsername: $finalizerUsername, approverUsername: $approverUsername, projectAcronym: $projectAcronym, measuredAt: $measuredAt, visitId: $visitId, isPhantom: $isPhantom, genderCode: $genderCode, nativeLanguageCode: $nativeLanguageCode, handednessCode: $handednessCode, answers: $answers) {
     name
     extension
     content

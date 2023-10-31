@@ -7,7 +7,8 @@ import { PrismaService } from "@app/prisma/prisma.service";
 import { GeneratePDFArgs } from "./dto/generate-pdf.args";
 import { PDFEntity } from "./entities/pdf.entity";
 
-type GenerateProbandPDFArgs = Required<Omit<GeneratePDFArgs, "approverUco">> & Pick<GeneratePDFArgs, "approverUco">;
+type GenerateProbandPDFArgs = Required<Omit<GeneratePDFArgs, "approverUsername">> &
+  Pick<GeneratePDFArgs, "approverUsername">;
 
 @Injectable()
 export class PDFService {
@@ -252,10 +253,10 @@ export class PDFService {
     // Get operator who approved the visit
     let operatorApprover: IPDFOperator | undefined;
 
-    if (generatePDFInput.approverUco) {
+    if (generatePDFInput.approverUsername) {
       operatorApprover = await this.prisma.operator.findUniqueOrThrow({
         where: {
-          uco: generatePDFInput.approverUco,
+          username: generatePDFInput.approverUsername,
         },
         select: {
           name: true,
@@ -321,7 +322,7 @@ export class PDFService {
     // Get operator who finalized the visit
     const operatorFinalizer: IPDFOperator = await this.prisma.operator.findUniqueOrThrow({
       where: {
-        uco: generatePDFInput.finalizerUco,
+        username: generatePDFInput.finalizerUsername,
       },
       select: {
         name: true,

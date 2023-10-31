@@ -26,8 +26,8 @@ export class OperatorResolver {
   }
 
   @Query(() => OperatorEntity, { name: "operator" })
-  async getOperator(@Args("uco") uco: string) {
-    return this.operatorService.findOne(uco);
+  async getOperator(@Args("username") username: string) {
+    return this.operatorService.findOne(username);
   }
 
   // @Mutation(() => OperatorEntity)

@@ -17,8 +17,8 @@ export const PhantomForm = () => {
     submitButtonProps: {
       titleLocalizationKey: "form.common.buttons.finalize",
       onClick: async (data) => {
-        const visitId = await createPhantomVisit(data, operator?.uco, new Date());
-        const pdf = await generatePhantomPdf(visitId, data, operator?.uco);
+        const visitId = await createPhantomVisit(data, operator?.username, new Date());
+        const pdf = await generatePhantomPdf(visitId, data, operator?.username);
         await addPdfToVisit(visitId, pdf);
         navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visitId}`);
       },

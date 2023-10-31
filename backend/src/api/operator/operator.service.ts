@@ -30,30 +30,30 @@ export class OperatorService {
   async authenticate(authenticateOperatorArgs: AuthenticateOperatorArgs): Promise<Operator | never> {
     const operator = await this.prisma.operator.findUniqueOrThrow({
       where: {
-        uco: authenticateOperatorArgs.uco,
+        username: authenticateOperatorArgs.username,
       },
     });
 
     if (!operator.isValid) {
-      this.logger.error(`Operator [${operator.uco}] is invalid!`);
+      this.logger.error(`Operator [${operator.username}] is invalid!`);
       throw new UnauthorizedException("Operator is invalid!");
     }
 
     const userChangedData = this.getUserChangedData(operator, authenticateOperatorArgs);
 
     if (userChangedData.length === 0) {
-      this.logger.log(`Operator [${operator.uco}] authenticated.`);
+      this.logger.log(`Operator [${operator.username}] authenticated.`);
       return operator;
     }
 
-    this.logger.error(`Operator [${operator.uco}] data changed: ${userChangedData.join(", ")}!`);
+    this.logger.error(`Operator [${operator.username}] data changed: ${userChangedData.join(", ")}!`);
     throw new UnauthorizedException("Invalid operator login data!");
   }
 
   async create(createOperatorInput: CreateOperatorInput): Promise<Operator> {
     return this.prisma.operator.upsert({
       where: {
-        uco: createOperatorInput.uco,
+        username: createOperatorInput.username,
       },
       update: {
         ...createOperatorInput,
@@ -70,10 +70,10 @@ export class OperatorService {
     return this.prisma.operator.findMany();
   }
 
-  async findOne(uco: string): Promise<Operator> {
+  async findOne(username: string): Promise<Operator> {
     return this.prisma.operator.findUniqueOrThrow({
       where: {
-        uco,
+        username,
       },
     });
   }

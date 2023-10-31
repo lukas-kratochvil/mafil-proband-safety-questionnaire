@@ -56,16 +56,16 @@ export class GeneratePDFArgs extends IntersectionType(
   @Field()
   handednessCode: string;
 
-  // In the MAFILDB is stored operator's UCO
+  // In the MAFILDB is stored operator's username
   @IsString()
   @Field()
-  finalizerUco: string;
+  finalizerUsername: string;
 
-  // In the MAFILDB is stored operator's UCO
+  // In the MAFILDB is stored operator's username
   @IsOptional()
   @IsString()
   @Field({ nullable: true })
-  approverUco?: string;
+  approverUsername?: string;
 
   // eslint-disable-next-line @darraghor/nestjs-typed/all-properties-have-explicit-defined
   @ValidateIf((object: GeneratePDFArgs) => !object.isPhantom)

@@ -70,7 +70,7 @@ const initialDummyVisit: IVisitDTO = {
   project_id: projectsDev[0].id,
   device_id: devicesDev[0].id,
   measurement_date: new Date(),
-  finalizer_uco: "123456",
+  finalizer_username: "123456",
   name: "Karel",
   surname: "Novák",
   personal_id: "123456789",

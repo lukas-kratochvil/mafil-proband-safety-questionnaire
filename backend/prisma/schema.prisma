@@ -19,13 +19,13 @@ model Operator {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  name    String       @db.VarChar(200)
-  surname String       @db.VarChar(200)
-  uco     String       @unique @db.VarChar(20)
+  name     String       @db.VarChar(200)
+  surname  String       @db.VarChar(200)
+  username String       @unique @db.VarChar(255)
   // Max email length: https://www.ietf.org/rfc/rfc2821.tx (RFC 2821)
-  email   String       @unique @db.VarChar(320)
-  role    OperatorRole @default(MR)
-  isValid Boolean      @default(true)
+  email    String       @unique @db.VarChar(320)
+  role     OperatorRole @default(MR)
+  isValid  Boolean      @default(true)
 }
 
 enum OperatorRole {

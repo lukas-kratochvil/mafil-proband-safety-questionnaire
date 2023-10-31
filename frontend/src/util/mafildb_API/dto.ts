@@ -47,15 +47,15 @@ export interface ICreateVisitInput {
   email: string;
   phone: string;
   answers: IAnswerDTO[];
-  finalizer_uco: string;
+  finalizer_username: string;
   finalization_date: Date;
-  approver_uco?: string;
+  approver_username?: string;
   approval_date?: Date;
   disapproval_reason?: string;
 }
 
 export interface IVisitDTO
-  extends Omit<ICreateVisitInput, "finalization_date" | "approver_uco" | "approval_date" | "disapproval_reason"> {
+  extends Omit<ICreateVisitInput, "finalization_date" | "approver_username" | "approval_date" | "disapproval_reason"> {
   visit_name: string;
   date: Date; // TODO: not sure if this attribute is string or Date
 }

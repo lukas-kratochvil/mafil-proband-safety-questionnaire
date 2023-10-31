@@ -89,8 +89,8 @@ export const DuplicationForm = () => {
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.finalize",
           onClick: async (data) => {
-            const visitId = await createPhantomVisit(data, operator?.uco, new Date());
-            const pdf = await generatePhantomPdf(visitId, data, operator?.uco);
+            const visitId = await createPhantomVisit(data, operator?.username, new Date());
+            const pdf = await generatePhantomPdf(visitId, data, operator?.username);
             await addPdfToVisit(visitId, pdf);
             navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visitId}`);
           },
@@ -129,7 +129,7 @@ export const DuplicationForm = () => {
             await createFinalizedVisit(
               data,
               VisitState.DISAPPROVED,
-              operator?.uco,
+              operator?.username,
               new Date(),
               visit?.probandLanguageCode
             );
@@ -159,11 +159,11 @@ export const DuplicationForm = () => {
               const visitId = await createFinalizedVisit(
                 data,
                 VisitState.APPROVED,
-                operator?.uco,
+                operator?.username,
                 new Date(),
                 visit?.probandLanguageCode
               );
-              const pdf = await generateProbandPdf(visitId, data, operator?.uco, visit?.probandLanguageCode);
+              const pdf = await generateProbandPdf(visitId, data, operator?.username, visit?.probandLanguageCode);
               await addPdfToVisit(visitId, pdf);
               navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visitId}`);
             }

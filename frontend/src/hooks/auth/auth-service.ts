@@ -50,7 +50,7 @@ export class AuthService {
       user.profile.given_name === undefined
       || user.profile.family_name === undefined
       || user.profile.email === undefined
-      || user.profile.preferred_username === undefined
+      || user.profile.sub === undefined
     ) {
       throw new LocalizedError("missingOidcClaims");
     }
@@ -60,7 +60,7 @@ export class AuthService {
       name: user.profile.given_name,
       surname: user.profile.family_name,
       email: user.profile.email,
-      uco: user.profile.preferred_username,
+      username: user.profile.sub,
     });
   }
 

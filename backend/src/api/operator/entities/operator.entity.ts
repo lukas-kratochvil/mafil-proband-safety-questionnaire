@@ -26,9 +26,9 @@ export class OperatorEntity extends BaseEntity implements Operator {
   @Field()
   surname: string;
 
-  @MaxLength(20)
+  @MaxLength(255)
   @Field()
-  uco: string;
+  username: string;
 
   @IsEmail()
   @MaxLength(320)

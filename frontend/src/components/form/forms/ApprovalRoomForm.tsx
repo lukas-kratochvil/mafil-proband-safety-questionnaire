@@ -108,10 +108,10 @@ export const ApprovalRoomForm = () => {
               await createVisitFromApproval(
                 data,
                 VisitState.DISAPPROVED,
-                visitForm?.additionalInfo.finalizer.uco,
+                visitForm?.additionalInfo.finalizer.username,
                 visitForm?.additionalInfo.finalizedAt,
                 visitForm?.probandLanguageCode,
-                operator?.uco,
+                operator?.username,
                 new Date()
               );
               // TODO: mark visitForm as DELETED / DISAPPROVED?
@@ -137,10 +137,10 @@ export const ApprovalRoomForm = () => {
               const visitId = await createVisitFromApproval(
                 data,
                 VisitState.APPROVED,
-                visitForm?.additionalInfo.finalizer.uco,
+                visitForm?.additionalInfo.finalizer.username,
                 visitForm?.additionalInfo.finalizedAt,
                 visitForm?.probandLanguageCode,
-                operator.uco,
+                operator.username,
                 new Date()
               );
 
@@ -152,9 +152,9 @@ export const ApprovalRoomForm = () => {
               const pdf = await generateProbandPdf(
                 visitId,
                 data,
-                visitForm?.additionalInfo.finalizer.uco,
+                visitForm?.additionalInfo.finalizer.username,
                 visitForm?.probandLanguageCode,
-                operator.uco
+                operator.username
               );
               await addPdfToVisit(visitId, pdf);
               await markVisitFormAsPdfGenerated(id);

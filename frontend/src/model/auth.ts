@@ -6,6 +6,6 @@ export enum IAuthMethodDev {
 export interface IOperatorAuthorization {
   name: string;
   surname: string;
-  uco: string;
+  username: string;
   email: string;
 }

@@ -93,8 +93,8 @@ export const authenticateOperator = async (loggingOperator: IOperatorAuthorizati
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchOperator = async (uco: string): Promise<IOperatorDTO | never> => {
-  const variables = { uco };
+export const fetchOperator = async (username: string): Promise<IOperatorDTO | never> => {
+  const variables = { username };
   const { data } = await axiosConfig.serverApi.post<OperatorResponse>("", { query: GET_OPERATOR, variables });
 
   if (data.data) {
@@ -563,12 +563,12 @@ const generatePdf = async (
   isPhantom: boolean,
   visitId: string,
   visitFormData: ValidatedFormData,
-  finalizerUco: string | undefined,
+  finalizerUsername: string | undefined,
   probandLanguageCode?: LanguageCode,
-  approverUco?: string
+  approverUsername?: string
 ): Promise<IPdfDTO | never> => {
-  if (finalizerUco === undefined) {
-    throw new Error("Missing UCO of the operator who finalized the visit!");
+  if (finalizerUsername === undefined) {
+    throw new Error("Missing username of the operator who finalized the visit!");
   }
 
   const variables: IGeneratePdfInput = {
@@ -577,8 +577,8 @@ const generatePdf = async (
     probandLanguageCode,
     projectAcronym: visitFormData.project?.acronym ?? "",
     measuredAt: visitFormData.measuredAt ?? new Date(),
-    finalizerUco,
-    approverUco,
+    finalizerUsername,
+    approverUsername,
     name: visitFormData.name,
     surname: visitFormData.surname,
     personalId: visitFormData.personalId,
@@ -613,19 +613,19 @@ const generatePdf = async (
 export const generateProbandPdf = async (
   visitId: string,
   visitFormData: ValidatedFormData,
-  finalizerUco: string | undefined,
+  finalizerUsername: string | undefined,
   probandLanguageCode: ProbandVisitLanguageCode | undefined,
-  approverUco?: string
+  approverUsername?: string
 ): Promise<IPdfDTO | never> => {
   if (probandLanguageCode === undefined || probandLanguageCode === "") {
     throw new Error("Proband language code is undefined!");
   }
 
-  return generatePdf(false, visitId, visitFormData, finalizerUco, probandLanguageCode, approverUco);
+  return generatePdf(false, visitId, visitFormData, finalizerUsername, probandLanguageCode, approverUsername);
 };
 
 export const generatePhantomPdf = async (
   visitId: string,
   visitFormData: ValidatedFormData,
-  finalizerUco: string | undefined
-): Promise<IPdfDTO> => generatePdf(true, visitId, visitFormData, finalizerUco);
+  finalizerUsername: string | undefined
+): Promise<IPdfDTO> => generatePdf(true, visitId, visitFormData, finalizerUsername);
