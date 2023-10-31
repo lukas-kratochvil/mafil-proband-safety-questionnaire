@@ -8,6 +8,7 @@ Web application for ensuring the registration and safety of MR measurements in t
   - [Populating the database with initial data](#populating-the-database-with-initial-data)
 - [Developers installation](#developers-installation)
   - [Populating the database with initial data](#populating-the-database-with-initial-data-1)
+  - [Changing the database schema and database migrations](#changing-the-database-schema-and-database-migrations)
 - [Services update](#services-update)
 - [Notes for the repository owner](#notes-for-the-repository-owner)
   - [Repository secrets and variables](#repository-secrets-and-variables)
@@ -99,6 +100,15 @@ To populate the local database with initial data (languages, genders, native lan
 ```
 npm run seed:local
 ```
+
+### Changing the database schema and database migrations
+Local `server` service must be up and running to apply changes in the `schema.prisma` file. Then run this command in the `mafil-proband-safety-questionnaire/backend` directory:
+
+```
+npx prisma migrate dev --name what-has-changed
+```
+
+Update the `server` service after successful migration - see: [service update](#services-update).
 
 ## Services update
 To update services run these commands in the server app directory:
