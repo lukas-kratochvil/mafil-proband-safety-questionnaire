@@ -117,11 +117,13 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
 
   @ValidateIf((object: VisitFormEntity) => object.email !== "")
   @IsEmail()
+  @MaxLength(320)
   @Field()
   email: string;
 
   @ValidateIf((object: VisitFormEntity) => object.phone !== "")
   @IsMobilePhone()
+  @MaxLength(50)
   @Field()
   phone: string;
 }

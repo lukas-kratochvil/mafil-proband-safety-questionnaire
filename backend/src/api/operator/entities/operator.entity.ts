@@ -26,11 +26,12 @@ export class OperatorEntity extends BaseEntity implements Operator {
   @Field()
   surname: string;
 
-  @MaxLength(8)
+  @MaxLength(20)
   @Field()
   uco: string;
 
   @IsEmail()
+  @MaxLength(320)
   @Field()
   email: string;
 

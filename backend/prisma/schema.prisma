@@ -21,8 +21,9 @@ model Operator {
 
   name    String       @db.VarChar(200)
   surname String       @db.VarChar(200)
-  uco     String       @unique
-  email   String       @unique
+  uco     String       @unique @db.VarChar(20)
+  // Max email length: https://www.ietf.org/rfc/rfc2821.tx (RFC 2821)
+  email   String       @unique @db.VarChar(320)
   role    OperatorRole @default(MR)
   isValid Boolean      @default(true)
 }
@@ -59,8 +60,9 @@ model VisitForm {
   heightCm                Float
   weightKg                Float
   visualCorrectionDioptre Float
-  email                   String         @default("")
-  phone                   String         @default("")
+  // Max email length: https://www.ietf.org/rfc/rfc2821.tx (RFC 2821)
+  email                   String         @default("") @db.VarChar(320)
+  phone                   String         @default("") @db.VarChar(50)
 }
 
 enum VisitFormState {
