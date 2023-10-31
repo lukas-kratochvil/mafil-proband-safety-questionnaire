@@ -13,6 +13,12 @@ const config: UserManagerSettings = {
   client_id: import.meta.env.VITE_JPM_CLIENT_ID,
   redirect_uri: `${window.location.origin}${RoutingPath.OIDC_LOGIN}`,
   scope: "openid profile email eduperson_entitlement",
+  /**
+   * This web app requires MFA on every user login, but the OIDC provider "Jednotné přihlášení MUNI" provides the MFA
+   * attribute in the HTTP request header only once per some period of time because it remembers that the user had
+   * logged in using MFA a moment ago so the user does not need to undergo the second factor authentication on every
+   * login. Because of that we have to trust the OIDC provider that it manages the MFA correctly!
+   */
   acr_values: MFA_URL,
   post_logout_redirect_uri: `${window.location.origin}${RoutingPath.LOGOUT}`,
 };
@@ -48,20 +54,6 @@ export class AuthService {
     ) {
       throw new LocalizedError("missingOidcClaims");
     }
-
-    /**
-     * TODO: allow MFA
-     *
-     * Note: Disallowed due to the auth problem. This web app requires MFA on every user login, but the OIDC
-     *       provider Jednotné přihlášení MUNI provides the MFA only once per some period of time and remember that so
-     *       that the user does not need to undergo the second factor authentication on every login. So we cannot
-     *       check the MFA, because it is not provided on every user login and so the acr value is not provided in the
-     *       request header.
-     */
-    // Check that the user used MFA to authenticate
-    // if (user.profile.acr !== MFA_URL) {
-    //   throw new LocalizedError("missingMFA");
-    // }
 
     // Check that the user is registered in our app and should have access to the authenticated part of the app
     return authenticateOperator({
