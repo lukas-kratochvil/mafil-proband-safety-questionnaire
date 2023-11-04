@@ -38,7 +38,7 @@ export const fetchProjects = async (): Promise<IProjectDTO[]> => {
 
   // TODO: add correct MAFILDB endpoint
   const { data } = await axiosConfig.mafildbApi.get<ProjectsResponse>("projects.json");
-  return data.rows;
+  return data.results;
 };
 
 export const fetchDevices = async (): Promise<IDeviceDTO[]> => {
@@ -48,7 +48,7 @@ export const fetchDevices = async (): Promise<IDeviceDTO[]> => {
 
   // TODO: add correct MAFILDB endpoint
   const { data } = await axiosConfig.mafildbApi.get<DevicesResponse>("devices.json");
-  return data.rows;
+  return data.results;
 };
 
 const createVisit = async (
@@ -248,7 +248,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
     fetchDevices(),
   ]);
   const visits: IRecentVisitsTableVisit[] = [];
-  data.rows.forEach(async (visit) => {
+  data.results.forEach(async (visit) => {
     const project = projects.find((proj) => proj.id === visit.project_id);
     const device = devices.find((dev) => dev.id === visit.device_id);
     let finalizer: IOperatorDTO | undefined;
@@ -293,11 +293,11 @@ const fetchVisit = async (visitId: string): Promise<IVisitDTO | never> => {
   // TODO: add correct MAFILDB endpoint
   const { data } = await axiosConfig.mafildbApi.get<VisitsResponse>("visits.json", { params });
 
-  if (data.rows.length !== 1) {
+  if (data.results.length !== 1) {
     throw new Error("Visit not found!");
   }
 
-  return data.rows[0];
+  return data.results[0];
 };
 
 export const fetchDuplicatedVisit = async (
