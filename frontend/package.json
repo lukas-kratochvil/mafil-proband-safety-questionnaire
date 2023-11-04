@@ -8,7 +8,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" --fix",
+    "lint": "eslint --fix \"src/**/*.{ts,tsx}\"",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:ui": "vitest --ui --api 9527",
