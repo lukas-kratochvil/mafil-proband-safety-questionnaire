@@ -104,8 +104,12 @@ async function seed() {
 }
 
 seed()
-  .then(async () => await prisma.$disconnect())
+  .then(async () => {
+    console.log("Seeding finished successfully!")
+    await prisma.$disconnect()
+  })
   .catch(async (e) => {
+    console.log("Something went wrong!")
     console.error(e);
     await prisma.$disconnect();
     process.exit(1);
