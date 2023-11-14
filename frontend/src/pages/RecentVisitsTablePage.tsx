@@ -69,10 +69,11 @@ const RecentVisitsTablePage = () => {
         accessorFn: (visit) => format(visit.date, processedDateFormat),
         id: "processedDate",
         header: t("header.processedDate"),
-        sortingFn: (rowA, rowB, columnId) =>
+        sortingFn: (rowA, rowB) =>
+          // Sorting is done by 'created' attribute, because the 'date' attribute does not contain the time
           compareAsc(
-            parse(`${rowA.getValue(columnId)}`, processedDateFormat, new Date()),
-            parse(`${rowB.getValue(columnId)}`, processedDateFormat, new Date())
+            parse(`${rowA.original.created}`, processedDateFormat, new Date()),
+            parse(`${rowB.original.created}`, processedDateFormat, new Date())
           ),
         maxSize: 0,
       },

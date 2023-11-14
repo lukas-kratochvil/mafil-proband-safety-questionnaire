@@ -63,6 +63,7 @@ const createDummyVisits = (
 
 const initialDummyVisit: IVisitDTO = {
   date: new Date(1663390000000),
+  created: new Date(1663390000000),
   visit_name: generateVisitId(),
   state: VisitState.APPROVED,
   is_phantom: false,

@@ -75,6 +75,7 @@ const createVisit = async (
       state,
       visit_name: generateVisitId(),
       date: new Date(),
+      created: new Date(),
       is_phantom: isPhantom,
       proband_language_code: probandLanguageCode ?? "",
       finalizer_username: finalizerUsername,

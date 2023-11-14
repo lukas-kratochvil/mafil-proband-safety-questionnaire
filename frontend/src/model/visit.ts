@@ -24,6 +24,7 @@ interface IAnswer {
 
 interface IVisit {
   date: Date;
+  created: Date;
   visitId: string;
   state: VisitState;
   isPhantom: boolean;
@@ -53,7 +54,8 @@ export interface IRecentVisitsTableVisit
   finalizer: IOperatorDTO;
 }
 
-export interface IDuplicatedVisitIncludingQuestions extends Omit<IVisit, "projectId" | "deviceId" | "answers"> {
+export interface IDuplicatedVisitIncludingQuestions
+  extends Omit<IVisit, "created" | "projectId" | "deviceId" | "answers"> {
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
 }
 

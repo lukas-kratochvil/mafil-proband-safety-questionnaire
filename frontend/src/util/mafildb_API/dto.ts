@@ -58,6 +58,7 @@ export interface IVisitDTO
   extends Omit<ICreateVisitInput, "finalization_date" | "approver_username" | "approval_date" | "disapproval_reason"> {
   visit_name: string;
   date: Date; // TODO: not sure if this attribute is string or Date
+  created: Date; // TODO: not sure if this attribute is string or Date
 }
 
 export type IUpdateVisitStateInput = Pick<IVisitDTO, "visit_name" | "state">;
