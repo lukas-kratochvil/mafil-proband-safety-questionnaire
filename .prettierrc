@@ -1,4 +1,5 @@
 {
+  "endOfLine": "lf",
   "bracketSameLine": false,
   "printWidth": 120,
   "singleAttributePerLine": true,
