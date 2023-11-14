@@ -104,6 +104,6 @@ jobs:
           file: ./frontend/Dockerfile
           build-args: |
             JPM_CLIENT_ID=${{ secrets.JPM_CLIENT_ID }}
-          push: true
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
