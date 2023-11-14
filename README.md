@@ -95,6 +95,12 @@ docker-compose -f docker-compose.local.yml up -d
 
 The backend and frontend `package.json` and the source code directory are mapped as volumes in the corresponding container filesystem.
 
+### Installing Node packages
+Install Node packages to resolve all the references in the code. In the `/`, `/backend` and `/frontend` directories run:
+```
+npm i
+```
+
 ### Populating the database with initial data
 To populate the local database with initial data (languages, genders, native languages, handednesses and safety questions), the command below must be run inside the `server` container.
 ```
