@@ -6,9 +6,18 @@ import {
   IVisitDetail,
   ProbandVisitLanguageCode,
 } from "@app/model/visit";
-import { devicesDev, dummyVisits, generateVisitId, PDF_CONTENT, projectsDev } from "@app/util/mafildb_API/data.dev";
 import { fetchGender, fetchHandedness, fetchNativeLanguage, fetchOperator, fetchQuestion } from "../server_API/calls";
 import { IOperatorDTO, IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
+import {
+  addPdfToVisitDev,
+  createVisitDev,
+  fetchDevicesDev,
+  fetchDuplicatedVisitDev,
+  fetchProjectsDev,
+  fetchRecentVisitsDev,
+  fetchVisitDetailDev,
+  updateVisitStateDev,
+} from "./calls.dev";
 import {
   IAddPdfToVisitInput,
   ICreateVisitInput,
@@ -33,7 +42,7 @@ const PDF_FILE_TYPE = "REGISTRATION_PDF";
 
 export const fetchProjects = async (): Promise<IProjectDTO[]> => {
   if (import.meta.env.DEV) {
-    return projectsDev;
+    return fetchProjectsDev();
   }
 
   // TODO: add correct MAFILDB endpoint
@@ -43,7 +52,7 @@ export const fetchProjects = async (): Promise<IProjectDTO[]> => {
 
 export const fetchDevices = async (): Promise<IDeviceDTO[]> => {
   if (import.meta.env.DEV) {
-    return devicesDev;
+    return fetchDevicesDev();
   }
 
   // TODO: add correct MAFILDB endpoint
@@ -70,33 +79,7 @@ const createVisit = async (
   }
 
   if (import.meta.env.DEV) {
-    dummyVisits.push({
-      ...visitFormData,
-      state,
-      visit_name: generateVisitId(),
-      date: new Date(),
-      created: new Date(),
-      is_phantom: isPhantom,
-      proband_language_code: probandLanguageCode ?? "",
-      finalizer_username: finalizerUsername,
-      measurement_date: visitFormData.measuredAt ?? new Date(),
-      project_id: visitFormData.project?.id ?? "",
-      device_id: visitFormData.device?.id ?? "",
-      personal_id: visitFormData.personalId,
-      birthdate: visitFormData.birthdate,
-      gender_code: visitFormData.gender.code,
-      native_language_code: visitFormData.nativeLanguage.code,
-      height_cm: visitFormData.heightCm,
-      weight_kg: visitFormData.weightKg,
-      visual_correction_dioptre: visitFormData.visualCorrectionDioptre,
-      handedness_code: visitFormData.handedness.code,
-      answers: visitFormData.answers.map((answer) => ({
-        question_id: answer.questionId,
-        answer: answer.answer,
-        comment: answer.comment,
-      })),
-    });
-    return dummyVisits[dummyVisits.length - 1].visit_name;
+    return createVisitDev(visitFormData, state, isPhantom, finalizerUsername, probandLanguageCode);
   }
 
   const createData: ICreateVisitInput = {
@@ -189,7 +172,7 @@ export const createPhantomVisit = async (
 
 export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<string> => {
   if (import.meta.env.DEV) {
-    return "file_ID";
+    return addPdfToVisitDev(visitId);
   }
 
   const addPdfToVisitData: IAddPdfToVisitInput = {
@@ -206,40 +189,7 @@ export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<stri
 
 export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> => {
   if (import.meta.env.DEV) {
-    const [projects, devices, finalizer] = await Promise.all([
-      fetchProjects(),
-      fetchDevices(),
-      fetchOperator(dummyVisits[0].finalizer_username),
-    ]);
-    const visits: IRecentVisitsTableVisit[] = [];
-    dummyVisits.forEach((visit) => {
-      const project = projects.find((proj) => proj.id === visit.project_id);
-      const device = devices.find((dev) => dev.id === visit.device_id);
-
-      // if project or device don't exist we skip the visit
-      if (project !== undefined && device !== undefined) {
-        visits.push({
-          ...visit,
-          visitId: visit.visit_name,
-          isPhantom: visit.is_phantom,
-          project,
-          device,
-          measurementDate: visit.measurement_date,
-          finalizer,
-          probandLanguageCode: visit.proband_language_code,
-          personalId: visit.personal_id,
-          heightCm: visit.height_cm,
-          weightKg: visit.weight_kg,
-          visualCorrectionDioptre: visit.visual_correction_dioptre,
-          answers: visit.answers.map((answer) => ({
-            questionId: answer.question_id,
-            answer: answer.answer,
-            comment: answer.comment,
-          })),
-        });
-      }
-    });
-    return visits;
+    return fetchRecentVisitsDev();
   }
 
   const [{ data }, projects, devices] = await Promise.all([
@@ -309,48 +259,7 @@ export const fetchDuplicatedVisit = async (
   }
 
   if (import.meta.env.DEV) {
-    const visit = dummyVisits.find((dummyVisit) => dummyVisit.visit_name === visitId);
-
-    if (visit === undefined) {
-      throw new Error("Visit not found!");
-    }
-
-    const [gender, nativeLanguage, handedness, answersIncludingQuestions] = await Promise.all([
-      fetchGender(visit.gender_code),
-      fetchNativeLanguage(visit.native_language_code),
-      fetchHandedness(visit.handedness_code),
-      Promise.all(
-        visit.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
-          const question = await fetchQuestion(answer.question_id);
-          return {
-            answer: answer.answer,
-            comment: answer.comment,
-            questionId: question.id,
-            mustBeApproved: question.mustBeApproved,
-            partNumber: question.partNumber,
-            order: question.order,
-            hiddenByGenders: question.hiddenByGenders,
-            translations: question.translations,
-            updatedAt: question.updatedAt,
-          };
-        })
-      ),
-    ]);
-    return {
-      ...visit,
-      visitId: visit.visit_name,
-      isPhantom: visit.is_phantom,
-      measurementDate: visit.measurement_date,
-      probandLanguageCode: visit.proband_language_code,
-      personalId: visit.personal_id,
-      gender,
-      nativeLanguage,
-      heightCm: visit.height_cm,
-      weightKg: visit.weight_kg,
-      visualCorrectionDioptre: visit.visual_correction_dioptre,
-      handedness,
-      answersIncludingQuestions,
-    };
+    return fetchDuplicatedVisitDev(visitId);
   }
 
   const visit = await fetchVisit(visitId);
@@ -410,19 +319,7 @@ export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVi
   }
 
   if (import.meta.env.DEV) {
-    const visit = dummyVisits.find((dummyVisit) => dummyVisit.visit_name === visitId);
-
-    if (visit === undefined) {
-      throw new Error("Visit not found!");
-    }
-
-    return {
-      visitId: visit.visit_name,
-      isPhantom: visit.is_phantom,
-      state: visit.state,
-      pdfName: `${visit.visit_name}.pdf`,
-      pdfContent: PDF_CONTENT,
-    };
+    return fetchVisitDetailDev(visitId);
   }
 
   const [visit, visitPDF] = await Promise.all([fetchVisit(visitId), fetchVisitPDF(visitId)]);
@@ -437,14 +334,7 @@ export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVi
 
 export const updateVisitState = async (visitId: string, state: VisitState): Promise<string | never> => {
   if (import.meta.env.DEV) {
-    const visit = dummyVisits.find((dummyVisit) => dummyVisit.visit_name === visitId);
-
-    if (visit === undefined) {
-      throw new Error("Visit not found!");
-    }
-
-    visit.state = state;
-    return visit.visit_name;
+    return updateVisitStateDev(visitId, state);
   }
 
   const updateData: IUpdateVisitStateInput = {
