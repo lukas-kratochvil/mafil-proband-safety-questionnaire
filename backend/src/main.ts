@@ -3,8 +3,8 @@ import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import helmet, { HelmetOptions } from "helmet";
 import { AppModule } from "./app.module";
-import { createUserInputError } from "./exception-handling";
-import { createWinstonLogger } from "./winston-logger";
+import { createUserInputError } from "./exception/exception-handling";
+import { createWinstonLogger } from "./log/winston-logger";
 
 // Development Helmet options so we can use GraphQL playground
 const devHelmetOptions: HelmetOptions = {

@@ -5,7 +5,7 @@ import { ConfigService } from "@nestjs/config";
 import { GqlOptionsFactory } from "@nestjs/graphql";
 import { Request, Response } from "express";
 import { GraphQLFormattedError } from "graphql";
-import { ValidationErrorExtensions, ValidationFieldErrors, VALIDATION_ERROR } from "@app/exception-handling";
+import { ValidationErrorExtensions, ValidationFieldErrors, VALIDATION_ERROR } from "@app/exception/exception-handling";
 import { UUID } from "./utils/scalars/uuid-scalar";
 import { Void } from "./utils/scalars/void-scalar";
 
