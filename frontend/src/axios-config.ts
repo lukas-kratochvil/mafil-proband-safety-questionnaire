@@ -18,7 +18,6 @@ const serverApi = axios.create({
 // Transform all date-strings in the response into Date objects
 serverApi.interceptors.response.use(transformDateStringToDate);
 
-
 /**
  * MAFILDB instance
  */
@@ -44,7 +43,6 @@ mafildbApi.interceptors.request.use(async (config) => {
 
 // Transform all date-strings in the response into Date objects
 mafildbApi.interceptors.response.use(transformDateStringToDate);
-
 
 export default {
   serverApi,
