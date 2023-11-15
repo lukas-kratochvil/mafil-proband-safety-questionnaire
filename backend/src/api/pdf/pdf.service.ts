@@ -86,7 +86,6 @@ export class PDFService {
 
     return {
       isPhantom: true,
-      useSecondaryLanguage: false,
       visitId: generatePDFInput.visitId,
       projectAcronym: generatePDFInput.projectAcronym,
       measurementDate: generatePDFInput.measuredAt,
@@ -264,7 +263,6 @@ export class PDFService {
 
     return {
       isPhantom: false,
-      useSecondaryLanguage,
       visitId: generatePDFInput.visitId,
       projectAcronym: generatePDFInput.projectAcronym,
       measurementDate: generatePDFInput.measuredAt,

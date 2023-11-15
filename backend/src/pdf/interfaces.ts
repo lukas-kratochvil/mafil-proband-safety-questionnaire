@@ -11,7 +11,6 @@ export interface IPDFQuestionAnswer {
 
 export interface IPDFData {
   isPhantom: boolean;
-  useSecondaryLanguage: boolean; // indicates whether the PDF will be bilingual - proband and operator use different language
   operatorFinalizer: IPDFOperator;
   operatorApprover?: IPDFOperator;
   visitId: string;
