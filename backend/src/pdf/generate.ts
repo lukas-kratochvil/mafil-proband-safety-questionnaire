@@ -1,4 +1,3 @@
-import fs from "fs";
 import { Readable } from "stream";
 import { AnswerOption } from "@prisma/client";
 import { Base64Encode } from "base64-stream";
@@ -613,8 +612,7 @@ const streamToString = (stream: Readable): Promise<string | never> => {
   });
 };
 
-export const generatePDF = async (
-  isDevelopment: boolean, // TODO: delete 'isDevelopment' property - only for development purposes
+export const generateBase64PDF = async (
   data: IPDFData,
   locale: string,
   secondaryLocale?: string
@@ -639,16 +637,7 @@ export const generatePDF = async (
   });
 
   // Setup Base64 stream
-  const stream = doc.pipe(new Base64Encode());
-
-  // TODO: delete - only for development purpose
-  let pdfFile: fs.WriteStream | undefined;
-
-  // TODO: delete this - only for development purposes
-  if (isDevelopment) {
-    pdfFile = fs.createWriteStream(`output_${Date.now()}.pdf`);
-    doc.pipe(pdfFile);
-  }
+  const base64Stream = doc.pipe(new Base64Encode());
 
   // Register and use Roboto font family that supports UNICODE characters
   doc.registerFont(REGULAR_FONT, getFontPath("roboto/Roboto-Regular.ttf"));
@@ -752,13 +741,9 @@ export const generatePDF = async (
   }
 
   doc.end();
-  const content = await streamToString(stream);
-  stream.destroy();
-
-  // TODO: delete this - only for development purpose
-  if (pdfFile) {
-    pdfFile.end();
-  }
-
+  const content = await streamToString(base64Stream);
+  // TODO: use end() instead of destroy()?
+  // base64Stream.end();
+  base64Stream.destroy();
   return content;
 };

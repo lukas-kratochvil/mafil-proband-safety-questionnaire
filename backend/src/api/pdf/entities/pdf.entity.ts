@@ -13,5 +13,5 @@ export class PDFEntity {
 
   @IsString()
   @Field()
-  content: string;
+  base64Content: string;
 }

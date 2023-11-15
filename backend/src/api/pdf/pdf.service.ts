@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { AnswerOption, Prisma } from "@prisma/client";
-import { generatePDF } from "@app/pdf/generate";
+import { generateBase64PDF } from "@app/pdf/generate";
 import { IPDFData, IPDFOperator, IPDFQuestionAnswer } from "@app/pdf/interfaces";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { GeneratePDFArgs } from "./dto/generate-pdf.args";
@@ -14,12 +14,9 @@ type GenerateProbandPDFArgs = Required<Omit<GeneratePDFArgs, "approverUsername">
 export class PDFService {
   // Default language for all the operator text translations
   private operatorLanguageCode: string;
-  // TODO: delete 'isDevelopment' property - only for development purposes
-  private isDevelopment: boolean;
 
   constructor(config: ConfigService, private readonly prisma: PrismaService) {
     this.operatorLanguageCode = config.get<string>("PDF_OPERATOR_LANGUAGE_CODE") ?? "cs";
-    this.isDevelopment = config.get<string>("NODE_ENV") === "development";
   }
 
   private createPDFName(generatePDFInput: GeneratePDFArgs): string {
@@ -307,11 +304,11 @@ export class PDFService {
     };
   }
 
-  private createPDF(name: string, content: string): PDFEntity {
+  private createPDF(name: string, base64Content: string): PDFEntity {
     const pdf = new PDFEntity();
     pdf.name = name;
     pdf.extension = "pdf";
-    pdf.content = content;
+    pdf.base64Content = base64Content;
     return pdf;
   }
 
@@ -334,8 +331,8 @@ export class PDFService {
       const phantomData = await this.getPhantomPDFData(generatePDFInput, operatorFinalizer);
 
       // Generate content and return it in the response
-      const content = await generatePDF(this.isDevelopment, phantomData, this.operatorLanguageCode);
-      return this.createPDF(pdfName, content);
+      const base64Content = await generateBase64PDF(phantomData, this.operatorLanguageCode);
+      return this.createPDF(pdfName, base64Content);
     }
 
     // Proband language code is required for proband PDF
@@ -360,12 +357,11 @@ export class PDFService {
     );
 
     // Generate content and return it in the response
-    const content = await generatePDF(
-      this.isDevelopment,
+    const base64Content = await generateBase64PDF(
       data,
       generatePDFInput.probandLanguageCode,
       useSecondaryLanguage ? this.operatorLanguageCode : undefined
     );
-    return this.createPDF(pdfName, content);
+    return this.createPDF(pdfName, base64Content);
   }
 }
