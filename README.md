@@ -10,6 +10,7 @@ Web application for ensuring the registration and safety of MR measurements in t
   - [Populating the database with initial data](#populating-the-database-with-initial-data-1)
   - [Changing the database schema and applying database migrations](#changing-the-database-schema-and-applying-database-migrations)
 - [Services update](#services-update)
+- [What to be aware of](#what-to-be-aware-of)
 - [Notes for the repository owner](#notes-for-the-repository-owner)
   - [Repository secrets and variables](#repository-secrets-and-variables)
 
@@ -85,7 +86,7 @@ docker-compose -f docker-compose.ENV.yml exec server npm run seed
 Then users that are eligible to access the authenticated part of the app must be defined. Login to the Adminer at `/adminer` URL path and create accounts in the `Operator` table in the database.
 
 ## Developers installation
-Create a `.env` configuration file inspired by `.env.example` in the root directory.
+Create a `.env` configuration file inspired by the `.env.example` in the root directory.
 
 The docker-compose configuration file to use for the development is called `docker-compose.local.yml`.
 Start all the services with the command below:
@@ -117,10 +118,10 @@ Go into the `server` container terminal and in the `/usr/src/app/backend` direct
 npx prisma migrate dev --name what-has-changed
 ```
 
-This command will generate new Prisma client code that corresponds to a current state of the `schema.prisma`.
+This command will generate a new Prisma client code that corresponds to the current state of the `schema.prisma`.
 
 ## Services update
-It may be necessary to update `.env` variables according to `.env.example` before running the commands bellow.
+It may be necessary to update `.env` variables according to `.env.example` before running the commands below.
 
 To update services run these commands in the root directory:
 ```
@@ -128,6 +129,10 @@ docker-compose -f docker-compose.ENV.yml pull [SERVICE]
 docker-compose -f docker-compose.ENV.yml up -d --force-recreate --no-deps [SERVICE]
 docker image prune -f
 ```
+
+## What to be aware of
+1. Sometimes the client app has a problem with obtaining data from the server API due to an invalid locale.
+   * Fix: change the language of the application using the language menu in the app GUI.
 
 ## Notes for the repository owner
 ### Repository secrets and variables
