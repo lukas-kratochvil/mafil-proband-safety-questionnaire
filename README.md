@@ -12,6 +12,7 @@ Web application for ensuring the registration and safety of MR measurements in t
   - [Installation](#installation-1)
   - [Populating the database with initial data](#populating-the-database-with-initial-data-1)
   - [Changing the database schema and applying database migrations](#changing-the-database-schema-and-applying-database-migrations)
+  - [Useful tools](#useful-tools)
 - [Repository owner notes](#repository-owner-notes)
   - [Repository secrets and variables](#repository-secrets-and-variables)
 
@@ -135,6 +136,9 @@ npx prisma migrate dev --name what-has-changed
 ```
 
 This command will generate a new Prisma client code that corresponds to the current state of the `schema.prisma`.
+
+### Useful tools
+* GraphQL playground to test the server GraphQL API: http://localhost:4000/graphql
 
 ## Repository owner notes
 ### Repository secrets and variables
