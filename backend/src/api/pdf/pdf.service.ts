@@ -213,11 +213,6 @@ export class PDFService {
                 },
                 select: {
                   text: true,
-                  language: {
-                    select: {
-                      code: true,
-                    },
-                  },
                 },
                 orderBy: {
                   language: languageOrderBy,
