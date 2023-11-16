@@ -2,13 +2,17 @@ import { BadRequestException, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { AnswerOption, Prisma } from "@prisma/client";
 import { generateBase64PDF } from "@app/pdf/generate";
-import { IPDFData, IPDFOperator, IPDFQuestionAnswer } from "@app/pdf/interfaces";
+import { IPDFData, IPDFEntityTexts, IPDFOperator, IPDFQuestionAnswer } from "@app/pdf/interfaces";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { GeneratePDFArgs } from "./dto/generate-pdf.args";
 import { PDFEntity } from "./entities/pdf.entity";
 
 type GenerateProbandPDFArgs = Required<Omit<GeneratePDFArgs, "approverUsername">> &
   Pick<GeneratePDFArgs, "approverUsername">;
+
+type EntityTranslations = {
+  text: string;
+}[];
 
 @Injectable()
 export class PDFService {
@@ -110,15 +114,22 @@ export class PDFService {
     useSecondaryLanguage: boolean
   ): Promise<IPDFData> {
     const languageCodes = [generatePDFInput.probandLanguageCode];
+    let languageCodeOrder: Prisma.SortOrder = "asc";
 
     if (useSecondaryLanguage) {
       languageCodes.push(this.operatorLanguageCode);
+
+      // Ensure that proband translations are always at index 0
+      if (generatePDFInput.probandLanguageCode > this.operatorLanguageCode) {
+        languageCodeOrder = "desc";
+      }
     }
 
-    const languageOrderBy = Prisma.validator<Prisma.LanguageOrderByWithAggregationInput>()({ code: "asc" });
-    const translationTextIndex
-      = !useSecondaryLanguage || generatePDFInput.probandLanguageCode < this.operatorLanguageCode ? 0 : 1;
-    const translationSecondaryTextIndex = !useSecondaryLanguage ? undefined : translationTextIndex === 0 ? 1 : 0;
+    const languageOrderBy = Prisma.validator<Prisma.LanguageOrderByWithAggregationInput>()({ code: languageCodeOrder });
+    const getTranslatedTexts = (translations: EntityTranslations): IPDFEntityTexts => ({
+      text: translations[0].text,
+      secondaryText: languageCodes.length === 1 ? undefined : translations[1].text,
+    });
 
     // Get gender translations
     const gender = await this.prisma.gender.findFirstOrThrow({
@@ -224,11 +235,7 @@ export class PDFService {
       )
     )
       .map((question, i) => ({
-        questionText: question.translations[translationTextIndex].text,
-        questionSecondaryText:
-          translationSecondaryTextIndex === undefined
-            ? undefined
-            : question.translations[translationSecondaryTextIndex].text,
+        ...getTranslatedTexts(question.translations),
         answer: generatePDFInput.answers?.at(i)?.answer as AnswerOption,
         comment: generatePDFInput.answers?.at(i)?.comment,
         hiddenByGenders: question.hiddenByGenders,
@@ -267,30 +274,12 @@ export class PDFService {
       surname: generatePDFInput.surname,
       personalId: generatePDFInput.personalId,
       birthdate: generatePDFInput.birthdate,
-      gender: {
-        text: gender.translations[translationTextIndex].text,
-        secondaryText:
-          translationSecondaryTextIndex === undefined
-            ? undefined
-            : gender.translations[translationSecondaryTextIndex].text,
-      },
-      nativeLanguage: {
-        text: nativeLanguage.translations[translationTextIndex].text,
-        secondaryText:
-          translationSecondaryTextIndex === undefined
-            ? undefined
-            : nativeLanguage.translations[translationSecondaryTextIndex].text,
-      },
+      gender: getTranslatedTexts(gender.translations),
+      nativeLanguage: getTranslatedTexts(nativeLanguage.translations),
       heightCm: generatePDFInput.heightCm,
       weightKg: generatePDFInput.weightKg,
       visualCorrectionDioptre: generatePDFInput.visualCorrectionDioptre,
-      handedness: {
-        text: handedness.translations[translationTextIndex].text,
-        secondaryText:
-          translationSecondaryTextIndex === undefined
-            ? undefined
-            : handedness.translations[translationSecondaryTextIndex].text,
-      },
+      handedness: getTranslatedTexts(handedness.translations),
       email: generatePDFInput.email,
       phone: generatePDFInput.phone,
       answers,

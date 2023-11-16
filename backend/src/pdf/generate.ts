@@ -288,7 +288,7 @@ const addQuestions = (
   questions: IPDFQuestionAnswer[]
 ): void => {
   addBlockTitle(doc, x, y, CHAPTER_FONT_SIZE, GAP_AFTER_CHAPTER_TITLE, texts.title, secondaryTexts?.title);
-  questions.forEach(({ questionText, questionSecondaryText, answer, comment }) => {
+  questions.forEach(({ text, secondaryText, answer, comment }) => {
     const answerText = (answer === AnswerOption.YES ? texts.answerYes : texts.answerNo).toUpperCase();
     const answerSecondaryText = (
       answer === AnswerOption.YES ? secondaryTexts?.answerYes : secondaryTexts?.answerNo
@@ -302,8 +302,8 @@ const addQuestions = (
     if (
       !doesQuestionFitOnPage(
         doc,
-        `${questionText} ${answerText}`,
-        questionSecondaryText && answerSecondaryText ? `${questionSecondaryText} ${answerSecondaryText}` : undefined,
+        `${text} ${answerText}`,
+        secondaryText && answerSecondaryText ? `${secondaryText} ${answerSecondaryText}` : undefined,
         comment
       )
     ) {
@@ -312,14 +312,14 @@ const addQuestions = (
 
     doc
       .font(REGULAR_FONT, TEXT_FONT_SIZE)
-      .text(`${questionText} `, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, continued: true })
+      .text(`${text} `, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, continued: true })
       .font(MEDIUM_FONT, TEXT_FONT_SIZE)
-      .text(answerText, { paragraphGap: questionSecondaryText || comment ? SECONDARY_TEXT_GAP : INPUT_ROWS_GAP });
+      .text(answerText, { paragraphGap: secondaryText || comment ? SECONDARY_TEXT_GAP : INPUT_ROWS_GAP });
 
-    if (questionSecondaryText && answerSecondaryText) {
+    if (secondaryText && answerSecondaryText) {
       doc
         .font(REGULAR_FONT, SECONDARY_TEXT_FONT_SIZE)
-        .text(`(${questionSecondaryText} `, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, continued: true })
+        .text(`(${secondaryText} `, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, continued: true })
         .font(MEDIUM_FONT)
         .text(answerSecondaryText, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, continued: true })
         .font(REGULAR_FONT)
