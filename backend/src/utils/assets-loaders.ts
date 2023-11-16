@@ -1,14 +1,10 @@
 import path from "path";
 import commonTexts from "../assets/localization/common.json";
 import cs from "../assets/localization/cs.json";
+import { FONTS_DIR_PATH, IMAGES_DIR_PATH, LOCALIZATIONS_DIR_PATH } from "./paths";
 
 export type LocalizedTextsFile = typeof cs;
 export type CommonTextsFile = typeof commonTexts;
-
-const ASSETS_DIR_PATH = path.join(__dirname, "..", "assets");
-const LOCALIZATIONS_DIR_PATH = path.join(ASSETS_DIR_PATH, "localization");
-const IMAGES_DIR_PATH = path.join(ASSETS_DIR_PATH, "images");
-const FONTS_DIR_PATH = path.join(ASSETS_DIR_PATH, "fonts");
 
 const getFilePath = (dirPath: string, fileName: string): string => path.join(dirPath, fileName);
 
