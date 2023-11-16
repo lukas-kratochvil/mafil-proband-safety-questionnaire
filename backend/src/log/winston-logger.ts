@@ -23,7 +23,7 @@ export const createWinstonLogger = (): LoggerService => {
         format: winston.format.combine(
           winston.format.timestamp(),
           winston.format.ms(),
-          nestWinstonModuleUtilities.format.nestLike("MAFILDB-PSQ", {
+          nestWinstonModuleUtilities.format.nestLike("MAFIL-PSQ", {
             colors: true,
             prettyPrint: true,
           })
