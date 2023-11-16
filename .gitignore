@@ -1,6 +1,6 @@
 # Compiled output
-dist
-node_modules
+dist/
+node_modules/
 
 # Environment variables
 .env*
@@ -10,13 +10,13 @@ node_modules
 database-storage
 
 # PlantUML diagram exports
-out
+out/
 
 # Generated GraphQL schema
 graphql-schema.gql
 
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 pnpm-debug.log*
