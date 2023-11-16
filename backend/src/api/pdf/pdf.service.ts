@@ -1,9 +1,11 @@
+import fs from "fs";
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { AnswerOption, Prisma } from "@prisma/client";
 import { generateBase64PDF } from "@app/pdf/generate";
 import { IPDFData, IPDFEntityTexts, IPDFOperator, IPDFQuestionAnswer } from "@app/pdf/interfaces";
 import { PrismaService } from "@app/prisma/prisma.service";
+import { GENERATED_PDF_DIR_PATH } from "@app/utils/paths";
 import { GeneratePDFArgs } from "./dto/generate-pdf.args";
 import { PDFEntity } from "./entities/pdf.entity";
 
@@ -18,9 +20,12 @@ type EntityTranslations = {
 export class PDFService {
   // Default language for all the operator text translations
   private operatorLanguageCode: string;
+  // TODO: delete - only for a development purpose
+  private isDevelopment: boolean;
 
   constructor(config: ConfigService, private readonly prisma: PrismaService) {
     this.operatorLanguageCode = config.get<string>("PDF_OPERATOR_LANGUAGE_CODE") ?? "cs";
+    this.isDevelopment = config.get<string>("NODE_ENV") === "development";
   }
 
   private createPDFName(generatePDFInput: GeneratePDFArgs): string {
@@ -287,6 +292,14 @@ export class PDFService {
   }
 
   private createPDF(name: string, base64Content: string): PDFEntity {
+    // TODO: delete - only for a development purpose to store generated PDF locally
+    if (this.isDevelopment) {
+      const fileName = `${GENERATED_PDF_DIR_PATH}/visit_${Date.now()}.pdf`;
+      fs.writeFile(fileName, Buffer.from(base64Content, "base64"), (err) =>
+        console.log(err ? err : `Development PDF '${fileName}' successfully created!`)
+      );
+    }
+
     const pdf = new PDFEntity();
     pdf.name = name;
     pdf.extension = "pdf";
