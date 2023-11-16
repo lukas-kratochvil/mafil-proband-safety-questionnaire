@@ -12,8 +12,8 @@ database-storage
 # PlantUML diagram exports
 out/
 
-# Generated GraphQL schema
-graphql-schema.gql
+# Generated files
+generated/
 
 # Logs
 logs/

@@ -6,6 +6,7 @@ import { GqlOptionsFactory } from "@nestjs/graphql";
 import { Request, Response } from "express";
 import { GraphQLFormattedError } from "graphql";
 import { ValidationErrorExtensions, ValidationFieldErrors, VALIDATION_ERROR } from "@app/exception/exception-handling";
+import { GENERATED_DIR_PATH } from "@app/utils/paths";
 import { UUID } from "./utils/scalars/uuid-scalar";
 import { Void } from "./utils/scalars/void-scalar";
 
@@ -16,7 +17,7 @@ export class GraphQLConfigService implements GqlOptionsFactory {
 
   createGqlOptions(): ApolloDriverConfig {
     return {
-      autoSchemaFile: path.join(process.cwd(), "graphql-schema.gql"),
+      autoSchemaFile: path.join(GENERATED_DIR_PATH, "graphql-schema.gql"),
       // passing original request and response objects into the GraphQL context
       context: ({ req, res }: { req: Request; res: Response }) => ({ req, res }),
       // error formatting inspired by: https://github.com/nestjs/graphql/issues/1053#issuecomment-786972617
