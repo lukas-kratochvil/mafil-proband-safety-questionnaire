@@ -4,6 +4,7 @@ import { APP_GUARD } from "@nestjs/core";
 import { ScheduleModule } from "@nestjs/schedule";
 import { ThrottlerModule } from "@nestjs/throttler";
 import { GraphQLApiModule } from "./api/graphql-api.module";
+import { EnvironmentVariables } from "./config.interface";
 import { CronModule } from "./cron/cron.module";
 import { AuthGuard } from "./guards/auth/auth.guard";
 import { ThrottlerGuard } from "./guards/throttler/throttler.guard";
@@ -16,9 +17,9 @@ import { LoggerMiddleware } from "./middleware/logger.middleware";
     ThrottlerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        ttl: config.get<number>("THROTTLE_TTL"),
-        limit: config.get<number>("THROTTLE_LIMIT"),
+      useFactory: (config: ConfigService<EnvironmentVariables, true>) => ({
+        ttl: config.get("THROTTLE_TTL", { infer: true }),
+        limit: config.get("THROTTLE_LIMIT", { infer: true }),
       }),
     }),
     GraphQLApiModule,

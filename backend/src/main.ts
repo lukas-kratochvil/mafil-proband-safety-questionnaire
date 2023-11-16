@@ -4,6 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import helmet, { HelmetOptions } from "helmet";
 import { AppModule } from "./app.module";
+import { EnvironmentVariables } from "./config.interface";
 import { createUserInputError } from "./exception/exception-handling";
 import { createWinstonLogger } from "./log/winston-logger";
 import { GENERATED_DIR_PATH, GENERATED_PDF_DIR_PATH } from "./utils/paths";
@@ -33,7 +34,7 @@ async function bootstrap() {
     cors: true,
     logger,
   });
-  const config = app.get(ConfigService);
+  const config = app.get(ConfigService<EnvironmentVariables, true>);
 
   // TODO: check that all the required environment variables are defined!
 
@@ -41,12 +42,12 @@ async function bootstrap() {
   createFolder(GENERATED_DIR_PATH, logger);
 
   // Create a folder for generated development PDFs
-  if (config.get<string>("NODE_ENV") === "development") {
+  if (config.get("NODE_ENV", { infer: true }) === "development") {
     createFolder(GENERATED_PDF_DIR_PATH, logger);
   }
 
   // Protection from some well-known web vulnerabilities by setting HTTP headers appropriately
-  app.use(helmet(config.get<string>("NODE_ENV") === "development" ? devHelmetOptions : undefined));
+  app.use(helmet(config.get("NODE_ENV", { infer: true }) === "development" ? devHelmetOptions : undefined));
 
   // Enabling input data validation
   app.useGlobalPipes(
@@ -59,7 +60,7 @@ async function bootstrap() {
 
   // TODO: use CORS? Origins 'localhost' and '127.0.0.1' are different.
   // CORS
-  // const webDomain = config.get<string>("WEB_DOMAIN");
+  // const webDomain = config.get("WEB_DOMAIN", { infer: true });
   // if (webDomain === undefined) {
   //   const errorMsg = "MAFIL-PSQ web app URL is not defined! Shutting down…";
   //   logger.error(errorMsg);
@@ -68,7 +69,7 @@ async function bootstrap() {
   // app.enableCors({ origin: [webDomain] });
 
   // Setting up the port
-  const port = config.get<number>("PORT");
+  const port = config.get("PORT", { infer: true });
 
   if (port === undefined) {
     const errorMsg = "MAFIL-PSQ server port is not defined! Shutting down…";

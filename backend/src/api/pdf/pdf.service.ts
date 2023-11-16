@@ -2,6 +2,7 @@ import fs from "fs";
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { AnswerOption, Prisma } from "@prisma/client";
+import { EnvironmentVariables } from "@app/config.interface";
 import { generateBase64PDF } from "@app/pdf/generate";
 import { IPDFData, IPDFEntityTexts, IPDFOperator, IPDFQuestionAnswer } from "@app/pdf/interfaces";
 import { PrismaService } from "@app/prisma/prisma.service";
@@ -23,9 +24,9 @@ export class PDFService {
   // TODO: delete - only for a development purpose
   private isDevelopment: boolean;
 
-  constructor(config: ConfigService, private readonly prisma: PrismaService) {
-    this.operatorLanguageCode = config.get<string>("PDF_OPERATOR_LANGUAGE_CODE") ?? "cs";
-    this.isDevelopment = config.get<string>("NODE_ENV") === "development";
+  constructor(config: ConfigService<EnvironmentVariables, true>, private readonly prisma: PrismaService) {
+    this.operatorLanguageCode = config.get("PDF_OPERATOR_LANGUAGE_CODE", { infer: true });
+    this.isDevelopment = config.get("NODE_ENV", { infer: true }) === "development";
   }
 
   private createPDFName(generatePDFInput: GeneratePDFArgs): string {
