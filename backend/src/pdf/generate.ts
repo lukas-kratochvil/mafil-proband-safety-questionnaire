@@ -742,8 +742,6 @@ export const generateBase64PDF = async (
 
   doc.end();
   const content = await streamToString(base64Stream);
-  // TODO: use end() instead of destroy()?
-  // base64Stream.end();
-  base64Stream.destroy();
+  base64Stream.end();
   return content;
 };
