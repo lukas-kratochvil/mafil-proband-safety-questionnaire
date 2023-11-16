@@ -40,8 +40,9 @@ FROM node:16-alpine AS production
 WORKDIR /usr/src/app
 
 COPY --from=build ["/usr/src/app/backend/package.json", "/usr/src/app/backend/package-lock.json", "./"]
-COPY --from=build /usr/src/app/backend/prisma ./prisma
 COPY --from=build /usr/src/app/backend/node_modules ./node_modules
+COPY --from=build /usr/src/app/backend/prisma ./prisma
+COPY --from=build /usr/src/app/backend/assets ./assets
 COPY --from=build /usr/src/app/backend/dist ./dist
 
 CMD [ "npm", "run", "start:migrate:prod" ]
