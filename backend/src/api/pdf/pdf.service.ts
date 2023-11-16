@@ -310,9 +310,9 @@ export class PDFService {
     });
 
     if (generatePDFInput.isPhantom) {
+      // Prepare data for PDF generation
       const phantomData = await this.getPhantomPDFData(generatePDFInput, operatorFinalizer);
-
-      // Generate content and return it in the response
+      // Generate PDF
       const base64Content = await generateBase64PDF(phantomData, this.operatorLanguageCode);
       return this.createPDF(pdfName, base64Content);
     }
@@ -328,6 +328,7 @@ export class PDFService {
     }
 
     const useSecondaryLanguage = generatePDFInput.probandLanguageCode !== this.operatorLanguageCode;
+    // Prepare data for PDF generation
     const data = await this.getProbandPDFData(
       {
         ...generatePDFInput,
@@ -337,13 +338,10 @@ export class PDFService {
       operatorFinalizer,
       useSecondaryLanguage
     );
+    const secondaryLocale = useSecondaryLanguage ? this.operatorLanguageCode : undefined;
 
-    // Generate content and return it in the response
-    const base64Content = await generateBase64PDF(
-      data,
-      generatePDFInput.probandLanguageCode,
-      useSecondaryLanguage ? this.operatorLanguageCode : undefined
-    );
+    // Generate PDF
+    const base64Content = await generateBase64PDF(data, generatePDFInput.probandLanguageCode, secondaryLocale);
     return this.createPDF(pdfName, base64Content);
   }
 }
