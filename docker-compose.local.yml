@@ -42,15 +42,12 @@ services:
       target: development
     command: npm run start:migrate:dev
     volumes:
-      # TODO: correct the volume mapping - do we need to map package.json when we map the whole backend directory?
-      # changes in host's ./backend directory will be propagated to the container
+      # Changes in host's ./backend directory will be propagated to the container
+      # This will also let us add packages during development without rebuilding the image
+      # - We then need to install added packages (run 'npm i') inside the container in the folder '/usr/src/app/backend'
       - ./backend:/usr/src/app/backend
-      # this will let us add packages during development without rebuilding the image
-      # - we then need to install added packages (run 'npm i') inside the container in the folder '/usr/src'
-      - ./backend/package.json:/usr/src/app/backend/package.json
-      - ./backend/package-lock.json:/usr/src/app/backend/package-lock.json
-      # this prevents our host files from overriding container's node_modules
-      # – some packages may be platform specific so we always need to run 'npm i' in the container when new package is added
+      # This prevents our host files from overriding container's node_modules
+      # – Some packages may be platform specific so we always need to run 'npm i' in the container when new package is added
       - exclude-server:/usr/src/app/backend/node_modules/
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
@@ -79,15 +76,12 @@ services:
       target: development
     command: npm run dev
     volumes:
-      # TODO: correct the volume mapping - do we need to map package.json when we map the whole backend directory?
-      # changes in host's ./frontend directory will be propagated to the container
+      # Changes in host's ./frontend directory will be propagated to the container
+      # This will also let us add packages during development without rebuilding the image
+      # - We then need to install added packages (run 'npm i') inside the container in the folder '/usr/src/app/frontend'
       - ./frontend:/usr/src/app/frontend
-      # this will let us add packages during development without rebuilding the image
-      # - we then need to install added packages (run 'npm i') inside the container in the folder '/usr/src'
-      - ./frontend/package.json:/usr/src/app/frontend/package.json
-      - ./frontend/package-lock.json:/usr/src/app/frontend/package-lock.json
-      # this prevents our host files from overriding container's node_modules
-      # – some packages may be platform specific so we always need to run 'npm i' in the container when new package is added
+      # This prevents our host files from overriding container's node_modules
+      # – Some packages may be platform specific so we always need to run 'npm i' in the container when new package is added
       - exclude-web:/usr/src/app/frontend/node_modules/
     ports:
       - ${WEB_PORT}:${WEB_PORT}

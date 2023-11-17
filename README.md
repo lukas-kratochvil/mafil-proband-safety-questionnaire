@@ -10,7 +10,6 @@ Web application for ensuring the registration and safety of MR measurements in t
 - [What to be aware of](#what-to-be-aware-of)
 - [Local development](#local-development)
   - [Installation](#installation-1)
-    - [Installing Node packages](#installing-node-packages)
   - [Populating the database with initial data](#populating-the-database-with-initial-data-1)
   - [Changing the database schema and applying database migrations](#changing-the-database-schema-and-applying-database-migrations)
   - [Useful tools](#useful-tools)
@@ -114,13 +113,15 @@ docker-compose -f docker-compose.local.yml up -d
 
 The backend and frontend `package.json` and the source code directory are mapped as volumes in the corresponding container filesystem.
 
-Only `node_modules` aren't mapped due to potential platform-specific code. So they must be installed separately on a local machine and in the Docker container.
+Only `node_modules` aren't mapped to Docker containers due to potential platform-specific code. So they must be installed and updated separately on a local machine and in the `server` and `web` Docker containers.
 
-#### Installing Node packages
-Install Node packages to resolve all the references in the code. In the `/`, `/backend` and `/frontend` directories run:
+To install Node packages run the command:
 ```
 npm i
 ```
+* on a local machine in the `/`, `/backend` and `/frontend` directories.
+* in the `server` Docker container in the `/usr/src/app/backend` directory.
+* in the `web` Docker container in the `/usr/src/app/frontend` directory.
 
 ### Populating the database with initial data
 To populate the local database with initial data (languages, genders, native languages, handednesses and safety questions), the command below must be run inside the `server` container.
