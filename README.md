@@ -10,6 +10,7 @@ Web application for ensuring the registration and safety of MR measurements in t
 - [What to be aware of](#what-to-be-aware-of)
 - [Local development](#local-development)
   - [Installation](#installation-1)
+    - [Installing Node packages](#installing-node-packages)
   - [Populating the database with initial data](#populating-the-database-with-initial-data-1)
   - [Changing the database schema and applying database migrations](#changing-the-database-schema-and-applying-database-migrations)
   - [Useful tools](#useful-tools)
@@ -103,7 +104,7 @@ docker image prune -f
 
 ## Local development
 ### Installation
-Create a `.env` configuration file inspired by the `.env.local.example` in the root directory.
+Create a `.env` configuration file inspired by the `.env.local.example` in the root directory and edit `.env` configuration variables with your values.
 
 The docker-compose configuration file to use for the development is called `docker-compose.local.yml`.
 Start all the services with the command below:
@@ -113,7 +114,9 @@ docker-compose -f docker-compose.local.yml up -d
 
 The backend and frontend `package.json` and the source code directory are mapped as volumes in the corresponding container filesystem.
 
-### Installing Node packages
+Only `node_modules` aren't mapped due to potential platform-specific code. So they must be installed separately on a local machine and in the Docker container.
+
+#### Installing Node packages
 Install Node packages to resolve all the references in the code. In the `/`, `/backend` and `/frontend` directories run:
 ```
 npm i
@@ -138,7 +141,8 @@ npx prisma migrate dev --name what-has-changed
 This command will generate a new Prisma client code that corresponds to the current state of the `schema.prisma`.
 
 ### Useful tools
-* GraphQL playground to test the server GraphQL API: http://localhost:4000/graphql
+* GraphQL playground to test the server GraphQL API: use `server` URL with the path `/graphql`
+  * You must specify the same `API_KEY` HTTP header value when sending requests.
 
 ## Repository owner notes
 ### Repository secrets and variables
