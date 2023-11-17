@@ -36,8 +36,6 @@ async function bootstrap() {
   });
   const config = app.get(ConfigService<EnvironmentVariables, true>);
 
-  // TODO: check that all the required environment variables are defined!
-
   // Create a folder for generated files such as GraphQL schema
   createFolder(GENERATED_DIR_PATH, logger);
 
