@@ -30,10 +30,7 @@ const devHelmetOptions: HelmetOptions = {
 
 async function bootstrap() {
   const logger = createWinstonLogger();
-  const app = await NestFactory.create(AppModule, {
-    cors: true,
-    logger,
-  });
+  const app = await NestFactory.create(AppModule, { logger });
   const config = app.get(ConfigService<EnvironmentVariables, true>);
 
   // Create a folder for generated files such as GraphQL schema
@@ -56,15 +53,9 @@ async function bootstrap() {
     })
   );
 
-  // TODO: use CORS? Origins 'localhost' and '127.0.0.1' are different.
   // CORS
-  // const webDomain = config.get("WEB_DOMAIN", { infer: true });
-  // if (webDomain === undefined) {
-  //   const errorMsg = "MAFIL-PSQ web app URL is not defined! Shutting down…";
-  //   logger.error(errorMsg);
-  //   throw new Error(errorMsg);
-  // }
-  // app.enableCors({ origin: [webDomain] });
+  const webDomain = config.get("WEB_DOMAIN", { infer: true });
+  app.enableCors({ origin: webDomain });
 
   // Starting the app
   const port = config.get("PORT", { infer: true });

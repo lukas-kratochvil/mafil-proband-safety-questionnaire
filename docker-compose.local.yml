@@ -65,7 +65,7 @@ services:
       - THROTTLE_LIMIT=${THROTTLE_LIMIT}
       - WEB_API_KEY=${WEB_API_KEY}
       - PDF_OPERATOR_LANGUAGE_CODE=${PDF_OPERATOR_LANGUAGE_CODE}
-      # - WEB_DOMAIN=${WEB_DOMAIN}
+      - WEB_DOMAIN=http://localhost:3000
     restart: unless-stopped
     depends_on:
       - postgres
@@ -99,7 +99,7 @@ services:
       - TZ=${TIMEZONE}
       - PORT=3000
       - VITE_WEB_API_KEY=${WEB_API_KEY}
-      - VITE_SERVER_URL=http://127.0.0.1:${SERVER_PORT}
+      - VITE_SERVER_URL=http://localhost:${SERVER_PORT}
       - VITE_APP_BAR_COLOR=#068f0d
     restart: unless-stopped
     depends_on:
