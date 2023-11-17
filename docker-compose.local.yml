@@ -65,7 +65,7 @@ services:
       - THROTTLE_LIMIT=${THROTTLE_LIMIT}
       - WEB_API_KEY=${WEB_API_KEY}
       - PDF_OPERATOR_LANGUAGE_CODE=${PDF_OPERATOR_LANGUAGE_CODE}
-      - WEB_DOMAIN=http://localhost:3000
+      - WEB_DOMAIN=http://localhost:${WEB_PORT}
     restart: unless-stopped
     depends_on:
       - postgres
@@ -90,14 +90,14 @@ services:
       # – some packages may be platform specific so we always need to run 'npm i' in the container when new package is added
       - exclude-web:/usr/src/app/frontend/node_modules/
     ports:
-      - 3000:3000
+      - ${WEB_PORT}:${WEB_PORT}
     networks:
       - backend-network
       - frontend-network
     environment:
       - NODE_ENV=development
       - TZ=${TIMEZONE}
-      - PORT=3000
+      - PORT=${WEB_PORT}
       - VITE_WEB_API_KEY=${WEB_API_KEY}
       - VITE_SERVER_URL=http://localhost:${SERVER_PORT}
       - VITE_APP_BAR_COLOR=#068f0d
