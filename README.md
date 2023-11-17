@@ -45,9 +45,7 @@ This repository contains the following most important directories and files:
 ## Installation
 Firstly, install Docker and docker-compose ([see the official Docker docs](https://docs.docker.com/engine/install/)) on the system you want to run this app on.
 
-After that use `download.sh` script (located in the project root directory) and edit the `DEST_BASE_PATH` variable inside this file, so that a path corresponds with the actual location on your file system.
-
-Running the script will download files essential to run the app.
+After that use the `download.sh` script (located in the project root directory) to download files essential to run the app.
 - environment-specific docker-compose file
 - .env containing services configuration
 

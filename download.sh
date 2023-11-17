@@ -6,31 +6,62 @@
 #   2. .env - contains configuration for the app services
 #-----------------------------------------------------------------------------------------------------------------------
 
-# TODO: specify the local path where the files will be downloaded
-DEST_BASE_PATH=".."
+USAGE="
+Usage: $(basename $0) [OPTIONS]
 
-while [ true ]; do
-  echo "Which environment do you want to deploy on? Options are: 'devel' or 'prod'."
-  read -p "Environment: " ENVIRONMENT
+Options:
+  -d,     Directory where to download files
+  -e,     Environment - one of: 'prod', 'devel'
+  -h,     Prints this help
+"
 
-  case "$ENVIRONMENT" in
-  "devel")
-    GIT_BRANCH="devel"
-    break
-    ;;
-  "prod")
-    GIT_BRANCH="main"
-    break
-    ;;
-  *)
-    echo "Invalid environment! Try again!" >&2
-    ;;
-  esac
+if (($# == 0)); then
+  echo "$USAGE"
+  exit 0
+fi
 
-  echo
+while getopts ":d:e:h" opt; do
+    case $opt in
+        d)
+          if ! [ -d $DEST_BASE_PATH ]; then
+            echo "Directory does not exist!" >&2
+            exit 1
+          fi
+          DEST_BASE_PATH=$OPTARG
+          ;;
+        e)
+          case $OPTARG in
+            devel)
+              ENVIRONMENT=$OPTARG
+              GIT_BRANCH=devel
+              ;;
+            prod)
+              ENVIRONMENT=$OPTARG
+              GIT_BRANCH=main
+              ;;
+            *)
+              echo "Environment must be one of: 'prod', 'devel'!" >&2
+              exit 1
+              ;;
+          esac
+          ;;
+        h)
+          echo "$USAGE"
+          exit 0
+          ;;
+        :)
+          echo "$USAGE"
+          exit 1
+          ;;
+    esac
 done
 
-DEST_DIR_PATH="$DEST_BASE_PATH/mafil_psq_${ENVIRONMENT}"
+if [[ -z $DEST_BASE_PATH || -z $ENVIRONMENT ]]; then
+  echo "-d and -e options are required!" >&2
+  exit 1
+fi
+
+DEST_DIR_PATH="$DEST_BASE_PATH/mafil_psq_${ENVIRONMENT}_$(date +%Y%m%d_%H%M%S)"
 
 echo
 echo "Creating directory $(
