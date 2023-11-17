@@ -66,16 +66,8 @@ async function bootstrap() {
   // }
   // app.enableCors({ origin: [webDomain] });
 
-  // Setting up the port
-  const port = config.get("PORT", { infer: true });
-
-  if (port === undefined) {
-    const errorMsg = "MAFIL-PSQ server port is not defined! Shutting down…";
-    logger.error(errorMsg);
-    throw new Error(errorMsg);
-  }
-
   // Starting the app
+  const port = config.get("PORT", { infer: true });
   logger.log(`MAFIL-PSQ server is listening on: http://localhost:${port}`);
   await app.listen(port);
 }
