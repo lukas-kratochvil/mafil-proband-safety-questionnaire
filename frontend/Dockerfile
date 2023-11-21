@@ -1,7 +1,7 @@
 #-------------------------------------------
 # BUILD FOR DEVELOPMENT
 #-------------------------------------------
-FROM node:16-alpine AS development
+FROM node:18-alpine AS development
 
 WORKDIR /usr/src/app/frontend
 
@@ -16,7 +16,7 @@ COPY ./frontend .
 #-------------------------------------------
 # BUILD FOR PRODUCTION
 #-------------------------------------------
-FROM node:16-alpine AS build
+FROM node:18-alpine AS build
 
 WORKDIR /usr/src/app/frontend
 

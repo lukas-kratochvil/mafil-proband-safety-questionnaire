@@ -1,7 +1,7 @@
 #-------------------------------------------
 # BUILD FOR DEVELOPMENT
 #-------------------------------------------
-FROM node:16-alpine AS development
+FROM node:18-alpine AS development
 
 WORKDIR /usr/src/app/backend
 
@@ -19,7 +19,7 @@ COPY ./backend .
 #-------------------------------------------
 # BUILD FOR PRODUCTION
 #-------------------------------------------
-FROM node:16-alpine AS build
+FROM node:18-alpine AS build
 
 WORKDIR /usr/src/app/backend
 
@@ -35,7 +35,7 @@ RUN npm ci --omit='dev' && npm cache clean --force
 #-------------------------------------------
 # PRODUCTION
 #-------------------------------------------
-FROM node:16-alpine AS production
+FROM node:18-alpine AS production
 
 WORKDIR /usr/src/app
 
