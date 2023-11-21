@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-app:
     name: Build
     runs-on: ubuntu-latest
     defaults:
@@ -53,10 +53,10 @@ jobs:
     - name: Run the tests
       run: npm test
 
-  create_docker_image:
+  create-docker-image:
     name: Build and push Docker image to the GitHub Container registry
     if: ${{ github.event_name == 'push' }}
-    needs: build
+    needs: build-app
     runs-on: ubuntu-latest
     env:
       DOCKER_REGISTRY: ghcr.io
