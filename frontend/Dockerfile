@@ -31,7 +31,7 @@ ARG APP_BAR_COLOR
 
 RUN VITE_JPM_CLIENT_ID=$JPM_CLIENT_ID VITE_APP_BAR_COLOR=$APP_BAR_COLOR npm run build
 
-RUN npm ci --production && npm cache clean --force
+RUN npm ci --omit='dev' && npm cache clean --force
 
 
 #-------------------------------------------

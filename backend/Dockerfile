@@ -29,7 +29,7 @@ COPY --from=development /usr/src/app/. ../.
 
 RUN npm run build
 
-RUN npm ci --production && npm cache clean --force
+RUN npm ci --omit='dev' && npm cache clean --force
 
 
 #-------------------------------------------
