@@ -1,4 +1,6 @@
-export const AUTHENTICATE_OPERATOR = `
+const gql = String.raw
+
+export const AUTHENTICATE_OPERATOR = gql`
 query AuthenticateOperator($name: String!, $surname: String!, $username: String!, $email: String!) {
   authenticateOperator(name: $name, surname: $surname, username: $username, email: $email) {
     id
@@ -11,7 +13,7 @@ query AuthenticateOperator($name: String!, $surname: String!, $username: String!
 }
 `;
 
-export const GET_OPERATOR = `
+export const GET_OPERATOR = gql`
 query GetOperator($username: String!) {
   operator(username: $username) {
     id
@@ -24,7 +26,7 @@ query GetOperator($username: String!) {
 }
 `;
 
-export const GET_GENDERS = `
+export const GET_GENDERS = gql`
 query GetGenders {
   genders {
     id
@@ -41,7 +43,7 @@ query GetGenders {
 }
 `;
 
-export const GET_GENDER = `
+export const GET_GENDER = gql`
 query GetGender($code: String!) {
   gender(code: $code) {
     id
@@ -57,7 +59,7 @@ query GetGender($code: String!) {
 }
 `;
 
-export const GET_NATIVE_LANGUAGES = `
+export const GET_NATIVE_LANGUAGES = gql`
 query GetNativeLanguages {
   nativeLanguages {
     id
@@ -74,7 +76,7 @@ query GetNativeLanguages {
 }
 `;
 
-export const GET_NATIVE_LANGUAGE = `
+export const GET_NATIVE_LANGUAGE = gql`
 query GetNativeLanguage($code: String!) {
   nativeLanguage(code: $code) {
     id
@@ -90,7 +92,7 @@ query GetNativeLanguage($code: String!) {
 }
 `;
 
-export const GET_HANDEDNESSES = `
+export const GET_HANDEDNESSES = gql`
 query GetHandednesses {
   handednesses {
     id
@@ -107,7 +109,7 @@ query GetHandednesses {
 }
 `;
 
-export const GET_HANDEDNESS = `
+export const GET_HANDEDNESS = gql`
 query GetHandedness($code: String!) {
   handedness(code: $code) {
     id
@@ -123,7 +125,7 @@ query GetHandedness($code: String!) {
 }
 `;
 
-export const GET_CURRENT_QUESTIONS = `
+export const GET_CURRENT_QUESTIONS = gql`
 query GetCurrentQuestions {
   questions {
     id
@@ -145,7 +147,7 @@ query GetCurrentQuestions {
 }
 `;
 
-export const GET_QUESTION = `
+export const GET_QUESTION = gql`
 query GetQuestion($id: UUID!) {
   question(id: $id) {
     id
@@ -165,7 +167,7 @@ query GetQuestion($id: UUID!) {
 }
 `;
 
-export const GET_ENTRY_INFO = `
+export const GET_ENTRY_INFO = gql`
 query GetEntryInfo($locale: String!) {
   entryInfo(locale: $locale) {
     title
@@ -174,7 +176,7 @@ query GetEntryInfo($locale: String!) {
 }
 `;
 
-export const GET_SAFETY_INFO = `
+export const GET_SAFETY_INFO = gql`
 query GetSafetyInfo($locale: String!) {
   safetyInfo(locale: $locale) {
     title
@@ -183,7 +185,7 @@ query GetSafetyInfo($locale: String!) {
 }
 `;
 
-export const GET_BEFORE_EXAMINATION = `
+export const GET_BEFORE_EXAMINATION = gql`
 query GetBeforeExamination($locale: String!) {
   beforeExamination(locale: $locale) {
     title
@@ -192,7 +194,7 @@ query GetBeforeExamination($locale: String!) {
 }
 `;
 
-export const GET_EXAMINATION_CONSENT = `
+export const GET_EXAMINATION_CONSENT = gql`
 query GetExaminationConsent($locale: String!) {
   examinationConsent(locale: $locale) {
     title
@@ -201,7 +203,7 @@ query GetExaminationConsent($locale: String!) {
 }
 `;
 
-export const GET_PROBAND_CONTACT_REQUEST = `
+export const GET_PROBAND_CONTACT_REQUEST = gql`
 query GetProbandContactRequest($locale: String!, $name: String!, $surname: String!, $birthdateStr: String!, $currentDateStr: String!) {
   probandContactRequest(locale: $locale, name: $name, surname: $surname, birthdateStr: $birthdateStr, currentDateStr: $currentDateStr) {
     title
@@ -210,7 +212,7 @@ query GetProbandContactRequest($locale: String!, $name: String!, $surname: Strin
 }
 `;
 
-export const GET_PROBAND_CONTACT_CONSENT = `
+export const GET_PROBAND_CONTACT_CONSENT = gql`
 query GetProbandContactConsent($locale: String!) {
   probandContactConsent(locale: $locale) {
     title
@@ -219,7 +221,7 @@ query GetProbandContactConsent($locale: String!) {
 }
 `;
 
-export const GET_WAITING_ROOM_TABLE_VISIT_FORMS = `
+export const GET_WAITING_ROOM_TABLE_VISIT_FORMS = gql`
 query GetWaitingRoomVisitForms($state: VisitFormState) {
   visitForms(state: $state) {
     id
@@ -268,7 +270,7 @@ query GetWaitingRoomVisitForms($state: VisitFormState) {
 }
 `;
 
-export const GET_WAITING_ROOM_VISIT_FORM = `
+export const GET_WAITING_ROOM_VISIT_FORM = gql`
 query GetWaitingRoomVisitForm($id: UUID!) {
   visitForm(id: $id) {
     id
@@ -323,7 +325,7 @@ query GetWaitingRoomVisitForm($id: UUID!) {
 }
 `;
 
-export const GET_APPROVAL_ROOM_TABLE_VISIT_FORMS = `
+export const GET_APPROVAL_ROOM_TABLE_VISIT_FORMS = gql`
 query GetApprovalRoomVisitForms($state: VisitFormState) {
   visitForms(state: $state) {
     id
@@ -379,7 +381,7 @@ query GetApprovalRoomVisitForms($state: VisitFormState) {
 }
 `;
 
-export const GET_APPROVAL_ROOM_VISIT_FORM = `
+export const GET_APPROVAL_ROOM_VISIT_FORM = gql`
 query GetApprovalRoomVisitForm($id: UUID!) {
   visitForm(id: $id) {
     id
@@ -444,7 +446,7 @@ query GetApprovalRoomVisitForm($id: UUID!) {
 }
 `;
 
-export const GENERATE_PDF = `
+export const GENERATE_PDF = gql`
 query GeneratePDF($name: String!, $surname: String!, $personalId: String!, $birthdate: DateTime!, $heightCm: Float!, $weightKg: Float!, $visualCorrectionDioptre: Float!, $email: String!, $phone: String!, $probandLanguageCode: String, $finalizerUsername: String!, $approverUsername: String, $projectAcronym: String!, $measuredAt: DateTime!, $visitId: String!, $isPhantom: Boolean!, $genderCode: String!, $nativeLanguageCode: String!, $handednessCode: String!, $answers: [PDFAnswer!]){
   generatePDF(name: $name, surname: $surname, personalId: $personalId, birthdate: $birthdate, heightCm: $heightCm, weightKg: $weightKg, visualCorrectionDioptre: $visualCorrectionDioptre, email: $email, phone: $phone, probandLanguageCode: $probandLanguageCode, finalizerUsername: $finalizerUsername, approverUsername: $approverUsername, projectAcronym: $projectAcronym, measuredAt: $measuredAt, visitId: $visitId, isPhantom: $isPhantom, genderCode: $genderCode, nativeLanguageCode: $nativeLanguageCode, handednessCode: $handednessCode, answers: $answers) {
     name
