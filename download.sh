@@ -27,8 +27,8 @@ fi
 while getopts ":d:e:h" opt; do
     case $opt in
         d)
-          if ! [ -d $DEST_BASE_PATH ]; then
-            echo "Directory does not exist!" >&2
+          if ! [ -d $OPTARG ]; then
+            echo "Directory '$OPTARG' does not exist!" >&2
             exit 1
           fi
           DEST_BASE_PATH=$OPTARG
