@@ -57,6 +57,9 @@ async function bootstrap() {
   const webDomain = config.get("WEB_DOMAIN", { infer: true });
   app.enableCors({ origin: webDomain });
 
+  // Starts listening for shutdown hooks
+  app.enableShutdownHooks()
+
   // Starting the app
   const port = config.get("PORT", { infer: true });
   logger.log(`MAFIL-PSQ server is listening on: http://localhost:${port}`);
