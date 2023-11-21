@@ -180,7 +180,7 @@ export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<stri
     file_type: "REGISTRATION_PDF",
     file_name: pdf.name,
     file_extension: pdf.extension,
-    file_content: pdf.content,
+    file_content: pdf.base64Content,
   };
   // TODO: add correct MAFILDB endpoint
   const { data } = await axiosConfig.mafildbApi.post<AddPdfToVisitResponse>("files", addPdfToVisitData);

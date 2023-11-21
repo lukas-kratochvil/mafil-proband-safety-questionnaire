@@ -206,7 +206,7 @@ export interface IUpdateVisitFormStateInput {
 export interface IPdfDTO {
   name: string;
   extension: string;
-  content: string;
+  base64Content: string;
 }
 
 export interface IGeneratePdfInput {

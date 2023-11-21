@@ -337,7 +337,7 @@ export const GENERATE_PDF = gql`
     ) {
       name
       extension
-      content
+      base64Content
     }
   }
 `;
