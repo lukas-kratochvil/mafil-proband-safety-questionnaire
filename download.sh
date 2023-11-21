@@ -74,7 +74,6 @@ echo "Creating directory $(
   pwd
 )/$(basename "$DEST_DIR_PATH")\
  to which will be installation files downloaded."
-rm -r $DEST_DIR_PATH
 mkdir $DEST_DIR_PATH
 echo "> DONE"
 
