@@ -1,4 +1,4 @@
-const gql = String.raw
+import { gql } from "./gql-tag";
 
 export const AUTHENTICATE_OPERATOR = gql`
 query AuthenticateOperator($name: String!, $surname: String!, $username: String!, $email: String!) {
