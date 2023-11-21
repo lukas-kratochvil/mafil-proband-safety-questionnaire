@@ -6,17 +6,21 @@
 #   2. .env - contains configuration for the app services
 #-----------------------------------------------------------------------------------------------------------------------
 
-USAGE="
+help() {
+  echo "
 Usage: $(basename $0) [OPTIONS]
 
-Options:
+Required:
   -d,     Directory where to download files
   -e,     Environment - one of: 'prod', 'devel'
+
+Optional:
   -h,     Prints this help
 "
+}
 
 if (($# == 0)); then
-  echo "$USAGE"
+  help
   exit 0
 fi
 
@@ -46,11 +50,11 @@ while getopts ":d:e:h" opt; do
           esac
           ;;
         h)
-          echo "$USAGE"
+          help
           exit 0
           ;;
         :)
-          echo "$USAGE"
+          help
           exit 1
           ;;
     esac
@@ -58,6 +62,7 @@ done
 
 if [[ -z $DEST_BASE_PATH || -z $ENVIRONMENT ]]; then
   echo "-d and -e options are required!" >&2
+  help
   exit 1
 fi
 
