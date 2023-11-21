@@ -6,7 +6,7 @@
 #   2. .env - contains configuration for the app services
 #-----------------------------------------------------------------------------------------------------------------------
 
-help() {
+help () {
   echo "
 Usage: $(basename $0) [OPTIONS]
 
@@ -16,6 +16,26 @@ Required:
 
 Optional:
   -h,     Prints this help
+"
+}
+
+download () {
+  if curl -fkSs -o $1 $2; then
+    echo "> DONE"
+  else
+    echo "> File not found!"
+    exit 1
+  fi
+}
+
+success () {
+  echo "
+Successfully completed!
+
+Next steps:
+  1. Change .env file variables to satisfy your needs and then copy these files to your server.
+  2. Uploud .env and docker-compose.ENV.yml on the server
+  3. Install or update the app
 "
 }
 
@@ -79,12 +99,11 @@ echo "> DONE"
 
 GITHUB_FILE_URL="https://raw.githubusercontent.com/lukas-kratochvil/mafil-proband-safety-questionnaire/$GIT_BRANCH"
 DOCKER_COMPOSE_FILE="docker-compose.$ENVIRONMENT.yml"
-ENV_EXAMPLE_FILE=".env.example"
 
-echo "Downloading latest $DOCKER_COMPOSE_FILE from the $GIT_BRANCH branch of the GitHub repo…"
-(curl -fkSs -o "$DEST_DIR_PATH/$DOCKER_COMPOSE_FILE" "$GITHUB_FILE_URL/$DOCKER_COMPOSE_FILE") && echo "> DONE" || echo "> File not found!"
+echo "Downloading latest '$DOCKER_COMPOSE_FILE' from the '$GIT_BRANCH' branch of the GitHub repo…"
+download "$DEST_DIR_PATH/$DOCKER_COMPOSE_FILE" "$GITHUB_FILE_URL/$DOCKER_COMPOSE_FILE"
 
-echo "Downloading latest .env from the $GIT_BRANCH branch of the GitHub repo…"
-(curl -fkSs -o "$DEST_DIR_PATH/.env" "$GITHUB_FILE_URL/$ENV_EXAMPLE_FILE") && echo "> DONE" || echo "> File not found!"
+echo "Downloading latest '.env' from the '$GIT_BRANCH' branch of the GitHub repo…"
+download "$DEST_DIR_PATH/.env" "$GITHUB_FILE_URL/.env.example"
 
-echo "Change .env file variables to satisfy your needs and then copy these files to your server."
+success
