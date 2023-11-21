@@ -5,7 +5,7 @@ import {
   ORDERED_TRANSLATION_ENTITY_PROPS,
   TRANSLATIONS_FRAGMENT,
   TRANSLATION_ENTITY_PROPS,
-} from "./gql-tag";
+} from "./gql-util";
 
 export const AUTHENTICATE_OPERATOR = gql`
   query AuthenticateOperator($name: String!, $surname: String!, $username: String!, $email: String!) {

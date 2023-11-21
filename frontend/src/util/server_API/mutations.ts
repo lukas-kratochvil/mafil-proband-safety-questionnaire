@@ -1,4 +1,4 @@
-import { gql } from "./gql-tag";
+import { gql } from "./gql-util";
 
 export const CREATE_VISIT_FORM = gql`
   mutation CreateVisitForm($createVisitFormInput: CreateVisitFormInput!) {
