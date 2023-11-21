@@ -35,7 +35,7 @@ This repository contains the following most important directories and files:
 - *docker-compose.devel.yml* - development environment services configuration
 - *docker-compose.local.yml* - local development environment services configuration
 - *docker-compose.prod.yml* - production environment services configuration
-- *download.sh* - script to download files for deployment (you must specify the local path where the files will be downloaded)
+- *download.sh* - script to download files for deployment
 
 ## Base URL paths
 - `/` - root path directs to the proband safety questionnaire
@@ -48,6 +48,10 @@ Firstly, install Docker and docker-compose ([see the official Docker docs](https
 After that use the `download.sh` script (located in the project root directory) to download files essential to run the app.
 - environment-specific docker-compose file
 - .env containing services configuration
+
+```bash
+./download.sh -d [DOWNLOAD_PATH] -e [ENV]
+```
 
 Edit `.env` configuration variables with your values.
 
