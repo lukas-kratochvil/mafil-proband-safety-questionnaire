@@ -58,7 +58,7 @@ async function bootstrap() {
   app.enableCors({ origin: webDomain });
 
   // Starts listening for shutdown hooks
-  app.enableShutdownHooks()
+  app.enableShutdownHooks();
 
   // Starting the app
   const port = config.get("PORT", { infer: true });
