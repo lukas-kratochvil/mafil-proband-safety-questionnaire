@@ -86,7 +86,7 @@ const createVisit = async (
     state,
     is_phantom: isPhantom,
     proband_language_code: probandLanguageCode ?? "",
-    project_id: visitFormData.project?.id ?? "",
+    project_uuid: visitFormData.project?.uuid ?? "",
     device_id: visitFormData.device?.id ?? "",
     measurement_date: visitFormData.measuredAt ?? new Date(),
     name: visitFormData.name,
@@ -200,7 +200,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
   ]);
   const visits: IRecentVisitsTableVisit[] = [];
   data.results.forEach(async (visit) => {
-    const project = projects.find((proj) => proj.id === visit.project_id);
+    const project = projects.find((proj) => proj.uuid === visit.project_uuid);
     const device = devices.find((dev) => dev.id === visit.device_id);
     let finalizer: IOperatorDTO | undefined;
 

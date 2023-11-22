@@ -72,7 +72,7 @@ export const loadFormDefaultValuesFromApprovalRoomVisitForm = (
   ...loadFormDefaultValuesFromWaitingRoomVisitForm(visitForm),
   // selected project is set in the FormProjectInfo component
   project: {
-    id: visitForm.additionalInfo.projectId, // id is used to match the correct project loaded from the MAFILDB
+    uuid: visitForm.additionalInfo.projectUuid, // uuid is used to match the correct project loaded from the MAFILDB
     acronym: "",
     name: "",
   },

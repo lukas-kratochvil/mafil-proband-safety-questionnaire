@@ -441,7 +441,7 @@ export const createDuplicatedVisitFormForApproval = async (
       email: visitFormData.email,
       phone: visitFormData.phone,
       additionalInfo: {
-        projectId: visitFormData.project?.id ?? "",
+        projectUuid: visitFormData.project?.uuid ?? "",
         projectAcronym: visitFormData.project?.acronym ?? "",
         deviceId: visitFormData.device?.id ?? "",
         deviceName: visitFormData.device?.name ?? "",
@@ -491,7 +491,7 @@ export const sendVisitFormForApproval = async (
       email: visitFormData.email,
       phone: visitFormData.phone,
       additionalInfo: {
-        projectId: visitFormData.project?.id ?? "",
+        projectUuid: visitFormData.project?.uuid ?? "",
         projectAcronym: visitFormData.project?.acronym ?? "",
         deviceId: visitFormData.device?.id ?? "",
         deviceName: visitFormData.device?.name ?? "",

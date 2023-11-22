@@ -29,7 +29,7 @@ interface IVisit {
   state: VisitState;
   isPhantom: boolean;
   probandLanguageCode: ProbandVisitLanguageCode;
-  projectId: string;
+  projectUuid: string;
   deviceId: string;
   measurementDate: Date;
   name: string;
@@ -48,14 +48,14 @@ interface IVisit {
 }
 
 export interface IRecentVisitsTableVisit
-  extends Omit<IVisit, "projectId" | "deviceId" | "gender" | "nativeLanguage" | "handedness"> {
+  extends Omit<IVisit, "projectUuid" | "deviceId" | "gender" | "nativeLanguage" | "handedness"> {
   project: IProjectDTO;
   device: IDeviceDTO;
   finalizer: IOperatorDTO;
 }
 
 export interface IDuplicatedVisitIncludingQuestions
-  extends Omit<IVisit, "created" | "projectId" | "deviceId" | "answers"> {
+  extends Omit<IVisit, "created" | "projectUuid" | "deviceId" | "answers"> {
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
 }
 

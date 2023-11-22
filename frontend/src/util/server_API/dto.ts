@@ -122,7 +122,7 @@ export interface IWaitingRoomVisitFormIncludingQuestions extends IWaitingRoomTab
 
 export interface IApprovalRoomTableVisitFormDTO extends IWaitingRoomTableVisitFormDTO {
   additionalInfo: {
-    projectId: string;
+    projectUuid: string;
     projectAcronym: string;
     deviceId: string;
     deviceName: string;
@@ -145,7 +145,7 @@ export interface IApprovalRoomVisitFormIncludingQuestionsDTO extends IApprovalRo
 }
 
 type AdditionalInfo = {
-  projectId: string;
+  projectUuid: string;
   projectAcronym: string;
   deviceId: string;
   deviceName: string;

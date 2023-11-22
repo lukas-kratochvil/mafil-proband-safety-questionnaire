@@ -236,7 +236,7 @@ export const GET_APPROVAL_ROOM_TABLE_VISIT_FORMS = gql`
       email
       phone
       additionalInfo {
-        projectId
+        projectUuid
         projectAcronym
         deviceId
         deviceName
@@ -273,7 +273,7 @@ export const GET_APPROVAL_ROOM_VISIT_FORM = gql`
       email
       phone
       additionalInfo {
-        projectId
+        projectUuid
         deviceId
         measuredAt
         finalizer {

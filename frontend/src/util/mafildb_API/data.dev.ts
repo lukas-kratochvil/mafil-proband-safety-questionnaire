@@ -2,17 +2,17 @@ import { IDeviceDTO, IProjectDTO, IVisitDTO, VisitState } from "@app/util/mafild
 
 export const projectsDev: IProjectDTO[] = [
   {
-    id: "1",
+    uuid: "1",
     name: "Projekt 1",
     acronym: "P1",
   },
   {
-    id: "2",
+    uuid: "2",
     name: "Projekt 2",
     acronym: "P2",
   },
   {
-    id: "3",
+    uuid: "3",
     name: "Projekt 3",
     acronym: "P3",
   },
@@ -53,7 +53,7 @@ const createDummyVisits = (
       visit_name: generateVisitId(),
       state,
       is_phantom: isPhantom,
-      project_id: projectsDev[i % 2].id,
+      project_uuid: projectsDev[i % 2].uuid,
       device_id: devicesDev[i % 2].id,
     });
   }
@@ -68,7 +68,7 @@ const initialDummyVisit: IVisitDTO = {
   state: VisitState.APPROVED,
   is_phantom: false,
   proband_language_code: "cs",
-  project_id: projectsDev[0].id,
+  project_uuid: projectsDev[0].uuid,
   device_id: devicesDev[0].id,
   measurement_date: new Date(),
   finalizer_username: import.meta.env.VITE_OPERATOR_USERNAME,

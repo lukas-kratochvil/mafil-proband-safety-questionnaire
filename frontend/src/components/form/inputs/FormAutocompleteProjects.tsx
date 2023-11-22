@@ -31,7 +31,7 @@ export const FormAutocompleteProjects = ({
             id={name}
             options={options === undefined ? [] : options}
             getOptionLabel={(option: IProjectDTO) => getProjectText(option)}
-            isOptionEqualToValue={(option, value) => option.id === value.id}
+            isOptionEqualToValue={(option, value) => option.uuid === value.uuid}
             value={field.value}
             onChange={(_event, val) => field.onChange(val)}
             onBlur={field.onBlur}

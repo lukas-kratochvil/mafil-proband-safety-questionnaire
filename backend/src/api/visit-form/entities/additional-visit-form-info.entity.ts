@@ -30,7 +30,7 @@ export class AdditionalVisitFormInfoEntity extends BaseEntity implements Additio
 
   @MaxLength(35)
   @Field()
-  projectId: string;
+  projectUuid: string;
 
   @MaxLength(30)
   @Field()

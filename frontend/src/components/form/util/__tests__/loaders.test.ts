@@ -54,7 +54,7 @@ const approvalRoomVisitForm: IApprovalRoomVisitFormIncludingQuestionsDTO = {
   ...waitingRoomVisitForm,
   answersIncludingQuestions: [{ ...answerIncludingQuestion, comment: "comment" }],
   additionalInfo: {
-    projectId: "1552314",
+    projectUuid: "1552314",
     projectAcronym: "Proj1",
     deviceId: "6552515",
     deviceName: "M1",
@@ -186,7 +186,7 @@ describe("form loaders", () => {
     const fetchedVisit = approvalRoomVisitForm;
     const loadedFormValues = loadFormDefaultValuesFromApprovalRoomVisitForm(fetchedVisit);
 
-    expect(loadedFormValues.project?.id).toEqual(fetchedVisit.additionalInfo.projectId); // project is loaded in the FormProjectInfo component using the projectId
+    expect(loadedFormValues.project?.uuid).toEqual(fetchedVisit.additionalInfo.projectUuid); // project is loaded in the FormProjectInfo component using the projectUuid
     expect(loadedFormValues.device?.id).toEqual(fetchedVisit.additionalInfo.deviceId); // device is loaded in the FormProjectInfo component using the deviceId
     expect(loadedFormValues.measuredAt).toEqual(fetchedVisit.additionalInfo.measuredAt);
     expect(loadedFormValues.name).toEqual(fetchedVisit.name);

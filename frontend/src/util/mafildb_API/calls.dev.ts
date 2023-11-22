@@ -31,7 +31,7 @@ export const createVisitDev = async (
     proband_language_code: probandLanguageCode ?? "",
     finalizer_username: finalizerUsername,
     measurement_date: visitFormData.measuredAt ?? new Date(),
-    project_id: visitFormData.project?.id ?? "",
+    project_uuid: visitFormData.project?.uuid ?? "",
     device_id: visitFormData.device?.id ?? "",
     personal_id: visitFormData.personalId,
     birthdate: visitFormData.birthdate,
@@ -60,7 +60,7 @@ export const fetchRecentVisitsDev = async (): Promise<IRecentVisitsTableVisit[]>
   ]);
   const visits: IRecentVisitsTableVisit[] = [];
   dummyVisits.forEach((visit) => {
-    const project = projects.find((proj) => proj.id === visit.project_id);
+    const project = projects.find((proj) => proj.uuid === visit.project_uuid);
     const device = devices.find((dev) => dev.id === visit.device_id);
 
     // if project or device doesn't exist we skip the visit

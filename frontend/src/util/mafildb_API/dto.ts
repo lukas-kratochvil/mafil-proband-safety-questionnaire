@@ -2,7 +2,7 @@ import { AnswerOption } from "@app/model/form";
 import { ProbandVisitLanguageCode } from "@app/model/visit";
 
 export interface IProjectDTO {
-  id: string;
+  uuid: string;
   acronym: string;
   name: string;
 }
@@ -31,7 +31,7 @@ export interface ICreateVisitInput {
   state: VisitState;
   is_phantom: boolean;
   proband_language_code: ProbandVisitLanguageCode;
-  project_id: string;
+  project_uuid: string;
   device_id: string;
   measurement_date: Date; // TODO: not sure if this attribute is string or Date
   name: string;

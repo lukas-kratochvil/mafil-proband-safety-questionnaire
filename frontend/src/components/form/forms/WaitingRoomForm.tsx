@@ -194,7 +194,7 @@ export const WaitingRoomForm = () => {
         name: data.device?.name ?? "",
       },
       project: {
-        id: data.project?.id ?? "",
+        uuid: data.project?.uuid ?? "",
         acronym: data.project?.acronym ?? "",
         name: data.project?.name ?? "",
       },

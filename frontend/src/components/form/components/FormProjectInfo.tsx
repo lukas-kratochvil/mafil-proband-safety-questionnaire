@@ -27,10 +27,10 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
   // Setting selected project
   useEffect(() => {
     if (projects.data !== undefined) {
-      const projectId = getValues("project.id");
+      const projectUuid = getValues("project.uuid");
 
-      if (projectId !== null && projectId !== undefined && projectId !== "") {
-        const selectedProject = projects.data.find((project) => project.id === projectId) ?? null;
+      if (projectUuid !== null && projectUuid !== undefined && projectUuid !== "") {
+        const selectedProject = projects.data.find((project) => project.uuid === projectUuid) ?? null;
         setValue("project", selectedProject, { shouldTouch: true });
       }
     }

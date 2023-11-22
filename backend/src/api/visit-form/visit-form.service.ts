@@ -161,7 +161,7 @@ export class VisitFormService {
                 upsert: {
                   create: {
                     // properties are checked against undefined, so the values here are always non-undefined
-                    projectId: updateVisitFormInput.additionalInfo.projectId || "",
+                    projectUuid: updateVisitFormInput.additionalInfo.projectUuid || "",
                     projectAcronym: updateVisitFormInput.additionalInfo.projectAcronym || "",
                     deviceId: updateVisitFormInput.additionalInfo.deviceId || "",
                     deviceName: updateVisitFormInput.additionalInfo.deviceName || "",
