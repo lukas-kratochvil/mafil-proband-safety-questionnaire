@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { OperatorRole, PrismaClient } from "@prisma/client";
 import genders from "./data/genders";
 import handednesses from "./data/handednesses";
 import nativeLanguages from "./data/native-languages";
@@ -12,6 +12,17 @@ const createTranslation = (languageId: string, text: string) => ({
 });
 
 async function seed() {
+  // Operator used in the authenticated part of the app
+  await prisma.operator.create({
+    data: {
+      name: process.env.OPERATOR_FIRSTNAME as string,
+      surname: process.env.OPERATOR_SURNAME as string,
+      username: process.env.OPERATOR_USERNAME as string,
+      email: process.env.OPERATOR_EMAIL as string,
+      role: process.env.OPERATOR_ROLE as OperatorRole,
+    },
+  });
+
   /**
    * Languages (locales) - ISO 639-1 (https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
    */

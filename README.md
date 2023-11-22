@@ -131,8 +131,6 @@ To populate the local database with initial data (languages, genders, native lan
 npm run seed:local
 ```
 
-The next step is to create an operator in the database. This operator will be used in the authenticated part of the app. Login to the [Adminer](http://localhost:8080/) and create an account in the `Operator` table with exactly the same data as `DEV_OPERATOR` in the `frontend\src\hooks\auth\auth-provider-dev.ts`. There is a tricky part with the operator ID (UUID version 4) - it has to be added manually, try this [UUID v4 generator](https://www.uuidgenerator.net/version4).
-
 ### Changing the database schema and applying database migrations
 `postgres` and `server` services must be up and running to apply changes from the `schema.prisma` file.
 

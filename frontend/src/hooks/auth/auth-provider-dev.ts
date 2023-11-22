@@ -7,10 +7,10 @@ import { IAuth, Operator } from "./AuthProvider";
 
 const SESSION_STORAGE_OPERATOR_KEY = "operator";
 const DEV_OPERATOR: IOperatorAuthorization = {
-  name: "Jiří",
-  surname: "Svoboda",
-  username: "987654",
-  email: "987654@muni.cz",
+  name: import.meta.env.VITE_OPERATOR_FIRSTNAME,
+  surname: import.meta.env.VITE_OPERATOR_SURNAME,
+  username: import.meta.env.VITE_OPERATOR_USERNAME,
+  email: import.meta.env.VITE_OPERATOR_EMAIL,
 };
 
 export const useAuthProviderDev = (): IAuth => {
