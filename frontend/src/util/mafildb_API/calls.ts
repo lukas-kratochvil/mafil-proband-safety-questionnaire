@@ -45,8 +45,7 @@ export const fetchProjects = async (): Promise<IProjectDTO[]> => {
     return fetchProjectsDev();
   }
 
-  // TODO: add correct MAFILDB endpoint
-  const { data } = await axiosConfig.mafildbApi.get<ProjectsResponse>("projects");
+  const { data } = await axiosConfig.mafildbApi.get<ProjectsResponse>("v2/projects");
   return data.results;
 };
 
@@ -55,8 +54,7 @@ export const fetchDevices = async (): Promise<IDeviceDTO[]> => {
     return fetchDevicesDev();
   }
 
-  // TODO: add correct MAFILDB endpoint
-  const { data } = await axiosConfig.mafildbApi.get<DevicesResponse>("devices");
+  const { data } = await axiosConfig.mafildbApi.get<DevicesResponse>("v2/devices");
   return data.results;
 };
 
