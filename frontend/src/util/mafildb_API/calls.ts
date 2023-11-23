@@ -1,3 +1,4 @@
+import { subDays } from "date-fns";
 import axiosConfig from "@app/axios-config";
 import { ValidatedFormData } from "@app/model/form";
 import {
@@ -188,9 +189,11 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
     return fetchRecentVisitsDev();
   }
 
+  // Fetch only visits created 3 days ago and newer
+  const params = { newer_than: subDays(new Date().setHours(0, 0, 0, 0), 3).valueOf() };
+
   const [{ data }, projects, devices] = await Promise.all([
-    // TODO: fetch only visits newer than specified timestamp
-    axiosConfig.mafildbApi.get<VisitsResponse>("v2/visits"),
+    axiosConfig.mafildbApi.get<VisitsResponse>("v2/visits", { params }),
     fetchProjects(),
     fetchDevices(),
   ]);
