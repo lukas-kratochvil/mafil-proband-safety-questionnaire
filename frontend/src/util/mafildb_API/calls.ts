@@ -46,7 +46,7 @@ export const fetchProjects = async (): Promise<IProjectDTO[]> => {
   }
 
   // TODO: add correct MAFILDB endpoint
-  const { data } = await axiosConfig.mafildbApi.get<ProjectsResponse>("projects.json");
+  const { data } = await axiosConfig.mafildbApi.get<ProjectsResponse>("projects");
   return data.results;
 };
 
@@ -56,7 +56,7 @@ export const fetchDevices = async (): Promise<IDeviceDTO[]> => {
   }
 
   // TODO: add correct MAFILDB endpoint
-  const { data } = await axiosConfig.mafildbApi.get<DevicesResponse>("devices.json");
+  const { data } = await axiosConfig.mafildbApi.get<DevicesResponse>("devices");
   return data.results;
 };
 
@@ -112,8 +112,7 @@ const createVisit = async (
     approval_date: approvedAt,
     disapproval_reason: visitFormData.disapprovalReason,
   };
-  // TODO: add correct MAFILDB endpoint
-  const { data } = await axiosConfig.mafildbApi.post<CreateVisitResponse>("visit", createData);
+  const { data } = await axiosConfig.mafildbApi.post<CreateVisitResponse>("v2/visits", createData);
   return data.visit_name;
 };
 
@@ -182,8 +181,7 @@ export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<stri
     file_extension: pdf.extension,
     file_content: pdf.base64Content,
   };
-  // TODO: add correct MAFILDB endpoint
-  const { data } = await axiosConfig.mafildbApi.post<AddPdfToVisitResponse>("files", addPdfToVisitData);
+  const { data } = await axiosConfig.mafildbApi.post<AddPdfToVisitResponse>(`v2/visits/${visitId}/files`, addPdfToVisitData);
   return data.file_id;
 };
 
@@ -193,8 +191,8 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
   }
 
   const [{ data }, projects, devices] = await Promise.all([
-    // TODO: add correct MAFILDB endpoint and fetch only visits newer than specified timestamp
-    axiosConfig.mafildbApi.get<VisitsResponse>("visits.json"),
+    // TODO: fetch only visits newer than specified timestamp
+    axiosConfig.mafildbApi.get<VisitsResponse>("v2/visits"),
     fetchProjects(),
     fetchDevices(),
   ]);
@@ -238,11 +236,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
 };
 
 const fetchVisit = async (visitId: string): Promise<IVisitDTO | never> => {
-  const params = {
-    filter: { visit_name: visitId },
-  };
-  // TODO: add correct MAFILDB endpoint
-  const { data } = await axiosConfig.mafildbApi.get<VisitsResponse>("visits.json", { params });
+  const { data } = await axiosConfig.mafildbApi.get<VisitsResponse>(`v2/visits/${visitId}`);
 
   if (data.results.length !== 1) {
     throw new Error("Visit not found!");
@@ -302,14 +296,8 @@ export const fetchDuplicatedVisit = async (
 };
 
 const fetchVisitPDF = async (visitId: string): Promise<IVisitPdfDTO> => {
-  const params = {
-    filter: {
-      visit_name: visitId,
-      file_type: PDF_FILE_TYPE,
-    },
-  };
-  // TODO: correct the MAFILDB endpoint and response object type
-  const { data } = await axiosConfig.mafildbApi.get<VisitPdfResponse>("files.json", { params });
+  const params = { file_type: PDF_FILE_TYPE };
+  const { data } = await axiosConfig.mafildbApi.get<VisitPdfResponse>(`v2/visits/${visitId}/files`, { params });
   return data.file;
 };
 
@@ -341,7 +329,6 @@ export const updateVisitState = async (visitId: string, state: VisitState): Prom
     visit_name: visitId,
     state,
   };
-  // TODO: add correct MAFILDB endpoint
-  const { data } = await axiosConfig.mafildbApi.patch<UpdateVisitStateResponse>("visit", updateData);
+  const { data } = await axiosConfig.mafildbApi.patch<UpdateVisitStateResponse>(`v2/visits/${visitId}`, updateData);
   return data.visit_name;
 };
