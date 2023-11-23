@@ -12,7 +12,7 @@ import {
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n";
 import { IVisitDetail } from "@app/model/visit";
-import { fetchVisitDetail, updateVisitState } from "@app/util/mafildb_API/calls";
+import { fetchVisitDetail, updateVisitSignatureState } from "@app/util/mafildb_API/calls";
 import { VisitState } from "@app/util/mafildb_API/dto";
 import { getBackButtonProps, handleErrorsWithToast, IButtonProps } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
@@ -84,7 +84,7 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
               titleLocalizationKey: "visitDetailPage.buttons.downloadPDFAndPhysicallySign",
               onClick: async () => {
                 downloadPdf(visitDetail.pdfName, visitDetail.pdfContent);
-                await updateVisitState(visitDetail.visitId, VisitState.FOR_SIGNATURE_PHYSICALLY);
+                await updateVisitSignatureState(visitDetail.visitId, VisitState.FOR_SIGNATURE_PHYSICALLY);
                 void queryClient.invalidateQueries({
                   queryKey: getVisitDetailQueryKey(visitDetail.visitId),
                   exact: true,
@@ -94,7 +94,7 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
             {
               titleLocalizationKey: "visitDetailPage.buttons.signElectronically",
               onClick: async () => {
-                await updateVisitState(visitDetail.visitId, VisitState.FOR_SIGNATURE_ELECTRONICALLY);
+                await updateVisitSignatureState(visitDetail.visitId, VisitState.FOR_SIGNATURE_ELECTRONICALLY);
               },
               disabled: true,
             },
@@ -104,7 +104,7 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
         {
           titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
           onClick: async () => {
-            await updateVisitState(visitDetail.visitId, VisitState.SIGNED_PHYSICALLY);
+            await updateVisitSignatureState(visitDetail.visitId, VisitState.SIGNED_PHYSICALLY);
             void queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitDetail.visitId), exact: true });
           },
         },
@@ -114,7 +114,7 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
         {
           titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
           onClick: async () => {
-            await updateVisitState(visitDetail.visitId, VisitState.SIGNED_ELECTRONICALLY);
+            await updateVisitSignatureState(visitDetail.visitId, VisitState.SIGNED_ELECTRONICALLY);
             void queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitDetail.visitId), exact: true });
           },
         },

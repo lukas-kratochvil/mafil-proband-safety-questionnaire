@@ -320,7 +320,7 @@ export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVi
   };
 };
 
-export const updateVisitState = async (visitId: string, state: VisitState): Promise<string | never> => {
+export const updateVisitSignatureState = async (visitId: string, state: VisitState): Promise<string | never> => {
   if (import.meta.env.DEV) {
     return updateVisitStateDev(visitId, state);
   }
