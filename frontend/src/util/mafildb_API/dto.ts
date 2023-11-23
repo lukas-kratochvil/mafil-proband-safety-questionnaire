@@ -65,11 +65,11 @@ export type IUpdateVisitStateInput = Pick<IVisitDTO, "visit_name" | "state">;
 
 type IVisitFileType = "REGISTRATION_PDF";
 
-export type IAddPdfToVisitInput = Pick<IVisitDTO, "visit_name"> & {
+export type IAddPdfToVisitInput = {
   file_type: IVisitFileType;
-  file_name: string;
-  file_extension: string;
-  file_content: string; // Base64 encoded PDF content
+  name: string;
+  mime_type: string;
+  content: string; // Base64 encoded PDF content
 };
 
-export type IVisitPdfDTO = Pick<IAddPdfToVisitInput, "file_name" | "file_content">;
+export type IVisitPdfDTO = Pick<IAddPdfToVisitInput, "name" | "content">;

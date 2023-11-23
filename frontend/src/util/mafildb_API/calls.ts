@@ -174,13 +174,15 @@ export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<stri
   }
 
   const addPdfToVisitData: IAddPdfToVisitInput = {
-    visit_name: visitId,
     file_type: "REGISTRATION_PDF",
-    file_name: pdf.name,
-    file_extension: pdf.extension,
-    file_content: pdf.base64Content,
+    name: pdf.name,
+    mime_type: "application/pdf",
+    content: pdf.base64Content,
   };
-  const { data } = await axiosConfig.mafildbApi.post<AddPdfToVisitResponse>(`v2/visits/${visitId}/files`, addPdfToVisitData);
+  const { data } = await axiosConfig.mafildbApi.post<AddPdfToVisitResponse>(
+    `v2/visits/${visitId}/files`,
+    addPdfToVisitData
+  );
   return data.file_id;
 };
 
@@ -316,8 +318,8 @@ export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVi
     visitId: visit.visit_name,
     isPhantom: visit.is_phantom,
     state: visit.state,
-    pdfName: `${visitPDF.file_name}.pdf`,
-    pdfContent: visitPDF.file_content,
+    pdfName: `${visitPDF.name}.pdf`,
+    pdfContent: visitPDF.content,
   };
 };
 
