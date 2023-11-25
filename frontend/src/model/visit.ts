@@ -59,7 +59,11 @@ export interface IDuplicatedVisitIncludingQuestions
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
 }
 
+export interface IVisitDetailPDF {
+  name: string; // also contains extension, for example: my_doc.pdf
+  content: string; // Base64 encoded PDF content
+}
+
 export interface IVisitDetail extends Pick<IVisit, "visitId" | "state" | "isPhantom"> {
-  pdfName: string;
-  pdfContent: string; // Base64 encoded PDF content
+  pdf: IVisitDetailPDF;
 }

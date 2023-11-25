@@ -14,8 +14,10 @@ const defaultVisit: IVisitDetail = {
   visitId: "VisitId1",
   state: VisitState.APPROVED,
   isPhantom: false,
-  pdfName: "pdf_name",
-  pdfContent: PDF_CONTENT,
+  pdf: {
+    name: "pdf_name",
+    content: PDF_CONTENT,
+  },
 };
 
 //----------------------------------------------------------------------

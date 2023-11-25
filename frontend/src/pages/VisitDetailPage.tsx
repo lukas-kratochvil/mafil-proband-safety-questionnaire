@@ -11,7 +11,7 @@ import {
 } from "@app/components/informative/ColoredInfoStripe";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n";
-import { IVisitDetail } from "@app/model/visit";
+import { IVisitDetail, IVisitDetailPDF } from "@app/model/visit";
 import { fetchVisitDetail, updateVisitSignatureState } from "@app/util/mafildb_API/calls";
 import { VisitState } from "@app/util/mafildb_API/dto";
 import { getBackButtonProps, handleErrorsWithToast, IButtonProps } from "@app/util/utils";
@@ -57,12 +57,12 @@ const getColoredInfoStripe = (visitDetail: IVisitDetail): IColoredInfoStripeProp
   }
 };
 
-const createBase64EncodedPdfDataUrl = (base64PdfContent: string) => `data:application/pdf;base64,${base64PdfContent}`;
+const createBase64EncodedPdfDataUrl = (pdf: IVisitDetailPDF) => `data:application/pdf;base64,${pdf.content}`;
 
-const downloadPdf = (pdfName: string, base64PdfContent: string): void => {
+const downloadPdf = (pdf: IVisitDetailPDF): void => {
   const downloadLink = document.createElement("a");
-  downloadLink.href = createBase64EncodedPdfDataUrl(base64PdfContent);
-  downloadLink.download = pdfName;
+  downloadLink.href = createBase64EncodedPdfDataUrl(pdf);
+  downloadLink.download = pdf.name;
   downloadLink.style.display = "none";
   document.body.appendChild(downloadLink);
   downloadLink.click();
@@ -76,14 +76,14 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
         ? [
             {
               titleLocalizationKey: "visitDetailPage.buttons.downloadPDF",
-              onClick: async () => downloadPdf(visitDetail.pdfName, visitDetail.pdfContent),
+              onClick: async () => downloadPdf(visitDetail.pdf),
             },
           ]
         : [
             {
               titleLocalizationKey: "visitDetailPage.buttons.downloadPDFAndPhysicallySign",
               onClick: async () => {
-                downloadPdf(visitDetail.pdfName, visitDetail.pdfContent);
+                downloadPdf(visitDetail.pdf);
                 await updateVisitSignatureState(visitDetail.visitId, VisitState.FOR_SIGNATURE_PHYSICALLY);
                 void queryClient.invalidateQueries({
                   queryKey: getVisitDetailQueryKey(visitDetail.visitId),
@@ -124,7 +124,7 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
       return [
         {
           titleLocalizationKey: "visitDetailPage.buttons.downloadPDF",
-          onClick: async () => downloadPdf(visitDetail.pdfName, visitDetail.pdfContent),
+          onClick: async () => downloadPdf(visitDetail.pdf),
         },
       ];
     default:
@@ -190,7 +190,7 @@ const VisitDetailPage = () => {
         >
           {coloredInfoStripe && <ColoredInfoStripe {...coloredInfoStripe} />}
           <iframe
-            src={`${createBase64EncodedPdfDataUrl(visitDetail.pdfContent)}#view=fitH`}
+            src={`${createBase64EncodedPdfDataUrl(visitDetail.pdf)}#view=fitH`}
             title="Visit detail"
             height="770px"
             width="100%"

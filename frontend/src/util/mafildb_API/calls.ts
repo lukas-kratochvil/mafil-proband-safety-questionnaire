@@ -318,8 +318,10 @@ export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVi
     visitId: visit.visit_name,
     isPhantom: visit.is_phantom,
     state: visit.state,
-    pdfName: `${visitPDF.name}.pdf`,
-    pdfContent: visitPDF.content,
+    pdf: {
+      name: `${visitPDF.name}.pdf`,
+      content: visitPDF.content,
+    },
   };
 };
 
