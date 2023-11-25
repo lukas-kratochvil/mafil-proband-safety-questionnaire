@@ -50,7 +50,9 @@ export const createVisitDev = async (
   return dummyVisits[dummyVisits.length - 1].visit_name;
 };
 
-export const addPdfToVisitDev = async (visitId: string): Promise<string> => `file_ID${visitId}`;
+export const addPdfToVisitDev = async (): Promise<void> => {
+  /* do nothing */
+};
 
 export const fetchRecentVisitsDev = async (): Promise<IRecentVisitsTableVisit[]> => {
   const [projects, devices, finalizer] = await Promise.all([

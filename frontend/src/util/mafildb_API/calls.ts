@@ -168,9 +168,9 @@ export const createPhantomVisit = async (
   finalizedAt: Date | undefined
 ): Promise<string | never> => createVisit(visitFormData, VisitState.APPROVED, true, finalizerUsername, finalizedAt);
 
-export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<string> => {
+export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<void> => {
   if (import.meta.env.DEV) {
-    return addPdfToVisitDev(visitId);
+    return addPdfToVisitDev();
   }
 
   const addPdfToVisitData: IAddPdfToVisitInput = {
@@ -179,11 +179,8 @@ export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<stri
     mime_type: "application/pdf",
     content: pdf.content,
   };
-  const { data } = await axiosConfig.mafildbApi.post<AddPdfToVisitResponse>(
-    `v2/visits/${visitId}/files`,
-    addPdfToVisitData
-  );
-  return data.file_id;
+  await axiosConfig.mafildbApi.post<AddPdfToVisitResponse>(`v2/visits/${visitId}/files`, addPdfToVisitData);
+  return undefined;
 };
 
 export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> => {
