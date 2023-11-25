@@ -67,7 +67,7 @@ const initialDummyVisit: IVisitDTO = {
   visit_name: generateVisitId(),
   state: VisitState.APPROVED,
   is_phantom: false,
-  proband_language_code: "cs",
+  preferred_language_id: "cs",
   project_uuid: projectsDev[0].uuid,
   device_id: devicesDev[0].id,
   measurement_date: new Date(),

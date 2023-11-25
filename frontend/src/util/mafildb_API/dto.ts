@@ -30,7 +30,7 @@ interface IAnswerDTO {
 export interface ICreateVisitInput {
   state: VisitState;
   is_phantom: boolean;
-  proband_language_code: ProbandVisitLanguageCode;
+  preferred_language_id: ProbandVisitLanguageCode;
   project_uuid: string;
   device_id: string;
   measurement_date: Date;
