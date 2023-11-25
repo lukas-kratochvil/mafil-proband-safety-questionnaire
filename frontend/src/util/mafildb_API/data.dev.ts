@@ -70,7 +70,6 @@ const initialDummyVisit: IVisitDTO = {
   preferred_language_id: "cs",
   project_uuid: projectsDev[0].uuid,
   device_id: devicesDev[0].id,
-  measurement_date: new Date(),
   finalizer_username: import.meta.env.VITE_OPERATOR_USERNAME,
   name: "Karel",
   surname: "Novák",

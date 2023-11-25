@@ -30,12 +30,12 @@ interface IAnswerDTO {
 export interface ICreateVisitInput {
   state: VisitState;
   is_phantom: boolean;
-  preferred_language_id: ProbandVisitLanguageCode;
+  date: Date;
   project_uuid: string;
   device_id: string;
-  measurement_date: Date;
   name: string;
   surname: string;
+  preferred_language_id: ProbandVisitLanguageCode;
   personal_id: string;
   birthdate: Date;
   gender_code: string;
@@ -57,7 +57,6 @@ export interface ICreateVisitInput {
 export interface IVisitDTO
   extends Omit<ICreateVisitInput, "finalization_date" | "approver_username" | "approval_date" | "disapproval_reason"> {
   visit_name: string;
-  date: Date;
   created: Date;
 }
 
