@@ -54,8 +54,7 @@ export interface ICreateVisitInput {
   registration_disapprove_reason?: string;
 }
 
-export interface IVisitDTO
-  extends Omit<ICreateVisitInput, "registration_finalize_date" | "registration_approve_user" | "registration_approve_date" | "registration_disapprove_reason"> {
+export interface IVisitDTO extends ICreateVisitInput {
   visit_name: string;
   created: Date;
 }

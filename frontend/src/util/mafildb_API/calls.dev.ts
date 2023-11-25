@@ -30,6 +30,7 @@ export const createVisitDev = async (
     is_phantom: isPhantom,
     preferred_language_id: probandLanguageCode ?? "",
     registration_finalize_user: finalizerUsername,
+    registration_finalize_date: new Date(),
     project_uuid: visitFormData.project?.uuid ?? "",
     device_id: visitFormData.device?.id ?? "",
     personal_id: visitFormData.personalId,

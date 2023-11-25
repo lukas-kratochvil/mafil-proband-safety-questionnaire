@@ -71,6 +71,7 @@ const initialDummyVisit: IVisitDTO = {
   project_uuid: projectsDev[0].uuid,
   device_id: devicesDev[0].id,
   registration_finalize_user: import.meta.env.VITE_OPERATOR_USERNAME,
+  registration_finalize_date: new Date(1663390000000),
   name: "Karel",
   surname: "Novák",
   personal_id: "123456789",
