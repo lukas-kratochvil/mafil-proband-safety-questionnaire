@@ -33,11 +33,11 @@ export interface ICreateVisitInput {
   proband_language_code: ProbandVisitLanguageCode;
   project_uuid: string;
   device_id: string;
-  measurement_date: Date; // TODO: not sure if this attribute is string or Date
+  measurement_date: Date;
   name: string;
   surname: string;
   personal_id: string;
-  birthdate: Date; // TODO: not sure if this attribute is string or Date
+  birthdate: Date;
   gender_code: string;
   native_language_code: string;
   height_cm: number;
@@ -57,8 +57,8 @@ export interface ICreateVisitInput {
 export interface IVisitDTO
   extends Omit<ICreateVisitInput, "finalization_date" | "approver_username" | "approval_date" | "disapproval_reason"> {
   visit_name: string;
-  date: Date; // TODO: not sure if this attribute is string or Date
-  created: Date; // TODO: not sure if this attribute is string or Date
+  date: Date;
+  created: Date;
 }
 
 export type IUpdateVisitStateInput = Pick<IVisitDTO, "visit_name" | "state">;
