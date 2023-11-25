@@ -9,5 +9,5 @@ export class PDFEntity {
 
   @IsString()
   @Field()
-  base64Content: string;
+  content: string; // Base64 encoded PDF content
 }

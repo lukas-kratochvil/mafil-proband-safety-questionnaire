@@ -303,7 +303,7 @@ export class PDFService {
 
     const pdf = new PDFEntity();
     pdf.name = name;
-    pdf.base64Content = base64Content;
+    pdf.content = base64Content;
     return pdf;
   }
 

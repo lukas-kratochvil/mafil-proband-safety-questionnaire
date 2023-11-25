@@ -336,7 +336,7 @@ export const GENERATE_PDF = gql`
       answers: $answers
     ) {
       name
-      base64Content
+      content
     }
   }
 `;
