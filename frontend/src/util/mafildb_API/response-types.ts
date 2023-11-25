@@ -1,4 +1,4 @@
-import { IDeviceDTO, IProjectDTO, IVisitDTO, IVisitPdfDTO } from "./dto";
+import { IDeviceDTO, IProjectDTO, IVisitDTO, IVisitFileDTO } from "./dto";
 
 // TODO: correct MAFILDB response types
 
@@ -26,6 +26,6 @@ export type AddPdfToVisitResponse = {
   file_id: string;
 };
 
-export type VisitPdfResponse = {
-  file: IVisitPdfDTO;
+export type VisitFilesResponse = {
+  files: IVisitFileDTO[];
 };

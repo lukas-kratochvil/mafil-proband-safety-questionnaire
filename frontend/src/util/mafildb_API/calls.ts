@@ -26,7 +26,7 @@ import {
   IProjectDTO,
   IUpdateVisitStateInput,
   IVisitDTO,
-  IVisitPdfDTO,
+  IVisitFileDTO,
   VisitState,
 } from "./dto";
 import {
@@ -35,7 +35,7 @@ import {
   DevicesResponse,
   ProjectsResponse,
   UpdateVisitStateResponse,
-  VisitPdfResponse,
+  VisitFilesResponse,
   VisitsResponse,
 } from "./response-types";
 
@@ -298,10 +298,17 @@ export const fetchDuplicatedVisit = async (
   };
 };
 
-const fetchVisitPDF = async (visitId: string): Promise<IVisitPdfDTO> => {
+const fetchVisitPDF = async (visitId: string): Promise<IVisitFileDTO> => {
   const params = { file_type: PDF_FILE_TYPE };
-  const { data } = await axiosConfig.mafildbApi.get<VisitPdfResponse>(`v2/visits/${visitId}/files`, { params });
-  return data.file;
+  // TODO: use query filter on file_type
+  const { data } = await axiosConfig.mafildbApi.get<VisitFilesResponse>(`v2/visits/${visitId}/files`, { params });
+  const pdf = data.files.find((file) => file.file_type.includes("reg_form"));
+
+  if (pdf === undefined) {
+    throw new Error("Visit PDF not provided!");
+  }
+
+  return pdf;
 };
 
 export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVisitDetail | never> => {

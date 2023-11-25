@@ -63,16 +63,14 @@ export interface IVisitDTO
 
 export type IUpdateVisitStateInput = Pick<IVisitDTO, "visit_name" | "state">;
 
-type IVisitFileType = "REGISTRATION_PDF";
-
 export type IAddPdfToVisitInput = {
-  file_type: IVisitFileType;
+  file_type: string;
   name: string; // also contains extension, for example: my_doc.pdf
   mime_type: string;
   content: string; // Base64 encoded PDF content
 };
 
-export type IVisitPdfDTO = IAddPdfToVisitInput & {
+export type IVisitFileDTO = IAddPdfToVisitInput & {
   id: number;
   uploaded: Date;
-}
+};
