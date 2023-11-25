@@ -40,8 +40,8 @@ export interface ICreateVisitInput {
   birthdate: Date;
   gender_code: string;
   native_language_code: string;
-  height_cm: number;
-  weight_kg: number;
+  height: number;
+  weight: number;
   handedness_code: string;
   visual_correction_dioptre: number;
   email: string;
