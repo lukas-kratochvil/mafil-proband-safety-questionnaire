@@ -29,7 +29,7 @@ export const createVisitDev = async (
     created: new Date(),
     is_phantom: isPhantom,
     preferred_language_id: probandLanguageCode ?? "",
-    finalizer_username: finalizerUsername,
+    registration_finalize_user: finalizerUsername,
     project_uuid: visitFormData.project?.uuid ?? "",
     device_id: visitFormData.device?.id ?? "",
     personal_id: visitFormData.personalId,
@@ -40,7 +40,7 @@ export const createVisitDev = async (
     weight: visitFormData.weightKg,
     visual_correction_dioptre: visitFormData.visualCorrectionDioptre,
     handedness_code: visitFormData.handedness.code,
-    answers: visitFormData.answers.map((answer) => ({
+    registration_answers: visitFormData.answers.map((answer) => ({
       question_id: answer.questionId,
       answer: answer.answer,
       comment: answer.comment,
@@ -57,7 +57,7 @@ export const fetchRecentVisitsDev = async (): Promise<IRecentVisitsTableVisit[]>
   const [projects, devices, finalizer] = await Promise.all([
     fetchProjectsDev(),
     fetchDevicesDev(),
-    fetchOperator(dummyVisits[0].finalizer_username),
+    fetchOperator(dummyVisits[0].registration_finalize_user),
   ]);
   const visits: IRecentVisitsTableVisit[] = [];
   dummyVisits.forEach((visit) => {
@@ -79,7 +79,7 @@ export const fetchRecentVisitsDev = async (): Promise<IRecentVisitsTableVisit[]>
         heightCm: visit.height,
         weightKg: visit.weight,
         visualCorrectionDioptre: visit.visual_correction_dioptre,
-        answers: visit.answers.map((answer) => ({
+        answers: visit.registration_answers.map((answer) => ({
           questionId: answer.question_id,
           answer: answer.answer,
           comment: answer.comment,
@@ -102,7 +102,7 @@ export const fetchDuplicatedVisitDev = async (visitId: string): Promise<IDuplica
     fetchNativeLanguage(visit.native_language_code),
     fetchHandedness(visit.handedness_code),
     Promise.all(
-      visit.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
+      visit.registration_answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
         const question = await fetchQuestion(answer.question_id);
         return {
           answer: answer.answer,

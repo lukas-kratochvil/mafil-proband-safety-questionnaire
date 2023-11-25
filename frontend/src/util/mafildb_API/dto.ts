@@ -46,16 +46,16 @@ export interface ICreateVisitInput {
   visual_correction_dioptre: number;
   email: string;
   phone: string;
-  answers: IAnswerDTO[];
-  finalizer_username: string;
-  finalization_date: Date;
-  approver_username?: string;
-  approval_date?: Date;
-  disapproval_reason?: string;
+  registration_answers: IAnswerDTO[];
+  registration_finalize_user: string;
+  registration_finalize_date: Date;
+  registration_approve_user?: string;
+  registration_approve_date?: Date;
+  registration_disapprove_reason?: string;
 }
 
 export interface IVisitDTO
-  extends Omit<ICreateVisitInput, "finalization_date" | "approver_username" | "approval_date" | "disapproval_reason"> {
+  extends Omit<ICreateVisitInput, "registration_finalize_date" | "registration_approve_user" | "registration_approve_date" | "registration_disapprove_reason"> {
   visit_name: string;
   created: Date;
 }

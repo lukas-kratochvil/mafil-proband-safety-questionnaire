@@ -70,7 +70,7 @@ const initialDummyVisit: IVisitDTO = {
   preferred_language_id: "cs",
   project_uuid: projectsDev[0].uuid,
   device_id: devicesDev[0].id,
-  finalizer_username: import.meta.env.VITE_OPERATOR_USERNAME,
+  registration_finalize_user: import.meta.env.VITE_OPERATOR_USERNAME,
   name: "Karel",
   surname: "Novák",
   personal_id: "123456789",
@@ -83,7 +83,7 @@ const initialDummyVisit: IVisitDTO = {
   handedness_code: "r",
   email: "karel.novak@email.cz",
   phone: "123456789",
-  answers: [],
+  registration_answers: [],
 };
 
 export const dummyVisits: IVisitDTO[] = [

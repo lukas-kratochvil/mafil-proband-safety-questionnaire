@@ -100,16 +100,16 @@ const createVisit = async (
     visual_correction_dioptre: visitFormData.visualCorrectionDioptre,
     email: visitFormData.email,
     phone: visitFormData.phone,
-    answers: visitFormData.answers.map((answer) => ({
+    registration_answers: visitFormData.answers.map((answer) => ({
       question_id: answer.questionId,
       answer: answer.answer,
       comment: answer.comment,
     })),
-    finalizer_username: finalizerUsername,
-    finalization_date: finalizedAt,
-    approver_username: approverUsername ?? "",
-    approval_date: approvedAt,
-    disapproval_reason: visitFormData.disapprovalReason,
+    registration_finalize_user: finalizerUsername,
+    registration_finalize_date: finalizedAt,
+    registration_approve_user: approverUsername ?? "",
+    registration_approve_date: approvedAt,
+    registration_disapprove_reason: visitFormData.disapprovalReason,
   };
   const { data } = await axiosConfig.mafildbApi.post<CreateVisitResponse>("v2/visits", createData);
   return data.visit_name;
@@ -203,7 +203,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
     let finalizer: IOperatorDTO | undefined;
 
     try {
-      finalizer = await fetchOperator(visit.finalizer_username);
+      finalizer = await fetchOperator(visit.registration_finalize_user);
     } catch (e) {
       // TODO: what to do when finalizer not found? Skip the visit?
       return;
@@ -224,7 +224,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
         heightCm: visit.height,
         weightKg: visit.weight,
         visualCorrectionDioptre: visit.visual_correction_dioptre,
-        answers: visit.answers.map((answer) => ({
+        answers: visit.registration_answers.map((answer) => ({
           questionId: answer.question_id,
           answer: answer.answer,
           comment: answer.comment,
@@ -262,7 +262,7 @@ export const fetchDuplicatedVisit = async (
     fetchNativeLanguage(visit.native_language_code),
     fetchHandedness(visit.handedness_code),
     Promise.all(
-      visit.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
+      visit.registration_answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
         const question = await fetchQuestion(answer.question_id);
         return {
           answer: answer.answer,
