@@ -5,11 +5,7 @@ import { IsString } from "class-validator";
 export class PDFEntity {
   @IsString()
   @Field()
-  name: string;
-
-  @IsString()
-  @Field()
-  extension: string;
+  name: string; // also contains extension, for example: my_doc.pdf
 
   @IsString()
   @Field()

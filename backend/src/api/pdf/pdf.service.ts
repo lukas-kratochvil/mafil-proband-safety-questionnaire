@@ -30,7 +30,7 @@ export class PDFService {
   }
 
   private createPDFName(generatePDFInput: GeneratePDFArgs): string {
-    return `${generatePDFInput.visitId}_${generatePDFInput.surname}_${generatePDFInput.name}`;
+    return `${generatePDFInput.visitId}_${generatePDFInput.surname}_${generatePDFInput.name}.pdf`;
   }
 
   private async getPhantomPDFData(
@@ -303,7 +303,6 @@ export class PDFService {
 
     const pdf = new PDFEntity();
     pdf.name = name;
-    pdf.extension = "pdf";
     pdf.base64Content = base64Content;
     return pdf;
   }

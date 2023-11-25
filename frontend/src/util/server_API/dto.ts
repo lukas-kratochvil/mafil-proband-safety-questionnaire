@@ -204,8 +204,7 @@ export interface IUpdateVisitFormStateInput {
 }
 
 export interface IPdfDTO {
-  name: string;
-  extension: string;
+  name: string; // also contains extension, for example: my_doc.pdf
   base64Content: string;
 }
 
