@@ -27,6 +27,7 @@ import {
   IUpdateVisitStateInput,
   IVisitDTO,
   IVisitFileDTO,
+  VisitFileType,
   VisitState,
 } from "./dto";
 import {
@@ -38,8 +39,6 @@ import {
   VisitFilesResponse,
   VisitsResponse,
 } from "./response-types";
-
-const PDF_FILE_TYPE = "REGISTRATION_PDF";
 
 export const fetchProjects = async (): Promise<IProjectDTO[]> => {
   if (import.meta.env.DEV) {
@@ -174,7 +173,7 @@ export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<void
   }
 
   const addPdfToVisitData: IAddPdfToVisitInput = {
-    file_type: "REGISTRATION_PDF",
+    file_type: "reg_form",
     name: pdf.name,
     mime_type: "application/pdf",
     content: pdf.content,
@@ -296,8 +295,10 @@ export const fetchDuplicatedVisit = async (
 };
 
 const fetchVisitPDF = async (visitId: string): Promise<IVisitFileDTO> => {
-  const params = { file_type: PDF_FILE_TYPE };
-  // TODO: use query filter on file_type
+  type VisitFilesParams = {
+    file_type: VisitFileType;
+  }
+  const params: VisitFilesParams = { file_type: "reg_form" };
   const { data } = await axiosConfig.mafildbApi.get<VisitFilesResponse>(`v2/visits/${visitId}/files`, { params });
   const pdf = data.files.find((file) => file.file_type.includes("reg_form"));
 

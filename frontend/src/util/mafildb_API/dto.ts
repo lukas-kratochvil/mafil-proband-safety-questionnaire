@@ -61,8 +61,10 @@ export interface IVisitDTO extends ICreateVisitInput {
 
 export type IUpdateVisitStateInput = Pick<IVisitDTO, "visit_name" | "state">;
 
+export type VisitFileType = "reg_form";
+
 export type IAddPdfToVisitInput = {
-  file_type: string;
+  file_type: VisitFileType;
   name: string; // also contains extension, for example: my_doc.pdf
   mime_type: string;
   content: string; // Base64 encoded PDF content
