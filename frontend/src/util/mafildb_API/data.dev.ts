@@ -20,11 +20,11 @@ export const projectsDev: IProjectDTO[] = [
 
 export const devicesDev: IDeviceDTO[] = [
   {
-    id: "1",
+    id: 1,
     name: "Magnet 1",
   },
   {
-    id: "2",
+    id: 2,
     name: "Magnet 2",
   },
 ];

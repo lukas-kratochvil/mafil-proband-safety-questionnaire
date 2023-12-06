@@ -32,7 +32,7 @@ export const createVisitDev = async (
     registration_finalize_user: finalizerUsername,
     registration_finalize_date: new Date(),
     project_uuid: visitFormData.project?.uuid ?? "",
-    device_id: visitFormData.device?.id ?? "",
+    device_id: visitFormData.device?.id ?? 0,
     personal_id: visitFormData.personalId,
     birthdate: visitFormData.birthdate,
     gender_code: visitFormData.gender.code,

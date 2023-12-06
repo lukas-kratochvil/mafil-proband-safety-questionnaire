@@ -124,7 +124,7 @@ export interface IApprovalRoomTableVisitFormDTO extends IWaitingRoomTableVisitFo
   additionalInfo: {
     projectUuid: string;
     projectAcronym: string;
-    deviceId: string;
+    deviceId: number;
     deviceName: string;
     measuredAt: Date;
     finalizer: Pick<IOperatorDTO, "username">;
@@ -147,7 +147,7 @@ export interface IApprovalRoomVisitFormIncludingQuestionsDTO extends IApprovalRo
 type AdditionalInfo = {
   projectUuid: string;
   projectAcronym: string;
-  deviceId: string;
+  deviceId: number;
   deviceName: string;
   measuredAt: Date;
   finalizerId: string;

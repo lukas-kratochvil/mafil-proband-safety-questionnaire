@@ -190,7 +190,7 @@ export const WaitingRoomForm = () => {
     const modifiedFields: Partial<ValidatedFormData> = {
       ...(getModifiedFieldsOnly(initialFormData, data) ?? {}),
       device: {
-        id: data.device?.id ?? "",
+        id: data.device?.id ?? 0,
         name: data.device?.name ?? "",
       },
       project: {

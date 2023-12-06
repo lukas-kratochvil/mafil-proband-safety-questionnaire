@@ -443,7 +443,7 @@ export const createDuplicatedVisitFormForApproval = async (
       additionalInfo: {
         projectUuid: visitFormData.project?.uuid ?? "",
         projectAcronym: visitFormData.project?.acronym ?? "",
-        deviceId: visitFormData.device?.id ?? "",
+        deviceId: visitFormData.device?.id ?? 0,
         deviceName: visitFormData.device?.name ?? "",
         measuredAt: visitFormData.measuredAt ?? new Date(),
         finalizerId,
@@ -493,7 +493,7 @@ export const sendVisitFormForApproval = async (
       additionalInfo: {
         projectUuid: visitFormData.project?.uuid ?? "",
         projectAcronym: visitFormData.project?.acronym ?? "",
-        deviceId: visitFormData.device?.id ?? "",
+        deviceId: visitFormData.device?.id ?? 0,
         deviceName: visitFormData.device?.name ?? "",
         measuredAt: visitFormData.measuredAt ?? new Date(),
         finalizedAt: new Date(),

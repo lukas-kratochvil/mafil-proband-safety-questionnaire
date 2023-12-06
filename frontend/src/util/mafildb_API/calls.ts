@@ -97,7 +97,7 @@ const createVisit = async (
     is_phantom: isPhantom,
     preferred_language_id: probandLanguageCode ?? "",
     project_uuid: visitFormData.project?.uuid ?? "",
-    device_id: visitFormData.device?.id ?? "",
+    device_id: visitFormData.device?.id ?? 0,
     date: visitFormData.measuredAt ?? new Date(),
     name: visitFormData.name,
     surname: visitFormData.surname,

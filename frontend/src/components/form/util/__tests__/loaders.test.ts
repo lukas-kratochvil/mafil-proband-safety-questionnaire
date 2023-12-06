@@ -56,7 +56,7 @@ const approvalRoomVisitForm: IApprovalRoomVisitFormIncludingQuestionsDTO = {
   additionalInfo: {
     projectUuid: "1552314",
     projectAcronym: "Proj1",
-    deviceId: "6552515",
+    deviceId: 6552515,
     deviceName: "M1",
     measuredAt: new Date(),
     finalizer: operatorMRDev,

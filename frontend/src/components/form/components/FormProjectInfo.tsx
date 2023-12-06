@@ -41,7 +41,7 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
     if (devices.data !== undefined) {
       const deviceId = getValues("device.id");
 
-      if (deviceId !== null && deviceId !== undefined && deviceId !== "") {
+      if (deviceId !== null && deviceId !== undefined) {
         const selectedDevice = devices.data.find((device) => device.id === deviceId) ?? null;
         setValue("device", selectedDevice, { shouldTouch: true });
       }

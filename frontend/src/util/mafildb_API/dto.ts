@@ -8,7 +8,7 @@ export interface IProjectDTO {
 }
 
 export interface IDeviceDTO {
-  id: string;
+  id: number;
   name: string;
 }
 
@@ -32,7 +32,7 @@ export interface ICreateVisitInput {
   is_phantom: boolean;
   date: Date;
   project_uuid: string;
-  device_id: string;
+  device_id: number;
   name: string;
   surname: string;
   preferred_language_id: ProbandVisitLanguageCode;
