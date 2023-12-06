@@ -2,13 +2,26 @@ import { IAddPdfToVisitInput, IDeviceDTO, IProjectDTO, IVisitDTO, IVisitFileDTO 
 
 // TODO: correct MAFILDB response types
 
-export type ProjectsResponse = {
-  results: IProjectDTO[];
+export const MAFILDB_RESPONSE_ERROR_ATTR = "detail";
+
+type MafildbErrorResponse = {
+  [key in typeof MAFILDB_RESPONSE_ERROR_ATTR]: string;
 };
 
-export type DevicesResponse = {
-  results: IDeviceDTO[];
+type MafildbGetSuccessResponse<T> = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: T[];
 };
+
+// Generic MAFILDB API response types
+type MafildbGetManyResponse<T> = MafildbGetSuccessResponse<T> | MafildbErrorResponse;
+type MafildbGetOneResponse<T> = T | MafildbErrorResponse;
+
+export type ProjectsResponse = MafildbGetManyResponse<IProjectDTO>;
+
+export type DevicesResponse = MafildbGetManyResponse<IDeviceDTO>;
 
 export type CreateVisitResponse = {
   visit_name: string;
@@ -18,15 +31,13 @@ export type UpdateVisitStateResponse = {
   visit_name: string;
 };
 
-export type VisitsResponse = {
-  results: IVisitDTO[];
-};
+export type VisitsResponse = MafildbGetManyResponse<IVisitDTO>;
+
+export type VisitResponse = MafildbGetOneResponse<IVisitDTO>;
 
 export type AddPdfToVisitResponse = Pick<IAddPdfToVisitInput, "name" | "file_type" | "mime_type"> & {
   id: string;
   updated: Date;
 };
 
-export type VisitFilesResponse = {
-  files: IVisitFileDTO[];
-};
+export type VisitFilesResponse = MafildbGetManyResponse<IVisitFileDTO>;

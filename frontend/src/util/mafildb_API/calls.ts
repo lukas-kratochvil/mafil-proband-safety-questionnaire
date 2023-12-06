@@ -34,9 +34,11 @@ import {
   AddPdfToVisitResponse,
   CreateVisitResponse,
   DevicesResponse,
+  MAFILDB_RESPONSE_ERROR_ATTR,
   ProjectsResponse,
   UpdateVisitStateResponse,
   VisitFilesResponse,
+  VisitResponse,
   VisitsResponse,
 } from "./response-types";
 
@@ -46,6 +48,11 @@ export const fetchProjects = async (): Promise<IProjectDTO[]> => {
   }
 
   const { data } = await axiosConfig.mafildbApi.get<ProjectsResponse>("v2/projects");
+
+  if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
+    throw new Error(data.detail);
+  }
+
   return data.results;
 };
 
@@ -55,6 +62,11 @@ export const fetchDevices = async (): Promise<IDeviceDTO[]> => {
   }
 
   const { data } = await axiosConfig.mafildbApi.get<DevicesResponse>("v2/devices");
+
+  if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
+    throw new Error(data.detail);
+  }
+
   return data.results;
 };
 
@@ -195,6 +207,11 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
     fetchProjects(),
     fetchDevices(),
   ]);
+
+  if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
+    throw new Error(data.detail);
+  }
+
   const visits: IRecentVisitsTableVisit[] = [];
   data.results.forEach(async (visit) => {
     const project = projects.find((proj) => proj.uuid === visit.project_uuid);
@@ -235,13 +252,13 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
 };
 
 const fetchVisit = async (visitId: string): Promise<IVisitDTO | never> => {
-  const { data } = await axiosConfig.mafildbApi.get<VisitsResponse>(`v2/visits/${visitId}`);
+  const { data } = await axiosConfig.mafildbApi.get<VisitResponse>(`v2/visits/${visitId}`);
 
-  if (data.results.length !== 1) {
-    throw new Error("Visit not found!");
+  if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
+    throw new Error(data.detail);
   }
 
-  return data.results[0];
+  return data;
 };
 
 export const fetchDuplicatedVisit = async (
@@ -300,7 +317,12 @@ const fetchVisitPDF = async (visitId: string): Promise<IVisitFileDTO> => {
   }
   const params: VisitFilesParams = { file_type: "reg_form" };
   const { data } = await axiosConfig.mafildbApi.get<VisitFilesResponse>(`v2/visits/${visitId}/files`, { params });
-  const pdf = data.files.find((file) => file.file_type.includes("reg_form"));
+
+  if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
+    throw new Error(data.detail);
+  }
+
+  const pdf = data.results.find((file) => file.file_type.includes("reg_form"));
 
   if (pdf === undefined) {
     throw new Error("Visit PDF not provided!");
