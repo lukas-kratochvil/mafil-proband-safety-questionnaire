@@ -139,7 +139,7 @@ Go into the `server` container terminal and in the `/usr/src/app/backend` direct
 npx prisma migrate dev --name what-has-changed
 ```
 
-This command will generate a new Prisma client code that corresponds to the current state of the `schema.prisma`.
+This command creates a new migration and also generates a new Prisma client code that corresponds to the current state of the `schema.prisma`.
 
 ### Useful tools
 * GraphQL playground to test the server GraphQL API: use `server` URL with the path `/graphql`

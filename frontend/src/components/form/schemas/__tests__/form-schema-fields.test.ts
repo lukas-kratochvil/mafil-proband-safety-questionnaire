@@ -50,6 +50,8 @@ describe("form schemas", () => {
       ["0", false],
       ["1", true],
       [" 1 ", true],
+      ["0,5", false],
+      ["0.5", false],
     ])("height cm: '%s' -> %s", (input: string, isValid: boolean) => {
       const schema = probandFormSchema.pick(["heightCm"]) as AnySchema;
       const toValidate = { heightCm: input };
@@ -62,6 +64,8 @@ describe("form schemas", () => {
       ["0", false],
       ["1", true],
       [" 1 ", true],
+      ["0,5", false],
+      ["0.5", false],
     ])("weight kg: '%s' -> %s", (input: string, isValid: boolean) => {
       const schema = probandFormSchema.pick(["weightKg"]) as AnySchema;
       const toValidate = { weightKg: input };

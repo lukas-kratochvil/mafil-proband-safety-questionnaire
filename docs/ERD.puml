@@ -41,8 +41,8 @@ entity VisitForm {
   * surname: string
   * personalId: string
   * birthdate: date
-  * heightCm: float
-  * weightKg: float
+  * heightCm: int
+  * weightKg: int
   * visualCorrectionDioptre: float
   email: string
   phone: string

@@ -34,10 +34,16 @@ export const probandFormSchema = object().shape(
     nativeLanguage: mixed<INativeLanguageDTO>().nullable().required("form.validation.required"),
     heightCm: number()
       .typeError("form.validation.notValid")
+      // integer() accepts integer numbers in decimal notation (will not throw an error), but converts them to integers
+      // for example: accepts '1.0' and converts it to '1'
+      .integer("form.validation.integer")
       .positive("form.validation.positive")
       .required("form.validation.required"),
     weightKg: number()
       .typeError("form.validation.notValid")
+      // integer() accepts integer numbers in decimal notation, but converts them to integers
+      // for example: accepts '1.0' and converts it to '1'
+      .integer("form.validation.integer")
       .positive("form.validation.positive")
       .required("form.validation.required"),
     handedness: mixed<IHandednessDTO>().nullable().required("form.validation.required"),

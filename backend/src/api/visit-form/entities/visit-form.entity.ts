@@ -1,4 +1,4 @@
-import { Field, Float, HideField, ObjectType, registerEnumType } from "@nestjs/graphql";
+import { Field, Float, HideField, Int, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { VisitForm, VisitFormState } from "@prisma/client";
 import {
   ArrayNotEmpty,
@@ -103,12 +103,12 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
 
   @IsNumber()
   @IsPositive()
-  @Field(() => Float)
+  @Field(() => Int)
   heightCm: number;
 
   @IsNumber()
   @IsPositive()
-  @Field(() => Float)
+  @Field(() => Int)
   weightKg: number;
 
   @IsNumber()

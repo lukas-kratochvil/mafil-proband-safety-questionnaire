@@ -57,8 +57,8 @@ model VisitForm {
   surname                 String         @db.VarChar(200)
   personalId              String         @db.VarChar(50)
   birthdate               DateTime
-  heightCm                Float
-  weightKg                Float
+  heightCm                Int            @db.SmallInt
+  weightKg                Int            @db.SmallInt
   visualCorrectionDioptre Float
   // Max email length: https://www.ietf.org/rfc/rfc2821.tx (RFC 2821)
   email                   String         @default("") @db.VarChar(320)
