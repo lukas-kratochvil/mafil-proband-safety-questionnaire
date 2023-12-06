@@ -66,9 +66,9 @@ entity AdditionalVisitFormInfo {
   * modifiedAt: date
   deletedAt: date
   ---
-  * projectId: UUID
+  * projectUuid: UUID
   * projectAcronym: string
-  * deviceId: UUID
+  * deviceId: int
   * deviceName: string
   * measuredAt: date
   * finalizedAt: date
