@@ -1,11 +1,12 @@
 import { IOption } from "@app/components/form/util/options";
-import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
+import { IDeviceDTO } from "@app/util/mafildb_API/dto";
 import {
   IGenderDTO,
   IHandednessDTO,
   INativeLanguageDTO,
   QuestionHiddenByGendersWithoutId,
 } from "../util/server_API/dto";
+import { IProject } from "./project";
 
 // Form fields having this data type are validated as numbers
 type TextFieldNumberInput = string | number;
@@ -30,7 +31,7 @@ export type FormQac = FormAnswer &
 
 export type FormPropType = {
   // Project info
-  project: IProjectDTO | null;
+  project: IProject | null;
   device: IDeviceDTO | null;
   measuredAt: Date | null;
 
@@ -67,7 +68,7 @@ export type ValidatedFormAnswer = {
 
 export type ValidatedFormData = {
   // Project info
-  project: IProjectDTO | null;
+  project: IProject | null;
   device: IDeviceDTO | null;
   measuredAt: Date | null;
 

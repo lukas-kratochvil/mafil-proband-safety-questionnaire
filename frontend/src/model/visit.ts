@@ -1,5 +1,5 @@
 import { LanguageCode } from "@app/i18n";
-import { IDeviceDTO, IProjectDTO, ISubjectDTO, VisitState } from "@app/util/mafildb_API/dto";
+import { IDeviceDTO, ISubjectDTO, VisitState } from "@app/util/mafildb_API/dto";
 import {
   IGenderDTO,
   IHandednessDTO,
@@ -8,6 +8,7 @@ import {
   VisitFormAnswerIncludingQuestion,
 } from "../util/server_API/dto";
 import { AnswerOption } from "./form";
+import { IProject } from "./project";
 
 export enum VisualCorrection {
   YES,
@@ -31,7 +32,7 @@ interface IVisit {
   isPhantom: boolean;
   measurementDate: Date;
   subject: ISubjectDTO;
-  project: IProjectDTO;
+  project: IProject;
   device: IDeviceDTO;
   heightCm: number;
   weightKg: number;
@@ -41,7 +42,7 @@ interface IVisit {
 }
 
 // TODO: correct attributes
-export type IRecentVisitsTableVisit = IVisit
+export type IRecentVisitsTableVisit = IVisit;
 
 // TODO: correct attributes
 export interface IDuplicatedVisitIncludingQuestions extends Omit<IVisit, "created" | "answers" | "finalizer"> {

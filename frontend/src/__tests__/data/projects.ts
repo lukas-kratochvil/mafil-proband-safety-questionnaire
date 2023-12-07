@@ -1,6 +1,6 @@
-import { IProjectDTO } from "@app/util/mafildb_API/dto";
+import { IProject } from "@app/model/project";
 
-export const projectsTest: IProjectDTO[] = [
+export const projectsTest: IProject[] = [
   {
     uuid: "1",
     name: "Projekt 1",

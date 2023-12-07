@@ -1,7 +1,7 @@
 import { updatedDiff } from "deep-object-diff";
 import { Operator } from "@app/hooks/auth/AuthProvider";
 import { AnswerOption, FormPropType, ValidatedFormAnswer, ValidatedFormData } from "@app/model/form";
-import { IProjectDTO } from "@app/util/mafildb_API/dto";
+import { IProject } from "@app/model/project";
 import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IOrderedNativeLanguageDTO } from "@app/util/server_API/dto";
 import { IButtonProps } from "@app/util/utils";
 
@@ -29,7 +29,7 @@ export const compareNativeLanguages = (
   return aText === undefined || bText === undefined ? -1 : new Intl.Collator(locale).compare(aText, bText);
 };
 
-export const getProjectText = (project: IProjectDTO): string => {
+export const getProjectText = (project: IProject): string => {
   const projectAcronym = project.acronym.trim();
   const projectName = project.name.trim();
   return projectName === "" ? projectAcronym : `${projectAcronym} - ${projectName}`;

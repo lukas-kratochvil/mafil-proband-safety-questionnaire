@@ -1,6 +1,7 @@
 import { subDays } from "date-fns";
 import axiosConfig from "@app/axios-config";
 import { ValidatedFormData } from "@app/model/form";
+import { IProject } from "@app/model/project";
 import {
   IDuplicatedVisitIncludingQuestions,
   IRecentVisitsTableVisit,
@@ -24,7 +25,6 @@ import {
   ICreateSubjectInput,
   ICreateVisitInput,
   IDeviceDTO,
-  IProjectDTO,
   ISubjectDTO,
   IUpdateVisitStateInput,
   IVisitDTO,
@@ -45,7 +45,7 @@ import {
   VisitsResponse,
 } from "./response-types";
 
-export const fetchProjects = async (): Promise<IProjectDTO[]> => {
+export const fetchProjects = async (): Promise<IProject[]> => {
   if (import.meta.env.DEV) {
     return fetchProjectsDev();
   }
@@ -56,7 +56,7 @@ export const fetchProjects = async (): Promise<IProjectDTO[]> => {
     throw new Error(data.detail);
   }
 
-  return data.results;
+  return data.results.map((projectDTO) => ({ ...projectDTO }));
 };
 
 export const fetchDevices = async (): Promise<IDeviceDTO[]> => {
