@@ -3,6 +3,7 @@ import axiosConfig from "@app/axios-config";
 import { IDevice } from "@app/model/device";
 import { ValidatedFormData } from "@app/model/form";
 import { IProject } from "@app/model/project";
+import { ISubject } from "@app/model/subject";
 import {
   IDuplicatedVisitIncludingQuestions,
   IRecentVisitsTableVisit,
@@ -25,7 +26,6 @@ import {
   IAddPdfToVisitInput,
   ICreateSubjectInput,
   ICreateVisitInput,
-  ISubjectDTO,
   IUpdateVisitStateInput,
   IVisitDTO,
   IVisitFileDTO,
@@ -76,7 +76,7 @@ export const fetchDevices = async (): Promise<IDevice[]> => {
 const createVisitSubject = async (
   visitFormData: ValidatedFormData,
   probandLanguageCode?: ProbandVisitLanguageCode
-): Promise<ISubjectDTO | never> => {
+): Promise<ISubject | never> => {
   const createData: ICreateSubjectInput = {
     first_name: visitFormData.name,
     last_name: visitFormData.surname,
@@ -95,7 +95,17 @@ const createVisitSubject = async (
     throw new Error(data.detail);
   }
 
-  return data;
+  return {
+    ...data,
+    preferredLanguageCode: data.preferred_language_id,
+    name: data.first_name,
+    surname: data.last_name,
+    birthdate: data.birth_date,
+    personalId: data.personal_ID,
+    genderCode: data.gender,
+    nativeLanguageCode: data.native_language_id,
+    handednessCode: data.handedness,
+  };
 };
 
 const createVisit = async (
@@ -256,6 +266,17 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
         answer: answer.answer,
         comment: answer.comment,
       })),
+      subject: {
+        ...visit.subject,
+        preferredLanguageCode: visit.subject.preferred_language_id,
+        name: visit.subject.first_name,
+        surname: visit.subject.last_name,
+        birthdate: visit.subject.birth_date,
+        personalId: visit.subject.personal_ID,
+        genderCode: visit.subject.gender,
+        nativeLanguageCode: visit.subject.native_language_id,
+        handednessCode: visit.subject.handedness,
+      },
     });
   });
   return visits;
@@ -316,6 +337,17 @@ export const fetchDuplicatedVisit = async (
     visualCorrectionDioptre: visit.visual_correction_dioptre,
     handedness,
     answersIncludingQuestions,
+    subject: {
+      ...visit.subject,
+      preferredLanguageCode: visit.subject.preferred_language_id,
+      name: visit.subject.first_name,
+      surname: visit.subject.last_name,
+      birthdate: visit.subject.birth_date,
+      personalId: visit.subject.personal_ID,
+      genderCode: visit.subject.gender,
+      nativeLanguageCode: visit.subject.native_language_id,
+      handednessCode: visit.subject.handedness,
+    },
   };
 };
 

@@ -84,6 +84,17 @@ export const fetchRecentVisitsDev = async (): Promise<IRecentVisitsTableVisit[]>
         answer: answer.answer,
         comment: answer.comment,
       })),
+      subject: {
+        ...visit.subject,
+        preferredLanguageCode: visit.subject.preferred_language_id,
+        name: visit.subject.first_name,
+        surname: visit.subject.last_name,
+        birthdate: visit.subject.birth_date,
+        personalId: visit.subject.personal_ID,
+        genderCode: visit.subject.gender,
+        nativeLanguageCode: visit.subject.native_language_id,
+        handednessCode: visit.subject.handedness,
+      },
     });
   });
   return visits;
@@ -129,6 +140,17 @@ export const fetchDuplicatedVisitDev = async (visitId: string): Promise<IDuplica
     visualCorrectionDioptre: visit.visual_correction_dioptre,
     handedness,
     answersIncludingQuestions,
+    subject: {
+      ...visit.subject,
+      preferredLanguageCode: visit.subject.preferred_language_id,
+      name: visit.subject.first_name,
+      surname: visit.subject.last_name,
+      birthdate: visit.subject.birth_date,
+      personalId: visit.subject.personal_ID,
+      genderCode: visit.subject.gender,
+      nativeLanguageCode: visit.subject.native_language_id,
+      handednessCode: visit.subject.handedness,
+    },
   };
 };
 

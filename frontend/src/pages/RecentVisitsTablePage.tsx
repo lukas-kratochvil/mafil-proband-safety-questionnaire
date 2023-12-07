@@ -50,7 +50,7 @@ const RecentVisitsTablePage = () => {
         size: 100,
       },
       {
-        accessorFn: (visit) => `${visit.subject.last_name}, ${visit.subject.first_name}`,
+        accessorFn: (visit) => `${visit.subject.surname}, ${visit.subject.name}`,
         id: "proband",
         header: t("header.proband"),
         minSize: 150,

@@ -1,7 +1,10 @@
+import { devicesTest } from "@app/__tests__/data/devices";
 import { gendersTest } from "@app/__tests__/data/genders";
 import { handednessesTest } from "@app/__tests__/data/handednesses";
 import { nativeLanguagesTest } from "@app/__tests__/data/native-languages";
 import { operatorMRTest } from "@app/__tests__/data/operators";
+import { projectsTest } from "@app/__tests__/data/projects";
+import { subjectsTest } from "@app/__tests__/data/subjects";
 import { AnswerOption } from "@app/model/form";
 import { IDuplicatedVisitIncludingQuestions, VisualCorrection } from "@app/model/visit";
 import { VisitState } from "@app/util/mafildb_API/dto";
@@ -70,28 +73,9 @@ const duplicatedVisit: IDuplicatedVisitIncludingQuestions = {
   isPhantom: false,
   state: VisitState.APPROVED,
   measurementDate: new Date(),
-  subject: {
-    uuid: "111",
-    preferred_language_id: "cs",
-    first_name: "Name",
-    last_name: "Surname",
-    personal_ID: "000000",
-    birth_date: new Date(),
-    gender: "M",
-    native_language_id: "",
-    handedness: "",
-    email: "",
-    phone: "",
-  },
-  project: {
-    uuid: "1",
-    acronym: "A",
-    name: "Project_A",
-  },
-  device: {
-    id: 1,
-    name: "MR A",
-  },
+  subject: subjectsTest[0],
+  project: projectsTest[0],
+  device: devicesTest[0],
   gender: gendersTest[0],
   nativeLanguage: nativeLanguagesTest[2],
   heightCm: 180,
@@ -213,10 +197,10 @@ describe("form loaders", () => {
     expect(formDefaultValuesVisitDuplication.project).toBeNull();
     expect(formDefaultValuesVisitDuplication.device).toBeNull();
     expect(formDefaultValuesVisitDuplication.measuredAt).toEqual(currentDate);
-    expect(formDefaultValuesVisitDuplication.name).toEqual(duplicatedVisit.subject.first_name);
-    expect(formDefaultValuesVisitDuplication.surname).toEqual(duplicatedVisit.subject.last_name);
-    expect(formDefaultValuesVisitDuplication.personalId).toEqual(duplicatedVisit.subject.personal_ID);
-    expect(formDefaultValuesVisitDuplication.birthdate).toEqual(duplicatedVisit.subject.birth_date);
+    expect(formDefaultValuesVisitDuplication.name).toEqual(duplicatedVisit.subject.name);
+    expect(formDefaultValuesVisitDuplication.surname).toEqual(duplicatedVisit.subject.surname);
+    expect(formDefaultValuesVisitDuplication.personalId).toEqual(duplicatedVisit.subject.personalId);
+    expect(formDefaultValuesVisitDuplication.birthdate).toEqual(duplicatedVisit.subject.birthdate);
     expect(formDefaultValuesVisitDuplication.gender?.id).toEqual(duplicatedVisit.gender.id);
     expect(formDefaultValuesVisitDuplication.nativeLanguage).toEqual(duplicatedVisit.nativeLanguage);
     expect(formDefaultValuesVisitDuplication.heightCm).toEqual(duplicatedVisit.heightCm);

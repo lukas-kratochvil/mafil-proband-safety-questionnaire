@@ -1,5 +1,5 @@
 import { LanguageCode } from "@app/i18n";
-import { ISubjectDTO, VisitState } from "@app/util/mafildb_API/dto";
+import { VisitState } from "@app/util/mafildb_API/dto";
 import {
   IGenderDTO,
   IHandednessDTO,
@@ -10,6 +10,7 @@ import {
 import { IDevice } from "./device";
 import { AnswerOption } from "./form";
 import { IProject } from "./project";
+import { ISubject } from "./subject";
 
 export enum VisualCorrection {
   YES,
@@ -32,7 +33,7 @@ interface IVisit {
   state: VisitState;
   isPhantom: boolean;
   measurementDate: Date;
-  subject: ISubjectDTO;
+  subject: ISubject;
   project: IProject;
   device: IDevice;
   heightCm: number;

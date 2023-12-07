@@ -1,16 +1,16 @@
-import { ISubjectDTO } from "@app/util/mafildb_API/dto";
+import { ISubject } from "@app/model/subject";
 
-export const subjectsTest: ISubjectDTO[] = [
+export const subjectsTest: ISubject[] = [
   {
     uuid: "1",
-    preferred_language_id: "cs",
-    first_name: "Karel",
-    last_name: "Novák",
-    birth_date: new Date(),
-    personal_ID: "123456789",
-    gender: "M",
-    native_language_id: "cs",
-    handedness: "r",
+    preferredLanguageCode: "cs",
+    name: "Karel",
+    surname: "Novák",
+    birthdate: new Date(),
+    personalId: "123456789",
+    genderCode: "M",
+    nativeLanguageCode: "cs",
+    handednessCode: "r",
     email: "karel.novak@email.cz",
     phone: "123456789",
   },

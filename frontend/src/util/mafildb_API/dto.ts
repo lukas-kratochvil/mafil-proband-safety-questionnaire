@@ -16,13 +16,13 @@ export interface ICreateSubjectInput {
   preferred_language_id: ProbandVisitLanguageCode;
   first_name: string;
   last_name: string;
+  birth_date: Date;
   personal_ID: string;
   gender: string;
   native_language_id: string;
   handedness: string;
   email: string;
   phone: string;
-  birth_date: Date;
 }
 
 export interface ISubjectDTO extends ICreateSubjectInput {
