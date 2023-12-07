@@ -1,6 +1,6 @@
-import { IDeviceDTO } from "@app/util/mafildb_API/dto";
+import { IDevice } from "@app/model/device";
 
-export const devicesTest: IDeviceDTO[] = [
+export const devicesTest: IDevice[] = [
   {
     id: 1,
     name: "Magnet 1",

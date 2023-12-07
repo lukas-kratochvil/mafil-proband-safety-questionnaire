@@ -1,7 +1,7 @@
 import { array, date, mixed, string } from "yup";
+import { IDevice } from "@app/model/device";
 import { AnswerOption } from "@app/model/form";
 import { IProject } from "@app/model/project";
-import { IDeviceDTO } from "@app/util/mafildb_API/dto";
 import { answersSchema, probandFormSchema } from "./proband-form-schema";
 
 const operatorAnswersSchema = answersSchema.shape({
@@ -15,7 +15,7 @@ const operatorAnswersSchema = answersSchema.shape({
 
 export const operatorFinalizationFormSchema = probandFormSchema.shape({
   project: mixed<IProject>().nullable().required("form.validation.required"),
-  device: mixed<IDeviceDTO>().nullable().required("form.validation.required"),
+  device: mixed<IDevice>().nullable().required("form.validation.required"),
   measuredAt: date().nullable().required("form.validation.required"),
   answers: array().of(operatorAnswersSchema).required("form.validation.safetyQuestionsRequired"),
 });

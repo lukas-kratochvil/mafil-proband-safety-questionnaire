@@ -8,9 +8,9 @@ import { operatorMRTest } from "@app/__tests__/data/operators";
 import { pdfTest } from "@app/__tests__/data/pdf";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { getProjectText } from "@app/components/form/util/utils";
+import { IDevice } from "@app/model/device";
 import { IProject } from "@app/model/project";
 import PhantomFormPage from "@app/pages/PhantomFormPage";
-import { IDeviceDTO } from "@app/util/mafildb_API/dto";
 import { INativeLanguageDTO, IOrderedGenderDTO, IOrderedHandednessDTO, IPdfDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor } from "@test-utils";
 
@@ -54,7 +54,7 @@ vi.mock("@app/util/server_API/calls", async () => ({
 //----------------------------------------------------------------------
 vi.mock("@app/util/mafildb_API/calls", async () => ({
   fetchProjects: async (): Promise<IProject[]> => projectsTest,
-  fetchDevices: async (): Promise<IDeviceDTO[]> => devicesTest,
+  fetchDevices: async (): Promise<IDevice[]> => devicesTest,
   createPhantomVisit: async (): Promise<string> => "visitId",
   addPdfToVisit: async (): Promise<string> => "fileId",
 }));

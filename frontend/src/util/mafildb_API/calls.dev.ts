@@ -1,3 +1,4 @@
+import { IDevice } from "@app/model/device";
 import { ValidatedFormData } from "@app/model/form";
 import { IProject } from "@app/model/project";
 import {
@@ -11,11 +12,11 @@ import { devicesTest } from "../../__tests__/data/devices";
 import { projectsTest } from "../../__tests__/data/projects";
 import { fetchGender, fetchHandedness, fetchNativeLanguage, fetchOperator, fetchQuestion } from "../server_API/calls";
 import { VisitFormAnswerIncludingQuestion } from "../server_API/dto";
-import { IDeviceDTO, VisitState } from "./dto";
+import { VisitState } from "./dto";
 
 export const fetchProjectsDev = async (): Promise<IProject[]> => projectsTest;
 
-export const fetchDevicesDev = async (): Promise<IDeviceDTO[]> => devicesTest;
+export const fetchDevicesDev = async (): Promise<IDevice[]> => devicesTest;
 
 export const createVisitDev = async (
   visitFormData: ValidatedFormData,

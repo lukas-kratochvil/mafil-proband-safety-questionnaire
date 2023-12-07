@@ -1,5 +1,5 @@
 import { LanguageCode } from "@app/i18n";
-import { IDeviceDTO, ISubjectDTO, VisitState } from "@app/util/mafildb_API/dto";
+import { ISubjectDTO, VisitState } from "@app/util/mafildb_API/dto";
 import {
   IGenderDTO,
   IHandednessDTO,
@@ -7,6 +7,7 @@ import {
   IOperatorDTO,
   VisitFormAnswerIncludingQuestion,
 } from "../util/server_API/dto";
+import { IDevice } from "./device";
 import { AnswerOption } from "./form";
 import { IProject } from "./project";
 
@@ -33,7 +34,7 @@ interface IVisit {
   measurementDate: Date;
   subject: ISubjectDTO;
   project: IProject;
-  device: IDeviceDTO;
+  device: IDevice;
   heightCm: number;
   weightKg: number;
   visualCorrectionDioptre: number;

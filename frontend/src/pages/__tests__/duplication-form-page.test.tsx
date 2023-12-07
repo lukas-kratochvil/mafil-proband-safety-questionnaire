@@ -8,11 +8,12 @@ import { pdfTest } from "@app/__tests__/data/pdf";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { questionsTest } from "@app/__tests__/data/questions";
 import { subjectsTest } from "@app/__tests__/data/subjects";
+import { IDevice } from "@app/model/device";
 import { AnswerOption } from "@app/model/form";
 import { IProject } from "@app/model/project";
 import { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
-import { IDeviceDTO, VisitState } from "@app/util/mafildb_API/dto";
+import { VisitState } from "@app/util/mafildb_API/dto";
 import {
   INativeLanguageDTO,
   IOrderedGenderDTO,
@@ -104,7 +105,7 @@ vi.mock("@app/util/server_API/calls", async () => ({
 //----------------------------------------------------------------------
 vi.mock("@app/util/mafildb_API/calls", async () => ({
   fetchProjects: async (): Promise<IProject[]> => projectsTest,
-  fetchDevices: async (): Promise<IDeviceDTO[]> => devicesTest,
+  fetchDevices: async (): Promise<IDevice[]> => devicesTest,
   fetchDuplicatedVisit: async (): Promise<IDuplicatedVisitIncludingQuestions> => visit,
   createFinalizedVisit: async (): Promise<string> => "visitId",
   createPhantomVisit: async (): Promise<string> => "visitId",
