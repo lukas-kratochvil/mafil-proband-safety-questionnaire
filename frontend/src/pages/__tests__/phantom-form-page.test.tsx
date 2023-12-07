@@ -1,13 +1,14 @@
 import userEvent from "@testing-library/user-event";
 import { format } from "date-fns";
-import { gendersDev } from "@app/__tests__/data/genders";
-import { handednessesDev } from "@app/__tests__/data/handednesses";
-import { nativeLanguagesDev } from "@app/__tests__/data/native-languages";
-import { operatorMRDev } from "@app/__tests__/data/operators";
-import { pdfDev } from "@app/__tests__/data/pdf";
+import { devicesTest } from "@app/__tests__/data/devices";
+import { gendersTest } from "@app/__tests__/data/genders";
+import { handednessesTest } from "@app/__tests__/data/handednesses";
+import { nativeLanguagesTest } from "@app/__tests__/data/native-languages";
+import { operatorMRTest } from "@app/__tests__/data/operators";
+import { pdfTest } from "@app/__tests__/data/pdf";
+import { projectsTest } from "@app/__tests__/data/projects";
 import { getProjectText } from "@app/components/form/util/utils";
 import PhantomFormPage from "@app/pages/PhantomFormPage";
-import { devicesDev, projectsDev } from "@app/util/mafildb_API/data.dev";
 import { IDeviceDTO, IProjectDTO } from "@app/util/mafildb_API/dto";
 import { INativeLanguageDTO, IOrderedGenderDTO, IOrderedHandednessDTO, IPdfDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor } from "@test-utils";
@@ -33,7 +34,7 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 //----------------------------------------------------------------------
 vi.mock("@app/hooks/auth/AuthProvider", () => ({
   useAuth: () => ({
-    operator: operatorMRDev,
+    operator: operatorMRTest,
   }),
 }));
 
@@ -41,18 +42,18 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
 // Mocking server API calls
 //----------------------------------------------------------------------
 vi.mock("@app/util/server_API/calls", async () => ({
-  fetchGenders: async (): Promise<IOrderedGenderDTO[]> => gendersDev,
-  fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesDev,
-  fetchHandednesses: async (): Promise<IOrderedHandednessDTO[]> => handednessesDev,
-  generatePhantomPdf: async (): Promise<IPdfDTO> => pdfDev,
+  fetchGenders: async (): Promise<IOrderedGenderDTO[]> => gendersTest,
+  fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesTest,
+  fetchHandednesses: async (): Promise<IOrderedHandednessDTO[]> => handednessesTest,
+  generatePhantomPdf: async (): Promise<IPdfDTO> => pdfTest,
 }));
 
 //----------------------------------------------------------------------
 // Mocking MAFILDB API calls
 //----------------------------------------------------------------------
 vi.mock("@app/util/mafildb_API/calls", async () => ({
-  fetchProjects: async (): Promise<IProjectDTO[]> => projectsDev,
-  fetchDevices: async (): Promise<IDeviceDTO[]> => devicesDev,
+  fetchProjects: async (): Promise<IProjectDTO[]> => projectsTest,
+  fetchDevices: async (): Promise<IDeviceDTO[]> => devicesTest,
   createPhantomVisit: async (): Promise<string> => "visitId",
   addPdfToVisit: async (): Promise<string> => "fileId",
 }));
@@ -66,11 +67,11 @@ describe("phantom form page", () => {
   };
 
   // Data
-  const genderOther = gendersDev[2].translations[0].text;
-  const nativeLanguageCzech = nativeLanguagesDev[0].translations[0].text;
-  const handednessUndetermined = handednessesDev[3].translations[0].text;
-  const project1Text = getProjectText(projectsDev[0]);
-  const device1Name = devicesDev[0].name;
+  const genderOther = gendersTest[2].translations[0].text;
+  const nativeLanguageCzech = nativeLanguagesTest[0].translations[0].text;
+  const handednessUndetermined = handednessesTest[3].translations[0].text;
+  const project1Text = getProjectText(projectsTest[0]);
+  const device1Name = devicesTest[0].name;
 
   test("contains correct form buttons", async () => {
     setup();

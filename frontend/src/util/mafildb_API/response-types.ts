@@ -1,4 +1,4 @@
-import { IAddPdfToVisitInput, IDeviceDTO, IProjectDTO, IVisitDTO, IVisitFileDTO } from "./dto";
+import { IAddPdfToVisitInput, IDeviceDTO, IProjectDTO, ISubjectDTO, IVisitDTO, IVisitFileDTO } from "./dto";
 
 // TODO: correct MAFILDB response types
 
@@ -22,6 +22,8 @@ type MafildbGetOneResponse<T> = T | MafildbErrorResponse;
 export type ProjectsResponse = MafildbGetManyResponse<IProjectDTO>;
 
 export type DevicesResponse = MafildbGetManyResponse<IDeviceDTO>;
+
+export type CreateSubjectResponse = MafildbGetOneResponse<ISubjectDTO>;
 
 export type CreateVisitResponse = {
   visit_name: string;

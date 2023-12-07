@@ -12,6 +12,23 @@ export interface IDeviceDTO {
   name: string;
 }
 
+export interface ICreateSubjectInput {
+  preferred_language_id: ProbandVisitLanguageCode;
+  first_name: string;
+  last_name: string;
+  personal_ID: string;
+  gender: string;
+  native_language_id: string;
+  handedness: string;
+  email: string;
+  phone: string;
+  birth_date: Date;
+}
+
+export interface ISubjectDTO extends ICreateSubjectInput {
+  uuid: string;
+}
+
 export enum VisitState {
   DISAPPROVED = "DISAPPROVED",
   APPROVED = "APPROVED",
@@ -31,33 +48,28 @@ export interface ICreateVisitInput {
   state: VisitState;
   is_phantom: boolean;
   date: Date;
+  subject_uuid: string;
   project_uuid: string;
   device_id: number;
-  name: string;
-  surname: string;
-  preferred_language_id: ProbandVisitLanguageCode;
-  personal_id: string;
-  birthdate: Date;
-  gender_code: string;
-  native_language_code: string;
   height: number;
   weight: number;
-  handedness_code: string;
   visual_correction_dioptre: number;
-  email: string;
-  phone: string;
   registration_answers: IAnswerDTO[];
   registration_finalize_user: string;
   registration_finalize_date: Date;
   registration_approve_user?: string;
   registration_approve_date?: Date;
   registration_disapprove_reason?: string;
-}
+};
 
-export interface IVisitDTO extends ICreateVisitInput {
+export type IVisitDTO = Omit<ICreateVisitInput, "subject_uuid" | "project_uuid" | "device_id"> & {
+  uuid: string;
   visit_name: string;
   created: Date;
-}
+  subject: ISubjectDTO;
+  project: IProjectDTO;
+  device: IDeviceDTO;
+};
 
 export type IUpdateVisitStateInput = Pick<IVisitDTO, "visit_name" | "state">;
 

@@ -1,7 +1,7 @@
 import { IOrderedHandednessDTO } from "@app/util/server_API/dto";
 import { NEUTRAL_LANGUAGE_CODE } from "../neutral-language-code";
 
-export const handednessesDev: IOrderedHandednessDTO[] = [
+export const handednessesTest: IOrderedHandednessDTO[] = [
   {
     id: "1",
     code: "r",

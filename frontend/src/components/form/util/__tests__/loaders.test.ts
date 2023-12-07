@@ -1,7 +1,7 @@
-import { gendersDev } from "@app/__tests__/data/genders";
-import { handednessesDev } from "@app/__tests__/data/handednesses";
-import { nativeLanguagesDev } from "@app/__tests__/data/native-languages";
-import { operatorMRDev } from "@app/__tests__/data/operators";
+import { gendersTest } from "@app/__tests__/data/genders";
+import { handednessesTest } from "@app/__tests__/data/handednesses";
+import { nativeLanguagesTest } from "@app/__tests__/data/native-languages";
+import { operatorMRTest } from "@app/__tests__/data/operators";
 import { AnswerOption } from "@app/model/form";
 import { IDuplicatedVisitIncludingQuestions, VisualCorrection } from "@app/model/visit";
 import { VisitState } from "@app/util/mafildb_API/dto";
@@ -39,12 +39,12 @@ const waitingRoomVisitForm: IWaitingRoomVisitFormIncludingQuestions = {
   surname: "Surname",
   personalId: "000000",
   birthdate: new Date(),
-  gender: gendersDev[0],
-  nativeLanguage: nativeLanguagesDev[2],
+  gender: gendersTest[0],
+  nativeLanguage: nativeLanguagesTest[2],
   heightCm: 180,
   weightKg: 80,
   visualCorrectionDioptre: 1,
-  handedness: handednessesDev[3],
+  handedness: handednessesTest[3],
   email: "name.surname@email.com",
   phone: "123456789",
   answersIncludingQuestions: [answerIncludingQuestion],
@@ -59,7 +59,7 @@ const approvalRoomVisitForm: IApprovalRoomVisitFormIncludingQuestionsDTO = {
     deviceId: 6552515,
     deviceName: "M1",
     measuredAt: new Date(),
-    finalizer: operatorMRDev,
+    finalizer: operatorMRTest,
     finalizedAt: new Date(),
   },
 };
@@ -70,41 +70,34 @@ const duplicatedVisit: IDuplicatedVisitIncludingQuestions = {
   isPhantom: false,
   state: VisitState.APPROVED,
   measurementDate: new Date(),
-  probandLanguageCode: "cs",
-  name: "Name",
-  surname: "Surname",
-  personalId: "000000",
-  birthdate: new Date(),
-  gender: gendersDev[0],
-  nativeLanguage: nativeLanguagesDev[2],
+  subject: {
+    uuid: "111",
+    preferred_language_id: "cs",
+    first_name: "Name",
+    last_name: "Surname",
+    personal_ID: "000000",
+    birth_date: new Date(),
+    gender: "M",
+    native_language_id: "",
+    handedness: "",
+    email: "",
+    phone: "",
+  },
+  project: {
+    uuid: "1",
+    acronym: "A",
+    name: "Project_A",
+  },
+  device: {
+    id: 1,
+    name: "MR A",
+  },
+  gender: gendersTest[0],
+  nativeLanguage: nativeLanguagesTest[2],
   heightCm: 180,
   weightKg: 80,
   visualCorrectionDioptre: 1,
-  handedness: handednessesDev[3],
-  email: "name.surname@email.com",
-  phone: "123456789",
-  answersIncludingQuestions: [answerIncludingQuestion],
-};
-
-const visitNotCompleted: IDuplicatedVisitIncludingQuestions = {
-  visitId: "1",
-  date: new Date(),
-  isPhantom: false,
-  state: VisitState.APPROVED,
-  probandLanguageCode: "cs",
-  measurementDate: new Date(),
-  name: "Name",
-  surname: "Surname",
-  personalId: "000000",
-  birthdate: new Date(),
-  gender: gendersDev[0],
-  nativeLanguage: nativeLanguagesDev[2],
-  heightCm: 180,
-  weightKg: 80,
-  visualCorrectionDioptre: 0,
-  handedness: handednessesDev[3],
-  email: "",
-  phone: "",
+  handedness: handednessesTest[3],
   answersIncludingQuestions: [answerIncludingQuestion],
 };
 
@@ -220,10 +213,10 @@ describe("form loaders", () => {
     expect(formDefaultValuesVisitDuplication.project).toBeNull();
     expect(formDefaultValuesVisitDuplication.device).toBeNull();
     expect(formDefaultValuesVisitDuplication.measuredAt).toEqual(currentDate);
-    expect(formDefaultValuesVisitDuplication.name).toEqual(duplicatedVisit.name);
-    expect(formDefaultValuesVisitDuplication.surname).toEqual(duplicatedVisit.surname);
-    expect(formDefaultValuesVisitDuplication.personalId).toEqual(duplicatedVisit.personalId);
-    expect(formDefaultValuesVisitDuplication.birthdate).toEqual(duplicatedVisit.birthdate);
+    expect(formDefaultValuesVisitDuplication.name).toEqual(duplicatedVisit.subject.first_name);
+    expect(formDefaultValuesVisitDuplication.surname).toEqual(duplicatedVisit.subject.last_name);
+    expect(formDefaultValuesVisitDuplication.personalId).toEqual(duplicatedVisit.subject.personal_ID);
+    expect(formDefaultValuesVisitDuplication.birthdate).toEqual(duplicatedVisit.subject.birth_date);
     expect(formDefaultValuesVisitDuplication.gender?.id).toEqual(duplicatedVisit.gender.id);
     expect(formDefaultValuesVisitDuplication.nativeLanguage).toEqual(duplicatedVisit.nativeLanguage);
     expect(formDefaultValuesVisitDuplication.heightCm).toEqual(duplicatedVisit.heightCm);
@@ -233,14 +226,14 @@ describe("form loaders", () => {
       duplicatedVisit.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
     );
     expect(formDefaultValuesVisitDuplication.visualCorrectionDioptre).toEqual(duplicatedVisit.visualCorrectionDioptre);
-    expect(formDefaultValuesVisitDuplication.email).toEqual(duplicatedVisit.email);
-    expect(formDefaultValuesVisitDuplication.phone).toEqual(duplicatedVisit.phone);
+    expect(formDefaultValuesVisitDuplication.email).toEqual(duplicatedVisit.subject.email);
+    expect(formDefaultValuesVisitDuplication.phone).toEqual(duplicatedVisit.subject.phone);
 
     formDefaultValuesVisitDuplication.answers.forEach((answer, i) => {
-      expect(answer.questionId).toEqual(visitNotCompleted.answersIncludingQuestions[i].questionId);
-      expect(answer.mustBeApproved).toEqual(visitNotCompleted.answersIncludingQuestions[i].mustBeApproved);
-      expect(answer.answer).toEqual(visitNotCompleted.answersIncludingQuestions[i].answer);
-      expect(answer.comment).toEqual(visitNotCompleted.answersIncludingQuestions[i].comment);
+      expect(answer.questionId).toEqual(duplicatedVisit.answersIncludingQuestions[i].questionId);
+      expect(answer.mustBeApproved).toEqual(duplicatedVisit.answersIncludingQuestions[i].mustBeApproved);
+      expect(answer.answer).toEqual(duplicatedVisit.answersIncludingQuestions[i].answer);
+      expect(answer.comment).toEqual(duplicatedVisit.answersIncludingQuestions[i].comment);
     });
   });
 });

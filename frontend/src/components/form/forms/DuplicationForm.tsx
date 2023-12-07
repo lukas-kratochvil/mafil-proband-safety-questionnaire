@@ -131,7 +131,7 @@ export const DuplicationForm = () => {
               VisitState.DISAPPROVED,
               operator?.username,
               new Date(),
-              visit?.probandLanguageCode
+              visit?.subject.preferred_language_id
             );
             navigate(RoutingPath.RECENT_VISITS);
           },
@@ -161,9 +161,14 @@ export const DuplicationForm = () => {
                 VisitState.APPROVED,
                 operator?.username,
                 new Date(),
-                visit?.probandLanguageCode
+                visit?.subject.preferred_language_id
               );
-              const pdf = await generateProbandPdf(visitId, data, operator?.username, visit?.probandLanguageCode);
+              const pdf = await generateProbandPdf(
+                visitId,
+                data,
+                operator?.username,
+                visit?.subject.preferred_language_id
+              );
               await addPdfToVisit(visitId, pdf);
               navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visitId}`);
             }
@@ -201,7 +206,7 @@ export const DuplicationForm = () => {
     setValue,
     trigger,
     valuesBeforeEditing,
-    visit?.probandLanguageCode,
+    visit?.subject.preferred_language_id,
   ]);
 
   const createVisitFormInApprovalRoom = async (data: ValidatedFormData) => {

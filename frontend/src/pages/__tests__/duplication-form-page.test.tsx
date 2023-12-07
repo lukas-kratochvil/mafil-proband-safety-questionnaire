@@ -1,14 +1,16 @@
 import { format } from "date-fns";
-import { gendersDev } from "@app/__tests__/data/genders";
-import { handednessesDev } from "@app/__tests__/data/handednesses";
-import { nativeLanguagesDev } from "@app/__tests__/data/native-languages";
-import { operatorMRHigPermDev } from "@app/__tests__/data/operators";
-import { pdfDev } from "@app/__tests__/data/pdf";
-import { questionsDev } from "@app/__tests__/data/questions";
+import { devicesTest } from "@app/__tests__/data/devices";
+import { gendersTest } from "@app/__tests__/data/genders";
+import { handednessesTest } from "@app/__tests__/data/handednesses";
+import { nativeLanguagesTest } from "@app/__tests__/data/native-languages";
+import { operatorMRHigPermTest } from "@app/__tests__/data/operators";
+import { pdfTest } from "@app/__tests__/data/pdf";
+import { projectsTest } from "@app/__tests__/data/projects";
+import { questionsTest } from "@app/__tests__/data/questions";
+import { subjectsTest } from "@app/__tests__/data/subjects";
 import { AnswerOption } from "@app/model/form";
 import { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
-import { devicesDev, projectsDev } from "@app/util/mafildb_API/data.dev";
 import { IDeviceDTO, IProjectDTO, VisitState } from "@app/util/mafildb_API/dto";
 import {
   INativeLanguageDTO,
@@ -30,21 +32,17 @@ const visit: IDuplicatedVisitIncludingQuestions = {
   visitId: "VisitId1",
   isPhantom: false,
   measurementDate: new Date(),
-  probandLanguageCode: "en",
   state: VisitState.SIGNED_PHYSICALLY,
-  name: "John",
-  surname: "Wick",
-  personalId: "0123456789",
-  birthdate: new Date(1980, 8, 24),
-  gender: gendersDev[0],
+  subject: subjectsTest[0],
+  project: projectsTest[0],
+  device: devicesTest[0],
+  gender: gendersTest[0],
   heightCm: 179,
   weightKg: 75,
-  nativeLanguage: nativeLanguagesDev[0],
-  handedness: handednessesDev[0],
+  nativeLanguage: nativeLanguagesTest[0],
+  handedness: handednessesTest[0],
   visualCorrectionDioptre: 0,
-  email: "",
-  phone: "",
-  answersIncludingQuestions: questionsDev.map((question, index) => ({
+  answersIncludingQuestions: questionsTest.map((question, index) => ({
     questionId: question.id,
     mustBeApproved: index % 2 === 0,
     answer: index % 2 === 0 ? AnswerOption.YES : AnswerOption.NO,
@@ -81,7 +79,7 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 //----------------------------------------------------------------------
 vi.mock("@app/hooks/auth/AuthProvider", () => ({
   useAuth: () => ({
-    operator: operatorMRHigPermDev,
+    operator: operatorMRHigPermTest,
   }),
 }));
 
@@ -91,21 +89,21 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
 const newDuplicatedVisitFormId = "id123";
 
 vi.mock("@app/util/server_API/calls", async () => ({
-  fetchGenders: async (): Promise<IOrderedGenderDTO[]> => gendersDev,
-  fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesDev,
-  fetchHandednesses: async (): Promise<IOrderedHandednessDTO[]> => handednessesDev,
-  fetchCurrentQuestions: async (): Promise<IOrderedQuestionDTO[]> => questionsDev,
+  fetchGenders: async (): Promise<IOrderedGenderDTO[]> => gendersTest,
+  fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesTest,
+  fetchHandednesses: async (): Promise<IOrderedHandednessDTO[]> => handednessesTest,
+  fetchCurrentQuestions: async (): Promise<IOrderedQuestionDTO[]> => questionsTest,
   createDuplicatedVisitFormForApproval: async (): Promise<string> => newDuplicatedVisitFormId,
-  generateProbandPdf: async (): Promise<IPdfDTO> => pdfDev,
-  generatePhantomPdf: async (): Promise<IPdfDTO> => pdfDev,
+  generateProbandPdf: async (): Promise<IPdfDTO> => pdfTest,
+  generatePhantomPdf: async (): Promise<IPdfDTO> => pdfTest,
 }));
 
 //----------------------------------------------------------------------
 // Mocking MAFILDB API calls
 //----------------------------------------------------------------------
 vi.mock("@app/util/mafildb_API/calls", async () => ({
-  fetchProjects: async (): Promise<IProjectDTO[]> => projectsDev,
-  fetchDevices: async (): Promise<IDeviceDTO[]> => devicesDev,
+  fetchProjects: async (): Promise<IProjectDTO[]> => projectsTest,
+  fetchDevices: async (): Promise<IDeviceDTO[]> => devicesTest,
   fetchDuplicatedVisit: async (): Promise<IDuplicatedVisitIncludingQuestions> => visit,
   createFinalizedVisit: async (): Promise<string> => "visitId",
   createPhantomVisit: async (): Promise<string> => "visitId",
@@ -141,10 +139,10 @@ describe("duplication form page", () => {
       project: "",
       device: "",
       measuredAt: format(new Date(), "dd.MM.yyyy"),
-      name: visit.name,
-      surname: visit.surname,
-      personalId: visit.personalId,
-      birthdate: format(visit.birthdate, "dd.MM.yyyy"),
+      name: visit.subject.first_name,
+      surname: visit.subject.last_name,
+      personalId: visit.subject.personal_ID,
+      birthdate: format(visit.subject.birth_date, "dd.MM.yyyy"),
       gender: visit.gender.translations[0].text,
       nativeLanguage: visit.nativeLanguage.translations[0].text,
       heightCm: visit.heightCm.toString(),
@@ -152,14 +150,14 @@ describe("duplication form page", () => {
       visualCorrection: "form.enums.visualCorrection.NO",
       visualCorrectionDioptre: visit.visualCorrectionDioptre.toString(),
       handedness: visit.handedness.translations[0].text,
-      email: visit.email,
-      phone: visit.phone,
+      email: visit.subject.email,
+      phone: visit.subject.phone,
     };
 
     await waitFor(() => expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues));
 
     const questions = await screen.findAllByRole("radiogroup");
-    expect(questions.length).toEqual(questionsDev.length);
+    expect(questions.length).toEqual(questionsTest.length);
 
     questions.forEach(async (question, index) => {
       const yesRadio = await within(question).findByRole("radio", { name: "form.safetyQuestions.yes" });

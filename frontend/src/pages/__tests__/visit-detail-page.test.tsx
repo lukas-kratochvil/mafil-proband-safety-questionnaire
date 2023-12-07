@@ -1,4 +1,4 @@
-import { operatorMRDev } from "@app/__tests__/data/operators";
+import { operatorMRTest } from "@app/__tests__/data/operators";
 import { IVisitDetail } from "@app/model/visit";
 import VisitDetailPage from "@app/pages/VisitDetailPage";
 import * as mafildbCalls from "@app/util/mafildb_API/calls";
@@ -38,7 +38,7 @@ vi.mock("react-router-dom", async () => ({
 //----------------------------------------------------------------------
 vi.mock("@app/hooks/auth/AuthProvider", () => ({
   useAuth: () => ({
-    operator: operatorMRDev,
+    operator: operatorMRTest,
   }),
 }));
 

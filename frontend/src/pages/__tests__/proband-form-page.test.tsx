@@ -1,8 +1,8 @@
 import userEvent from "@testing-library/user-event";
-import { gendersDev } from "@app/__tests__/data/genders";
-import { handednessesDev } from "@app/__tests__/data/handednesses";
-import { nativeLanguagesDev } from "@app/__tests__/data/native-languages";
-import { questionsDev } from "@app/__tests__/data/questions";
+import { gendersTest } from "@app/__tests__/data/genders";
+import { handednessesTest } from "@app/__tests__/data/handednesses";
+import { nativeLanguagesTest } from "@app/__tests__/data/native-languages";
+import { questionsTest } from "@app/__tests__/data/questions";
 import ProbandFormPage from "@app/pages/ProbandFormPage";
 import {
   IHTMLCardDTO,
@@ -48,10 +48,10 @@ const htmlCard: IHTMLCardDTO = {
 const newProbandVisitFormId = "id123";
 
 vi.mock("@app/util/server_API/calls", async () => ({
-  fetchGenders: async (): Promise<IOrderedGenderDTO[]> => gendersDev,
-  fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesDev,
-  fetchHandednesses: async (): Promise<IOrderedHandednessDTO[]> => handednessesDev,
-  fetchCurrentQuestions: async (): Promise<IOrderedQuestionDTO[]> => questionsDev,
+  fetchGenders: async (): Promise<IOrderedGenderDTO[]> => gendersTest,
+  fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesTest,
+  fetchHandednesses: async (): Promise<IOrderedHandednessDTO[]> => handednessesTest,
+  fetchCurrentQuestions: async (): Promise<IOrderedQuestionDTO[]> => questionsTest,
   createProbandVisitForm: async (): Promise<string> => newProbandVisitFormId,
   fetchEntryInfo: async (): Promise<IHTMLCardDTO> => htmlCard,
   fetchSafetyInfo: async (): Promise<IHTMLCardDTO> => htmlCard,
@@ -70,10 +70,10 @@ describe("proband form page", () => {
   };
 
   // Data
-  const genderMan = gendersDev[0].translations[0].text;
-  const genderWoman = gendersDev[1].translations[0].text;
-  const nativeLanguageCzech = nativeLanguagesDev[0].translations[0].text;
-  const handednessUndetermined = handednessesDev[3].translations[0].text;
+  const genderMan = gendersTest[0].translations[0].text;
+  const genderWoman = gendersTest[1].translations[0].text;
+  const nativeLanguageCzech = nativeLanguagesTest[0].translations[0].text;
+  const handednessUndetermined = handednessesTest[3].translations[0].text;
 
   test("contains correct form buttons", async () => {
     setup();
@@ -103,7 +103,7 @@ describe("proband form page", () => {
       })
     );
     const questions = await screen.findAllByRole("radiogroup");
-    expect(questions.length).toEqual(questionsDev.length);
+    expect(questions.length).toEqual(questionsTest.length);
   });
 
   describe("auto-fills", () => {

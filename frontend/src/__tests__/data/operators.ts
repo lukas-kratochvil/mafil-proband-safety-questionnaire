@@ -1,6 +1,6 @@
 import { IOperatorDTO } from "@app/util/server_API/dto";
 
-export const operatorMRDev: IOperatorDTO = {
+export const operatorMRTest: IOperatorDTO = {
   id: "1",
   name: "Operator",
   surname: "MR",
@@ -9,7 +9,7 @@ export const operatorMRDev: IOperatorDTO = {
   username: "123456",
 };
 
-export const operatorMRHigPermDev: IOperatorDTO = {
+export const operatorMRHigPermTest: IOperatorDTO = {
   id: "2",
   name: "Operator",
   surname: "Special",

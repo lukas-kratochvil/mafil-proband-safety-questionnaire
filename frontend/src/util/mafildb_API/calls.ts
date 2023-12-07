@@ -21,9 +21,11 @@ import {
 } from "./calls.dev";
 import {
   IAddPdfToVisitInput,
+  ICreateSubjectInput,
   ICreateVisitInput,
   IDeviceDTO,
   IProjectDTO,
+  ISubjectDTO,
   IUpdateVisitStateInput,
   IVisitDTO,
   IVisitFileDTO,
@@ -32,6 +34,7 @@ import {
 } from "./dto";
 import {
   AddPdfToVisitResponse,
+  CreateSubjectResponse,
   CreateVisitResponse,
   DevicesResponse,
   MAFILDB_RESPONSE_ERROR_ATTR,
@@ -70,6 +73,31 @@ export const fetchDevices = async (): Promise<IDeviceDTO[]> => {
   return data.results;
 };
 
+const createVisitSubject = async (
+  visitFormData: ValidatedFormData,
+  probandLanguageCode?: ProbandVisitLanguageCode
+): Promise<ISubjectDTO | never> => {
+  const createData: ICreateSubjectInput = {
+    first_name: visitFormData.name,
+    last_name: visitFormData.surname,
+    preferred_language_id: probandLanguageCode ?? "",
+    birth_date: visitFormData.birthdate,
+    personal_ID: visitFormData.personalId,
+    gender: visitFormData.gender.code,
+    native_language_id: visitFormData.nativeLanguage.code,
+    handedness: visitFormData.handedness.code,
+    email: visitFormData.email,
+    phone: visitFormData.phone,
+  };
+  const { data } = await axiosConfig.mafildbApi.post<CreateSubjectResponse>("v2/subjects", createData);
+
+  if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
+    throw new Error(data.detail);
+  }
+
+  return data;
+};
+
 const createVisit = async (
   visitFormData: ValidatedFormData,
   state: VisitState,
@@ -92,25 +120,17 @@ const createVisit = async (
     return createVisitDev(visitFormData, state, isPhantom, finalizerUsername, probandLanguageCode);
   }
 
+  const subject = await createVisitSubject(visitFormData);
   const createData: ICreateVisitInput = {
     state,
     is_phantom: isPhantom,
-    preferred_language_id: probandLanguageCode ?? "",
+    subject_uuid: subject.uuid,
     project_uuid: visitFormData.project?.uuid ?? "",
     device_id: visitFormData.device?.id ?? 0,
     date: visitFormData.measuredAt ?? new Date(),
-    name: visitFormData.name,
-    surname: visitFormData.surname,
-    personal_id: visitFormData.personalId,
-    birthdate: visitFormData.birthdate,
-    gender_code: visitFormData.gender.code,
-    native_language_code: visitFormData.nativeLanguage.code,
     height: visitFormData.heightCm,
     weight: visitFormData.weightKg,
-    handedness_code: visitFormData.handedness.code,
     visual_correction_dioptre: visitFormData.visualCorrectionDioptre,
-    email: visitFormData.email,
-    phone: visitFormData.phone,
     registration_answers: visitFormData.answers.map((answer) => ({
       question_id: answer.questionId,
       answer: answer.answer,
@@ -201,12 +221,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
 
   // Fetch only visits created 3 days ago and newer
   const params = { newer_than: subDays(new Date().setHours(0, 0, 0, 0), 3).valueOf() };
-
-  const [{ data }, projects, devices] = await Promise.all([
-    axiosConfig.mafildbApi.get<VisitsResponse>("v2/visits", { params }),
-    fetchProjects(),
-    fetchDevices(),
-  ]);
+  const { data } = await axiosConfig.mafildbApi.get<VisitsResponse>("v2/visits", { params });
 
   if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
@@ -214,39 +229,34 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
 
   const visits: IRecentVisitsTableVisit[] = [];
   data.results.forEach(async (visit) => {
-    const project = projects.find((proj) => proj.uuid === visit.project_uuid);
-    const device = devices.find((dev) => dev.id === visit.device_id);
     let finalizer: IOperatorDTO | undefined;
 
     try {
       finalizer = await fetchOperator(visit.registration_finalize_user);
+
+      if (finalizer === undefined) {
+        throw new Error("Finalizer not found!");
+      }
     } catch (e) {
       // TODO: what to do when finalizer not found? Skip the visit?
       return;
     }
 
-    // if project or device don't exist we skip the visit
-    if (project !== undefined && device !== undefined && finalizer !== undefined) {
-      visits.push({
-        ...visit,
-        visitId: visit.visit_name,
-        isPhantom: visit.is_phantom,
-        project,
-        device,
-        measurementDate: visit.date,
-        finalizer,
-        probandLanguageCode: visit.preferred_language_id,
-        personalId: visit.personal_id,
-        heightCm: visit.height,
-        weightKg: visit.weight,
-        visualCorrectionDioptre: visit.visual_correction_dioptre,
-        answers: visit.registration_answers.map((answer) => ({
-          questionId: answer.question_id,
-          answer: answer.answer,
-          comment: answer.comment,
-        })),
-      });
-    }
+    visits.push({
+      ...visit,
+      visitId: visit.visit_name,
+      isPhantom: visit.is_phantom,
+      measurementDate: visit.date,
+      finalizer,
+      heightCm: visit.height,
+      weightKg: visit.weight,
+      visualCorrectionDioptre: visit.visual_correction_dioptre,
+      answers: visit.registration_answers.map((answer) => ({
+        questionId: answer.question_id,
+        answer: answer.answer,
+        comment: answer.comment,
+      })),
+    });
   });
   return visits;
 };
@@ -274,9 +284,9 @@ export const fetchDuplicatedVisit = async (
 
   const visit = await fetchVisit(visitId);
   const [gender, nativeLanguage, handedness, answersIncludingQuestions] = await Promise.all([
-    fetchGender(visit.gender_code),
-    fetchNativeLanguage(visit.native_language_code),
-    fetchHandedness(visit.handedness_code),
+    fetchGender(visit.subject.gender),
+    fetchNativeLanguage(visit.subject.native_language_id),
+    fetchHandedness(visit.subject.handedness),
     Promise.all(
       visit.registration_answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
         const question = await fetchQuestion(answer.question_id);
@@ -299,8 +309,6 @@ export const fetchDuplicatedVisit = async (
     visitId: visit.visit_name,
     isPhantom: visit.is_phantom,
     measurementDate: visit.date,
-    probandLanguageCode: visit.preferred_language_id,
-    personalId: visit.personal_id,
     gender,
     nativeLanguage,
     heightCm: visit.height,
@@ -314,7 +322,7 @@ export const fetchDuplicatedVisit = async (
 const fetchVisitPDF = async (visitId: string): Promise<IVisitFileDTO> => {
   type VisitFilesParams = {
     file_type: VisitFileType;
-  }
+  };
   const params: VisitFilesParams = { file_type: "reg_form" };
   const { data } = await axiosConfig.mafildbApi.get<VisitFilesResponse>(`v2/visits/${visitId}/files`, { params });
 

@@ -1,5 +1,5 @@
 import { LanguageCode } from "@app/i18n";
-import { IDeviceDTO, IProjectDTO, VisitState } from "@app/util/mafildb_API/dto";
+import { IDeviceDTO, IProjectDTO, ISubjectDTO, VisitState } from "@app/util/mafildb_API/dto";
 import {
   IGenderDTO,
   IHandednessDTO,
@@ -22,40 +22,32 @@ interface IAnswer {
   comment: string;
 }
 
+// TODO: correct attributes
 interface IVisit {
   date: Date;
   created: Date;
   visitId: string;
   state: VisitState;
   isPhantom: boolean;
-  probandLanguageCode: ProbandVisitLanguageCode;
-  projectUuid: string;
-  deviceId: string;
   measurementDate: Date;
-  name: string;
-  surname: string;
-  personalId: string;
-  birthdate: Date;
-  heightCm: number;
-  weightKg: number;
-  gender: IGenderDTO;
-  nativeLanguage: INativeLanguageDTO;
-  visualCorrectionDioptre: number;
-  handedness: IHandednessDTO;
-  email: string;
-  phone: string;
-  answers: IAnswer[];
-}
-
-export interface IRecentVisitsTableVisit
-  extends Omit<IVisit, "projectUuid" | "deviceId" | "gender" | "nativeLanguage" | "handedness"> {
+  subject: ISubjectDTO;
   project: IProjectDTO;
   device: IDeviceDTO;
+  heightCm: number;
+  weightKg: number;
+  visualCorrectionDioptre: number;
+  answers: IAnswer[];
   finalizer: IOperatorDTO;
 }
 
-export interface IDuplicatedVisitIncludingQuestions
-  extends Omit<IVisit, "created" | "projectUuid" | "deviceId" | "answers"> {
+// TODO: correct attributes
+export type IRecentVisitsTableVisit = IVisit
+
+// TODO: correct attributes
+export interface IDuplicatedVisitIncludingQuestions extends Omit<IVisit, "created" | "answers" | "finalizer"> {
+  gender: IGenderDTO;
+  nativeLanguage: INativeLanguageDTO;
+  handedness: IHandednessDTO;
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
 }
 
@@ -64,6 +56,7 @@ export interface IVisitDetailPDF {
   content: string; // Base64 encoded PDF content
 }
 
+// TODO: correct attributes
 export interface IVisitDetail extends Pick<IVisit, "visitId" | "state" | "isPhantom"> {
   pdf: IVisitDetailPDF;
 }

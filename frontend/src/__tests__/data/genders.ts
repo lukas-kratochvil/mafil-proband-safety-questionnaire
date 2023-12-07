@@ -1,7 +1,7 @@
 import { IOrderedGenderDTO } from "@app/util/server_API/dto";
 import { NEUTRAL_LANGUAGE_CODE } from "../neutral-language-code";
 
-export const gendersDev: IOrderedGenderDTO[] = [
+export const gendersTest: IOrderedGenderDTO[] = [
   {
     id: "1",
     code: "M",

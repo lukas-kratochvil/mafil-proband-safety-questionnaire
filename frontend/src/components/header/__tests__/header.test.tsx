@@ -1,5 +1,5 @@
 import ScienceIcon from "@mui/icons-material/Science";
-import { operatorMRDev } from "@app/__tests__/data/operators";
+import { operatorMRTest } from "@app/__tests__/data/operators";
 import { RoutingPath } from "@app/routing-paths";
 import { IOperatorDTO } from "@app/util/server_API/dto";
 import { render, screen, within } from "@test-utils";
@@ -79,7 +79,7 @@ describe("header", () => {
 
   describe("auth user is logged in", () => {
     test("contains all tabs", () => {
-      mockOperator = operatorMRDev;
+      mockOperator = operatorMRTest;
 
       const { container } = render(<Header />);
       const headerTabs = within(container).getAllByRole("tab");

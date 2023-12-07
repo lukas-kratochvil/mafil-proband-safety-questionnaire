@@ -92,6 +92,12 @@ export const loadFormDefaultValuesVisitDuplication = (visit: IDuplicatedVisitInc
   device: null,
   measuredAt: new Date(),
   disapprovalReason: null,
+  name: visit.subject.first_name,
+  surname: visit.subject.last_name,
+  birthdate: visit.subject.birth_date,
+  personalId: visit.subject.personal_ID,
+  email: visit.subject.email,
+  phone: visit.subject.phone,
   visualCorrection: getOption(
     visualCorrectionOptions,
     visit.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES

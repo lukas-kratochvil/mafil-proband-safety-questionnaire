@@ -1,4 +1,4 @@
-import { gendersDev } from "@app/__tests__/data/genders";
+import { gendersTest } from "@app/__tests__/data/genders";
 import { CzechPersonalId, getPersonalIdPart } from "../personal-id";
 
 describe("personal ID", () => {
@@ -100,7 +100,7 @@ describe("personal ID", () => {
       { birthdate: new Date(2010, 2, 1), expectedPersonalIdPart: "100301" },
       { birthdate: new Date(2099, 2, 1), expectedPersonalIdPart: "990301" },
     ])("valid MALE personalID part $expectedPersonalIdPart", ({ birthdate, expectedPersonalIdPart }) => {
-      const maleGender = gendersDev[0];
+      const maleGender = gendersTest[0];
       const personalIdPart = getPersonalIdPart(birthdate, maleGender);
 
       expect(personalIdPart.length).toBe(6);
@@ -113,7 +113,7 @@ describe("personal ID", () => {
       { birthdate: new Date(2010, 2, 1), expectedPersonalIdPart: "105301" },
       { birthdate: new Date(2099, 2, 1), expectedPersonalIdPart: "995301" },
     ])("valid FEMALE personalID part $expectedPersonalIdPart", ({ birthdate, expectedPersonalIdPart }) => {
-      const femaleGender = gendersDev[1];
+      const femaleGender = gendersTest[1];
       const personalIdPart = getPersonalIdPart(birthdate, femaleGender);
 
       expect(personalIdPart.length).toBe(6);

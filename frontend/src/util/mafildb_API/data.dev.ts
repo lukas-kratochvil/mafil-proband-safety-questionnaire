@@ -1,33 +1,7 @@
-import { IDeviceDTO, IProjectDTO, IVisitDTO, VisitState } from "@app/util/mafildb_API/dto";
-
-export const projectsDev: IProjectDTO[] = [
-  {
-    uuid: "1",
-    name: "Projekt 1",
-    acronym: "P1",
-  },
-  {
-    uuid: "2",
-    name: "Projekt 2",
-    acronym: "P2",
-  },
-  {
-    uuid: "3",
-    name: "Projekt 3",
-    acronym: "P3",
-  },
-];
-
-export const devicesDev: IDeviceDTO[] = [
-  {
-    id: 1,
-    name: "Magnet 1",
-  },
-  {
-    id: 2,
-    name: "Magnet 2",
-  },
-];
+import { devicesTest } from "@app/__tests__/data/devices";
+import { projectsTest } from "@app/__tests__/data/projects";
+import { subjectsTest } from "@app/__tests__/data/subjects";
+import { IVisitDTO, VisitState } from "@app/util/mafildb_API/dto";
 
 const idCounter = {
   freeId: "1",
@@ -46,15 +20,15 @@ const createDummyVisits = (
   isPhantom = false
 ): IVisitDTO[] => {
   const visits: IVisitDTO[] = [];
+  const visitId = generateVisitId();
 
   for (let i = 0; i < count; i++) {
     visits.push({
       ...initialVisit,
-      visit_name: generateVisitId(),
+      uuid: visitId,
+      visit_name: visitId,
       state,
       is_phantom: isPhantom,
-      project_uuid: projectsDev[i % 2].uuid,
-      device_id: devicesDev[i % 2].id,
     });
   }
 
@@ -62,28 +36,20 @@ const createDummyVisits = (
 };
 
 const initialDummyVisit: IVisitDTO = {
+  uuid: "1",
   date: new Date(1663390000000),
   created: new Date(1663390000000),
   visit_name: generateVisitId(),
   state: VisitState.APPROVED,
   is_phantom: false,
-  preferred_language_id: "cs",
-  project_uuid: projectsDev[0].uuid,
-  device_id: devicesDev[0].id,
+  subject: subjectsTest[0],
+  project: projectsTest[0],
+  device: devicesTest[0],
   registration_finalize_user: import.meta.env.VITE_OPERATOR_USERNAME,
   registration_finalize_date: new Date(1663390000000),
-  name: "Karel",
-  surname: "Novák",
-  personal_id: "123456789",
-  birthdate: new Date(),
   height: 180,
   weight: 85,
-  gender_code: "M",
-  native_language_code: "cs",
   visual_correction_dioptre: 0,
-  handedness_code: "r",
-  email: "karel.novak@email.cz",
-  phone: "123456789",
   registration_answers: [],
 };
 

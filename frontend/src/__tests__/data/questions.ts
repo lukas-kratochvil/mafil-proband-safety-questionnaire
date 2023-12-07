@@ -1,7 +1,7 @@
 import { IOrderedQuestionDTO } from "@app/util/server_API/dto";
 import { NEUTRAL_LANGUAGE_CODE } from "../neutral-language-code";
 
-export const questionsDev: IOrderedQuestionDTO[] = [
+export const questionsTest: IOrderedQuestionDTO[] = [
   {
     id: "p1q01",
     updatedAt: new Date(),
