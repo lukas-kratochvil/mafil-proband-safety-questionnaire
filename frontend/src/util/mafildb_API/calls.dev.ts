@@ -1,18 +1,17 @@
+import { devicesTest } from "@app/__tests__/data/devices";
+import { projectsTest } from "@app/__tests__/data/projects";
+import { subjectsTest } from "@app/__tests__/data/subjects";
 import { IDevice } from "@app/model/device";
 import { ValidatedFormData } from "@app/model/form";
 import { IProject } from "@app/model/project";
-import {
-  IDuplicatedVisitIncludingQuestions,
-  IRecentVisitsTableVisit,
-  IVisitDetail,
-  ProbandVisitLanguageCode,
-} from "@app/model/visitForm";
+import { ISubject } from "@app/model/subject";
+import { IDuplicatedVisitIncludingQuestions, IRecentVisitsTableVisit, IVisitDetail } from "@app/model/visit";
 import { dummyVisits, generateVisitId, PDF_CONTENT } from "@app/util/mafildb_API/data.dev";
-import { devicesTest } from "../../__tests__/data/devices";
-import { projectsTest } from "../../__tests__/data/projects";
 import { fetchGender, fetchHandedness, fetchNativeLanguage, fetchOperator, fetchQuestion } from "../server_API/calls";
 import { VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import { VisitState } from "./dto";
+
+export const fetchSubjectsDev = async (): Promise<ISubject[]> => subjectsTest;
 
 export const fetchProjectsDev = async (): Promise<IProject[]> => projectsTest;
 
@@ -22,163 +21,89 @@ export const createVisitDev = async (
   visitFormData: ValidatedFormData,
   state: VisitState,
   isPhantom: boolean,
-  finalizerUsername: string,
-  probandLanguageCode?: ProbandVisitLanguageCode
+  finalizerUsername: string
 ): Promise<string | never> => {
+  const visitId = generateVisitId();
   dummyVisits.push({
     ...visitFormData,
-    uuid: "",
+    uuid: visitId,
     state,
-    visit_name: generateVisitId(),
-    date: visitFormData.measuredAt ?? new Date(),
+    visitId,
+    measurementDate: visitFormData.measuredAt ?? new Date(),
     created: new Date(),
-    is_phantom: isPhantom,
-    subject: {
-      uuid: Math.random().toString(),
-      first_name: visitFormData.name,
-      last_name: visitFormData.surname,
-      birth_date: visitFormData.birthdate,
-      personal_ID: visitFormData.personalId,
-      email: visitFormData.email,
-      phone: visitFormData.phone,
-      preferred_language_id: probandLanguageCode ?? "",
-      gender: visitFormData.gender.code,
-      native_language_id: visitFormData.nativeLanguage.code,
-      handedness: visitFormData.handedness.code,
-    },
+    isPhantom,
+    subject: (await fetchSubjectsDev())[0],
     project: (await fetchProjectsDev())[0],
     device: (await fetchDevicesDev())[0],
-    registration_finalize_user: finalizerUsername,
-    registration_finalize_date: new Date(),
-    height: visitFormData.heightCm,
-    weight: visitFormData.weightKg,
-    visual_correction_dioptre: visitFormData.visualCorrectionDioptre,
-    registration_answers: visitFormData.answers.map((answer) => ({
-      question_id: answer.questionId,
-      answer: answer.answer,
-      comment: answer.comment,
-    })),
+    heightCm: visitFormData.heightCm,
+    weightKg: visitFormData.weightKg,
+    visualCorrectionDioptre: visitFormData.visualCorrectionDioptre,
+    finalizer: await fetchOperator(finalizerUsername),
+    finalizationDate: new Date(),
+    approver: null,
+    approvalDate: null,
+    disapprovalReason: "",
+    answers: visitFormData.answers.map((answer) => ({ ...answer })),
   });
-  return dummyVisits[dummyVisits.length - 1].visit_name;
+  return dummyVisits[dummyVisits.length - 1].visitId;
 };
 
 export const addPdfToVisitDev = async (): Promise<void> => {
   /* do nothing */
 };
 
-export const fetchRecentVisitsDev = async (): Promise<IRecentVisitsTableVisit[]> => {
-  const finalizer = await fetchOperator(dummyVisits[0].registration_finalize_user);
-  const visits: IRecentVisitsTableVisit[] = [];
-  dummyVisits.forEach((visit) => {
-    visits.push({
-      ...visit,
-      visitId: visit.visit_name,
-      isPhantom: visit.is_phantom,
-      measurementDate: visit.date,
-      finalizer,
-      heightCm: visit.height,
-      weightKg: visit.weight,
-      visualCorrectionDioptre: visit.visual_correction_dioptre,
-      answers: visit.registration_answers.map((answer) => ({
-        questionId: answer.question_id,
-        answer: answer.answer,
-        comment: answer.comment,
-      })),
-      subject: {
-        ...visit.subject,
-        preferredLanguageCode: visit.subject.preferred_language_id,
-        name: visit.subject.first_name,
-        surname: visit.subject.last_name,
-        birthdate: visit.subject.birth_date,
-        personalId: visit.subject.personal_ID,
-        genderCode: visit.subject.gender,
-        nativeLanguageCode: visit.subject.native_language_id,
-        handednessCode: visit.subject.handedness,
-      },
-    });
-  });
-  return visits;
-};
+export const fetchRecentVisitsDev = async (): Promise<IRecentVisitsTableVisit[]> => dummyVisits;
 
 export const fetchDuplicatedVisitDev = async (visitId: string): Promise<IDuplicatedVisitIncludingQuestions | never> => {
-  const visit = dummyVisits.find((dummyVisit) => dummyVisit.visit_name === visitId);
+  const visit = dummyVisits.find((dummyVisit) => dummyVisit.visitId === visitId);
 
   if (visit === undefined) {
     throw new Error("Visit not found!");
   }
 
   const [gender, nativeLanguage, handedness, answersIncludingQuestions] = await Promise.all([
-    fetchGender(visit.subject.gender),
-    fetchNativeLanguage(visit.subject.native_language_id),
-    fetchHandedness(visit.subject.handedness),
+    fetchGender(visit.subject.genderCode),
+    fetchNativeLanguage(visit.subject.nativeLanguageCode),
+    fetchHandedness(visit.subject.handednessCode),
     Promise.all(
-      visit.registration_answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
-        const question = await fetchQuestion(answer.question_id);
-        return {
-          answer: answer.answer,
-          comment: answer.comment,
-          questionId: question.id,
-          mustBeApproved: question.mustBeApproved,
-          partNumber: question.partNumber,
-          order: question.order,
-          hiddenByGenders: question.hiddenByGenders,
-          translations: question.translations,
-          updatedAt: question.updatedAt,
-        };
+      visit.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
+        const question = await fetchQuestion(answer.questionId);
+        return { ...answer, ...question };
       })
     ),
   ]);
   return {
     ...visit,
-    visitId: visit.visit_name,
-    isPhantom: visit.is_phantom,
-    measurementDate: visit.date,
     gender,
     nativeLanguage,
-    heightCm: visit.height,
-    weightKg: visit.weight,
-    visualCorrectionDioptre: visit.visual_correction_dioptre,
     handedness,
     answersIncludingQuestions,
-    subject: {
-      ...visit.subject,
-      preferredLanguageCode: visit.subject.preferred_language_id,
-      name: visit.subject.first_name,
-      surname: visit.subject.last_name,
-      birthdate: visit.subject.birth_date,
-      personalId: visit.subject.personal_ID,
-      genderCode: visit.subject.gender,
-      nativeLanguageCode: visit.subject.native_language_id,
-      handednessCode: visit.subject.handedness,
-    },
   };
 };
 
 export const fetchVisitDetailDev = async (visitId: string): Promise<IVisitDetail | never> => {
-  const visit = dummyVisits.find((dummyVisit) => dummyVisit.visit_name === visitId);
+  const visit = dummyVisits.find((dummyVisit) => dummyVisit.visitId === visitId);
 
   if (visit === undefined) {
     throw new Error("Visit not found!");
   }
 
   return {
-    visitId: visit.visit_name,
-    isPhantom: visit.is_phantom,
-    state: visit.state,
+    ...visit,
     pdf: {
-      name: visit.visit_name,
+      name: visit.visitId,
       content: PDF_CONTENT,
     },
   };
 };
 
 export const updateVisitStateDev = async (visitId: string, state: VisitState): Promise<string | never> => {
-  const visit = dummyVisits.find((dummyVisit) => dummyVisit.visit_name === visitId);
+  const visit = dummyVisits.find((dummyVisit) => dummyVisit.visitId === visitId);
 
   if (visit === undefined) {
     throw new Error("Visit not found!");
   }
 
   visit.state = state;
-  return visit.visit_name;
+  return visit.visitId;
 };

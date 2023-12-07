@@ -9,7 +9,7 @@ import {
   IRecentVisitsTableVisit,
   IVisitDetail,
   ProbandVisitLanguageCode,
-} from "@app/model/visitForm";
+} from "@app/model/visit";
 import { fetchGender, fetchHandedness, fetchNativeLanguage, fetchOperator, fetchQuestion } from "../server_API/calls";
 import { IOperatorDTO, IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import {
@@ -127,10 +127,10 @@ const createVisit = async (
   }
 
   if (import.meta.env.DEV) {
-    return createVisitDev(visitFormData, state, isPhantom, finalizerUsername, probandLanguageCode);
+    return createVisitDev(visitFormData, state, isPhantom, finalizerUsername);
   }
 
-  const subject = await createVisitSubject(visitFormData);
+  const subject = await createVisitSubject(visitFormData, probandLanguageCode);
   const createData: ICreateVisitInput = {
     state,
     is_phantom: isPhantom,
@@ -149,7 +149,7 @@ const createVisit = async (
     registration_finalize_user: finalizerUsername,
     registration_finalize_date: finalizedAt,
     registration_approve_user: approverUsername ?? "",
-    registration_approve_date: approvedAt,
+    registration_approve_date: approvedAt ?? null,
     registration_disapprove_reason: visitFormData.disapprovalReason,
   };
   const { data } = await axiosConfig.mafildbApi.post<CreateVisitResponse>("v2/visits", createData);
@@ -239,10 +239,11 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
 
   const visits: IRecentVisitsTableVisit[] = [];
   data.results.forEach(async (visit) => {
-    let finalizer: IOperatorDTO | undefined;
+    let finalizer: IOperatorDTO;
+    let approver: IOperatorDTO | null = null;
 
     try {
-      finalizer = await fetchOperator(visit.registration_finalize_user);
+      finalizer = await fetchOperator(visit.registration_finalize_user.username);
 
       if (finalizer === undefined) {
         throw new Error("Finalizer not found!");
@@ -252,12 +253,24 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
       return;
     }
 
+    try {
+      if (visit.registration_approve_user !== null) {
+        approver = await fetchOperator(visit.registration_approve_user.username);
+
+        if (approver === undefined) {
+          throw new Error("Approver not found!");
+        }
+      }
+    } catch (e) {
+      // TODO: what to do when approver not found? Skip the visit?
+      return;
+    }
+
     visits.push({
       ...visit,
       visitId: visit.visit_name,
       isPhantom: visit.is_phantom,
       measurementDate: visit.date,
-      finalizer,
       heightCm: visit.height,
       weightKg: visit.weight,
       visualCorrectionDioptre: visit.visual_correction_dioptre,
@@ -277,6 +290,11 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
         nativeLanguageCode: visit.subject.native_language_id,
         handednessCode: visit.subject.handedness,
       },
+      finalizer,
+      finalizationDate: visit.registration_finalize_date,
+      approver,
+      approvalDate: visit.registration_approve_date,
+      disapprovalReason: visit.registration_disapprove_reason,
     });
   });
   return visits;

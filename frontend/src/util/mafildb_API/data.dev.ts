@@ -1,7 +1,9 @@
 import { devicesTest } from "@app/__tests__/data/devices";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { subjectsTest } from "@app/__tests__/data/subjects";
-import { IVisitDTO, VisitState } from "@app/util/mafildb_API/dto";
+import { IVisit } from "@app/model/visit";
+import { VisitState } from "@app/util/mafildb_API/dto";
+import { fetchOperator } from "../server_API/calls";
 
 const idCounter = {
   freeId: "1",
@@ -13,57 +15,45 @@ export const generateVisitId = (): string => {
   return id;
 };
 
-const createDummyVisits = (
-  initialVisit: IVisitDTO,
-  state: VisitState,
-  count: number,
-  isPhantom = false
-): IVisitDTO[] => {
-  const visits: IVisitDTO[] = [];
+const createDummyVisits = (initialVisit: IVisit, state: VisitState, count: number, isPhantom = false): IVisit[] => {
+  const visits: IVisit[] = [];
   const visitId = generateVisitId();
 
   for (let i = 0; i < count; i++) {
     visits.push({
       ...initialVisit,
       uuid: visitId,
-      visit_name: visitId,
+      visitId,
       state,
-      is_phantom: isPhantom,
+      isPhantom,
     });
   }
 
   return visits;
 };
 
-const initialDummyVisit: IVisitDTO = {
+const initialDummyVisit: IVisit = {
   uuid: "1",
-  date: new Date(1663390000000),
   created: new Date(1663390000000),
-  visit_name: generateVisitId(),
+  visitId: generateVisitId(),
   state: VisitState.APPROVED,
-  is_phantom: false,
-  subject: {
-    ...subjectsTest[0],
-    preferred_language_id: subjectsTest[0].preferredLanguageCode,
-    first_name: subjectsTest[0].name,
-    last_name: subjectsTest[0].surname,
-    birth_date: subjectsTest[0].birthdate,
-    personal_ID: subjectsTest[0].personalId,
-    gender: subjectsTest[0].genderCode,
-    native_language_id: subjectsTest[0].nativeLanguageCode,
-    handedness: subjectsTest[0].handednessCode,
-  },
+  isPhantom: false,
+  measurementDate: new Date(1663390000000),
+  subject: subjectsTest[0],
   project: projectsTest[0],
   device: devicesTest[0],
-  registration_finalize_user: import.meta.env.VITE_OPERATOR_USERNAME,
-  registration_finalize_date: new Date(1663390000000),
-  height: 180,
-  weight: 85,
-  visual_correction_dioptre: 0,
-  registration_answers: [],
+  heightCm: 180,
+  weightKg: 85,
+  visualCorrectionDioptre: 0,
+  answers: [],
+  finalizer: await fetchOperator(import.meta.env.VITE_OPERATOR_USERNAME),
+  finalizationDate: new Date(1663390000000),
+  approver: null,
+  approvalDate: null,
+  disapprovalReason: "",
 };
 
-export const dummyVisits: IVisitDTO[] = [
+export const dummyVisits: IVisit[] = [
   initialDummyVisit,
   ...createDummyVisits(initialDummyVisit, VisitState.DISAPPROVED, 2),
   ...createDummyVisits(initialDummyVisit, VisitState.APPROVED, 2),

@@ -1,9 +1,10 @@
 import { operatorMRTest } from "@app/__tests__/data/operators";
-import { IVisitDetail } from "@app/model/visitForm";
+import { IVisitDetail } from "@app/model/visit";
 import VisitDetailPage from "@app/pages/VisitDetailPage";
 import * as mafildbCalls from "@app/util/mafildb_API/calls";
 import { PDF_CONTENT } from "@app/util/mafildb_API/data.dev";
 import { VisitState } from "@app/util/mafildb_API/dto";
+import { IOperatorDTO } from "@app/util/server_API/dto";
 import { render, screen } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -40,6 +41,13 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
   useAuth: () => ({
     operator: operatorMRTest,
   }),
+}));
+
+//----------------------------------------------------------------------
+// Mocking server API calls
+//----------------------------------------------------------------------
+vi.mock("@app/util/server_API/calls", async () => ({
+  fetchOperator: async (): Promise<IOperatorDTO> => operatorMRTest,
 }));
 
 //----------------------------------------------------------------------

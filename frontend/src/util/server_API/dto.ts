@@ -23,6 +23,7 @@ interface ITranslations {
   translations: ITranslation[];
 }
 
+// TODO: do I need Gender without the order attribute?
 export interface IGenderDTO extends ITranslations {
   id: string;
   code: string;

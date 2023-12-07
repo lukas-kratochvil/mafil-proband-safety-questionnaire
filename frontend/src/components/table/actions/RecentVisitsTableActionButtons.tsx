@@ -3,7 +3,7 @@ import { compareAsc } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { defaultNS } from "@app/i18n";
-import { IRecentVisitsTableVisit } from "@app/model/visitForm";
+import { IRecentVisitsTableVisit } from "@app/model/visit";
 import { RoutingPath } from "@app/routing-paths";
 import { LocalizedError } from "@app/util/error-handling/LocalizedError";
 import { fetchCurrentQuestions } from "@app/util/server_API/calls";
@@ -29,7 +29,8 @@ export const RecentVisitsTableActionButtons = ({ visit }: IRecentVisitsTableActi
           currentQuestions.length !== visitQuestionIds.length
           || currentQuestions.some(
             (currentQuestion) =>
-              !visitQuestionIds.includes(currentQuestion.id) || compareAsc(currentQuestion.updatedAt, visit.date) !== 1
+              !visitQuestionIds.includes(currentQuestion.id)
+              || compareAsc(currentQuestion.updatedAt, visit.created) !== 1
           )
         ) {
           throw new LocalizedError("cannotDuplicateVisitDueToDifferentSafetyQuestions");

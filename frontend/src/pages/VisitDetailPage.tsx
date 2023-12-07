@@ -11,7 +11,7 @@ import {
 } from "@app/components/informative/ColoredInfoStripe";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n";
-import { IVisitDetail, IVisitDetailPDF } from "@app/model/visitForm";
+import { IVisitDetail, IVisitDetailPDF } from "@app/model/visit";
 import { fetchVisitDetail, updateVisitSignatureState } from "@app/util/mafildb_API/calls";
 import { VisitState } from "@app/util/mafildb_API/dto";
 import { getBackButtonProps, handleErrorsWithToast, IButtonProps } from "@app/util/utils";

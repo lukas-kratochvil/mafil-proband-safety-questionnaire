@@ -1,5 +1,5 @@
 import { AnswerOption } from "@app/model/form";
-import { ProbandVisitLanguageCode } from "@app/model/visitForm";
+import { ProbandVisitLanguageCode } from "@app/model/visit";
 
 export interface IProjectDTO {
   uuid: string;
@@ -38,6 +38,11 @@ export enum VisitState {
   SIGNED_ELECTRONICALLY = "SIGNED_ELECTRONICALLY",
 }
 
+interface IRegistrationUserDTO {
+  id: number;
+  username: string;
+}
+
 interface IAnswerDTO {
   question_id: string;
   answer: AnswerOption;
@@ -57,18 +62,23 @@ export interface ICreateVisitInput {
   registration_answers: IAnswerDTO[];
   registration_finalize_user: string;
   registration_finalize_date: Date;
-  registration_approve_user?: string;
-  registration_approve_date?: Date;
-  registration_disapprove_reason?: string;
+  registration_approve_user: string | null;
+  registration_approve_date: Date | null;
+  registration_disapprove_reason: string;
 };
 
-export type IVisitDTO = Omit<ICreateVisitInput, "subject_uuid" | "project_uuid" | "device_id"> & {
+export type IVisitDTO = Omit<
+  ICreateVisitInput,
+  "subject_uuid" | "project_uuid" | "device_id" | "registration_finalize_user" | "registration_approve_user"
+> & {
   uuid: string;
   visit_name: string;
   created: Date;
   subject: ISubjectDTO;
   project: IProjectDTO;
   device: IDeviceDTO;
+  registration_finalize_user: IRegistrationUserDTO;
+  registration_approve_user: IRegistrationUserDTO | null;
 };
 
 export type IUpdateVisitStateInput = Pick<IVisitDTO, "visit_name" | "state">;

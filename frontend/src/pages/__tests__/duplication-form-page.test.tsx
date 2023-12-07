@@ -11,7 +11,7 @@ import { subjectsTest } from "@app/__tests__/data/subjects";
 import { IDevice } from "@app/model/device";
 import { AnswerOption } from "@app/model/form";
 import { IProject } from "@app/model/project";
-import { IDuplicatedVisitIncludingQuestions } from "@app/model/visitForm";
+import { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
 import { VisitState } from "@app/util/mafildb_API/dto";
 import {
@@ -30,7 +30,7 @@ const id = "ID1";
 const comment = "Comment";
 
 const visit: IDuplicatedVisitIncludingQuestions = {
-  date: new Date(),
+  uuid: "1",
   visitId: "VisitId1",
   isPhantom: false,
   measurementDate: new Date(),

@@ -6,7 +6,8 @@ import { operatorMRTest } from "@app/__tests__/data/operators";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { subjectsTest } from "@app/__tests__/data/subjects";
 import { AnswerOption } from "@app/model/form";
-import { IDuplicatedVisitIncludingQuestions, VisualCorrection } from "@app/model/visitForm";
+import { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
+import { VisualCorrection } from "@app/model/visitForm";
 import { VisitState } from "@app/util/mafildb_API/dto";
 import {
   IApprovalRoomVisitFormIncludingQuestionsDTO,
@@ -68,8 +69,8 @@ const approvalRoomVisitForm: IApprovalRoomVisitFormIncludingQuestionsDTO = {
 };
 
 const duplicatedVisit: IDuplicatedVisitIncludingQuestions = {
+  uuid: "1",
   visitId: "1",
-  date: new Date(),
   isPhantom: false,
   state: VisitState.APPROVED,
   measurementDate: new Date(),

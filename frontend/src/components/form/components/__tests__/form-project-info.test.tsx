@@ -1,6 +1,11 @@
+import { operatorMRTest } from "@app/__tests__/data/operators";
+import { IOperatorDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor } from "@test-utils";
 import { FormProjectInfo } from "../FormProjectInfo";
 
+//----------------------------------------------------------------------
+// Mocking react-hook-form
+//----------------------------------------------------------------------
 vi.mock("react-hook-form", () => ({
   Controller: () => <div data-testid="input" />,
   useFormContext: () => ({
@@ -9,10 +14,23 @@ vi.mock("react-hook-form", () => ({
   }),
 }));
 
+//----------------------------------------------------------------------
+// Mocking server API calls
+//----------------------------------------------------------------------
+vi.mock("@app/util/server_API/calls", async () => ({
+  fetchOperator: async (): Promise<IOperatorDTO> => operatorMRTest,
+}));
+
+//----------------------------------------------------------------------
+// Mocking error components
+//----------------------------------------------------------------------
 vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
   ErrorMessage: () => <div />,
 }));
 
+//----------------------------------------------------------------------
+// Tests
+//----------------------------------------------------------------------
 describe("form project info", () => {
   test("contains translations", async () => {
     const { container } = render(<FormProjectInfo />);
