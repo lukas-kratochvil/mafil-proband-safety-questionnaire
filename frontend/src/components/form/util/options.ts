@@ -1,4 +1,4 @@
-import { VisualCorrection } from "@app/model/visit";
+import { VisualCorrection } from "@app/model/visitForm";
 
 export interface IOption {
   value: number;

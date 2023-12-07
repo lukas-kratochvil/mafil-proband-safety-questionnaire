@@ -1,5 +1,5 @@
 import { AnswerOption } from "@app/model/form";
-import { ProbandVisitLanguageCode } from "@app/model/visit";
+import { ProbandVisitLanguageCode } from "@app/model/visitForm";
 
 export interface IProjectDTO {
   uuid: string;

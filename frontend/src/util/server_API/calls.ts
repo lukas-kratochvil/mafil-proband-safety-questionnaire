@@ -2,7 +2,7 @@ import axiosConfig from "@app/axios-config";
 import i18n, { LanguageCode } from "@app/i18n";
 import { IOperatorAuthorization } from "@app/model/auth";
 import { ValidatedFormData } from "@app/model/form";
-import { ProbandVisitLanguageCode } from "@app/model/visit";
+import { ProbandVisitLanguageCode } from "@app/model/visitForm";
 import {
   IApprovalRoomTableVisitFormDTO,
   IApprovalRoomVisitFormIncludingQuestionsDTO,

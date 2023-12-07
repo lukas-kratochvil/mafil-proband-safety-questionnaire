@@ -26,7 +26,7 @@ interface IAnswer {
 }
 
 // TODO: correct attributes
-interface IVisit {
+interface IVisitForm {
   date: Date;
   created: Date;
   visitId: string;
@@ -44,10 +44,10 @@ interface IVisit {
 }
 
 // TODO: correct attributes
-export type IRecentVisitsTableVisit = IVisit;
+export type IRecentVisitsTableVisit = IVisitForm;
 
 // TODO: correct attributes
-export interface IDuplicatedVisitIncludingQuestions extends Omit<IVisit, "created" | "answers" | "finalizer"> {
+export interface IDuplicatedVisitIncludingQuestions extends Omit<IVisitForm, "created" | "answers" | "finalizer"> {
   gender: IGenderDTO;
   nativeLanguage: INativeLanguageDTO;
   handedness: IHandednessDTO;
@@ -60,6 +60,6 @@ export interface IVisitDetailPDF {
 }
 
 // TODO: correct attributes
-export interface IVisitDetail extends Pick<IVisit, "visitId" | "state" | "isPhantom"> {
+export interface IVisitDetail extends Pick<IVisitForm, "visitId" | "state" | "isPhantom"> {
   pdf: IVisitDetailPDF;
 }

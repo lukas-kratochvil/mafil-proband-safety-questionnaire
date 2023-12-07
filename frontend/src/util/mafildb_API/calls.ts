@@ -9,7 +9,7 @@ import {
   IRecentVisitsTableVisit,
   IVisitDetail,
   ProbandVisitLanguageCode,
-} from "@app/model/visit";
+} from "@app/model/visitForm";
 import { fetchGender, fetchHandedness, fetchNativeLanguage, fetchOperator, fetchQuestion } from "../server_API/calls";
 import { IOperatorDTO, IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import {

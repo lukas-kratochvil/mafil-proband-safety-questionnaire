@@ -7,7 +7,7 @@ import { TranslatedTableCell } from "@app/components/table/TranslatedTableCell";
 import { RecentVisitsTableActionButtons } from "@app/components/table/actions/RecentVisitsTableActionButtons";
 import { defaultTableProps } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n";
-import { IRecentVisitsTableVisit } from "@app/model/visit";
+import { IRecentVisitsTableVisit } from "@app/model/visitForm";
 import { fetchRecentVisits } from "@app/util/mafildb_API/calls";
 import { VisitState } from "@app/util/mafildb_API/dto";
 import { PageContainer } from "./PageContainer";

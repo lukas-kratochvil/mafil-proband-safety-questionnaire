@@ -1,4 +1,4 @@
-import { ProbandVisitLanguageCode } from "./visit";
+import { ProbandVisitLanguageCode } from "./visitForm";
 
 export interface ISubject {
   uuid: string;

@@ -6,7 +6,7 @@ import {
   IRecentVisitsTableVisit,
   IVisitDetail,
   ProbandVisitLanguageCode,
-} from "@app/model/visit";
+} from "@app/model/visitForm";
 import { dummyVisits, generateVisitId, PDF_CONTENT } from "@app/util/mafildb_API/data.dev";
 import { devicesTest } from "../../__tests__/data/devices";
 import { projectsTest } from "../../__tests__/data/projects";

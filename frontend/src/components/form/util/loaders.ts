@@ -1,5 +1,5 @@
 import { FormAnswer, FormPropType } from "@app/model/form";
-import { IDuplicatedVisitIncludingQuestions, VisualCorrection } from "@app/model/visit";
+import { IDuplicatedVisitIncludingQuestions, VisualCorrection } from "@app/model/visitForm";
 import {
   IApprovalRoomVisitFormIncludingQuestionsDTO,
   IWaitingRoomVisitFormIncludingQuestions,

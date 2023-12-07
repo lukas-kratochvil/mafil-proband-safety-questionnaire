@@ -1,6 +1,6 @@
 import { array, boolean, date, mixed, number, object, string } from "yup";
 import { AnswerOption } from "@app/model/form";
-import { VisualCorrection } from "@app/model/visit";
+import { VisualCorrection } from "@app/model/visitForm";
 import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "@app/util/server_API/dto";
 import { getOption, IOption, visualCorrectionOptions } from "../util/options";
 

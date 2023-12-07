@@ -11,7 +11,7 @@ import { subjectsTest } from "@app/__tests__/data/subjects";
 import { IDevice } from "@app/model/device";
 import { AnswerOption } from "@app/model/form";
 import { IProject } from "@app/model/project";
-import { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
+import { IDuplicatedVisitIncludingQuestions } from "@app/model/visitForm";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
 import { VisitState } from "@app/util/mafildb_API/dto";
 import {
