@@ -64,7 +64,9 @@ export const fetchDevices = async (): Promise<IDevice[]> => {
     return fetchDevicesDev();
   }
 
-  const { data } = await axiosConfig.mafildbApi.get<DevicesResponse>("v2/devices");
+  // Only MR devices are relevant for this app
+  const params = { type: "MR" }
+  const { data } = await axiosConfig.mafildbApi.get<DevicesResponse>("v2/devices", { params });
 
   if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
