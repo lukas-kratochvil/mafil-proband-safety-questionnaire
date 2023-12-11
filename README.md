@@ -141,6 +141,11 @@ npx prisma migrate dev --name what-has-changed
 
 This command creates a new migration and also generates a new Prisma client code that corresponds to the current state of the `schema.prisma`.
 
+The new Prisma client code is generated only in the `server` container because local and `server` container `node_modules` are separated. To update local node_modules use this command in the `backend` directory to apply new migrations:
+```
+npx prisma generate
+```
+
 ### Useful tools
 * GraphQL playground to test the server GraphQL API: use `server` URL with the path `/graphql`
   * You must specify the same `API_KEY` HTTP header value when sending requests.

@@ -1,6 +1,6 @@
-import { Field, HideField, ObjectType } from "@nestjs/graphql";
+import { Field, HideField, Int, ObjectType } from "@nestjs/graphql";
 import { AdditionalVisitFormInfo } from "@prisma/client";
-import { IsDate, IsObject, IsUUID, MaxLength } from "class-validator";
+import { IsDate, IsNumber, IsObject, IsPositive, IsUUID, MaxLength } from "class-validator";
 import { OperatorEntity } from "@app/api/operator/entities/operator.entity";
 import { BaseEntity } from "@app/api/utils/entities/base.entity";
 import { UUID } from "@app/api/utils/scalars/uuid-scalar";
@@ -36,9 +36,10 @@ export class AdditionalVisitFormInfoEntity extends BaseEntity implements Additio
   @Field()
   projectAcronym: string;
 
-  @MaxLength(35)
-  @Field()
-  deviceId: string;
+  @IsNumber()
+  @IsPositive()
+  @Field(() => Int)
+  deviceId: number;
 
   @MaxLength(200)
   @Field()
