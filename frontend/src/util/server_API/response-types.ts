@@ -6,9 +6,6 @@ import {
   IHTMLCardDTO,
   INativeLanguageDTO,
   IOperatorDTO,
-  IOrderedGenderDTO,
-  IOrderedHandednessDTO,
-  IOrderedNativeLanguageDTO,
   IOrderedQuestionDTO,
   IPdfDTO,
   IQuestionDTO,
@@ -38,15 +35,15 @@ export type AuthenticateOperatorResponse = DataErrorsResponse<{ authenticateOper
 
 export type OperatorResponse = DataErrorsResponse<{ operator: IOperatorDTO }>;
 
-export type GendersResponse = DataErrorsResponse<{ genders: IOrderedGenderDTO[] }>;
+export type GendersResponse = DataErrorsResponse<{ genders: IGenderDTO[] }>;
 
 export type GenderResponse = DataErrorsResponse<{ gender: IGenderDTO }>;
 
-export type NativeLanguagesResponse = DataErrorsResponse<{ nativeLanguages: IOrderedNativeLanguageDTO[] }>;
+export type NativeLanguagesResponse = DataErrorsResponse<{ nativeLanguages: INativeLanguageDTO[] }>;
 
 export type NativeLanguageResponse = DataErrorsResponse<{ nativeLanguage: INativeLanguageDTO }>;
 
-export type HandednessesResponse = DataErrorsResponse<{ handednesses: IOrderedHandednessDTO[] }>;
+export type HandednessesResponse = DataErrorsResponse<{ handednesses: IHandednessDTO[] }>;
 
 export type HandednessResponse = DataErrorsResponse<{ handedness: IHandednessDTO }>;
 

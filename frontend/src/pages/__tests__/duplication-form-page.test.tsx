@@ -14,13 +14,7 @@ import { IProject } from "@app/model/project";
 import { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
 import { VisitState } from "@app/util/mafildb_API/dto";
-import {
-  INativeLanguageDTO,
-  IOrderedGenderDTO,
-  IOrderedHandednessDTO,
-  IOrderedQuestionDTO,
-  IPdfDTO,
-} from "@app/util/server_API/dto";
+import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IOrderedQuestionDTO, IPdfDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -91,9 +85,9 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
 const newDuplicatedVisitFormId = "id123";
 
 vi.mock("@app/util/server_API/calls", async () => ({
-  fetchGenders: async (): Promise<IOrderedGenderDTO[]> => gendersTest,
+  fetchGenders: async (): Promise<IGenderDTO[]> => gendersTest,
   fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesTest,
-  fetchHandednesses: async (): Promise<IOrderedHandednessDTO[]> => handednessesTest,
+  fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesTest,
   fetchCurrentQuestions: async (): Promise<IOrderedQuestionDTO[]> => questionsTest,
   createDuplicatedVisitFormForApproval: async (): Promise<string> => newDuplicatedVisitFormId,
   generateProbandPdf: async (): Promise<IPdfDTO> => pdfTest,

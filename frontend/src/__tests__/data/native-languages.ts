@@ -1,7 +1,7 @@
-import { IOrderedNativeLanguageDTO } from "@app/util/server_API/dto";
+import { INativeLanguageDTO } from "@app/util/server_API/dto";
 import { NEUTRAL_LANGUAGE_CODE } from "../neutral-language-code";
 
-export const nativeLanguagesTest: IOrderedNativeLanguageDTO[] = [
+export const nativeLanguagesTest: INativeLanguageDTO[] = [
   {
     id: "1",
     code: "cs",

@@ -2,18 +2,14 @@ import { updatedDiff } from "deep-object-diff";
 import { Operator } from "@app/hooks/auth/AuthProvider";
 import { AnswerOption, FormPropType, ValidatedFormAnswer, ValidatedFormData } from "@app/model/form";
 import { IProject } from "@app/model/project";
-import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IOrderedNativeLanguageDTO } from "@app/util/server_API/dto";
+import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "@app/util/server_API/dto";
 import { IButtonProps } from "@app/util/utils";
 
 export interface IFormSubmitButtonProps extends Omit<IButtonProps, "onClick"> {
   onClick: (data: ValidatedFormData) => Promise<void>;
 }
 
-export const compareNativeLanguages = (
-  a: IOrderedNativeLanguageDTO,
-  b: IOrderedNativeLanguageDTO,
-  locale: string
-): number => {
+export const compareNativeLanguages = (a: INativeLanguageDTO, b: INativeLanguageDTO, locale: string): number => {
   if (a.order && b.order) {
     return a.order - b.order;
   }

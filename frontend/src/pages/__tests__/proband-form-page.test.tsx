@@ -5,10 +5,10 @@ import { nativeLanguagesTest } from "@app/__tests__/data/native-languages";
 import { questionsTest } from "@app/__tests__/data/questions";
 import ProbandFormPage from "@app/pages/ProbandFormPage";
 import {
+  IGenderDTO,
+  IHandednessDTO,
   IHTMLCardDTO,
   INativeLanguageDTO,
-  IOrderedGenderDTO,
-  IOrderedHandednessDTO,
   IOrderedQuestionDTO,
 } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
@@ -48,9 +48,9 @@ const htmlCard: IHTMLCardDTO = {
 const newProbandVisitFormId = "id123";
 
 vi.mock("@app/util/server_API/calls", async () => ({
-  fetchGenders: async (): Promise<IOrderedGenderDTO[]> => gendersTest,
+  fetchGenders: async (): Promise<IGenderDTO[]> => gendersTest,
   fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesTest,
-  fetchHandednesses: async (): Promise<IOrderedHandednessDTO[]> => handednessesTest,
+  fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesTest,
   fetchCurrentQuestions: async (): Promise<IOrderedQuestionDTO[]> => questionsTest,
   createProbandVisitForm: async (): Promise<string> => newProbandVisitFormId,
   fetchEntryInfo: async (): Promise<IHTMLCardDTO> => htmlCard,

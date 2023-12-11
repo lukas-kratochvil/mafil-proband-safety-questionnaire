@@ -11,7 +11,7 @@ import { getProjectText } from "@app/components/form/util/utils";
 import { IDevice } from "@app/model/device";
 import { IProject } from "@app/model/project";
 import PhantomFormPage from "@app/pages/PhantomFormPage";
-import { INativeLanguageDTO, IOrderedGenderDTO, IOrderedHandednessDTO, IPdfDTO } from "@app/util/server_API/dto";
+import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IPdfDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -43,9 +43,9 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
 // Mocking server API calls
 //----------------------------------------------------------------------
 vi.mock("@app/util/server_API/calls", async () => ({
-  fetchGenders: async (): Promise<IOrderedGenderDTO[]> => gendersTest,
+  fetchGenders: async (): Promise<IGenderDTO[]> => gendersTest,
   fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesTest,
-  fetchHandednesses: async (): Promise<IOrderedHandednessDTO[]> => handednessesTest,
+  fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesTest,
   generatePhantomPdf: async (): Promise<IPdfDTO> => pdfTest,
 }));
 

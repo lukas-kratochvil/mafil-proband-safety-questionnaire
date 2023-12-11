@@ -14,9 +14,6 @@ import {
   IHTMLCardDTO,
   INativeLanguageDTO,
   IOperatorDTO,
-  IOrderedGenderDTO,
-  IOrderedHandednessDTO,
-  IOrderedNativeLanguageDTO,
   IOrderedQuestionDTO,
   IPdfDTO,
   IQuestionDTO,
@@ -104,7 +101,7 @@ export const fetchOperator = async (username: string): Promise<IOperatorDTO | ne
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchGenders = async (): Promise<IOrderedGenderDTO[] | never> => {
+export const fetchGenders = async (): Promise<IGenderDTO[] | never> => {
   const { data } = await axiosConfig.serverApi.post<GendersResponse>("", { query: GET_GENDERS });
 
   if (data.data) {
@@ -125,7 +122,7 @@ export const fetchGender = async (code: string): Promise<IGenderDTO | never> => 
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchNativeLanguages = async (): Promise<IOrderedNativeLanguageDTO[] | never> => {
+export const fetchNativeLanguages = async (): Promise<INativeLanguageDTO[] | never> => {
   const { data } = await axiosConfig.serverApi.post<NativeLanguagesResponse>("", { query: GET_NATIVE_LANGUAGES });
 
   if (data.data) {
@@ -149,7 +146,7 @@ export const fetchNativeLanguage = async (code: string): Promise<INativeLanguage
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchHandednesses = async (): Promise<IOrderedHandednessDTO[] | never> => {
+export const fetchHandednesses = async (): Promise<IHandednessDTO[] | never> => {
   const { data } = await axiosConfig.serverApi.post<HandednessesResponse>("", { query: GET_HANDEDNESSES });
 
   if (data.data) {

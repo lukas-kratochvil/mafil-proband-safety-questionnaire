@@ -39,11 +39,11 @@ export interface IVisit {
   approvalDate: Date | null;
   disapprovalReason: string;
 }
-// TODO: correct attributes
 
+// TODO: correct attributes
 export type IRecentVisitsTableVisit = IVisit;
-// TODO: correct attributes
 
+// TODO: correct attributes
 export interface IDuplicatedVisitIncludingQuestions
   extends Omit<
     IVisit,
@@ -59,8 +59,8 @@ export interface IVisitDetailPDF {
   name: string; // also contains extension, for example: my_doc.pdf
   content: string; // Base64 encoded PDF content
 }
-// TODO: correct attributes
 
+// TODO: correct attributes
 export interface IVisitDetail extends Pick<IVisit, "visitId" | "state" | "isPhantom"> {
   pdf: IVisitDetailPDF;
 }
