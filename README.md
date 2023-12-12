@@ -117,7 +117,7 @@ The backend and frontend `package.json` and the source code directory are mapped
 
 Only `node_modules` aren't mapped to Docker containers due to potential platform-specific code. So they must be installed and updated separately on a local machine and in the `server` and `web` Docker containers.
 
-To install Node packages run the command:
+To install or update Node packages run the command:
 ```
 npm i
 ```
