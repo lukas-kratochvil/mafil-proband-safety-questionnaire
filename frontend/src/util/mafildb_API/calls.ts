@@ -149,9 +149,9 @@ const createVisit = async (
       answer: answer.answer,
       comment: answer.comment,
     })),
-    registration_finalize_user: finalizerUsername,
+    registration_finalize_username: finalizerUsername,
     registration_finalize_date: finalizedAt,
-    registration_approve_user: approverUsername ?? "",
+    registration_approve_username: approverUsername ?? "",
     registration_approve_date: approvedAt ?? null,
     registration_disapprove_reason: visitFormData.disapprovalReason,
   };

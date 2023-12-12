@@ -3,8 +3,8 @@ import { ProbandVisitLanguageCode } from "@app/model/visit";
 
 export interface IProjectDTO {
   uuid: string;
-  acronym: string;
   name: string;
+  acronym: string;
 }
 
 export interface IDeviceDTO {
@@ -64,16 +64,16 @@ export type ICreateVisitInput = {
   weight: number;
   visual_correction_dioptre: number;
   registration_answers: IAnswerDTO[];
-  registration_finalize_user: string;
+  registration_finalize_username: string;
   registration_finalize_date: Date;
-  registration_approve_user: string | null;
+  registration_approve_username: string;
   registration_approve_date: Date | null;
   registration_disapprove_reason: string;
 };
 
 export type IVisitDTO = Omit<
   ICreateVisitInput,
-  "subject_uuid" | "project_uuid" | "device_id" | "registration_finalize_user" | "registration_approve_user"
+  "subject_uuid" | "project_uuid" | "device_id" | "registration_finalize_username" | "registration_approve_username"
 > & {
   uuid: string;
   visit_name: string;
