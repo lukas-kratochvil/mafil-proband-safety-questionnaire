@@ -12,7 +12,7 @@ const questionInclude = Prisma.validator<Prisma.QuestionInclude>()({
   hiddenByGenders: true,
 });
 
-const questionTranslationsArgs = Prisma.validator<Prisma.QuestionArgs>()({
+const questionTranslationsArgs = Prisma.validator<Prisma.QuestionDefaultArgs>()({
   include: questionInclude,
 });
 

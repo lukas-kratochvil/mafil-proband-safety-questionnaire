@@ -8,7 +8,7 @@ import { UpdateGenderInput } from "./dto/update-gender.input";
 
 const genderTranslations = Prisma.validator<Prisma.GenderInclude>()(translationsIncludeSchema);
 
-const genderTranslationsArgs = Prisma.validator<Prisma.GenderArgs>()({
+const genderTranslationsArgs = Prisma.validator<Prisma.GenderDefaultArgs>()({
   include: genderTranslations,
 });
 

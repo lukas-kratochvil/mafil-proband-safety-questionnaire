@@ -24,7 +24,7 @@ const visitFormInclude = Prisma.validator<Prisma.VisitFormInclude>()({
   },
 });
 
-const visitFormArgs = Prisma.validator<Prisma.VisitFormArgs>()({
+const visitFormArgs = Prisma.validator<Prisma.VisitFormDefaultArgs>()({
   include: visitFormInclude,
 });
 

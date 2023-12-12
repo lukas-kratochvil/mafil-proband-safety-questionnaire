@@ -8,7 +8,7 @@ import { UpdateNativeLanguageInput } from "./dto/update-native-language.input";
 
 const nativeLanguageTranslations = Prisma.validator<Prisma.NativeLanguageInclude>()(translationsIncludeSchema);
 
-const nativeLanguageTranslationsArgs = Prisma.validator<Prisma.NativeLanguageArgs>()({
+const nativeLanguageTranslationsArgs = Prisma.validator<Prisma.NativeLanguageDefaultArgs>()({
   include: nativeLanguageTranslations,
 });
 

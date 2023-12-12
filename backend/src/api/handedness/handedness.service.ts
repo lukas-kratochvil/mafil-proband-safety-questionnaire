@@ -8,7 +8,7 @@ import { UpdateHandednessInput } from "./dto/update-handedness.input";
 
 const handednessTranslations = Prisma.validator<Prisma.HandednessInclude>()(translationsIncludeSchema);
 
-const handednessTranslationsArgs = Prisma.validator<Prisma.HandednessArgs>()({
+const handednessTranslationsArgs = Prisma.validator<Prisma.HandednessDefaultArgs>()({
   include: handednessTranslations,
 });
 
