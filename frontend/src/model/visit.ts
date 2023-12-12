@@ -1,5 +1,5 @@
 import { LanguageCode } from "@app/i18n";
-import { VisitState } from "@app/util/mafildb_API/dto";
+import { ApprovalState, SignatureState } from "@app/util/mafildb_API/dto";
 import {
   IGenderDTO,
   IHandednessDTO,
@@ -19,11 +19,12 @@ interface IAnswer {
   answer: AnswerOption;
   comment: string;
 }
+
 export interface IVisit {
   uuid: string;
   visitId: string;
   created: Date;
-  state: VisitState; // TODO: separate model VisitState and DTO VisitState
+  approvalState: ApprovalState;
   isPhantom: boolean;
   measurementDate: Date;
   subject: ISubject;
@@ -37,17 +38,24 @@ export interface IVisit {
   finalizationDate: Date;
   approver: IOperatorDTO | null;
   approvalDate: Date | null;
+  signatureState: SignatureState;
   disapprovalReason: string;
 }
 
-// TODO: correct attributes
 export type IRecentVisitsTableVisit = IVisit;
 
-// TODO: correct attributes
 export interface IDuplicatedVisitIncludingQuestions
   extends Omit<
     IVisit,
-    "created" | "answers" | "finalizer" | "finalizationDate" | "approver" | "approvalDate" | "disapprovalReason"
+    | "created"
+    | "approvalState"
+    | "answers"
+    | "finalizer"
+    | "finalizationDate"
+    | "approver"
+    | "approvalDate"
+    | "disapprovalReason"
+    | "signatureState"
   > {
   gender: IGenderDTO;
   nativeLanguage: INativeLanguageDTO;
@@ -60,7 +68,6 @@ export interface IVisitDetailPDF {
   content: string; // Base64 encoded PDF content
 }
 
-// TODO: correct attributes
-export interface IVisitDetail extends Pick<IVisit, "visitId" | "state" | "isPhantom"> {
+export interface IVisitDetail extends Pick<IVisit, "visitId" | "approvalState" | "isPhantom" | "signatureState"> {
   pdf: IVisitDetailPDF;
 }

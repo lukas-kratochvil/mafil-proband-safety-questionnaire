@@ -13,7 +13,7 @@ import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n";
 import { IVisitDetail, IVisitDetailPDF } from "@app/model/visit";
 import { fetchVisitDetail, updateVisitSignatureState } from "@app/util/mafildb_API/calls";
-import { VisitState } from "@app/util/mafildb_API/dto";
+import { ApprovalState, SignatureState } from "@app/util/mafildb_API/dto";
 import { getBackButtonProps, handleErrorsWithToast, IButtonProps } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
 
@@ -24,34 +24,41 @@ interface IVisitDetailButtonProps extends IButtonProps {
 }
 
 const getColoredInfoStripe = (visitDetail: IVisitDetail): IColoredInfoStripeProps | undefined => {
-  switch (visitDetail.state) {
-    case VisitState.APPROVED:
-      return visitDetail.isPhantom
-        ? {
-            textLocalizationKey: "visitDetailPage.infoStripes.completed",
-            color: ColoredInfoStripeColors.GREEN,
-          }
-        : {
-            textLocalizationKey: "visitDetailPage.infoStripes.signatureChoice",
-            color: ColoredInfoStripeColors.BLUE,
-          };
-    case VisitState.DISAPPROVED:
+  if (visitDetail.isPhantom) {
+    return {
+      textLocalizationKey: "visitDetailPage.infoStripes.completed",
+      color: ColoredInfoStripeColors.GREEN,
+    };
+  }
+
+  switch (visitDetail.approvalState) {
+    case ApprovalState.DISAPPROVED:
       return {
         textLocalizationKey: "visitDetailPage.infoStripes.disapproved",
         color: ColoredInfoStripeColors.RED,
       };
-    case VisitState.FOR_SIGNATURE_PHYSICALLY:
-    case VisitState.FOR_SIGNATURE_ELECTRONICALLY:
-      return {
-        textLocalizationKey: "visitDetailPage.infoStripes.waitingForSignatureConfirmation",
-        color: ColoredInfoStripeColors.ORANGE,
-      };
-    case VisitState.SIGNED_PHYSICALLY:
-    case VisitState.SIGNED_ELECTRONICALLY:
-      return {
-        textLocalizationKey: "visitDetailPage.infoStripes.signed",
-        color: ColoredInfoStripeColors.GREEN,
-      };
+    case ApprovalState.APPROVED:
+      switch (visitDetail.signatureState) {
+        case SignatureState.NOT_SET:
+          return {
+            textLocalizationKey: "visitDetailPage.infoStripes.signatureChoice",
+            color: ColoredInfoStripeColors.BLUE,
+          };
+        case SignatureState.FOR_SIGNATURE_PHYSICALLY:
+        case SignatureState.FOR_SIGNATURE_ELECTRONICALLY:
+          return {
+            textLocalizationKey: "visitDetailPage.infoStripes.waitingForSignatureConfirmation",
+            color: ColoredInfoStripeColors.ORANGE,
+          };
+        case SignatureState.SIGNED_PHYSICALLY:
+        case SignatureState.SIGNED_ELECTRONICALLY:
+          return {
+            textLocalizationKey: "visitDetailPage.infoStripes.signed",
+            color: ColoredInfoStripeColors.GREEN,
+          };
+        default:
+          return undefined;
+      }
     default:
       return undefined;
   }
@@ -70,21 +77,27 @@ const downloadPdf = (pdf: IVisitDetailPDF): void => {
 };
 
 const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisitDetailButtonProps[] => {
-  switch (visitDetail.state) {
-    case VisitState.APPROVED:
-      return visitDetail.isPhantom
-        ? [
-            {
-              titleLocalizationKey: "visitDetailPage.buttons.downloadPDF",
-              onClick: async () => downloadPdf(visitDetail.pdf),
-            },
-          ]
-        : [
+  if (visitDetail.isPhantom) {
+    return [
+      {
+        titleLocalizationKey: "visitDetailPage.buttons.downloadPDF",
+        onClick: async () => downloadPdf(visitDetail.pdf),
+      },
+    ];
+  }
+
+  switch (visitDetail.approvalState) {
+    case ApprovalState.DISAPPROVED:
+      return [];
+    case ApprovalState.APPROVED:
+      switch (visitDetail.signatureState) {
+        case SignatureState.NOT_SET:
+          return [
             {
               titleLocalizationKey: "visitDetailPage.buttons.downloadPDFAndPhysicallySign",
               onClick: async () => {
                 downloadPdf(visitDetail.pdf);
-                await updateVisitSignatureState(visitDetail.visitId, VisitState.FOR_SIGNATURE_PHYSICALLY);
+                await updateVisitSignatureState(visitDetail.visitId, SignatureState.FOR_SIGNATURE_PHYSICALLY);
                 void queryClient.invalidateQueries({
                   queryKey: getVisitDetailQueryKey(visitDetail.visitId),
                   exact: true,
@@ -94,39 +107,48 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
             {
               titleLocalizationKey: "visitDetailPage.buttons.signElectronically",
               onClick: async () => {
-                await updateVisitSignatureState(visitDetail.visitId, VisitState.FOR_SIGNATURE_ELECTRONICALLY);
+                await updateVisitSignatureState(visitDetail.visitId, SignatureState.FOR_SIGNATURE_ELECTRONICALLY);
               },
               disabled: true,
             },
           ];
-    case VisitState.FOR_SIGNATURE_PHYSICALLY:
-      return [
-        {
-          titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
-          onClick: async () => {
-            await updateVisitSignatureState(visitDetail.visitId, VisitState.SIGNED_PHYSICALLY);
-            void queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitDetail.visitId), exact: true });
-          },
-        },
-      ];
-    case VisitState.FOR_SIGNATURE_ELECTRONICALLY:
-      return [
-        {
-          titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
-          onClick: async () => {
-            await updateVisitSignatureState(visitDetail.visitId, VisitState.SIGNED_ELECTRONICALLY);
-            void queryClient.invalidateQueries({ queryKey: getVisitDetailQueryKey(visitDetail.visitId), exact: true });
-          },
-        },
-      ];
-    case VisitState.SIGNED_PHYSICALLY:
-    case VisitState.SIGNED_ELECTRONICALLY:
-      return [
-        {
-          titleLocalizationKey: "visitDetailPage.buttons.downloadPDF",
-          onClick: async () => downloadPdf(visitDetail.pdf),
-        },
-      ];
+        case SignatureState.FOR_SIGNATURE_PHYSICALLY:
+          return [
+            {
+              titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
+              onClick: async () => {
+                await updateVisitSignatureState(visitDetail.visitId, SignatureState.SIGNED_PHYSICALLY);
+                void queryClient.invalidateQueries({
+                  queryKey: getVisitDetailQueryKey(visitDetail.visitId),
+                  exact: true,
+                });
+              },
+            },
+          ];
+        case SignatureState.FOR_SIGNATURE_ELECTRONICALLY:
+          return [
+            {
+              titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
+              onClick: async () => {
+                await updateVisitSignatureState(visitDetail.visitId, SignatureState.SIGNED_ELECTRONICALLY);
+                void queryClient.invalidateQueries({
+                  queryKey: getVisitDetailQueryKey(visitDetail.visitId),
+                  exact: true,
+                });
+              },
+            },
+          ];
+        case SignatureState.SIGNED_PHYSICALLY:
+        case SignatureState.SIGNED_ELECTRONICALLY:
+          return [
+            {
+              titleLocalizationKey: "visitDetailPage.buttons.downloadPDF",
+              onClick: async () => downloadPdf(visitDetail.pdf),
+            },
+          ];
+        default:
+          return [];
+      }
     default:
       return [];
   }

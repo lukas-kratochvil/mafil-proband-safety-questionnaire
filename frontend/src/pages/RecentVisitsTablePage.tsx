@@ -9,25 +9,34 @@ import { defaultTableProps } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n";
 import { IRecentVisitsTableVisit } from "@app/model/visit";
 import { fetchRecentVisits } from "@app/util/mafildb_API/calls";
-import { VisitState } from "@app/util/mafildb_API/dto";
+import { ApprovalState, SignatureState } from "@app/util/mafildb_API/dto";
 import { PageContainer } from "./PageContainer";
 
 const processedDateFormat = "d.M.y H:mm";
 
 const getStateLocalizationString = (visit: IRecentVisitsTableVisit): string | undefined => {
-  switch (visit.state) {
-    case VisitState.DISAPPROVED:
+  if (visit.isPhantom) {
+    return "phantomDone";
+  }
+
+  switch (visit.approvalState) {
+    case ApprovalState.DISAPPROVED:
       return "disapproved";
-    case VisitState.APPROVED:
-      return visit.isPhantom ? "phantomDone" : "approved";
-    case VisitState.FOR_SIGNATURE_PHYSICALLY:
-      return "forSignaturePhysically";
-    case VisitState.FOR_SIGNATURE_ELECTRONICALLY:
-      return "forSignatureElectronically";
-    case VisitState.SIGNED_PHYSICALLY:
-      return "signedPhysically";
-    case VisitState.SIGNED_ELECTRONICALLY:
-      return "signedElectronically";
+    case ApprovalState.APPROVED:
+      switch (visit.signatureState) {
+        case SignatureState.NOT_SET:
+          return "approved";
+        case SignatureState.FOR_SIGNATURE_PHYSICALLY:
+          return "forSignaturePhysically";
+        case SignatureState.FOR_SIGNATURE_ELECTRONICALLY:
+          return "forSignatureElectronically";
+        case SignatureState.SIGNED_PHYSICALLY:
+          return "signedPhysically";
+        case SignatureState.SIGNED_ELECTRONICALLY:
+          return "signedElectronically";
+        default:
+          return undefined;
+      }
     default:
       return undefined;
   }

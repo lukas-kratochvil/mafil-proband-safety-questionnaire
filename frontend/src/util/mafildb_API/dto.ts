@@ -29,15 +29,6 @@ export interface ISubjectDTO extends ICreateSubjectInput {
   uuid: string;
 }
 
-export enum VisitState {
-  DISAPPROVED = "DISAPPROVED",
-  APPROVED = "APPROVED",
-  FOR_SIGNATURE_PHYSICALLY = "FOR_SIGNATURE_PHYSICALLY",
-  FOR_SIGNATURE_ELECTRONICALLY = "FOR_SIGNATURE_ELECTRONICALLY",
-  SIGNED_PHYSICALLY = "SIGNED_PHYSICALLY",
-  SIGNED_ELECTRONICALLY = "SIGNED_ELECTRONICALLY",
-}
-
 interface IRegistrationUserDTO {
   id: number;
   username: string;
@@ -49,8 +40,21 @@ interface IAnswerDTO {
   comment: string;
 }
 
-export interface ICreateVisitInput {
-  state: VisitState;
+export enum ApprovalState {
+  APPROVED = "ra",
+  DISAPPROVED = "rd",
+}
+
+export enum SignatureState {
+  NOT_SET = "ns",
+  FOR_SIGNATURE_PHYSICALLY = "pp",
+  FOR_SIGNATURE_ELECTRONICALLY = "pe",
+  SIGNED_PHYSICALLY = "sp",
+  SIGNED_ELECTRONICALLY = "se",
+}
+
+export type ICreateVisitInput = {
+  checked: ApprovalState;
   is_phantom: boolean;
   date: Date;
   subject_uuid: string;
@@ -79,9 +83,10 @@ export type IVisitDTO = Omit<
   device: IDeviceDTO;
   registration_finalize_user: IRegistrationUserDTO;
   registration_approve_user: IRegistrationUserDTO | null;
+  registration_signature_status: SignatureState;
 };
 
-export type IUpdateVisitStateInput = Pick<IVisitDTO, "visit_name" | "state">;
+export type IUpdateVisitSignatureStateInput = Pick<IVisitDTO, "visit_name" | "registration_signature_status">;
 
 export type VisitFileType = "reg_form";
 

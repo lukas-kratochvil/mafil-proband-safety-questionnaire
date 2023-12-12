@@ -2,7 +2,7 @@ import { devicesTest } from "@app/__tests__/data/devices";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { subjectsTest } from "@app/__tests__/data/subjects";
 import { IVisit } from "@app/model/visit";
-import { VisitState } from "@app/util/mafildb_API/dto";
+import { ApprovalState, SignatureState } from "@app/util/mafildb_API/dto";
 import { fetchOperator } from "../server_API/calls";
 
 const idCounter = {
@@ -15,7 +15,13 @@ export const generateVisitId = (): string => {
   return id;
 };
 
-const createDummyVisits = (initialVisit: IVisit, state: VisitState, count: number, isPhantom = false): IVisit[] => {
+const createDummyVisits = (
+  count: number,
+  initialVisit: IVisit,
+  approvalState: ApprovalState,
+  signatureState: SignatureState = SignatureState.NOT_SET,
+  isPhantom = false
+): IVisit[] => {
   const visits: IVisit[] = [];
   const visitId = generateVisitId();
 
@@ -24,7 +30,8 @@ const createDummyVisits = (initialVisit: IVisit, state: VisitState, count: numbe
       ...initialVisit,
       uuid: visitId,
       visitId,
-      state,
+      approvalState,
+      signatureState,
       isPhantom,
     });
   }
@@ -36,7 +43,7 @@ const initialDummyVisit: IVisit = {
   uuid: "1",
   created: new Date(1663390000000),
   visitId: generateVisitId(),
-  state: VisitState.APPROVED,
+  approvalState: ApprovalState.APPROVED,
   isPhantom: false,
   measurementDate: new Date(1663390000000),
   subject: subjectsTest[0],
@@ -51,15 +58,16 @@ const initialDummyVisit: IVisit = {
   approver: null,
   approvalDate: null,
   disapprovalReason: "",
+  signatureState: SignatureState.NOT_SET,
 };
 
 export const dummyVisits: IVisit[] = [
   initialDummyVisit,
-  ...createDummyVisits(initialDummyVisit, VisitState.DISAPPROVED, 2),
-  ...createDummyVisits(initialDummyVisit, VisitState.APPROVED, 2),
-  ...createDummyVisits(initialDummyVisit, VisitState.FOR_SIGNATURE_PHYSICALLY, 2),
-  ...createDummyVisits(initialDummyVisit, VisitState.APPROVED, 2, true),
-  ...createDummyVisits(initialDummyVisit, VisitState.SIGNED_PHYSICALLY, 6),
+  ...createDummyVisits(2, initialDummyVisit, ApprovalState.DISAPPROVED),
+  ...createDummyVisits(2, initialDummyVisit, ApprovalState.APPROVED),
+  ...createDummyVisits(2, initialDummyVisit, ApprovalState.APPROVED, SignatureState.FOR_SIGNATURE_PHYSICALLY),
+  ...createDummyVisits(6, initialDummyVisit, ApprovalState.APPROVED, SignatureState.SIGNED_PHYSICALLY),
+  ...createDummyVisits(2, initialDummyVisit, ApprovalState.APPROVED, SignatureState.NOT_SET, true),
 ];
 
 export const PDF_CONTENT

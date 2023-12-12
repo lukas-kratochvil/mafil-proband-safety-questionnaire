@@ -13,7 +13,6 @@ import { AnswerOption } from "@app/model/form";
 import { IProject } from "@app/model/project";
 import { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
-import { VisitState } from "@app/util/mafildb_API/dto";
 import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IOrderedQuestionDTO, IPdfDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
 
@@ -28,7 +27,6 @@ const visit: IDuplicatedVisitIncludingQuestions = {
   visitId: "VisitId1",
   isPhantom: false,
   measurementDate: new Date(),
-  state: VisitState.SIGNED_PHYSICALLY,
   subject: subjectsTest[0],
   project: projectsTest[0],
   device: devicesTest[0],

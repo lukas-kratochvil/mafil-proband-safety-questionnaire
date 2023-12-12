@@ -9,7 +9,7 @@ import { IDuplicatedVisitIncludingQuestions, IRecentVisitsTableVisit, IVisitDeta
 import { dummyVisits, generateVisitId, PDF_CONTENT } from "@app/util/mafildb_API/data.dev";
 import { fetchGender, fetchHandedness, fetchNativeLanguage, fetchOperator, fetchQuestion } from "../server_API/calls";
 import { VisitFormAnswerIncludingQuestion } from "../server_API/dto";
-import { VisitState } from "./dto";
+import { ApprovalState, SignatureState } from "./dto";
 
 export const fetchSubjectsDev = async (): Promise<ISubject[]> => subjectsTest;
 
@@ -19,7 +19,7 @@ export const fetchDevicesDev = async (): Promise<IDevice[]> => devicesTest;
 
 export const createVisitDev = async (
   visitFormData: ValidatedFormData,
-  state: VisitState,
+  approvalState: ApprovalState,
   isPhantom: boolean,
   finalizerUsername: string
 ): Promise<string | never> => {
@@ -27,7 +27,8 @@ export const createVisitDev = async (
   dummyVisits.push({
     ...visitFormData,
     uuid: visitId,
-    state,
+    approvalState,
+    signatureState: SignatureState.NOT_SET,
     visitId,
     measurementDate: visitFormData.measuredAt ?? new Date(),
     created: new Date(),
@@ -97,13 +98,16 @@ export const fetchVisitDetailDev = async (visitId: string): Promise<IVisitDetail
   };
 };
 
-export const updateVisitStateDev = async (visitId: string, state: VisitState): Promise<string | never> => {
+export const updateVisitSignatureStateDev = async (
+  visitId: string,
+  signatureState: SignatureState
+): Promise<string | never> => {
   const visit = dummyVisits.find((dummyVisit) => dummyVisit.visitId === visitId);
 
   if (visit === undefined) {
     throw new Error("Visit not found!");
   }
 
-  visit.state = state;
+  visit.signatureState = signatureState;
   return visit.visitId;
 };

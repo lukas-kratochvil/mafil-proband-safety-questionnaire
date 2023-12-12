@@ -12,7 +12,7 @@ import { useAuth } from "@app/hooks/auth/AuthProvider";
 import { FormPropType, FormQac, ValidatedFormData } from "@app/model/form";
 import { RoutingPath } from "@app/routing-paths";
 import { addPdfToVisit, createVisitFromApproval } from "@app/util/mafildb_API/calls";
-import { VisitState } from "@app/util/mafildb_API/dto";
+import { ApprovalState } from "@app/util/mafildb_API/dto";
 import {
   fetchApprovalRoomVisitForm,
   generateProbandPdf,
@@ -107,7 +107,7 @@ export const ApprovalRoomForm = () => {
             onClick: async (data) => {
               await createVisitFromApproval(
                 data,
-                VisitState.DISAPPROVED,
+                ApprovalState.DISAPPROVED,
                 visitForm?.additionalInfo.finalizer.username,
                 visitForm?.additionalInfo.finalizedAt,
                 visitForm?.probandLanguageCode,
@@ -136,7 +136,7 @@ export const ApprovalRoomForm = () => {
             onClick: async (data) => {
               const visitId = await createVisitFromApproval(
                 data,
-                VisitState.APPROVED,
+                ApprovalState.APPROVED,
                 visitForm?.additionalInfo.finalizer.username,
                 visitForm?.additionalInfo.finalizedAt,
                 visitForm?.probandLanguageCode,
