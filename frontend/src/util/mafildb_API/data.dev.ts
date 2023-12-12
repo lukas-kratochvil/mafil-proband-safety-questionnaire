@@ -3,7 +3,16 @@ import { projectsTest } from "@app/__tests__/data/projects";
 import { subjectsTest } from "@app/__tests__/data/subjects";
 import { IVisit } from "@app/model/visit";
 import { ApprovalState, SignatureState } from "@app/util/mafildb_API/dto";
-import { fetchOperator } from "../server_API/calls";
+import { IOperatorDTO } from "../server_API/dto";
+
+const operatorFinalizer: IOperatorDTO = {
+  id: "1",
+  name: "Julie",
+  surname: "Novotná",
+  username: "julie.novotna@operator.cz",
+  email: "julie.novotna@operator.cz",
+  role: "MR_HIGH_PERM",
+}
 
 const idCounter = {
   freeId: "1",
@@ -53,7 +62,7 @@ const initialDummyVisit: IVisit = {
   weightKg: 85,
   visualCorrectionDioptre: 0,
   answers: [],
-  finalizer: await fetchOperator(import.meta.env.VITE_OPERATOR_USERNAME),
+  finalizer: operatorFinalizer,
   finalizationDate: new Date(1663390000000),
   approver: null,
   approvalDate: null,
