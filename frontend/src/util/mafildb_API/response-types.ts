@@ -29,9 +29,7 @@ export type CreateVisitResponse = {
   visit_name: string;
 };
 
-export type UpdateVisitStateResponse = {
-  visit_name: string;
-};
+export type UpdateVisitSignatureStateResponse = MafildbGetOneResponse<Pick<IVisitDTO, "registration_signature_status">>;
 
 export type VisitsResponse = MafildbGetManyResponse<IVisitDTO>;
 

@@ -41,10 +41,10 @@ import {
   DevicesResponse,
   MAFILDB_RESPONSE_ERROR_ATTR,
   ProjectsResponse,
-  UpdateVisitStateResponse,
   VisitFilesResponse,
   VisitResponse,
   VisitsResponse,
+  UpdateVisitSignatureStateResponse,
 } from "./response-types";
 
 export const fetchProjects = async (): Promise<IProject[]> => {
@@ -439,9 +439,16 @@ export const updateVisitSignatureState = async (
   }
 
   const updateData: IUpdateVisitSignatureStateInput = {
-    visit_name: visitId,
     registration_signature_status: signatureState,
   };
-  const { data } = await axiosConfig.mafildbApi.patch<UpdateVisitStateResponse>(`v2/visits/${visitId}`, updateData);
-  return data.visit_name;
+  const { data } = await axiosConfig.mafildbApi.patch<UpdateVisitSignatureStateResponse>(
+    `v2/visits/${visitId}`,
+    updateData
+  );
+
+  if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
+    throw new Error(data.detail);
+  }
+
+  return data.registration_signature_status;
 };

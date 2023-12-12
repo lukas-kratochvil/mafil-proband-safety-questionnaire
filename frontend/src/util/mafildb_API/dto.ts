@@ -86,7 +86,7 @@ export type IVisitDTO = Omit<
   registration_signature_status: SignatureState;
 };
 
-export type IUpdateVisitSignatureStateInput = Pick<IVisitDTO, "visit_name" | "registration_signature_status">;
+export type IUpdateVisitSignatureStateInput = Pick<IVisitDTO, "registration_signature_status">;
 
 export type VisitFileType = "reg_form";
 
