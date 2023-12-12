@@ -1,4 +1,4 @@
-import { IAddPdfToVisitInput, IDeviceDTO, IProjectDTO, ISubjectDTO, IVisitDTO, IVisitFileDTO } from "./dto";
+import { IDeviceDTO, IProjectDTO, ISubjectDTO, IVisitDTO, IVisitFileDTO } from "./dto";
 
 // TODO: correct MAFILDB response types
 
@@ -37,9 +37,8 @@ export type VisitsResponse = MafildbGetManyResponse<IVisitDTO>;
 
 export type VisitResponse = MafildbGetOneResponse<IVisitDTO>;
 
-export type AddPdfToVisitResponse = Pick<IAddPdfToVisitInput, "name" | "file_type" | "mime_type"> & {
-  id: string;
-  updated: Date;
-};
+export type AddPdfToVisitResponse = MafildbGetOneResponse<
+  Pick<IVisitFileDTO, "id" | "uploaded" | "name" | "file_type" | "mime_type">
+>;
 
 export type VisitFilesResponse = MafildbGetManyResponse<IVisitFileDTO>;

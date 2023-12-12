@@ -6,9 +6,10 @@ import { ValidatedFormData } from "@app/model/form";
 import { IProject } from "@app/model/project";
 import { ISubject } from "@app/model/subject";
 import { IDuplicatedVisitIncludingQuestions, IRecentVisitsTableVisit, IVisitDetail } from "@app/model/visit";
+import { IVisitPDF } from "@app/model/visitPdf";
 import { dummyVisits, generateVisitId, PDF_CONTENT } from "@app/util/mafildb_API/data.dev";
 import { fetchGender, fetchHandedness, fetchNativeLanguage, fetchOperator, fetchQuestion } from "../server_API/calls";
-import { VisitFormAnswerIncludingQuestion } from "../server_API/dto";
+import { IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import { ApprovalState, SignatureState } from "./dto";
 
 export const fetchSubjectsDev = async (): Promise<ISubject[]> => subjectsTest;
@@ -49,9 +50,14 @@ export const createVisitDev = async (
   return dummyVisits[dummyVisits.length - 1].visitId;
 };
 
-export const addPdfToVisitDev = async (): Promise<void> => {
-  /* do nothing */
-};
+export const addPdfToVisitDev = async (pdf: IPdfDTO): Promise<IVisitPDF> => ({
+  id: 1,
+  uploaded: new Date(),
+  name: pdf.name,
+  fileType: "reg_form",
+  mimeType: "application/pdf",
+  content: pdf.content,
+});
 
 export const fetchRecentVisitsDev = async (): Promise<IRecentVisitsTableVisit[]> => dummyVisits;
 

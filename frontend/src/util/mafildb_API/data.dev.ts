@@ -12,7 +12,7 @@ const operatorFinalizer: IOperatorDTO = {
   username: "julie.novotna@operator.cz",
   email: "julie.novotna@operator.cz",
   role: "MR_HIGH_PERM",
-}
+};
 
 const idCounter = {
   freeId: "1",

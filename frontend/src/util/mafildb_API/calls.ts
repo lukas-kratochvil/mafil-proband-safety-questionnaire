@@ -10,6 +10,7 @@ import {
   IVisitDetail,
   ProbandVisitLanguageCode,
 } from "@app/model/visit";
+import { IVisitPDF } from "@app/model/visitPdf";
 import { fetchGender, fetchHandedness, fetchNativeLanguage, fetchOperator, fetchQuestion } from "../server_API/calls";
 import { IOperatorDTO, IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import {
@@ -212,9 +213,9 @@ export const createPhantomVisit = async (
   finalizedAt: Date | undefined
 ): Promise<string | never> => createVisit(visitFormData, ApprovalState.APPROVED, true, finalizerUsername, finalizedAt);
 
-export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<void> => {
+export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<IVisitPDF> => {
   if (import.meta.env.DEV) {
-    return addPdfToVisitDev();
+    return addPdfToVisitDev(pdf);
   }
 
   const addPdfToVisitData: IAddPdfToVisitInput = {
@@ -223,8 +224,21 @@ export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<void
     mime_type: "application/pdf",
     content: pdf.content,
   };
-  await axiosConfig.mafildbApi.post<AddPdfToVisitResponse>(`v2/visits/${visitId}/files`, addPdfToVisitData);
-  return undefined;
+  const { data } = await axiosConfig.mafildbApi.post<AddPdfToVisitResponse>(
+    `v2/visits/${visitId}/files`,
+    addPdfToVisitData
+  );
+
+  if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
+    throw new Error(data.detail);
+  }
+
+  return {
+    ...data,
+    fileType: data.file_type,
+    mimeType: data.mime_type,
+    content: pdf.content,
+  };
 };
 
 export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> => {

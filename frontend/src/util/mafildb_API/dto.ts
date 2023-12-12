@@ -90,10 +90,12 @@ export type IUpdateVisitSignatureStateInput = Pick<IVisitDTO, "visit_name" | "re
 
 export type VisitFileType = "reg_form";
 
+export type VisitFileMimeType = "application/pdf";
+
 export type IAddPdfToVisitInput = {
   file_type: VisitFileType;
   name: string; // also contains extension, for example: my_doc.pdf
-  mime_type: string;
+  mime_type: VisitFileMimeType;
   content: string; // Base64 encoded PDF content
 };
 
