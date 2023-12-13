@@ -5,6 +5,7 @@ import { ValidatedFormData } from "@app/model/form";
 import { IProject } from "@app/model/project";
 import { ISubject } from "@app/model/subject";
 import {
+  CreateVisit,
   IDuplicatedVisitIncludingQuestions,
   IRecentVisitsTableVisit,
   IVisitDetail,
@@ -121,7 +122,7 @@ const createVisit = async (
   probandLanguageCode?: ProbandVisitLanguageCode,
   approverUsername?: string,
   approvedAt?: Date
-): Promise<string | never> => {
+): Promise<CreateVisit | never> => {
   if (finalizerUsername === undefined) {
     throw new Error("Missing username of the operator who finalized the visit!");
   }
@@ -157,7 +158,15 @@ const createVisit = async (
     registration_disapprove_reason: visitFormData.disapprovalReason,
   };
   const { data } = await axiosConfig.mafildbApi.post<CreateVisitResponse>("v2/visits", createData);
-  return data.visit_name;
+
+  if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
+    throw new Error(data.detail);
+  }
+
+  return {
+    uuid: data.uuid,
+    visitId: data.visit_name,
+  };
 };
 
 export const createFinalizedVisit = async (
@@ -166,7 +175,7 @@ export const createFinalizedVisit = async (
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
   probandLanguageCode: ProbandVisitLanguageCode | undefined
-): Promise<string | never> => {
+): Promise<CreateVisit | never> => {
   if (probandLanguageCode === undefined) {
     throw new Error("Missing proband language code!");
   }
@@ -182,7 +191,7 @@ export const createVisitFromApproval = async (
   probandLanguageCode: ProbandVisitLanguageCode | undefined,
   approverUsername: string | undefined,
   approvedAt: Date | undefined
-): Promise<string | never> => {
+): Promise<CreateVisit | never> => {
   if (probandLanguageCode === undefined) {
     throw new Error("Missing proband language code!");
   }
@@ -211,9 +220,10 @@ export const createPhantomVisit = async (
   visitFormData: ValidatedFormData,
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined
-): Promise<string | never> => createVisit(visitFormData, ApprovalState.APPROVED, true, finalizerUsername, finalizedAt);
+): Promise<CreateVisit | never> =>
+  createVisit(visitFormData, ApprovalState.APPROVED, true, finalizerUsername, finalizedAt);
 
-export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<IVisitPDF> => {
+export const addPdfToVisit = async (visitUuid: string, pdf: IPdfDTO): Promise<IVisitPDF> => {
   if (import.meta.env.DEV) {
     return addPdfToVisitDev(pdf);
   }
@@ -225,7 +235,7 @@ export const addPdfToVisit = async (visitId: string, pdf: IPdfDTO): Promise<IVis
     content: pdf.content,
   };
   const { data } = await axiosConfig.mafildbApi.post<AddPdfToVisitResponse>(
-    `v2/visits/${visitId}/files`,
+    `v2/visits/${visitUuid}/files`,
     addPdfToVisitData
   );
 
@@ -319,8 +329,8 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
   return visits;
 };
 
-const fetchVisit = async (visitId: string): Promise<IVisitDTO | never> => {
-  const { data } = await axiosConfig.mafildbApi.get<GetVisitResponse>(`v2/visits/${visitId}`);
+const fetchVisit = async (visitUuid: string): Promise<IVisitDTO | never> => {
+  const { data } = await axiosConfig.mafildbApi.get<GetVisitResponse>(`v2/visits/${visitUuid}`);
 
   if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
@@ -330,17 +340,17 @@ const fetchVisit = async (visitId: string): Promise<IVisitDTO | never> => {
 };
 
 export const fetchDuplicatedVisit = async (
-  visitId: string | undefined
+  visitUuid: string | undefined
 ): Promise<IDuplicatedVisitIncludingQuestions | never> => {
-  if (visitId === undefined) {
+  if (visitUuid === undefined) {
     throw new Error("Missing visit ID!");
   }
 
   if (import.meta.env.DEV) {
-    return fetchDuplicatedVisitDev(visitId);
+    return fetchDuplicatedVisitDev(visitUuid);
   }
 
-  const visit = await fetchVisit(visitId);
+  const visit = await fetchVisit(visitUuid);
   const [gender, nativeLanguage, handedness, answersIncludingQuestions] = await Promise.all([
     fetchGender(visit.subject.gender),
     fetchNativeLanguage(visit.subject.native_language_id),
@@ -388,12 +398,12 @@ export const fetchDuplicatedVisit = async (
   };
 };
 
-const fetchVisitPDF = async (visitId: string): Promise<IVisitFileDTO> => {
+const fetchVisitPDF = async (visitUuid: string): Promise<IVisitFileDTO> => {
   type VisitFilesParams = {
     file_type: VisitFileType;
   };
   const params: VisitFilesParams = { file_type: "reg_form" };
-  const { data } = await axiosConfig.mafildbApi.get<GetVisitFilesResponse>(`v2/visits/${visitId}/files`, { params });
+  const { data } = await axiosConfig.mafildbApi.get<GetVisitFilesResponse>(`v2/visits/${visitUuid}/files`, { params });
 
   if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
@@ -408,16 +418,16 @@ const fetchVisitPDF = async (visitId: string): Promise<IVisitFileDTO> => {
   return pdf;
 };
 
-export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVisitDetail | never> => {
-  if (visitId === undefined) {
+export const fetchVisitDetail = async (visitUuid: string | undefined): Promise<IVisitDetail | never> => {
+  if (visitUuid === undefined) {
     throw new Error("Missing visit ID!");
   }
 
   if (import.meta.env.DEV) {
-    return fetchVisitDetailDev(visitId);
+    return fetchVisitDetailDev(visitUuid);
   }
 
-  const [visit, visitPDF] = await Promise.all([fetchVisit(visitId), fetchVisitPDF(visitId)]);
+  const [visit, visitPDF] = await Promise.all([fetchVisit(visitUuid), fetchVisitPDF(visitUuid)]);
   return {
     visitId: visit.visit_name,
     isPhantom: visit.is_phantom,
@@ -431,18 +441,18 @@ export const fetchVisitDetail = async (visitId: string | undefined): Promise<IVi
 };
 
 export const updateVisitSignatureState = async (
-  visitId: string,
+  visitUuid: string,
   signatureState: SignatureState
 ): Promise<string | never> => {
   if (import.meta.env.DEV) {
-    return updateVisitSignatureStateDev(visitId, signatureState);
+    return updateVisitSignatureStateDev(visitUuid, signatureState);
   }
 
   const updateData: IUpdateVisitSignatureStateInput = {
     registration_signature_status: signatureState,
   };
   const { data } = await axiosConfig.mafildbApi.patch<UpdateVisitSignatureStateResponse>(
-    `v2/visits/${visitId}`,
+    `v2/visits/${visitUuid}`,
     updateData
   );
 

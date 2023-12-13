@@ -17,10 +17,10 @@ export const PhantomForm = () => {
     submitButtonProps: {
       titleLocalizationKey: "form.common.buttons.finalize",
       onClick: async (data) => {
-        const visitId = await createPhantomVisit(data, operator?.username, new Date());
-        const pdf = await generatePhantomPdf(visitId, data, operator?.username);
-        await addPdfToVisit(visitId, pdf);
-        navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visitId}`);
+        const visit = await createPhantomVisit(data, operator?.username, new Date());
+        const pdf = await generatePhantomPdf(visit.visitId, data, operator?.username);
+        await addPdfToVisit(visit.uuid, pdf);
+        navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.visitId}`);
       },
     },
     buttonsProps: [getBackButtonProps(navigate, "form.common.buttons.cancel")],

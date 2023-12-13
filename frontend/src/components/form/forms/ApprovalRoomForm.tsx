@@ -134,7 +134,7 @@ export const ApprovalRoomForm = () => {
           submitButtonProps: {
             titleLocalizationKey: "form.common.buttons.approve",
             onClick: async (data) => {
-              const visitId = await createVisitFromApproval(
+              const visit = await createVisitFromApproval(
                 data,
                 ApprovalState.APPROVED,
                 visitForm?.additionalInfo.finalizer.username,
@@ -150,15 +150,15 @@ export const ApprovalRoomForm = () => {
               }
 
               const pdf = await generateProbandPdf(
-                visitId,
+                visit.visitId,
                 data,
                 visitForm?.additionalInfo.finalizer.username,
                 visitForm?.probandLanguageCode,
                 operator.username
               );
-              await addPdfToVisit(visitId, pdf);
+              await addPdfToVisit(visit.uuid, pdf);
               await markVisitFormAsPdfGenerated(id);
-              navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visitId}`);
+              navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.visitId}`);
             },
           },
           buttonsProps: [

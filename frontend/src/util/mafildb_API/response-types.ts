@@ -25,9 +25,7 @@ export type GetDevicesResponse = MafildbGetManyResponse<IDeviceDTO>;
 
 export type CreateSubjectResponse = MafildbGetOneResponse<ISubjectDTO>;
 
-export type CreateVisitResponse = {
-  visit_name: string;
-};
+export type CreateVisitResponse = MafildbGetOneResponse<IVisitDTO>;
 
 export type UpdateVisitSignatureStateResponse = MafildbGetOneResponse<Pick<IVisitDTO, "registration_signature_status">>;
 

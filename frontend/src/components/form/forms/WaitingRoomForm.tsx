@@ -142,7 +142,7 @@ export const WaitingRoomForm = () => {
               // open warning dialog that the visit form has to be approved by an operator with higher permissions
               setOpenFinalizeDialog(true);
             } else {
-              const visitId = await createFinalizedVisit(
+              const visit = await createFinalizedVisit(
                 data,
                 ApprovalState.APPROVED,
                 operator?.username,
@@ -155,10 +155,15 @@ export const WaitingRoomForm = () => {
                 await markVisitFormAsSentToMafilDb(id);
               }
 
-              const pdf = await generateProbandPdf(visitId, data, operator?.username, visitForm?.probandLanguageCode);
-              await addPdfToVisit(visitId, pdf);
+              const pdf = await generateProbandPdf(
+                visit.visitId,
+                data,
+                operator?.username,
+                visitForm?.probandLanguageCode
+              );
+              await addPdfToVisit(visit.uuid, pdf);
               await markVisitFormAsPdfGenerated(id);
-              navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visitId}`);
+              navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.visitId}`);
             }
           },
         },

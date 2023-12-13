@@ -42,6 +42,9 @@ export interface IVisit {
   disapprovalReason: string;
 }
 
+export type CreateVisit = Pick<IVisit, "uuid" | "visitId">;
+
+// TODO: correct the type
 export type IRecentVisitsTableVisit = IVisit;
 
 export interface IDuplicatedVisitIncludingQuestions

@@ -33,7 +33,7 @@ import { FormContainer } from "./FormContainer";
 export const DuplicationForm = () => {
   const { id } = useParams();
   const {
-    data: visit,
+    data: duplicatedVisit,
     isLoading,
     isError,
   } = useQuery({
@@ -57,9 +57,9 @@ export const DuplicationForm = () => {
 
   // Setting default values
   useEffect(() => {
-    if (visit !== undefined) {
+    if (duplicatedVisit !== undefined) {
       setQacs(
-        visit.answersIncludingQuestions.map((answer, index) => ({
+        duplicatedVisit.answersIncludingQuestions.map((answer, index) => ({
           index,
           questionId: answer.questionId,
           answer: answer.answer,
@@ -72,15 +72,15 @@ export const DuplicationForm = () => {
           updatedAt: answer.updatedAt,
         }))
       );
-      const defaultValues = loadFormDefaultValuesVisitDuplication(visit);
+      const defaultValues = loadFormDefaultValuesVisitDuplication(duplicatedVisit);
       type DefaultValuesPropertyType = keyof typeof defaultValues;
       Object.keys(defaultValues).forEach((propertyName) => {
         setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
       });
-      setIsPhantom(visit.isPhantom);
+      setIsPhantom(duplicatedVisit.isPhantom);
       setAreDefaultValuesLoaded(true);
     }
-  }, [visit, setValue]);
+  }, [duplicatedVisit, setValue]);
 
   // Setting form buttons
   useEffect(() => {
@@ -89,10 +89,10 @@ export const DuplicationForm = () => {
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.finalize",
           onClick: async (data) => {
-            const visitId = await createPhantomVisit(data, operator?.username, new Date());
-            const pdf = await generatePhantomPdf(visitId, data, operator?.username);
-            await addPdfToVisit(visitId, pdf);
-            navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visitId}`);
+            const visit = await createPhantomVisit(data, operator?.username, new Date());
+            const pdf = await generatePhantomPdf(visit.visitId, data, operator?.username);
+            await addPdfToVisit(visit.uuid, pdf);
+            navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.visitId}`);
           },
         },
         buttonsProps: [getBackButtonProps(navigate, "form.common.buttons.cancel")],
@@ -131,7 +131,7 @@ export const DuplicationForm = () => {
               ApprovalState.DISAPPROVED,
               operator?.username,
               new Date(),
-              visit?.subject.preferredLanguageCode
+              duplicatedVisit?.subject.preferredLanguageCode
             );
             navigate(RoutingPath.RECENT_VISITS);
           },
@@ -156,21 +156,21 @@ export const DuplicationForm = () => {
               // open warning dialog that the visit form has to be approved by an operator with higher permissions
               setOpenFinalizeDialog(true);
             } else {
-              const visitId = await createFinalizedVisit(
+              const visit = await createFinalizedVisit(
                 data,
                 ApprovalState.APPROVED,
                 operator?.username,
                 new Date(),
-                visit?.subject.preferredLanguageCode
+                duplicatedVisit?.subject.preferredLanguageCode
               );
               const pdf = await generateProbandPdf(
-                visitId,
+                visit.visitId,
                 data,
                 operator?.username,
-                visit?.subject.preferredLanguageCode
+                duplicatedVisit?.subject.preferredLanguageCode
               );
-              await addPdfToVisit(visitId, pdf);
-              navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visitId}`);
+              await addPdfToVisit(visit.uuid, pdf);
+              navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.visitId}`);
             }
           },
         },
@@ -206,7 +206,7 @@ export const DuplicationForm = () => {
     setValue,
     trigger,
     valuesBeforeEditing,
-    visit?.subject.preferredLanguageCode,
+    duplicatedVisit?.subject.preferredLanguageCode,
   ]);
 
   const createVisitFormInApprovalRoom = async (data: ValidatedFormData) => {

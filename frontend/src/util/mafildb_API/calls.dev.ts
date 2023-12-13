@@ -5,7 +5,12 @@ import { IDevice } from "@app/model/device";
 import { ValidatedFormData } from "@app/model/form";
 import { IProject } from "@app/model/project";
 import { ISubject } from "@app/model/subject";
-import { IDuplicatedVisitIncludingQuestions, IRecentVisitsTableVisit, IVisitDetail } from "@app/model/visit";
+import {
+  CreateVisit,
+  IDuplicatedVisitIncludingQuestions,
+  IRecentVisitsTableVisit,
+  IVisitDetail,
+} from "@app/model/visit";
 import { IVisitPDF } from "@app/model/visitPdf";
 import { dummyVisits, generateVisitId, PDF_CONTENT } from "@app/util/mafildb_API/data.dev";
 import { fetchGender, fetchHandedness, fetchNativeLanguage, fetchOperator, fetchQuestion } from "../server_API/calls";
@@ -23,7 +28,7 @@ export const createVisitDev = async (
   approvalState: ApprovalState,
   isPhantom: boolean,
   finalizerUsername: string
-): Promise<string | never> => {
+): Promise<CreateVisit | never> => {
   const visitId = generateVisitId();
   dummyVisits.push({
     ...visitFormData,
@@ -47,7 +52,7 @@ export const createVisitDev = async (
     disapprovalReason: "",
     answers: visitFormData.answers.map((answer) => ({ ...answer })),
   });
-  return dummyVisits[dummyVisits.length - 1].visitId;
+  return dummyVisits[dummyVisits.length - 1];
 };
 
 export const addPdfToVisitDev = async (pdf: IPdfDTO): Promise<IVisitPDF> => ({
@@ -61,8 +66,10 @@ export const addPdfToVisitDev = async (pdf: IPdfDTO): Promise<IVisitPDF> => ({
 
 export const fetchRecentVisitsDev = async (): Promise<IRecentVisitsTableVisit[]> => dummyVisits;
 
-export const fetchDuplicatedVisitDev = async (visitId: string): Promise<IDuplicatedVisitIncludingQuestions | never> => {
-  const visit = dummyVisits.find((dummyVisit) => dummyVisit.visitId === visitId);
+export const fetchDuplicatedVisitDev = async (
+  visitUuid: string
+): Promise<IDuplicatedVisitIncludingQuestions | never> => {
+  const visit = dummyVisits.find((dummyVisit) => dummyVisit.uuid === visitUuid);
 
   if (visit === undefined) {
     throw new Error("Visit not found!");
@@ -88,8 +95,8 @@ export const fetchDuplicatedVisitDev = async (visitId: string): Promise<IDuplica
   };
 };
 
-export const fetchVisitDetailDev = async (visitId: string): Promise<IVisitDetail | never> => {
-  const visit = dummyVisits.find((dummyVisit) => dummyVisit.visitId === visitId);
+export const fetchVisitDetailDev = async (visitUuid: string): Promise<IVisitDetail | never> => {
+  const visit = dummyVisits.find((dummyVisit) => dummyVisit.uuid === visitUuid);
 
   if (visit === undefined) {
     throw new Error("Visit not found!");
@@ -105,10 +112,10 @@ export const fetchVisitDetailDev = async (visitId: string): Promise<IVisitDetail
 };
 
 export const updateVisitSignatureStateDev = async (
-  visitId: string,
+  visitUuid: string,
   signatureState: SignatureState
 ): Promise<string | never> => {
-  const visit = dummyVisits.find((dummyVisit) => dummyVisit.visitId === visitId);
+  const visit = dummyVisits.find((dummyVisit) => dummyVisit.uuid === visitUuid);
 
   if (visit === undefined) {
     throw new Error("Visit not found!");
