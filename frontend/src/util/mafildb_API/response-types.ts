@@ -8,7 +8,7 @@ type MafildbErrorResponse = {
   [key in typeof MAFILDB_RESPONSE_ERROR_ATTR]: string;
 };
 
-type MafildbGetSuccessResponse<T> = {
+type MafildbGetManySuccessResponse<T> = {
   count: number;
   next: string | null;
   previous: string | null;
@@ -16,12 +16,12 @@ type MafildbGetSuccessResponse<T> = {
 };
 
 // Generic MAFILDB API response types
-type MafildbGetManyResponse<T> = MafildbGetSuccessResponse<T> | MafildbErrorResponse;
+type MafildbGetManyResponse<T> = MafildbGetManySuccessResponse<T> | MafildbErrorResponse;
 type MafildbGetOneResponse<T> = T | MafildbErrorResponse;
 
-export type ProjectsResponse = MafildbGetManyResponse<IProjectDTO>;
+export type GetProjectsResponse = MafildbGetManyResponse<IProjectDTO>;
 
-export type DevicesResponse = MafildbGetManyResponse<IDeviceDTO>;
+export type GetDevicesResponse = MafildbGetManyResponse<IDeviceDTO>;
 
 export type CreateSubjectResponse = MafildbGetOneResponse<ISubjectDTO>;
 
@@ -31,12 +31,12 @@ export type CreateVisitResponse = {
 
 export type UpdateVisitSignatureStateResponse = MafildbGetOneResponse<Pick<IVisitDTO, "registration_signature_status">>;
 
-export type VisitsResponse = MafildbGetManyResponse<IVisitDTO>;
+export type GetVisitsResponse = MafildbGetManyResponse<IVisitDTO>;
 
-export type VisitResponse = MafildbGetOneResponse<IVisitDTO>;
+export type GetVisitResponse = MafildbGetOneResponse<IVisitDTO>;
 
 export type AddPdfToVisitResponse = MafildbGetOneResponse<
   Pick<IVisitFileDTO, "id" | "uploaded" | "name" | "file_type" | "mime_type">
 >;
 
-export type VisitFilesResponse = MafildbGetManyResponse<IVisitFileDTO>;
+export type GetVisitFilesResponse = MafildbGetManyResponse<IVisitFileDTO>;

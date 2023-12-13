@@ -38,12 +38,12 @@ import {
   AddPdfToVisitResponse,
   CreateSubjectResponse,
   CreateVisitResponse,
-  DevicesResponse,
+  GetDevicesResponse,
+  GetProjectsResponse,
+  GetVisitFilesResponse,
+  GetVisitResponse,
+  GetVisitsResponse,
   MAFILDB_RESPONSE_ERROR_ATTR,
-  ProjectsResponse,
-  VisitFilesResponse,
-  VisitResponse,
-  VisitsResponse,
   UpdateVisitSignatureStateResponse,
 } from "./response-types";
 
@@ -52,7 +52,7 @@ export const fetchProjects = async (): Promise<IProject[]> => {
     return fetchProjectsDev();
   }
 
-  const { data } = await axiosConfig.mafildbApi.get<ProjectsResponse>("v2/projects");
+  const { data } = await axiosConfig.mafildbApi.get<GetProjectsResponse>("v2/projects");
 
   if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
@@ -68,7 +68,7 @@ export const fetchDevices = async (): Promise<IDevice[]> => {
 
   // Only MR devices are relevant for this app
   const params = { type: "MR" };
-  const { data } = await axiosConfig.mafildbApi.get<DevicesResponse>("v2/devices", { params });
+  const { data } = await axiosConfig.mafildbApi.get<GetDevicesResponse>("v2/devices", { params });
 
   if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
@@ -248,7 +248,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
 
   // Fetch only visits created 3 days ago and newer
   const params = { newer_than: subDays(new Date().setHours(0, 0, 0, 0), 3).valueOf() };
-  const { data } = await axiosConfig.mafildbApi.get<VisitsResponse>("v2/visits", { params });
+  const { data } = await axiosConfig.mafildbApi.get<GetVisitsResponse>("v2/visits", { params });
 
   if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
@@ -320,7 +320,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
 };
 
 const fetchVisit = async (visitId: string): Promise<IVisitDTO | never> => {
-  const { data } = await axiosConfig.mafildbApi.get<VisitResponse>(`v2/visits/${visitId}`);
+  const { data } = await axiosConfig.mafildbApi.get<GetVisitResponse>(`v2/visits/${visitId}`);
 
   if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
@@ -393,7 +393,7 @@ const fetchVisitPDF = async (visitId: string): Promise<IVisitFileDTO> => {
     file_type: VisitFileType;
   };
   const params: VisitFilesParams = { file_type: "reg_form" };
-  const { data } = await axiosConfig.mafildbApi.get<VisitFilesResponse>(`v2/visits/${visitId}/files`, { params });
+  const { data } = await axiosConfig.mafildbApi.get<GetVisitFilesResponse>(`v2/visits/${visitId}/files`, { params });
 
   if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
