@@ -296,8 +296,8 @@ export const GENERATE_PDF = gql`
     $surname: String!
     $personalId: String!
     $birthdate: DateTime!
-    $heightCm: Float!
-    $weightKg: Float!
+    $heightCm: Int!
+    $weightKg: Int!
     $visualCorrectionDioptre: Float!
     $email: String!
     $phone: String!
