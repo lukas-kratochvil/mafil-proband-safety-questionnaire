@@ -293,13 +293,13 @@ export const fetchWaitingRoomTableVisitForms = async (): Promise<IWaitingRoomTab
 };
 
 export const fetchWaitingRoomVisitForm = async (
-  visitId: string | undefined
+  id: string | undefined
 ): Promise<IWaitingRoomVisitFormIncludingQuestions | never> => {
-  if (visitId === undefined) {
-    throw new Error("Missing visit ID!");
+  if (id === undefined) {
+    throw new Error("Missing visit form ID!");
   }
 
-  const variables = { id: visitId };
+  const variables = { id };
   const { data } = await axiosConfig.serverApi.post<WaitingRoomVisitFormResponse>("", {
     query: GET_WAITING_ROOM_VISIT_FORM,
     variables,
@@ -344,13 +344,13 @@ export const fetchApprovalRoomTableVisitForms = async (): Promise<IApprovalRoomT
 };
 
 export const fetchApprovalRoomVisitForm = async (
-  visitId: string | undefined
+  id: string | undefined
 ): Promise<IApprovalRoomVisitFormIncludingQuestionsDTO | never> => {
-  if (visitId === undefined) {
+  if (id === undefined) {
     throw new Error("Missing visit ID!");
   }
 
-  const variables = { id: visitId };
+  const variables = { id };
   const { data } = await axiosConfig.serverApi.post<ApprovalRoomVisitFormResponse>("", {
     query: GET_APPROVAL_ROOM_VISIT_FORM,
     variables,

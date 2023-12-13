@@ -1,7 +1,5 @@
 import { IDeviceDTO, IProjectDTO, ISubjectDTO, IVisitDTO, IVisitFileDTO } from "./dto";
 
-// TODO: correct MAFILDB response types
-
 export const MAFILDB_RESPONSE_ERROR_ATTR = "detail";
 
 type MafildbErrorResponse = {
