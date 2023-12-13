@@ -32,9 +32,9 @@ const createDummyVisits = (
   isPhantom = false
 ): IVisit[] => {
   const visits: IVisit[] = [];
-  const visitId = generateVisitId();
 
   for (let i = 0; i < count; i++) {
+    const visitId = generateVisitId();
     visits.push({
       ...initialVisit,
       uuid: visitId,

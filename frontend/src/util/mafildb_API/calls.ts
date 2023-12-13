@@ -132,7 +132,15 @@ const createVisit = async (
   }
 
   if (import.meta.env.DEV) {
-    return createVisitDev(visitFormData, approvalState, isPhantom, finalizerUsername);
+    return createVisitDev(
+      visitFormData,
+      approvalState,
+      isPhantom,
+      finalizerUsername,
+      finalizedAt,
+      approverUsername,
+      approvedAt
+    );
   }
 
   const subject = await createVisitSubject(visitFormData, probandLanguageCode);

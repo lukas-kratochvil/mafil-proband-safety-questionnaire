@@ -27,7 +27,10 @@ export const createVisitDev = async (
   visitFormData: ValidatedFormData,
   approvalState: ApprovalState,
   isPhantom: boolean,
-  finalizerUsername: string
+  finalizerUsername: string,
+  finalizedAt: Date,
+  approverUsername?: string,
+  approvedAt?: Date
 ): Promise<CreateVisit | never> => {
   const visitId = generateVisitId();
   dummyVisits.push({
@@ -46,9 +49,9 @@ export const createVisitDev = async (
     weightKg: visitFormData.weightKg,
     visualCorrectionDioptre: visitFormData.visualCorrectionDioptre,
     finalizer: await fetchOperator(finalizerUsername),
-    finalizationDate: new Date(),
-    approver: null,
-    approvalDate: null,
+    finalizationDate: finalizedAt,
+    approver: approverUsername ? await fetchOperator(approverUsername) : null,
+    approvalDate: approvedAt ?? null,
     disapprovalReason: "",
     answers: visitFormData.answers.map((answer) => ({ ...answer })),
   });
