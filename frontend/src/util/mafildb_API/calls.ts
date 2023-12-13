@@ -437,6 +437,7 @@ export const fetchVisitDetail = async (visitUuid: string | undefined): Promise<I
 
   const [visit, visitPDF] = await Promise.all([fetchVisit(visitUuid), fetchVisitPDF(visitUuid)]);
   return {
+    uuid: visit.uuid,
     visitId: visit.visit_name,
     isPhantom: visit.is_phantom,
     approvalState: visit.checked,

@@ -97,7 +97,7 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
               titleLocalizationKey: "visitDetailPage.buttons.downloadPDFAndPhysicallySign",
               onClick: async () => {
                 downloadPdf(visitDetail.pdf);
-                await updateVisitSignatureState(visitDetail.visitId, SignatureState.FOR_SIGNATURE_PHYSICALLY);
+                await updateVisitSignatureState(visitDetail.uuid, SignatureState.FOR_SIGNATURE_PHYSICALLY);
                 void queryClient.invalidateQueries({
                   queryKey: getVisitDetailQueryKey(visitDetail.visitId),
                   exact: true,
@@ -107,7 +107,7 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
             {
               titleLocalizationKey: "visitDetailPage.buttons.signElectronically",
               onClick: async () => {
-                await updateVisitSignatureState(visitDetail.visitId, SignatureState.FOR_SIGNATURE_ELECTRONICALLY);
+                await updateVisitSignatureState(visitDetail.uuid, SignatureState.FOR_SIGNATURE_ELECTRONICALLY);
               },
               disabled: true,
             },
@@ -117,7 +117,7 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
             {
               titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
               onClick: async () => {
-                await updateVisitSignatureState(visitDetail.visitId, SignatureState.SIGNED_PHYSICALLY);
+                await updateVisitSignatureState(visitDetail.uuid, SignatureState.SIGNED_PHYSICALLY);
                 void queryClient.invalidateQueries({
                   queryKey: getVisitDetailQueryKey(visitDetail.visitId),
                   exact: true,
@@ -130,7 +130,7 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
             {
               titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
               onClick: async () => {
-                await updateVisitSignatureState(visitDetail.visitId, SignatureState.SIGNED_ELECTRONICALLY);
+                await updateVisitSignatureState(visitDetail.uuid, SignatureState.SIGNED_ELECTRONICALLY);
                 void queryClient.invalidateQueries({
                   queryKey: getVisitDetailQueryKey(visitDetail.visitId),
                   exact: true,

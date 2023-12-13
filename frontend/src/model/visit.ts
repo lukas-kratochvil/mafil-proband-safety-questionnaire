@@ -71,6 +71,6 @@ export interface IVisitDetailPDF {
   content: string; // Base64 encoded PDF content
 }
 
-export interface IVisitDetail extends Pick<IVisit, "visitId" | "approvalState" | "isPhantom" | "signatureState"> {
+export interface IVisitDetail extends Pick<IVisit, "uuid" | "visitId" | "approvalState" | "isPhantom" | "signatureState"> {
   pdf: IVisitDetailPDF;
 }

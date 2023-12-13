@@ -12,6 +12,7 @@ import { render, screen } from "@test-utils";
 //----------------------------------------------------------------------
 const id = "ID1";
 const defaultVisit: IVisitDetail = {
+  uuid: "1",
   visitId: "VisitId1",
   isPhantom: false,
   approvalState: ApprovalState.APPROVED,
