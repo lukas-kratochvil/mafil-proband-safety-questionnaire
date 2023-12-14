@@ -2,13 +2,8 @@ import { useTranslation } from "react-i18next";
 import { LanguageCode } from "@app/i18n/i18n";
 import { ITranslation } from "@app/util/server_API/dto";
 
-const getTranslation = (translations: ITranslation[], languageCode: LanguageCode): string => {
-  if (translations.length === 0) {
-    return "";
-  }
-
-  return translations.find((trans) => trans.language.code === languageCode)?.text ?? "";
-};
+const getTranslation = (translations: ITranslation[], languageCode: LanguageCode): string =>
+  translations.find((trans) => trans.language.code === languageCode)?.text ?? "";
 
 interface ITranslatedEntityTableCellProps {
   translations: ITranslation[];
