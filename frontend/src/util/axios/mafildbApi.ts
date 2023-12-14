@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AuthService } from "../../hooks/auth/auth-service";
+import { AuthService } from "@app/hooks/auth/auth-service";
 import { transformDateStringToDate } from "./axios-transformers";
 
 /**
