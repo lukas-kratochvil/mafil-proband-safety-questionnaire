@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import { bindPopper, bindToggle, usePopupState } from "material-ui-popup-state/hooks";
-import i18n, { LanguageCode } from "@app/i18n";
+import i18n, { LanguageCode } from "@app/i18n/i18n";
 
 const languageNativeNames: Record<LanguageCode, string> = {
   cs: "Čeština",

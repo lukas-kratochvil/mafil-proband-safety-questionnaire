@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { compareAsc } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { defaultNS } from "@app/i18n";
+import { defaultNS } from "@app/i18n/i18n";
 import { IRecentVisitsTableVisit } from "@app/model/visit";
 import { RoutingPath } from "@app/routing-paths";
 import { LocalizedError } from "@app/util/error-handling/LocalizedError";

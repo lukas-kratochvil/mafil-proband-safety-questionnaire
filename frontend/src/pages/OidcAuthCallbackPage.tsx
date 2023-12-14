@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
-import { defaultNS } from "@app/i18n";
+import { defaultNS } from "@app/i18n/i18n";
 import { RoutingPath } from "@app/routing-paths";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";

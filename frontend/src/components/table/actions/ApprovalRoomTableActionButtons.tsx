@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { defaultNS } from "@app/i18n";
+import { defaultNS } from "@app/i18n/i18n";
 import { RoutingPath } from "@app/routing-paths";
 import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 

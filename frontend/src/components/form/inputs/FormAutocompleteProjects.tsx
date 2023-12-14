@@ -1,7 +1,7 @@
 import { Autocomplete } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { defaultNS } from "@app/i18n";
+import { defaultNS } from "@app/i18n/i18n";
 import { IProject } from "@app/model/project";
 import { getProjectText } from "../util/utils";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";

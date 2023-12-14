@@ -2,7 +2,7 @@ import { Avatar, Button, Stack, Theme, Typography, useMediaQuery } from "@mui/ma
 import { useTranslation } from "react-i18next";
 import { CardContainer } from "@app/components/card/CardContainer";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
-import { defaultNS } from "@app/i18n";
+import { defaultNS } from "@app/i18n/i18n";
 import { PageContainer } from "./PageContainer";
 
 const LoginPage = () => {

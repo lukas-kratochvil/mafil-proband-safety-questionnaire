@@ -1,4 +1,4 @@
-import i18n, { LanguageCode } from "@app/i18n";
+import i18n, { LanguageCode } from "@app/i18n/i18n";
 import { IOperatorAuthorization } from "@app/model/auth";
 import { ValidatedFormData } from "@app/model/form";
 import { ProbandVisitLanguageCode } from "@app/model/visit";

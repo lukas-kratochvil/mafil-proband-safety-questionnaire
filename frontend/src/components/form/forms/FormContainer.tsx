@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormButtons, IFormButtonsProps } from "@app/components/form/components/FormButtons";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
-import { defaultNS } from "@app/i18n";
+import { defaultNS } from "@app/i18n/i18n";
 import { FormPropType } from "@app/model/form";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { getValidatedFormData } from "../util/utils";

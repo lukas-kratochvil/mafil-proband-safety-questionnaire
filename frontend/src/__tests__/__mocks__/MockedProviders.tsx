@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PropsWithChildren } from "react";
 import { I18nextProvider } from "react-i18next";
 import { BrowserRouter } from "react-router-dom";
-import i18n from "@app/i18n";
+import i18n from "@app/i18n/i18n";
 
 export const MockedProviders = ({ children }: PropsWithChildren) => {
   const theme = createTheme({});

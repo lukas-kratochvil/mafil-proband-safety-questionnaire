@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { TranslatedTableCell } from "@app/components/table/TranslatedTableCell";
 import { RecentVisitsTableActionButtons } from "@app/components/table/actions/RecentVisitsTableActionButtons";
 import { defaultTableProps } from "@app/components/table/default-table-props";
-import { defaultNS } from "@app/i18n";
+import { defaultNS } from "@app/i18n/i18n";
 import { IRecentVisitsTableVisit } from "@app/model/visit";
 import { fetchRecentVisits } from "@app/util/mafildb_API/calls";
 import { ApprovalState, SignatureState } from "@app/util/mafildb_API/dto";

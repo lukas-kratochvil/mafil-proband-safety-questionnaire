@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { defaultNS } from "@app/i18n";
+import { defaultNS } from "@app/i18n/i18n";
 import { RoutingPath } from "@app/routing-paths";
 import { PageContainer } from "./PageContainer";
 

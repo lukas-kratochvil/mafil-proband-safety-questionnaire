@@ -1,4 +1,4 @@
-import { LanguageCode } from "@app/i18n";
+import { LanguageCode } from "@app/i18n/i18n";
 import { ApprovalState, SignatureState } from "@app/util/mafildb_API/dto";
 import {
   IGenderDTO,

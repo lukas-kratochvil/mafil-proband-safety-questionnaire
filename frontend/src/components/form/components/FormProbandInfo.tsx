@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { InfoTooltip } from "@app/components/informative/InfoTooltip";
-import { defaultNS } from "@app/i18n";
+import { defaultNS } from "@app/i18n/i18n";
 import { FormPropType } from "@app/model/form";
 import { VisualCorrection } from "@app/model/visitForm";
 import { fetchGenders, fetchHandednesses, fetchNativeLanguages } from "@app/util/server_API/calls";

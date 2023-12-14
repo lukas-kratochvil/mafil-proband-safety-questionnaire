@@ -2,7 +2,7 @@ import { Button, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { CardContainer } from "@app/components/card/CardContainer";
-import { defaultNS } from "@app/i18n";
+import { defaultNS } from "@app/i18n/i18n";
 import { RoutingPath } from "@app/routing-paths";
 import { PageContainer } from "./PageContainer";
 

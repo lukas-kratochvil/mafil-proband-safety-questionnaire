@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { TranslatedEntityTableCell } from "@app/components/table/TranslatedEntityTableCell";
 import { ApprovalRoomTableActionButtons } from "@app/components/table/actions/ApprovalRoomTableActionButtons";
 import { defaultTableProps } from "@app/components/table/default-table-props";
-import { defaultNS } from "@app/i18n";
+import { defaultNS } from "@app/i18n/i18n";
 import { fetchApprovalRoomTableVisitForms } from "@app/util/server_API/calls";
 import { IApprovalRoomTableVisitFormDTO } from "@app/util/server_API/dto";
 import { PageContainer } from "./PageContainer";

@@ -11,7 +11,7 @@ import {
 import { SetStateAction } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { defaultNS } from "@app/i18n";
+import { defaultNS } from "@app/i18n/i18n";
 import { FormPropType, ValidatedFormData } from "@app/model/form";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { getValidatedFormData } from "../util/utils";

@@ -1,6 +1,6 @@
 import { Button, Grid, Theme, useMediaQuery } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { convertStringToLocalizationKey, defaultNS } from "@app/i18n";
+import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
 import { handleErrorsWithToast, IButtonProps } from "@app/util/utils";
 import { IFormSubmitButtonProps } from "../util/utils";
 

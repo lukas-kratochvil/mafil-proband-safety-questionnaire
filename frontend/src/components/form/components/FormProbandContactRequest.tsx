@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import i18n, { defaultNS, LanguageCode } from "@app/i18n";
+import i18n, { defaultNS, LanguageCode } from "@app/i18n/i18n";
 import { FormPropType } from "@app/model/form";
 import { sanitizeHtml } from "@app/util/htmlSanitization";
 import { fetchProbandContactRequest } from "@app/util/server_API/calls";

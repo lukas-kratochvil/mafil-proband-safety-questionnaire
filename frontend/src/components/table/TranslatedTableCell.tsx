@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { convertStringToLocalizationKey, defaultNS } from "@app/i18n";
+import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
 
 interface ITranslatedTableCellProps {
   localizationKey: string;

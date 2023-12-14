@@ -1,6 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { defaultNS } from "@app/i18n";
+import { defaultNS } from "@app/i18n/i18n";
 
 const NotFoundPage = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "notFoundPage" });
