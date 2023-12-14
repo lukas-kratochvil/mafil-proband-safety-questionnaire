@@ -1,8 +1,8 @@
-import axiosConfig from "@app/axios-config";
 import i18n, { LanguageCode } from "@app/i18n";
 import { IOperatorAuthorization } from "@app/model/auth";
 import { ValidatedFormData } from "@app/model/form";
 import { ProbandVisitLanguageCode } from "@app/model/visit";
+import { serverApi } from "@app/util/axios/serverApi";
 import {
   IApprovalRoomTableVisitFormDTO,
   IApprovalRoomVisitFormIncludingQuestionsDTO,
@@ -78,7 +78,7 @@ import {
 
 export const authenticateOperator = async (loggingOperator: IOperatorAuthorization): Promise<IOperatorDTO | never> => {
   const variables: IOperatorAuthorization = { ...loggingOperator };
-  const { data } = await axiosConfig.serverApi.post<AuthenticateOperatorResponse>("", {
+  const { data } = await serverApi.post<AuthenticateOperatorResponse>("", {
     query: AUTHENTICATE_OPERATOR,
     variables,
   });
@@ -92,7 +92,7 @@ export const authenticateOperator = async (loggingOperator: IOperatorAuthorizati
 
 export const fetchOperator = async (username: string): Promise<IOperatorDTO | never> => {
   const variables = { username };
-  const { data } = await axiosConfig.serverApi.post<OperatorResponse>("", { query: GET_OPERATOR, variables });
+  const { data } = await serverApi.post<OperatorResponse>("", { query: GET_OPERATOR, variables });
 
   if (data.data) {
     return data.data.operator;
@@ -102,7 +102,7 @@ export const fetchOperator = async (username: string): Promise<IOperatorDTO | ne
 };
 
 export const fetchGenders = async (): Promise<IGenderDTO[] | never> => {
-  const { data } = await axiosConfig.serverApi.post<GendersResponse>("", { query: GET_GENDERS });
+  const { data } = await serverApi.post<GendersResponse>("", { query: GET_GENDERS });
 
   if (data.data) {
     return data.data.genders;
@@ -113,7 +113,7 @@ export const fetchGenders = async (): Promise<IGenderDTO[] | never> => {
 
 export const fetchGender = async (code: string): Promise<IGenderDTO | never> => {
   const variables = { code };
-  const { data } = await axiosConfig.serverApi.post<GenderResponse>("", { query: GET_GENDER, variables });
+  const { data } = await serverApi.post<GenderResponse>("", { query: GET_GENDER, variables });
 
   if (data.data) {
     return data.data.gender;
@@ -123,7 +123,7 @@ export const fetchGender = async (code: string): Promise<IGenderDTO | never> => 
 };
 
 export const fetchNativeLanguages = async (): Promise<INativeLanguageDTO[] | never> => {
-  const { data } = await axiosConfig.serverApi.post<NativeLanguagesResponse>("", { query: GET_NATIVE_LANGUAGES });
+  const { data } = await serverApi.post<NativeLanguagesResponse>("", { query: GET_NATIVE_LANGUAGES });
 
   if (data.data) {
     return data.data.nativeLanguages;
@@ -134,7 +134,7 @@ export const fetchNativeLanguages = async (): Promise<INativeLanguageDTO[] | nev
 
 export const fetchNativeLanguage = async (code: string): Promise<INativeLanguageDTO | never> => {
   const variables = { code };
-  const { data } = await axiosConfig.serverApi.post<NativeLanguageResponse>("", {
+  const { data } = await serverApi.post<NativeLanguageResponse>("", {
     query: GET_NATIVE_LANGUAGE,
     variables,
   });
@@ -147,7 +147,7 @@ export const fetchNativeLanguage = async (code: string): Promise<INativeLanguage
 };
 
 export const fetchHandednesses = async (): Promise<IHandednessDTO[] | never> => {
-  const { data } = await axiosConfig.serverApi.post<HandednessesResponse>("", { query: GET_HANDEDNESSES });
+  const { data } = await serverApi.post<HandednessesResponse>("", { query: GET_HANDEDNESSES });
 
   if (data.data) {
     return data.data.handednesses;
@@ -158,7 +158,7 @@ export const fetchHandednesses = async (): Promise<IHandednessDTO[] | never> => 
 
 export const fetchHandedness = async (code: string): Promise<IHandednessDTO | never> => {
   const variables = { code };
-  const { data } = await axiosConfig.serverApi.post<HandednessResponse>("", { query: GET_HANDEDNESS, variables });
+  const { data } = await serverApi.post<HandednessResponse>("", { query: GET_HANDEDNESS, variables });
 
   if (data.data) {
     return data.data.handedness;
@@ -168,7 +168,7 @@ export const fetchHandedness = async (code: string): Promise<IHandednessDTO | ne
 };
 
 export const fetchCurrentQuestions = async (): Promise<IOrderedQuestionDTO[] | never> => {
-  const { data } = await axiosConfig.serverApi.post<CurrentQuestionsResponse>("", { query: GET_CURRENT_QUESTIONS });
+  const { data } = await serverApi.post<CurrentQuestionsResponse>("", { query: GET_CURRENT_QUESTIONS });
 
   if (data.data) {
     return data.data.questions;
@@ -179,7 +179,7 @@ export const fetchCurrentQuestions = async (): Promise<IOrderedQuestionDTO[] | n
 
 export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO | never> => {
   const variables = { id: questionId };
-  const { data } = await axiosConfig.serverApi.post<QuestionResponse>("", { query: GET_QUESTION, variables });
+  const { data } = await serverApi.post<QuestionResponse>("", { query: GET_QUESTION, variables });
 
   if (data.data) {
     return data.data.question;
@@ -190,7 +190,7 @@ export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO | 
 
 export const fetchEntryInfo = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
   const variables = { locale };
-  const { data } = await axiosConfig.serverApi.post<EntryInfoResponse>("", {
+  const { data } = await serverApi.post<EntryInfoResponse>("", {
     query: GET_ENTRY_INFO,
     variables,
   });
@@ -204,7 +204,7 @@ export const fetchEntryInfo = async (locale: LanguageCode): Promise<IHTMLCardDTO
 
 export const fetchSafetyInfo = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
   const variables = { locale };
-  const { data } = await axiosConfig.serverApi.post<SafetyInfoResponse>("", {
+  const { data } = await serverApi.post<SafetyInfoResponse>("", {
     query: GET_SAFETY_INFO,
     variables,
   });
@@ -218,7 +218,7 @@ export const fetchSafetyInfo = async (locale: LanguageCode): Promise<IHTMLCardDT
 
 export const fetchBeforeExamination = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
   const variables = { locale };
-  const { data } = await axiosConfig.serverApi.post<BeforeExaminationResponse>("", {
+  const { data } = await serverApi.post<BeforeExaminationResponse>("", {
     query: GET_BEFORE_EXAMINATION,
     variables,
   });
@@ -232,7 +232,7 @@ export const fetchBeforeExamination = async (locale: LanguageCode): Promise<IHTM
 
 export const fetchExaminationConsent = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
   const variables = { locale };
-  const { data } = await axiosConfig.serverApi.post<ExaminationConsentResponse>("", {
+  const { data } = await serverApi.post<ExaminationConsentResponse>("", {
     query: GET_EXAMINATION_CONSENT,
     variables,
   });
@@ -252,7 +252,7 @@ export const fetchProbandContactRequest = async (
   currentDateStr: string
 ): Promise<IHTMLCardDTO | never> => {
   const variables = { locale, name, surname, birthdateStr, currentDateStr };
-  const { data } = await axiosConfig.serverApi.post<ProbandContactRequestResponse>("", {
+  const { data } = await serverApi.post<ProbandContactRequestResponse>("", {
     query: GET_PROBAND_CONTACT_REQUEST,
     variables,
   });
@@ -266,7 +266,7 @@ export const fetchProbandContactRequest = async (
 
 export const fetchProbandContactConsent = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
   const variables = { locale };
-  const { data } = await axiosConfig.serverApi.post<ProbandContactConsentResponse>("", {
+  const { data } = await serverApi.post<ProbandContactConsentResponse>("", {
     query: GET_PROBAND_CONTACT_CONSENT,
     variables,
   });
@@ -280,7 +280,7 @@ export const fetchProbandContactConsent = async (locale: LanguageCode): Promise<
 
 export const fetchWaitingRoomTableVisitForms = async (): Promise<IWaitingRoomTableVisitFormDTO[] | never> => {
   const variables = { state: "NEW" };
-  const { data } = await axiosConfig.serverApi.post<WaitingRoomTableVisitFormsResponse>("", {
+  const { data } = await serverApi.post<WaitingRoomTableVisitFormsResponse>("", {
     query: GET_WAITING_ROOM_TABLE_VISIT_FORMS,
     variables,
   });
@@ -300,7 +300,7 @@ export const fetchWaitingRoomVisitForm = async (
   }
 
   const variables = { id };
-  const { data } = await axiosConfig.serverApi.post<WaitingRoomVisitFormResponse>("", {
+  const { data } = await serverApi.post<WaitingRoomVisitFormResponse>("", {
     query: GET_WAITING_ROOM_VISIT_FORM,
     variables,
   });
@@ -331,7 +331,7 @@ export const fetchWaitingRoomVisitForm = async (
 
 export const fetchApprovalRoomTableVisitForms = async (): Promise<IApprovalRoomTableVisitFormDTO[] | never> => {
   const variables = { state: "IN_APPROVAL" };
-  const { data } = await axiosConfig.serverApi.post<ApprovalRoomTableVisitFormsResponse>("", {
+  const { data } = await serverApi.post<ApprovalRoomTableVisitFormsResponse>("", {
     query: GET_APPROVAL_ROOM_TABLE_VISIT_FORMS,
     variables,
   });
@@ -351,7 +351,7 @@ export const fetchApprovalRoomVisitForm = async (
   }
 
   const variables = { id };
-  const { data } = await axiosConfig.serverApi.post<ApprovalRoomVisitFormResponse>("", {
+  const { data } = await serverApi.post<ApprovalRoomVisitFormResponse>("", {
     query: GET_APPROVAL_ROOM_VISIT_FORM,
     variables,
   });
@@ -402,7 +402,7 @@ export const createProbandVisitForm = async (visitFormData: ValidatedFormData): 
       })),
     },
   };
-  const { data } = await axiosConfig.serverApi.post<CreateVisitFormResponse>("", {
+  const { data } = await serverApi.post<CreateVisitFormResponse>("", {
     query: CREATE_VISIT_FORM,
     variables,
   });
@@ -454,7 +454,7 @@ export const createDuplicatedVisitFormForApproval = async (
       })),
     },
   };
-  const { data } = await axiosConfig.serverApi.post<CreateVisitFormResponse>("", {
+  const { data } = await serverApi.post<CreateVisitFormResponse>("", {
     query: CREATE_VISIT_FORM,
     variables,
   });
@@ -503,7 +503,7 @@ export const sendVisitFormForApproval = async (
       })),
     },
   };
-  const { data } = await axiosConfig.serverApi.post<UpdateVisitFormResponse>("", {
+  const { data } = await serverApi.post<UpdateVisitFormResponse>("", {
     query: UPDATE_VISIT_FORM,
     variables,
   });
@@ -526,7 +526,7 @@ const updateVisitFormState = async (visitFormId: string | undefined, state: Visi
       state,
     },
   };
-  const { data } = await axiosConfig.serverApi.post<UpdateVisitFormResponse>("", {
+  const { data } = await serverApi.post<UpdateVisitFormResponse>("", {
     query: UPDATE_VISIT_FORM,
     variables,
   });
@@ -546,7 +546,7 @@ export const markVisitFormAsPdfGenerated = async (visitFormId: string | undefine
 
 export const deleteVisitForm = async (visitFormId: string): Promise<void | never> => {
   const variables = { id: visitFormId };
-  const { data } = await axiosConfig.serverApi.post<RemoveVisitFormResponse>("", {
+  const { data } = await serverApi.post<RemoveVisitFormResponse>("", {
     query: REMOVE_VISIT_FORM,
     variables,
   });
@@ -595,7 +595,7 @@ const generatePdf = async (
     })),
   };
 
-  const { data } = await axiosConfig.serverApi.post<GeneratePdfResponse>("", {
+  const { data } = await serverApi.post<GeneratePdfResponse>("", {
     query: GENERATE_PDF,
     variables,
   });

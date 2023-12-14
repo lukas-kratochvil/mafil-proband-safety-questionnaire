@@ -1,5 +1,4 @@
 import { subDays } from "date-fns";
-import axiosConfig from "@app/axios-config";
 import { IDevice } from "@app/model/device";
 import { ValidatedFormData } from "@app/model/form";
 import { IProject } from "@app/model/project";
@@ -12,6 +11,7 @@ import {
   ProbandVisitLanguageCode,
 } from "@app/model/visit";
 import { IVisitPDF } from "@app/model/visitPdf";
+import { mafildbApi } from "@app/util/axios/mafildbApi";
 import { fetchGender, fetchHandedness, fetchNativeLanguage, fetchOperator, fetchQuestion } from "../server_API/calls";
 import { IOperatorDTO, IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import {
@@ -53,7 +53,7 @@ export const fetchProjects = async (): Promise<IProject[]> => {
     return fetchProjectsDev();
   }
 
-  const { data } = await axiosConfig.mafildbApi.get<GetProjectsResponse>("v2/projects");
+  const { data } = await mafildbApi.get<GetProjectsResponse>("v2/projects");
 
   if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
@@ -69,7 +69,7 @@ export const fetchDevices = async (): Promise<IDevice[]> => {
 
   // Only MR devices are relevant for this app
   const params = { type: "MR" };
-  const { data } = await axiosConfig.mafildbApi.get<GetDevicesResponse>("v2/devices", { params });
+  const { data } = await mafildbApi.get<GetDevicesResponse>("v2/devices", { params });
 
   if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
@@ -94,7 +94,7 @@ const createVisitSubject = async (
     email: visitFormData.email,
     phone: visitFormData.phone,
   };
-  const { data } = await axiosConfig.mafildbApi.post<CreateSubjectResponse>("v2/subjects", createData);
+  const { data } = await mafildbApi.post<CreateSubjectResponse>("v2/subjects", createData);
 
   if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
@@ -165,7 +165,7 @@ const createVisit = async (
     registration_approve_date: approvedAt ?? null,
     registration_disapprove_reason: visitFormData.disapprovalReason,
   };
-  const { data } = await axiosConfig.mafildbApi.post<CreateVisitResponse>("v2/visits", createData);
+  const { data } = await mafildbApi.post<CreateVisitResponse>("v2/visits", createData);
 
   if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
@@ -242,10 +242,7 @@ export const addPdfToVisit = async (visitUuid: string, pdf: IPdfDTO): Promise<IV
     mime_type: "application/pdf",
     content: pdf.content,
   };
-  const { data } = await axiosConfig.mafildbApi.post<AddPdfToVisitResponse>(
-    `v2/visits/${visitUuid}/files`,
-    addPdfToVisitData
-  );
+  const { data } = await mafildbApi.post<AddPdfToVisitResponse>(`v2/visits/${visitUuid}/files`, addPdfToVisitData);
 
   if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
@@ -266,7 +263,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
 
   // Fetch only visits created 3 days ago and newer
   const params = { newer_than: subDays(new Date().setHours(0, 0, 0, 0), 3).valueOf() };
-  const { data } = await axiosConfig.mafildbApi.get<GetVisitsResponse>("v2/visits", { params });
+  const { data } = await mafildbApi.get<GetVisitsResponse>("v2/visits", { params });
 
   if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
@@ -338,7 +335,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
 };
 
 const fetchVisit = async (visitUuid: string): Promise<IVisitDTO | never> => {
-  const { data } = await axiosConfig.mafildbApi.get<GetVisitResponse>(`v2/visits/${visitUuid}`);
+  const { data } = await mafildbApi.get<GetVisitResponse>(`v2/visits/${visitUuid}`);
 
   if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
@@ -411,7 +408,7 @@ const fetchVisitPDF = async (visitUuid: string): Promise<IVisitFileDTO> => {
     file_type: VisitFileType;
   };
   const params: VisitFilesParams = { file_type: "reg_form" };
-  const { data } = await axiosConfig.mafildbApi.get<GetVisitFilesResponse>(`v2/visits/${visitUuid}/files`, { params });
+  const { data } = await mafildbApi.get<GetVisitFilesResponse>(`v2/visits/${visitUuid}/files`, { params });
 
   if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
@@ -460,10 +457,7 @@ export const updateVisitSignatureState = async (
   const updateData: IUpdateVisitSignatureStateInput = {
     registration_signature_status: signatureState,
   };
-  const { data } = await axiosConfig.mafildbApi.patch<UpdateVisitSignatureStateResponse>(
-    `v2/visits/${visitUuid}`,
-    updateData
-  );
+  const { data } = await mafildbApi.patch<UpdateVisitSignatureStateResponse>(`v2/visits/${visitUuid}`, updateData);
 
   if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
