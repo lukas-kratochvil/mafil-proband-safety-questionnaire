@@ -12,14 +12,14 @@ import { SetStateAction } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n/i18n";
-import { FormPropType, ValidatedFormData } from "@app/model/form";
+import { FormPropType, ValidatedOperatorFormData } from "@app/model/form";
 import { handleErrorsWithToast } from "@app/util/utils";
-import { getValidatedFormData } from "../util/utils";
+import { getValidatedOperatorFormData } from "../util/utils";
 
 interface IFormFinalizeDialogProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
-  onContinue: (data: ValidatedFormData) => Promise<void>;
+  onContinue: (data: ValidatedOperatorFormData) => Promise<void>;
 }
 
 // Warning dialog that the visit form has to be approved by an operator with higher permissions
@@ -29,7 +29,7 @@ export const FormFinalizeDialog = ({ isOpen, setIsOpen, onContinue }: IFormFinal
   const { handleSubmit } = useFormContext<FormPropType>();
 
   const onValid = async (data: FormPropType) => {
-    const validatedFormData = getValidatedFormData(data);
+    const validatedFormData = getValidatedOperatorFormData(data);
 
     try {
       await onContinue(validatedFormData);

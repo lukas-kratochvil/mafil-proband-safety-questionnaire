@@ -9,7 +9,7 @@ import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesFromApprovalRoomVisitForm } from "@app/components/form/util/loaders";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
-import { FormPropType, FormQac, ValidatedFormData } from "@app/model/form";
+import { FormPropType, FormQac, ValidatedOperatorFormData } from "@app/model/form";
 import { RoutingPath } from "@app/routing-paths";
 import { addPdfToVisit, createVisitFromApproval } from "@app/util/mafildb_API/calls";
 import { ApprovalState } from "@app/util/mafildb_API/dto";
@@ -22,6 +22,7 @@ import {
 import { QuestionPartNumber } from "@app/util/server_API/dto";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
+import { getValidatedOperatorFormData } from "../util/utils";
 import { FormContainer } from "./FormContainer";
 
 export const ApprovalRoomForm = () => {
@@ -45,7 +46,7 @@ export const ApprovalRoomForm = () => {
   const [valuesBeforeEditing, setValuesBeforeEditing] = useState<FormPropType>();
   const [isDisapproved, setIsDisapproved] = useState<boolean>(false);
   const [qacs, setQacs] = useState<FormQac[]>([]);
-  const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
+  const [formButtons, setFormButtons] = useState<IFormButtonsProps<ValidatedOperatorFormData>>();
 
   // Setting default values
   useEffect(() => {
@@ -80,7 +81,7 @@ export const ApprovalRoomForm = () => {
         setFormButtons({
           submitButtonProps: {
             titleLocalizationKey: "form.common.buttons.saveChanges",
-            onClick: async (_data: ValidatedFormData) => setIsEditing(false),
+            onClick: async (_data: ValidatedOperatorFormData) => setIsEditing(false),
           },
           buttonsProps: [
             {
@@ -193,10 +194,11 @@ export const ApprovalRoomForm = () => {
   }, [getValues, id, isDisapproved, isEditing, navigate, operator, setValue, trigger, valuesBeforeEditing, visitForm]);
 
   return (
-    <FormContainer
+    <FormContainer<ValidatedOperatorFormData>
       isLoading={isLoading || !areDefaultValuesLoaded}
       isError={isError}
       buttons={formButtons}
+      getFormData={getValidatedOperatorFormData}
     >
       <FormProjectInfo disableInputs={!isEditing} />
       <FormProbandInfo disableInputs={!isEditing} />

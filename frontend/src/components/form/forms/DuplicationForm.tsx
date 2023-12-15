@@ -9,7 +9,7 @@ import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesVisitDuplication } from "@app/components/form/util/loaders";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
-import { FormPropType, FormQac, ValidatedFormData } from "@app/model/form";
+import { FormPropType, FormQac, ValidatedOperatorFormData } from "@app/model/form";
 import { RoutingPath } from "@app/routing-paths";
 import {
   addPdfToVisit,
@@ -27,7 +27,7 @@ import { QuestionPartNumber } from "@app/util/server_API/dto";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormFinalizeDialog } from "../components/FormFinalizeDialog";
-import { isVisitFormForApproval } from "../util/utils";
+import { getValidatedOperatorFormData, isVisitFormForApproval } from "../util/utils";
 import { FormContainer } from "./FormContainer";
 
 export const DuplicationForm = () => {
@@ -53,7 +53,7 @@ export const DuplicationForm = () => {
   const [isDisapproved, setIsDisapproved] = useState<boolean>(false);
   const [openFinalizeDialog, setOpenFinalizeDialog] = useState<boolean>(false);
   const [qacs, setQacs] = useState<FormQac[]>([]);
-  const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
+  const [formButtons, setFormButtons] = useState<IFormButtonsProps<ValidatedOperatorFormData>>();
 
   // Setting default values
   useEffect(() => {
@@ -101,7 +101,7 @@ export const DuplicationForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.saveChanges",
-          onClick: async (_data: ValidatedFormData) => setIsEditing(false),
+          onClick: async (_data) => setIsEditing(false),
         },
         buttonsProps: [
           {
@@ -209,17 +209,18 @@ export const DuplicationForm = () => {
     duplicatedVisit?.subject.preferredLanguageCode,
   ]);
 
-  const createVisitFormInApprovalRoom = async (data: ValidatedFormData) => {
+  const createVisitFormInApprovalRoom = async (data: ValidatedOperatorFormData) => {
     await createDuplicatedVisitFormForApproval(data, operator?.id);
     setOpenFinalizeDialog(false);
     navigate(RoutingPath.RECENT_VISITS);
   };
 
   return (
-    <FormContainer
+    <FormContainer<ValidatedOperatorFormData>
       isLoading={isLoading || !areDefaultValuesLoaded}
       isError={isError}
       buttons={formButtons}
+      getFormData={getValidatedOperatorFormData}
     >
       <FormProjectInfo isPhantom={isPhantom} />
       <FormProbandInfo

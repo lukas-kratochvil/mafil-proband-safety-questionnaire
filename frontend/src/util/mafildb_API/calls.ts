@@ -1,6 +1,6 @@
 import { subDays } from "date-fns";
 import { IDevice } from "@app/model/device";
-import { ValidatedFormData } from "@app/model/form";
+import { ValidatedOperatorFormData } from "@app/model/form";
 import { IProject } from "@app/model/project";
 import { ISubject } from "@app/model/subject";
 import {
@@ -79,12 +79,13 @@ export const fetchDevices = async (): Promise<IDevice[]> => {
 };
 
 const createVisitSubject = async (
-  visitFormData: ValidatedFormData,
+  visitFormData: ValidatedOperatorFormData,
   probandLanguageCode?: ProbandVisitLanguageCode
 ): Promise<ISubject | never> => {
   const createData: ICreateSubjectInput = {
     first_name: visitFormData.name,
     last_name: visitFormData.surname,
+    // TODO: phantom visits do not have the probandLanguageCode filled
     preferred_language_id: probandLanguageCode ?? "",
     birth_date: visitFormData.birthdate,
     personal_ID: visitFormData.personalId,
@@ -114,7 +115,7 @@ const createVisitSubject = async (
 };
 
 const createVisit = async (
-  visitFormData: ValidatedFormData,
+  visitFormData: ValidatedOperatorFormData,
   approvalState: ApprovalState,
   isPhantom: boolean,
   finalizerUsername: string | undefined,
@@ -148,9 +149,9 @@ const createVisit = async (
     checked: approvalState,
     is_phantom: isPhantom,
     subject_uuid: subject.uuid,
-    project_uuid: visitFormData.project?.uuid ?? "",
-    device_id: visitFormData.device?.id ?? 0,
-    date: visitFormData.measuredAt ?? new Date(),
+    project_uuid: visitFormData.project.uuid,
+    device_id: visitFormData.device.id,
+    date: visitFormData.measuredAt,
     height: visitFormData.heightCm,
     weight: visitFormData.weightKg,
     visual_correction_dioptre: visitFormData.visualCorrectionDioptre,
@@ -178,7 +179,7 @@ const createVisit = async (
 };
 
 export const createFinalizedVisit = async (
-  visitFormData: ValidatedFormData,
+  visitFormData: ValidatedOperatorFormData,
   approvalState: ApprovalState,
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
@@ -192,7 +193,7 @@ export const createFinalizedVisit = async (
 };
 
 export const createVisitFromApproval = async (
-  visitFormData: ValidatedFormData,
+  visitFormData: ValidatedOperatorFormData,
   state: ApprovalState,
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
@@ -225,7 +226,7 @@ export const createVisitFromApproval = async (
 };
 
 export const createPhantomVisit = async (
-  visitFormData: ValidatedFormData,
+  visitFormData: ValidatedOperatorFormData,
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined
 ): Promise<CreateVisit | never> =>

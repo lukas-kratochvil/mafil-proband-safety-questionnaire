@@ -9,12 +9,13 @@ import { FormExaminationConsent } from "@app/components/form/components/FormExam
 import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo";
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { FormSafetyInfo } from "@app/components/form/components/FormSafetyInfo";
-import { FormPropType, FormQac } from "@app/model/form";
+import { FormPropType, FormQac, ValidatedProbandFormData } from "@app/model/form";
 import { RoutingPath } from "@app/routing-paths";
 import { createProbandVisitForm, fetchCurrentQuestions } from "@app/util/server_API/calls";
 import { FormProbandContactCheckbox } from "../components/FormProbandContactCheckbox";
 import { FormProbandContactConsent } from "../components/FormProbandContactConsent";
 import { FormProbandContactRequest } from "../components/FormProbandContactRequest";
+import { getValidatedProbandFormData } from "../util/utils";
 import { FormContainer } from "./FormContainer";
 
 enum ProbandFormStep {
@@ -28,7 +29,7 @@ export const ProbandForm = () => {
 
   const [step, setStep] = useState<ProbandFormStep>(ProbandFormStep.EXAMINATION);
   const [qacs, setQacs] = useState<FormQac[]>([]);
-  const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
+  const [formButtons, setFormButtons] = useState<IFormButtonsProps<ValidatedProbandFormData>>();
   const [isContactsRequestShown, setIsContactsRequestShown] = useState<boolean>(false);
 
   const {
@@ -113,10 +114,11 @@ export const ProbandForm = () => {
   }, [isContactsRequestShown, navigate, setError, step]);
 
   return (
-    <FormContainer
+    <FormContainer<ValidatedProbandFormData>
       isLoading={isLoading}
       isError={isError}
       buttons={formButtons}
+      getFormData={getValidatedProbandFormData}
     >
       {step === ProbandFormStep.EXAMINATION && (
         <>

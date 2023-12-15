@@ -7,22 +7,28 @@ import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { defaultNS } from "@app/i18n/i18n";
 import { FormPropType } from "@app/model/form";
 import { handleErrorsWithToast } from "@app/util/utils";
-import { getValidatedFormData } from "../util/utils";
 import { FormSkeleton } from "./FormSkeleton";
 
-interface IFormContainerProps {
+interface IFormContainerProps<TValidatedData> {
   isLoading: boolean;
   isError: boolean;
-  buttons: IFormButtonsProps | undefined;
+  buttons: IFormButtonsProps<TValidatedData> | undefined;
+  getFormData: (data: FormPropType) => TValidatedData;
 }
 
-export const FormContainer = ({ children, isLoading, isError, buttons }: PropsWithChildren<IFormContainerProps>) => {
+export const FormContainer = <TValidatedData,>({
+  children,
+  isLoading,
+  isError,
+  buttons,
+  getFormData,
+}: PropsWithChildren<IFormContainerProps<TValidatedData>>) => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const { t } = useTranslation(defaultNS);
   const { handleSubmit } = useFormContext<FormPropType>();
 
   const onValid = async (data: FormPropType) => {
-    const validatedFormData = getValidatedFormData(data);
+    const validatedFormData = getFormData(data);
 
     try {
       await buttons?.submitButtonProps?.onClick(validatedFormData);

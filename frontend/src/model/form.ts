@@ -66,12 +66,7 @@ export type ValidatedFormAnswer = {
   comment: string;
 };
 
-export type ValidatedFormData = {
-  // Project info
-  project: IProject | null;
-  device: IDevice | null;
-  measuredAt: Date | null;
-
+export type ValidatedProbandFormData = {
   // Proband info
   name: string;
   surname: string;
@@ -90,7 +85,18 @@ export type ValidatedFormData = {
   // Proband contacts
   email: string;
   phone: string;
+};
+
+type OperatorAddedFormData = {
+  // Project info
+  project: IProject;
+  device: IDevice;
+  measuredAt: Date;
 
   // Visit form disapproval
   disapprovalReason: string;
 };
+
+export type ValidatedOperatorModifiedFormData = OperatorAddedFormData & Partial<ValidatedProbandFormData>;
+
+export type ValidatedOperatorFormData = OperatorAddedFormData & ValidatedProbandFormData;

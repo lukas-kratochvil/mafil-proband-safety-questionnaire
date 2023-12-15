@@ -1,6 +1,5 @@
 import { IButtonProps } from "@app/util/utils";
 import { render, screen } from "@test-utils";
-import { IFormSubmitButtonProps } from "../../util/utils";
 import { FormButtons } from "../FormButtons";
 
 describe("form buttons", () => {
@@ -17,14 +16,12 @@ describe("form buttons", () => {
 
   describe("submit button", () => {
     test("is visible", () => {
-      const submitButtonProps: IFormSubmitButtonProps = {
-        onClick: vi.fn(),
-        titleLocalizationKey: "",
-      };
-
       render(
         <FormButtons
-          submitButtonProps={submitButtonProps}
+          submitButtonProps={{
+            onClick: vi.fn(),
+            titleLocalizationKey: "",
+          }}
           buttonsProps={[]}
         />
       );
@@ -36,14 +33,13 @@ describe("form buttons", () => {
 
     test("has title", () => {
       const titleLocalizationKey = "submitButtonTitle";
-      const submitButtonProps: IFormSubmitButtonProps = {
-        onClick: vi.fn(),
-        titleLocalizationKey,
-      };
 
       render(
         <FormButtons
-          submitButtonProps={submitButtonProps}
+          submitButtonProps={{
+            onClick: vi.fn(),
+            titleLocalizationKey,
+          }}
           buttonsProps={[]}
         />
       );
@@ -110,10 +106,6 @@ describe("form buttons", () => {
 
   test("all buttons visible", () => {
     const submitButtonTitle = "submitButtonTitle";
-    const submitButtonProps: IFormSubmitButtonProps = {
-      onClick: vi.fn(),
-      titleLocalizationKey: submitButtonTitle,
-    };
     const titleButton1 = "title1";
     const titleButton2 = "title2";
     const buttonsProps: IButtonProps[] = [
@@ -129,7 +121,10 @@ describe("form buttons", () => {
 
     render(
       <FormButtons
-        submitButtonProps={submitButtonProps}
+        submitButtonProps={{
+          onClick: vi.fn(),
+          titleLocalizationKey: submitButtonTitle,
+        }}
         buttonsProps={buttonsProps}
       />
     );

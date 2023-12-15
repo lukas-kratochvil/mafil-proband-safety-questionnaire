@@ -1,6 +1,10 @@
 import i18n, { LanguageCode } from "@app/i18n/i18n";
 import { IOperatorAuthorization } from "@app/model/auth";
-import { ValidatedFormData } from "@app/model/form";
+import {
+  ValidatedOperatorFormData,
+  ValidatedOperatorModifiedFormData,
+  ValidatedProbandFormData,
+} from "@app/model/form";
 import { ProbandVisitLanguageCode } from "@app/model/visit";
 import { serverApi } from "@app/util/axios/serverApi";
 import {
@@ -380,7 +384,7 @@ export const fetchApprovalRoomVisitForm = async (
   return { ...visitForm, probandLanguageCode: visitForm.probandLanguage.code, answersIncludingQuestions };
 };
 
-export const createProbandVisitForm = async (visitFormData: ValidatedFormData): Promise<string | never> => {
+export const createProbandVisitForm = async (visitFormData: ValidatedProbandFormData): Promise<string | never> => {
   const variables: ICreateProbandVisitFormInput = {
     createVisitFormInput: {
       probandLanguageCode: i18n.language as LanguageCode,
@@ -415,7 +419,7 @@ export const createProbandVisitForm = async (visitFormData: ValidatedFormData): 
 };
 
 export const createDuplicatedVisitFormForApproval = async (
-  visitFormData: ValidatedFormData,
+  visitFormData: ValidatedOperatorFormData,
   finalizerId: string | undefined
 ): Promise<string | never> => {
   if (finalizerId === undefined) {
@@ -438,11 +442,11 @@ export const createDuplicatedVisitFormForApproval = async (
       email: visitFormData.email,
       phone: visitFormData.phone,
       additionalInfo: {
-        projectUuid: visitFormData.project?.uuid ?? "",
-        projectAcronym: visitFormData.project?.acronym ?? "",
-        deviceId: visitFormData.device?.id ?? 0,
-        deviceName: visitFormData.device?.name ?? "",
-        measuredAt: visitFormData.measuredAt ?? new Date(),
+        projectUuid: visitFormData.project.uuid,
+        projectAcronym: visitFormData.project.acronym,
+        deviceId: visitFormData.device.id,
+        deviceName: visitFormData.device.name,
+        measuredAt: visitFormData.measuredAt,
         finalizerId,
         finalizedAt: new Date(),
       },
@@ -468,7 +472,7 @@ export const createDuplicatedVisitFormForApproval = async (
 
 export const sendVisitFormForApproval = async (
   visitFormId: string,
-  visitFormData: Partial<ValidatedFormData>,
+  visitFormData: ValidatedOperatorModifiedFormData,
   finalizerId: string
 ): Promise<string | never> => {
   const variables: ISendVisitFormFromWaitingRoomForApprovalInput = {
@@ -488,11 +492,11 @@ export const sendVisitFormForApproval = async (
       email: visitFormData.email,
       phone: visitFormData.phone,
       additionalInfo: {
-        projectUuid: visitFormData.project?.uuid ?? "",
-        projectAcronym: visitFormData.project?.acronym ?? "",
-        deviceId: visitFormData.device?.id ?? 0,
-        deviceName: visitFormData.device?.name ?? "",
-        measuredAt: visitFormData.measuredAt ?? new Date(),
+        projectUuid: visitFormData.project.uuid,
+        projectAcronym: visitFormData.project.acronym,
+        deviceId: visitFormData.device.id,
+        deviceName: visitFormData.device.name,
+        measuredAt: visitFormData.measuredAt,
         finalizedAt: new Date(),
         finalizerId,
       },
@@ -559,7 +563,7 @@ export const deleteVisitForm = async (visitFormId: string): Promise<void | never
 const generatePdf = async (
   isPhantom: boolean,
   visitId: string,
-  visitFormData: ValidatedFormData,
+  visitFormData: ValidatedOperatorFormData,
   finalizerUsername: string | undefined,
   probandLanguageCode?: LanguageCode,
   approverUsername?: string
@@ -572,8 +576,8 @@ const generatePdf = async (
     isPhantom,
     visitId,
     probandLanguageCode,
-    projectAcronym: visitFormData.project?.acronym ?? "",
-    measuredAt: visitFormData.measuredAt ?? new Date(),
+    projectAcronym: visitFormData.project.acronym,
+    measuredAt: visitFormData.measuredAt,
     finalizerUsername,
     approverUsername,
     name: visitFormData.name,
@@ -609,7 +613,7 @@ const generatePdf = async (
 
 export const generateProbandPdf = async (
   visitId: string,
-  visitFormData: ValidatedFormData,
+  visitFormData: ValidatedOperatorFormData,
   finalizerUsername: string | undefined,
   probandLanguageCode: ProbandVisitLanguageCode | undefined,
   approverUsername?: string
@@ -623,6 +627,6 @@ export const generateProbandPdf = async (
 
 export const generatePhantomPdf = async (
   visitId: string,
-  visitFormData: ValidatedFormData,
+  visitFormData: ValidatedOperatorFormData,
   finalizerUsername: string | undefined
 ): Promise<IPdfDTO> => generatePdf(true, visitId, visitFormData, finalizerUsername);

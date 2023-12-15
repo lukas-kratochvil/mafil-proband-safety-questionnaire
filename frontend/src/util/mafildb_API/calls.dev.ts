@@ -2,7 +2,7 @@ import { devicesTest } from "@app/__tests__/data/devices";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { subjectsTest } from "@app/__tests__/data/subjects";
 import { IDevice } from "@app/model/device";
-import { ValidatedFormData } from "@app/model/form";
+import { ValidatedOperatorFormData } from "@app/model/form";
 import { IProject } from "@app/model/project";
 import { ISubject } from "@app/model/subject";
 import {
@@ -24,7 +24,7 @@ export const fetchProjectsDev = async (): Promise<IProject[]> => projectsTest;
 export const fetchDevicesDev = async (): Promise<IDevice[]> => devicesTest;
 
 export const createVisitDev = async (
-  visitFormData: ValidatedFormData,
+  visitFormData: ValidatedOperatorFormData,
   approvalState: ApprovalState,
   isPhantom: boolean,
   finalizerUsername: string,
@@ -39,7 +39,7 @@ export const createVisitDev = async (
     approvalState,
     signatureState: SignatureState.NOT_SET,
     visitId,
-    measurementDate: visitFormData.measuredAt ?? new Date(),
+    measurementDate: visitFormData.measuredAt,
     created: new Date(),
     isPhantom,
     subject: (await fetchSubjectsDev())[0],

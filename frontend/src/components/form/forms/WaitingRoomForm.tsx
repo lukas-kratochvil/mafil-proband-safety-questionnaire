@@ -9,7 +9,7 @@ import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesFromWaitingRoomVisitForm } from "@app/components/form/util/loaders";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
-import { FormPropType, FormQac, ValidatedFormData } from "@app/model/form";
+import { FormPropType, FormQac, ValidatedOperatorFormData, ValidatedOperatorModifiedFormData } from "@app/model/form";
 import { RoutingPath } from "@app/routing-paths";
 import { addPdfToVisit, createFinalizedVisit } from "@app/util/mafildb_API/calls";
 import { ApprovalState } from "@app/util/mafildb_API/dto";
@@ -24,7 +24,7 @@ import { QuestionPartNumber } from "@app/util/server_API/dto";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormFinalizeDialog } from "../components/FormFinalizeDialog";
-import { getModifiedFieldsOnly, isVisitFormForApproval } from "../util/utils";
+import { getModifiedFieldsOnly, getValidatedOperatorFormData, isVisitFormForApproval } from "../util/utils";
 import { FormContainer } from "./FormContainer";
 
 export const WaitingRoomForm = () => {
@@ -51,7 +51,7 @@ export const WaitingRoomForm = () => {
   const [isDisapproved, setIsDisapproved] = useState<boolean>(false);
   const [openFinalizeDialog, setOpenFinalizeDialog] = useState<boolean>(false);
   const [qacs, setQacs] = useState<FormQac[]>([]);
-  const [formButtons, setFormButtons] = useState<IFormButtonsProps>();
+  const [formButtons, setFormButtons] = useState<IFormButtonsProps<ValidatedOperatorFormData>>();
 
   // Setting default values
   useEffect(() => {
@@ -86,7 +86,7 @@ export const WaitingRoomForm = () => {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.saveChanges",
-          onClick: async (_data: ValidatedFormData) => setIsEditing(false),
+          onClick: async (_data) => setIsEditing(false),
         },
         buttonsProps: [
           {
@@ -191,19 +191,13 @@ export const WaitingRoomForm = () => {
     }
   }, [getValues, id, isDisapproved, isEditing, navigate, operator, setValue, trigger, valuesBeforeEditing, visitForm]);
 
-  const moveVisitFormToApprovalRoom = async (data: ValidatedFormData) => {
-    const modifiedFields: Partial<ValidatedFormData> = {
+  const moveVisitFormToApprovalRoom = async (data: ValidatedOperatorFormData) => {
+    const modifiedFields: ValidatedOperatorModifiedFormData = {
       ...(getModifiedFieldsOnly(initialFormData, data) ?? {}),
-      device: {
-        id: data.device?.id ?? 0,
-        name: data.device?.name ?? "",
-      },
-      project: {
-        uuid: data.project?.uuid ?? "",
-        acronym: data.project?.acronym ?? "",
-        name: data.project?.name ?? "",
-      },
-      measuredAt: data.measuredAt ?? new Date(),
+      device: data.device,
+      project: data.project,
+      measuredAt: data.measuredAt,
+      disapprovalReason: data.disapprovalReason,
     };
     await sendVisitFormForApproval(id ?? "", modifiedFields, operator?.id ?? "");
     void queryClient.invalidateQueries({ queryKey: ["waitingRoomVisitForms"], exact: true });
@@ -212,10 +206,11 @@ export const WaitingRoomForm = () => {
   };
 
   return (
-    <FormContainer
+    <FormContainer<ValidatedOperatorFormData>
       isLoading={isLoading || !areDefaultValuesLoaded}
       isError={isError}
       buttons={formButtons}
+      getFormData={getValidatedOperatorFormData}
     >
       <FormProjectInfo />
       <FormProbandInfo disableInputs={!isEditing} />

@@ -1,13 +1,15 @@
 import { updatedDiff } from "deep-object-diff";
 import { Operator } from "@app/hooks/auth/AuthProvider";
-import { AnswerOption, FormPropType, ValidatedFormAnswer, ValidatedFormData } from "@app/model/form";
+import { IDevice } from "@app/model/device";
+import {
+  AnswerOption,
+  FormPropType,
+  ValidatedFormAnswer,
+  ValidatedOperatorFormData,
+  ValidatedProbandFormData,
+} from "@app/model/form";
 import { IProject } from "@app/model/project";
 import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "@app/util/server_API/dto";
-import { IButtonProps } from "@app/util/utils";
-
-export interface IFormSubmitButtonProps extends Omit<IButtonProps, "onClick"> {
-  onClick: (data: ValidatedFormData) => Promise<void>;
-}
 
 export const compareNativeLanguages = (a: INativeLanguageDTO, b: INativeLanguageDTO, locale: string): number => {
   if (a.order && b.order) {
@@ -33,8 +35,8 @@ export const getProjectText = (project: IProject): string => {
 
 export const getModifiedFieldsOnly = (
   initialData: FormPropType | undefined,
-  submittedData: ValidatedFormData
-): Partial<ValidatedFormData> | undefined => {
+  submittedData: ValidatedOperatorFormData
+): Partial<ValidatedOperatorFormData> | undefined => {
   if (initialData === undefined) {
     return undefined;
   }
@@ -57,14 +59,11 @@ export const getModifiedFieldsOnly = (
     );
   }
 
-  const diffRest: Partial<ValidatedFormData> = updatedDiff(initialDataRest, submittedDataRest);
+  const diffRest: Partial<ValidatedOperatorFormData> = updatedDiff(initialDataRest, submittedDataRest);
   return { ...diffRest, answers: diffAnswers };
 };
 
-export const getValidatedFormData = (data: FormPropType): ValidatedFormData => ({
-  project: data.project,
-  device: data.device,
-  measuredAt: data.measuredAt,
+export const getValidatedProbandFormData = (data: FormPropType): ValidatedProbandFormData => ({
   name: data.name,
   surname: data.surname,
   personalId: data.personalId,
@@ -84,10 +83,17 @@ export const getValidatedFormData = (data: FormPropType): ValidatedFormData => (
   })),
   email: data.email,
   phone: data.phone,
-  disapprovalReason: data.disapprovalReason ?? "",
 });
 
-export const isVisitFormForApproval = (operator: Operator, data: ValidatedFormData) =>
+export const getValidatedOperatorFormData = (data: FormPropType): ValidatedOperatorFormData => ({
+  ...getValidatedProbandFormData(data),
+  project: data.project as IProject,
+  device: data.device as IDevice,
+  measuredAt: data.measuredAt as Date,
+  disapprovalReason: data.disapprovalReason as string,
+});
+
+export const isVisitFormForApproval = (operator: Operator, data: ValidatedOperatorFormData) =>
   operator === undefined
   || (operator.role !== "MR_HIGH_PERM"
     && data.answers.some((answer) => answer.mustBeApproved && answer.answer === AnswerOption.YES));
