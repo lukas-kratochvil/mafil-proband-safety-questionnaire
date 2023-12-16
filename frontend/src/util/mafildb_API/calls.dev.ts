@@ -77,6 +77,7 @@ export const addPdfToVisitDev = async (pdf: IPdfDTO): Promise<IVisitPDF> => ({
 export const fetchRecentVisitsDev = async (): Promise<IRecentVisitsTableVisit[]> => {
   const currentQuestions = await fetchCurrentQuestions();
   return dummyVisits.map((dummyVisit) => {
+    // eslint-disable-next-line no-param-reassign
     dummyVisit.answers = currentQuestions.map((question) => {
       const rand = Math.floor(Math.random() * 100) % 2 === 0;
       return {
