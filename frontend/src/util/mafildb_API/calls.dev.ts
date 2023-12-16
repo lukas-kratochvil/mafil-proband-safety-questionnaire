@@ -2,7 +2,7 @@ import { devicesTest } from "@app/__tests__/data/devices";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { subjectsTest } from "@app/__tests__/data/subjects";
 import { IDevice } from "@app/model/device";
-import { ValidatedOperatorFormData } from "@app/model/form";
+import { AnswerOption, ValidatedOperatorFormData } from "@app/model/form";
 import { IProject } from "@app/model/project";
 import { ISubject } from "@app/model/subject";
 import {
@@ -13,7 +13,14 @@ import {
 } from "@app/model/visit";
 import { IVisitPDF } from "@app/model/visitPdf";
 import { dummyVisits, generateVisitId, PDF_CONTENT } from "@app/util/mafildb_API/data.dev";
-import { fetchGender, fetchHandedness, fetchNativeLanguage, fetchOperator, fetchQuestion } from "../server_API/calls";
+import {
+  fetchCurrentQuestions,
+  fetchGender,
+  fetchHandedness,
+  fetchNativeLanguage,
+  fetchOperator,
+  fetchQuestion,
+} from "../server_API/calls";
 import { IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import { ApprovalState, SignatureState } from "./dto";
 
@@ -67,7 +74,20 @@ export const addPdfToVisitDev = async (pdf: IPdfDTO): Promise<IVisitPDF> => ({
   content: pdf.content,
 });
 
-export const fetchRecentVisitsDev = async (): Promise<IRecentVisitsTableVisit[]> => dummyVisits;
+export const fetchRecentVisitsDev = async (): Promise<IRecentVisitsTableVisit[]> => {
+  const currentQuestions = await fetchCurrentQuestions();
+  return dummyVisits.map((dummyVisit) => {
+    dummyVisit.answers = currentQuestions.map((question) => {
+      const rand = Math.floor(Math.random() * 100) % 2 === 0;
+      return {
+        questionId: question.id,
+        answer: rand ? AnswerOption.YES : AnswerOption.NO,
+        comment: rand ? "Comment" : "",
+      };
+    });
+    return dummyVisit;
+  });
+};
 
 export const fetchDuplicatedVisitDev = async (
   visitUuid: string
