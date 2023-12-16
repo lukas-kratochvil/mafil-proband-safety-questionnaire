@@ -161,12 +161,12 @@ export class VisitFormService {
                 upsert: {
                   create: {
                     // properties are checked against undefined, so the values here are always non-undefined
-                    projectUuid: updateVisitFormInput.additionalInfo.projectUuid || "",
-                    projectAcronym: updateVisitFormInput.additionalInfo.projectAcronym || "",
-                    deviceId: updateVisitFormInput.additionalInfo.deviceId || 0,
-                    deviceName: updateVisitFormInput.additionalInfo.deviceName || "",
-                    measuredAt: updateVisitFormInput.additionalInfo.measuredAt || new Date(),
-                    finalizedAt: updateVisitFormInput.additionalInfo.finalizedAt || new Date(),
+                    projectUuid: updateVisitFormInput.additionalInfo.projectUuid ?? "",
+                    projectAcronym: updateVisitFormInput.additionalInfo.projectAcronym ?? "",
+                    deviceId: updateVisitFormInput.additionalInfo.deviceId ?? 0,
+                    deviceName: updateVisitFormInput.additionalInfo.deviceName ?? "",
+                    measuredAt: updateVisitFormInput.additionalInfo.measuredAt ?? new Date(),
+                    finalizedAt: updateVisitFormInput.additionalInfo.finalizedAt ?? new Date(),
                     finalizer: {
                       connect: {
                         id: updateVisitFormInput.additionalInfo.finalizerId,

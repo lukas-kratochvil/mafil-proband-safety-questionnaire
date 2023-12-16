@@ -11,7 +11,7 @@ export const CardContainer = ({ children, title, maxWidth }: PropsWithChildren<I
   <Card
     sx={{
       width: "100%",
-      maxWidth: maxWidth || undefined,
+      maxWidth,
       border: 1,
       borderColor: ({ palette }) => palette.grey[600],
     }}
