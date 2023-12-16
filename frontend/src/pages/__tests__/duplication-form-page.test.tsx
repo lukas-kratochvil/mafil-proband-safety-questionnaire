@@ -20,7 +20,7 @@ import { render, screen, waitFor, within } from "@test-utils";
 // Default data
 //----------------------------------------------------------------------
 const id = "ID1";
-const comment = "Comment";
+const commentText = "Comment";
 
 const visit: IDuplicatedVisitIncludingQuestions = {
   uuid: "1",
@@ -40,7 +40,7 @@ const visit: IDuplicatedVisitIncludingQuestions = {
     questionId: question.id,
     mustBeApproved: index % 2 === 0,
     answer: index % 2 === 0 ? AnswerOption.YES : AnswerOption.NO,
-    comment: index % 2 === 0 ? comment : "",
+    comment: index % 2 === 0 ? commentText : "",
     order: question.order,
     hiddenByGenders: question.hiddenByGenders,
     partNumber: question.partNumber,
@@ -148,25 +148,25 @@ describe("duplication form page", () => {
       phone: visit.subject.phone,
     };
 
-    await waitFor(() => expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues));
+    await waitFor(async () => expect(await screen.findByRole("form")).toHaveFormValues(expectedFormValues));
 
     const questions = await screen.findAllByRole("radiogroup");
     expect(questions.length).toEqual(questionsTest.length);
 
-    questions.forEach(async (question, index) => {
-      const yesRadio = await within(question).findByRole("radio", { name: "form.safetyQuestions.yes" });
-      const noRadio = await within(question).findByRole("radio", { name: "form.safetyQuestions.no" });
+    for (let i = 0; i < questions.length; i++) {
+      const yesRadio = within(questions[i]).getByRole("radio", { name: "form.safetyQuestions.yes" });
+      const noRadio = within(questions[i]).getByRole("radio", { name: "form.safetyQuestions.no" });
+      const commentField = screen.queryByRole("textbox", { name: `answers.${i}.comment` });
 
-      if (index % 2 === 0) {
+      if (i % 2 === 0) {
         expect(yesRadio).toBeChecked();
         expect(noRadio).not.toBeChecked();
-        // TODO: correct comment check
-        // expect(screen.getByLabelText(`answers.${index}.comment`)).toHaveTextContent(comment);
+        expect(commentField).toHaveTextContent(commentText);
       } else {
         expect(yesRadio).not.toBeChecked();
         expect(noRadio).toBeChecked();
-        expect(screen.queryByLabelText(`answers.${index}.comment`)).toBeNull();
+        expect(commentField).toBeNull();
       }
-    });
+    }
   });
 });
