@@ -1,8 +1,8 @@
 {
   "name": "backend",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",

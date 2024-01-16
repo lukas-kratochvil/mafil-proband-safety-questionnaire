@@ -1,16 +1,16 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "ES2022",
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "Node",
     "lib": [
       "DOM",
       "DOM.Iterable",
-      "ES2022",
+      "ESNext",
     ],
     "outDir": "./dist",
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@app/*": [
         "src/*"
