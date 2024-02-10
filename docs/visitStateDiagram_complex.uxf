@@ -1,0 +1,78 @@
+<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLSpecialState</id><coordinates><x>48</x><y>176</y><w>16</w><h>16</h></coordinates><panel_attributes>type=initial</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>752</x><y>168</y><w>144</w><h>40</h></coordinates><panel_attributes>operátor klikne na
+"Zpracovat" visitu
+lt=-&gt;</panel_attributes><additional_attributes>10;20;160;20</additional_attributes></element><element><id>Relation</id><coordinates><x>368</x><y>312</y><w>152</w><h>104</h></coordinates><panel_attributes>operátor klikne na "Zrušit"
+lt=-&gt;</panel_attributes><additional_attributes>170;110;10;110;10;10;110;10</additional_attributes></element><element><id>Relation</id><coordinates><x>136</x><y>192</y><w>712</w><h>336</h></coordinates><panel_attributes>operátor klikne
+na "Odstranit"
+lt=-&gt;</panel_attributes><additional_attributes>700;10;700;60;10;60;10;400;870;400</additional_attributes></element><element><id>UMLSpecialState</id><coordinates><x>872</x><y>224</y><w>32</w><h>32</h></coordinates><panel_attributes>type=decision</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLState</id><coordinates><x>1064</x><y>168</y><w>88</w><h>32</h></coordinates><panel_attributes>V editaci
+(operátorem)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>896</x><y>192</y><w>232</w><h>64</h></coordinates><panel_attributes>operátor klikne na "Editovat"
+lt=-&gt;</panel_attributes><additional_attributes>10;60;270;60;270;10</additional_attributes></element><element><id>UMLSpecialState</id><coordinates><x>880</x><y>176</y><w>16</w><h>16</h></coordinates><panel_attributes>type=initial</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>880</x><y>184</y><w>24</w><h>56</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>880</x><y>120</y><w>248</w><h>72</h></coordinates><panel_attributes>operátor klikne na "Uložit změny"
+lt=-&gt;</panel_attributes><additional_attributes>290;60;290;20;10;20;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>888</x><y>168</y><w>192</w><h>40</h></coordinates><panel_attributes>operátor klikne na
+"Zrušit" (změny)
+lt=-&gt;</panel_attributes><additional_attributes>220;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>880</x><y>416</y><w>64</w><h>104</h></coordinates><panel_attributes>po(48 h.)
+lt=-&gt;</panel_attributes><additional_attributes>10;10;10;110</additional_attributes></element><element><id>UMLClass</id><coordinates><x>408</x><y>40</y><w>424</w><h>32</h></coordinates><panel_attributes>valign=center
+halign=center
+UML state diagram visity v rámci aplikace "Bezpečnostní dotazník probanda"</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>352</x><y>168</y><w>168</w><h>40</h></coordinates><panel_attributes>proband vyplní formulář
+a klikne na "Souhlasím"
+lt=-&gt;</panel_attributes><additional_attributes>10;20;190;20</additional_attributes></element><element><id>Relation</id><coordinates><x>528</x><y>168</y><w>136</w><h>32</h></coordinates><panel_attributes>úspěšná validace
+lt=-&gt;</panel_attributes><additional_attributes>10;20;150;20</additional_attributes></element><element><id>UMLSpecialState</id><coordinates><x>504</x><y>168</y><w>32</w><h>32</h></coordinates><panel_attributes>type=decision</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>344</x><y>120</y><w>192</w><h>72</h></coordinates><panel_attributes>neúspěšná validace
+lt=-&gt;</panel_attributes><additional_attributes>220;60;220;20;10;20;10;70</additional_attributes></element><element><id>UMLState</id><coordinates><x>832</x><y>504</y><w>80</w><h>32</h></coordinates><panel_attributes>K odstranění</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>880</x><y>248</y><w>168</w><h>64</h></coordinates><panel_attributes>operátor klikne na "Finalizovat"
+lt=-&gt;</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>UMLSpecialState</id><coordinates><x>872</x><y>296</y><w>32</w><h>32</h></coordinates><panel_attributes>type=decision</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>576</x><y>296</y><w>312</w><h>40</h></coordinates><panel_attributes>operátor nemá vyšší oprávnění a u některé
+z kritických otázek je zaškrtnuto "Ano"
+lt=-&gt;</panel_attributes><additional_attributes>370;20;10;20</additional_attributes></element><element><id>UMLSpecialState</id><coordinates><x>504</x><y>384</y><w>32</w><h>32</h></coordinates><panel_attributes>type=decision</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>528</x><y>384</y><w>288</w><h>40</h></coordinates><panel_attributes>operátor s vyšším oprávněním klikne na "Schválit"
+lt=-&gt;
+</panel_attributes><additional_attributes>10;20;340;20</additional_attributes></element><element><id>Relation</id><coordinates><x>880</x><y>320</y><w>48</w><h>72</h></coordinates><panel_attributes>[jinak]
+lt=-&gt;</panel_attributes><additional_attributes>10;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>712</x><y>192</y><w>176</w><h>72</h></coordinates><panel_attributes>operátor klikne
+na "Zrušit"
+lt=-&gt;</panel_attributes><additional_attributes>200;60;10;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>304</x><y>376</y><w>232</w><h>88</h></coordinates><panel_attributes>operátor s vyšším oprávněním
+klikne na "Neschválit"
+lt=-&gt;</panel_attributes><additional_attributes>270;50;270;80;10;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>512</x><y>320</y><w>248</w><h>80</h></coordinates><panel_attributes>operátor s vyšším oprávněním klikne na "Zobrazit"
+lt=-&gt;</panel_attributes><additional_attributes>10;10;10;80</additional_attributes></element><element><id>Relation</id><coordinates><x>1144</x><y>576</y><w>80</w><h>24</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;80;10</additional_attributes></element><element><id>Relation</id><coordinates><x>928</x><y>304</y><w>160</w><h>88</h></coordinates><panel_attributes>operátor klikne na
+"Duplikovat"
+lt=-&gt;</panel_attributes><additional_attributes>10;90;10;20;180;20</additional_attributes></element><element><id>Relation</id><coordinates><x>952</x><y>384</y><w>136</w><h>40</h></coordinates><panel_attributes>operátor vybere
+typ podpisu
+lt=-&gt;</panel_attributes><additional_attributes>10;20;150;20</additional_attributes></element><element><id>Relation</id><coordinates><x>1128</x><y>408</y><w>104</w><h>112</h></coordinates><panel_attributes>operátor klikne na
+"Potvrdit podpis"
+lt=-&gt;</panel_attributes><additional_attributes>10;10;10;120</additional_attributes></element><element><id>UMLSpecialState</id><coordinates><x>1208</x><y>576</y><w>16</w><h>16</h></coordinates><panel_attributes>type=final</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLState</id><coordinates><x>648</x><y>160</y><w>112</w><h>40</h></coordinates><panel_attributes>Nový
+--
+V tabulce "Čekárna"
+
+valign=top
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLState</id><coordinates><x>112</x><y>168</y><w>72</w><h>32</h></coordinates><panel_attributes>Nezaložený</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>176</x><y>168</y><w>184</w><h>40</h></coordinates><panel_attributes>proband/operátor klikne na
+"Otevřít nový formulář"
+lt=-&gt;</panel_attributes><additional_attributes>10;20;210;20</additional_attributes></element><element><id>UMLSpecialState</id><coordinates><x>344</x><y>176</y><w>16</w><h>16</h></coordinates><panel_attributes>type=initial</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>56</x><y>176</y><w>72</w><h>24</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;70;10</additional_attributes></element><element><id>UMLState</id><coordinates><x>456</x><y>288</y><w>128</w><h>40</h></coordinates><panel_attributes>Ke schválení
+--
+V tabulce "Ke schválení"
+valign=top
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLState</id><coordinates><x>800</x><y>376</y><w>160</w><h>48</h></coordinates><panel_attributes>Schválená
+--
+Vstup / založí se visita v MAFILDB
+V tabulce "Poslední visity"
+
+valign=top
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLState</id><coordinates><x>1072</x><y>296</y><w>144</w><h>48</h></coordinates><panel_attributes>Založit novou visitu
+s výchozími hodnotami
+z původní visity
+type=sender</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>272</x><y>240</y><w>624</w><h>112</h></coordinates><panel_attributes>operátor klikne na "Neschválit"
+lt=&lt;-</panel_attributes><additional_attributes>10;120;10;40;720;40;760;10</additional_attributes></element><element><id>Relation</id><coordinates><x>248</x><y>376</y><w>624</w><h>144</h></coordinates><panel_attributes>po(24 h.)
+lt=&lt;-</panel_attributes><additional_attributes>760;160;760;130;10;130;10;10</additional_attributes></element><element><id>UMLState</id><coordinates><x>184</x><y>336</y><w>168</w><h>48</h></coordinates><panel_attributes>Neschválená
+--
+Vstup / založí se visita v MAFILDB
+V tabulce "Poslední visity"
+
+valign=top
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>320</x><y>280</y><w>152</w><h>72</h></coordinates><panel_attributes>po(24 h.)
+lt=&lt;-</panel_attributes><additional_attributes>10;70;10;20;170;20</additional_attributes></element><element><id>Relation</id><coordinates><x>80</x><y>192</y><w>768</w><h>352</h></coordinates><panel_attributes>po(48 h.)
+lt=&lt;-</panel_attributes><additional_attributes>940;420;10;420;10;40;730;40;730;10</additional_attributes></element><element><id>UMLState</id><coordinates><x>1072</x><y>376</y><w>136</w><h>40</h></coordinates><panel_attributes>K podepsání
+--
+V tabulce "Poslední visity"
+
+valign=top
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>904</x><y>408</y><w>208</w><h>120</h></coordinates><panel_attributes>po(48 h.)
+lt=-&gt;</panel_attributes><additional_attributes>240;10;240;60;70;60;70;130;10;130</additional_attributes></element><element><id>UMLState</id><coordinates><x>1072</x><y>504</y><w>136</w><h>40</h></coordinates><panel_attributes>Podepsaná
+--
+V tabulce "Poslední visity"
+
+valign=top
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>904</x><y>512</y><w>184</w><h>32</h></coordinates><panel_attributes>po(48 h.)
+lt=&lt;-</panel_attributes><additional_attributes>10;20;210;20</additional_attributes></element><element><id>Relation</id><coordinates><x>864</x><y>528</y><w>224</w><h>72</h></coordinates><panel_attributes>lt=-&gt;
+po(3 dny)</panel_attributes><additional_attributes>10;10;10;70;260;70</additional_attributes></element><element><id>UMLState</id><coordinates><x>1072</x><y>568</y><w>80</w><h>32</h></coordinates><panel_attributes>Odstraněná</panel_attributes><additional_attributes></additional_attributes></element></diagram>
