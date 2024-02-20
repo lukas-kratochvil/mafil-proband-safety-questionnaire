@@ -9,7 +9,7 @@ import { defaultTableProps } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n/i18n";
 import { IRecentVisitsTableVisit } from "@app/model/visit";
 import { fetchRecentVisits } from "@app/util/mafildb_API/calls";
-import { ApprovalState, SignatureState } from "@app/util/mafildb_API/dto";
+import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
 import { PageContainer } from "./PageContainer";
 
 const processedDateFormat = "d.M.y H:mm";
@@ -20,19 +20,19 @@ const getStateLocalizationString = (visit: IRecentVisitsTableVisit): string | un
   }
 
   switch (visit.approvalState) {
-    case ApprovalState.DISAPPROVED:
+    case MDB_ApprovalState.DISAPPROVED:
       return "disapproved";
-    case ApprovalState.APPROVED:
+    case MDB_ApprovalState.APPROVED:
       switch (visit.signatureState) {
-        case SignatureState.NOT_SET:
+        case MDB_SignatureState.NOT_SET:
           return "approved";
-        case SignatureState.FOR_SIGNATURE_PHYSICALLY:
+        case MDB_SignatureState.FOR_SIGNATURE_PHYSICALLY:
           return "forSignaturePhysically";
-        case SignatureState.FOR_SIGNATURE_ELECTRONICALLY:
+        case MDB_SignatureState.FOR_SIGNATURE_ELECTRONICALLY:
           return "forSignatureElectronically";
-        case SignatureState.SIGNED_PHYSICALLY:
+        case MDB_SignatureState.SIGNED_PHYSICALLY:
           return "signedPhysically";
-        case SignatureState.SIGNED_ELECTRONICALLY:
+        case MDB_SignatureState.SIGNED_ELECTRONICALLY:
           return "signedElectronically";
         default:
           return undefined;

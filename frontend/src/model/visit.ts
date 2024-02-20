@@ -1,5 +1,5 @@
 import { LanguageCode } from "@app/i18n/i18n";
-import { ApprovalState, SignatureState } from "@app/util/mafildb_API/dto";
+import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
 import {
   IGenderDTO,
   IHandednessDTO,
@@ -24,7 +24,7 @@ export interface IVisit {
   uuid: string;
   visitId: string;
   created: Date;
-  approvalState: ApprovalState;
+  approvalState: MDB_ApprovalState;
   isPhantom: boolean;
   measurementDate: Date;
   subject: ISubject;
@@ -38,7 +38,7 @@ export interface IVisit {
   finalizationDate: Date;
   approver: IOperatorDTO | null;
   approvalDate: Date | null;
-  signatureState: SignatureState;
+  signatureState: MDB_SignatureState;
   disapprovalReason: string;
 }
 

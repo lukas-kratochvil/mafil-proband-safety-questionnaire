@@ -17,7 +17,7 @@ import {
   createPhantomVisit,
   fetchDuplicatedVisit,
 } from "@app/util/mafildb_API/calls";
-import { ApprovalState } from "@app/util/mafildb_API/dto";
+import { MDB_ApprovalState } from "@app/util/mafildb_API/dto";
 import {
   createDuplicatedVisitFormForApproval,
   generatePhantomPdf,
@@ -128,7 +128,7 @@ export const DuplicationForm = () => {
           onClick: async (data) => {
             await createFinalizedVisit(
               data,
-              ApprovalState.DISAPPROVED,
+              MDB_ApprovalState.DISAPPROVED,
               operator?.username,
               new Date(),
               duplicatedVisit?.subject.preferredLanguageCode
@@ -158,7 +158,7 @@ export const DuplicationForm = () => {
             } else {
               const visit = await createFinalizedVisit(
                 data,
-                ApprovalState.APPROVED,
+                MDB_ApprovalState.APPROVED,
                 operator?.username,
                 new Date(),
                 duplicatedVisit?.subject.preferredLanguageCode

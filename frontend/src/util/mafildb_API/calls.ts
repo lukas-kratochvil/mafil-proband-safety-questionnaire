@@ -25,27 +25,27 @@ import {
   updateVisitSignatureStateDev,
 } from "./calls.dev";
 import {
-  ApprovalState,
-  IAddPdfToVisitInput,
-  ICreateSubjectInput,
-  ICreateVisitInput,
-  IUpdateVisitSignatureStateInput,
-  IVisitDTO,
-  IVisitFileDTO,
-  SignatureState,
-  VisitFileType,
+  MDB_ApprovalState,
+  MDB_IAddPdfToVisitInput,
+  MDB_ICreateSubjectInput,
+  MDB_ICreateVisitInput,
+  MDB_IUpdateVisitSignatureStateInput,
+  MDB_IVisitDTO,
+  MDB_IVisitFileDTO,
+  MDB_SignatureState,
+  MDB_VisitFileType,
 } from "./dto";
 import {
-  AddPdfToVisitResponse,
-  CreateSubjectResponse,
-  CreateVisitResponse,
-  GetDevicesResponse,
-  GetProjectsResponse,
-  GetVisitFilesResponse,
-  GetVisitResponse,
-  GetVisitsResponse,
-  MAFILDB_RESPONSE_ERROR_ATTR,
-  UpdateVisitSignatureStateResponse,
+  MDB_AddPdfToVisitResponse,
+  MDB_CreateSubjectResponse,
+  MDB_CreateVisitResponse,
+  MDB_GetDevicesResponse,
+  MDB_GetProjectsResponse,
+  MDB_GetVisitFilesResponse,
+  MDB_GetVisitResponse,
+  MDB_GetVisitsResponse,
+  MDB_RESPONSE_ERROR_ATTR,
+  MDB_UpdateVisitSignatureStateResponse,
 } from "./response-types";
 
 export const fetchProjects = async (): Promise<IProject[]> => {
@@ -53,9 +53,9 @@ export const fetchProjects = async (): Promise<IProject[]> => {
     return fetchProjectsDev();
   }
 
-  const { data } = await mafildbApi.get<GetProjectsResponse>("projects");
+  const { data } = await mafildbApi.get<MDB_GetProjectsResponse>("projects");
 
-  if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
+  if (MDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
   }
 
@@ -69,9 +69,9 @@ export const fetchDevices = async (): Promise<IDevice[]> => {
 
   // Only MR devices are relevant for this app
   const params = { type: "MR" };
-  const { data } = await mafildbApi.get<GetDevicesResponse>("devices", { params });
+  const { data } = await mafildbApi.get<MDB_GetDevicesResponse>("devices", { params });
 
-  if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
+  if (MDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
   }
 
@@ -82,7 +82,7 @@ const createVisitSubject = async (
   visitFormData: ValidatedOperatorFormData,
   probandLanguageCode?: ProbandVisitLanguageCode
 ): Promise<ISubject | never> => {
-  const createData: ICreateSubjectInput = {
+  const createData: MDB_ICreateSubjectInput = {
     first_name: visitFormData.name,
     last_name: visitFormData.surname,
     // TODO: phantom visits do not have the probandLanguageCode filled
@@ -95,9 +95,9 @@ const createVisitSubject = async (
     email: visitFormData.email,
     phone: visitFormData.phone,
   };
-  const { data } = await mafildbApi.post<CreateSubjectResponse>("subjects", createData);
+  const { data } = await mafildbApi.post<MDB_CreateSubjectResponse>("subjects", createData);
 
-  if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
+  if (MDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
   }
 
@@ -116,7 +116,7 @@ const createVisitSubject = async (
 
 const createVisit = async (
   visitFormData: ValidatedOperatorFormData,
-  approvalState: ApprovalState,
+  approvalState: MDB_ApprovalState,
   isPhantom: boolean,
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
@@ -145,7 +145,7 @@ const createVisit = async (
   }
 
   const subject = await createVisitSubject(visitFormData, probandLanguageCode);
-  const createData: ICreateVisitInput = {
+  const createData: MDB_ICreateVisitInput = {
     checked: approvalState,
     is_phantom: isPhantom,
     subject_uuid: subject.uuid,
@@ -166,9 +166,9 @@ const createVisit = async (
     registration_approve_date: approvedAt ?? null,
     registration_disapprove_reason: visitFormData.disapprovalReason,
   };
-  const { data } = await mafildbApi.post<CreateVisitResponse>("visits", createData);
+  const { data } = await mafildbApi.post<MDB_CreateVisitResponse>("visits", createData);
 
-  if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
+  if (MDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
   }
 
@@ -180,7 +180,7 @@ const createVisit = async (
 
 export const createFinalizedVisit = async (
   visitFormData: ValidatedOperatorFormData,
-  approvalState: ApprovalState,
+  approvalState: MDB_ApprovalState,
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
   probandLanguageCode: ProbandVisitLanguageCode | undefined
@@ -194,7 +194,7 @@ export const createFinalizedVisit = async (
 
 export const createVisitFromApproval = async (
   visitFormData: ValidatedOperatorFormData,
-  state: ApprovalState,
+  state: MDB_ApprovalState,
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
   probandLanguageCode: ProbandVisitLanguageCode | undefined,
@@ -230,22 +230,22 @@ export const createPhantomVisit = async (
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined
 ): Promise<CreateVisit | never> =>
-  createVisit(visitFormData, ApprovalState.APPROVED, true, finalizerUsername, finalizedAt);
+  createVisit(visitFormData, MDB_ApprovalState.APPROVED, true, finalizerUsername, finalizedAt);
 
 export const addPdfToVisit = async (visitUuid: string, pdf: IPdfDTO): Promise<IVisitPDF> => {
   if (import.meta.env.DEV) {
     return addPdfToVisitDev(pdf);
   }
 
-  const addPdfToVisitData: IAddPdfToVisitInput = {
+  const addPdfToVisitData: MDB_IAddPdfToVisitInput = {
     file_type: "reg_form",
     name: pdf.name,
     mime_type: "application/pdf",
     content: pdf.content,
   };
-  const { data } = await mafildbApi.post<AddPdfToVisitResponse>(`visits/${visitUuid}/files`, addPdfToVisitData);
+  const { data } = await mafildbApi.post<MDB_AddPdfToVisitResponse>(`visits/${visitUuid}/files`, addPdfToVisitData);
 
-  if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
+  if (MDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
   }
 
@@ -264,9 +264,9 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
 
   // Fetch only visits created 3 days ago and newer
   const params = { newer_than: subDays(new Date().setHours(0, 0, 0, 0), 3).valueOf() };
-  const { data } = await mafildbApi.get<GetVisitsResponse>("visits", { params });
+  const { data } = await mafildbApi.get<MDB_GetVisitsResponse>("visits", { params });
 
-  if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
+  if (MDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
   }
 
@@ -335,10 +335,10 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
   return visits;
 };
 
-const fetchVisit = async (visitUuid: string): Promise<IVisitDTO | never> => {
-  const { data } = await mafildbApi.get<GetVisitResponse>(`visits/${visitUuid}`);
+const fetchVisit = async (visitUuid: string): Promise<MDB_IVisitDTO | never> => {
+  const { data } = await mafildbApi.get<MDB_GetVisitResponse>(`visits/${visitUuid}`);
 
-  if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
+  if (MDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
   }
 
@@ -404,14 +404,14 @@ export const fetchDuplicatedVisit = async (
   };
 };
 
-const fetchVisitPDF = async (visitUuid: string): Promise<IVisitFileDTO> => {
+const fetchVisitPDF = async (visitUuid: string): Promise<MDB_IVisitFileDTO> => {
   type VisitFilesParams = {
-    file_type: VisitFileType;
+    file_type: MDB_VisitFileType;
   };
   const params: VisitFilesParams = { file_type: "reg_form" };
-  const { data } = await mafildbApi.get<GetVisitFilesResponse>(`visits/${visitUuid}/files`, { params });
+  const { data } = await mafildbApi.get<MDB_GetVisitFilesResponse>(`visits/${visitUuid}/files`, { params });
 
-  if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
+  if (MDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
   }
 
@@ -449,18 +449,18 @@ export const fetchVisitDetail = async (visitUuid: string | undefined): Promise<I
 
 export const updateVisitSignatureState = async (
   visitUuid: string,
-  signatureState: SignatureState
+  signatureState: MDB_SignatureState
 ): Promise<string | never> => {
   if (import.meta.env.DEV) {
     return updateVisitSignatureStateDev(visitUuid, signatureState);
   }
 
-  const updateData: IUpdateVisitSignatureStateInput = {
+  const updateData: MDB_IUpdateVisitSignatureStateInput = {
     registration_signature_status: signatureState,
   };
-  const { data } = await mafildbApi.patch<UpdateVisitSignatureStateResponse>(`visits/${visitUuid}`, updateData);
+  const { data } = await mafildbApi.patch<MDB_UpdateVisitSignatureStateResponse>(`visits/${visitUuid}`, updateData);
 
-  if (MAFILDB_RESPONSE_ERROR_ATTR in data) {
+  if (MDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
   }
 

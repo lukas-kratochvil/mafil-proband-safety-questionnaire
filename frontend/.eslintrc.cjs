@@ -24,6 +24,7 @@ module.exports = {
   },
   plugins: ["@tanstack/query", "react", "react-hooks", "react-hooks-addons", "testing-library"],
   rules: {
+    camelcase: "off",
     "react/function-component-definition": [2, { namedComponents: "arrow-function" }],
     "react/jsx-filename-extension": ["warn", { extensions: [".tsx"] }],
     "react/jsx-first-prop-new-line": [1, "multiline"],

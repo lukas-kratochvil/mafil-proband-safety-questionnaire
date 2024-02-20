@@ -3,7 +3,7 @@ import { IVisitDetail } from "@app/model/visit";
 import VisitDetailPage from "@app/pages/VisitDetailPage";
 import * as mafildbCalls from "@app/util/mafildb_API/calls";
 import { PDF_CONTENT } from "@app/util/mafildb_API/data.dev";
-import { ApprovalState, SignatureState } from "@app/util/mafildb_API/dto";
+import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
 import { IOperatorDTO } from "@app/util/server_API/dto";
 import { render, screen } from "@test-utils";
 
@@ -15,8 +15,8 @@ const defaultVisit: IVisitDetail = {
   uuid: "1",
   visitId: "VisitId1",
   isPhantom: false,
-  approvalState: ApprovalState.APPROVED,
-  signatureState: SignatureState.NOT_SET,
+  approvalState: MDB_ApprovalState.APPROVED,
+  signatureState: MDB_SignatureState.NOT_SET,
   pdf: {
     name: "pdf_name",
     content: PDF_CONTENT,
@@ -70,7 +70,7 @@ describe("visit detail page", () => {
   test("is disapproved", async () => {
     const disapprovedVisit: IVisitDetail = {
       ...defaultVisit,
-      approvalState: ApprovalState.DISAPPROVED,
+      approvalState: MDB_ApprovalState.DISAPPROVED,
     };
     vi.spyOn(mafildbCalls, "fetchVisitDetail").mockImplementationOnce(async () => disapprovedVisit);
     setup();
@@ -86,7 +86,7 @@ describe("visit detail page", () => {
   test("is approved", async () => {
     const approvedVisit: IVisitDetail = {
       ...defaultVisit,
-      approvalState: ApprovalState.APPROVED,
+      approvalState: MDB_ApprovalState.APPROVED,
     };
     vi.spyOn(mafildbCalls, "fetchVisitDetail").mockImplementationOnce(async () => approvedVisit);
     setup();
@@ -108,7 +108,7 @@ describe("visit detail page", () => {
   test("is for signature physically", async () => {
     const forSignatureVisit: IVisitDetail = {
       ...defaultVisit,
-      signatureState: SignatureState.FOR_SIGNATURE_PHYSICALLY,
+      signatureState: MDB_SignatureState.FOR_SIGNATURE_PHYSICALLY,
     };
     vi.spyOn(mafildbCalls, "fetchVisitDetail").mockImplementationOnce(async () => forSignatureVisit);
     setup();
@@ -126,7 +126,7 @@ describe("visit detail page", () => {
   test("is for signature electronically", async () => {
     const forSignatureVisit: IVisitDetail = {
       ...defaultVisit,
-      signatureState: SignatureState.FOR_SIGNATURE_ELECTRONICALLY,
+      signatureState: MDB_SignatureState.FOR_SIGNATURE_ELECTRONICALLY,
     };
     vi.spyOn(mafildbCalls, "fetchVisitDetail").mockImplementationOnce(async () => forSignatureVisit);
     setup();
@@ -144,7 +144,7 @@ describe("visit detail page", () => {
   test("is signed physically", async () => {
     const signedVisit: IVisitDetail = {
       ...defaultVisit,
-      signatureState: SignatureState.SIGNED_PHYSICALLY,
+      signatureState: MDB_SignatureState.SIGNED_PHYSICALLY,
     };
     vi.spyOn(mafildbCalls, "fetchVisitDetail").mockImplementationOnce(async () => signedVisit);
     setup();
@@ -162,7 +162,7 @@ describe("visit detail page", () => {
   test("is signed electronically", async () => {
     const signedVisit: IVisitDetail = {
       ...defaultVisit,
-      signatureState: SignatureState.SIGNED_ELECTRONICALLY,
+      signatureState: MDB_SignatureState.SIGNED_ELECTRONICALLY,
     };
     vi.spyOn(mafildbCalls, "fetchVisitDetail").mockImplementationOnce(async () => signedVisit);
     setup();

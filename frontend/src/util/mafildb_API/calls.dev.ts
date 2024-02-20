@@ -22,7 +22,7 @@ import {
   fetchQuestion,
 } from "../server_API/calls";
 import { IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
-import { ApprovalState, SignatureState } from "./dto";
+import { MDB_ApprovalState, MDB_SignatureState } from "./dto";
 
 export const fetchSubjectsDev = async (): Promise<ISubject[]> => subjectsTest;
 
@@ -32,7 +32,7 @@ export const fetchDevicesDev = async (): Promise<IDevice[]> => devicesTest;
 
 export const createVisitDev = async (
   visitFormData: ValidatedOperatorFormData,
-  approvalState: ApprovalState,
+  approvalState: MDB_ApprovalState,
   isPhantom: boolean,
   finalizerUsername: string,
   finalizedAt: Date,
@@ -44,7 +44,7 @@ export const createVisitDev = async (
     ...visitFormData,
     uuid: visitId,
     approvalState,
-    signatureState: SignatureState.NOT_SET,
+    signatureState: MDB_SignatureState.NOT_SET,
     visitId,
     measurementDate: visitFormData.measuredAt,
     created: new Date(),
@@ -137,7 +137,7 @@ export const fetchVisitDetailDev = async (visitUuid: string): Promise<IVisitDeta
 
 export const updateVisitSignatureStateDev = async (
   visitUuid: string,
-  signatureState: SignatureState
+  signatureState: MDB_SignatureState
 ): Promise<string | never> => {
   const visit = dummyVisits.find((dummyVisit) => dummyVisit.uuid === visitUuid);
 

@@ -13,7 +13,7 @@ import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
 import { IVisitDetail, IVisitDetailPDF } from "@app/model/visit";
 import { fetchVisitDetail, updateVisitSignatureState } from "@app/util/mafildb_API/calls";
-import { ApprovalState, SignatureState } from "@app/util/mafildb_API/dto";
+import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
 import { getBackButtonProps, handleErrorsWithToast, IButtonProps } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
 
@@ -32,26 +32,26 @@ const getColoredInfoStripe = (visitDetail: IVisitDetail): IColoredInfoStripeProp
   }
 
   switch (visitDetail.approvalState) {
-    case ApprovalState.DISAPPROVED:
+    case MDB_ApprovalState.DISAPPROVED:
       return {
         textLocalizationKey: "visitDetailPage.infoStripes.disapproved",
         color: ColoredInfoStripeColors.RED,
       };
-    case ApprovalState.APPROVED:
+    case MDB_ApprovalState.APPROVED:
       switch (visitDetail.signatureState) {
-        case SignatureState.NOT_SET:
+        case MDB_SignatureState.NOT_SET:
           return {
             textLocalizationKey: "visitDetailPage.infoStripes.signatureChoice",
             color: ColoredInfoStripeColors.BLUE,
           };
-        case SignatureState.FOR_SIGNATURE_PHYSICALLY:
-        case SignatureState.FOR_SIGNATURE_ELECTRONICALLY:
+        case MDB_SignatureState.FOR_SIGNATURE_PHYSICALLY:
+        case MDB_SignatureState.FOR_SIGNATURE_ELECTRONICALLY:
           return {
             textLocalizationKey: "visitDetailPage.infoStripes.waitingForSignatureConfirmation",
             color: ColoredInfoStripeColors.ORANGE,
           };
-        case SignatureState.SIGNED_PHYSICALLY:
-        case SignatureState.SIGNED_ELECTRONICALLY:
+        case MDB_SignatureState.SIGNED_PHYSICALLY:
+        case MDB_SignatureState.SIGNED_ELECTRONICALLY:
           return {
             textLocalizationKey: "visitDetailPage.infoStripes.signed",
             color: ColoredInfoStripeColors.GREEN,
@@ -87,17 +87,17 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
   }
 
   switch (visitDetail.approvalState) {
-    case ApprovalState.DISAPPROVED:
+    case MDB_ApprovalState.DISAPPROVED:
       return [];
-    case ApprovalState.APPROVED:
+    case MDB_ApprovalState.APPROVED:
       switch (visitDetail.signatureState) {
-        case SignatureState.NOT_SET:
+        case MDB_SignatureState.NOT_SET:
           return [
             {
               titleLocalizationKey: "visitDetailPage.buttons.downloadPDFAndPhysicallySign",
               onClick: async () => {
                 downloadPdf(visitDetail.pdf);
-                await updateVisitSignatureState(visitDetail.uuid, SignatureState.FOR_SIGNATURE_PHYSICALLY);
+                await updateVisitSignatureState(visitDetail.uuid, MDB_SignatureState.FOR_SIGNATURE_PHYSICALLY);
                 void queryClient.invalidateQueries({
                   queryKey: getVisitDetailQueryKey(visitDetail.visitId),
                   exact: true,
@@ -107,17 +107,17 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
             {
               titleLocalizationKey: "visitDetailPage.buttons.signElectronically",
               onClick: async () => {
-                await updateVisitSignatureState(visitDetail.uuid, SignatureState.FOR_SIGNATURE_ELECTRONICALLY);
+                await updateVisitSignatureState(visitDetail.uuid, MDB_SignatureState.FOR_SIGNATURE_ELECTRONICALLY);
               },
               disabled: true,
             },
           ];
-        case SignatureState.FOR_SIGNATURE_PHYSICALLY:
+        case MDB_SignatureState.FOR_SIGNATURE_PHYSICALLY:
           return [
             {
               titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
               onClick: async () => {
-                await updateVisitSignatureState(visitDetail.uuid, SignatureState.SIGNED_PHYSICALLY);
+                await updateVisitSignatureState(visitDetail.uuid, MDB_SignatureState.SIGNED_PHYSICALLY);
                 void queryClient.invalidateQueries({
                   queryKey: getVisitDetailQueryKey(visitDetail.visitId),
                   exact: true,
@@ -125,12 +125,12 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
               },
             },
           ];
-        case SignatureState.FOR_SIGNATURE_ELECTRONICALLY:
+        case MDB_SignatureState.FOR_SIGNATURE_ELECTRONICALLY:
           return [
             {
               titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
               onClick: async () => {
-                await updateVisitSignatureState(visitDetail.uuid, SignatureState.SIGNED_ELECTRONICALLY);
+                await updateVisitSignatureState(visitDetail.uuid, MDB_SignatureState.SIGNED_ELECTRONICALLY);
                 void queryClient.invalidateQueries({
                   queryKey: getVisitDetailQueryKey(visitDetail.visitId),
                   exact: true,
@@ -138,8 +138,8 @@ const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisit
               },
             },
           ];
-        case SignatureState.SIGNED_PHYSICALLY:
-        case SignatureState.SIGNED_ELECTRONICALLY:
+        case MDB_SignatureState.SIGNED_PHYSICALLY:
+        case MDB_SignatureState.SIGNED_ELECTRONICALLY:
           return [
             {
               titleLocalizationKey: "visitDetailPage.buttons.downloadPDF",

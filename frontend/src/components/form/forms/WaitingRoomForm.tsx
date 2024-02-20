@@ -12,7 +12,7 @@ import { useAuth } from "@app/hooks/auth/AuthProvider";
 import { FormPropType, FormQac, ValidatedOperatorFormData, ValidatedOperatorModifiedFormData } from "@app/model/form";
 import { RoutingPath } from "@app/routing-paths";
 import { addPdfToVisit, createFinalizedVisit } from "@app/util/mafildb_API/calls";
-import { ApprovalState } from "@app/util/mafildb_API/dto";
+import { MDB_ApprovalState } from "@app/util/mafildb_API/dto";
 import {
   fetchWaitingRoomVisitForm,
   generateProbandPdf,
@@ -113,7 +113,7 @@ export const WaitingRoomForm = () => {
           onClick: async (data) => {
             await createFinalizedVisit(
               data,
-              ApprovalState.DISAPPROVED,
+              MDB_ApprovalState.DISAPPROVED,
               operator?.username,
               new Date(),
               visitForm?.probandLanguageCode
@@ -144,7 +144,7 @@ export const WaitingRoomForm = () => {
             } else {
               const visit = await createFinalizedVisit(
                 data,
-                ApprovalState.APPROVED,
+                MDB_ApprovalState.APPROVED,
                 operator?.username,
                 new Date(),
                 visitForm?.probandLanguageCode

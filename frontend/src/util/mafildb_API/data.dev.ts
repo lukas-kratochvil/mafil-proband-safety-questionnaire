@@ -2,7 +2,7 @@ import { devicesTest } from "@app/__tests__/data/devices";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { subjectsTest } from "@app/__tests__/data/subjects";
 import { IVisit } from "@app/model/visit";
-import { ApprovalState, SignatureState } from "@app/util/mafildb_API/dto";
+import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
 import { IOperatorDTO } from "../server_API/dto";
 
 const operatorFinalizer: IOperatorDTO = {
@@ -27,8 +27,8 @@ export const generateVisitId = (): string => {
 const createDummyVisits = (
   count: number,
   initialVisit: IVisit,
-  approvalState: ApprovalState,
-  signatureState: SignatureState = SignatureState.NOT_SET,
+  approvalState: MDB_ApprovalState,
+  signatureState: MDB_SignatureState = MDB_SignatureState.NOT_SET,
   isPhantom = false
 ): IVisit[] => {
   const visits: IVisit[] = [];
@@ -52,7 +52,7 @@ const initialDummyVisit: IVisit = {
   uuid: "1",
   created: new Date(1663390000000),
   visitId: generateVisitId(),
-  approvalState: ApprovalState.APPROVED,
+  approvalState: MDB_ApprovalState.APPROVED,
   isPhantom: false,
   measurementDate: new Date(1663390000000),
   subject: subjectsTest[0],
@@ -67,16 +67,16 @@ const initialDummyVisit: IVisit = {
   approver: null,
   approvalDate: null,
   disapprovalReason: "",
-  signatureState: SignatureState.NOT_SET,
+  signatureState: MDB_SignatureState.NOT_SET,
 };
 
 export const dummyVisits: IVisit[] = [
   initialDummyVisit,
-  ...createDummyVisits(2, initialDummyVisit, ApprovalState.DISAPPROVED),
-  ...createDummyVisits(2, initialDummyVisit, ApprovalState.APPROVED),
-  ...createDummyVisits(2, initialDummyVisit, ApprovalState.APPROVED, SignatureState.FOR_SIGNATURE_PHYSICALLY),
-  ...createDummyVisits(6, initialDummyVisit, ApprovalState.APPROVED, SignatureState.SIGNED_PHYSICALLY),
-  ...createDummyVisits(2, initialDummyVisit, ApprovalState.APPROVED, SignatureState.NOT_SET, true),
+  ...createDummyVisits(2, initialDummyVisit, MDB_ApprovalState.DISAPPROVED),
+  ...createDummyVisits(2, initialDummyVisit, MDB_ApprovalState.APPROVED),
+  ...createDummyVisits(2, initialDummyVisit, MDB_ApprovalState.APPROVED, MDB_SignatureState.FOR_SIGNATURE_PHYSICALLY),
+  ...createDummyVisits(6, initialDummyVisit, MDB_ApprovalState.APPROVED, MDB_SignatureState.SIGNED_PHYSICALLY),
+  ...createDummyVisits(2, initialDummyVisit, MDB_ApprovalState.APPROVED, MDB_SignatureState.NOT_SET, true),
 ];
 
 export const PDF_CONTENT
