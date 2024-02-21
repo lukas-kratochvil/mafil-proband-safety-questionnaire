@@ -3,7 +3,7 @@
   "compilerOptions": {
     // project specific
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "Node",
     "lib": [
       "ESNext",
