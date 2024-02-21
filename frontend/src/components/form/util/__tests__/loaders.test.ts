@@ -1,7 +1,7 @@
 import { devicesTest } from "@app/__tests__/data/devices";
 import { gendersTest } from "@app/__tests__/data/genders";
 import { handednessesTest } from "@app/__tests__/data/handednesses";
-import { nativeLanguagesTest } from "@app/__tests__/data/native-languages";
+import { nativeLanguagesTest } from "@app/__tests__/data/languages";
 import { operatorMRTest } from "@app/__tests__/data/operators";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { subjectsTest } from "@app/__tests__/data/subjects";

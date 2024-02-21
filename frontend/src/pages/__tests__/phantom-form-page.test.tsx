@@ -3,15 +3,16 @@ import { format } from "date-fns";
 import { devicesTest } from "@app/__tests__/data/devices";
 import { gendersTest } from "@app/__tests__/data/genders";
 import { handednessesTest } from "@app/__tests__/data/handednesses";
-import { nativeLanguagesTest } from "@app/__tests__/data/native-languages";
+import { nativeLanguagesTest } from "@app/__tests__/data/languages";
 import { operatorMRTest } from "@app/__tests__/data/operators";
 import { pdfTest } from "@app/__tests__/data/pdf";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { getProjectText } from "@app/components/form/util/utils";
 import { IDevice } from "@app/model/device";
+import { INativeLanguage } from "@app/model/language";
 import { IProject } from "@app/model/project";
 import PhantomFormPage from "@app/pages/PhantomFormPage";
-import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IPdfDTO } from "@app/util/server_API/dto";
+import { IGenderDTO, IHandednessDTO, IPdfDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -44,7 +45,7 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
 //----------------------------------------------------------------------
 vi.mock("@app/util/server_API/calls", async () => ({
   fetchGenders: async (): Promise<IGenderDTO[]> => gendersTest,
-  fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesTest,
+  fetchNativeLanguages: async (): Promise<INativeLanguage[]> => nativeLanguagesTest,
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesTest,
   generatePhantomPdf: async (): Promise<IPdfDTO> => pdfTest,
 }));
@@ -69,7 +70,7 @@ describe("phantom form page", () => {
 
   // Data
   const genderOther = gendersTest[2].translations[0].text;
-  const nativeLanguageCzech = nativeLanguagesTest[0].translations[0].text;
+  const nativeLanguageCzech = nativeLanguagesTest[0].nativeName;
   const handednessUndetermined = handednessesTest[3].translations[0].text;
   const project1Text = getProjectText(projectsTest[0]);
   const device1Name = devicesTest[0].name;

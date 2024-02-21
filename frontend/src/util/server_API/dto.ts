@@ -1,5 +1,6 @@
 import { LanguageCode } from "@app/i18n/i18n";
 import { AnswerOption } from "@app/model/form";
+import { INativeLanguage } from "@app/model/language";
 
 export type OperatorRole = "MR" | "MR_HIGH_PERM";
 
@@ -27,12 +28,6 @@ export interface IGenderDTO extends ITranslations {
   id: string;
   code: string;
   order: number;
-}
-
-export interface INativeLanguageDTO extends ITranslations {
-  id: string;
-  code: string;
-  order: number | null;
 }
 
 export interface IHandednessDTO extends ITranslations {
@@ -86,7 +81,7 @@ export interface IWaitingRoomTableVisitFormDTO {
   personalId: string;
   birthdate: Date;
   gender: IGenderDTO;
-  nativeLanguage: INativeLanguageDTO;
+  nativeLanguage: INativeLanguage;
   heightCm: number;
   weightKg: number;
   visualCorrectionDioptre: number;
@@ -151,7 +146,7 @@ type CreateProbandInfoInput = {
   personalId: string;
   birthdate: Date;
   genderId: string;
-  nativeLanguageId: string;
+  nativeLanguageId: number;
   heightCm: number;
   weightKg: number;
   visualCorrectionDioptre: number;

@@ -1,16 +1,11 @@
 import userEvent from "@testing-library/user-event";
 import { gendersTest } from "@app/__tests__/data/genders";
 import { handednessesTest } from "@app/__tests__/data/handednesses";
-import { nativeLanguagesTest } from "@app/__tests__/data/native-languages";
+import { nativeLanguagesTest } from "@app/__tests__/data/languages";
 import { questionsTest } from "@app/__tests__/data/questions";
+import { INativeLanguage } from "@app/model/language";
 import ProbandFormPage from "@app/pages/ProbandFormPage";
-import {
-  IGenderDTO,
-  IHandednessDTO,
-  IHTMLCardDTO,
-  INativeLanguageDTO,
-  IOrderedQuestionDTO,
-} from "@app/util/server_API/dto";
+import { IGenderDTO, IHandednessDTO, IHTMLCardDTO, IOrderedQuestionDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -49,7 +44,7 @@ const newProbandVisitFormId = "id123";
 
 vi.mock("@app/util/server_API/calls", async () => ({
   fetchGenders: async (): Promise<IGenderDTO[]> => gendersTest,
-  fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesTest,
+  fetchNativeLanguages: async (): Promise<INativeLanguage[]> => nativeLanguagesTest,
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesTest,
   fetchCurrentQuestions: async (): Promise<IOrderedQuestionDTO[]> => questionsTest,
   createProbandVisitForm: async (): Promise<string> => newProbandVisitFormId,
@@ -72,7 +67,7 @@ describe("proband form page", () => {
   // Data
   const genderMan = gendersTest[0].translations[0].text;
   const genderWoman = gendersTest[1].translations[0].text;
-  const nativeLanguageCzech = nativeLanguagesTest[0].translations[0].text;
+  const nativeLanguageCzech = nativeLanguagesTest[0].nativeName;
   const handednessUndetermined = handednessesTest[3].translations[0].text;
 
   test("contains correct form buttons", async () => {

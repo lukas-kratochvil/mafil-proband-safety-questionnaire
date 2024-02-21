@@ -1,14 +1,9 @@
 import { LanguageCode } from "@app/i18n/i18n";
 import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
-import {
-  IGenderDTO,
-  IHandednessDTO,
-  INativeLanguageDTO,
-  IOperatorDTO,
-  VisitFormAnswerIncludingQuestion,
-} from "@app/util/server_API/dto";
+import { IGenderDTO, IHandednessDTO, IOperatorDTO, VisitFormAnswerIncludingQuestion } from "@app/util/server_API/dto";
 import { IDevice } from "./device";
 import { AnswerOption } from "./form";
+import { INativeLanguage } from "./language";
 import { IProject } from "./project";
 import { ISubject } from "./subject";
 
@@ -61,7 +56,7 @@ export interface IDuplicatedVisitIncludingQuestions
     | "signatureState"
   > {
   gender: IGenderDTO;
-  nativeLanguage: INativeLanguageDTO;
+  nativeLanguage: INativeLanguage;
   handedness: IHandednessDTO;
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
 }

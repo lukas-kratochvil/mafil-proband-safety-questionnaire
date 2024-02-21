@@ -75,10 +75,7 @@ const ApprovalRoomTablePage = () => {
       {
         id: "nativeLanguage",
         header: t("header.nativeLanguage"),
-        // eslint-disable-next-line react/no-unstable-nested-components
-        Cell: ({ row }: { row: MRTRow<IApprovalRoomTableVisitFormDTO> }) => (
-          <TranslatedEntityTableCell translations={row.original.nativeLanguage.translations} />
-        ),
+        accessorFn: (visit) => visit.nativeLanguage.nativeName,
         maxSize: 0,
       },
       {

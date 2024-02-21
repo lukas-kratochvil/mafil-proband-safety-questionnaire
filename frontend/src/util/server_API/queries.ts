@@ -39,22 +39,6 @@ export const GET_GENDER = gql`
   }
 `;
 
-export const GET_NATIVE_LANGUAGES = gql`
-  query GetNativeLanguages {
-    nativeLanguages {
-      ${ORDERED_TRANSLATION_ENTITY_PROPS}
-    }
-  }
-`;
-
-export const GET_NATIVE_LANGUAGE = gql`
-  query GetNativeLanguage($code: String!) {
-    nativeLanguage(code: $code) {
-      ${TRANSLATION_ENTITY_PROPS}
-    }
-  }
-`;
-
 export const GET_HANDEDNESSES = gql`
   query GetHandednesses {
     handednesses {

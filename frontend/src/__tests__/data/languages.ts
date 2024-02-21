@@ -1,9 +1,9 @@
-import { ILanguage } from "@app/model/language";
+import { ILanguage, INativeLanguage } from "@app/model/language";
 
-export const languagesTest: ILanguage[] = [
+const languagesTest: ILanguage[] = [
   {
     id: 1,
-    name: "Čeština",
+    nativeName: "Čeština",
     nameCs: "Čeština",
     nameEn: "Czech",
     code: "cs",
@@ -11,7 +11,7 @@ export const languagesTest: ILanguage[] = [
   },
   {
     id: 2,
-    name: "Slovenčina",
+    nativeName: "Slovenčina",
     nameCs: "Slovenština",
     nameEn: "Slovak",
     code: "sk",
@@ -19,10 +19,12 @@ export const languagesTest: ILanguage[] = [
   },
   {
     id: 3,
-    name: "English",
+    nativeName: "English",
     nameCs: "Angličtina",
     nameEn: "English",
     code: "en",
     priority: 3,
   },
 ];
+
+export const nativeLanguagesTest: INativeLanguage[] = languagesTest;

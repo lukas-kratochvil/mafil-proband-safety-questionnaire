@@ -1,5 +1,5 @@
 import { devicesTest } from "@app/__tests__/data/devices";
-import { languagesTest } from "@app/__tests__/data/languages";
+import { nativeLanguagesTest } from "@app/__tests__/data/languages";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { subjectsTest } from "@app/__tests__/data/subjects";
 import { IDevice } from "@app/model/device";
@@ -15,18 +15,15 @@ import {
 } from "@app/model/visit";
 import { IVisitPDF } from "@app/model/visitPdf";
 import { dummyVisits, generateVisitId, PDF_CONTENT } from "@app/util/mafildb_API/data.dev";
-import {
-  fetchCurrentQuestions,
-  fetchGender,
-  fetchHandedness,
-  fetchNativeLanguage,
-  fetchOperator,
-  fetchQuestion,
-} from "../server_API/calls";
+import { fetchCurrentQuestions, fetchGender, fetchHandedness, fetchOperator, fetchQuestion } from "../server_API/calls";
 import { IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
+import { fetchNativeLanguage } from "./calls";
 import { MDB_ApprovalState, MDB_SignatureState } from "./dto";
 
-export const fetchLanguagesDev = async (): Promise<ILanguage[]> => languagesTest;
+export const fetchLanguagesDev = async (): Promise<ILanguage[]> => nativeLanguagesTest;
+
+export const fetchLanguageDev = async (id: number): Promise<ILanguage> =>
+  nativeLanguagesTest.find((language) => id === language.id) ?? nativeLanguagesTest[0];
 
 export const fetchSubjectsDev = async (): Promise<ISubject[]> => subjectsTest;
 
@@ -105,7 +102,7 @@ export const fetchDuplicatedVisitDev = async (
 
   const [gender, nativeLanguage, handedness, answersIncludingQuestions] = await Promise.all([
     fetchGender(visit.subject.genderCode),
-    fetchNativeLanguage(visit.subject.nativeLanguageCode),
+    fetchNativeLanguage(visit.subject.nativeLanguageId),
     fetchHandedness(visit.subject.handednessCode),
     Promise.all(
       visit.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {

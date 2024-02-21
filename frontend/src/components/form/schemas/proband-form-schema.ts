@@ -1,7 +1,8 @@
 import { array, boolean, date, mixed, number, object, string } from "yup";
 import { AnswerOption } from "@app/model/form";
+import { INativeLanguage } from "@app/model/language";
 import { VisualCorrection } from "@app/model/visitForm";
-import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "@app/util/server_API/dto";
+import { IGenderDTO, IHandednessDTO } from "@app/util/server_API/dto";
 import { getOption, IOption, visualCorrectionOptions } from "../util/options";
 
 // using custom email regex due to very free yup email validator, inspired by: https://github.com/jquense/yup/issues/507#issuecomment-765799429
@@ -31,7 +32,7 @@ export const probandFormSchema = object().shape(
       .max(new Date(), "form.validation.birthdateMaxDate")
       .required("form.validation.required"),
     gender: mixed<IGenderDTO>().nullable().required("form.validation.required"),
-    nativeLanguage: mixed<INativeLanguageDTO>().nullable().required("form.validation.required"),
+    nativeLanguage: mixed<INativeLanguage>().nullable().required("form.validation.required"),
     heightCm: number()
       .typeError("form.validation.notValid")
       // integer() accepts integer numbers in decimal notation (will not throw an error), but converts them to integers

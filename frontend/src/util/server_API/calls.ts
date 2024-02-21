@@ -16,7 +16,6 @@ import {
   IGeneratePdfInput,
   IHandednessDTO,
   IHTMLCardDTO,
-  INativeLanguageDTO,
   IOperatorDTO,
   IOrderedQuestionDTO,
   IPdfDTO,
@@ -43,8 +42,6 @@ import {
   GET_GENDERS,
   GET_HANDEDNESS,
   GET_HANDEDNESSES,
-  GET_NATIVE_LANGUAGE,
-  GET_NATIVE_LANGUAGES,
   GET_OPERATOR,
   GET_PROBAND_CONTACT_CONSENT,
   GET_PROBAND_CONTACT_REQUEST,
@@ -67,8 +64,6 @@ import {
   GeneratePdfResponse,
   HandednessesResponse,
   HandednessResponse,
-  NativeLanguageResponse,
-  NativeLanguagesResponse,
   OperatorResponse,
   ProbandContactConsentResponse,
   ProbandContactRequestResponse,
@@ -121,30 +116,6 @@ export const fetchGender = async (code: string): Promise<IGenderDTO | never> => 
 
   if (data.data) {
     return data.data.gender;
-  }
-
-  throw createServerApiCallError(data.errors);
-};
-
-export const fetchNativeLanguages = async (): Promise<INativeLanguageDTO[] | never> => {
-  const { data } = await serverApi.post<NativeLanguagesResponse>("", { query: GET_NATIVE_LANGUAGES });
-
-  if (data.data) {
-    return data.data.nativeLanguages;
-  }
-
-  throw createServerApiCallError(data.errors);
-};
-
-export const fetchNativeLanguage = async (code: string): Promise<INativeLanguageDTO | never> => {
-  const variables = { code };
-  const { data } = await serverApi.post<NativeLanguageResponse>("", {
-    query: GET_NATIVE_LANGUAGE,
-    variables,
-  });
-
-  if (data.data) {
-    return data.data.nativeLanguage;
   }
 
   throw createServerApiCallError(data.errors);

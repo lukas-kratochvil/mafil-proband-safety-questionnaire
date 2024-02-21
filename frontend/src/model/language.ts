@@ -1,8 +1,10 @@
 export interface ILanguage {
   id: number;
-  name: string;
+  nativeName: string;
   nameCs: string;
   nameEn: string;
   code: string;
   priority: number | null;
 }
+
+export type INativeLanguage = ILanguage;

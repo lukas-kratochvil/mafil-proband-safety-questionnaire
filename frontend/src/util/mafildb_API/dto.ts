@@ -1,7 +1,7 @@
 import { AnswerOption } from "@app/model/form";
 import { ProbandVisitLanguageCode } from "@app/model/visit";
 
-export interface MDB_LanguageDTO {
+export interface MDB_ILanguageDTO {
   id: number;
   name: string;
   name_cs: string;
@@ -22,13 +22,14 @@ export interface MDB_IDeviceDTO {
 }
 
 export interface MDB_ICreateSubjectInput {
+  // TODO: should I connect preferred_language_id to the MAFILDB /languages model?
   preferred_language_id: ProbandVisitLanguageCode;
   first_name: string;
   last_name: string;
   birth_date: Date;
   personal_ID: string;
   gender: string;
-  native_language_id: string;
+  native_language_id: number;
   handedness: string;
   email: string;
   phone: string;

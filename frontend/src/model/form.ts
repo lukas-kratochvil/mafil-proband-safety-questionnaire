@@ -1,11 +1,7 @@
 import { IOption } from "@app/components/form/util/options";
-import {
-  IGenderDTO,
-  IHandednessDTO,
-  INativeLanguageDTO,
-  QuestionHiddenByGendersWithoutId,
-} from "../util/server_API/dto";
+import { IGenderDTO, IHandednessDTO, QuestionHiddenByGendersWithoutId } from "../util/server_API/dto";
 import { IDevice } from "./device";
+import { INativeLanguage } from "./language";
 import { IProject } from "./project";
 
 // Form fields having this data type are validated as numbers
@@ -41,7 +37,7 @@ export type FormPropType = {
   personalId: string;
   birthdate: Date | null;
   gender: IGenderDTO | null;
-  nativeLanguage: INativeLanguageDTO | null;
+  nativeLanguage: INativeLanguage | null;
   heightCm: TextFieldNumberInput;
   weightKg: TextFieldNumberInput;
   handedness: IHandednessDTO | null;
@@ -73,7 +69,7 @@ export type ValidatedProbandFormData = {
   personalId: string;
   birthdate: Date;
   gender: IGenderDTO;
-  nativeLanguage: INativeLanguageDTO;
+  nativeLanguage: INativeLanguage;
   heightCm: number;
   weightKg: number;
   handedness: IHandednessDTO;

@@ -1,7 +1,7 @@
 import { subDays } from "date-fns";
 import { IDevice } from "@app/model/device";
 import { ValidatedOperatorFormData } from "@app/model/form";
-import { ILanguage } from "@app/model/language";
+import { ILanguage, INativeLanguage } from "@app/model/language";
 import { IProject } from "@app/model/project";
 import { ISubject } from "@app/model/subject";
 import {
@@ -13,13 +13,14 @@ import {
 } from "@app/model/visit";
 import { IVisitPDF } from "@app/model/visitPdf";
 import { mafildbApi } from "@app/util/axios/mafildbApi";
-import { fetchGender, fetchHandedness, fetchNativeLanguage, fetchOperator, fetchQuestion } from "../server_API/calls";
+import { fetchGender, fetchHandedness, fetchOperator, fetchQuestion } from "../server_API/calls";
 import { IOperatorDTO, IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import {
   addPdfToVisitDev,
   createVisitDev,
   fetchDevicesDev,
   fetchDuplicatedVisitDev,
+  fetchLanguageDev,
   fetchLanguagesDev,
   fetchProjectsDev,
   fetchRecentVisitsDev,
@@ -42,6 +43,7 @@ import {
   MDB_CreateSubjectResponse,
   MDB_CreateVisitResponse,
   MDB_GetDevicesResponse,
+  MDB_GetLanguageResponse,
   MDB_GetLanguagesResponse,
   MDB_GetProjectsResponse,
   MDB_GetVisitFilesResponse,
@@ -51,7 +53,7 @@ import {
   MDB_UpdateVisitSignatureStateResponse,
 } from "./response-types";
 
-export const fetchLanguages = async (): Promise<ILanguage[]> => {
+const fetchLanguages = async (): Promise<ILanguage[]> => {
   if (import.meta.env.DEV) {
     return fetchLanguagesDev();
   }
@@ -64,10 +66,34 @@ export const fetchLanguages = async (): Promise<ILanguage[]> => {
 
   return data.results.map((languageDTO) => ({
     ...languageDTO,
+    nativeName: languageDTO.name,
     nameCs: languageDTO.name_cs,
     nameEn: languageDTO.name_en,
   }));
 };
+
+const fetchLanguage = async (id: number): Promise<ILanguage> => {
+  if (import.meta.env.DEV) {
+    return fetchLanguageDev(id);
+  }
+
+  const { data } = await mafildbApi.get<MDB_GetLanguageResponse>(`languages/${id}`);
+
+  if (MDB_RESPONSE_ERROR_ATTR in data) {
+    throw new Error(data.detail);
+  }
+
+  return {
+    ...data,
+    nativeName: data.name,
+    nameCs: data.name_cs,
+    nameEn: data.name_en,
+  };
+};
+
+export const fetchNativeLanguages = async (): Promise<INativeLanguage[]> => fetchLanguages();
+
+export const fetchNativeLanguage = async (id: number): Promise<INativeLanguage> => fetchLanguage(id);
 
 export const fetchProjects = async (): Promise<IProject[]> => {
   if (import.meta.env.DEV) {
@@ -111,7 +137,7 @@ const createVisitSubject = async (
     birth_date: visitFormData.birthdate,
     personal_ID: visitFormData.personalId,
     gender: visitFormData.gender.code,
-    native_language_id: visitFormData.nativeLanguage.code,
+    native_language_id: visitFormData.nativeLanguage.id,
     handedness: visitFormData.handedness.code,
     email: visitFormData.email,
     phone: visitFormData.phone,
@@ -130,7 +156,7 @@ const createVisitSubject = async (
     birthdate: data.birth_date,
     personalId: data.personal_ID,
     genderCode: data.gender,
-    nativeLanguageCode: data.native_language_id,
+    nativeLanguageId: data.native_language_id,
     handednessCode: data.handedness,
   };
 };
@@ -341,7 +367,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
         birthdate: visit.subject.birth_date,
         personalId: visit.subject.personal_ID,
         genderCode: visit.subject.gender,
-        nativeLanguageCode: visit.subject.native_language_id,
+        nativeLanguageId: visit.subject.native_language_id,
         handednessCode: visit.subject.handedness,
       },
       finalizer,
@@ -419,7 +445,7 @@ export const fetchDuplicatedVisit = async (
       birthdate: visit.subject.birth_date,
       personalId: visit.subject.personal_ID,
       genderCode: visit.subject.gender,
-      nativeLanguageCode: visit.subject.native_language_id,
+      nativeLanguageId: visit.subject.native_language_id,
       handednessCode: visit.subject.handedness,
     },
   };

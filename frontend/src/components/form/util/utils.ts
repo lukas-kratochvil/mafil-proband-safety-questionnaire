@@ -8,23 +8,18 @@ import {
   ValidatedOperatorFormData,
   ValidatedProbandFormData,
 } from "@app/model/form";
+import { INativeLanguage } from "@app/model/language";
 import { IProject } from "@app/model/project";
-import { IGenderDTO, IHandednessDTO, INativeLanguageDTO } from "@app/util/server_API/dto";
+import { IGenderDTO, IHandednessDTO } from "@app/util/server_API/dto";
 
-export const compareNativeLanguages = (a: INativeLanguageDTO, b: INativeLanguageDTO, locale: string): number => {
-  if (a.order && b.order) {
-    return a.order - b.order;
+export const compareNativeLanguages = (a: INativeLanguage, b: INativeLanguage): number => {
+  if (a.priority && b.priority) {
+    return a.priority - b.priority;
   }
-  if (a.order) {
-    return -1;
-  }
-  if (b.order) {
+  if (b.priority) {
     return 1;
   }
-
-  const aText = a.translations.find((trans) => trans.language.code === locale)?.text ?? undefined;
-  const bText = b.translations.find((trans) => trans.language.code === locale)?.text ?? undefined;
-  return aText === undefined || bText === undefined ? -1 : new Intl.Collator(locale).compare(aText, bText);
+  return -1;
 };
 
 export const getProjectText = (project: IProject): string => {
@@ -69,7 +64,7 @@ export const getValidatedProbandFormData = (data: FormPropType): ValidatedProban
   personalId: data.personalId,
   birthdate: data.birthdate as Date,
   gender: data.gender as IGenderDTO,
-  nativeLanguage: data.nativeLanguage as INativeLanguageDTO,
+  nativeLanguage: data.nativeLanguage as INativeLanguage,
   heightCm: typeof data.heightCm === "string" ? +data.heightCm : data.heightCm,
   weightKg: typeof data.weightKg === "string" ? +data.weightKg : data.weightKg,
   handedness: data.handedness as IHandednessDTO,

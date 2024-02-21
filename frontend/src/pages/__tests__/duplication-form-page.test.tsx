@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import { devicesTest } from "@app/__tests__/data/devices";
 import { gendersTest } from "@app/__tests__/data/genders";
 import { handednessesTest } from "@app/__tests__/data/handednesses";
-import { nativeLanguagesTest } from "@app/__tests__/data/native-languages";
+import { nativeLanguagesTest } from "@app/__tests__/data/languages";
 import { operatorMRHigPermTest } from "@app/__tests__/data/operators";
 import { pdfTest } from "@app/__tests__/data/pdf";
 import { projectsTest } from "@app/__tests__/data/projects";
@@ -10,10 +10,11 @@ import { questionsTest } from "@app/__tests__/data/questions";
 import { subjectsTest } from "@app/__tests__/data/subjects";
 import { IDevice } from "@app/model/device";
 import { AnswerOption } from "@app/model/form";
+import { INativeLanguage } from "@app/model/language";
 import { IProject } from "@app/model/project";
 import { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
-import { IGenderDTO, IHandednessDTO, INativeLanguageDTO, IOrderedQuestionDTO, IPdfDTO } from "@app/util/server_API/dto";
+import { IGenderDTO, IHandednessDTO, IOrderedQuestionDTO, IPdfDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -84,7 +85,7 @@ const newDuplicatedVisitFormId = "id123";
 
 vi.mock("@app/util/server_API/calls", async () => ({
   fetchGenders: async (): Promise<IGenderDTO[]> => gendersTest,
-  fetchNativeLanguages: async (): Promise<INativeLanguageDTO[]> => nativeLanguagesTest,
+  fetchNativeLanguages: async (): Promise<INativeLanguage[]> => nativeLanguagesTest,
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesTest,
   fetchCurrentQuestions: async (): Promise<IOrderedQuestionDTO[]> => questionsTest,
   createDuplicatedVisitFormForApproval: async (): Promise<string> => newDuplicatedVisitFormId,
@@ -138,7 +139,7 @@ describe("duplication form page", () => {
       personalId: visit.subject.personalId,
       birthdate: format(visit.subject.birthdate, "dd.MM.yyyy"),
       gender: visit.gender.translations[0].text,
-      nativeLanguage: visit.nativeLanguage.translations[0].text,
+      nativeLanguage: visit.nativeLanguage.nativeName,
       heightCm: visit.heightCm.toString(),
       weightKg: visit.weightKg.toString(),
       visualCorrection: "form.enums.visualCorrection.NO",

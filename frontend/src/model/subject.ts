@@ -7,10 +7,10 @@ export interface ISubject {
   surname: string;
   birthdate: Date;
   personalId: string;
-  // TODO: should i have Gender, Native language and Handedness objects or just codes?
+  // TODO: should i have Gender and Handedness objects or just codes?
   genderCode: string;
-  nativeLanguageCode: string;
   handednessCode: string;
+  nativeLanguageId: number;
   email: string;
   phone: string;
 }

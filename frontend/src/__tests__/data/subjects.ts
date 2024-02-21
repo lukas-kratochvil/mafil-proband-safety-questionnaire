@@ -13,7 +13,7 @@ export const subjectsTest: ISubject[] = [
     birthdate,
     personalId: "123456789",
     genderCode: "M",
-    nativeLanguageCode: "cs",
+    nativeLanguageId: 1,
     handednessCode: "RH",
     email: "karel.novak@email.cz",
     phone: "123456789",
