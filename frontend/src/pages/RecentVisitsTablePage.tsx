@@ -54,30 +54,30 @@ const RecentVisitsTablePage = () => {
   const columns = useMemo<MRTColumnDef<IRecentVisitsTableVisit>[]>(
     () => [
       {
-        accessorKey: "visitId",
         header: "Visit ID",
+        accessorKey: "visitId",
         size: 100,
       },
       {
-        accessorFn: (visit) => `${visit.subject.surname}, ${visit.subject.name}`,
-        id: "proband",
         header: t("header.proband"),
+        id: "proband",
+        accessorFn: (visit) => `${visit.subject.surname}, ${visit.subject.name}`,
         minSize: 150,
       },
       {
-        accessorKey: "project.acronym",
         header: t("header.project"),
+        accessorKey: "project.acronym",
         minSize: 300,
       },
       {
-        accessorKey: "device.name",
         header: t("header.device"),
+        accessorKey: "device.name",
         maxSize: 0,
       },
       {
-        accessorFn: (visit) => format(visit.measurementDate, processedDateFormat),
-        id: "processedDate",
         header: t("header.processedDate"),
+        id: "processedDate",
+        accessorFn: (visit) => format(visit.measurementDate, processedDateFormat),
         sortingFn: (rowA, rowB) =>
           // Sorting is done by 'created' attribute, because the 'date' attribute does not contain the time
           compareAsc(
@@ -87,14 +87,14 @@ const RecentVisitsTablePage = () => {
         maxSize: 0,
       },
       {
-        accessorFn: (visit) => `${visit.finalizer.surname}, ${visit.finalizer.name}`,
-        id: "processUser",
         header: t("header.operatorProcessed"),
+        id: "processUser",
+        accessorFn: (visit) => `${visit.finalizer.surname}, ${visit.finalizer.name}`,
         maxSize: 0,
       },
       {
-        id: "state",
         header: t("header.state"),
+        id: "state",
         // eslint-disable-next-line react/no-unstable-nested-components
         Cell: ({ row }: { row: MRTRow<IRecentVisitsTableVisit> }) => {
           const stateLocalizationString = getStateLocalizationString(row.original);
@@ -105,8 +105,8 @@ const RecentVisitsTablePage = () => {
         maxSize: 0,
       },
       {
-        id: "actionButtons",
         header: t("header.actions"),
+        id: "actionButtons",
         columnDefType: "display", // turns off data column features like sorting, filtering, etc.
         // eslint-disable-next-line react/no-unstable-nested-components
         Cell: ({ row }: { row: MRTRow<IRecentVisitsTableVisit> }) => (

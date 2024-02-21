@@ -28,9 +28,9 @@ const WaitingRoomTablePage = () => {
   const columns = useMemo<MRTColumnDef<IWaitingRoomTableVisitFormDTO>[]>(
     () => [
       {
-        accessorFn: (visit) => (visit.createdAt ? format(visit.createdAt, createdAtFormat) : ""),
-        id: "createdAt",
         header: t("header.registrationDate"),
+        id: "createdAt",
+        accessorFn: (visit) => (visit.createdAt ? format(visit.createdAt, createdAtFormat) : ""),
         sortingFn: (rowA, rowB, columnId) =>
           compareAsc(
             parse(`${rowA.getValue(columnId)}`, createdAtFormat, new Date()),
@@ -39,20 +39,20 @@ const WaitingRoomTablePage = () => {
         maxSize: 0,
       },
       {
-        accessorFn: (visit) => `${visit.surname}, ${visit.name}`,
-        id: "proband",
         header: t("header.proband"),
+        id: "proband",
+        accessorFn: (visit) => `${visit.surname}, ${visit.name}`,
         minSize: 150,
       },
       {
-        accessorKey: "personalId",
         header: t("header.personalId"),
+        accessorKey: "personalId",
         maxSize: 0,
       },
       {
-        accessorFn: (visit) => format(visit.birthdate, probandBirthdateFormat),
-        id: "birthdate",
         header: t("header.birthdate"),
+        id: "birthdate",
+        accessorFn: (visit) => format(visit.birthdate, probandBirthdateFormat),
         sortingFn: (rowA, rowB, columnId) =>
           compareAsc(
             parse(`${rowA.getValue(columnId)}`, probandBirthdateFormat, new Date()),
@@ -61,8 +61,8 @@ const WaitingRoomTablePage = () => {
         maxSize: 0,
       },
       {
-        id: "gender",
         header: t("header.gender"),
+        id: "gender",
         // eslint-disable-next-line react/no-unstable-nested-components
         Cell: ({ row }: { row: MRTRow<IWaitingRoomTableVisitFormDTO> }) => (
           <TranslatedEntityTableCell translations={row.original.gender.translations} />
@@ -70,14 +70,14 @@ const WaitingRoomTablePage = () => {
         maxSize: 0,
       },
       {
-        id: "nativeLanguage",
         header: t("header.nativeLanguage"),
+        id: "nativeLanguage",
         accessorFn: (visit) => visit.nativeLanguage.nativeName,
         maxSize: 0,
       },
       {
-        id: "actionButtons",
         header: t("header.actions"),
+        id: "actionButtons",
         columnDefType: "display", // turns off data column features like sorting, filtering, etc.
         // eslint-disable-next-line react/no-unstable-nested-components
         Cell: ({ row }: { row: MRTRow<IWaitingRoomTableVisitFormDTO> }) => (
