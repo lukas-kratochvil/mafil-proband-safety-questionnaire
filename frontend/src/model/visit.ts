@@ -6,7 +6,7 @@ import {
   INativeLanguageDTO,
   IOperatorDTO,
   VisitFormAnswerIncludingQuestion,
-} from "../util/server_API/dto";
+} from "@app/util/server_API/dto";
 import { IDevice } from "./device";
 import { AnswerOption } from "./form";
 import { IProject } from "./project";

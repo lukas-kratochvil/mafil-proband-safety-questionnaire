@@ -1,8 +1,10 @@
 import { devicesTest } from "@app/__tests__/data/devices";
+import { languagesTest } from "@app/__tests__/data/languages";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { subjectsTest } from "@app/__tests__/data/subjects";
 import { IDevice } from "@app/model/device";
 import { AnswerOption, ValidatedOperatorFormData } from "@app/model/form";
+import { ILanguage } from "@app/model/language";
 import { IProject } from "@app/model/project";
 import { ISubject } from "@app/model/subject";
 import {
@@ -23,6 +25,8 @@ import {
 } from "../server_API/calls";
 import { IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import { MDB_ApprovalState, MDB_SignatureState } from "./dto";
+
+export const fetchLanguagesDev = async (): Promise<ILanguage[]> => languagesTest;
 
 export const fetchSubjectsDev = async (): Promise<ISubject[]> => subjectsTest;
 

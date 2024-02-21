@@ -1,4 +1,11 @@
-import { MDB_IDeviceDTO, MDB_IProjectDTO, MDB_ISubjectDTO, MDB_IVisitDTO, MDB_IVisitFileDTO } from "./dto";
+import {
+  MDB_IDeviceDTO,
+  MDB_IProjectDTO,
+  MDB_ISubjectDTO,
+  MDB_IVisitDTO,
+  MDB_IVisitFileDTO,
+  MDB_LanguageDTO,
+} from "./dto";
 
 export const MDB_RESPONSE_ERROR_ATTR = "detail";
 
@@ -16,6 +23,8 @@ type MDB_GetManySuccessResponse<T> = {
 // Generic MAFILDB API response types
 type MDB_GetManyResponse<T> = MDB_GetManySuccessResponse<T> | MDB_ErrorResponse;
 type MDB_GetOneResponse<T> = T | MDB_ErrorResponse;
+
+export type MDB_GetLanguagesResponse = MDB_GetManyResponse<MDB_LanguageDTO>;
 
 export type MDB_GetProjectsResponse = MDB_GetManyResponse<MDB_IProjectDTO>;
 

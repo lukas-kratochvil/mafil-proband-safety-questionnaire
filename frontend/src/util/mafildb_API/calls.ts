@@ -1,6 +1,7 @@
 import { subDays } from "date-fns";
 import { IDevice } from "@app/model/device";
 import { ValidatedOperatorFormData } from "@app/model/form";
+import { ILanguage } from "@app/model/language";
 import { IProject } from "@app/model/project";
 import { ISubject } from "@app/model/subject";
 import {
@@ -19,6 +20,7 @@ import {
   createVisitDev,
   fetchDevicesDev,
   fetchDuplicatedVisitDev,
+  fetchLanguagesDev,
   fetchProjectsDev,
   fetchRecentVisitsDev,
   fetchVisitDetailDev,
@@ -40,6 +42,7 @@ import {
   MDB_CreateSubjectResponse,
   MDB_CreateVisitResponse,
   MDB_GetDevicesResponse,
+  MDB_GetLanguagesResponse,
   MDB_GetProjectsResponse,
   MDB_GetVisitFilesResponse,
   MDB_GetVisitResponse,
@@ -47,6 +50,24 @@ import {
   MDB_RESPONSE_ERROR_ATTR,
   MDB_UpdateVisitSignatureStateResponse,
 } from "./response-types";
+
+export const fetchLanguages = async (): Promise<ILanguage[]> => {
+  if (import.meta.env.DEV) {
+    return fetchLanguagesDev();
+  }
+
+  const { data } = await mafildbApi.get<MDB_GetLanguagesResponse>("languages");
+
+  if (MDB_RESPONSE_ERROR_ATTR in data) {
+    throw new Error(data.detail);
+  }
+
+  return data.results.map((languageDTO) => ({
+    ...languageDTO,
+    nameCs: languageDTO.name_cs,
+    nameEn: languageDTO.name_en,
+  }));
+};
 
 export const fetchProjects = async (): Promise<IProject[]> => {
   if (import.meta.env.DEV) {
