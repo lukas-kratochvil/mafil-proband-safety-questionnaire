@@ -29,7 +29,6 @@ entity VisitForm {
   * probandLanguageId: UUID <<FK>>
   * genderId: UUID <<FK>>
   * handednessId: UUID <<FK>>
-  * nativeLanguageId: UUID <<FK>>
   ---
   * createdAt: date
   * modifiedAt: date
@@ -41,6 +40,7 @@ entity VisitForm {
   * surname: string
   * personalId: string
   * birthdate: date
+  * nativeLanguageId: int
   * heightCm: int
   * weightKg: int
   * visualCorrectionDioptre: float
@@ -180,30 +180,6 @@ entity HandednessTranslation {
   * text: string
 }
 
-entity NativeLanguage {
-  * id: UUID <<generated>>
-  ---
-  * createdAt: date
-  * modifiedAt: date
-  deletedAt: date
-  ---
-  * code: string
-  order: int
-}
-
-entity NativeLanguageTranslation {
-  * id: UUID <<generated>>
-  ---
-  * nativeLanguageId: UUID <<FK>>
-  * languageId: UUID <<FK>>
-  ---
-  * createdAt: date
-  * modifiedAt: date
-  deletedAt: date
-  ---
-  * text: string
-}
-
 entity Language {
   * id: UUID <<generated>>
   ---
@@ -223,7 +199,6 @@ VisitForm ||..|{ Answer
 VisitForm }o..|| Language
 VisitForm }o..|| Gender
 VisitForm }o...|| Handedness
-VisitForm }o...|| NativeLanguage
 Answer }o..|| Question
 AnswerOption ||.o{ Answer
 Question |o..|| Question
@@ -235,7 +210,5 @@ Gender ||..|{ GenderTranslation
 GenderTranslation }o..|| Language
 Handedness ||..|{ HandednessTranslation
 HandednessTranslation }o..|| Language
-NativeLanguage ||..|{ NativeLanguageTranslation
-NativeLanguageTranslation }o..|| Language
 
 @enduml
