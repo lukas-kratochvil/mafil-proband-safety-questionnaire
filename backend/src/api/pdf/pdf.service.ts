@@ -56,25 +56,6 @@ export class PDFService {
       },
     });
 
-    // Get native language translations
-    const nativeLanguage = await this.prisma.nativeLanguage.findFirstOrThrow({
-      where: {
-        code: generatePDFInput.nativeLanguageCode,
-      },
-      select: {
-        translations: {
-          where: {
-            language: {
-              code: this.operatorLanguageCode,
-            },
-          },
-          select: {
-            text: true,
-          },
-        },
-      },
-    });
-
     // Get handedness translations
     const handedness = await this.prisma.handedness.findFirstOrThrow({
       where: {
@@ -105,7 +86,7 @@ export class PDFService {
       personalId: generatePDFInput.personalId,
       birthdate: generatePDFInput.birthdate,
       gender: { text: gender.translations[0].text },
-      nativeLanguage: { text: nativeLanguage.translations[0].text },
+      nativeLanguage: generatePDFInput.nativeLanguage,
       heightCm: generatePDFInput.heightCm,
       weightKg: generatePDFInput.weightKg,
       visualCorrectionDioptre: generatePDFInput.visualCorrectionDioptre,
@@ -144,30 +125,6 @@ export class PDFService {
       },
       select: {
         code: true,
-        translations: {
-          where: {
-            language: {
-              code: {
-                in: languageCodes,
-              },
-            },
-          },
-          select: {
-            text: true,
-          },
-          orderBy: {
-            language: languageOrderBy,
-          },
-        },
-      },
-    });
-
-    // Get native language translations
-    const nativeLanguage = await this.prisma.nativeLanguage.findFirstOrThrow({
-      where: {
-        code: generatePDFInput.nativeLanguageCode,
-      },
-      select: {
         translations: {
           where: {
             language: {
@@ -281,7 +238,7 @@ export class PDFService {
       personalId: generatePDFInput.personalId,
       birthdate: generatePDFInput.birthdate,
       gender: getTranslatedTexts(gender.translations),
-      nativeLanguage: getTranslatedTexts(nativeLanguage.translations),
+      nativeLanguage: generatePDFInput.nativeLanguage,
       heightCm: generatePDFInput.heightCm,
       weightKg: generatePDFInput.weightKg,
       visualCorrectionDioptre: generatePDFInput.visualCorrectionDioptre,

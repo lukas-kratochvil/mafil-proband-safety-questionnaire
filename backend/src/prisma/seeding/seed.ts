@@ -1,7 +1,6 @@
 import { OperatorRole, PrismaClient } from "@prisma/client";
 import genders from "./data/genders";
 import handednesses from "./data/handednesses";
-import nativeLanguages from "./data/native-languages";
 import questions from "./data/questions";
 
 const prisma = new PrismaClient();
@@ -40,22 +39,6 @@ async function seed() {
       name: "English",
     },
   });
-
-  // Native languages
-  nativeLanguages.forEach(
-    async (nativeLanguage) =>
-      await prisma.nativeLanguage.create({
-        data: {
-          code: nativeLanguage.code,
-          order: nativeLanguage.order,
-          translations: {
-            createMany: {
-              data: [createTranslation(cs.id, nativeLanguage.csText), createTranslation(en.id, nativeLanguage.enText)],
-            },
-          },
-        },
-      })
-  );
 
   // Genders
   genders.forEach(

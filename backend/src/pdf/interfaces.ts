@@ -24,7 +24,10 @@ export interface IPDFData {
   personalId: string;
   birthdate: Date;
   gender: IPDFEntityTexts;
-  nativeLanguage: IPDFEntityTexts;
+  nativeLanguage: {
+    nativeName: string;
+    nameCs: string;
+  };
   heightCm: number;
   weightKg: number;
   visualCorrectionDioptre: number;

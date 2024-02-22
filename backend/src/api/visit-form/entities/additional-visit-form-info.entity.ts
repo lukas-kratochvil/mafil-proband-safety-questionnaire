@@ -28,19 +28,23 @@ export class AdditionalVisitFormInfoEntity extends BaseEntity implements Additio
   @Field()
   finalizedAt: Date;
 
+  // MAFILDB project UUID
   @MaxLength(35)
   @Field()
   projectUuid: string;
 
+  // MAFILDB project acronym
   @MaxLength(30)
   @Field()
   projectAcronym: string;
 
+  // MAFILDB device ID
   @IsNumber()
   @IsPositive()
   @Field(() => Int)
   deviceId: number;
 
+  // MAFILDB device name
   @MaxLength(200)
   @Field()
   deviceName: string;

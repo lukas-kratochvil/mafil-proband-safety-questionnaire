@@ -42,8 +42,6 @@ model VisitForm {
   genderId          String                   @db.Uuid
   handedness        Handedness               @relation(fields: [handednessId], references: [id])
   handednessId      String                   @db.Uuid
-  nativeLanguage    NativeLanguage           @relation(fields: [nativeLanguageId], references: [id])
-  nativeLanguageId  String                   @db.Uuid
   answers           Answer[]
   additionalInfo    AdditionalVisitFormInfo?
 
@@ -57,6 +55,7 @@ model VisitForm {
   surname                 String         @db.VarChar(200)
   personalId              String         @db.VarChar(50)
   birthdate               DateTime
+  nativeLanguageId        Int
   heightCm                Int            @db.SmallInt
   weightKg                Int            @db.SmallInt
   visualCorrectionDioptre Float
@@ -226,44 +225,12 @@ model HandednessTranslation {
   @@unique([handednessId, languageId])
 }
 
-model NativeLanguage {
-  id String @id @default(uuid()) @db.Uuid
-
-  visitForms   VisitForm[]
-  translations NativeLanguageTranslation[]
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
-
-  code  String @unique @db.VarChar(2)
-  order Int?   @unique @db.SmallInt
-}
-
-model NativeLanguageTranslation {
-  id String @id @default(uuid()) @db.Uuid
-
-  nativeLanguage   NativeLanguage @relation(fields: [nativeLanguageId], references: [id], onDelete: Cascade)
-  nativeLanguageId String         @db.Uuid
-  language         Language       @relation(fields: [languageId], references: [id])
-  languageId       String         @db.Uuid
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
-
-  text String
-
-  @@unique([nativeLanguageId, languageId])
-}
-
 model Language {
   id String @id @default(uuid()) @db.Uuid
 
   visitForms                 VisitForm[]
   genderTranslations         GenderTranslation[]
   handednessTranslations     HandednessTranslation[]
-  nativeLanguageTranslations NativeLanguageTranslation[]
   questionTranslations       QuestionTranslation[]
 
   createdAt DateTime  @default(now())

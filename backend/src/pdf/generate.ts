@@ -224,8 +224,9 @@ const addPersonalData = (
     {
       title: texts.nativeLanguage,
       secondaryTitle: secondaryTexts?.nativeLanguage,
-      value: data.nativeLanguage.text,
-      secondaryValue: data.nativeLanguage.secondaryText,
+      value: data.nativeLanguage.nativeName,
+      secondaryValue:
+        data.nativeLanguage.nativeName === data.nativeLanguage.nameCs ? undefined : data.nativeLanguage.nameCs,
     },
     { title: texts.height, secondaryTitle: secondaryTexts?.height, value: `${data.heightCm} cm` },
     { title: texts.weight, secondaryTitle: secondaryTexts?.weight, value: `${data.weightKg} kg` },

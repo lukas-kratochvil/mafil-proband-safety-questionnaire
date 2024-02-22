@@ -4,6 +4,7 @@ import {
   ArrayUnique,
   IsArray,
   IsBoolean,
+  IsObject,
   IsOptional,
   IsString,
   MaxLength,
@@ -12,6 +13,17 @@ import {
 import { AdditionalVisitFormInfoEntity } from "@app/api/visit-form/entities/additional-visit-form-info.entity";
 import { AnswerEntity } from "@app/api/visit-form/entities/answer.entity";
 import { VisitFormEntity } from "@app/api/visit-form/entities/visit-form.entity";
+
+@InputType()
+class PDFNativeLanguage {
+  @IsString()
+  @Field()
+  nativeName: string;
+
+  @IsString()
+  @Field()
+  nameCs: string;
+}
 
 @InputType()
 class PDFAnswer extends IntersectionType(
@@ -48,20 +60,20 @@ export class GeneratePDFArgs extends IntersectionType(
   @Field()
   genderCode: string;
 
-  @IsString()
-  @Field()
-  nativeLanguageCode: string;
+  @IsObject()
+  @Field(() => PDFNativeLanguage)
+  nativeLanguage: PDFNativeLanguage;
 
   @IsString()
   @Field()
   handednessCode: string;
 
-  // In the MAFILDB is stored operator's username
+  // Operator's username is stored in MAFILDB
   @IsString()
   @Field()
   finalizerUsername: string;
 
-  // In the MAFILDB is stored operator's username
+  // Operator's username is stored in MAFILDB
   @IsOptional()
   @IsString()
   @Field({ nullable: true })

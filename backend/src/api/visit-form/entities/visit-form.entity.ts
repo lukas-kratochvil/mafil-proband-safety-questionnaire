@@ -20,7 +20,6 @@ import {
 import { GenderEntity } from "@app/api/gender/entities/gender.entity";
 import { HandednessEntity } from "@app/api/handedness/entities/handedness.entity";
 import { LanguageEntity } from "@app/api/language/entities/language.entity";
-import { NativeLanguageEntity } from "@app/api/native-language/entities/native-language.entity";
 import { BaseEntity } from "@app/api/utils/entities/base.entity";
 import { AdditionalVisitFormInfoEntity } from "./additional-visit-form-info.entity";
 import { AnswerEntity } from "./answer.entity";
@@ -60,13 +59,11 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   @HideField()
   sentToMafilDbAt: Date | null;
 
-  @IsUUID()
-  @HideField()
-  nativeLanguageId: string;
-
-  @IsObject()
-  @Field(() => NativeLanguageEntity)
-  nativeLanguage: NativeLanguageEntity;
+  // MAFILDB native language ID
+  @IsNumber()
+  @IsPositive()
+  @Field(() => Int)
+  nativeLanguageId: number;
 
   @IsUUID()
   @HideField()

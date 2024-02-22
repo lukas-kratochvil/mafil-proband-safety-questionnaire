@@ -12,6 +12,7 @@ export class CreateVisitFormInput extends IntersectionType(
     "surname",
     "personalId",
     "birthdate",
+    "nativeLanguageId",
     "heightCm",
     "weightKg",
     "visualCorrectionDioptre",
@@ -39,10 +40,6 @@ export class CreateVisitFormInput extends IntersectionType(
   @IsUUID()
   @Field(() => UUID)
   genderId: string;
-
-  @IsUUID()
-  @Field(() => UUID)
-  nativeLanguageId: string;
 
   @IsUUID()
   @Field(() => UUID)

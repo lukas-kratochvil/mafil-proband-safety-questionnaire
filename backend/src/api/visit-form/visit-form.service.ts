@@ -16,9 +16,6 @@ const visitFormInclude = Prisma.validator<Prisma.VisitFormInclude>()({
   gender: {
     include: translationsIncludeSchema,
   },
-  nativeLanguage: {
-    include: translationsIncludeSchema,
-  },
   handedness: {
     include: translationsIncludeSchema,
   },
@@ -47,11 +44,7 @@ export class VisitFormService {
             id: createVisitFormInput.genderId,
           },
         },
-        nativeLanguage: {
-          connect: {
-            id: createVisitFormInput.nativeLanguageId,
-          },
-        },
+        nativeLanguageId: createVisitFormInput.nativeLanguageId,
         heightCm: createVisitFormInput.heightCm,
         weightKg: createVisitFormInput.weightKg,
         handedness: {
@@ -137,13 +130,7 @@ export class VisitFormService {
                 },
               }
             : undefined,
-          nativeLanguage: updateVisitFormInput.nativeLanguageId
-            ? {
-                connect: {
-                  id: updateVisitFormInput.nativeLanguageId,
-                },
-              }
-            : undefined,
+          nativeLanguageId: updateVisitFormInput.nativeLanguageId,
           heightCm: updateVisitFormInput.heightCm,
           weightKg: updateVisitFormInput.weightKg,
           handedness: updateVisitFormInput.handednessId
