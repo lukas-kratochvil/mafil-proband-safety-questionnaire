@@ -146,9 +146,7 @@ export const GET_WAITING_ROOM_TABLE_VISIT_FORMS = gql`
       gender {
         ${TRANSLATION_ENTITY_PROPS}
       }
-      nativeLanguage {
-        ${TRANSLATION_ENTITY_PROPS}
-      }
+      nativeLanguageId
       heightCm
       weightKg
       visualCorrectionDioptre
@@ -176,9 +174,7 @@ export const GET_WAITING_ROOM_VISIT_FORM = gql`
       gender {
         ${TRANSLATION_ENTITY_PROPS}
       }
-      nativeLanguage {
-        ${TRANSLATION_ENTITY_PROPS}
-      }
+      nativeLanguageId
       heightCm
       weightKg
       visualCorrectionDioptre
@@ -208,9 +204,7 @@ export const GET_APPROVAL_ROOM_TABLE_VISIT_FORMS = gql`
       gender {
         ${TRANSLATION_ENTITY_PROPS}
       }
-      nativeLanguage {
-        ${TRANSLATION_ENTITY_PROPS}
-      }
+      nativeLanguageId
       heightCm
       weightKg
       visualCorrectionDioptre
@@ -245,9 +239,7 @@ export const GET_APPROVAL_ROOM_VISIT_FORM = gql`
       gender {
         ${TRANSLATION_ENTITY_PROPS}
       }
-      nativeLanguage {
-        ${TRANSLATION_ENTITY_PROPS}
-      }
+      nativeLanguageId
       heightCm
       weightKg
       visualCorrectionDioptre
@@ -293,7 +285,7 @@ export const GENERATE_PDF = gql`
     $visitId: String!
     $isPhantom: Boolean!
     $genderCode: String!
-    $nativeLanguageCode: String!
+    $nativeLanguage: PDFNativeLanguage!
     $handednessCode: String!
     $answers: [PDFAnswer!]
   ) {
@@ -315,7 +307,7 @@ export const GENERATE_PDF = gql`
       visitId: $visitId
       isPhantom: $isPhantom
       genderCode: $genderCode
-      nativeLanguageCode: $nativeLanguageCode
+      nativeLanguage: $nativeLanguage
       handednessCode: $handednessCode
       answers: $answers
     ) {

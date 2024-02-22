@@ -556,7 +556,10 @@ const generatePdf = async (
     personalId: visitFormData.personalId,
     birthdate: visitFormData.birthdate,
     genderCode: visitFormData.gender.code,
-    nativeLanguageCode: visitFormData.nativeLanguage.code,
+    nativeLanguage: {
+      nativeName: visitFormData.nativeLanguage.nativeName,
+      nameCs: visitFormData.nativeLanguage.nameCs,
+    },
     heightCm: visitFormData.heightCm,
     weightKg: visitFormData.weightKg,
     visualCorrectionDioptre: visitFormData.visualCorrectionDioptre,

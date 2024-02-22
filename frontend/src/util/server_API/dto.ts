@@ -207,7 +207,10 @@ export interface IGeneratePdfInput {
   personalId: string;
   birthdate: Date;
   genderCode: string;
-  nativeLanguageCode: string;
+  nativeLanguage: {
+    nativeName: string;
+    nameCs: string;
+  };
   heightCm: number;
   weightKg: number;
   visualCorrectionDioptre: number;
