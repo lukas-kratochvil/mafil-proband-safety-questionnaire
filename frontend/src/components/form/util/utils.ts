@@ -1,3 +1,4 @@
+import { FilterOptionsState } from "@mui/material";
 import { updatedDiff } from "deep-object-diff";
 import { Operator } from "@app/hooks/auth/AuthProvider";
 import { IDevice } from "@app/model/device";
@@ -20,6 +21,14 @@ export const compareNativeLanguages = (a: INativeLanguage, b: INativeLanguage): 
     return 1;
   }
   return -1;
+};
+
+export const filterNativeLanguages = (options: INativeLanguage[], state: FilterOptionsState<INativeLanguage>) => {
+  const inputValue = state.inputValue.trim().toLowerCase();
+  return options.filter((option) => {
+    const valuesToBeMatched = [option.nativeName, option.nameCs, option.nameEn];
+    return valuesToBeMatched.some((optionValue) => optionValue.trim().toLowerCase().startsWith(inputValue));
+  });
 };
 
 export const getProjectText = (project: IProject): string => {

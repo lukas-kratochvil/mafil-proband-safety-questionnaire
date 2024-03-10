@@ -3,7 +3,7 @@ import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n/i18n";
 import { INativeLanguage } from "@app/model/language";
-import { compareNativeLanguages } from "../util/utils";
+import { compareNativeLanguages, filterNativeLanguages } from "../util/utils";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import { IFormAsyncAutocompleteProps } from "./interfaces/input-props";
@@ -32,6 +32,7 @@ export const FormAutocompleteNativeLanguages = ({
             options={options?.sort((a, b) => compareNativeLanguages(a, b)) ?? []}
             getOptionLabel={(option: INativeLanguage) => option.nativeName}
             isOptionEqualToValue={(option, value) => option.id === value.id}
+            filterOptions={filterNativeLanguages}
             value={field.value}
             onChange={(_event, val) => field.onChange(val)}
             onBlur={field.onBlur}
