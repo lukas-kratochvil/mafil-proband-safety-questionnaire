@@ -225,6 +225,7 @@ const addPersonalData = (
       title: texts.nativeLanguage,
       secondaryTitle: secondaryTexts?.nativeLanguage,
       value: data.nativeLanguage.nativeName,
+      // Show czech translation of non-czech native language (doesn't depend on proband vs. operator preferred languages)
       secondaryValue:
         data.nativeLanguage.nativeName === data.nativeLanguage.nameCs ? undefined : data.nativeLanguage.nameCs,
     },
@@ -619,12 +620,10 @@ export const generateBase64PDF = async (
   secondaryLocale?: string
 ): Promise<string | never> => {
   const texts = getLocalizedTextsFile(locale);
-  let secondaryTexts: LocalizedTextsFile | undefined = undefined;
+  const secondaryTexts: LocalizedTextsFile | undefined = secondaryLocale
+    ? getLocalizedTextsFile(secondaryLocale)
+    : undefined;
   const commonTexts = getCommonTextsFile();
-
-  if (secondaryLocale) {
-    secondaryTexts = getLocalizedTextsFile(secondaryLocale);
-  }
 
   // Create PDF document
   const doc = new PDFDocument({

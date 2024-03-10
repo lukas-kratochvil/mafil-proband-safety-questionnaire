@@ -12,6 +12,11 @@ export interface IPDFQuestionAnswer extends IPDFEntityTexts {
   comment?: string;
 }
 
+interface IPDFNativeLanguage {
+  nativeName: string;
+  nameCs: string;
+}
+
 export interface IPDFData {
   isPhantom: boolean;
   operatorFinalizer: IPDFOperator;
@@ -24,10 +29,7 @@ export interface IPDFData {
   personalId: string;
   birthdate: Date;
   gender: IPDFEntityTexts;
-  nativeLanguage: {
-    nativeName: string;
-    nameCs: string;
-  };
+  nativeLanguage: IPDFNativeLanguage;
   heightCm: number;
   weightKg: number;
   visualCorrectionDioptre: number;
