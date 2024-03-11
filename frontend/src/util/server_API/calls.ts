@@ -6,7 +6,7 @@ import {
   ValidatedProbandFormData,
 } from "@app/model/form";
 import { ProbandVisitLanguageCode } from "@app/model/visit";
-import { IApprovalRoomTableVisitForm } from "@app/model/visitForm";
+import { IApprovalRoomTableVisitForm, IWaitingRoomTableVisitForm } from "@app/model/visitForm";
 import { serverApi } from "@app/util/axios/serverApi";
 import {
   IApprovalRoomVisitFormIncludingQuestionsDTO,
@@ -22,13 +22,12 @@ import {
   IQuestionDTO,
   ISendVisitFormFromWaitingRoomForApprovalInput,
   IUpdateVisitFormStateInput,
-  IWaitingRoomTableVisitFormDTO,
   IWaitingRoomVisitFormIncludingQuestions,
   VisitFormAnswerIncludingQuestion,
   VisitFormState,
 } from "@app/util/server_API/dto";
 import { createServerApiCallError } from "../error-handling/server-utils";
-import { fetchProject } from "../mafildb_API/calls";
+import { fetchNativeLanguage, fetchProject } from "../mafildb_API/calls";
 import { CREATE_VISIT_FORM, REMOVE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
 import {
   AUTHENTICATE_OPERATOR,
@@ -254,18 +253,26 @@ export const fetchProbandContactConsent = async (locale: LanguageCode): Promise<
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchWaitingRoomTableVisitForms = async (): Promise<IWaitingRoomTableVisitFormDTO[] | never> => {
+export const fetchWaitingRoomTableVisitForms = async (): Promise<IWaitingRoomTableVisitForm[] | never> => {
   const variables = { state: "NEW" };
   const { data } = await serverApi.post<WaitingRoomTableVisitFormsResponse>("", {
     query: GET_WAITING_ROOM_TABLE_VISIT_FORMS,
     variables,
   });
 
-  if (data.data) {
-    return data.data.visitForms;
+  if (data.data === null || data.data === undefined) {
+    throw createServerApiCallError(data.errors);
   }
 
-  throw createServerApiCallError(data.errors);
+  return Promise.all(
+    data.data.visitForms.map(async (visitForm) => {
+      const nativeLanguage = await fetchNativeLanguage(visitForm.nativeLanguageId);
+      return {
+        ...visitForm,
+        nativeLanguage,
+      };
+    })
+  );
 };
 
 export const fetchWaitingRoomVisitForm = async (
@@ -319,9 +326,11 @@ export const fetchApprovalRoomTableVisitForms = async (): Promise<IApprovalRoomT
   return Promise.all(
     data.data.visitForms.map(async (visitForm) => {
       const project = await fetchProject(visitForm.additionalInfo.projectUuid);
+      const nativeLanguage = await fetchNativeLanguage(visitForm.nativeLanguageId);
       return {
         ...visitForm,
         project,
+        nativeLanguage,
       };
     })
   );

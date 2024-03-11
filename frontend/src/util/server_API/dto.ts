@@ -1,6 +1,5 @@
 import { LanguageCode } from "@app/i18n/i18n";
 import { AnswerOption } from "@app/model/form";
-import { INativeLanguage } from "@app/model/language";
 
 export type OperatorRole = "MR" | "MR_HIGH_PERM";
 
@@ -81,7 +80,7 @@ export interface IWaitingRoomTableVisitFormDTO {
   personalId: string;
   birthdate: Date;
   gender: IGenderDTO;
-  nativeLanguage: INativeLanguage;
+  nativeLanguageId: number;
   heightCm: number;
   weightKg: number;
   visualCorrectionDioptre: number;

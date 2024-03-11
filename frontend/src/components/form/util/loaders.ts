@@ -59,6 +59,14 @@ export const loadFormDefaultValuesFromWaitingRoomVisitForm = (
   measuredAt: new Date(),
   disapprovalReason: null,
   ...visitForm,
+  nativeLanguage: {
+    id: visitForm.nativeLanguageId,
+    code: "",
+    nativeName: "",
+    nameCs: "",
+    nameEn: "",
+    priority: null,
+  },
   visualCorrection: getOption(
     visualCorrectionOptions,
     visitForm.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
@@ -97,6 +105,7 @@ export const loadFormDefaultValuesVisitDuplication = (visit: IDuplicatedVisitInc
   surname: visit.subject.surname,
   birthdate: visit.subject.birthdate,
   personalId: visit.subject.personalId,
+  nativeLanguage: visit.subject.nativeLanguage,
   email: visit.subject.email,
   phone: visit.subject.phone,
   visualCorrection: getOption(

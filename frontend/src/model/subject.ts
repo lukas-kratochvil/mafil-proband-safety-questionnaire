@@ -1,3 +1,4 @@
+import { INativeLanguage } from "./language";
 import { ProbandVisitLanguageCode } from "./visit";
 
 export interface ISubject {
@@ -10,7 +11,7 @@ export interface ISubject {
   // TODO: should i have Gender and Handedness objects or just codes?
   genderCode: string;
   handednessCode: string;
-  nativeLanguageId: number;
+  nativeLanguage: INativeLanguage;
   email: string;
   phone: string;
 }

@@ -45,7 +45,6 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
 //----------------------------------------------------------------------
 vi.mock("@app/util/server_API/calls", async () => ({
   fetchGenders: async (): Promise<IGenderDTO[]> => gendersTest,
-  fetchNativeLanguages: async (): Promise<INativeLanguage[]> => nativeLanguagesTest,
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesTest,
   generatePhantomPdf: async (): Promise<IPdfDTO> => pdfTest,
 }));
@@ -54,6 +53,7 @@ vi.mock("@app/util/server_API/calls", async () => ({
 // Mocking MAFILDB API calls
 //----------------------------------------------------------------------
 vi.mock("@app/util/mafildb_API/calls", async () => ({
+  fetchNativeLanguages: async (): Promise<INativeLanguage[]> => nativeLanguagesTest,
   fetchProjects: async (): Promise<IProject[]> => projectsTest,
   fetchDevices: async (): Promise<IDevice[]> => devicesTest,
   createPhantomVisit: async (): Promise<string> => "visitId",

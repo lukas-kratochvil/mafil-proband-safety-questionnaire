@@ -3,7 +3,6 @@ import { IDevice } from "@app/model/device";
 import { ValidatedOperatorFormData } from "@app/model/form";
 import { ILanguage, INativeLanguage } from "@app/model/language";
 import { IProject } from "@app/model/project";
-import { ISubject } from "@app/model/subject";
 import {
   CreateVisit,
   IDuplicatedVisitIncludingQuestions,
@@ -144,7 +143,7 @@ export const fetchDevices = async (): Promise<IDevice[]> => {
 const createVisitSubject = async (
   visitFormData: ValidatedOperatorFormData,
   probandLanguageCode?: ProbandVisitLanguageCode
-): Promise<ISubject | never> => {
+): Promise<string | never> => {
   const createData: MDB_ICreateSubjectInput = {
     first_name: visitFormData.name,
     last_name: visitFormData.surname,
@@ -164,17 +163,7 @@ const createVisitSubject = async (
     throw new Error(data.detail);
   }
 
-  return {
-    ...data,
-    preferredLanguageCode: data.preferred_language_id,
-    name: data.first_name,
-    surname: data.last_name,
-    birthdate: data.birth_date,
-    personalId: data.personal_ID,
-    genderCode: data.gender,
-    nativeLanguageId: data.native_language_id,
-    handednessCode: data.handedness,
-  };
+  return data.uuid;
 };
 
 const createVisit = async (
@@ -207,11 +196,11 @@ const createVisit = async (
     );
   }
 
-  const subject = await createVisitSubject(visitFormData, probandLanguageCode);
+  const subjectUuid = await createVisitSubject(visitFormData, probandLanguageCode);
   const createData: MDB_ICreateVisitInput = {
     checked: approvalState,
     is_phantom: isPhantom,
-    subject_uuid: subject.uuid,
+    subject_uuid: subjectUuid,
     project_uuid: visitFormData.project.uuid,
     device_id: visitFormData.device.id,
     date: visitFormData.measuredAt,
@@ -335,6 +324,8 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
 
   const visits: IRecentVisitsTableVisit[] = [];
   data.results.forEach(async (visit) => {
+    const nativeLanguage = await fetchNativeLanguage(visit.subject.native_language_id);
+
     let finalizer: IOperatorDTO;
     let approver: IOperatorDTO | null = null;
 
@@ -383,7 +374,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
         birthdate: visit.subject.birth_date,
         personalId: visit.subject.personal_ID,
         genderCode: visit.subject.gender,
-        nativeLanguageId: visit.subject.native_language_id,
+        nativeLanguage,
         handednessCode: visit.subject.handedness,
       },
       finalizer,
@@ -447,7 +438,6 @@ export const fetchDuplicatedVisit = async (
     isPhantom: visit.is_phantom,
     measurementDate: visit.date,
     gender,
-    nativeLanguage,
     heightCm: visit.height,
     weightKg: visit.weight,
     visualCorrectionDioptre: visit.visual_correction_dioptre,
@@ -461,7 +451,7 @@ export const fetchDuplicatedVisit = async (
       birthdate: visit.subject.birth_date,
       personalId: visit.subject.personal_ID,
       genderCode: visit.subject.gender,
-      nativeLanguageId: visit.subject.native_language_id,
+      nativeLanguage,
       handednessCode: visit.subject.handedness,
     },
   };

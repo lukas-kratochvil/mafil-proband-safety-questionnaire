@@ -43,7 +43,7 @@ const waitingRoomVisitForm: IWaitingRoomVisitFormIncludingQuestions = {
   personalId: "000000",
   birthdate: new Date(),
   gender: gendersTest[0],
-  nativeLanguage: nativeLanguagesTest[2],
+  nativeLanguageId: nativeLanguagesTest[2].id,
   heightCm: 180,
   weightKg: 80,
   visualCorrectionDioptre: 1,
@@ -74,7 +74,6 @@ const duplicatedVisit: IDuplicatedVisitIncludingQuestions = {
   project: projectsTest[0],
   device: devicesTest[0],
   gender: gendersTest[0],
-  nativeLanguage: nativeLanguagesTest[2],
   heightCm: 180,
   weightKg: 80,
   visualCorrectionDioptre: 1,
@@ -139,7 +138,7 @@ describe("form loaders", () => {
     expect(loadedFormValues.personalId).toEqual(fetchedVisit.personalId);
     expect(loadedFormValues.birthdate).toEqual(fetchedVisit.birthdate);
     expect(loadedFormValues.gender?.id).toEqual(fetchedVisit.gender.id);
-    expect(loadedFormValues.nativeLanguage?.id).toEqual(fetchedVisit.nativeLanguage.id);
+    expect(loadedFormValues.nativeLanguage?.id).toEqual(fetchedVisit.nativeLanguageId);
     expect(loadedFormValues.heightCm).toEqual(fetchedVisit.heightCm);
     expect(loadedFormValues.weightKg).toEqual(fetchedVisit.weightKg);
     expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.handedness.id);
@@ -168,7 +167,7 @@ describe("form loaders", () => {
     expect(loadedFormValues.personalId).toEqual(fetchedVisit.personalId);
     expect(loadedFormValues.birthdate).toEqual(fetchedVisit.birthdate);
     expect(loadedFormValues.gender?.id).toEqual(fetchedVisit.gender.id);
-    expect(loadedFormValues.nativeLanguage?.id).toEqual(fetchedVisit.nativeLanguage.id);
+    expect(loadedFormValues.nativeLanguage?.id).toEqual(fetchedVisit.nativeLanguageId);
     expect(loadedFormValues.heightCm).toEqual(fetchedVisit.heightCm);
     expect(loadedFormValues.weightKg).toEqual(fetchedVisit.weightKg);
     expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.handedness.id);
@@ -199,7 +198,7 @@ describe("form loaders", () => {
     expect(formDefaultValuesVisitDuplication.personalId).toEqual(duplicatedVisit.subject.personalId);
     expect(formDefaultValuesVisitDuplication.birthdate).toEqual(duplicatedVisit.subject.birthdate);
     expect(formDefaultValuesVisitDuplication.gender?.id).toEqual(duplicatedVisit.gender.id);
-    expect(formDefaultValuesVisitDuplication.nativeLanguage).toEqual(duplicatedVisit.nativeLanguage);
+    expect(formDefaultValuesVisitDuplication.nativeLanguage).toEqual(duplicatedVisit.subject.nativeLanguage);
     expect(formDefaultValuesVisitDuplication.heightCm).toEqual(duplicatedVisit.heightCm);
     expect(formDefaultValuesVisitDuplication.weightKg).toEqual(duplicatedVisit.weightKg);
     expect(formDefaultValuesVisitDuplication.handedness?.id).toEqual(duplicatedVisit.handedness.id);

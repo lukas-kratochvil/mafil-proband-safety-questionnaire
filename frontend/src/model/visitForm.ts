@@ -1,4 +1,5 @@
-import { IApprovalRoomTableVisitFormDTO } from "@app/util/server_API/dto";
+import { IApprovalRoomTableVisitFormDTO, IWaitingRoomTableVisitFormDTO } from "@app/util/server_API/dto";
+import { INativeLanguage } from "./language";
 import { IProject } from "./project";
 
 export enum VisualCorrection {
@@ -6,7 +7,12 @@ export enum VisualCorrection {
   NO,
 }
 
+export interface IWaitingRoomTableVisitForm extends Omit<IWaitingRoomTableVisitFormDTO, "nativeLanguageId"> {
+  nativeLanguage: INativeLanguage;
+}
+
 export interface IApprovalRoomTableVisitForm
-  extends Omit<IApprovalRoomTableVisitFormDTO, "additionalInfo"> {
+  extends Omit<IApprovalRoomTableVisitFormDTO, "additionalInfo" | "nativeLanguageId"> {
   project: IProject;
+  nativeLanguage: INativeLanguage;
 }

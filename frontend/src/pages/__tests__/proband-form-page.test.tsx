@@ -44,7 +44,6 @@ const newProbandVisitFormId = "id123";
 
 vi.mock("@app/util/server_API/calls", async () => ({
   fetchGenders: async (): Promise<IGenderDTO[]> => gendersTest,
-  fetchNativeLanguages: async (): Promise<INativeLanguage[]> => nativeLanguagesTest,
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesTest,
   fetchCurrentQuestions: async (): Promise<IOrderedQuestionDTO[]> => questionsTest,
   createProbandVisitForm: async (): Promise<string> => newProbandVisitFormId,
@@ -54,6 +53,13 @@ vi.mock("@app/util/server_API/calls", async () => ({
   fetchExaminationConsent: async (): Promise<IHTMLCardDTO> => htmlCard,
   fetchProbandContactRequest: async (): Promise<IHTMLCardDTO> => htmlCard,
   fetchProbandContactConsent: async (): Promise<IHTMLCardDTO> => htmlCard,
+}));
+
+//----------------------------------------------------------------------
+// Mocking MAFILDB API calls
+//----------------------------------------------------------------------
+vi.mock("@app/util/mafildb_API/calls", async () => ({
+  fetchNativeLanguages: async (): Promise<INativeLanguage[]> => nativeLanguagesTest,
 }));
 
 //----------------------------------------------------------------------

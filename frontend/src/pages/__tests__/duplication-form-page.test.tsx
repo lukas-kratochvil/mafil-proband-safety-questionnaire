@@ -34,7 +34,6 @@ const visit: IDuplicatedVisitIncludingQuestions = {
   gender: gendersTest[0],
   heightCm: 179,
   weightKg: 75,
-  nativeLanguage: nativeLanguagesTest[0],
   handedness: handednessesTest[0],
   visualCorrectionDioptre: 0,
   answersIncludingQuestions: questionsTest.map((question, index) => ({
@@ -85,7 +84,6 @@ const newDuplicatedVisitFormId = "id123";
 
 vi.mock("@app/util/server_API/calls", async () => ({
   fetchGenders: async (): Promise<IGenderDTO[]> => gendersTest,
-  fetchNativeLanguages: async (): Promise<INativeLanguage[]> => nativeLanguagesTest,
   fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesTest,
   fetchCurrentQuestions: async (): Promise<IOrderedQuestionDTO[]> => questionsTest,
   createDuplicatedVisitFormForApproval: async (): Promise<string> => newDuplicatedVisitFormId,
@@ -97,6 +95,7 @@ vi.mock("@app/util/server_API/calls", async () => ({
 // Mocking MAFILDB API calls
 //----------------------------------------------------------------------
 vi.mock("@app/util/mafildb_API/calls", async () => ({
+  fetchNativeLanguages: async (): Promise<INativeLanguage[]> => nativeLanguagesTest,
   fetchProjects: async (): Promise<IProject[]> => projectsTest,
   fetchDevices: async (): Promise<IDevice[]> => devicesTest,
   fetchDuplicatedVisit: async (): Promise<IDuplicatedVisitIncludingQuestions> => visit,
@@ -139,7 +138,7 @@ describe("duplication form page", () => {
       personalId: visit.subject.personalId,
       birthdate: format(visit.subject.birthdate, "dd.MM.yyyy"),
       gender: visit.gender.translations[0].text,
-      nativeLanguage: visit.nativeLanguage.nativeName,
+      nativeLanguage: visit.subject.nativeLanguage.nativeName,
       heightCm: visit.heightCm.toString(),
       weightKg: visit.weightKg.toString(),
       visualCorrection: "form.enums.visualCorrection.NO",

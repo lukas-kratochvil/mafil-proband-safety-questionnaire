@@ -17,7 +17,6 @@ import { IVisitPDF } from "@app/model/visitPdf";
 import { dummyVisits, generateVisitId, PDF_CONTENT } from "@app/util/mafildb_API/data.dev";
 import { fetchCurrentQuestions, fetchGender, fetchHandedness, fetchOperator, fetchQuestion } from "../server_API/calls";
 import { IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
-import { fetchNativeLanguage } from "./calls";
 import { MDB_ApprovalState, MDB_SignatureState } from "./dto";
 
 export const fetchLanguagesDev = async (): Promise<ILanguage[]> => nativeLanguagesTest;
@@ -103,9 +102,8 @@ export const fetchDuplicatedVisitDev = async (
     throw new Error("Visit not found!");
   }
 
-  const [gender, nativeLanguage, handedness, answersIncludingQuestions] = await Promise.all([
+  const [gender, handedness, answersIncludingQuestions] = await Promise.all([
     fetchGender(visit.subject.genderCode),
-    fetchNativeLanguage(visit.subject.nativeLanguageId),
     fetchHandedness(visit.subject.handednessCode),
     Promise.all(
       visit.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
@@ -117,7 +115,6 @@ export const fetchDuplicatedVisitDev = async (
   return {
     ...visit,
     gender,
-    nativeLanguage,
     handedness,
     answersIncludingQuestions,
   };
