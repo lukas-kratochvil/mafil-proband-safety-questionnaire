@@ -65,7 +65,7 @@ const ApprovalRoomTablePage = () => {
       },
       {
         header: t("header.gender"),
-        id: "gender",
+        accessorKey: "gender",
         // eslint-disable-next-line react/no-unstable-nested-components
         Cell: ({ row }: { row: MRTRow<IApprovalRoomTableVisitForm> }) => (
           <TranslatedEntityTableCell translations={row.original.gender.translations} />

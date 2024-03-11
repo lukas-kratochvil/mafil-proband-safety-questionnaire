@@ -62,7 +62,7 @@ const WaitingRoomTablePage = () => {
       },
       {
         header: t("header.gender"),
-        id: "gender",
+        accessorKey: "gender",
         // eslint-disable-next-line react/no-unstable-nested-components
         Cell: ({ row }: { row: MRTRow<IWaitingRoomTableVisitFormDTO> }) => (
           <TranslatedEntityTableCell translations={row.original.gender.translations} />
