@@ -86,9 +86,7 @@ model AdditionalVisitFormInfo {
   deletedAt DateTime?
 
   projectUuid    String   @db.VarChar(35)
-  projectAcronym String   @db.VarChar(30)
   deviceId       Int
-  deviceName     String   @db.VarChar(200)
   measuredAt     DateTime
   finalizedAt    DateTime
 }

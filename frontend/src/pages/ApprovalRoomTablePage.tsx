@@ -7,8 +7,8 @@ import { TranslatedEntityTableCell } from "@app/components/table/TranslatedEntit
 import { ApprovalRoomTableActionButtons } from "@app/components/table/actions/ApprovalRoomTableActionButtons";
 import { defaultTableProps } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n/i18n";
+import { IApprovalRoomTableVisitForm } from "@app/model/visitForm";
 import { fetchApprovalRoomTableVisitForms } from "@app/util/server_API/calls";
-import { IApprovalRoomTableVisitFormDTO } from "@app/util/server_API/dto";
 import { PageContainer } from "./PageContainer";
 
 const createdAtFormat = "d.M.y H:mm";
@@ -23,7 +23,7 @@ const ApprovalRoomTablePage = () => {
     isError,
   } = useQuery({ queryKey: ["approvalRoomVisitForms"], queryFn: fetchApprovalRoomTableVisitForms });
 
-  const columns = useMemo<MRTColumnDef<IApprovalRoomTableVisitFormDTO>[]>(
+  const columns = useMemo<MRTColumnDef<IApprovalRoomTableVisitForm>[]>(
     () => [
       {
         header: t("header.registrationDate"),
@@ -38,7 +38,7 @@ const ApprovalRoomTablePage = () => {
       },
       {
         header: t("header.project"),
-        accessorKey: "additionalInfo.projectAcronym",
+        accessorKey: "project.acronym",
         minSize: 300,
       },
       {
@@ -67,7 +67,7 @@ const ApprovalRoomTablePage = () => {
         header: t("header.gender"),
         id: "gender",
         // eslint-disable-next-line react/no-unstable-nested-components
-        Cell: ({ row }: { row: MRTRow<IApprovalRoomTableVisitFormDTO> }) => (
+        Cell: ({ row }: { row: MRTRow<IApprovalRoomTableVisitForm> }) => (
           <TranslatedEntityTableCell translations={row.original.gender.translations} />
         ),
         maxSize: 0,
@@ -83,7 +83,7 @@ const ApprovalRoomTablePage = () => {
         id: "actionButtons",
         columnDefType: "display", // turns off data column features like sorting, filtering, etc.
         // eslint-disable-next-line react/no-unstable-nested-components
-        Cell: ({ row }: { row: MRTRow<IApprovalRoomTableVisitFormDTO> }) => (
+        Cell: ({ row }: { row: MRTRow<IApprovalRoomTableVisitForm> }) => (
           <ApprovalRoomTableActionButtons visitFormId={row.original.id} />
         ),
         maxSize: 0,

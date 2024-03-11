@@ -30,6 +30,8 @@ export type MDB_GetLanguageResponse = MDB_GetOneResponse<MDB_ILanguageDTO>;
 
 export type MDB_GetProjectsResponse = MDB_GetManyResponse<MDB_IProjectDTO>;
 
+export type MDB_GetProjectResponse = MDB_GetOneResponse<MDB_IProjectDTO>;
+
 export type MDB_GetDevicesResponse = MDB_GetManyResponse<MDB_IDeviceDTO>;
 
 export type MDB_CreateSubjectResponse = MDB_GetOneResponse<MDB_ISubjectDTO>;

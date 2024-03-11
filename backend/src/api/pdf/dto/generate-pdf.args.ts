@@ -45,7 +45,7 @@ export class GeneratePDFArgs extends IntersectionType(
     "email",
     "phone",
   ] as const),
-  PickType(AdditionalVisitFormInfoEntity, ["projectAcronym", "measuredAt"] as const),
+  PickType(AdditionalVisitFormInfoEntity, ["measuredAt"] as const),
   ArgsType
 ) {
   @IsString()
@@ -55,6 +55,11 @@ export class GeneratePDFArgs extends IntersectionType(
   @IsBoolean()
   @Field()
   isPhantom: boolean;
+
+  // MAFILDB project acronym
+  @IsString()
+  @Field()
+  projectAcronym: string;
 
   @IsString()
   @Field()

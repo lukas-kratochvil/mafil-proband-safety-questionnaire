@@ -4,6 +4,6 @@ import { AdditionalVisitFormInfoEntity } from "@app/api/visit-form/entities/addi
 @InputType()
 export class CreateAdditionalVisitFormInfoInput extends PickType(
   AdditionalVisitFormInfoEntity,
-  ["projectUuid", "projectAcronym", "deviceId", "deviceName", "measuredAt", "finalizerId", "finalizedAt"] as const,
+  ["projectUuid", "deviceId", "measuredAt", "finalizerId", "finalizedAt"] as const,
   InputType
 ) {}

@@ -30,7 +30,7 @@ export const FormAutocompleteProjects = ({
           <Autocomplete
             id={name}
             options={options === undefined ? [] : options}
-            getOptionLabel={(option: IProject) => getProjectText(option)}
+            getOptionLabel={getProjectText}
             isOptionEqualToValue={(option, value) => option.uuid === value.uuid}
             value={field.value}
             onChange={(_event, val) => field.onChange(val)}

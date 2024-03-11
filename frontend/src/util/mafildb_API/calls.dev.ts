@@ -29,6 +29,9 @@ export const fetchSubjectsDev = async (): Promise<ISubject[]> => subjectsTest;
 
 export const fetchProjectsDev = async (): Promise<IProject[]> => projectsTest;
 
+export const fetchProjectDev = async (uuid: string): Promise<IProject> =>
+  projectsTest.find((project) => uuid === project.uuid) ?? projectsTest[0];
+
 export const fetchDevicesDev = async (): Promise<IDevice[]> => devicesTest;
 
 export const createVisitDev = async (

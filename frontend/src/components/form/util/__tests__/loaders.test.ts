@@ -58,9 +58,7 @@ const approvalRoomVisitForm: IApprovalRoomVisitFormIncludingQuestionsDTO = {
   answersIncludingQuestions: [{ ...answerIncludingQuestion, comment: "comment" }],
   additionalInfo: {
     projectUuid: "1552314",
-    projectAcronym: "Proj1",
     deviceId: 6552515,
-    deviceName: "M1",
     measuredAt: new Date(),
     finalizer: operatorMRTest,
     finalizedAt: new Date(),

@@ -22,6 +22,7 @@ import {
   fetchDuplicatedVisitDev,
   fetchLanguageDev,
   fetchLanguagesDev,
+  fetchProjectDev,
   fetchProjectsDev,
   fetchRecentVisitsDev,
   fetchVisitDetailDev,
@@ -45,6 +46,7 @@ import {
   MDB_GetDevicesResponse,
   MDB_GetLanguageResponse,
   MDB_GetLanguagesResponse,
+  MDB_GetProjectResponse,
   MDB_GetProjectsResponse,
   MDB_GetVisitFilesResponse,
   MDB_GetVisitResponse,
@@ -107,6 +109,20 @@ export const fetchProjects = async (): Promise<IProject[]> => {
   }
 
   return data.results.map((projectDTO) => ({ ...projectDTO }));
+};
+
+export const fetchProject = async (uuid: string): Promise<IProject> => {
+  if (import.meta.env.DEV) {
+    return fetchProjectDev(uuid);
+  }
+
+  const { data } = await mafildbApi.get<MDB_GetProjectResponse>(`projects/${uuid}`);
+
+  if (MDB_RESPONSE_ERROR_ATTR in data) {
+    throw new Error(data.detail);
+  }
+
+  return data;
 };
 
 export const fetchDevices = async (): Promise<IDevice[]> => {

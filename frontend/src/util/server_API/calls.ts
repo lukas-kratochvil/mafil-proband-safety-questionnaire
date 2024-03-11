@@ -6,9 +6,9 @@ import {
   ValidatedProbandFormData,
 } from "@app/model/form";
 import { ProbandVisitLanguageCode } from "@app/model/visit";
+import { IApprovalRoomTableVisitForm } from "@app/model/visitForm";
 import { serverApi } from "@app/util/axios/serverApi";
 import {
-  IApprovalRoomTableVisitFormDTO,
   IApprovalRoomVisitFormIncludingQuestionsDTO,
   ICreateDuplicatedVisitFormForApprovalInput,
   ICreateProbandVisitFormInput,
@@ -28,6 +28,7 @@ import {
   VisitFormState,
 } from "@app/util/server_API/dto";
 import { createServerApiCallError } from "../error-handling/server-utils";
+import { fetchProject } from "../mafildb_API/calls";
 import { CREATE_VISIT_FORM, REMOVE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
 import {
   AUTHENTICATE_OPERATOR,
@@ -304,18 +305,26 @@ export const fetchWaitingRoomVisitForm = async (
   return { ...visitForm, probandLanguageCode: visitForm.probandLanguage.code, answersIncludingQuestions };
 };
 
-export const fetchApprovalRoomTableVisitForms = async (): Promise<IApprovalRoomTableVisitFormDTO[] | never> => {
+export const fetchApprovalRoomTableVisitForms = async (): Promise<IApprovalRoomTableVisitForm[] | never> => {
   const variables = { state: "IN_APPROVAL" };
   const { data } = await serverApi.post<ApprovalRoomTableVisitFormsResponse>("", {
     query: GET_APPROVAL_ROOM_TABLE_VISIT_FORMS,
     variables,
   });
 
-  if (data.data) {
-    return data.data.visitForms;
+  if (data.data === null || data.data === undefined) {
+    throw createServerApiCallError(data.errors);
   }
 
-  throw createServerApiCallError(data.errors);
+  return Promise.all(
+    data.data.visitForms.map(async (visitForm) => {
+      const project = await fetchProject(visitForm.additionalInfo.projectUuid);
+      return {
+        ...visitForm,
+        project,
+      };
+    })
+  );
 };
 
 export const fetchApprovalRoomVisitForm = async (
@@ -414,9 +423,7 @@ export const createDuplicatedVisitFormForApproval = async (
       phone: visitFormData.phone,
       additionalInfo: {
         projectUuid: visitFormData.project.uuid,
-        projectAcronym: visitFormData.project.acronym,
         deviceId: visitFormData.device.id,
-        deviceName: visitFormData.device.name,
         measuredAt: visitFormData.measuredAt,
         finalizerId,
         finalizedAt: new Date(),
@@ -464,9 +471,7 @@ export const sendVisitFormForApproval = async (
       phone: visitFormData.phone,
       additionalInfo: {
         projectUuid: visitFormData.project.uuid,
-        projectAcronym: visitFormData.project.acronym,
         deviceId: visitFormData.device.id,
-        deviceName: visitFormData.device.name,
         measuredAt: visitFormData.measuredAt,
         finalizedAt: new Date(),
         finalizerId,
