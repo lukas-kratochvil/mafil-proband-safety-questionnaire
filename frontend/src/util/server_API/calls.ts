@@ -1,5 +1,4 @@
 import i18n, { LanguageCode } from "@app/i18n/i18n";
-import { IOperatorAuthorization } from "@app/model/auth";
 import {
   ValidatedOperatorFormData,
   ValidatedOperatorModifiedFormData,
@@ -16,6 +15,7 @@ import {
   IGeneratePdfInput,
   IHandednessDTO,
   IHTMLCardDTO,
+  IOperatorAuthInput,
   IOperatorDTO,
   IOrderedQuestionDTO,
   IPdfDTO,
@@ -75,8 +75,8 @@ import {
   WaitingRoomVisitFormResponse,
 } from "./response-types";
 
-export const authenticateOperator = async (loggingOperator: IOperatorAuthorization): Promise<IOperatorDTO | never> => {
-  const variables: IOperatorAuthorization = { ...loggingOperator };
+export const authenticateOperator = async (loggingOperator: IOperatorAuthInput): Promise<IOperatorDTO | never> => {
+  const variables: IOperatorAuthInput = { ...loggingOperator };
   const { data } = await serverApi.post<AuthenticateOperatorResponse>("", {
     query: AUTHENTICATE_OPERATOR,
     variables,

@@ -1,10 +1,11 @@
 import { LanguageCode } from "@app/i18n/i18n";
-import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
+import { MDB_IVisitDTO } from "@app/util/mafildb_API/dto";
 import { IGenderDTO, IHandednessDTO, IOperatorDTO, VisitFormAnswerIncludingQuestion } from "@app/util/server_API/dto";
 import { IDevice } from "./device";
 import { AnswerOption } from "./form";
 import { IProject } from "./project";
 import { ISubject } from "./subject";
+import { IVisitPDF } from "./visitPdf";
 
 export type ProbandVisitLanguageCode = LanguageCode | "";
 
@@ -15,28 +16,28 @@ interface IAnswer {
 }
 
 export interface IVisit {
-  uuid: string;
-  visitId: string;
-  created: Date;
-  approvalState: MDB_ApprovalState;
-  isPhantom: boolean;
-  measurementDate: Date;
+  uuid: MDB_IVisitDTO["uuid"];
+  visitId: MDB_IVisitDTO["visit_name"];
+  created: MDB_IVisitDTO["created"];
+  approvalState: MDB_IVisitDTO["checked"];
+  isPhantom: MDB_IVisitDTO["is_phantom"];
+  measurementDate: MDB_IVisitDTO["date"];
   subject: ISubject;
   project: IProject;
   device: IDevice;
-  heightCm: number;
-  weightKg: number;
-  visualCorrectionDioptre: number;
+  heightCm: MDB_IVisitDTO["height"];
+  weightKg: MDB_IVisitDTO["weight"];
+  visualCorrectionDioptre: MDB_IVisitDTO["visual_correction_dioptre"];
   answers: IAnswer[];
   finalizer: IOperatorDTO;
-  finalizationDate: Date;
+  finalizationDate: MDB_IVisitDTO["registration_finalize_date"];
   approver: IOperatorDTO | null;
-  approvalDate: Date | null;
-  signatureState: MDB_SignatureState;
-  disapprovalReason: string;
+  approvalDate: MDB_IVisitDTO["registration_approve_date"];
+  signatureState: MDB_IVisitDTO["registration_signature_status"];
+  disapprovalReason: MDB_IVisitDTO["registration_disapprove_reason"];
 }
 
-export type CreateVisit = Pick<IVisit, "uuid" | "visitId">;
+export type CreatedVisitData = Pick<IVisit, "uuid" | "visitId">;
 
 // TODO: correct the type
 export type IRecentVisitsTableVisit = IVisit;
@@ -46,23 +47,20 @@ export interface IDuplicatedVisitIncludingQuestions
     IVisit,
     | "created"
     | "approvalState"
+    | "signatureState"
     | "answers"
     | "finalizer"
     | "finalizationDate"
     | "approver"
     | "approvalDate"
     | "disapprovalReason"
-    | "signatureState"
   > {
   gender: IGenderDTO;
   handedness: IHandednessDTO;
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
 }
 
-export interface IVisitDetailPDF {
-  name: string; // also contains extension, for example: my_doc.pdf
-  content: string; // Base64 encoded PDF content
-}
+export type IVisitDetailPDF = Pick<IVisitPDF, "name" | "content">;
 
 export interface IVisitDetail
   extends Pick<IVisit, "uuid" | "visitId" | "approvalState" | "isPhantom" | "signatureState"> {

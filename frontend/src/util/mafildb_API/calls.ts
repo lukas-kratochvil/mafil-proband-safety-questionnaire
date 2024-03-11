@@ -4,7 +4,7 @@ import { ValidatedOperatorFormData } from "@app/model/form";
 import { ILanguage, INativeLanguage } from "@app/model/language";
 import { IProject } from "@app/model/project";
 import {
-  CreateVisit,
+  CreatedVisitData,
   IDuplicatedVisitIncludingQuestions,
   IRecentVisitsTableVisit,
   IVisitDetail,
@@ -175,7 +175,7 @@ const createVisit = async (
   probandLanguageCode?: ProbandVisitLanguageCode,
   approverUsername?: string,
   approvedAt?: Date
-): Promise<CreateVisit | never> => {
+): Promise<CreatedVisitData | never> => {
   if (finalizerUsername === undefined) {
     throw new Error("Missing username of the operator who finalized the visit!");
   }
@@ -236,7 +236,7 @@ export const createFinalizedVisit = async (
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
   probandLanguageCode: ProbandVisitLanguageCode | undefined
-): Promise<CreateVisit | never> => {
+): Promise<CreatedVisitData | never> => {
   if (probandLanguageCode === undefined) {
     throw new Error("Missing proband language code!");
   }
@@ -252,7 +252,7 @@ export const createVisitFromApproval = async (
   probandLanguageCode: ProbandVisitLanguageCode | undefined,
   approverUsername: string | undefined,
   approvedAt: Date | undefined
-): Promise<CreateVisit | never> => {
+): Promise<CreatedVisitData | never> => {
   if (probandLanguageCode === undefined) {
     throw new Error("Missing proband language code!");
   }
@@ -281,7 +281,7 @@ export const createPhantomVisit = async (
   visitFormData: ValidatedOperatorFormData,
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined
-): Promise<CreateVisit | never> =>
+): Promise<CreatedVisitData | never> =>
   createVisit(visitFormData, MDB_ApprovalState.APPROVED, true, finalizerUsername, finalizedAt);
 
 export const addPdfToVisit = async (visitUuid: string, pdf: IPdfDTO): Promise<IVisitPDF> => {

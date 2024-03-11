@@ -12,6 +12,8 @@ export interface IOperatorDTO {
   role: OperatorRole;
 }
 
+export type IOperatorAuthInput = Pick<IOperatorDTO, "name" | "surname" | "username" | "email">;
+
 export interface ITranslation {
   text: string;
   language: {

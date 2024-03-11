@@ -39,28 +39,15 @@ export interface MDB_ISubjectDTO extends MDB_ICreateSubjectInput {
   uuid: string;
 }
 
-interface MDB_IRegistrationUserDTO {
-  id: number;
-  username: string;
+export enum MDB_ApprovalState {
+  APPROVED = "ra",
+  DISAPPROVED = "rd",
 }
 
 interface MDB_IAnswerDTO {
   question_id: string;
   answer: AnswerOption;
   comment: string;
-}
-
-export enum MDB_ApprovalState {
-  APPROVED = "ra",
-  DISAPPROVED = "rd",
-}
-
-export enum MDB_SignatureState {
-  NOT_SET = "ns",
-  FOR_SIGNATURE_PHYSICALLY = "pp",
-  FOR_SIGNATURE_ELECTRONICALLY = "pe",
-  SIGNED_PHYSICALLY = "sp",
-  SIGNED_ELECTRONICALLY = "se",
 }
 
 export type MDB_ICreateVisitInput = {
@@ -81,6 +68,19 @@ export type MDB_ICreateVisitInput = {
   registration_disapprove_reason: string;
 };
 
+interface MDB_IRegistrationUserDTO {
+  id: number;
+  username: string;
+}
+
+export enum MDB_SignatureState {
+  NOT_SET = "ns",
+  FOR_SIGNATURE_PHYSICALLY = "pp",
+  FOR_SIGNATURE_ELECTRONICALLY = "pe",
+  SIGNED_PHYSICALLY = "sp",
+  SIGNED_ELECTRONICALLY = "se",
+}
+
 export type MDB_IVisitDTO = Omit<
   MDB_ICreateVisitInput,
   "subject_uuid" | "project_uuid" | "device_id" | "registration_finalize_username" | "registration_approve_username"
@@ -100,7 +100,7 @@ export type MDB_IUpdateVisitSignatureStateInput = Pick<MDB_IVisitDTO, "registrat
 
 export type MDB_VisitFileType = "reg_form";
 
-export type MDB_VisitFileMimeType = "application/pdf";
+type MDB_VisitFileMimeType = "application/pdf";
 
 export type MDB_IAddPdfToVisitInput = {
   file_type: MDB_VisitFileType;

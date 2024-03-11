@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { IOperatorAuthorization } from "@app/model/auth";
 import { RoutingPath } from "@app/routing-paths";
 import { authenticateOperator } from "@app/util/server_API/calls";
+import { IOperatorAuthInput } from "@app/util/server_API/dto";
 import { IAuth, Operator } from "./AuthProvider";
 
 const SESSION_STORAGE_OPERATOR_KEY = "operator";
-const DEV_OPERATOR: IOperatorAuthorization = {
+const DEV_OPERATOR: IOperatorAuthInput = {
   name: import.meta.env.VITE_OPERATOR_FIRSTNAME,
   surname: import.meta.env.VITE_OPERATOR_SURNAME,
   username: import.meta.env.VITE_OPERATOR_USERNAME,

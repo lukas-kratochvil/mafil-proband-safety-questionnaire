@@ -8,7 +8,7 @@ import { ILanguage } from "@app/model/language";
 import { IProject } from "@app/model/project";
 import { ISubject } from "@app/model/subject";
 import {
-  CreateVisit,
+  CreatedVisitData,
   IDuplicatedVisitIncludingQuestions,
   IRecentVisitsTableVisit,
   IVisitDetail,
@@ -41,7 +41,7 @@ export const createVisitDev = async (
   finalizedAt: Date,
   approverUsername?: string,
   approvedAt?: Date
-): Promise<CreateVisit | never> => {
+): Promise<CreatedVisitData | never> => {
   const visitId = generateVisitId();
   dummyVisits.push({
     ...visitFormData,
