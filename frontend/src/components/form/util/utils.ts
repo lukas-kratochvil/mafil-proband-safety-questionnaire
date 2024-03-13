@@ -17,10 +17,13 @@ export const compareNativeLanguages = (a: INativeLanguage, b: INativeLanguage): 
   if (a.priority && b.priority) {
     return a.priority - b.priority;
   }
+  if (a.priority) {
+    return -1;
+  }
   if (b.priority) {
     return 1;
   }
-  return -1;
+  return a.nameEn.localeCompare(b.nameEn);
 };
 
 export const filterNativeLanguages = (options: INativeLanguage[], state: FilterOptionsState<INativeLanguage>) => {

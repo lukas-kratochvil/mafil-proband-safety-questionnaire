@@ -29,7 +29,7 @@ export const FormAutocompleteNativeLanguages = ({
         render={({ field }) => (
           <Autocomplete
             id={name}
-            options={options?.sort((a, b) => compareNativeLanguages(a, b)) ?? []}
+            options={options?.sort(compareNativeLanguages) ?? []}
             getOptionLabel={(option: INativeLanguage) => option.nativeName}
             isOptionEqualToValue={(option, value) => option.id === value.id}
             filterOptions={filterNativeLanguages}
