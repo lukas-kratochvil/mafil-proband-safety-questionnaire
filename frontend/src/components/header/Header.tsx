@@ -14,7 +14,7 @@ export const Header = () => {
     <AppBar
       position="static"
       sx={{
-        backgroundColor: import.meta.env.VITE_APP_BAR_COLOR,
+        backgroundColor: import.meta.env.VITE_APP_BAR_COLOR ?? "#7ac143",
       }}
     >
       <Toolbar variant="dense">
