@@ -34,7 +34,7 @@ server {
 
   # MAFILDB API calls
   location /mafildb-api/ {
-    # rewrite any URI starting with 'mafildb-api' to start with '/api'
+    # rewrite any URI starting with 'mafildb-api' to start with '/api/v2' (we use the 2. version of MAFILDB API)
     rewrite ^/mafildb-api/(.*)$ /api/v2/$1 break;
     proxy_pass ${MAFILDB_API_URL};
     proxy_http_version 1.1;
