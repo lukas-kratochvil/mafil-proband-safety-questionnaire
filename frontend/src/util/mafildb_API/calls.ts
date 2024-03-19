@@ -12,7 +12,13 @@ import {
 } from "@app/model/visit";
 import { IVisitPDF } from "@app/model/visitPdf";
 import { mafildbApi } from "@app/util/axios/mafildbApi";
-import { fetchGender, fetchHandedness, fetchOperator, fetchQuestion } from "../server_API/calls";
+import {
+  fetchGender,
+  fetchHandedness,
+  fetchNativeLanguagesService,
+  fetchOperator,
+  fetchQuestion,
+} from "../server_API/calls";
 import { IOperatorDTO, IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import {
   addPdfToVisitDev,
@@ -92,7 +98,9 @@ const fetchLanguage = async (id: number): Promise<ILanguage> => {
   };
 };
 
-export const fetchNativeLanguages = async (): Promise<INativeLanguage[]> => fetchLanguages();
+// Native languages in the proband form must be fetched from our backend (no authenticated user => cannot use access token to authenticate the request in the MAFILDB)
+export const fetchNativeLanguages = async (isUserAuthenticated: boolean): Promise<INativeLanguage[]> =>
+  import.meta.env.DEV || isUserAuthenticated ? fetchLanguages() : fetchNativeLanguagesService();
 
 export const fetchNativeLanguage = async (id: number): Promise<INativeLanguage> => fetchLanguage(id);
 

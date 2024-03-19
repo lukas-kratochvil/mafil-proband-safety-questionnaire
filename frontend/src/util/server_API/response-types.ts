@@ -1,3 +1,4 @@
+import { INativeLanguage } from "@app/model/language";
 import {
   IApprovalRoomTableVisitFormDTO,
   IApprovalRoomVisitFormDTO,
@@ -33,6 +34,8 @@ type DataErrorsResponse<TData> = {
 export type AuthenticateOperatorResponse = DataErrorsResponse<{ authenticateOperator: IOperatorDTO }>;
 
 export type OperatorResponse = DataErrorsResponse<{ operator: IOperatorDTO }>;
+
+export type NativeLanguagesResponse = DataErrorsResponse<{ nativeLanguages: INativeLanguage[] }>;
 
 export type GendersResponse = DataErrorsResponse<{ genders: IGenderDTO[] }>;
 

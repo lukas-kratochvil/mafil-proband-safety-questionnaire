@@ -6,6 +6,7 @@ import { GenderModule } from "./gender/gender.module";
 import { GraphQLConfigService } from "./graphql-config.service";
 import { HandednessModule } from "./handedness/handedness.module";
 import { HTMLCardModule } from "./html-card/html-card.module";
+import { NativeLanguageModule } from "./native-language/native-language.module";
 import { OperatorModule } from "./operator/operator.module";
 import { PDFModule } from "./pdf/pdf.module";
 import { QuestionModule } from "./question/question.module";
@@ -22,6 +23,7 @@ import { VisitFormModule } from "./visit-form/visit-form.module";
     GenderModule,
     HandednessModule,
     HTMLCardModule,
+    NativeLanguageModule,
     OperatorModule,
     PDFModule,
     QuestionModule,

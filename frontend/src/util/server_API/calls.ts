@@ -4,6 +4,7 @@ import {
   ValidatedOperatorModifiedFormData,
   ValidatedProbandFormData,
 } from "@app/model/form";
+import { INativeLanguage } from "@app/model/language";
 import { ProbandVisitLanguageCode } from "@app/model/visit";
 import { IApprovalRoomTableVisitForm, IWaitingRoomTableVisitForm } from "@app/model/visitForm";
 import { serverApi } from "@app/util/axios/serverApi";
@@ -42,6 +43,7 @@ import {
   GET_GENDERS,
   GET_HANDEDNESS,
   GET_HANDEDNESSES,
+  GET_NATIVE_LANGUAGES,
   GET_OPERATOR,
   GET_PROBAND_CONTACT_CONSENT,
   GET_PROBAND_CONTACT_REQUEST,
@@ -64,6 +66,7 @@ import {
   GeneratePdfResponse,
   HandednessesResponse,
   HandednessResponse,
+  NativeLanguagesResponse,
   OperatorResponse,
   ProbandContactConsentResponse,
   ProbandContactRequestResponse,
@@ -95,6 +98,16 @@ export const fetchOperator = async (username: string): Promise<IOperatorDTO | ne
 
   if (data.data) {
     return data.data.operator;
+  }
+
+  throw createServerApiCallError(data.errors);
+};
+
+export const fetchNativeLanguagesService = async (): Promise<INativeLanguage[] | never> => {
+  const { data } = await serverApi.post<NativeLanguagesResponse>("", { query: GET_NATIVE_LANGUAGES });
+
+  if (data.data) {
+    return data.data.nativeLanguages;
   }
 
   throw createServerApiCallError(data.errors);
