@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { InfoTooltip } from "@app/components/informative/InfoTooltip";
-import { useAuth } from "@app/hooks/auth/AuthProvider";
 import { defaultNS } from "@app/i18n/i18n";
 import { FormPropType } from "@app/model/form";
 import { VisualCorrection } from "@app/model/visitForm";
@@ -23,7 +22,6 @@ import { CzechPersonalId, getPersonalIdPart } from "../util/personal-id";
 import { FormCardContainer } from "./FormCardContainer";
 
 export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardProps) => {
-  const { operator } = useAuth();
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandInfo" });
   const { getFieldState, getValues, resetField, setValue } = useFormContext<FormPropType>();
   const personalIdValue = useWatch<FormPropType, "personalId">({ name: "personalId" });
@@ -35,12 +33,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
     queries: [
       { queryKey: ["genders"], queryFn: fetchGenders, staleTime: Infinity, cacheTime: Infinity },
       { queryKey: ["handednesses"], queryFn: fetchHandednesses, staleTime: Infinity, cacheTime: Infinity },
-      {
-        queryKey: ["nativeLanguages", operator],
-        queryFn: () => fetchNativeLanguages(operator !== undefined),
-        staleTime: Infinity,
-        cacheTime: Infinity,
-      },
+      { queryKey: ["nativeLanguages"], queryFn: fetchNativeLanguages, staleTime: Infinity, cacheTime: Infinity },
     ],
   });
 

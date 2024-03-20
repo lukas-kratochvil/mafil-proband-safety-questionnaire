@@ -23,19 +23,6 @@ query GetOperator($username: String!) {
 }
 `;
 
-export const GET_NATIVE_LANGUAGES = gql`
-  query NativeLanguages {
-    nativeLanguages {
-      id
-      nativeName
-      nameCs
-      nameEn
-      code
-      priority
-    }
-  }
-`;
-
 export const GET_GENDERS = gql`
   query GetGenders {
     genders {
