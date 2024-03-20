@@ -46,7 +46,7 @@ const waitingRoomVisitForm: IWaitingRoomVisitFormIncludingQuestions = {
   personalId: "000000",
   birthdate: new Date(),
   gender: gendersTest[0],
-  nativeLanguageId: nativeLanguagesTest[2].id,
+  nativeLanguageCode: nativeLanguagesTest[2].code,
   heightCm: 180,
   weightKg: 80,
   visualCorrectionDioptre: 1,
@@ -144,7 +144,7 @@ describe("form loaders", () => {
     expect(loadedFormValues.personalId).toEqual(fetchedVisit.personalId);
     expect(loadedFormValues.birthdate).toEqual(fetchedVisit.birthdate);
     expect(loadedFormValues.gender?.id).toEqual(fetchedVisit.gender.id);
-    expect(loadedFormValues.nativeLanguage?.id).toEqual(fetchedVisit.nativeLanguageId);
+    expect(loadedFormValues.nativeLanguage?.code).toEqual(fetchedVisit.nativeLanguageCode);
     expect(loadedFormValues.heightCm).toEqual(fetchedVisit.heightCm);
     expect(loadedFormValues.weightKg).toEqual(fetchedVisit.weightKg);
     expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.handedness.id);
@@ -173,7 +173,7 @@ describe("form loaders", () => {
     expect(loadedFormValues.personalId).toEqual(fetchedVisit.personalId);
     expect(loadedFormValues.birthdate).toEqual(fetchedVisit.birthdate);
     expect(loadedFormValues.gender?.id).toEqual(fetchedVisit.gender.id);
-    expect(loadedFormValues.nativeLanguage?.id).toEqual(fetchedVisit.nativeLanguageId);
+    expect(loadedFormValues.nativeLanguage?.code).toEqual(fetchedVisit.nativeLanguageCode);
     expect(loadedFormValues.heightCm).toEqual(fetchedVisit.heightCm);
     expect(loadedFormValues.weightKg).toEqual(fetchedVisit.weightKg);
     expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.handedness.id);

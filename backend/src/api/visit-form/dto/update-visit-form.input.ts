@@ -12,7 +12,7 @@ export class UpdateVisitFormInput extends IntersectionType(
     PickType(CreateVisitFormInput, [
       "state",
       "genderId",
-      "nativeLanguageId",
+      "nativeLanguageCode",
       "handednessId",
       "name",
       "surname",

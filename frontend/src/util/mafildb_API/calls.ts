@@ -79,12 +79,12 @@ const fetchLanguages = async (): Promise<ILanguage[]> => {
   }));
 };
 
-const fetchLanguage = async (id: number): Promise<ILanguage> => {
+const fetchLanguage = async (code: string): Promise<ILanguage> => {
   if (import.meta.env.DEV) {
-    return fetchLanguageDev(id);
+    return fetchLanguageDev(code);
   }
 
-  const { data } = await mafildbApi.get<MDB_GetLanguageResponse>(`languages/${id}`);
+  const { data } = await mafildbApi.get<MDB_GetLanguageResponse>(`languages/${code}`);
 
   if (MDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
@@ -102,7 +102,7 @@ const fetchLanguage = async (id: number): Promise<ILanguage> => {
 export const fetchNativeLanguages = async (isUserAuthenticated: boolean): Promise<INativeLanguage[]> =>
   import.meta.env.DEV || isUserAuthenticated ? fetchLanguages() : fetchNativeLanguagesService();
 
-export const fetchNativeLanguage = async (id: number): Promise<INativeLanguage> => fetchLanguage(id);
+export const fetchNativeLanguage = async (code: string): Promise<INativeLanguage> => fetchLanguage(code);
 
 export const fetchProjects = async (): Promise<IProject[]> => {
   if (import.meta.env.DEV) {
@@ -156,11 +156,11 @@ const createVisitSubject = async (
     first_name: visitFormData.name,
     last_name: visitFormData.surname,
     // TODO: phantom visits do not have the probandLanguageCode filled
-    preferred_language_id: probandLanguageCode ?? "",
+    preferred_language_code: probandLanguageCode ?? "",
     birth_date: visitFormData.birthdate,
     personal_ID: visitFormData.personalId,
     gender: visitFormData.gender.code,
-    native_language_id: visitFormData.nativeLanguage.id,
+    native_language_code: visitFormData.nativeLanguage.code,
     handedness: visitFormData.handedness.code,
     email: visitFormData.email,
     phone: visitFormData.phone,
@@ -338,7 +338,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
     // Check if 14 days bound is really satisfied ('newer_than' query param may not work)
     .filter((visit) => compareAsc(visit.created, newerThanDateBound) > 0)
     .forEach(async (visit) => {
-      const nativeLanguage = await fetchNativeLanguage(visit.subject.native_language_id);
+      const nativeLanguage = await fetchNativeLanguage(visit.subject.native_language_code);
 
       let finalizer: IOperatorDTO;
       let approver: IOperatorDTO | null = null;
@@ -382,7 +382,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
         })),
         subject: {
           ...visit.subject,
-          preferredLanguageCode: visit.subject.preferred_language_id,
+          preferredLanguageCode: visit.subject.preferred_language_code,
           name: visit.subject.first_name,
           surname: visit.subject.last_name,
           birthdate: visit.subject.birth_date,
@@ -428,7 +428,7 @@ export const fetchDuplicatedVisit = async (
   const visit = await fetchVisit(visitUuid);
   const [gender, nativeLanguage, handedness, answersIncludingQuestions] = await Promise.all([
     fetchGender(visit.subject.gender),
-    fetchNativeLanguage(visit.subject.native_language_id),
+    fetchNativeLanguage(visit.subject.native_language_code),
     fetchHandedness(visit.subject.handedness),
     Promise.all(
       visit.registration_answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
@@ -460,7 +460,7 @@ export const fetchDuplicatedVisit = async (
     answersIncludingQuestions,
     subject: {
       ...visit.subject,
-      preferredLanguageCode: visit.subject.preferred_language_id,
+      preferredLanguageCode: visit.subject.preferred_language_code,
       name: visit.subject.first_name,
       surname: visit.subject.last_name,
       birthdate: visit.subject.birth_date,

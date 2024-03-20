@@ -31,7 +31,7 @@ export const FormAutocompleteNativeLanguages = ({
             id={name}
             options={options?.sort(compareNativeLanguages) ?? []}
             getOptionLabel={(option: INativeLanguage) => option.nativeName}
-            isOptionEqualToValue={(option, value) => option.id === value.id}
+            isOptionEqualToValue={(option, value) => option.code === value.code}
             filterOptions={filterNativeLanguages}
             value={field.value}
             onChange={(_event, val) => field.onChange(val)}

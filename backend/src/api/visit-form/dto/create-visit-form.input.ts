@@ -12,7 +12,7 @@ export class CreateVisitFormInput extends IntersectionType(
     "surname",
     "personalId",
     "birthdate",
-    "nativeLanguageId",
+    "nativeLanguageCode",
     "heightCm",
     "weightKg",
     "visualCorrectionDioptre",

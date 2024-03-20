@@ -21,8 +21,8 @@ import { MDB_ApprovalState, MDB_SignatureState } from "./dto";
 
 export const fetchLanguagesDev = async (): Promise<ILanguage[]> => nativeLanguagesTest;
 
-export const fetchLanguageDev = async (id: number): Promise<ILanguage> =>
-  nativeLanguagesTest.find((language) => id === language.id) ?? nativeLanguagesTest[0];
+export const fetchLanguageDev = async (code: string): Promise<ILanguage> =>
+  nativeLanguagesTest.find((language) => code === language.code) ?? nativeLanguagesTest[0];
 
 export const fetchSubjectsDev = async (): Promise<ISubject[]> => subjectsTest;
 

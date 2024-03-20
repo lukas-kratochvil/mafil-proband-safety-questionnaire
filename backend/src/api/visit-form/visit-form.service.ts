@@ -44,7 +44,7 @@ export class VisitFormService {
             id: createVisitFormInput.genderId,
           },
         },
-        nativeLanguageId: createVisitFormInput.nativeLanguageId,
+        nativeLanguageCode: createVisitFormInput.nativeLanguageCode,
         heightCm: createVisitFormInput.heightCm,
         weightKg: createVisitFormInput.weightKg,
         handedness: {
@@ -130,7 +130,7 @@ export class VisitFormService {
                 },
               }
             : undefined,
-          nativeLanguageId: updateVisitFormInput.nativeLanguageId,
+          nativeLanguageCode: updateVisitFormInput.nativeLanguageCode,
           heightCm: updateVisitFormInput.heightCm,
           weightKg: updateVisitFormInput.weightKg,
           handedness: updateVisitFormInput.handednessId

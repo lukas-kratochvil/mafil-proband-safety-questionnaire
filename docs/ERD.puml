@@ -40,7 +40,7 @@ entity VisitForm {
   * surname: string
   * personalId: string
   * birthdate: date
-  * nativeLanguageId: int
+  * nativeLanguageCode: string
   * heightCm: int
   * weightKg: int
   * visualCorrectionDioptre: float

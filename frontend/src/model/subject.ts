@@ -3,7 +3,7 @@ import { INativeLanguage } from "./language";
 
 export interface ISubject {
   uuid: MDB_ISubjectDTO["uuid"];
-  preferredLanguageCode: MDB_ISubjectDTO["preferred_language_id"];
+  preferredLanguageCode: MDB_ISubjectDTO["preferred_language_code"];
   name: MDB_ISubjectDTO["first_name"];
   surname: MDB_ISubjectDTO["last_name"];
   birthdate: MDB_ISubjectDTO["birth_date"];

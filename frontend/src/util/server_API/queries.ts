@@ -159,7 +159,7 @@ export const GET_WAITING_ROOM_TABLE_VISIT_FORMS = gql`
       gender {
         ${TRANSLATION_ENTITY_PROPS}
       }
-      nativeLanguageId
+      nativeLanguageCode
       heightCm
       weightKg
       visualCorrectionDioptre
@@ -187,7 +187,7 @@ export const GET_WAITING_ROOM_VISIT_FORM = gql`
       gender {
         ${TRANSLATION_ENTITY_PROPS}
       }
-      nativeLanguageId
+      nativeLanguageCode
       heightCm
       weightKg
       visualCorrectionDioptre
@@ -217,7 +217,7 @@ export const GET_APPROVAL_ROOM_TABLE_VISIT_FORMS = gql`
       gender {
         ${TRANSLATION_ENTITY_PROPS}
       }
-      nativeLanguageId
+      nativeLanguageCode
       heightCm
       weightKg
       visualCorrectionDioptre
@@ -250,7 +250,7 @@ export const GET_APPROVAL_ROOM_VISIT_FORM = gql`
       gender {
         ${TRANSLATION_ENTITY_PROPS}
       }
-      nativeLanguageId
+      nativeLanguageCode
       heightCm
       weightKg
       visualCorrectionDioptre

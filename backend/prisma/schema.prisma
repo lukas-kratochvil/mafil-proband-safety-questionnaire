@@ -55,7 +55,7 @@ model VisitForm {
   surname                 String         @db.VarChar(200)
   personalId              String         @db.VarChar(50)
   birthdate               DateTime
-  nativeLanguageId        Int
+  nativeLanguageCode      String         @db.VarChar(5)
   heightCm                Int            @db.SmallInt
   weightKg                Int            @db.SmallInt
   visualCorrectionDioptre Float

@@ -59,11 +59,10 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   @HideField()
   sentToMafilDbAt: Date | null;
 
-  // MAFILDB native language ID
-  @IsNumber()
-  @IsPositive()
-  @Field(() => Int)
-  nativeLanguageId: number;
+  // MAFILDB native language code
+  @MaxLength(5)
+  @Field()
+  nativeLanguageCode: string;
 
   @IsUUID()
   @HideField()

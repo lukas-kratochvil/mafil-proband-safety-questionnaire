@@ -66,11 +66,11 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
   // Setting selected native language
   useEffect(() => {
     if (nativeLanguages.data !== undefined) {
-      const nativeLanguageId = getValues("nativeLanguage.id");
+      const nativeLanguageCode = getValues("nativeLanguage.code");
 
-      if (nativeLanguageId !== null) {
+      if (nativeLanguageCode !== null) {
         const selectedNativeLanguage
-          = nativeLanguages.data.find((nativeLanguage) => nativeLanguage.id === nativeLanguageId) ?? null;
+          = nativeLanguages.data.find((nativeLanguage) => nativeLanguage.code === nativeLanguageCode) ?? null;
         setValue("nativeLanguage", selectedNativeLanguage, { shouldTouch: true });
       }
     }

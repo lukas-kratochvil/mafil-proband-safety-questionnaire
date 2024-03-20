@@ -3,9 +3,9 @@ import { IsInt, IsOptional, IsPositive, IsString } from "class-validator";
 
 @ObjectType()
 export class NativeLanguageEntity {
-  @IsInt()
-  @Field(() => Int)
-  id: number;
+  @IsString()
+  @Field()
+  code: string;
 
   @IsString()
   @Field()
@@ -18,10 +18,6 @@ export class NativeLanguageEntity {
   @IsString()
   @Field()
   nameEn: string;
-
-  @IsString()
-  @Field()
-  code: string;
 
   @IsOptional()
   @IsInt()

@@ -279,7 +279,7 @@ export const fetchWaitingRoomTableVisitForms = async (): Promise<IWaitingRoomTab
 
   return Promise.all(
     data.data.visitForms.map(async (visitForm) => {
-      const nativeLanguage = await fetchNativeLanguage(visitForm.nativeLanguageId);
+      const nativeLanguage = await fetchNativeLanguage(visitForm.nativeLanguageCode);
       return {
         ...visitForm,
         nativeLanguage,
@@ -339,7 +339,7 @@ export const fetchApprovalRoomTableVisitForms = async (): Promise<IApprovalRoomT
   return Promise.all(
     data.data.visitForms.map(async (visitForm) => {
       const project = await fetchProject(visitForm.additionalInfo.projectUuid);
-      const nativeLanguage = await fetchNativeLanguage(visitForm.nativeLanguageId);
+      const nativeLanguage = await fetchNativeLanguage(visitForm.nativeLanguageCode);
       return {
         ...visitForm,
         project,
@@ -395,7 +395,7 @@ export const createProbandVisitForm = async (visitFormData: ValidatedProbandForm
       personalId: visitFormData.personalId,
       birthdate: visitFormData.birthdate,
       genderId: visitFormData.gender.id,
-      nativeLanguageId: visitFormData.nativeLanguage.id,
+      nativeLanguageCode: visitFormData.nativeLanguage.code,
       heightCm: visitFormData.heightCm,
       weightKg: visitFormData.weightKg,
       visualCorrectionDioptre: visitFormData.visualCorrectionDioptre,
@@ -436,7 +436,7 @@ export const createDuplicatedVisitFormForApproval = async (
       personalId: visitFormData.personalId,
       birthdate: visitFormData.birthdate,
       genderId: visitFormData.gender.id,
-      nativeLanguageId: visitFormData.nativeLanguage.id,
+      nativeLanguageCode: visitFormData.nativeLanguage.code,
       heightCm: visitFormData.heightCm,
       weightKg: visitFormData.weightKg,
       visualCorrectionDioptre: visitFormData.visualCorrectionDioptre,
@@ -484,7 +484,7 @@ export const sendVisitFormForApproval = async (
       personalId: visitFormData.personalId === "" ? undefined : visitFormData.personalId,
       birthdate: visitFormData.birthdate,
       genderId: visitFormData.gender?.id,
-      nativeLanguageId: visitFormData.nativeLanguage?.id,
+      nativeLanguageCode: visitFormData.nativeLanguage?.code,
       heightCm: visitFormData.heightCm,
       weightKg: visitFormData.weightKg,
       visualCorrectionDioptre: visitFormData.visualCorrectionDioptre,

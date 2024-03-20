@@ -1,5 +1,6 @@
 import { LanguageCode } from "@app/i18n/i18n";
 import { AnswerOption } from "@app/model/form";
+import { MDB_ILanguageDTO } from "../mafildb_API/dto";
 
 export type OperatorRole = "MR" | "MR_HIGH_PERM";
 
@@ -82,7 +83,7 @@ export interface IWaitingRoomTableVisitFormDTO {
   personalId: string;
   birthdate: Date;
   gender: IGenderDTO;
-  nativeLanguageId: number;
+  nativeLanguageCode: MDB_ILanguageDTO["code"];
   heightCm: number;
   weightKg: number;
   visualCorrectionDioptre: number;
@@ -143,7 +144,7 @@ type CreateProbandInfoInput = {
   personalId: string;
   birthdate: Date;
   genderId: string;
-  nativeLanguageId: number;
+  nativeLanguageCode: MDB_ILanguageDTO["code"];
   heightCm: number;
   weightKg: number;
   visualCorrectionDioptre: number;

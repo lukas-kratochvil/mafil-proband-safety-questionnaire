@@ -60,8 +60,7 @@ export const loadFormDefaultValuesFromWaitingRoomVisitForm = (
   disapprovalReason: null,
   ...visitForm,
   nativeLanguage: {
-    id: visitForm.nativeLanguageId,
-    code: "",
+    code: visitForm.nativeLanguageCode,
     nativeName: "",
     nameCs: "",
     nameEn: "",
