@@ -1,6 +1,15 @@
 import { render, screen } from "@test-utils";
 import { FormProbandInfo } from "../FormProbandInfo";
 
+//----------------------------------------------------------------------
+// Mocking custom authentication
+//----------------------------------------------------------------------
+vi.mock("@app/hooks/auth/AuthProvider", () => ({
+  useAuth: () => ({
+    operator: undefined,
+  }),
+}));
+
 vi.mock("react", () => ({
   useEffect: vi.fn(),
 }));
