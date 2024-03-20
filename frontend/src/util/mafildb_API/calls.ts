@@ -1,4 +1,4 @@
-import { subDays } from "date-fns";
+import { compareAsc, subDays } from "date-fns";
 import { IDevice } from "@app/model/device";
 import { ValidatedOperatorFormData } from "@app/model/form";
 import { ILanguage, INativeLanguage } from "@app/model/language";
@@ -322,8 +322,11 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
     return fetchRecentVisitsDev();
   }
 
-  // Fetch only visits created 3 days ago and newer
-  const params = { newer_than: subDays(new Date().setHours(0, 0, 0, 0), 3).valueOf() };
+  // Set limitation to fetch only visits created 14 days ago and newer.
+  // MAFILDB returns only visits created X days ago and newer where X is given by the permissions acquired from the provided OIDC access token.
+  const newerThanDateBound = subDays(new Date().setHours(0, 0, 0, 0), 14);
+
+  const params = { newer_than: newerThanDateBound.valueOf() };
   const { data } = await mafildbApi.get<MDB_GetVisitsResponse>("visits", { params });
 
   if (MDB_RESPONSE_ERROR_ATTR in data) {
@@ -331,69 +334,73 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
   }
 
   const visits: IRecentVisitsTableVisit[] = [];
-  data.results.forEach(async (visit) => {
-    const nativeLanguage = await fetchNativeLanguage(visit.subject.native_language_id);
+  data.results
+    // Check if 14 days bound is really satisfied ('newer_than' query param may not work)
+    .filter((visit) => compareAsc(visit.created, newerThanDateBound) > 0)
+    .forEach(async (visit) => {
+      const nativeLanguage = await fetchNativeLanguage(visit.subject.native_language_id);
 
-    let finalizer: IOperatorDTO;
-    let approver: IOperatorDTO | null = null;
+      let finalizer: IOperatorDTO;
+      let approver: IOperatorDTO | null = null;
 
-    try {
-      finalizer = await fetchOperator(visit.registration_finalize_user.username);
+      try {
+        finalizer = await fetchOperator(visit.registration_finalize_user.username);
 
-      if (finalizer === undefined) {
-        throw new Error("Finalizer not found!");
-      }
-    } catch (e) {
-      // TODO: what to do when finalizer not found? Skip the visit?
-      return;
-    }
-
-    try {
-      if (visit.registration_approve_user !== null) {
-        approver = await fetchOperator(visit.registration_approve_user.username);
-
-        if (approver === undefined) {
-          throw new Error("Approver not found!");
+        if (finalizer === undefined) {
+          throw new Error("Finalizer not found!");
         }
+      } catch (e) {
+        // TODO: what to do when finalizer not found? Skip the visit?
+        return;
       }
-    } catch (e) {
-      // TODO: what to do when approver not found? Skip the visit?
-      return;
-    }
 
-    visits.push({
-      ...visit,
-      visitId: visit.visit_name,
-      isPhantom: visit.is_phantom,
-      measurementDate: visit.date,
-      heightCm: visit.height,
-      weightKg: visit.weight,
-      visualCorrectionDioptre: visit.visual_correction_dioptre,
-      answers: visit.registration_answers.map((answer) => ({
-        questionId: answer.question_id,
-        answer: answer.answer,
-        comment: answer.comment,
-      })),
-      subject: {
-        ...visit.subject,
-        preferredLanguageCode: visit.subject.preferred_language_id,
-        name: visit.subject.first_name,
-        surname: visit.subject.last_name,
-        birthdate: visit.subject.birth_date,
-        personalId: visit.subject.personal_ID,
-        genderCode: visit.subject.gender,
-        nativeLanguage,
-        handednessCode: visit.subject.handedness,
-      },
-      finalizer,
-      finalizationDate: visit.registration_finalize_date,
-      approver,
-      approvalDate: visit.registration_approve_date,
-      disapprovalReason: visit.registration_disapprove_reason,
-      approvalState: visit.checked,
-      signatureState: visit.registration_signature_status,
+      try {
+        if (visit.registration_approve_user !== null) {
+          approver = await fetchOperator(visit.registration_approve_user.username);
+
+          if (approver === undefined) {
+            throw new Error("Approver not found!");
+          }
+        }
+      } catch (e) {
+        // TODO: what to do when approver not found? Skip the visit?
+        return;
+      }
+
+      visits.push({
+        ...visit,
+        visitId: visit.visit_name,
+        isPhantom: visit.is_phantom,
+        measurementDate: visit.date,
+        heightCm: visit.height,
+        weightKg: visit.weight,
+        visualCorrectionDioptre: visit.visual_correction_dioptre,
+        answers: visit.registration_answers.map((answer) => ({
+          questionId: answer.question_id,
+          answer: answer.answer,
+          comment: answer.comment,
+        })),
+        subject: {
+          ...visit.subject,
+          preferredLanguageCode: visit.subject.preferred_language_id,
+          name: visit.subject.first_name,
+          surname: visit.subject.last_name,
+          birthdate: visit.subject.birth_date,
+          personalId: visit.subject.personal_ID,
+          genderCode: visit.subject.gender,
+          nativeLanguage,
+          handednessCode: visit.subject.handedness,
+        },
+        finalizer,
+        finalizationDate: visit.registration_finalize_date,
+        approver,
+        approvalDate: visit.registration_approve_date,
+        disapprovalReason: visit.registration_disapprove_reason,
+        approvalState: visit.checked,
+        signatureState: visit.registration_signature_status,
+      });
     });
-  });
+
   return visits;
 };
 
