@@ -1,6 +1,9 @@
 import { gendersTest } from "@app/__tests__/data/genders";
 import { CzechPersonalId, getPersonalIdPart } from "../personal-id";
 
+//----------------------------------------------------------------------
+// Tests
+//----------------------------------------------------------------------
 describe("personal ID", () => {
   describe("invalid inputs", () => {
     test.each([

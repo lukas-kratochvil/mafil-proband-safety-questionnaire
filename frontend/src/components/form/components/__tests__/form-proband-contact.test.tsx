@@ -1,14 +1,23 @@
 import { render, screen } from "@test-utils";
 import { FormProbandContact } from "../FormProbandContact";
 
+//----------------------------------------------------------------------
+// Mocking react-hook-form
+//----------------------------------------------------------------------
 vi.mock("react-hook-form", () => ({
   Controller: () => <div data-testid="input" />,
 }));
 
+//----------------------------------------------------------------------
+// Mocking error components
+//----------------------------------------------------------------------
 vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
   ErrorMessage: () => <div />,
 }));
 
+//----------------------------------------------------------------------
+// Tests
+//----------------------------------------------------------------------
 describe("form proband contact", () => {
   test("contains translations", () => {
     const { container } = render(<FormProbandContact />);

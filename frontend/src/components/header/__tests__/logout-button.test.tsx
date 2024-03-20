@@ -2,6 +2,9 @@ import userEvent from "@testing-library/user-event";
 import { render, screen } from "@test-utils";
 import { LogOutButton } from "../LogOutButton";
 
+//----------------------------------------------------------------------
+// Mocking custom authentication
+//----------------------------------------------------------------------
 const logOutSpy = vi.fn();
 
 vi.mock("@app/hooks/auth/AuthProvider", () => ({
@@ -10,6 +13,9 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
   }),
 }));
 
+//----------------------------------------------------------------------
+// Tests
+//----------------------------------------------------------------------
 describe("logout button", () => {
   test("has title", () => {
     render(<LogOutButton />);

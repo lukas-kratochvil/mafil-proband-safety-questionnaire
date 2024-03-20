@@ -3,6 +3,9 @@ import i18n from "@app/i18n/i18n";
 import { render, within } from "@test-utils";
 import { LanguageMenu } from "../LanguageMenu";
 
+//----------------------------------------------------------------------
+// Tests
+//----------------------------------------------------------------------
 describe("language menu", () => {
   test("language name is visible on the language button", async () => {
     await i18n.changeLanguage("en");

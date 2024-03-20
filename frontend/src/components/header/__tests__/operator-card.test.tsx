@@ -2,6 +2,9 @@ import { IOperatorDTO } from "@app/util/server_API/dto";
 import { render } from "@test-utils";
 import { OperatorCard } from "../OperatorCard";
 
+//----------------------------------------------------------------------
+// Mocking custom authentication
+//----------------------------------------------------------------------
 const operatorName = "Name";
 const operatorSurname = "Surname";
 
@@ -20,6 +23,9 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
   }),
 }));
 
+//----------------------------------------------------------------------
+// Tests
+//----------------------------------------------------------------------
 describe("operator card", () => {
   test("shows operator fullname", () => {
     const { container } = render(<OperatorCard />);

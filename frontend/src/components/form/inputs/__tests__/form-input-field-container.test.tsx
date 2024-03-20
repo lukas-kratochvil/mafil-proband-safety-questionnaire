@@ -1,10 +1,16 @@
 import { render } from "@test-utils";
 import { FormInputFieldContainer } from "../FormInputFieldContainer";
 
+//----------------------------------------------------------------------
+// Mocking error components
+//----------------------------------------------------------------------
 vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
   ErrorMessage: () => <div />,
 }));
 
+//----------------------------------------------------------------------
+// Tests
+//----------------------------------------------------------------------
 describe("form input field container", () => {
   test("required field contains only label", () => {
     const label = "Label";

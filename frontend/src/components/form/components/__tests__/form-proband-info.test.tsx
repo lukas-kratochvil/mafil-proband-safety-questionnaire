@@ -10,10 +10,16 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
   }),
 }));
 
+//----------------------------------------------------------------------
+// Mocking react
+//----------------------------------------------------------------------
 vi.mock("react", () => ({
   useEffect: vi.fn(),
 }));
 
+//----------------------------------------------------------------------
+// Mocking react-hook-form
+//----------------------------------------------------------------------
 vi.mock("react-hook-form", () => ({
   Controller: () => <div data-testid="input" />,
   useFormContext: () => ({
@@ -24,10 +30,16 @@ vi.mock("react-hook-form", () => ({
   useWatch: vi.fn(),
 }));
 
+//----------------------------------------------------------------------
+// Mocking error components
+//----------------------------------------------------------------------
 vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
   ErrorMessage: () => <div />,
 }));
 
+//----------------------------------------------------------------------
+// Tests
+//----------------------------------------------------------------------
 describe("form proband info", () => {
   test("contains translations", () => {
     const { container } = render(<FormProbandInfo />);

@@ -22,6 +22,9 @@ import {
   loadPhantomFormDefaultValues,
 } from "../loaders";
 
+//----------------------------------------------------------------------
+// Test data
+//----------------------------------------------------------------------
 const answerIncludingQuestion: VisitFormAnswerIncludingQuestion = {
   questionId: "1",
   updatedAt: new Date(),
@@ -81,6 +84,9 @@ const duplicatedVisit: IDuplicatedVisitIncludingQuestions = {
   answersIncludingQuestions: [answerIncludingQuestion],
 };
 
+//----------------------------------------------------------------------
+// Tests
+//----------------------------------------------------------------------
 describe("form loaders", () => {
   test("empty form default values", () => {
     const emptyFormDefaultValues = loadEmptyDefaultValues();
