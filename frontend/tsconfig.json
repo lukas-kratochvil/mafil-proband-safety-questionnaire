@@ -1,15 +1,25 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
+    /* Base options */
     "target": "ESNext",
+    /* If transpiling with TypeScript (tsc) */
     "module": "ESNext",
     "moduleResolution": "Node",
+    "outDir": "./dist",
+    /* If code runs in the DOM */
     "lib": [
       "DOM",
       "DOM.Iterable",
       "ESNext",
     ],
-    "outDir": "./dist",
+    /* For React app */
+    "jsx": "react-jsx",
+    /* TODO */
+    "types": [
+      "vitest/globals", // enable using Vitest globals without importing them (https://vitest.dev/config/#globals)
+    ],
+    /* Custom imports mapping */
     "baseUrl": "./",
     "paths": {
       "@app/*": [
@@ -19,10 +29,6 @@
         "src/__tests__/utils.ts",
       ],
     },
-    "jsx": "react-jsx",
-    "types": [
-      "vitest/globals", // enable using vitest globals without importing them
-    ],
   },
   "include": [
     "src",
