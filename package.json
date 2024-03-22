@@ -1,5 +1,5 @@
 {
-  "name": "mafil-proband_safety_questionare",
+  "name": "mafil-proband_safety_questionnaire",
   "private": true,
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.44.0",
