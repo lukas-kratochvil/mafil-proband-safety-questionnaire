@@ -11,10 +11,13 @@ interface IFormPageContainerProps {
   loadDefaultValues?: () => FormPropType;
 }
 
+// TODO: make this React component generic
 export const FormPageContainer = ({ FormPage, validationSchema, loadDefaultValues }: IFormPageContainerProps) => {
   const formMethods = useForm<FormPropType>({
     mode: "onChange",
     defaultValues: loadDefaultValues === undefined ? loadEmptyDefaultValues() : loadDefaultValues(),
+    // TODO: correctly infer the type of resolver's validation schema
+    // @ts-expect-error ts(2322)
     resolver: yupResolver(validationSchema),
   });
 
