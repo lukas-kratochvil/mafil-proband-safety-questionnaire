@@ -1,7 +1,7 @@
 import path from "path";
-import commonTexts from "../../assets/localization/common.json";
-import cs from "../../assets/localization/cs.json";
-import { FONTS_DIR_PATH, IMAGES_DIR_PATH, LOCALIZATIONS_DIR_PATH } from "./paths";
+import commonTexts from "@assets/localization/common.json";
+import cs from "@assets/localization/cs.json";
+import { FONTS_DIR_PATH, IMAGES_DIR_PATH, LOCALIZATIONS_DIR_PATH } from "./paths.js";
 
 export type LocalizedTextsFile = typeof cs;
 export type CommonTextsFile = typeof commonTexts;
