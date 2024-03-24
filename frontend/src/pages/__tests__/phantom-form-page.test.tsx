@@ -69,11 +69,11 @@ describe("phantom form page", () => {
   };
 
   // Data
-  const genderOther = gendersTest[2].translations[0].text;
-  const nativeLanguageCzech = nativeLanguagesTest[0].nativeName;
-  const handednessUndetermined = handednessesTest[3].translations[0].text;
-  const project1Text = getProjectText(projectsTest[0]);
-  const device1Name = devicesTest[0].name;
+  const genderOther = gendersTest[2]?.translations[0]?.text;
+  const nativeLanguageCzech = nativeLanguagesTest[0]?.nativeName;
+  const handednessUndetermined = handednessesTest[3]?.translations[0]?.text;
+  const project1Text = getProjectText(projectsTest[0]!);
+  const device1Name = devicesTest[0]?.name;
 
   test("contains correct form buttons", async () => {
     setup();
@@ -81,7 +81,7 @@ describe("phantom form page", () => {
 
     const buttons = await screen.findAllByRole("button", { name: /^form\.common\.buttons/ });
     expect(buttons.length).toBe(buttonNames.length);
-    buttonNames.forEach(async (buttonName, index) => expect(buttons[index].textContent).toBe(buttonName));
+    buttonNames.forEach(async (buttonName, index) => expect(buttons[index]?.textContent).toBe(buttonName));
   });
 
   test("renders new form default values", async () => {

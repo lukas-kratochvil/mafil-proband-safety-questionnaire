@@ -3,7 +3,7 @@ import { AnswerOption, Operator } from "@prisma/client";
 export type IPDFOperator = Pick<Operator, "name" | "surname">;
 
 export interface IPDFEntityTexts {
-  text: string;
+  text: string | undefined;
   secondaryText?: string;
 }
 

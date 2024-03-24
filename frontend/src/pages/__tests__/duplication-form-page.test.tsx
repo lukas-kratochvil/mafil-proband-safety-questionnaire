@@ -28,13 +28,13 @@ const visit: IDuplicatedVisitIncludingQuestions = {
   visitId: "VisitId1",
   isPhantom: false,
   measurementDate: new Date(),
-  subject: subjectsTest[0],
-  project: projectsTest[0],
-  device: devicesTest[0],
-  gender: gendersTest[0],
+  subject: subjectsTest[0]!,
+  project: projectsTest[0]!,
+  device: devicesTest[0]!,
+  gender: gendersTest[0]!,
   heightCm: 179,
   weightKg: 75,
-  handedness: handednessesTest[0],
+  handedness: handednessesTest[0]!,
   visualCorrectionDioptre: 0,
   answersIncludingQuestions: questionsTest.map((question, index) => ({
     questionId: question.id,
@@ -123,7 +123,7 @@ describe("duplication form page", () => {
 
     const buttons = await screen.findAllByRole("button", { name: /^form\.common\.buttons/ });
     expect(buttons.length).toBe(buttonNames.length);
-    buttonNames.forEach(async (buttonName, index) => expect(buttons[index].textContent).toBe(buttonName));
+    buttonNames.forEach(async (buttonName, index) => expect(buttons[index]?.textContent).toBe(buttonName));
   });
 
   test("renders values from the visit being duplicated", async () => {
@@ -137,13 +137,13 @@ describe("duplication form page", () => {
       surname: visit.subject.surname,
       personalId: visit.subject.personalId,
       birthdate: format(visit.subject.birthdate, "dd.MM.yyyy"),
-      gender: visit.gender.translations[0].text,
+      gender: visit.gender.translations[0]?.text,
       nativeLanguage: visit.subject.nativeLanguage.nativeName,
       heightCm: visit.heightCm.toString(),
       weightKg: visit.weightKg.toString(),
       visualCorrection: "form.enums.visualCorrection.NO",
       visualCorrectionDioptre: visit.visualCorrectionDioptre.toString(),
-      handedness: visit.handedness.translations[0].text,
+      handedness: visit.handedness.translations[0]?.text,
       email: visit.subject.email,
       phone: visit.subject.phone,
     };
@@ -153,9 +153,9 @@ describe("duplication form page", () => {
     const questions = await screen.findAllByRole("radiogroup");
     expect(questions.length).toEqual(questionsTest.length);
 
-    for (let i = 0; i < questions.length; i++) {
-      const yesRadio = within(questions[i]).getByRole("radio", { name: "form.safetyQuestions.yes" });
-      const noRadio = within(questions[i]).getByRole("radio", { name: "form.safetyQuestions.no" });
+    questions.forEach((question, i) => {
+      const yesRadio = within(question).getByRole("radio", { name: "form.safetyQuestions.yes" });
+      const noRadio = within(question).getByRole("radio", { name: "form.safetyQuestions.no" });
       const commentField = screen.queryByRole("textbox", { name: `answers.${i}.comment` });
 
       if (i % 2 === 0) {
@@ -167,6 +167,6 @@ describe("duplication form page", () => {
         expect(noRadio).toBeChecked();
         expect(commentField).toBeNull();
       }
-    }
+    });
   });
 });

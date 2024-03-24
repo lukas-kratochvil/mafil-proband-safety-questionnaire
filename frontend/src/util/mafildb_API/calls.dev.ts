@@ -22,14 +22,14 @@ import { MDB_ApprovalState, MDB_SignatureState } from "./dto";
 export const fetchLanguagesDev = async (): Promise<ILanguage[]> => nativeLanguagesTest;
 
 export const fetchLanguageDev = async (code: string): Promise<ILanguage> =>
-  nativeLanguagesTest.find((language) => code === language.code) ?? nativeLanguagesTest[0];
+  nativeLanguagesTest.find((language) => code === language.code) ?? nativeLanguagesTest[0]!;
 
 export const fetchSubjectsDev = async (): Promise<ISubject[]> => subjectsTest;
 
 export const fetchProjectsDev = async (): Promise<IProject[]> => projectsTest;
 
 export const fetchProjectDev = async (uuid: string): Promise<IProject> =>
-  projectsTest.find((project) => uuid === project.uuid) ?? projectsTest[0];
+  projectsTest.find((project) => uuid === project.uuid) ?? projectsTest[0]!;
 
 export const fetchDevicesDev = async (): Promise<IDevice[]> => devicesTest;
 
@@ -52,9 +52,9 @@ export const createVisitDev = async (
     measurementDate: visitFormData.measuredAt,
     created: new Date(),
     isPhantom,
-    subject: (await fetchSubjectsDev())[0],
-    project: (await fetchProjectsDev())[0],
-    device: (await fetchDevicesDev())[0],
+    subject: (await fetchSubjectsDev())[0]!,
+    project: (await fetchProjectsDev())[0]!,
+    device: (await fetchDevicesDev())[0]!,
     heightCm: visitFormData.heightCm,
     weightKg: visitFormData.weightKg,
     visualCorrectionDioptre: visitFormData.visualCorrectionDioptre,
@@ -65,7 +65,7 @@ export const createVisitDev = async (
     disapprovalReason: "",
     answers: visitFormData.answers.map((answer) => ({ ...answer })),
   });
-  return dummyVisits[dummyVisits.length - 1];
+  return dummyVisits[dummyVisits.length - 1]!;
 };
 
 export const addPdfToVisitDev = async (pdf: IPdfDTO): Promise<IVisitPDF> => ({

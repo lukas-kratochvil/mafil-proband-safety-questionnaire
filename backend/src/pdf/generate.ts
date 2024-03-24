@@ -218,7 +218,7 @@ const addPersonalData = (
     {
       title: texts.gender,
       secondaryTitle: secondaryTexts?.gender,
-      value: data.gender.text,
+      value: data.gender.text ?? "",
       secondaryValue: data.gender.secondaryText,
     },
     {
@@ -239,7 +239,7 @@ const addPersonalData = (
     {
       title: texts.handedness,
       secondaryTitle: secondaryTexts?.handedness,
-      value: data.handedness.text,
+      value: data.handedness.text ?? "",
       secondaryValue: data.handedness.secondaryText,
     },
   ];

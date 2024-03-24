@@ -85,12 +85,12 @@ export class PDFService {
       surname: generatePDFInput.surname,
       personalId: generatePDFInput.personalId,
       birthdate: generatePDFInput.birthdate,
-      gender: { text: gender.translations[0].text },
+      gender: { text: gender.translations[0]?.text },
       nativeLanguage: generatePDFInput.nativeLanguage,
       heightCm: generatePDFInput.heightCm,
       weightKg: generatePDFInput.weightKg,
       visualCorrectionDioptre: generatePDFInput.visualCorrectionDioptre,
-      handedness: { text: handedness.translations[0].text },
+      handedness: { text: handedness.translations[0]?.text },
       answers: [],
     };
   }
@@ -114,8 +114,8 @@ export class PDFService {
 
     const languageOrderBy = Prisma.validator<Prisma.LanguageOrderByWithAggregationInput>()({ code: languageCodeOrder });
     const getTranslatedTexts = (translations: EntityTranslations): IPDFEntityTexts => ({
-      text: translations[0].text,
-      secondaryText: languageCodes.length === 1 ? undefined : translations[1].text,
+      text: translations[0]?.text,
+      secondaryText: languageCodes.length === 1 ? undefined : translations[1]?.text,
     });
 
     // Get gender translations

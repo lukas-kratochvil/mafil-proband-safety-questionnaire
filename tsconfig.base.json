@@ -2,6 +2,7 @@
   "compilerOptions": {
     /* Strictness */
     "strict": true, // is a must! - every library counts with this option set to true
+    "noUncheckedIndexedAccess": true, // insures no unsafe indexing on records and arrays
 
     /* Other options */
     "skipLibCheck": true, // compiler won't throw compile-time errors on third-party libraries code

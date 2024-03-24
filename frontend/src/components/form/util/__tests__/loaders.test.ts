@@ -45,12 +45,12 @@ const waitingRoomVisitForm: IWaitingRoomVisitFormIncludingQuestions = {
   surname: "Surname",
   personalId: "000000",
   birthdate: new Date(),
-  gender: gendersTest[0],
-  nativeLanguageCode: nativeLanguagesTest[2].code,
+  gender: gendersTest[0]!,
+  nativeLanguageCode: nativeLanguagesTest[2]!.code,
   heightCm: 180,
   weightKg: 80,
   visualCorrectionDioptre: 1,
-  handedness: handednessesTest[3],
+  handedness: handednessesTest[3]!,
   email: "name.surname@email.com",
   phone: "123456789",
   answersIncludingQuestions: [answerIncludingQuestion],
@@ -73,14 +73,14 @@ const duplicatedVisit: IDuplicatedVisitIncludingQuestions = {
   visitId: "1",
   isPhantom: false,
   measurementDate: new Date(),
-  subject: subjectsTest[0],
-  project: projectsTest[0],
-  device: devicesTest[0],
-  gender: gendersTest[0],
+  subject: subjectsTest[0]!,
+  project: projectsTest[0]!,
+  device: devicesTest[0]!,
+  gender: gendersTest[0]!,
   heightCm: 180,
   weightKg: 80,
   visualCorrectionDioptre: 1,
-  handedness: handednessesTest[3],
+  handedness: handednessesTest[3]!,
   answersIncludingQuestions: [answerIncludingQuestion],
 };
 
@@ -155,8 +155,8 @@ describe("form loaders", () => {
     expect(loadedFormValues.email).toEqual(fetchedVisit.email);
     expect(loadedFormValues.phone).toEqual(fetchedVisit.phone);
     loadedFormValues.answers.forEach((loadedAnswer, i) => {
-      expect(loadedAnswer.answer).toEqual(fetchedVisit.answersIncludingQuestions[i].answer);
-      expect(loadedAnswer.questionId).toEqual(fetchedVisit.answersIncludingQuestions[i].questionId);
+      expect(loadedAnswer.answer).toEqual(fetchedVisit.answersIncludingQuestions[i]?.answer);
+      expect(loadedAnswer.questionId).toEqual(fetchedVisit.answersIncludingQuestions[i]?.questionId);
       expect(loadedAnswer.comment).toEqual("");
     });
   });
@@ -184,9 +184,9 @@ describe("form loaders", () => {
     expect(loadedFormValues.email).toEqual(fetchedVisit.email);
     expect(loadedFormValues.phone).toEqual(fetchedVisit.phone);
     loadedFormValues.answers.forEach((loadedAnswer, i) => {
-      expect(loadedAnswer.answer).toEqual(fetchedVisit.answersIncludingQuestions[i].answer);
-      expect(loadedAnswer.questionId).toEqual(fetchedVisit.answersIncludingQuestions[i].questionId);
-      expect(loadedAnswer.comment).toEqual(fetchedVisit.answersIncludingQuestions[i].comment);
+      expect(loadedAnswer.answer).toEqual(fetchedVisit.answersIncludingQuestions[i]?.answer);
+      expect(loadedAnswer.questionId).toEqual(fetchedVisit.answersIncludingQuestions[i]?.questionId);
+      expect(loadedAnswer.comment).toEqual(fetchedVisit.answersIncludingQuestions[i]?.comment);
     });
   });
 
@@ -216,10 +216,10 @@ describe("form loaders", () => {
     expect(formDefaultValuesVisitDuplication.phone).toEqual(duplicatedVisit.subject.phone);
 
     formDefaultValuesVisitDuplication.answers.forEach((answer, i) => {
-      expect(answer.questionId).toEqual(duplicatedVisit.answersIncludingQuestions[i].questionId);
-      expect(answer.mustBeApproved).toEqual(duplicatedVisit.answersIncludingQuestions[i].mustBeApproved);
-      expect(answer.answer).toEqual(duplicatedVisit.answersIncludingQuestions[i].answer);
-      expect(answer.comment).toEqual(duplicatedVisit.answersIncludingQuestions[i].comment);
+      expect(answer.questionId).toEqual(duplicatedVisit.answersIncludingQuestions[i]?.questionId);
+      expect(answer.mustBeApproved).toEqual(duplicatedVisit.answersIncludingQuestions[i]?.mustBeApproved);
+      expect(answer.answer).toEqual(duplicatedVisit.answersIncludingQuestions[i]?.answer);
+      expect(answer.comment).toEqual(duplicatedVisit.answersIncludingQuestions[i]?.comment);
     });
   });
 });
