@@ -1,6 +1,6 @@
-import { IApprovalRoomTableVisitFormDTO, IWaitingRoomTableVisitFormDTO } from "@app/util/server_API/dto";
-import { INativeLanguage } from "./language";
-import { IProject } from "./project";
+import type { IApprovalRoomTableVisitFormDTO, IWaitingRoomTableVisitFormDTO } from "@app/util/server_API/dto";
+import type { INativeLanguage } from "./language";
+import type { IProject } from "./project";
 
 export enum VisualCorrection {
   YES,

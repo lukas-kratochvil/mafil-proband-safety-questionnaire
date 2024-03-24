@@ -1,17 +1,17 @@
-import { FilterOptionsState } from "@mui/material";
+import { type FilterOptionsState } from "@mui/material";
 import { updatedDiff } from "deep-object-diff";
-import { Operator } from "@app/hooks/auth/AuthProvider";
-import { IDevice } from "@app/model/device";
+import { type Operator } from "@app/hooks/auth/AuthProvider";
+import type { IDevice } from "@app/model/device";
 import {
   AnswerOption,
-  FormPropType,
-  ValidatedFormAnswer,
-  ValidatedOperatorFormData,
-  ValidatedProbandFormData,
+  type FormPropType,
+  type ValidatedFormAnswer,
+  type ValidatedOperatorFormData,
+  type ValidatedProbandFormData,
 } from "@app/model/form";
-import { INativeLanguage } from "@app/model/language";
-import { IProject } from "@app/model/project";
-import { IGenderDTO, IHandednessDTO } from "@app/util/server_API/dto";
+import type { INativeLanguage } from "@app/model/language";
+import type { IProject } from "@app/model/project";
+import type { IGenderDTO, IHandednessDTO } from "@app/util/server_API/dto";
 
 export const compareNativeLanguages = (a: INativeLanguage, b: INativeLanguage): number => {
   if (a.priority && b.priority) {

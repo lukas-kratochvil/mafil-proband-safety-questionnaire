@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { compareAsc, format, parse } from "date-fns";
-import MaterialReactTable, { MRT_ColumnDef as MRTColumnDef, MRT_Row as MRTRow } from "material-react-table";
+import MaterialReactTable, { type MRT_ColumnDef as MRTColumnDef, type MRT_Row as MRTRow } from "material-react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { TranslatedEntityTableCell } from "@app/components/table/TranslatedEntityTableCell";
 import { ApprovalRoomTableActionButtons } from "@app/components/table/actions/ApprovalRoomTableActionButtons";
 import { defaultTableProps } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n/i18n";
-import { IApprovalRoomTableVisitForm } from "@app/model/visitForm";
+import type { IApprovalRoomTableVisitForm } from "@app/model/visitForm";
 import { fetchApprovalRoomTableVisitForms } from "@app/util/server_API/calls";
 import { PageContainer } from "./PageContainer";
 

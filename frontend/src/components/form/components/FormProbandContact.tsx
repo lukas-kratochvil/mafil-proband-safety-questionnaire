@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n/i18n";
 import { FormTextField } from "../inputs/FormTextField";
-import { IFormCardProps } from "../interfaces/form-card";
+import type { IFormCardProps } from "../interfaces/form-card";
 import { FormCardContainer } from "./FormCardContainer";
 
 export const FormProbandContact = ({ disableInputs }: IFormCardProps) => {

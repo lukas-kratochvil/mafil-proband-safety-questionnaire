@@ -1,7 +1,7 @@
 import { array, date, mixed, string } from "yup";
-import { IDevice } from "@app/model/device";
+import type { IDevice } from "@app/model/device";
 import { AnswerOption } from "@app/model/form";
-import { IProject } from "@app/model/project";
+import type { IProject } from "@app/model/project";
 import { answersSchema, probandFormSchema } from "./proband-form-schema";
 
 const operatorAnswersSchema = answersSchema.shape({

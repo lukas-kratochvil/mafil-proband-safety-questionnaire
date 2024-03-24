@@ -3,9 +3,9 @@ import { gendersTest } from "@app/__tests__/data/genders";
 import { handednessesTest } from "@app/__tests__/data/handednesses";
 import { nativeLanguagesTest } from "@app/__tests__/data/languages";
 import { questionsTest } from "@app/__tests__/data/questions";
-import { INativeLanguage } from "@app/model/language";
+import type { INativeLanguage } from "@app/model/language";
 import ProbandFormPage from "@app/pages/ProbandFormPage";
-import { IGenderDTO, IHandednessDTO, IHTMLCardDTO, IOrderedQuestionDTO } from "@app/util/server_API/dto";
+import type { IGenderDTO, IHandednessDTO, IHTMLCardDTO, IOrderedQuestionDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
 
 //----------------------------------------------------------------------

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { LanguageCode } from "@app/i18n/i18n";
+import { type LanguageCode } from "@app/i18n/i18n";
 import { sanitizeHtml } from "@app/util/htmlSanitization";
 import { fetchEntryInfo } from "@app/util/server_API/calls";
 import { FormCardContainer } from "./FormCardContainer";

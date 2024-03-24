@@ -1,11 +1,11 @@
-import { LanguageCode } from "@app/i18n/i18n";
-import { MDB_IVisitDTO } from "@app/util/mafildb_API/dto";
-import { IGenderDTO, IHandednessDTO, IOperatorDTO, VisitFormAnswerIncludingQuestion } from "@app/util/server_API/dto";
-import { IDevice } from "./device";
+import { type LanguageCode } from "@app/i18n/i18n";
+import type { MDB_IVisitDTO } from "@app/util/mafildb_API/dto";
+import type { IGenderDTO, IHandednessDTO, IOperatorDTO, VisitFormAnswerIncludingQuestion } from "@app/util/server_API/dto";
+import type { IDevice } from "./device";
 import { AnswerOption } from "./form";
-import { IProject } from "./project";
-import { ISubject } from "./subject";
-import { IVisitPDF } from "./visitPdf";
+import type { IProject } from "./project";
+import type { ISubject } from "./subject";
+import type { IVisitPDF } from "./visitPdf";
 
 export type ProbandVisitLanguageCode = LanguageCode | "";
 

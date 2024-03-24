@@ -1,12 +1,12 @@
-import { SvgIconComponent } from "@mui/icons-material";
+import { type SvgIconComponent } from "@mui/icons-material";
 import ApprovalIcon from "@mui/icons-material/Approval";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import RecentActorsIcon from "@mui/icons-material/RecentActors";
 import ScienceIcon from "@mui/icons-material/Science";
-import { SxProps, Theme } from "@mui/material";
+import { type SxProps, type Theme } from "@mui/material";
 import { amber } from "@mui/material/colors";
-import { Location, NavigateFunction } from "react-router-dom";
+import { type Location, type NavigateFunction } from "react-router-dom";
 import { RoutingPath } from "@app/routing-paths";
 
 export const TAB_DEFAULT_COLOR = amber[700];

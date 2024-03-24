@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { MaterialReactTableProps, MRT_ColumnDef as MRTColumnDef } from "material-react-table";
+import { type MaterialReactTableProps, type MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 
 export type DefaultSorting = {
   id: string; // column id

@@ -8,11 +8,11 @@ import { operatorMRTest } from "@app/__tests__/data/operators";
 import { pdfTest } from "@app/__tests__/data/pdf";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { getProjectText } from "@app/components/form/util/utils";
-import { IDevice } from "@app/model/device";
-import { INativeLanguage } from "@app/model/language";
-import { IProject } from "@app/model/project";
+import type { IDevice } from "@app/model/device";
+import type { INativeLanguage } from "@app/model/language";
+import type { IProject } from "@app/model/project";
 import PhantomFormPage from "@app/pages/PhantomFormPage";
-import { IGenderDTO, IHandednessDTO, IPdfDTO } from "@app/util/server_API/dto";
+import type { IGenderDTO, IHandednessDTO, IPdfDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor } from "@test-utils";
 
 //----------------------------------------------------------------------

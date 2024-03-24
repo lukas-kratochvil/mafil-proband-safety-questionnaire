@@ -6,13 +6,13 @@ import { operatorMRTest } from "@app/__tests__/data/operators";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { subjectsTest } from "@app/__tests__/data/subjects";
 import { AnswerOption } from "@app/model/form";
-import { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
+import type { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import { VisualCorrection } from "@app/model/visitForm";
 import {
-  IApprovalRoomVisitFormIncludingQuestionsDTO,
-  IWaitingRoomVisitFormIncludingQuestions,
+  type IApprovalRoomVisitFormIncludingQuestionsDTO,
+  type IWaitingRoomVisitFormIncludingQuestions,
   QuestionPartNumber,
-  VisitFormAnswerIncludingQuestion,
+  type VisitFormAnswerIncludingQuestion,
 } from "@app/util/server_API/dto";
 import {
   loadEmptyDefaultValues,

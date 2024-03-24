@@ -4,15 +4,15 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Theme,
+  type Theme,
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { SetStateAction } from "react";
+import { type SetStateAction } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n/i18n";
-import { FormPropType, ValidatedOperatorFormData } from "@app/model/form";
+import type { FormPropType, ValidatedOperatorFormData } from "@app/model/form";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { getValidatedOperatorFormData } from "../util/utils";
 

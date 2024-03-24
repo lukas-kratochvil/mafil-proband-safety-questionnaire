@@ -7,14 +7,14 @@ import { CardContainer } from "@app/components/card/CardContainer";
 import {
   ColoredInfoStripe,
   ColoredInfoStripeColors,
-  IColoredInfoStripeProps,
+  type IColoredInfoStripeProps,
 } from "@app/components/informative/ColoredInfoStripe";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
-import { IVisitDetail, IVisitDetailPDF } from "@app/model/visit";
+import type { IVisitDetail, IVisitDetailPDF } from "@app/model/visit";
 import { fetchVisitDetail, updateVisitSignatureState } from "@app/util/mafildb_API/calls";
 import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
-import { getBackButtonProps, handleErrorsWithToast, IButtonProps } from "@app/util/utils";
+import { getBackButtonProps, handleErrorsWithToast, type IButtonProps } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
 
 const getVisitDetailQueryKey = (visitId: string | undefined) => ["visit", visitId];

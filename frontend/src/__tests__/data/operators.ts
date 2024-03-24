@@ -1,4 +1,4 @@
-import { IOperatorDTO } from "@app/util/server_API/dto";
+import type { IOperatorDTO } from "@app/util/server_API/dto";
 
 export const operatorMRTest: IOperatorDTO = {
   id: "1",

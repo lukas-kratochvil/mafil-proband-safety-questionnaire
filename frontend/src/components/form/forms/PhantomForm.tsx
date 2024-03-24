@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { IFormButtonsProps } from "@app/components/form/components/FormButtons";
+import { type IFormButtonsProps } from "@app/components/form/components/FormButtons";
 import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo";
 import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
-import { ValidatedOperatorFormData } from "@app/model/form";
+import type { ValidatedOperatorFormData } from "@app/model/form";
 import { RoutingPath } from "@app/routing-paths";
 import { addPdfToVisit, createPhantomVisit } from "@app/util/mafildb_API/calls";
 import { generatePhantomPdf } from "@app/util/server_API/calls";

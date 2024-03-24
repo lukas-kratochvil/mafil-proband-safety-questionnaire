@@ -1,4 +1,4 @@
-import { GraphQlError } from "../server_API/response-types";
+import type { GraphQlError } from "../server_API/response-types";
 import { LocalizedError } from "./LocalizedError";
 import { ServerApiValidationError } from "./ServerApiValidationError";
 

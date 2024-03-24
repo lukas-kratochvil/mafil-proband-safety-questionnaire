@@ -1,4 +1,4 @@
-import { IGenderDTO } from "@app/util/server_API/dto";
+import type { IGenderDTO } from "@app/util/server_API/dto";
 import { NEUTRAL_LANGUAGE_CODE } from "../neutral-language-code";
 
 export const gendersTest: IGenderDTO[] = [

@@ -1,19 +1,19 @@
 import { compareAsc, subDays } from "date-fns";
-import { IDevice } from "@app/model/device";
-import { ValidatedOperatorFormData } from "@app/model/form";
-import { ILanguage, INativeLanguage } from "@app/model/language";
-import { IProject } from "@app/model/project";
-import {
+import type { IDevice } from "@app/model/device";
+import type { ValidatedOperatorFormData } from "@app/model/form";
+import type { ILanguage, INativeLanguage } from "@app/model/language";
+import type { IProject } from "@app/model/project";
+import type {
   CreatedVisitData,
   IDuplicatedVisitIncludingQuestions,
   IRecentVisitsTableVisit,
   IVisitDetail,
   ProbandVisitLanguageCode,
 } from "@app/model/visit";
-import { IVisitPDF } from "@app/model/visitPdf";
+import type { IVisitPDF } from "@app/model/visitPdf";
 import { mafildbApi } from "@app/util/axios/mafildbApi";
 import { fetchGender, fetchHandedness, fetchOperator, fetchQuestion } from "../server_API/calls";
-import { IOperatorDTO, IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
+import type { IOperatorDTO, IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import {
   addPdfToVisitDev,
   createVisitDev,
@@ -29,29 +29,29 @@ import {
 } from "./calls.dev";
 import {
   MDB_ApprovalState,
-  MDB_IAddPdfToVisitInput,
-  MDB_ICreateSubjectInput,
-  MDB_ICreateVisitInput,
-  MDB_IUpdateVisitSignatureStateInput,
-  MDB_IVisitDTO,
-  MDB_IVisitFileDTO,
-  MDB_SignatureState,
-  MDB_VisitFileType,
+  type MDB_IAddPdfToVisitInput,
+  type MDB_ICreateSubjectInput,
+  type MDB_ICreateVisitInput,
+  type MDB_IUpdateVisitSignatureStateInput,
+  type MDB_IVisitDTO,
+  type MDB_IVisitFileDTO,
+  type MDB_SignatureState,
+  type MDB_VisitFileType,
 } from "./dto";
 import {
-  MDB_AddPdfToVisitResponse,
-  MDB_CreateSubjectResponse,
-  MDB_CreateVisitResponse,
-  MDB_GetDevicesResponse,
-  MDB_GetLanguageResponse,
-  MDB_GetLanguagesResponse,
-  MDB_GetProjectResponse,
-  MDB_GetProjectsResponse,
-  MDB_GetVisitFilesResponse,
-  MDB_GetVisitResponse,
-  MDB_GetVisitsResponse,
+  type MDB_AddPdfToVisitResponse,
+  type MDB_CreateSubjectResponse,
+  type MDB_CreateVisitResponse,
+  type MDB_GetDevicesResponse,
+  type MDB_GetLanguageResponse,
+  type MDB_GetLanguagesResponse,
+  type MDB_GetProjectResponse,
+  type MDB_GetProjectsResponse,
+  type MDB_GetVisitFilesResponse,
+  type MDB_GetVisitResponse,
+  type MDB_GetVisitsResponse,
   MDB_RESPONSE_ERROR_ATTR,
-  MDB_UpdateVisitSignatureStateResponse,
+  type MDB_UpdateVisitSignatureStateResponse,
 } from "./response-types";
 
 const fetchLanguages = async (): Promise<ILanguage[]> => {

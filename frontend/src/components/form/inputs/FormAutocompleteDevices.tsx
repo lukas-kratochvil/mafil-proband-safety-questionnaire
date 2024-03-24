@@ -2,10 +2,10 @@ import { Autocomplete } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n/i18n";
-import { IDevice } from "@app/model/device";
+import type { IDevice } from "@app/model/device";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import { IFormAsyncAutocompleteProps } from "./interfaces/input-props";
+import type { IFormAsyncAutocompleteProps } from "./interfaces/input-props";
 
 export const FormAutocompleteDevices = ({
   name,

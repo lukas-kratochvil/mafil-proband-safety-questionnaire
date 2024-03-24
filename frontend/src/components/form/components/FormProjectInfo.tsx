@@ -5,12 +5,12 @@ import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ColoredInfoStripe, ColoredInfoStripeColors } from "@app/components/informative/ColoredInfoStripe";
 import { defaultNS } from "@app/i18n/i18n";
-import { FormPropType } from "@app/model/form";
+import type { FormPropType } from "@app/model/form";
 import { fetchDevices, fetchProjects } from "@app/util/mafildb_API/calls";
 import { FormAutocompleteDevices } from "../inputs/FormAutocompleteDevices";
 import { FormAutocompleteProjects } from "../inputs/FormAutocompleteProjects";
 import { FormDatePicker } from "../inputs/FormDatePicker";
-import { IPhantomFormCardProps } from "../interfaces/form-card";
+import type { IPhantomFormCardProps } from "../interfaces/form-card";
 import { FormCardContainer } from "./FormCardContainer";
 
 export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardProps) => {

@@ -2,10 +2,10 @@ import { Autocomplete } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
-import { IOption } from "../util/options";
+import { type IOption } from "../util/options";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import { IFormDefaultInputProps } from "./interfaces/input-props";
+import type { IFormDefaultInputProps } from "./interfaces/input-props";
 
 interface IFormAutocompleteOptionsProps extends IFormDefaultInputProps {
   options: IOption[];

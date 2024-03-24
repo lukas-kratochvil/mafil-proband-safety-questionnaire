@@ -1,13 +1,13 @@
-import i18n, { LanguageCode } from "@app/i18n/i18n";
-import {
+import i18n, { type LanguageCode } from "@app/i18n/i18n";
+import type {
   ValidatedOperatorFormData,
   ValidatedOperatorModifiedFormData,
   ValidatedProbandFormData,
 } from "@app/model/form";
-import { ProbandVisitLanguageCode } from "@app/model/visit";
-import { IApprovalRoomTableVisitForm, IWaitingRoomTableVisitForm } from "@app/model/visitForm";
+import type { ProbandVisitLanguageCode } from "@app/model/visit";
+import type { IApprovalRoomTableVisitForm, IWaitingRoomTableVisitForm } from "@app/model/visitForm";
 import { serverApi } from "@app/util/axios/serverApi";
-import {
+import type {
   IApprovalRoomVisitFormIncludingQuestionsDTO,
   ICreateDuplicatedVisitFormForApprovalInput,
   ICreateProbandVisitFormInput,
@@ -50,7 +50,7 @@ import {
   GET_WAITING_ROOM_TABLE_VISIT_FORMS,
   GET_WAITING_ROOM_VISIT_FORM,
 } from "./queries";
-import {
+import type {
   ApprovalRoomTableVisitFormsResponse,
   ApprovalRoomVisitFormResponse,
   AuthenticateOperatorResponse,

@@ -1,4 +1,4 @@
-import { ISubject } from "@app/model/subject";
+import type { ISubject } from "@app/model/subject";
 import { nativeLanguagesTest } from "./languages";
 
 const today = new Date();

@@ -6,7 +6,7 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { InfoTooltip } from "@app/components/informative/InfoTooltip";
 import { defaultNS } from "@app/i18n/i18n";
-import { FormPropType } from "@app/model/form";
+import type { FormPropType } from "@app/model/form";
 import { VisualCorrection } from "@app/model/visitForm";
 import { fetchNativeLanguages } from "@app/util/mafildb_API/calls";
 import { fetchGenders, fetchHandednesses } from "@app/util/server_API/calls";
@@ -16,7 +16,7 @@ import { FormAutocompleteNativeLanguages } from "../inputs/FormAutocompleteNativ
 import { FormAutocompleteOptions } from "../inputs/FormAutocompleteOptions";
 import { FormDatePicker } from "../inputs/FormDatePicker";
 import { FormTextField } from "../inputs/FormTextField";
-import { IPhantomFormCardProps } from "../interfaces/form-card";
+import type { IPhantomFormCardProps } from "../interfaces/form-card";
 import { visualCorrectionOptions } from "../util/options";
 import { CzechPersonalId, getPersonalIdPart } from "../util/personal-id";
 import { FormCardContainer } from "./FormCardContainer";

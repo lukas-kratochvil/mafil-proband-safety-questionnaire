@@ -1,5 +1,5 @@
-import { render, RenderOptions } from "@testing-library/react";
-import { ReactElement } from "react";
+import { render, type RenderOptions } from "@testing-library/react";
+import { type ReactElement } from "react";
 import { MockedProviders } from "./__mocks__/MockedProviders";
 
 const customRender = (ui: ReactElement, options?: Omit<RenderOptions, "wrapper">) =>

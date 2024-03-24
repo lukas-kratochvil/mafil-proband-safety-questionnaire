@@ -8,13 +8,13 @@ import { pdfTest } from "@app/__tests__/data/pdf";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { questionsTest } from "@app/__tests__/data/questions";
 import { subjectsTest } from "@app/__tests__/data/subjects";
-import { IDevice } from "@app/model/device";
+import type { IDevice } from "@app/model/device";
 import { AnswerOption } from "@app/model/form";
-import { INativeLanguage } from "@app/model/language";
-import { IProject } from "@app/model/project";
-import { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
+import type { INativeLanguage } from "@app/model/language";
+import type { IProject } from "@app/model/project";
+import type { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
-import { IGenderDTO, IHandednessDTO, IOrderedQuestionDTO, IPdfDTO } from "@app/util/server_API/dto";
+import type { IGenderDTO, IHandednessDTO, IOrderedQuestionDTO, IPdfDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
 
 //----------------------------------------------------------------------

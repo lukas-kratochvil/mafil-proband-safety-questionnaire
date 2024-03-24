@@ -1,4 +1,4 @@
-import { IProject } from "@app/model/project";
+import type { IProject } from "@app/model/project";
 
 export const projectsTest: IProject[] = [
   {

@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RoutingPath } from "@app/routing-paths";
 import { authenticateOperator } from "@app/util/server_API/calls";
-import { IOperatorAuthInput } from "@app/util/server_API/dto";
-import { IAuth, Operator } from "./AuthProvider";
+import type { IOperatorAuthInput } from "@app/util/server_API/dto";
+import { type IAuth, type Operator } from "./AuthProvider";
 
 const SESSION_STORAGE_OPERATOR_KEY = "operator";
 const DEV_OPERATOR: IOperatorAuthInput = {

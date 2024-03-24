@@ -1,4 +1,4 @@
-import { ILanguage, INativeLanguage } from "@app/model/language";
+import type { ILanguage, INativeLanguage } from "@app/model/language";
 
 const languagesTest: ILanguage[] = [
   {

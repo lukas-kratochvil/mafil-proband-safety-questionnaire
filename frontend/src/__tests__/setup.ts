@@ -1,4 +1,4 @@
-import matchers, { TestingLibraryMatchers } from "@testing-library/jest-dom/matchers";
+import matchers, { type TestingLibraryMatchers } from "@testing-library/jest-dom/matchers";
 import { cleanup } from "@testing-library/react";
 import i18n from "@app/i18n/i18n";
 import { NEUTRAL_LANGUAGE_CODE } from "./neutral-language-code";

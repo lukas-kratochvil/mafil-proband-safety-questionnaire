@@ -1,4 +1,4 @@
-import { IButtonProps } from "@app/util/utils";
+import { type IButtonProps } from "@app/util/utils";
 import { render, screen } from "@test-utils";
 import { FormButtons } from "../FormButtons";
 

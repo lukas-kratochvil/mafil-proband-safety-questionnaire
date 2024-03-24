@@ -1,5 +1,5 @@
 import { addYears, differenceInCalendarYears, getDate, getMonth, getYear, isExists } from "date-fns";
-import { IGenderDTO } from "@app/util/server_API/dto";
+import type { IGenderDTO } from "@app/util/server_API/dto";
 
 const FEMALE_CONST = 50;
 

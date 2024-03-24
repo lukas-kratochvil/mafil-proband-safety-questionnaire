@@ -1,4 +1,4 @@
-import { IFormInputFieldContainerProps } from "../FormInputFieldContainer";
+import { type IFormInputFieldContainerProps } from "../FormInputFieldContainer";
 
 export interface IFormDefaultInputProps extends IFormInputFieldContainerProps {
   disabled?: boolean;

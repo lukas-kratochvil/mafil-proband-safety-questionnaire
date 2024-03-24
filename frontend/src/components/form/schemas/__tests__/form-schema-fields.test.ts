@@ -1,4 +1,4 @@
-import { AnySchema } from "yup";
+import { type AnySchema } from "yup";
 import { probandFormSchema } from "../proband-form-schema";
 
 //----------------------------------------------------------------------

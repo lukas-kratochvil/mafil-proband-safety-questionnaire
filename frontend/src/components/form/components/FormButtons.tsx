@@ -1,7 +1,7 @@
-import { Button, Grid, Theme, useMediaQuery } from "@mui/material";
+import { Button, Grid, type Theme, useMediaQuery } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
-import { handleErrorsWithToast, IButtonProps } from "@app/util/utils";
+import { handleErrorsWithToast, type IButtonProps } from "@app/util/utils";
 
 interface IFormSubmitButtonProps<TValidatedData> extends Omit<IButtonProps, "onClick"> {
   onClick: (data: TValidatedData) => Promise<void>;

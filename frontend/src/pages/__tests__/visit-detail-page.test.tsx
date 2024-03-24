@@ -1,10 +1,10 @@
 import { operatorMRTest } from "@app/__tests__/data/operators";
-import { IVisitDetail } from "@app/model/visit";
+import type { IVisitDetail } from "@app/model/visit";
 import VisitDetailPage from "@app/pages/VisitDetailPage";
 import * as mafildbCalls from "@app/util/mafildb_API/calls";
 import { PDF_CONTENT } from "@app/util/mafildb_API/data.dev";
 import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
-import { IOperatorDTO } from "@app/util/server_API/dto";
+import type { IOperatorDTO } from "@app/util/server_API/dto";
 import { render, screen } from "@test-utils";
 
 //----------------------------------------------------------------------

@@ -1,10 +1,10 @@
 import ScienceIcon from "@mui/icons-material/Science";
 import { operatorMRTest } from "@app/__tests__/data/operators";
 import { RoutingPath } from "@app/routing-paths";
-import { IOperatorDTO } from "@app/util/server_API/dto";
+import type { IOperatorDTO } from "@app/util/server_API/dto";
 import { render, screen, within } from "@test-utils";
 import { Header } from "../Header";
-import { ITabProps } from "../navigation/common";
+import { type ITabProps } from "../navigation/common";
 
 //----------------------------------------------------------------------
 // Mocking custom authentication

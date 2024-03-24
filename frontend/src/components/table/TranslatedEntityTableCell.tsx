@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
-import { LanguageCode } from "@app/i18n/i18n";
-import { ITranslation } from "@app/util/server_API/dto";
+import { type LanguageCode } from "@app/i18n/i18n";
+import type { ITranslation } from "@app/util/server_API/dto";
 
 const getTranslation = (translations: ITranslation[], languageCode: LanguageCode): string =>
   translations.find((trans) => trans.language.code === languageCode)?.text ?? "";

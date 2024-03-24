@@ -1,8 +1,8 @@
-import { InputAdornment, TextField, Theme, useMediaQuery } from "@mui/material";
-import { HTMLInputTypeAttribute, ReactNode } from "react";
+import { InputAdornment, TextField, type Theme, useMediaQuery } from "@mui/material";
+import { type HTMLInputTypeAttribute, type ReactNode } from "react";
 import { Controller } from "react-hook-form";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import { IFormDefaultInputProps } from "./interfaces/input-props";
+import type { IFormDefaultInputProps } from "./interfaces/input-props";
 
 interface IFormTextFieldProps extends IFormDefaultInputProps {
   type?: HTMLInputTypeAttribute;

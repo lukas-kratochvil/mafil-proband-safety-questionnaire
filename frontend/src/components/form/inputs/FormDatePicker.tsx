@@ -1,10 +1,10 @@
-import { TextField, Theme, useMediaQuery } from "@mui/material";
+import { TextField, type Theme, useMediaQuery } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import CsLocale from "date-fns/locale/cs";
 import { Controller } from "react-hook-form";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import { IFormDefaultInputProps } from "./interfaces/input-props";
+import type { IFormDefaultInputProps } from "./interfaces/input-props";
 
 interface IFormDatePicker extends IFormDefaultInputProps {
   maxDate?: Date;

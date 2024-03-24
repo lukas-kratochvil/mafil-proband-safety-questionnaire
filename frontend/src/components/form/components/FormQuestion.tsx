@@ -1,13 +1,13 @@
-import { Grid, Theme, Typography, useMediaQuery } from "@mui/material";
+import { Grid, type Theme, Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
 import { defaultNS } from "@app/i18n/i18n";
-import { AnswerOption, FormPropType, FormQac } from "@app/model/form";
+import { AnswerOption, type FormPropType, type FormQac } from "@app/model/form";
 import { FormRadioGroup } from "../inputs/FormRadioGroup";
 import { FormTextField } from "../inputs/FormTextField";
-import { IFormCardProps } from "../interfaces/form-card";
+import type { IFormCardProps } from "../interfaces/form-card";
 
 interface IFormQuestionProps extends IFormCardProps {
   qac: FormQac;

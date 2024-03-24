@@ -1,8 +1,8 @@
-import { User, UserManager, UserManagerSettings } from "oidc-client-ts";
+import { User, UserManager, type UserManagerSettings } from "oidc-client-ts";
 import { RoutingPath } from "@app/routing-paths";
 import { LocalizedError } from "@app/util/error-handling/LocalizedError";
 import { authenticateOperator } from "@app/util/server_API/calls";
-import { IOperatorDTO } from "@app/util/server_API/dto";
+import type { IOperatorDTO } from "@app/util/server_API/dto";
 
 // Using OIDC Authorization Code Flow
 const config: UserManagerSettings = {

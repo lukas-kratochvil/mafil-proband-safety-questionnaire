@@ -1,5 +1,5 @@
-import { MDB_ISubjectDTO } from "@app/util/mafildb_API/dto";
-import { INativeLanguage } from "./language";
+import type { MDB_ISubjectDTO } from "@app/util/mafildb_API/dto";
+import type { INativeLanguage } from "./language";
 
 export interface ISubject {
   uuid: MDB_ISubjectDTO["uuid"];

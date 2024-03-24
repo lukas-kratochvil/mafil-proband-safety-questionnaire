@@ -1,8 +1,8 @@
-import { IOption } from "@app/components/form/util/options";
-import { IGenderDTO, IHandednessDTO, QuestionHiddenByGendersWithoutId } from "../util/server_API/dto";
-import { IDevice } from "./device";
-import { INativeLanguage } from "./language";
-import { IProject } from "./project";
+import { type IOption } from "@app/components/form/util/options";
+import type { IGenderDTO, IHandednessDTO, QuestionHiddenByGendersWithoutId } from "../util/server_API/dto";
+import type { IDevice } from "./device";
+import type { INativeLanguage } from "./language";
+import type { IProject } from "./project";
 
 // Form fields having this data type are validated as numbers
 type TextFieldNumberInput = string | number;

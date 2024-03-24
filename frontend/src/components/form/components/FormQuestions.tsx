@@ -1,8 +1,8 @@
 import { Stack } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
-import { FormQac } from "@app/model/form";
-import { IFormCardProps } from "../interfaces/form-card";
+import type { FormQac } from "@app/model/form";
+import type { IFormCardProps } from "../interfaces/form-card";
 import { FormCardContainer } from "./FormCardContainer";
 import { FormQuestion } from "./FormQuestion";
 

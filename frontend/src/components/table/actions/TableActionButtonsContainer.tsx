@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 
 export const TableActionButtonsContainer = ({ children }: PropsWithChildren) => (
   <Box

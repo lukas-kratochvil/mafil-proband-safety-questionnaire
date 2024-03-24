@@ -1,4 +1,4 @@
-import { MDB_IVisitFileDTO } from "@app/util/mafildb_API/dto";
+import type { MDB_IVisitFileDTO } from "@app/util/mafildb_API/dto";
 
 export interface IVisitPDF {
   id: MDB_IVisitFileDTO["id"];

@@ -1,5 +1,5 @@
-import { createContext, PropsWithChildren, useContext } from "react";
-import { IOperatorDTO } from "@app/util/server_API/dto";
+import { createContext, type PropsWithChildren, useContext } from "react";
+import type { IOperatorDTO } from "@app/util/server_API/dto";
 import { useAuthProvider } from "./auth-provider";
 import { useAuthProviderDev } from "./auth-provider-dev";
 

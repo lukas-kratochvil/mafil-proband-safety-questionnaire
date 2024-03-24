@@ -6,6 +6,7 @@
     /* If transpiling with TypeScript (tsc) */
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "verbatimModuleSyntax": true, // insures the right usage of ES module syntax (related to the 'module' setting)
     "outDir": "./dist",
     "noEmit": true,
     /* If code runs in the DOM */

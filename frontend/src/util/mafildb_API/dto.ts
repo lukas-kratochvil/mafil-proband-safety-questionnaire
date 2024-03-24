@@ -1,5 +1,5 @@
 import { AnswerOption } from "@app/model/form";
-import { ProbandVisitLanguageCode } from "@app/model/visit";
+import type { ProbandVisitLanguageCode } from "@app/model/visit";
 
 export interface MDB_ILanguageDTO {
   code: string;

@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
-import { TFunction } from "react-i18next";
-import { NavigateFunction } from "react-router-dom";
+import { type TFunction } from "react-i18next";
+import { type NavigateFunction } from "react-router-dom";
 import { convertStringToLocalizationKey } from "@app/i18n/i18n";
 import { LocalizedError } from "./error-handling/LocalizedError";
 import { ServerApiValidationError } from "./error-handling/ServerApiValidationError";

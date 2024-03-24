@@ -1,11 +1,11 @@
-import { Stack, Theme, useMediaQuery } from "@mui/material";
-import { PropsWithChildren } from "react";
+import { Stack, type Theme, useMediaQuery } from "@mui/material";
+import { type PropsWithChildren } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { FormButtons, IFormButtonsProps } from "@app/components/form/components/FormButtons";
+import { FormButtons, type IFormButtonsProps } from "@app/components/form/components/FormButtons";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { defaultNS } from "@app/i18n/i18n";
-import { FormPropType } from "@app/model/form";
+import type { FormPropType } from "@app/model/form";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { FormSkeleton } from "./FormSkeleton";
 

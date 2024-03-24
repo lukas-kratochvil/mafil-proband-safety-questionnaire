@@ -1,4 +1,4 @@
-import { MDB_ILanguageDTO } from "@app/util/mafildb_API/dto";
+import type { MDB_ILanguageDTO } from "@app/util/mafildb_API/dto";
 
 export interface ILanguage {
   code: MDB_ILanguageDTO["code"];

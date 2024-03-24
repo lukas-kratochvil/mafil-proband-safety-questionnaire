@@ -1,4 +1,4 @@
-import { Avatar, Button, Stack, Theme, Typography, useMediaQuery } from "@mui/material";
+import { Avatar, Button, Stack, type Theme, Typography, useMediaQuery } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { CardContainer } from "@app/components/card/CardContainer";
 import { useAuth } from "@app/hooks/auth/AuthProvider";

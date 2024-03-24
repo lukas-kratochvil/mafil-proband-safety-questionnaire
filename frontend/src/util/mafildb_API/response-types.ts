@@ -1,4 +1,4 @@
-import {
+import type {
   MDB_IDeviceDTO,
   MDB_ILanguageDTO,
   MDB_IProjectDTO,
