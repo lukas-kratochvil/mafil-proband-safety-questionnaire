@@ -9,7 +9,6 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint --fix \"{src,apps,libs,test}/**/*.ts\"",
     "tidy": "npm run format && npm run lint",
-    "start": "cross-env NODE_ENV=development nest start",
     "start:dev": "cross-env NODE_ENV=development nest start --watch",
     "start:migrate:dev": "prisma migrate deploy && prisma generate && npm run start:dev",
     "start:debug": "cross-env NODE_ENV=development nest start --debug",
@@ -69,7 +68,7 @@
     "ts-jest": "^29.0.5",
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
-    "tsconfig-paths": "4.0.0",
+    "tsconfig-paths": "^4.0.0",
     "typescript": "^4.9.5"
   }
 }
