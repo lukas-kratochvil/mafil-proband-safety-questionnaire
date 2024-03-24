@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "lint": "eslint --fix \"src/**/*.{ts,tsx}\"",
+    "tidy": "npm run format && npm run lint",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:ui": "vitest --ui --api 9527",
