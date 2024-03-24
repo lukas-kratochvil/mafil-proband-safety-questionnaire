@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
-    "allowJs": false,
-    "allowSyntheticDefaultImports": true,
-    "declaration": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+    /* Strictness */
+    "strict": true, // is a must! - every library counts with this option set to true
+
+    /* Other options */
+    "skipLibCheck": true, // compiler won't throw compile-time errors on third-party libraries code
     "isolatedModules": true,
+    "allowJs": true, // allows using JS files inside the project
+    "checkJs": true, // works in tandem with 'allowJs' option - type-checks JS files
+    "resolveJsonModule": true, // allows importing JSON files as modules
+    "moduleDetection": "force", // every file in a repo is treated as a module instead of as a script
     "removeComments": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "useDefineForClassFields": true,
   },
 }
