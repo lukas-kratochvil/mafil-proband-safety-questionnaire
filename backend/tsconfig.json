@@ -5,7 +5,7 @@
     "target": "ES2022",
     /* If transpiling with TypeScript (tsc) - NestJS does */
     "module": "CommonJS",
-    "moduleResolution": "Node", // insure that the code we produce can be consumed by Node (https://www.totaltypescript.com/relative-import-paths-need-explicit-file-extensions-in-ecmascript-imports)
+    "moduleResolution": "Node", // insure that the code we produce can be consumed by Node
     "outDir": "./dist",
     "sourceMap": true, // go to the original TypeScript definition from the generated JS file
     /* If code doesn't run in the DOM */
