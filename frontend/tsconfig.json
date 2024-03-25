@@ -5,10 +5,13 @@
     "target": "ES2022",
     /* If transpiling with TypeScript (tsc) */
     "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "verbatimModuleSyntax": true, // insures the right usage of ES module syntax (related to the 'module' setting)
+    "moduleResolution": "Node", // don't set 'moduleResolution' to 'Bundler' as it is intended for compilation with bundlers
     "outDir": "./dist",
     "noEmit": true,
+    /* Type checking */
+    // TODO: 'verbatimModuleSyntax' set to 'true' does collide with ESLint - ESLint will crash
+    // "verbatimModuleSyntax": true, // insures the right usage of ES module syntax (related to the 'module' setting)
+    "allowSyntheticDefaultImports": true, // enables imports like this 'import X from Y' instead of 'import * as X from Y' when module doesn't have a default import
     /* If code runs in the DOM */
     "lib": [
       "DOM",
