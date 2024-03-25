@@ -1,4 +1,10 @@
-import { type AutocompleteRenderInputParams, CircularProgress, TextField, type Theme, useMediaQuery } from "@mui/material";
+import {
+  CircularProgress,
+  TextField,
+  useMediaQuery,
+  type AutocompleteRenderInputParams,
+  type Theme,
+} from "@mui/material";
 import { type ControllerRenderProps, type FieldValues } from "react-hook-form";
 
 interface IFormAutocompleteInputFieldProps {

@@ -1,4 +1,4 @@
-import { Grid, type Theme, Typography, useMediaQuery } from "@mui/material";
+import { Grid, Typography, useMediaQuery, type Theme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";

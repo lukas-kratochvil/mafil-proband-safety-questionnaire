@@ -9,9 +9,9 @@ import { AnswerOption } from "@app/model/form";
 import type { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import { VisualCorrection } from "@app/model/visitForm";
 import {
+  QuestionPartNumber,
   type IApprovalRoomVisitFormIncludingQuestionsDTO,
   type IWaitingRoomVisitFormIncludingQuestions,
-  QuestionPartNumber,
   type VisitFormAnswerIncludingQuestion,
 } from "@app/util/server_API/dto";
 import {

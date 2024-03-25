@@ -1,8 +1,13 @@
 import { type LanguageCode } from "@app/i18n/i18n";
 import type { MDB_IVisitDTO } from "@app/util/mafildb_API/dto";
-import type { IGenderDTO, IHandednessDTO, IOperatorDTO, VisitFormAnswerIncludingQuestion } from "@app/util/server_API/dto";
+import type {
+  IGenderDTO,
+  IHandednessDTO,
+  IOperatorDTO,
+  VisitFormAnswerIncludingQuestion,
+} from "@app/util/server_API/dto";
 import type { IDevice } from "./device";
-import { AnswerOption } from "./form";
+import type { AnswerOption } from "./form";
 import type { IProject } from "./project";
 import type { ISubject } from "./subject";
 import type { IVisitPDF } from "./visitPdf";

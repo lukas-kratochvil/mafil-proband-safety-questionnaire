@@ -6,11 +6,11 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
-  type Theme,
   Typography,
   useMediaQuery,
+  type Theme,
 } from "@mui/material";
-import { type QueryKey, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, type QueryKey } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";

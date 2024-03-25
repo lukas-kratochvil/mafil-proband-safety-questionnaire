@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { TranslatedEntityTableCell } from "@app/components/table/TranslatedEntityTableCell";
 import { WaitingRoomTableActionButtons } from "@app/components/table/actions/WaitingRoomTableActionButtons";
-import { type DefaultSorting, defaultTableProps } from "@app/components/table/default-table-props";
+import { defaultTableProps, type DefaultSorting } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n/i18n";
 import type { IWaitingRoomTableVisitForm } from "@app/model/visitForm";
 import { fetchWaitingRoomTableVisitForms } from "@app/util/server_API/calls";

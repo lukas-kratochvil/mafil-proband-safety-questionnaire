@@ -1,4 +1,4 @@
-import { User, UserManager, type UserManagerSettings } from "oidc-client-ts";
+import { UserManager, type User, type UserManagerSettings } from "oidc-client-ts";
 import { RoutingPath } from "@app/routing-paths";
 import { LocalizedError } from "@app/util/error-handling/LocalizedError";
 import { authenticateOperator } from "@app/util/server_API/calls";

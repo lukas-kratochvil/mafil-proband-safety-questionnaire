@@ -3,7 +3,7 @@ import { AnswerOption } from "@app/model/form";
 import type { INativeLanguage } from "@app/model/language";
 import { VisualCorrection } from "@app/model/visitForm";
 import type { IGenderDTO, IHandednessDTO } from "@app/util/server_API/dto";
-import { getOption, type IOption, visualCorrectionOptions } from "../util/options";
+import { getOption, visualCorrectionOptions, type IOption } from "../util/options";
 
 // using custom email regex due to very free yup email validator, inspired by: https://github.com/jquense/yup/issues/507#issuecomment-765799429
 // email can be empty if proband does not want to fill in contact info

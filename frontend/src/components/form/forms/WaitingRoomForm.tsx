@@ -9,7 +9,12 @@ import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesFromWaitingRoomVisitForm } from "@app/components/form/util/loaders";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
-import type { FormPropType, FormQac, ValidatedOperatorFormData, ValidatedOperatorModifiedFormData } from "@app/model/form";
+import type {
+  FormPropType,
+  FormQac,
+  ValidatedOperatorFormData,
+  ValidatedOperatorModifiedFormData,
+} from "@app/model/form";
 import { RoutingPath } from "@app/routing-paths";
 import { addPdfToVisit, createFinalizedVisit } from "@app/util/mafildb_API/calls";
 import { MDB_ApprovalState } from "@app/util/mafildb_API/dto";

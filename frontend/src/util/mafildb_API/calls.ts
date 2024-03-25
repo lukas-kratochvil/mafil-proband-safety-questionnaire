@@ -39,6 +39,7 @@ import {
   type MDB_VisitFileType,
 } from "./dto";
 import {
+  MDB_RESPONSE_ERROR_ATTR,
   type MDB_AddPdfToVisitResponse,
   type MDB_CreateSubjectResponse,
   type MDB_CreateVisitResponse,
@@ -50,7 +51,6 @@ import {
   type MDB_GetVisitFilesResponse,
   type MDB_GetVisitResponse,
   type MDB_GetVisitsResponse,
-  MDB_RESPONSE_ERROR_ATTR,
   type MDB_UpdateVisitSignatureStateResponse,
 } from "./response-types";
 

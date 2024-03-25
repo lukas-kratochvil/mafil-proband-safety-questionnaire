@@ -1,4 +1,4 @@
-import { Button, Grid, type Theme, useMediaQuery } from "@mui/material";
+import { Button, Grid, useMediaQuery, type Theme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
 import { handleErrorsWithToast, type IButtonProps } from "@app/util/utils";

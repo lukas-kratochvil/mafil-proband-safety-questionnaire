@@ -1,4 +1,4 @@
-import { Box, type Theme, useMediaQuery } from "@mui/material";
+import { Box, useMediaQuery, type Theme } from "@mui/material";
 
 export const CeitecMafilLogo = () => {
   const matchesOnlyXsBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.only("xs"));

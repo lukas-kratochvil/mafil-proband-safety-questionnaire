@@ -1,4 +1,4 @@
-import { AnswerOption } from "@app/model/form";
+import type { AnswerOption } from "@app/model/form";
 import type { ProbandVisitLanguageCode } from "@app/model/visit";
 
 // TODO: check for nullable fields against the MAFILDB model: https://github.com/lukas-kratochvil/mafil-proband-safety-questionnaire/issues/19

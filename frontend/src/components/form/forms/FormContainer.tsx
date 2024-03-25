@@ -1,4 +1,4 @@
-import { Stack, type Theme, useMediaQuery } from "@mui/material";
+import { Stack, useMediaQuery, type Theme } from "@mui/material";
 import { type PropsWithChildren } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";

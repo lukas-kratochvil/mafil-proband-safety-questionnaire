@@ -1,5 +1,5 @@
 import { type LanguageCode } from "@app/i18n/i18n";
-import { AnswerOption } from "@app/model/form";
+import type { AnswerOption } from "@app/model/form";
 import type { MDB_ILanguageDTO } from "../mafildb_API/dto";
 
 export type OperatorRole = "MR" | "MR_HIGH_PERM";
