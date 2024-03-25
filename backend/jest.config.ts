@@ -3,9 +3,10 @@ import type { Config } from "jest";
 const config: Config = {
   moduleFileExtensions: ["js", "json", "ts"],
   moduleNameMapper: {
-    "@app/(.*)": "<rootDir>/$1",
+    "@app/(.*)": "<rootDir>/src/$1",
+    "@assets/(.*)": "<rootDir>/assets/$1",
   },
-  rootDir: "src",
+  rootDir: ".",
   testRegex: ".*\\.spec\\.ts$",
   transform: {
     "^.+\\.(t|j)s$": "ts-jest",
