@@ -1,6 +1,8 @@
 import { AnswerOption } from "@app/model/form";
 import type { ProbandVisitLanguageCode } from "@app/model/visit";
 
+// TODO: check for nullable fields against the MAFILDB model: https://github.com/lukas-kratochvil/mafil-proband-safety-questionnaire/issues/19
+
 export interface MDB_ILanguageDTO {
   code: string;
   name: string;
@@ -26,8 +28,10 @@ export interface MDB_ICreateSubjectInput {
   last_name: string;
   birth_date: Date;
   personal_ID: string;
+  // TODO: create type for one of: “ns” | ”m” | ”f” | ”o”
   gender: string;
   native_language_code: string;
+  // TODO: create type for one of: “ns” | ”rh” | ”lh” | ”fl” | ”un”
   handedness: string;
   email: string;
   phone: string;
@@ -49,6 +53,7 @@ interface MDB_IAnswerDTO {
 }
 
 export type MDB_ICreateVisitInput = {
+  // TODO: create type for one of: “ra” | ”rd”
   checked: MDB_ApprovalState;
   is_phantom: boolean;
   date: Date;
@@ -87,10 +92,14 @@ export type MDB_IVisitDTO = Omit<
   visit_name: string;
   created: Date;
   subject: MDB_ISubjectDTO;
+  // TODO: only 'uuid' and 'acronym' properties - missing 'name' attribute
   project: MDB_IProjectDTO;
+  // TODO: only 'id' and 'type' properties - missing 'name' attribute
+  // TODO: could any device ever be null in the devel/prod env?
   device: MDB_IDeviceDTO;
   registration_finalize_user: MDB_IRegistrationUserDTO;
   registration_approve_user: MDB_IRegistrationUserDTO | null;
+  // TODO: create type for one of: “ns” | ”pp” | ”pe” | ”sp” | ”se”
   registration_signature_status: MDB_SignatureState;
 };
 

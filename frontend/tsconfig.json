@@ -17,7 +17,7 @@
     ],
     /* For React app */
     "jsx": "react-jsx",
-    /* TODO */
+    /* For Vitest */
     "types": [
       "vitest/globals", // enable using Vitest globals without importing them (https://vitest.dev/config/#globals)
     ],
