@@ -7,7 +7,6 @@ import { nativeLanguagesTest } from "@app/__tests__/data/languages";
 import { operatorMRTest } from "@app/__tests__/data/operators";
 import { pdfTest } from "@app/__tests__/data/pdf";
 import { projectsTest } from "@app/__tests__/data/projects";
-import { getProjectText } from "@app/components/form/util/utils";
 import type { IDevice } from "@app/model/device";
 import type { INativeLanguage } from "@app/model/language";
 import type { IProject } from "@app/model/project";
@@ -72,7 +71,7 @@ describe("phantom form page", () => {
   const genderOther = gendersTest[2]?.translations[0]?.text;
   const nativeLanguageCzech = nativeLanguagesTest[0]?.nativeName;
   const handednessUndetermined = handednessesTest[3]?.translations[0]?.text;
-  const project1Text = getProjectText(projectsTest[0]!);
+  const project1Text = projectsTest[0]?.name === "" ? projectsTest[0].acronym : `${projectsTest[0]?.acronym} - ${projectsTest[0]?.name}`;
   const device1Name = devicesTest[0]?.name;
 
   test("contains correct form buttons", async () => {

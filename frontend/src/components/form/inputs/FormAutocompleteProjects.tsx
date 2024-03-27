@@ -3,7 +3,6 @@ import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n/i18n";
 import type { IProject } from "@app/model/project";
-import { getProjectText } from "../util/utils";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import type { IFormAsyncAutocompleteProps } from "./interfaces/input-props";
@@ -52,4 +51,10 @@ export const FormAutocompleteProjects = ({
       />
     </FormInputFieldContainer>
   );
+};
+
+const getProjectText = (project: IProject): string => {
+  const acronym = project.acronym.trim();
+  const name = project.name.trim();
+  return name === "" ? acronym : `${acronym} - ${name}`;
 };

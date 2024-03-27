@@ -12,12 +12,6 @@ import type { INativeLanguage } from "@app/model/language";
 import type { IProject } from "@app/model/project";
 import type { IGenderDTO, IHandednessDTO } from "@app/util/server_API/dto";
 
-export const getProjectText = (project: IProject): string => {
-  const projectAcronym = project.acronym.trim();
-  const projectName = project.name.trim();
-  return projectName === "" ? projectAcronym : `${projectAcronym} - ${projectName}`;
-};
-
 export const getModifiedFieldsOnly = (
   initialData: FormPropType | undefined,
   submittedData: ValidatedOperatorFormData
