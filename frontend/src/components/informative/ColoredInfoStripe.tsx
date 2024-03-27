@@ -3,36 +3,27 @@ import { blue, green, orange, red } from "@mui/material/colors";
 import { useTranslation } from "react-i18next";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
 
-export enum ColoredInfoStripeColors {
-  BLUE,
-  GREEN,
-  ORANGE,
-  RED,
-}
+type StripeColor = "blue" | "green" | "orange" | "red";
 
 // Colors used from: https://mui.com/material-ui/customization/color/#color-palette
 const COLOR_SHADE = 600;
 
-const mapBackgroundColor = (color: ColoredInfoStripeColors): string => {
+const mapBackgroundColor = (color: StripeColor): string => {
   switch (color) {
-    case ColoredInfoStripeColors.GREEN: {
+    case "green":
       return green[COLOR_SHADE];
-    }
-    case ColoredInfoStripeColors.ORANGE: {
+    case "orange":
       return orange[COLOR_SHADE];
-    }
-    case ColoredInfoStripeColors.RED: {
+    case "red":
       return red[COLOR_SHADE];
-    }
-    default: {
+    default:
       return blue[COLOR_SHADE];
-    }
   }
 };
 
 export type IColoredInfoStripeProps = {
   textLocalizationKey: string;
-  color: ColoredInfoStripeColors;
+  color: StripeColor;
 };
 
 export const ColoredInfoStripe = ({ textLocalizationKey, color }: IColoredInfoStripeProps) => {

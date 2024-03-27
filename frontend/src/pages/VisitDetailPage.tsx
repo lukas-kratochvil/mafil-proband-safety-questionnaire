@@ -4,11 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { CardContainer } from "@app/components/card/CardContainer";
-import {
-  ColoredInfoStripe,
-  ColoredInfoStripeColors,
-  type IColoredInfoStripeProps,
-} from "@app/components/informative/ColoredInfoStripe";
+import { ColoredInfoStripe, type IColoredInfoStripeProps } from "@app/components/informative/ColoredInfoStripe";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
 import type { IVisitDetail, IVisitDetailPDF } from "@app/model/visit";
@@ -27,7 +23,7 @@ const getColoredInfoStripe = (visitDetail: IVisitDetail): IColoredInfoStripeProp
   if (visitDetail.isPhantom) {
     return {
       textLocalizationKey: "visitDetailPage.infoStripes.completed",
-      color: ColoredInfoStripeColors.GREEN,
+      color: "green",
     };
   }
 
@@ -35,26 +31,26 @@ const getColoredInfoStripe = (visitDetail: IVisitDetail): IColoredInfoStripeProp
     case MDB_ApprovalState.DISAPPROVED:
       return {
         textLocalizationKey: "visitDetailPage.infoStripes.disapproved",
-        color: ColoredInfoStripeColors.RED,
+        color: "red",
       };
     case MDB_ApprovalState.APPROVED:
       switch (visitDetail.signatureState) {
         case MDB_SignatureState.NOT_SET:
           return {
             textLocalizationKey: "visitDetailPage.infoStripes.signatureChoice",
-            color: ColoredInfoStripeColors.BLUE,
+            color: "blue",
           };
         case MDB_SignatureState.FOR_SIGNATURE_PHYSICALLY:
         case MDB_SignatureState.FOR_SIGNATURE_ELECTRONICALLY:
           return {
             textLocalizationKey: "visitDetailPage.infoStripes.waitingForSignatureConfirmation",
-            color: ColoredInfoStripeColors.ORANGE,
+            color: "orange",
           };
         case MDB_SignatureState.SIGNED_PHYSICALLY:
         case MDB_SignatureState.SIGNED_ELECTRONICALLY:
           return {
             textLocalizationKey: "visitDetailPage.infoStripes.signed",
-            color: ColoredInfoStripeColors.GREEN,
+            color: "green",
           };
         default:
           return undefined;

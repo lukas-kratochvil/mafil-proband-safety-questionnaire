@@ -3,7 +3,7 @@ import { useQueries } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { ColoredInfoStripe, ColoredInfoStripeColors } from "@app/components/informative/ColoredInfoStripe";
+import { ColoredInfoStripe } from "@app/components/informative/ColoredInfoStripe";
 import { defaultNS } from "@app/i18n/i18n";
 import type { FormPropType } from "@app/model/form";
 import { fetchDevices, fetchProjects } from "@app/util/mafildb_API/calls";
@@ -57,7 +57,7 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           >
             <ColoredInfoStripe
               textLocalizationKey="form.projectInfo.phantomInfoStripe"
-              color={ColoredInfoStripeColors.BLUE}
+              color="blue"
             />
           </Grid>
         )}
