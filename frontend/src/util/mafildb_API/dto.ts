@@ -1,8 +1,6 @@
 import type { AnswerOption } from "@app/model/form";
 import type { ProbandVisitLanguageCode } from "@app/model/visit";
 
-// TODO: check for nullable fields against the MAFILDB model: https://github.com/lukas-kratochvil/mafil-proband-safety-questionnaire/issues/19
-
 export interface MDB_ILanguageDTO {
   code: string;
   name: string;
@@ -22,14 +20,16 @@ export interface MDB_IDeviceDTO {
   name: string;
 }
 
+// TODO: check for nullable fields against the MAFILDB model: https://github.com/lukas-kratochvil/mafil-proband-safety-questionnaire/issues/19
+export type MDB_GenderCode = "ns" | "m" | "f" | "o";
+
 export interface MDB_ICreateSubjectInput {
   preferred_language_code: ProbandVisitLanguageCode;
   first_name: string;
   last_name: string;
   birth_date: Date;
   personal_ID: string;
-  // TODO: create type for one of: “ns” | ”m” | ”f” | ”o”
-  gender: string;
+  gender: MDB_GenderCode;
   native_language_code: string;
   // TODO: create type for one of: “ns” | ”rh” | ”lh” | ”fl” | ”un”
   handedness: string;

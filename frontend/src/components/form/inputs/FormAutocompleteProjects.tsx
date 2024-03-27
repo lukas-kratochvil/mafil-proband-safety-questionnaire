@@ -7,6 +7,12 @@ import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import type { IFormAsyncAutocompleteProps } from "./interfaces/input-props";
 
+const getProjectText = (project: IProject): string => {
+  const acronym = project.acronym.trim();
+  const name = project.name.trim();
+  return name === "" ? acronym : `${acronym} - ${name}`;
+};
+
 export const FormAutocompleteProjects = ({
   name,
   label,
@@ -51,10 +57,4 @@ export const FormAutocompleteProjects = ({
       />
     </FormInputFieldContainer>
   );
-};
-
-const getProjectText = (project: IProject): string => {
-  const acronym = project.acronym.trim();
-  const name = project.name.trim();
-  return name === "" ? acronym : `${acronym} - ${name}`;
 };

@@ -71,7 +71,8 @@ describe("phantom form page", () => {
   const genderOther = gendersTest[2]?.translations[0]?.text;
   const nativeLanguageCzech = nativeLanguagesTest[0]?.nativeName;
   const handednessUndetermined = handednessesTest[3]?.translations[0]?.text;
-  const project1Text = projectsTest[0]?.name === "" ? projectsTest[0].acronym : `${projectsTest[0]?.acronym} - ${projectsTest[0]?.name}`;
+  const project1Text
+    = projectsTest[0]?.name === "" ? projectsTest[0].acronym : `${projectsTest[0]?.acronym} - ${projectsTest[0]?.name}`;
   const device1Name = devicesTest[0]?.name;
 
   test("contains correct form buttons", async () => {

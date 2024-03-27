@@ -27,6 +27,7 @@ import {
   fetchVisitDetailDev,
   updateVisitSignatureStateDev,
 } from "./calls.dev";
+import { transformGenderCodeForMDB } from "./codeMappers";
 import {
   MDB_ApprovalState,
   type MDB_IAddPdfToVisitInput,
@@ -151,7 +152,7 @@ const createVisitSubject = async (
     preferred_language_code: probandLanguageCode ?? "",
     birth_date: visitFormData.birthdate,
     personal_ID: visitFormData.personalId,
-    gender: visitFormData.gender.code,
+    gender: transformGenderCodeForMDB(visitFormData.gender.code),
     native_language_code: visitFormData.nativeLanguage.code,
     handedness: visitFormData.handedness.code,
     email: visitFormData.email,

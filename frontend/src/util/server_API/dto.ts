@@ -26,9 +26,11 @@ interface ITranslations {
   translations: ITranslation[];
 }
 
+export type GenderCode = "M" | "F" | "O";
+
 export interface IGenderDTO extends ITranslations {
   id: string;
-  code: string;
+  code: GenderCode;
   order: number;
 }
 
@@ -55,7 +57,7 @@ export interface IQuestionDTO extends ITranslations {
   mustBeApproved: boolean;
   order: number;
   hiddenByGenders: {
-    genderCode: string;
+    genderCode: GenderCode;
   }[];
 }
 

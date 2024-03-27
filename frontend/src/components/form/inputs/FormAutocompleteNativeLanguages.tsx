@@ -7,6 +7,27 @@ import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import type { IFormAsyncAutocompleteProps } from "./interfaces/input-props";
 
+const compareNativeLanguages = (a: INativeLanguage, b: INativeLanguage): number => {
+  if (a.priority && b.priority) {
+    return a.priority - b.priority;
+  }
+  if (a.priority) {
+    return -1;
+  }
+  if (b.priority) {
+    return 1;
+  }
+  return a.nameEn.localeCompare(b.nameEn);
+};
+
+const filterNativeLanguages = (options: INativeLanguage[], state: FilterOptionsState<INativeLanguage>) => {
+  const inputValue = state.inputValue.trim().toLowerCase();
+  return options.filter((option) => {
+    const valuesToBeMatched = [option.nativeName, option.nameCs, option.nameEn];
+    return valuesToBeMatched.some((optionValue) => optionValue.trim().toLowerCase().startsWith(inputValue));
+  });
+};
+
 export const FormAutocompleteNativeLanguages = ({
   name,
   label,
@@ -52,25 +73,4 @@ export const FormAutocompleteNativeLanguages = ({
       />
     </FormInputFieldContainer>
   );
-};
-
-const compareNativeLanguages = (a: INativeLanguage, b: INativeLanguage): number => {
-  if (a.priority && b.priority) {
-    return a.priority - b.priority;
-  }
-  if (a.priority) {
-    return -1;
-  }
-  if (b.priority) {
-    return 1;
-  }
-  return a.nameEn.localeCompare(b.nameEn);
-};
-
-const filterNativeLanguages = (options: INativeLanguage[], state: FilterOptionsState<INativeLanguage>) => {
-  const inputValue = state.inputValue.trim().toLowerCase();
-  return options.filter((option) => {
-    const valuesToBeMatched = [option.nativeName, option.nameCs, option.nameEn];
-    return valuesToBeMatched.some((optionValue) => optionValue.trim().toLowerCase().startsWith(inputValue));
-  });
 };

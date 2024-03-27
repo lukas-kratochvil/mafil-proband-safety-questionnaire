@@ -4,6 +4,7 @@ import { NEUTRAL_LANGUAGE_CODE } from "../neutral-language-code";
 export const gendersTest: IGenderDTO[] = [
   {
     id: "1",
+    order: 1,
     code: "M",
     translations: [
       {
@@ -16,6 +17,7 @@ export const gendersTest: IGenderDTO[] = [
   },
   {
     id: "2",
+    order: 2,
     code: "F",
     translations: [
       {
@@ -28,6 +30,7 @@ export const gendersTest: IGenderDTO[] = [
   },
   {
     id: "3",
+    order: 3,
     code: "O",
     translations: [
       {
@@ -38,7 +41,4 @@ export const gendersTest: IGenderDTO[] = [
       },
     ],
   },
-].map((gender, i) => ({
-  ...gender,
-  order: i + 1,
-}));
+];
