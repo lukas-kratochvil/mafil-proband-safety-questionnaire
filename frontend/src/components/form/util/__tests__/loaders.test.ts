@@ -8,11 +8,10 @@ import { subjectsTest } from "@app/__tests__/data/subjects";
 import { AnswerOption } from "@app/model/form";
 import type { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import { VisualCorrection } from "@app/model/visitForm";
-import {
-  QuestionPartNumber,
-  type IApprovalRoomVisitFormIncludingQuestionsDTO,
-  type IWaitingRoomVisitFormIncludingQuestions,
-  type VisitFormAnswerIncludingQuestion,
+import type {
+  IApprovalRoomVisitFormIncludingQuestionsDTO,
+  IWaitingRoomVisitFormIncludingQuestions,
+  VisitFormAnswerIncludingQuestion,
 } from "@app/util/server_API/dto";
 import {
   loadEmptyDefaultValues,
@@ -30,7 +29,7 @@ const answerIncludingQuestion: VisitFormAnswerIncludingQuestion = {
   updatedAt: new Date(),
   answer: AnswerOption.NO,
   comment: "",
-  partNumber: QuestionPartNumber.ONE,
+  partNumber: 1,
   mustBeApproved: false,
   order: 1,
   hiddenByGenders: [],

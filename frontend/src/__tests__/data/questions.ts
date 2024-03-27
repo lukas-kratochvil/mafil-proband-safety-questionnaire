@@ -4,6 +4,7 @@ import { NEUTRAL_LANGUAGE_CODE } from "../neutral-language-code";
 export const questionsTest: IOrderedQuestionDTO[] = [
   {
     id: "p1q01",
+    order: 1,
     updatedAt: new Date(),
     partNumber: 1,
     mustBeApproved: false,
@@ -19,6 +20,7 @@ export const questionsTest: IOrderedQuestionDTO[] = [
   },
   {
     id: "p1q02",
+    order: 2,
     updatedAt: new Date(),
     partNumber: 1,
     mustBeApproved: false,
@@ -34,6 +36,7 @@ export const questionsTest: IOrderedQuestionDTO[] = [
   },
   {
     id: "p2q01",
+    order: 3,
     updatedAt: new Date(),
     partNumber: 2,
     mustBeApproved: true,
@@ -49,6 +52,7 @@ export const questionsTest: IOrderedQuestionDTO[] = [
   },
   {
     id: "p2q02",
+    order: 4,
     updatedAt: new Date(),
     partNumber: 2,
     mustBeApproved: true,
@@ -62,7 +66,4 @@ export const questionsTest: IOrderedQuestionDTO[] = [
     ],
     hiddenByGenders: [],
   },
-].map((question, i) => ({
-  ...question,
-  order: i + 1,
-}));
+];

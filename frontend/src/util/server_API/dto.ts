@@ -47,10 +47,7 @@ export type IHTMLCardDTO = {
   html: string;
 };
 
-export enum QuestionPartNumber {
-  ONE = 1,
-  TWO = 2,
-}
+type QuestionPartNumber = 1 | 2;
 
 export type IQuestionDTO = ITranslations & {
   id: string;

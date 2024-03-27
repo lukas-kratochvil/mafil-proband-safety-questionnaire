@@ -23,7 +23,6 @@ import {
   generatePhantomPdf,
   generateProbandPdf,
 } from "@app/util/server_API/calls";
-import { QuestionPartNumber } from "@app/util/server_API/dto";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormFinalizeDialog } from "../components/FormFinalizeDialog";
@@ -232,12 +231,12 @@ export const DuplicationForm = () => {
           <FormProbandContact disableInputs={!isEditing} />
           <FormQuestions
             titleLocalizationKey="titlePart1"
-            qacs={qacs.filter((qac) => qac.partNumber === QuestionPartNumber.ONE)}
+            qacs={qacs.filter((qac) => qac.partNumber === 1)}
             disableInputs={!isEditing}
           />
           <FormQuestions
             titleLocalizationKey="titlePart2"
-            qacs={qacs.filter((qac) => qac.partNumber === QuestionPartNumber.TWO)}
+            qacs={qacs.filter((qac) => qac.partNumber === 2)}
             disableInputs={!isEditing}
           />
           {isDisapproved && <FormDisapprovalReason />}
