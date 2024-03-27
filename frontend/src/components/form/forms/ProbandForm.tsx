@@ -18,16 +18,13 @@ import { FormProbandContactRequest } from "../components/FormProbandContactReque
 import { getValidatedProbandFormData } from "../util/utils";
 import { FormContainer } from "./FormContainer";
 
-enum ProbandFormStep {
-  EXAMINATION,
-  CONTACTS,
-}
+type ProbandFormStep = "examination" | "contacts";
 
 export const ProbandForm = () => {
   const navigate = useNavigate();
   const { setError } = useFormContext<FormPropType>();
 
-  const [step, setStep] = useState<ProbandFormStep>(ProbandFormStep.EXAMINATION);
+  const [step, setStep] = useState<ProbandFormStep>("examination");
   const [qacs, setQacs] = useState<FormQac[]>([]);
   const [formButtons, setFormButtons] = useState<IFormButtonsProps<ValidatedProbandFormData>>();
   const [isContactsRequestShown, setIsContactsRequestShown] = useState<boolean>(false);
@@ -45,7 +42,7 @@ export const ProbandForm = () => {
 
   // Setting questions
   useEffect(() => {
-    if (questions !== undefined && step === ProbandFormStep.EXAMINATION) {
+    if (questions !== undefined && step === "examination") {
       setQacs(
         questions.map((question, index) => ({
           index,
@@ -65,15 +62,15 @@ export const ProbandForm = () => {
 
   // Setting form buttons
   useEffect(() => {
-    if (step === ProbandFormStep.EXAMINATION) {
+    if (step === "examination") {
       setFormButtons({
         submitButtonProps: {
           titleLocalizationKey: "form.common.buttons.agree",
-          onClick: async () => setStep(ProbandFormStep.CONTACTS),
+          onClick: async () => setStep("contacts"),
         },
         buttonsProps: [],
       });
-    } else if (step === ProbandFormStep.CONTACTS) {
+    } else if (step === "contacts") {
       if (isContactsRequestShown) {
         setFormButtons({
           submitButtonProps: {
@@ -120,7 +117,7 @@ export const ProbandForm = () => {
       buttons={formButtons}
       getFormData={getValidatedProbandFormData}
     >
-      {step === ProbandFormStep.EXAMINATION && (
+      {step === "examination" && (
         <>
           <FormEntryInfo />
           <FormProbandInfo />
@@ -134,7 +131,7 @@ export const ProbandForm = () => {
           <FormExaminationConsent />
         </>
       )}
-      {step === ProbandFormStep.CONTACTS && (
+      {step === "contacts" && (
         <>
           <FormProbandContactCheckbox setIsContactsRequestShown={setIsContactsRequestShown} />
           {isContactsRequestShown && (
