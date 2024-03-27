@@ -17,7 +17,7 @@ import type { IVisitPDF } from "@app/model/visitPdf";
 import { dummyVisits, generateVisitId, PDF_CONTENT } from "@app/util/mafildb_API/data.dev";
 import { fetchCurrentQuestions, fetchGender, fetchHandedness, fetchOperator, fetchQuestion } from "../server_API/calls";
 import type { IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
-import { MDB_SignatureState, type MDB_ICreateVisitInput } from "./dto";
+import { MDB_SignatureState, type MDB_ICreateVisitInput, type MDB_IUpdateVisitSignatureStateInput } from "./dto";
 
 export const fetchLanguagesDev = async (): Promise<ILanguage[]> => nativeLanguagesTest;
 
@@ -138,7 +138,7 @@ export const fetchVisitDetailDev = async (visitUuid: string): Promise<IVisitDeta
 
 export const updateVisitSignatureStateDev = async (
   visitUuid: string,
-  signatureState: MDB_SignatureState
+  signatureState: MDB_IUpdateVisitSignatureStateInput["registration_signature_status"]
 ): Promise<string | never> => {
   const visit = dummyVisits.find((dummyVisit) => dummyVisit.uuid === visitUuid);
 

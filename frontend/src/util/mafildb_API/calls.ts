@@ -36,7 +36,6 @@ import {
   type MDB_IUpdateVisitSignatureStateInput,
   type MDB_IVisitDTO,
   type MDB_IVisitFileDTO,
-  type MDB_SignatureState,
   type MDB_VisitFileType,
 } from "./dto";
 import {
@@ -510,7 +509,7 @@ export const fetchVisitDetail = async (visitUuid: string | undefined): Promise<I
 
 export const updateVisitSignatureState = async (
   visitUuid: string,
-  signatureState: MDB_SignatureState
+  signatureState: MDB_IUpdateVisitSignatureStateInput["registration_signature_status"]
 ): Promise<string | never> => {
   if (import.meta.env.DEV) {
     return updateVisitSignatureStateDev(visitUuid, signatureState);

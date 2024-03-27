@@ -77,13 +77,14 @@ type MDB_IRegistrationUserDTO = {
   username: string;
 };
 
-export enum MDB_SignatureState {
-  NOT_SET = "ns",
-  FOR_SIGNATURE_PHYSICALLY = "pp",
-  FOR_SIGNATURE_ELECTRONICALLY = "pe",
-  SIGNED_PHYSICALLY = "sp",
-  SIGNED_ELECTRONICALLY = "se",
-}
+export const MDB_SignatureState = {
+  NOT_SET: "ns",
+  FOR_SIGNATURE_PHYSICALLY: "pp",
+  FOR_SIGNATURE_ELECTRONICALLY: "pe",
+  SIGNED_PHYSICALLY: "sp",
+  SIGNED_ELECTRONICALLY: "se",
+} as const;
+type MDB_SignatureState = ObjectValues<typeof MDB_SignatureState>;
 
 export type MDB_IVisitDTO = Omit<
   MDB_ICreateVisitInput,
