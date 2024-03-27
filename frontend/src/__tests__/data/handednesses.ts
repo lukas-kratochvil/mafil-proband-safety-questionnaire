@@ -4,7 +4,8 @@ import { NEUTRAL_LANGUAGE_CODE } from "../neutral-language-code";
 export const handednessesTest: IHandednessDTO[] = [
   {
     id: "1",
-    code: "r",
+    order: 1,
+    code: "RH",
     translations: [
       {
         text: "Right-handed",
@@ -16,7 +17,8 @@ export const handednessesTest: IHandednessDTO[] = [
   },
   {
     id: "2",
-    code: "l",
+    order: 2,
+    code: "LH",
     translations: [
       {
         text: "Left-handed",
@@ -28,10 +30,11 @@ export const handednessesTest: IHandednessDTO[] = [
   },
   {
     id: "3",
-    code: "rl",
+    order: 3,
+    code: "FL",
     translations: [
       {
-        text: "Retrained left-handed",
+        text: "Forced left-handed",
         language: {
           code: NEUTRAL_LANGUAGE_CODE,
         },
@@ -40,7 +43,8 @@ export const handednessesTest: IHandednessDTO[] = [
   },
   {
     id: "4",
-    code: "u",
+    order: 4,
+    code: "UN",
     translations: [
       {
         text: "Undetermined",
@@ -50,7 +54,4 @@ export const handednessesTest: IHandednessDTO[] = [
       },
     ],
   },
-].map((handedness, i) => ({
-  ...handedness,
-  order: i + 1,
-}));
+];

@@ -22,7 +22,7 @@ const handednesses: Omit<IHandedness, "order">[] = [
     enText: "Forced left-handed",
   },
   {
-    code: "U",
+    code: "UN",
     csText: "Neurčeno",
     enText: "Undetermined",
   },

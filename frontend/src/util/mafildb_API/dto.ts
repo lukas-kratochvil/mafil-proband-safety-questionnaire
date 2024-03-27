@@ -22,6 +22,7 @@ export interface MDB_IDeviceDTO {
 
 // TODO: check for nullable fields against the MAFILDB model: https://github.com/lukas-kratochvil/mafil-proband-safety-questionnaire/issues/19
 export type MDB_GenderCode = "ns" | "m" | "f" | "o";
+export type MDB_HandednessCode = "ns" | "rh" | "lh" | "fl" | "un";
 
 export interface MDB_ICreateSubjectInput {
   preferred_language_code: ProbandVisitLanguageCode;
@@ -31,8 +32,7 @@ export interface MDB_ICreateSubjectInput {
   personal_ID: string;
   gender: MDB_GenderCode;
   native_language_code: string;
-  // TODO: create type for one of: “ns” | ”rh” | ”lh” | ”fl” | ”un”
-  handedness: string;
+  handedness: MDB_HandednessCode;
   email: string;
   phone: string;
 }

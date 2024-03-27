@@ -34,9 +34,11 @@ export interface IGenderDTO extends ITranslations {
   order: number;
 }
 
+export type HandednessCode = "RH" | "LH" | "FL" | "UN";
+
 export interface IHandednessDTO extends ITranslations {
   id: string;
-  code: string;
+  code: HandednessCode;
   order: number;
 }
 
