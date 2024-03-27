@@ -169,7 +169,7 @@ const createVisitSubject = async (
 
 const createVisit = async (
   visitFormData: ValidatedOperatorFormData,
-  approvalState: MDB_ApprovalState,
+  approvalState: MDB_ICreateVisitInput["checked"],
   isPhantom: boolean,
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
@@ -233,7 +233,7 @@ const createVisit = async (
 
 export const createFinalizedVisit = async (
   visitFormData: ValidatedOperatorFormData,
-  approvalState: MDB_ApprovalState,
+  approvalState: MDB_ICreateVisitInput["checked"],
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
   probandLanguageCode: ProbandVisitLanguageCode | undefined
@@ -247,7 +247,7 @@ export const createFinalizedVisit = async (
 
 export const createVisitFromApproval = async (
   visitFormData: ValidatedOperatorFormData,
-  state: MDB_ApprovalState,
+  state: MDB_ICreateVisitInput["checked"],
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
   probandLanguageCode: ProbandVisitLanguageCode | undefined,

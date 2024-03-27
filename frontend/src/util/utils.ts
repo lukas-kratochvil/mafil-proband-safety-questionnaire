@@ -6,6 +6,8 @@ import { convertStringToLocalizationKey } from "@app/i18n/i18n";
 import { LocalizedError } from "./error-handling/LocalizedError";
 import { ServerApiValidationError } from "./error-handling/ServerApiValidationError";
 
+export type ObjectValues<T> = T[keyof T];
+
 export type IButtonProps = {
   titleLocalizationKey: string;
   onClick: () => Promise<void>;

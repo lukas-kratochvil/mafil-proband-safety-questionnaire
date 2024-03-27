@@ -1,5 +1,6 @@
 import type { AnswerOption } from "@app/model/form";
 import type { ProbandVisitLanguageCode } from "@app/model/visit";
+import type { ObjectValues } from "../utils";
 
 export type MDB_ILanguageDTO = {
   code: string;
@@ -40,10 +41,11 @@ export type MDB_ISubjectDTO = MDB_ICreateSubjectInput & {
   uuid: string;
 };
 
-export enum MDB_ApprovalState {
-  APPROVED = "ra",
-  DISAPPROVED = "rd",
-}
+export const MDB_ApprovalState = {
+  APPROVED: "ra",
+  DISAPPROVED: "rd",
+} as const;
+type MDB_ApprovalState = ObjectValues<typeof MDB_ApprovalState>;
 
 type MDB_IAnswerDTO = {
   question_id: string;
@@ -53,7 +55,6 @@ type MDB_IAnswerDTO = {
 
 // TODO: check for nullable fields against the MAFILDB model: https://github.com/lukas-kratochvil/mafil-proband-safety-questionnaire/issues/19
 export type MDB_ICreateVisitInput = {
-  // TODO: create type for one of: “ra” | ”rd” - instead of the enum
   checked: MDB_ApprovalState;
   is_phantom: boolean;
   date: Date;

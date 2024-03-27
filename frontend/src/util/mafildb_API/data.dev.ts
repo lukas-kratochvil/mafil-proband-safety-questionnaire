@@ -2,7 +2,7 @@ import { devicesTest } from "@app/__tests__/data/devices";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { subjectsTest } from "@app/__tests__/data/subjects";
 import type { IVisit } from "@app/model/visit";
-import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
+import { MDB_ApprovalState, MDB_SignatureState, type MDB_ICreateVisitInput } from "@app/util/mafildb_API/dto";
 import type { IOperatorDTO } from "../server_API/dto";
 
 const operatorFinalizer: IOperatorDTO = {
@@ -27,7 +27,7 @@ export const generateVisitId = (): string => {
 const createDummyVisits = (
   count: number,
   initialVisit: IVisit,
-  approvalState: MDB_ApprovalState,
+  approvalState: MDB_ICreateVisitInput["checked"],
   signatureState: MDB_SignatureState = MDB_SignatureState.NOT_SET,
   isPhantom = false
 ): IVisit[] => {

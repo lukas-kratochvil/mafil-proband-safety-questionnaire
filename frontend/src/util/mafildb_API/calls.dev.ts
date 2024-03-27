@@ -17,7 +17,7 @@ import type { IVisitPDF } from "@app/model/visitPdf";
 import { dummyVisits, generateVisitId, PDF_CONTENT } from "@app/util/mafildb_API/data.dev";
 import { fetchCurrentQuestions, fetchGender, fetchHandedness, fetchOperator, fetchQuestion } from "../server_API/calls";
 import type { IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
-import { MDB_SignatureState, type MDB_ApprovalState } from "./dto";
+import { MDB_SignatureState, type MDB_ICreateVisitInput } from "./dto";
 
 export const fetchLanguagesDev = async (): Promise<ILanguage[]> => nativeLanguagesTest;
 
@@ -35,7 +35,7 @@ export const fetchDevicesDev = async (): Promise<IDevice[]> => devicesTest;
 
 export const createVisitDev = async (
   visitFormData: ValidatedOperatorFormData,
-  approvalState: MDB_ApprovalState,
+  approvalState: MDB_ICreateVisitInput["checked"],
   isPhantom: boolean,
   finalizerUsername: string,
   finalizedAt: Date,
