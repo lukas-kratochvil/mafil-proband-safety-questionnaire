@@ -1,4 +1,3 @@
-import { type FilterOptionsState } from "@mui/material";
 import { updatedDiff } from "deep-object-diff";
 import { type Operator } from "@app/hooks/auth/AuthProvider";
 import type { IDevice } from "@app/model/device";
@@ -12,27 +11,6 @@ import {
 import type { INativeLanguage } from "@app/model/language";
 import type { IProject } from "@app/model/project";
 import type { IGenderDTO, IHandednessDTO } from "@app/util/server_API/dto";
-
-export const compareNativeLanguages = (a: INativeLanguage, b: INativeLanguage): number => {
-  if (a.priority && b.priority) {
-    return a.priority - b.priority;
-  }
-  if (a.priority) {
-    return -1;
-  }
-  if (b.priority) {
-    return 1;
-  }
-  return a.nameEn.localeCompare(b.nameEn);
-};
-
-export const filterNativeLanguages = (options: INativeLanguage[], state: FilterOptionsState<INativeLanguage>) => {
-  const inputValue = state.inputValue.trim().toLowerCase();
-  return options.filter((option) => {
-    const valuesToBeMatched = [option.nativeName, option.nameCs, option.nameEn];
-    return valuesToBeMatched.some((optionValue) => optionValue.trim().toLowerCase().startsWith(inputValue));
-  });
-};
 
 export const getProjectText = (project: IProject): string => {
   const projectAcronym = project.acronym.trim();
