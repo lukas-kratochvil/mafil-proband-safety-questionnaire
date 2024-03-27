@@ -1,11 +1,11 @@
 export type GenderCode = "F" | "M" | "O";
 
-interface IGender {
+type IGender = {
   code: GenderCode;
   order: number;
   csText: string;
   enText: string;
-}
+};
 
 const genders: Omit<IGender, "order">[] = [
   {

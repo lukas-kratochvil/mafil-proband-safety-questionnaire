@@ -2,7 +2,7 @@ import { CanActivate, ExecutionContext, Injectable, Logger } from "@nestjs/commo
 import { ConfigService } from "@nestjs/config";
 import { Reflector } from "@nestjs/core";
 import { GqlContextType, GqlExecutionContext } from "@nestjs/graphql";
-import { EnvironmentVariables } from "@app/config.interface";
+import { EnvironmentVariables } from "@app/config";
 
 @Injectable()
 export class AuthGuard implements CanActivate {

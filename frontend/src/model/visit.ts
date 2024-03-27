@@ -14,13 +14,13 @@ import type { IVisitPDF } from "./visitPdf";
 
 export type ProbandVisitLanguageCode = LanguageCode | "";
 
-interface IAnswer {
+type IAnswer = {
   questionId: string;
   answer: AnswerOption;
   comment: string;
-}
+};
 
-export interface IVisit {
+export type IVisit = {
   uuid: MDB_IVisitDTO["uuid"];
   visitId: MDB_IVisitDTO["visit_name"];
   created: MDB_IVisitDTO["created"];
@@ -40,34 +40,32 @@ export interface IVisit {
   approvalDate: MDB_IVisitDTO["registration_approve_date"];
   signatureState: MDB_IVisitDTO["registration_signature_status"];
   disapprovalReason: MDB_IVisitDTO["registration_disapprove_reason"];
-}
+};
 
 export type CreatedVisitData = Pick<IVisit, "uuid" | "visitId">;
 
 // TODO: correct the type
 export type IRecentVisitsTableVisit = IVisit;
 
-export interface IDuplicatedVisitIncludingQuestions
-  extends Omit<
-    IVisit,
-    | "created"
-    | "approvalState"
-    | "signatureState"
-    | "answers"
-    | "finalizer"
-    | "finalizationDate"
-    | "approver"
-    | "approvalDate"
-    | "disapprovalReason"
-  > {
+export type IDuplicatedVisitIncludingQuestions = Omit<
+  IVisit,
+  | "created"
+  | "approvalState"
+  | "signatureState"
+  | "answers"
+  | "finalizer"
+  | "finalizationDate"
+  | "approver"
+  | "approvalDate"
+  | "disapprovalReason"
+> & {
   gender: IGenderDTO;
   handedness: IHandednessDTO;
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
-}
+};
 
 export type IVisitDetailPDF = Pick<IVisitPDF, "name" | "content">;
 
-export interface IVisitDetail
-  extends Pick<IVisit, "uuid" | "visitId" | "approvalState" | "isPhantom" | "signatureState"> {
+export type IVisitDetail = Pick<IVisit, "uuid" | "visitId" | "approvalState" | "isPhantom" | "signatureState"> & {
   pdf: IVisitDetailPDF;
-}
+};

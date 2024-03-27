@@ -19,9 +19,9 @@ import { PageContainer } from "./PageContainer";
 
 const getVisitDetailQueryKey = (visitId: string | undefined) => ["visit", visitId];
 
-interface IVisitDetailButtonProps extends IButtonProps {
+type IVisitDetailButtonProps = IButtonProps & {
   disabled?: boolean;
-}
+};
 
 const getColoredInfoStripe = (visitDetail: IVisitDetail): IColoredInfoStripeProps | undefined => {
   if (visitDetail.isPhantom) {

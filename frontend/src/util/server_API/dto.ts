@@ -4,55 +4,55 @@ import type { MDB_ILanguageDTO } from "../mafildb_API/dto";
 
 export type OperatorRole = "MR" | "MR_HIGH_PERM";
 
-export interface IOperatorDTO {
+export type IOperatorDTO = {
   id: string;
   name: string;
   surname: string;
   username: string;
   email: string;
   role: OperatorRole;
-}
+};
 
 export type IOperatorAuthInput = Pick<IOperatorDTO, "name" | "surname" | "username" | "email">;
 
-export interface ITranslation {
+export type ITranslation = {
   text: string;
   language: {
     code: string;
   };
-}
+};
 
-interface ITranslations {
+type ITranslations = {
   translations: ITranslation[];
-}
+};
 
 export type GenderCode = "M" | "F" | "O";
 
-export interface IGenderDTO extends ITranslations {
+export type IGenderDTO = ITranslations & {
   id: string;
   code: GenderCode;
   order: number;
-}
+};
 
 export type HandednessCode = "RH" | "LH" | "FL" | "UN";
 
-export interface IHandednessDTO extends ITranslations {
+export type IHandednessDTO = ITranslations & {
   id: string;
   code: HandednessCode;
   order: number;
-}
+};
 
-export interface IHTMLCardDTO {
+export type IHTMLCardDTO = {
   title: string;
   html: string;
-}
+};
 
 export enum QuestionPartNumber {
   ONE = 1,
   TWO = 2,
 }
 
-export interface IQuestionDTO extends ITranslations {
+export type IQuestionDTO = ITranslations & {
   id: string;
   updatedAt: Date;
   partNumber: QuestionPartNumber;
@@ -61,24 +61,24 @@ export interface IQuestionDTO extends ITranslations {
   hiddenByGenders: {
     genderCode: GenderCode;
   }[];
-}
+};
 
-export interface IOrderedQuestionDTO extends IQuestionDTO {
+export type IOrderedQuestionDTO = IQuestionDTO & {
   order: number;
-}
+};
 
-interface IProbandAnswerDTO {
+type IProbandAnswerDTO = {
   questionId: string;
   answer: AnswerOption;
-}
+};
 
-interface IOperatorAnswerDTO extends IProbandAnswerDTO {
+type IOperatorAnswerDTO = IProbandAnswerDTO & {
   comment: string;
-}
+};
 
 export type VisitFormState = "NEW" | "IN_APPROVAL" | "SENT_TO_MAFILDB" | "PDF_GENERATED";
 
-export interface IWaitingRoomTableVisitFormDTO {
+export type IWaitingRoomTableVisitFormDTO = {
   id: string;
   state: VisitFormState;
   createdAt?: Date;
@@ -94,25 +94,25 @@ export interface IWaitingRoomTableVisitFormDTO {
   handedness: IHandednessDTO;
   email: string;
   phone: string;
-}
+};
 
-export interface IWaitingRoomVisitFormDTO extends IWaitingRoomTableVisitFormDTO {
+export type IWaitingRoomVisitFormDTO = IWaitingRoomTableVisitFormDTO & {
   probandLanguage: {
     code: LanguageCode;
   };
   answers: IProbandAnswerDTO[];
-}
+};
 
 export type QuestionHiddenByGendersWithoutId = Omit<IOrderedQuestionDTO, "id">;
 
 export type VisitFormAnswerIncludingQuestion = IOperatorAnswerDTO & QuestionHiddenByGendersWithoutId;
 
-export interface IWaitingRoomVisitFormIncludingQuestions extends IWaitingRoomTableVisitFormDTO {
+export type IWaitingRoomVisitFormIncludingQuestions = IWaitingRoomTableVisitFormDTO & {
   probandLanguageCode: LanguageCode;
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
-}
+};
 
-export interface IApprovalRoomTableVisitFormDTO extends IWaitingRoomTableVisitFormDTO {
+export type IApprovalRoomTableVisitFormDTO = IWaitingRoomTableVisitFormDTO & {
   additionalInfo: {
     projectUuid: string;
     deviceId: number;
@@ -120,19 +120,19 @@ export interface IApprovalRoomTableVisitFormDTO extends IWaitingRoomTableVisitFo
     finalizer: Pick<IOperatorDTO, "username">;
     finalizedAt: Date;
   };
-}
+};
 
-export interface IApprovalRoomVisitFormDTO extends IApprovalRoomTableVisitFormDTO {
+export type IApprovalRoomVisitFormDTO = IApprovalRoomTableVisitFormDTO & {
   probandLanguage: {
     code: LanguageCode;
   };
   answers: IOperatorAnswerDTO[];
-}
+};
 
-export interface IApprovalRoomVisitFormIncludingQuestionsDTO extends IApprovalRoomTableVisitFormDTO {
+export type IApprovalRoomVisitFormIncludingQuestionsDTO = IApprovalRoomTableVisitFormDTO & {
   probandLanguageCode: LanguageCode;
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
-}
+};
 
 type AdditionalInfo = {
   projectUuid: string;
@@ -164,15 +164,15 @@ type CreateVisitFormInput = CreateProbandInfoInput & {
   answers: IOperatorAnswerDTO[];
 };
 
-export interface ICreateProbandVisitFormInput {
+export type ICreateProbandVisitFormInput = {
   createVisitFormInput: Omit<CreateVisitFormInput, "state" | "additionalInfo" | "answers"> & {
     answers: IProbandAnswerDTO[];
   };
-}
+};
 
-export interface ICreateDuplicatedVisitFormForApprovalInput {
+export type ICreateDuplicatedVisitFormForApprovalInput = {
   createVisitFormInput: CreateVisitFormInput;
-}
+};
 
 type UpdateVisitFormInput = Partial<CreateProbandInfoInput> & {
   id: string;
@@ -181,22 +181,22 @@ type UpdateVisitFormInput = Partial<CreateProbandInfoInput> & {
   answers: Partial<IOperatorAnswerDTO>[] | undefined;
 };
 
-export interface ISendVisitFormFromWaitingRoomForApprovalInput {
+export type ISendVisitFormFromWaitingRoomForApprovalInput = {
   updateVisitFormInput: Omit<UpdateVisitFormInput, "additionalInfo"> & {
     additionalInfo: AdditionalInfo;
   };
-}
+};
 
-export interface IUpdateVisitFormStateInput {
+export type IUpdateVisitFormStateInput = {
   updateVisitFormInput: Pick<UpdateVisitFormInput, "id" | "state">;
-}
+};
 
-export interface IPdfDTO {
+export type IPdfDTO = {
   name: string; // also contains extension, for example: my_doc.pdf
   content: string; // Base64 encoded PDF content
-}
+};
 
-export interface IGeneratePdfInput {
+export type IGeneratePdfInput = {
   visitId: string;
   isPhantom: boolean;
   probandLanguageCode?: LanguageCode;
@@ -224,4 +224,4 @@ export interface IGeneratePdfInput {
     answer: AnswerOption;
     comment: string | undefined;
   }[];
-}
+};

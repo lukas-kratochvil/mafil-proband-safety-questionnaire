@@ -4,10 +4,10 @@ import toast, { ToastBar, Toaster } from "react-hot-toast";
 import { Header } from "@app/components/header/Header";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
 
-interface IPageContainerProps {
+type IPageContainerProps = {
   center?: boolean;
   isTablePage?: boolean;
-}
+};
 
 export const PageContainer = ({ children, center, isTablePage }: PropsWithChildren<IPageContainerProps>) => {
   const { operator } = useAuth();

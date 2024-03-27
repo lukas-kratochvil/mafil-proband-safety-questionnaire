@@ -1,30 +1,29 @@
 import type { AnswerOption } from "@app/model/form";
 import type { ProbandVisitLanguageCode } from "@app/model/visit";
 
-export interface MDB_ILanguageDTO {
+export type MDB_ILanguageDTO = {
   code: string;
   name: string;
   name_cs: string;
   name_en: string;
   priority: number | null;
-}
+};
 
-export interface MDB_IProjectDTO {
+export type MDB_IProjectDTO = {
   uuid: string;
   name: string;
   acronym: string;
-}
+};
 
-export interface MDB_IDeviceDTO {
+export type MDB_IDeviceDTO = {
   id: number;
   name: string;
-}
+};
 
-// TODO: check for nullable fields against the MAFILDB model: https://github.com/lukas-kratochvil/mafil-proband-safety-questionnaire/issues/19
 export type MDB_GenderCode = "ns" | "m" | "f" | "o";
 export type MDB_HandednessCode = "ns" | "rh" | "lh" | "fl" | "un";
 
-export interface MDB_ICreateSubjectInput {
+export type MDB_ICreateSubjectInput = {
   preferred_language_code: ProbandVisitLanguageCode;
   first_name: string;
   last_name: string;
@@ -35,25 +34,26 @@ export interface MDB_ICreateSubjectInput {
   handedness: MDB_HandednessCode;
   email: string;
   phone: string;
-}
+};
 
-export interface MDB_ISubjectDTO extends MDB_ICreateSubjectInput {
+export type MDB_ISubjectDTO = MDB_ICreateSubjectInput & {
   uuid: string;
-}
+};
 
 export enum MDB_ApprovalState {
   APPROVED = "ra",
   DISAPPROVED = "rd",
 }
 
-interface MDB_IAnswerDTO {
+type MDB_IAnswerDTO = {
   question_id: string;
   answer: AnswerOption;
   comment: string;
-}
+};
 
+// TODO: check for nullable fields against the MAFILDB model: https://github.com/lukas-kratochvil/mafil-proband-safety-questionnaire/issues/19
 export type MDB_ICreateVisitInput = {
-  // TODO: create type for one of: “ra” | ”rd”
+  // TODO: create type for one of: “ra” | ”rd” - instead of the enum
   checked: MDB_ApprovalState;
   is_phantom: boolean;
   date: Date;
@@ -71,10 +71,10 @@ export type MDB_ICreateVisitInput = {
   registration_disapprove_reason: string;
 };
 
-interface MDB_IRegistrationUserDTO {
+type MDB_IRegistrationUserDTO = {
   id: number;
   username: string;
-}
+};
 
 export enum MDB_SignatureState {
   NOT_SET = "ns",

@@ -1,9 +1,9 @@
-interface IHandedness {
+type IHandedness = {
   code: string;
   order: number;
   csText: string;
   enText: string;
-}
+};
 
 const handednesses: Omit<IHandedness, "order">[] = [
   {

@@ -5,7 +5,7 @@ import { defaultNS } from "@app/i18n/i18n";
 import type { IHandednessDTO } from "@app/util/server_API/dto";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import type { IFormAsyncAutocompleteProps } from "./interfaces/input-props";
+import type { IFormAsyncAutocompleteProps } from "./input-props";
 
 export const FormAutocompleteHandednesses = ({
   name,

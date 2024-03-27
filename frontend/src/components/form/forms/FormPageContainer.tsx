@@ -5,11 +5,11 @@ import { loadEmptyDefaultValues } from "@app/components/form/util/loaders";
 import type { FormPropType } from "@app/model/form";
 import { PageContainer } from "@app/pages/PageContainer";
 
-interface IFormPageContainerProps {
+type IFormPageContainerProps = {
   FormPage: () => JSX.Element;
   validationSchema: AnyObjectSchema;
   loadDefaultValues?: () => FormPropType;
-}
+};
 
 // TODO: make this React component generic
 export const FormPageContainer = ({ FormPage, validationSchema, loadDefaultValues }: IFormPageContainerProps) => {

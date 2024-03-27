@@ -1,18 +1,18 @@
 import { FormControlLabel, Radio, RadioGroup, type SxProps, type Theme } from "@mui/material";
 import { Controller } from "react-hook-form";
-import type { IFormDefaultInputProps } from "./interfaces/input-props";
+import type { IFormDefaultInputProps } from "./input-props";
 
-export interface IRadioProps {
+export type IRadioProps = {
   id: string;
   label: string;
   value: string;
-}
+};
 
-interface IFormRadioGroupProps extends IFormDefaultInputProps {
+type IFormRadioGroupProps = IFormDefaultInputProps & {
   radios: IRadioProps[];
   defaultValue: string | null;
   sx?: SxProps<Theme>;
-}
+};
 
 export const FormRadioGroup = ({ name, disabled, radios, defaultValue, sx }: IFormRadioGroupProps) => (
   <Controller

@@ -6,11 +6,11 @@ import { convertStringToLocalizationKey } from "@app/i18n/i18n";
 import { LocalizedError } from "./error-handling/LocalizedError";
 import { ServerApiValidationError } from "./error-handling/ServerApiValidationError";
 
-export interface IButtonProps {
+export type IButtonProps = {
   titleLocalizationKey: string;
   onClick: () => Promise<void>;
   showErrorColor?: boolean;
-}
+};
 
 export const getBackButtonProps = (navigate: NavigateFunction, customTitleLocalizationKey?: string): IButtonProps => ({
   titleLocalizationKey: customTitleLocalizationKey ?? "common.backButton",

@@ -9,12 +9,12 @@ import type { FormPropType } from "@app/model/form";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { FormSkeleton } from "./FormSkeleton";
 
-interface IFormContainerProps<TValidatedData> {
+type IFormContainerProps<TValidatedData> = {
   isLoading: boolean;
   isError: boolean;
   buttons: IFormButtonsProps<TValidatedData> | undefined;
   getFormData: (data: FormPropType) => TValidatedData;
-}
+};
 
 export const FormContainer = <TValidatedData,>({
   children,

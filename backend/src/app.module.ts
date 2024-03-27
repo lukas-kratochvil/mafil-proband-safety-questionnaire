@@ -5,7 +5,7 @@ import { ScheduleModule } from "@nestjs/schedule";
 import { ThrottlerModule } from "@nestjs/throttler";
 import Joi from "joi";
 import { GraphQLApiModule } from "./api/graphql-api.module";
-import { ALLOWED_NODE_ENVS, ALLOWED_PDF_LANGUAGE_CODES, EnvironmentVariables } from "./config.interface";
+import { ALLOWED_NODE_ENVS, ALLOWED_PDF_LANGUAGE_CODES, EnvironmentVariables } from "./config";
 import { CronModule } from "./cron/cron.module";
 import { AuthGuard } from "./guards/auth/auth.guard";
 import { ThrottlerGuard } from "./guards/throttler/throttler.guard";

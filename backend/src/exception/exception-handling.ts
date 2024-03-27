@@ -17,7 +17,7 @@ const createValidationErrorExtensions = (errors: ValidationError[]): ValidationE
 export const createUserInputError = (errors: ValidationError[]) =>
   new UserInputError(VALIDATION_ERROR, { extensions: createValidationErrorExtensions(errors) });
 
-export interface ValidationFieldErrors {
+export type ValidationFieldErrors = {
   field: string;
   errors: string[];
-}
+};

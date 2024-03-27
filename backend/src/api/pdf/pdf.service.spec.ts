@@ -2,7 +2,7 @@ import { ConfigService } from "@nestjs/config";
 import { Test, TestingModule } from "@nestjs/testing";
 import { PrismaClient } from "@prisma/client";
 import { DeepMockProxy, mockDeep } from "jest-mock-extended";
-import { EnvironmentVariables } from "@app/config.interface";
+import { EnvironmentVariables } from "@app/config";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { PDFService } from "./pdf.service";
 

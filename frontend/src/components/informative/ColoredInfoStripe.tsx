@@ -30,10 +30,10 @@ const mapBackgroundColor = (color: ColoredInfoStripeColors): string => {
   }
 };
 
-export interface IColoredInfoStripeProps {
+export type IColoredInfoStripeProps = {
   textLocalizationKey: string;
   color: ColoredInfoStripeColors;
-}
+};
 
 export const ColoredInfoStripe = ({ textLocalizationKey, color }: IColoredInfoStripeProps) => {
   const { t } = useTranslation(defaultNS);

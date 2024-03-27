@@ -33,12 +33,12 @@ export const getCommonTabSx = (location: Location, urlPrefix: RoutingPath): SxPr
   };
 };
 
-export interface ITabProps {
+export type ITabProps = {
   localizationKey: string;
   urlPrefix: RoutingPath;
   onClick: () => void;
   Icon: SvgIconComponent;
-}
+};
 
 export const getTabs = (navigate: NavigateFunction): ITabProps[] => [
   {

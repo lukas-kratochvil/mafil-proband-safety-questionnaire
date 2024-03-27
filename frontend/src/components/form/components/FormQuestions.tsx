@@ -2,15 +2,15 @@ import { Stack } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
 import type { FormQac } from "@app/model/form";
-import type { IFormCardProps } from "../interfaces/form-card";
 import { FormCardContainer } from "./FormCardContainer";
 import { FormQuestion } from "./FormQuestion";
+import type { IFormCardProps } from "./form-card";
 
-interface IFormQuestionsProps extends IFormCardProps {
+type IFormQuestionsProps = IFormCardProps & {
   titleLocalizationKey: string;
   qacs: FormQac[];
   disableComment?: boolean;
-}
+};
 
 export const FormQuestions = ({ titleLocalizationKey, qacs, disableInputs, disableComment }: IFormQuestionsProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.safetyQuestions" });

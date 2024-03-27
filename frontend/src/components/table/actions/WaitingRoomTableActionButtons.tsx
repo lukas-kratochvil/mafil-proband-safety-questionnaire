@@ -20,10 +20,10 @@ import { deleteVisitForm } from "@app/util/server_API/calls";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
-interface IWaitingRoomTableActionButtonsProps {
+type IWaitingRoomTableActionButtonsProps = {
   visitFormId: string;
   queryKey: QueryKey;
-}
+};
 
 export const WaitingRoomTableActionButtons = ({ visitFormId, queryKey }: IWaitingRoomTableActionButtonsProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomTablePage.actions" });

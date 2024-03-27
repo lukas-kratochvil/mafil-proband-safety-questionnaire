@@ -7,12 +7,12 @@ import { defaultNS } from "@app/i18n/i18n";
 import { AnswerOption, type FormPropType, type FormQac } from "@app/model/form";
 import { FormRadioGroup } from "../inputs/FormRadioGroup";
 import { FormTextField } from "../inputs/FormTextField";
-import type { IFormCardProps } from "../interfaces/form-card";
+import type { IFormCardProps } from "./form-card";
 
-interface IFormQuestionProps extends IFormCardProps {
+type IFormQuestionProps = IFormCardProps & {
   qac: FormQac;
   disableComment?: boolean;
-}
+};
 
 export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuestionProps) => {
   const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.safetyQuestions" });

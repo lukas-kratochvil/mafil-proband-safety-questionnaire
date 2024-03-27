@@ -2,16 +2,16 @@ import { InputAdornment, TextField, useMediaQuery, type Theme } from "@mui/mater
 import { type HTMLInputTypeAttribute, type ReactNode } from "react";
 import { Controller } from "react-hook-form";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import type { IFormDefaultInputProps } from "./interfaces/input-props";
+import type { IFormDefaultInputProps } from "./input-props";
 
-interface IFormTextFieldProps extends IFormDefaultInputProps {
+type IFormTextFieldProps = IFormDefaultInputProps & {
   type?: HTMLInputTypeAttribute;
   isSmall?: boolean;
   isMultiline?: boolean;
   hasAutocomplete?: boolean;
   endAdornmentLabel?: ReactNode;
   hasAutoFocus?: boolean;
-}
+};
 
 export const FormTextField = ({
   name,

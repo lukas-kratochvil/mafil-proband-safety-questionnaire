@@ -4,11 +4,11 @@ import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n/i18n";
 import { ErrorMessage } from "./ErrorMessage";
 
-export interface IFormInputFieldContainerProps {
+export type IFormInputFieldContainerProps = {
   label: string;
   name: string;
   isOptional?: boolean;
-}
+};
 
 export const FormInputFieldContainer = ({
   children,

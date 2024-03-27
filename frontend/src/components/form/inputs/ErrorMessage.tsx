@@ -3,9 +3,9 @@ import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { convertStringToLocalizationKey } from "@app/i18n/i18n";
 
-interface IErrorFeedbackProps {
+type IErrorFeedbackProps = {
   name: string;
-}
+};
 
 export const ErrorMessage = ({ name }: IErrorFeedbackProps) => {
   const { t } = useTranslation();

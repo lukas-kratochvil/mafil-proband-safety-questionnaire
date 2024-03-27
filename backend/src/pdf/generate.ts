@@ -11,7 +11,7 @@ import {
   getLocalizedTextsFile,
   LocalizedTextsFile,
 } from "@app/utils/assets-loaders";
-import { IPDFData, IPDFQuestionAnswer } from "./interfaces";
+import { IPDFData, IPDFQuestionAnswer } from "./types";
 
 // Type of PDF document
 type PDFDoc = typeof PDFDocument;
@@ -75,13 +75,13 @@ const IN_BRNO_ON_DASHES = "_ _ _ _ _ _ _ _ _ _ _ _";
 const SIGNATURE_DASHES = "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _";
 //--------------------------------------
 
-interface ITitleValueRow {
+type ITitleValueRow = {
   title: string;
   secondaryTitle?: string;
   value: string;
   secondaryValue?: string;
   isRowBold?: boolean;
-}
+};
 
 const onNewPageAdded = (doc: PDFDoc, visitIdTitle: string, visitIdValue: string) => {
   const docX = doc.x;

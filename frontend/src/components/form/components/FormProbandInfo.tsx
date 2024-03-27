@@ -16,10 +16,10 @@ import { FormAutocompleteNativeLanguages } from "../inputs/FormAutocompleteNativ
 import { FormAutocompleteOptions } from "../inputs/FormAutocompleteOptions";
 import { FormDatePicker } from "../inputs/FormDatePicker";
 import { FormTextField } from "../inputs/FormTextField";
-import type { IPhantomFormCardProps } from "../interfaces/form-card";
 import { visualCorrectionOptions } from "../util/options";
 import { CzechPersonalId, getPersonalIdPart } from "../util/personal-id";
 import { FormCardContainer } from "./FormCardContainer";
+import type { IPhantomFormCardProps } from "./form-card";
 
 export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandInfo" });

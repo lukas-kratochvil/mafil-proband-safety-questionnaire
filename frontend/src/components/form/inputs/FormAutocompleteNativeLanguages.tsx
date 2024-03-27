@@ -5,7 +5,7 @@ import { defaultNS } from "@app/i18n/i18n";
 import type { INativeLanguage } from "@app/model/language";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import type { IFormAsyncAutocompleteProps } from "./interfaces/input-props";
+import type { IFormAsyncAutocompleteProps } from "./input-props";
 
 const compareNativeLanguages = (a: INativeLanguage, b: INativeLanguage): number => {
   if (a.priority && b.priority) {

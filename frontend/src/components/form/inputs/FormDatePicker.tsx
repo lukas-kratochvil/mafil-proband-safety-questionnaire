@@ -4,11 +4,11 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import CsLocale from "date-fns/locale/cs";
 import { Controller } from "react-hook-form";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import type { IFormDefaultInputProps } from "./interfaces/input-props";
+import type { IFormDefaultInputProps } from "./input-props";
 
-interface IFormDatePicker extends IFormDefaultInputProps {
+type IFormDatePicker = IFormDefaultInputProps & {
   maxDate?: Date;
-}
+};
 
 export const FormDatePicker = ({ name, label, isOptional, disabled, maxDate }: IFormDatePicker) => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));

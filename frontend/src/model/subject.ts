@@ -1,7 +1,7 @@
 import type { MDB_ISubjectDTO } from "@app/util/mafildb_API/dto";
 import type { INativeLanguage } from "./language";
 
-export interface ISubject {
+export type ISubject = {
   uuid: MDB_ISubjectDTO["uuid"];
   preferredLanguageCode: MDB_ISubjectDTO["preferred_language_code"];
   name: MDB_ISubjectDTO["first_name"];
@@ -14,4 +14,4 @@ export interface ISubject {
   nativeLanguage: INativeLanguage;
   email: MDB_ISubjectDTO["email"];
   phone: MDB_ISubjectDTO["phone"];
-}
+};

@@ -10,8 +10,8 @@ import { fetchDevices, fetchProjects } from "@app/util/mafildb_API/calls";
 import { FormAutocompleteDevices } from "../inputs/FormAutocompleteDevices";
 import { FormAutocompleteProjects } from "../inputs/FormAutocompleteProjects";
 import { FormDatePicker } from "../inputs/FormDatePicker";
-import type { IPhantomFormCardProps } from "../interfaces/form-card";
 import { FormCardContainer } from "./FormCardContainer";
+import type { IPhantomFormCardProps } from "./form-card";
 
 export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.projectInfo" });

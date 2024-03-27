@@ -5,9 +5,9 @@ import type { ITranslation } from "@app/util/server_API/dto";
 const getTranslation = (translations: ITranslation[], languageCode: LanguageCode): string =>
   translations.find((trans) => trans.language.code === languageCode)?.text ?? "";
 
-interface ITranslatedEntityTableCellProps {
+type ITranslatedEntityTableCellProps = {
   translations: ITranslation[];
-}
+};
 
 export const TranslatedEntityTableCell = ({ translations }: ITranslatedEntityTableCellProps) => {
   const { i18n } = useTranslation();

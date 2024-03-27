@@ -3,14 +3,14 @@ import { useTranslation } from "react-i18next";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
 import { handleErrorsWithToast, type IButtonProps } from "@app/util/utils";
 
-interface IFormSubmitButtonProps<TValidatedData> extends Omit<IButtonProps, "onClick"> {
+type IFormSubmitButtonProps<TValidatedData> = Omit<IButtonProps, "onClick"> & {
   onClick: (data: TValidatedData) => Promise<void>;
-}
+};
 
-export interface IFormButtonsProps<TValidatedData> {
+export type IFormButtonsProps<TValidatedData> = {
   submitButtonProps: IFormSubmitButtonProps<TValidatedData> | undefined;
   buttonsProps: IButtonProps[];
-}
+};
 
 export const FormButtons = <T,>({ submitButtonProps, buttonsProps }: IFormButtonsProps<T>) => {
   const { t } = useTranslation(defaultNS);

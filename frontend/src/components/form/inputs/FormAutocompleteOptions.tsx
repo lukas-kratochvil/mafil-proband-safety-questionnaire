@@ -5,11 +5,11 @@ import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
 import { type IOption } from "../util/options";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import type { IFormDefaultInputProps } from "./interfaces/input-props";
+import type { IFormDefaultInputProps } from "./input-props";
 
-interface IFormAutocompleteOptionsProps extends IFormDefaultInputProps {
+type IFormAutocompleteOptionsProps = IFormDefaultInputProps & {
   options: IOption[];
-}
+};
 
 export const FormAutocompleteOptions = ({
   name,

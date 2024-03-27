@@ -1,9 +1,9 @@
 import { VisualCorrection } from "@app/model/visitForm";
 
-export interface IOption {
+export type IOption = {
   value: number;
   localizationKey: string;
-}
+};
 
 /**
  * Creates options from the provided enum entries.

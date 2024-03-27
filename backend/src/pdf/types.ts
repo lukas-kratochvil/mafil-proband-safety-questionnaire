@@ -2,22 +2,22 @@ import { AnswerOption, Operator } from "@prisma/client";
 
 export type IPDFOperator = Pick<Operator, "name" | "surname">;
 
-export interface IPDFEntityTexts {
+export type IPDFEntityTexts = {
   text: string | undefined;
   secondaryText?: string;
-}
+};
 
-export interface IPDFQuestionAnswer extends IPDFEntityTexts {
+export type IPDFQuestionAnswer = IPDFEntityTexts & {
   answer: AnswerOption;
   comment?: string;
-}
+};
 
-interface IPDFNativeLanguage {
+type IPDFNativeLanguage = {
   nativeName: string;
   nameCs: string;
-}
+};
 
-export interface IPDFData {
+export type IPDFData = {
   isPhantom: boolean;
   operatorFinalizer: IPDFOperator;
   operatorApprover?: IPDFOperator;
@@ -37,4 +37,4 @@ export interface IPDFData {
   email?: string;
   phone?: string;
   answers: IPDFQuestionAnswer[];
-}
+};

@@ -6,7 +6,7 @@ type NodeEnv = StringArrayToUnion<typeof ALLOWED_NODE_ENVS>;
 export const ALLOWED_PDF_LANGUAGE_CODES = ["cs", "en"] as const;
 type PdfLanguageCode = StringArrayToUnion<typeof ALLOWED_PDF_LANGUAGE_CODES>;
 
-export interface EnvironmentVariables {
+export type EnvironmentVariables = {
   NODE_ENV: NodeEnv;
   TZ: number;
   PORT: number;
@@ -16,4 +16,4 @@ export interface EnvironmentVariables {
   WEB_API_KEY: string;
   PDF_OPERATOR_LANGUAGE_CODE: PdfLanguageCode;
   WEB_DOMAIN: string;
-}
+};

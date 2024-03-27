@@ -10,9 +10,9 @@ import { fetchCurrentQuestions } from "@app/util/server_API/calls";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
-interface IRecentVisitsTableActionButtonsProps {
+type IRecentVisitsTableActionButtonsProps = {
   visit: IRecentVisitsTableVisit;
-}
+};
 
 export const RecentVisitsTableActionButtons = ({ visit }: IRecentVisitsTableActionButtonsProps) => {
   const { t } = useTranslation(defaultNS);

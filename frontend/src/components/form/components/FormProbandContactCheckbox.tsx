@@ -3,9 +3,9 @@ import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n/i18n";
 import { FormCardContainer } from "./FormCardContainer";
 
-interface IFormProbandContactCheckboxProps {
+type IFormProbandContactCheckboxProps = {
   setIsContactsRequestShown: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 
 export const FormProbandContactCheckbox = ({ setIsContactsRequestShown }: IFormProbandContactCheckboxProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandContactCheckbox" });

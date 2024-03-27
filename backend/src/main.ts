@@ -4,7 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import helmet, { HelmetOptions } from "helmet";
 import { AppModule } from "./app.module";
-import { EnvironmentVariables } from "./config.interface";
+import { EnvironmentVariables } from "./config";
 import { createUserInputError } from "./exception/exception-handling";
 import { createWinstonLogger } from "./log/winston-logger";
 import { GENERATED_DIR_PATH, GENERATED_PDF_DIR_PATH } from "./utils/paths";

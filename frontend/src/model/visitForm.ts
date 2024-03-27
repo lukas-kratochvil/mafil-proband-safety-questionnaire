@@ -7,12 +7,14 @@ export enum VisualCorrection {
   NO,
 }
 
-export interface IWaitingRoomTableVisitForm extends Omit<IWaitingRoomTableVisitFormDTO, "nativeLanguageCode"> {
+export type IWaitingRoomTableVisitForm = Omit<IWaitingRoomTableVisitFormDTO, "nativeLanguageCode"> & {
   nativeLanguage: INativeLanguage;
-}
+};
 
-export interface IApprovalRoomTableVisitForm
-  extends Omit<IApprovalRoomTableVisitFormDTO, "additionalInfo" | "nativeLanguageCode"> {
+export type IApprovalRoomTableVisitForm = Omit<
+  IApprovalRoomTableVisitFormDTO,
+  "additionalInfo" | "nativeLanguageCode"
+> & {
   project: IProject;
   nativeLanguage: INativeLanguage;
-}
+};

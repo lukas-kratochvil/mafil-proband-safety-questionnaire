@@ -2,13 +2,13 @@ import { GenderCode } from "./genders";
 
 type PartNumberType = 1 | 2;
 
-interface IQuestion {
+type IQuestion = {
   partNumber: PartNumberType;
   order: number;
   csText: string;
   enText: string;
   hiddenByGender?: GenderCode[];
-}
+};
 
 const questions: Omit<IQuestion, "order">[] = [
   {
