@@ -1,9 +1,8 @@
 import { array, boolean, date, mixed, number, object, string } from "yup";
 import { AnswerOption } from "@app/model/form";
 import type { INativeLanguage } from "@app/model/language";
-import { VisualCorrection } from "@app/model/visitForm";
 import type { IGenderDTO, IHandednessDTO } from "@app/util/server_API/dto";
-import { getOption, visualCorrectionOptions, type IOption } from "../util/options";
+import { getOption, visualCorrectionOptions, type IOption, type VisualCorrection } from "../util/options";
 
 // using custom email regex due to very free yup email validator, inspired by: https://github.com/jquense/yup/issues/507#issuecomment-765799429
 // email can be empty if proband does not want to fill in contact info
@@ -48,14 +47,14 @@ export const probandFormSchema = object().shape(
       .positive("form.validation.positive")
       .required("form.validation.required"),
     handedness: mixed<IHandednessDTO>().nullable().required("form.validation.required"),
-    visualCorrection: mixed<IOption>().nullable().required("form.validation.required"),
+    visualCorrection: mixed<IOption<VisualCorrection>>().nullable().required("form.validation.required"),
     visualCorrectionDioptre: number()
       .default(0)
       // accepting dot and comma as decimal separators
       .transform((_value, originalValue) => Number(String(originalValue).replace(/,/, ".")))
       .typeError("form.validation.notValid")
       .when("visualCorrection", {
-        is: getOption(visualCorrectionOptions, VisualCorrection.YES),
+        is: getOption(visualCorrectionOptions, "yes"),
         then: number()
           .typeError("form.validation.notValid")
           .notOneOf([0], "form.validation.visualCorrectionDioptreNotZero"),

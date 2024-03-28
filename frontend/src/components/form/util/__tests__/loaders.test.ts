@@ -7,7 +7,6 @@ import { projectsTest } from "@app/__tests__/data/projects";
 import { subjectsTest } from "@app/__tests__/data/subjects";
 import { AnswerOption } from "@app/model/form";
 import type { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
-import { VisualCorrection } from "@app/model/visitForm";
 import type {
   IApprovalRoomVisitFormIncludingQuestionsDTO,
   IWaitingRoomVisitFormIncludingQuestions,
@@ -147,9 +146,7 @@ describe("form loaders", () => {
     expect(loadedFormValues.heightCm).toEqual(fetchedVisit.heightCm);
     expect(loadedFormValues.weightKg).toEqual(fetchedVisit.weightKg);
     expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.handedness.id);
-    expect(loadedFormValues.visualCorrection?.value).toEqual(
-      fetchedVisit.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
-    );
+    expect(loadedFormValues.visualCorrection?.value).toEqual(fetchedVisit.visualCorrectionDioptre === 0 ? "no" : "yes");
     expect(loadedFormValues.visualCorrectionDioptre).toEqual(fetchedVisit.visualCorrectionDioptre);
     expect(loadedFormValues.email).toEqual(fetchedVisit.email);
     expect(loadedFormValues.phone).toEqual(fetchedVisit.phone);
@@ -176,9 +173,7 @@ describe("form loaders", () => {
     expect(loadedFormValues.heightCm).toEqual(fetchedVisit.heightCm);
     expect(loadedFormValues.weightKg).toEqual(fetchedVisit.weightKg);
     expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.handedness.id);
-    expect(loadedFormValues.visualCorrection?.value).toEqual(
-      fetchedVisit.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
-    );
+    expect(loadedFormValues.visualCorrection?.value).toEqual(fetchedVisit.visualCorrectionDioptre === 0 ? "no" : "yes");
     expect(loadedFormValues.visualCorrectionDioptre).toEqual(fetchedVisit.visualCorrectionDioptre);
     expect(loadedFormValues.email).toEqual(fetchedVisit.email);
     expect(loadedFormValues.phone).toEqual(fetchedVisit.phone);
@@ -208,7 +203,7 @@ describe("form loaders", () => {
     expect(formDefaultValuesVisitDuplication.weightKg).toEqual(duplicatedVisit.weightKg);
     expect(formDefaultValuesVisitDuplication.handedness?.id).toEqual(duplicatedVisit.handedness.id);
     expect(formDefaultValuesVisitDuplication.visualCorrection?.value).toEqual(
-      duplicatedVisit.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
+      duplicatedVisit.visualCorrectionDioptre === 0 ? "no" : "yes"
     );
     expect(formDefaultValuesVisitDuplication.visualCorrectionDioptre).toEqual(duplicatedVisit.visualCorrectionDioptre);
     expect(formDefaultValuesVisitDuplication.email).toEqual(duplicatedVisit.subject.email);

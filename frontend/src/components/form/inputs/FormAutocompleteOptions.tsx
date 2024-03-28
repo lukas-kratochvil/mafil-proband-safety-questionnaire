@@ -2,22 +2,22 @@ import { Autocomplete } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
-import { type IOption } from "../util/options";
+import type { IOption } from "../util/options";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import type { IFormDefaultInputProps } from "./input-props";
 
-type IFormAutocompleteOptionsProps = IFormDefaultInputProps & {
-  options: IOption[];
+type IFormAutocompleteOptionsProps<T> = IFormDefaultInputProps & {
+  options: IOption<T>[];
 };
 
-export const FormAutocompleteOptions = ({
+export const FormAutocompleteOptions = <T,>({
   name,
   label,
   isOptional,
   disabled,
   options,
-}: IFormAutocompleteOptionsProps) => {
+}: IFormAutocompleteOptionsProps<T>) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form" });
   const isLoading = options.length === 0;
 
@@ -33,7 +33,9 @@ export const FormAutocompleteOptions = ({
           <Autocomplete
             id={name}
             options={options}
-            getOptionLabel={(option: IOption) => t(convertStringToLocalizationKey(`enums.${option.localizationKey}`))}
+            getOptionLabel={(option: IOption<T>) =>
+              t(convertStringToLocalizationKey(`enums.${option.localizationKey}`))
+            }
             isOptionEqualToValue={(option, value) => option.value === value.value}
             value={field.value}
             onChange={(_event, val) => field.onChange(val)}

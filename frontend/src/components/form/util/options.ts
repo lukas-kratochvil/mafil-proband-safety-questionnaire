@@ -1,7 +1,7 @@
-import { VisualCorrection } from "@app/model/visitForm";
+import type { ObjectValues } from "@app/util/utils";
 
-export type IOption = {
-  value: number;
+export type IOption<T> = {
+  value: T;
   localizationKey: string;
 };
 
@@ -11,17 +11,11 @@ export type IOption = {
  * @param i18nPrefix enum key i18n prefix that will be prepended to 'translations.form' prefix
  * @return options array
  */
-const createOptions = <T>(entries: [key: string, value: string | T][], i18nPrefix: string): IOption[] =>
-  entries
-    // This does the same filtering
-    // .filter(([_key, value]) => typeof value === "number")
-    .filter(([key, _value]) => Number.isNaN(+key))
-    .map(
-      ([key, value]): IOption => ({
-        value: +value,
-        localizationKey: `${i18nPrefix}.${key}`,
-      })
-    );
+const createOptions = <T>(entries: [key: string, value: T][], i18nPrefix: string): IOption<T>[] =>
+  entries.map(([key, value]) => ({
+    value,
+    localizationKey: `${i18nPrefix}.${key}`,
+  }));
 
 /**
  * Get option object by its value.
@@ -29,11 +23,21 @@ const createOptions = <T>(entries: [key: string, value: string | T][], i18nPrefi
  * @param value value from enum specific to options array values
  * @return option or null if options do not contain provided value
  */
-export const getOption = (options: IOption[], value: number): IOption | null =>
-  // Autocomplete excepts option object or null
+export const getOption = <T>(options: IOption<T>[], value: T): IOption<T> | null =>
+  // Autocomplete expects option object or null
   options.find((option) => option.value === value) ?? null;
 
-export const visualCorrectionOptions = createOptions<VisualCorrection>(
-  Object.entries(VisualCorrection),
+/**
+ * Visual correction options
+ */
+const visualCorrectionOptionsObject = {
+  yes: "yes",
+  no: "no",
+} as const;
+
+export type VisualCorrection = ObjectValues<typeof visualCorrectionOptionsObject>;
+
+export const visualCorrectionOptions = createOptions(
+  Object.entries(visualCorrectionOptionsObject),
   "visualCorrection"
 );

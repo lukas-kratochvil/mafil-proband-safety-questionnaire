@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 import { InfoTooltip } from "@app/components/informative/InfoTooltip";
 import { defaultNS } from "@app/i18n/i18n";
 import type { FormPropType } from "@app/model/form";
-import { VisualCorrection } from "@app/model/visitForm";
 import { fetchNativeLanguages } from "@app/util/mafildb_API/calls";
 import { fetchGenders, fetchHandednesses } from "@app/util/server_API/calls";
 import { FormAutocompleteGenders } from "../inputs/FormAutocompleteGenders";
@@ -136,8 +135,8 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
   useEffect(() => {
     const visualCorrectionDioptreValue = getValues("visualCorrectionDioptre");
 
-    // If we don't check the visual correction dioptre value resetField() causes infinite re-renders
-    if (+visualCorrectionDioptreValue !== 0 && visualCorrectionOption?.value !== VisualCorrection.YES) {
+    // If we don't check the visual correction dioptre value, resetField() causes infinite re-renders
+    if (+visualCorrectionDioptreValue !== 0 && visualCorrectionOption?.value !== "yes") {
       resetField("visualCorrectionDioptre");
     }
   }, [getValues, resetField, visualCorrectionOption]);
@@ -282,7 +281,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardPr
           <FormTextField
             name="visualCorrectionDioptre"
             label={t("visualCorrectionDioptre")}
-            disabled={disableInputs || visualCorrectionOption?.value !== VisualCorrection.YES}
+            disabled={disableInputs || visualCorrectionOption?.value !== "yes"}
             endAdornmentLabel={
               <>
                 <Typography sx={{ marginRight: "0.75rem" }}>D</Typography>

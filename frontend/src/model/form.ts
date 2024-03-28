@@ -1,4 +1,4 @@
-import { type IOption } from "@app/components/form/util/options";
+import type { IOption, VisualCorrection } from "@app/components/form/util/options";
 import type { IGenderDTO, IHandednessDTO, QuestionHiddenByGendersWithoutId } from "../util/server_API/dto";
 import type { IDevice } from "./device";
 import type { INativeLanguage } from "./language";
@@ -41,7 +41,7 @@ export type FormPropType = {
   heightCm: TextFieldNumberInput;
   weightKg: TextFieldNumberInput;
   handedness: IHandednessDTO | null;
-  visualCorrection: IOption | null;
+  visualCorrection: IOption<VisualCorrection> | null;
   visualCorrectionDioptre: TextFieldNumberInput;
 
   // Safety questions

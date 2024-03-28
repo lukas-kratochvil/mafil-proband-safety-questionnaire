@@ -2,11 +2,6 @@ import type { IApprovalRoomTableVisitFormDTO, IWaitingRoomTableVisitFormDTO } fr
 import type { INativeLanguage } from "./language";
 import type { IProject } from "./project";
 
-export enum VisualCorrection {
-  YES,
-  NO,
-}
-
 export type IWaitingRoomTableVisitForm = Omit<IWaitingRoomTableVisitFormDTO, "nativeLanguageCode"> & {
   nativeLanguage: INativeLanguage;
 };

@@ -1,6 +1,5 @@
 import type { FormAnswer, FormPropType } from "@app/model/form";
 import type { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
-import { VisualCorrection } from "@app/model/visitForm";
 import type {
   IApprovalRoomVisitFormIncludingQuestionsDTO,
   IWaitingRoomVisitFormIncludingQuestions,
@@ -66,10 +65,7 @@ export const loadFormDefaultValuesFromWaitingRoomVisitForm = (
     nameEn: "",
     priority: null,
   },
-  visualCorrection: getOption(
-    visualCorrectionOptions,
-    visitForm.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
-  ),
+  visualCorrection: getOption(visualCorrectionOptions, visitForm.visualCorrectionDioptre === 0 ? "no" : "yes"),
   answers: loadAnswers(visitForm.answersIncludingQuestions, ""),
 });
 
@@ -107,9 +103,6 @@ export const loadFormDefaultValuesVisitDuplication = (visit: IDuplicatedVisitInc
   nativeLanguage: visit.subject.nativeLanguage,
   email: visit.subject.email,
   phone: visit.subject.phone,
-  visualCorrection: getOption(
-    visualCorrectionOptions,
-    visit.visualCorrectionDioptre === 0 ? VisualCorrection.NO : VisualCorrection.YES
-  ),
+  visualCorrection: getOption(visualCorrectionOptions, visit.visualCorrectionDioptre === 0 ? "no" : "yes"),
   answers: loadAnswers(visit.answersIncludingQuestions),
 });

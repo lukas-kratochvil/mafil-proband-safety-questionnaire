@@ -39,8 +39,8 @@
       },
       "enums": {
         "visualCorrection": {
-          "YES": "Ano",
-          "NO": "Ne"
+          "yes": "Ano",
+          "no": "Ne"
         }
       },
       "disapprovalReason": {
