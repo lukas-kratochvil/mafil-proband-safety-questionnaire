@@ -1,6 +1,5 @@
 import { array, date, mixed, string } from "yup";
 import type { IDevice } from "@app/model/device";
-import { AnswerOption } from "@app/model/form";
 import type { IProject } from "@app/model/project";
 import { answersSchema, probandFormSchema } from "./proband-form-schema";
 
@@ -8,7 +7,7 @@ const operatorAnswersSchema = answersSchema.shape({
   comment: string()
     .default("")
     .when("answer", {
-      is: AnswerOption.YES,
+      is: "yes",
       then: string().trim().required("form.validation.required"),
     }),
 });

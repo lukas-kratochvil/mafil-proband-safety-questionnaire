@@ -9,7 +9,6 @@ import { projectsTest } from "@app/__tests__/data/projects";
 import { questionsTest } from "@app/__tests__/data/questions";
 import { subjectsTest } from "@app/__tests__/data/subjects";
 import type { IDevice } from "@app/model/device";
-import { AnswerOption } from "@app/model/form";
 import type { INativeLanguage } from "@app/model/language";
 import type { IProject } from "@app/model/project";
 import type { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
@@ -39,7 +38,7 @@ const visit: IDuplicatedVisitIncludingQuestions = {
   answersIncludingQuestions: questionsTest.map((question, index) => ({
     questionId: question.id,
     mustBeApproved: index % 2 === 0,
-    answer: index % 2 === 0 ? AnswerOption.YES : AnswerOption.NO,
+    answer: index % 2 === 0 ? "yes" : "no",
     comment: index % 2 === 0 ? commentText : "",
     order: question.order,
     hiddenByGenders: question.hiddenByGenders,

@@ -3,7 +3,7 @@ import { nativeLanguagesTest } from "@app/__tests__/data/languages";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { subjectsTest } from "@app/__tests__/data/subjects";
 import type { IDevice } from "@app/model/device";
-import { AnswerOption, type ValidatedOperatorFormData } from "@app/model/form";
+import { type ValidatedOperatorFormData } from "@app/model/form";
 import type { ILanguage } from "@app/model/language";
 import type { IProject } from "@app/model/project";
 import type { ISubject } from "@app/model/subject";
@@ -85,7 +85,7 @@ export const fetchRecentVisitsDev = async (): Promise<IRecentVisitsTableVisit[]>
       const rand = Math.floor(Math.random() * 100) % 2 === 0;
       return {
         questionId: question.id,
-        answer: rand ? AnswerOption.YES : AnswerOption.NO,
+        answer: rand ? "yes" : "no",
         comment: rand ? "Comment" : "",
       };
     });

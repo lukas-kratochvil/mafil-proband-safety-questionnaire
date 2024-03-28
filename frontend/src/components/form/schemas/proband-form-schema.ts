@@ -1,5 +1,6 @@
 import { array, boolean, date, mixed, number, object, string } from "yup";
-import { AnswerOption } from "@app/model/form";
+import type { AnswerOption} from "@app/model/form";
+import { answerOptions } from "@app/model/form";
 import type { INativeLanguage } from "@app/model/language";
 import type { IGenderDTO, IHandednessDTO } from "@app/util/server_API/dto";
 import { getOption, visualCorrectionOptions, type IOption, type VisualCorrection } from "../util/options";
@@ -16,7 +17,7 @@ const PHONE_NUMBER_REGEX = /^$|^(\+|00)?[1-9]{1}[0-9]{3,}$/;
 export const answersSchema = object({
   questionId: string().trim().required("form.validation.required"),
   mustBeApproved: boolean().required("form.validation.required"),
-  answer: mixed<AnswerOption>().nullable().oneOf(Object.values(AnswerOption)).required("form.validation.required"),
+  answer: mixed<AnswerOption>().nullable().oneOf(Object.values(answerOptions)).required("form.validation.required"),
   comment: string().nullable(),
 });
 

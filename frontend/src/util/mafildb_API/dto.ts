@@ -48,7 +48,7 @@ export const MDB_ApprovalState = {
 
 type MDB_ApprovalState = ObjectValues<typeof MDB_ApprovalState>;
 
-type MDB_IAnswerDTO = {
+export type MDB_IAnswerDTO = {
   question_id: string;
   answer: AnswerOption;
   comment: string;

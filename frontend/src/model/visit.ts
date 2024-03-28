@@ -1,5 +1,5 @@
 import { type LanguageCode } from "@app/i18n/i18n";
-import type { MDB_IVisitDTO } from "@app/util/mafildb_API/dto";
+import type { MDB_IAnswerDTO, MDB_IVisitDTO } from "@app/util/mafildb_API/dto";
 import type {
   IGenderDTO,
   IHandednessDTO,
@@ -7,7 +7,6 @@ import type {
   VisitFormAnswerIncludingQuestion,
 } from "@app/util/server_API/dto";
 import type { IDevice } from "./device";
-import type { AnswerOption } from "./form";
 import type { IProject } from "./project";
 import type { ISubject } from "./subject";
 import type { IVisitPDF } from "./visitPdf";
@@ -15,9 +14,9 @@ import type { IVisitPDF } from "./visitPdf";
 export type ProbandVisitLanguageCode = LanguageCode | "";
 
 type IAnswer = {
-  questionId: string;
-  answer: AnswerOption;
-  comment: string;
+  questionId: MDB_IAnswerDTO["question_id"];
+  answer: MDB_IAnswerDTO["answer"];
+  comment: MDB_IAnswerDTO["comment"];
 };
 
 export type IVisit = {

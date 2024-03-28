@@ -4,7 +4,7 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
 import { defaultNS } from "@app/i18n/i18n";
-import { AnswerOption, type FormPropType, type FormQac } from "@app/model/form";
+import { answerOptions, type FormPropType, type FormQac } from "@app/model/form";
 import { FormRadioGroup } from "../inputs/FormRadioGroup";
 import { FormTextField } from "../inputs/FormTextField";
 import type { IFormCardProps } from "./form-card";
@@ -39,7 +39,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
   useEffect(() => {
     if (selectedGender !== null && qac.hiddenByGenders.map((hbg) => hbg.genderCode).includes(selectedGender.code)) {
       setHideQuestion(true);
-      setValue(`answers.${qac.index}.answer`, AnswerOption.NO);
+      setValue(`answers.${qac.index}.answer`, "no");
     } else {
       setValue(`answers.${qac.index}.answer`, qac.answer);
       setHideQuestion(false);
@@ -48,7 +48,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
 
   // Reset comment if the current answer is 'NO'
   useEffect(() => {
-    if (questionAnswer !== AnswerOption.YES) {
+    if (questionAnswer !== "yes") {
       setValue(`answers.${qac.index}.comment`, "");
     }
   }, [qac.index, questionAnswer, setValue]);
@@ -88,16 +88,16 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
           name={`answers.${qac.index}.answer`}
           label={`Question: ${qac.questionId}`}
           defaultValue={qac.answer}
-          radios={Object.values(AnswerOption).map((answer) => ({
+          radios={Object.values(answerOptions).map((answer) => ({
             id: `${answer}-radio[${qac.questionId}]`,
-            label: answer === AnswerOption.YES ? t("yes") : t("no"),
+            label: t(answer),
             value: answer,
           }))}
           disabled={disableInputs}
           sx={{ justifyContent: matchesUpSmBreakpoint ? "flex-end" : "flex-start" }}
         />
       </Grid>
-      {operator !== undefined && questionAnswer === AnswerOption.YES && (
+      {operator !== undefined && questionAnswer === "yes" && (
         <Grid
           item
           xs={1}
@@ -108,7 +108,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuesti
             isSmall
             isMultiline
             hasAutocomplete
-            disabled={disableComment || (questionAnswer !== AnswerOption.YES && disableInputs)}
+            disabled={disableComment || (questionAnswer !== "yes" && disableInputs)}
           />
         </Grid>
       )}

@@ -5,7 +5,6 @@ import { nativeLanguagesTest } from "@app/__tests__/data/languages";
 import { operatorMRTest } from "@app/__tests__/data/operators";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { subjectsTest } from "@app/__tests__/data/subjects";
-import { AnswerOption } from "@app/model/form";
 import type { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import type {
   IApprovalRoomVisitFormIncludingQuestionsDTO,
@@ -26,7 +25,7 @@ import {
 const answerIncludingQuestion: VisitFormAnswerIncludingQuestion = {
   questionId: "1",
   updatedAt: new Date(),
-  answer: AnswerOption.NO,
+  answer: "no",
   comment: "",
   partNumber: 1,
   mustBeApproved: false,
