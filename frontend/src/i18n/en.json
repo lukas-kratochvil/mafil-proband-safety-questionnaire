@@ -37,7 +37,7 @@
           "saveChanges": "Save changes"
         }
       },
-      "enums": {
+      "options": {
         "visualCorrection": {
           "yes": "Yes",
           "no": "No"

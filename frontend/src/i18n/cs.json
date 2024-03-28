@@ -37,7 +37,7 @@
           "saveChanges": "Uložit změny"
         }
       },
-      "enums": {
+      "options": {
         "visualCorrection": {
           "yes": "Ano",
           "no": "Ne"

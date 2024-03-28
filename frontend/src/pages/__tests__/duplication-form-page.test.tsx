@@ -141,7 +141,7 @@ describe("duplication form page", () => {
       nativeLanguage: visit.subject.nativeLanguage.nativeName,
       heightCm: visit.heightCm.toString(),
       weightKg: visit.weightKg.toString(),
-      visualCorrection: "form.enums.visualCorrection.no",
+      visualCorrection: "form.options.visualCorrection.no",
       visualCorrectionDioptre: visit.visualCorrectionDioptre.toString(),
       handedness: visit.handedness.translations[0]?.text,
       email: visit.subject.email,

@@ -1,8 +1,9 @@
+import { convertStringToLocalizationKey } from "@app/i18n/i18n";
 import type { ObjectValues } from "@app/util/utils";
 
 export type IOption<T> = {
   value: T;
-  localizationKey: string;
+  localizationKey: TemplateStringsArray;
 };
 
 /**
@@ -14,7 +15,7 @@ export type IOption<T> = {
 const createOptions = <T>(optionsObject: Record<string, T>, i18nPrefix: string): IOption<T>[] =>
   Object.values(optionsObject).map((value) => ({
     value,
-    localizationKey: `${i18nPrefix}.${value}`,
+    localizationKey: convertStringToLocalizationKey(`options.${i18nPrefix}.${value}`),
   }));
 
 /**

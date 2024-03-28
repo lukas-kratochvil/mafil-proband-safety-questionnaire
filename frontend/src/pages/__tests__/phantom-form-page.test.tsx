@@ -137,11 +137,11 @@ describe("phantom form page", () => {
       expect(visualCorrectionDioptreInput).toHaveValue("0");
 
       await user.click(visualCorrectionInput);
-      await user.click(screen.getByRole("option", { name: "form.enums.visualCorrection.yes" }));
+      await user.click(screen.getByRole("option", { name: "form.options.visualCorrection.yes" }));
       await user.clear(visualCorrectionDioptreInput);
       await user.type(visualCorrectionDioptreInput, "-1,5");
       await user.click(visualCorrectionInput);
-      await user.click(screen.getByRole("option", { name: "form.enums.visualCorrection.no" }));
+      await user.click(screen.getByRole("option", { name: "form.options.visualCorrection.no" }));
 
       expect(visualCorrectionDioptreInput).toHaveValue("0");
     });
@@ -182,7 +182,7 @@ describe("phantom form page", () => {
       await user.type(screen.getByLabelText("weightKg"), typedWeight);
 
       await user.click(screen.getByRole("combobox", { name: "visualCorrection" }));
-      const selectedVisualCorrection = "form.enums.visualCorrection.yes";
+      const selectedVisualCorrection = "form.options.visualCorrection.yes";
       await user.click(screen.getByRole("option", { name: selectedVisualCorrection }));
 
       const typedVisualCorrectionDioptre = "-1,5";
@@ -250,7 +250,7 @@ describe("phantom form page", () => {
        * Expected result: does not submit the form
        */
       await user.click(screen.getByRole("combobox", { name: "visualCorrection" }));
-      await user.click(screen.getByRole("option", { name: "form.enums.visualCorrection.yes" }));
+      await user.click(screen.getByRole("option", { name: "form.options.visualCorrection.yes" }));
       await user.click(finalizeButton);
       expect(mockedUseNavigate).toHaveBeenCalledTimes(0);
       mockedUseNavigate.mockClear();
