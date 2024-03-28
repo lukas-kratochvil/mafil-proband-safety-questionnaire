@@ -258,11 +258,11 @@ export const createVisitFromApproval = async (
   }
 
   if (approverUsername === undefined) {
-    throw new Error("Proband language code is undefined!");
+    throw new Error("Missing visit approver username!");
   }
 
   if (approvedAt === undefined) {
-    throw new Error("Proband language code is undefined!");
+    throw new Error("Missing visit approval date!");
   }
 
   return createVisit(
@@ -335,7 +335,7 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
       try {
         // TODO: what to do when device is null? Skip the visit?
         if (visit.device === null) {
-          throw new Error("Device is null!");
+          throw new Error("Visit device is null!");
         }
       } catch (e) {
         return;
@@ -347,14 +347,14 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
       try {
         // TODO: what to do when finalizer is null? Skip the visit?
         if (visit.registration_finalize_user === null) {
-          throw new Error("Finalizer is null!");
+          throw new Error("Visit finalizer is null!");
         }
 
         finalizer = await fetchOperator(visit.registration_finalize_user.username);
 
         // TODO: what to do when finalizer not found? Skip the visit?
         if (finalizer === undefined) {
-          throw new Error("Finalizer not found!");
+          throw new Error("Visit finalizer not found!");
         }
       } catch (e) {
         return;
@@ -366,7 +366,7 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
 
           // TODO: what to do when approver not found? Skip the visit?
           if (approver === undefined) {
-            throw new Error("Approver not found!");
+            throw new Error("Visit approver not found!");
           }
         }
       } catch (e) {
@@ -436,7 +436,7 @@ export const fetchDuplicatedVisit = async (
 
   // TODO: what to do when device is null? Throw error? We should disable the 'Duplication' button for these visits or not load them in the 'Recent visits table' at all
   if (visit.device === null) {
-    throw new Error("Device is null!");
+    throw new Error("Visit device is null!");
   }
 
   const [gender, nativeLanguage, handedness, answersIncludingQuestions] = await Promise.all([
