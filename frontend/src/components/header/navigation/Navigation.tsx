@@ -2,7 +2,7 @@ import { Box, Tabs } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavigationTab } from "./NavigationTab";
-import { getTabs, TAB_DEFAULT_COLOR } from "./common";
+import { getTabs, TAB_DEFAULT_COLOR } from "./tabs";
 
 export const Navigation = () => {
   const navigate = useNavigate();

@@ -4,7 +4,7 @@ import { RoutingPath } from "@app/routing-paths";
 import type { IOperatorDTO } from "@app/util/server_API/dto";
 import { render, screen, within } from "@test-utils";
 import { Header } from "../Header";
-import { type ITabProps } from "../navigation/common";
+import { type ITabProps } from "../navigation/tabs";
 
 //----------------------------------------------------------------------
 // Mocking custom authentication
