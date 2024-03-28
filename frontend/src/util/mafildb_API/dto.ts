@@ -98,7 +98,7 @@ export type MDB_VisitDTO = Omit<
   subject: MDB_SubjectDTO;
   project: MDB_ProjectDTO;
   device: MDB_DeviceDTO | null;
-  registration_finalize_user: MDB_RegistrationUserDTO;
+  registration_finalize_user: MDB_RegistrationUserDTO | null;
   registration_approve_user: MDB_RegistrationUserDTO | null;
   // TODO: create type for one of: “ns” | ”pp” | ”pe” | ”sp” | ”se”
   registration_signature_status: MDB_SignatureState;

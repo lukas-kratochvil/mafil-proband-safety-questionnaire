@@ -333,11 +333,11 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
       const nativeLanguage = await fetchNativeLanguage(visit.subject.native_language_code);
 
       try {
+        // TODO: what to do when device is null? Skip the visit?
         if (visit.device === null) {
           throw new Error("Device is null!");
         }
       } catch (e) {
-        // TODO: what to do when device is null? Skip the visit?
         return;
       }
 
@@ -345,13 +345,18 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
       let approver: OperatorDTO | null = null;
 
       try {
+        // TODO: what to do when finalizer is null? Skip the visit?
+        if (visit.registration_finalize_user === null) {
+          throw new Error("Finalizer is null!");
+        }
+
         finalizer = await fetchOperator(visit.registration_finalize_user.username);
 
+        // TODO: what to do when finalizer not found? Skip the visit?
         if (finalizer === undefined) {
           throw new Error("Finalizer not found!");
         }
       } catch (e) {
-        // TODO: what to do when finalizer not found? Skip the visit?
         return;
       }
 
@@ -359,12 +364,12 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
         if (visit.registration_approve_user !== null) {
           approver = await fetchOperator(visit.registration_approve_user.username);
 
+          // TODO: what to do when approver not found? Skip the visit?
           if (approver === undefined) {
             throw new Error("Approver not found!");
           }
         }
       } catch (e) {
-        // TODO: what to do when approver not found? Skip the visit?
         return;
       }
 
