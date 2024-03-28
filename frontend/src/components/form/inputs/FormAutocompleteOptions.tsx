@@ -2,13 +2,13 @@ import { Autocomplete } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n/i18n";
-import type { IOption } from "../util/options";
+import type { AutocompleteOption } from "../util/options";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import type { IFormDefaultInputProps } from "./input-props";
 
 type IFormAutocompleteOptionsProps<T> = IFormDefaultInputProps & {
-  options: IOption<T>[];
+  options: AutocompleteOption<T>[];
 };
 
 export const FormAutocompleteOptions = <T,>({
@@ -33,7 +33,7 @@ export const FormAutocompleteOptions = <T,>({
           <Autocomplete
             id={name}
             options={options}
-            getOptionLabel={(option: IOption<T>) => t(option.localizationKey)}
+            getOptionLabel={(option: AutocompleteOption<T>) => t(option.localizationKey)}
             isOptionEqualToValue={(option, value) => option.value === value.value}
             value={field.value}
             onChange={(_event, val) => field.onChange(val)}

@@ -5,7 +5,7 @@ import type {
   IWaitingRoomVisitFormIncludingQuestions,
   VisitFormAnswerIncludingQuestion,
 } from "@app/util/server_API/dto";
-import { getOption, visualCorrectionOptions } from "./options";
+import { getAutocompleteOption, visualCorrectionOptions } from "./options";
 
 // Autocomplete component default value must be one of the options provided or null
 export const loadEmptyDefaultValues = (): FormPropType => ({
@@ -65,7 +65,10 @@ export const loadFormDefaultValuesFromWaitingRoomVisitForm = (
     nameEn: "",
     priority: null,
   },
-  visualCorrection: getOption(visualCorrectionOptions, visitForm.visualCorrectionDioptre === 0 ? "no" : "yes"),
+  visualCorrection: getAutocompleteOption(
+    visualCorrectionOptions,
+    visitForm.visualCorrectionDioptre === 0 ? "no" : "yes"
+  ),
   answers: loadAnswers(visitForm.answersIncludingQuestions, ""),
 });
 
@@ -103,6 +106,6 @@ export const loadFormDefaultValuesVisitDuplication = (visit: IDuplicatedVisitInc
   nativeLanguage: visit.subject.nativeLanguage,
   email: visit.subject.email,
   phone: visit.subject.phone,
-  visualCorrection: getOption(visualCorrectionOptions, visit.visualCorrectionDioptre === 0 ? "no" : "yes"),
+  visualCorrection: getAutocompleteOption(visualCorrectionOptions, visit.visualCorrectionDioptre === 0 ? "no" : "yes"),
   answers: loadAnswers(visit.answersIncludingQuestions),
 });

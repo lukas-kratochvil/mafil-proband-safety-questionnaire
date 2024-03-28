@@ -1,7 +1,7 @@
 import { convertStringToLocalizationKey } from "@app/i18n/i18n";
 import type { ObjectValues } from "@app/util/utils";
 
-export type IOption<T> = {
+export type AutocompleteOption<T> = {
   value: T;
   localizationKey: TemplateStringsArray;
 };
@@ -12,7 +12,7 @@ export type IOption<T> = {
  * @param i18nPrefix i18n prefix that will be prepended to 'translations.form' prefix
  * @return options array
  */
-const createOptions = <T>(optionsObject: Record<string, T>, i18nPrefix: string): IOption<T>[] =>
+const createAutocompleteOptions = <T>(optionsObject: Record<string, T>, i18nPrefix: string): AutocompleteOption<T>[] =>
   Object.values(optionsObject).map((value) => ({
     value,
     localizationKey: convertStringToLocalizationKey(`options.${i18nPrefix}.${value}`),
@@ -24,7 +24,7 @@ const createOptions = <T>(optionsObject: Record<string, T>, i18nPrefix: string):
  * @param value one of the option's values
  * @return option or null if options do not contain provided value
  */
-export const getOption = <T>(options: IOption<T>[], value: T): IOption<T> | null =>
+export const getAutocompleteOption = <T>(options: AutocompleteOption<T>[], value: T): AutocompleteOption<T> | null =>
   // Autocomplete expects option object or null
   options.find((option) => option.value === value) ?? null;
 
@@ -38,4 +38,4 @@ const visualCorrectionOptionsObject = {
 
 export type VisualCorrection = ObjectValues<typeof visualCorrectionOptionsObject>;
 
-export const visualCorrectionOptions = createOptions(visualCorrectionOptionsObject, "visualCorrection");
+export const visualCorrectionOptions = createAutocompleteOptions(visualCorrectionOptionsObject, "visualCorrection");
