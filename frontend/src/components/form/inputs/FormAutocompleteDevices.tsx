@@ -2,10 +2,10 @@ import { Autocomplete } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n/i18n";
-import type { IDevice } from "@app/model/device";
+import type { Device } from "@app/model/device";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import type { IFormAsyncAutocompleteProps } from "./input-props";
+import type { FormAsyncAutocompleteProps } from "./input-props";
 
 export const FormAutocompleteDevices = ({
   name,
@@ -14,7 +14,7 @@ export const FormAutocompleteDevices = ({
   disabled,
   options,
   isLoading,
-}: IFormAsyncAutocompleteProps<IDevice>) => {
+}: FormAsyncAutocompleteProps<Device>) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
 
   return (
@@ -29,7 +29,7 @@ export const FormAutocompleteDevices = ({
           <Autocomplete
             id={name}
             options={options === undefined ? [] : options}
-            getOptionLabel={(option: IDevice) => option.name}
+            getOptionLabel={(option: Device) => option.name}
             isOptionEqualToValue={(option, value) => option.id === value.id}
             value={field.value}
             onChange={(_event, val) => field.onChange(val)}

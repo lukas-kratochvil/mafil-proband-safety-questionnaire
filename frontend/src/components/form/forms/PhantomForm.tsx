@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { type IFormButtonsProps } from "@app/components/form/components/FormButtons";
+import { type FormButtonsProps } from "@app/components/form/components/FormButtons";
 import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo";
 import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
@@ -15,7 +15,7 @@ export const PhantomForm = () => {
   const navigate = useNavigate();
   const { operator } = useAuth();
 
-  const formButtons: IFormButtonsProps<ValidatedOperatorFormData> = {
+  const formButtons: FormButtonsProps<ValidatedOperatorFormData> = {
     submitButtonProps: {
       titleLocalizationKey: "form.common.buttons.finalize",
       onClick: async (data) => {

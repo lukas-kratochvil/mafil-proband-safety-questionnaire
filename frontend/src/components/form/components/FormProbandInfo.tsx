@@ -18,9 +18,9 @@ import { FormTextField } from "../inputs/FormTextField";
 import { visualCorrectionOptions } from "../util/options";
 import { CzechPersonalId, getPersonalIdPart } from "../util/personal-id";
 import { FormCardContainer } from "./FormCardContainer";
-import type { IPhantomFormCardProps } from "./form-card";
+import type { PhantomFormCardProps } from "./form-card";
 
-export const FormProbandInfo = ({ isPhantom, disableInputs }: IPhantomFormCardProps) => {
+export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandInfo" });
   const { getFieldState, getValues, resetField, setValue } = useFormContext<FormPropType>();
   const personalIdValue = useWatch<FormPropType, "personalId">({ name: "personalId" });

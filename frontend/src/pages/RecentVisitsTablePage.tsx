@@ -7,14 +7,14 @@ import { TranslatedTableCell } from "@app/components/table/TranslatedTableCell";
 import { RecentVisitsTableActionButtons } from "@app/components/table/actions/RecentVisitsTableActionButtons";
 import { defaultTableProps } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n/i18n";
-import type { IRecentVisitsTableVisit } from "@app/model/visit";
+import type { RecentVisitsTableVisit } from "@app/model/visit";
 import { fetchRecentVisits } from "@app/util/mafildb_API/calls";
 import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
 import { PageContainer } from "./PageContainer";
 
 const processedDateFormat = "d.M.y H:mm";
 
-const getStateLocalizationString = (visit: IRecentVisitsTableVisit): string | undefined => {
+const getStateLocalizationString = (visit: RecentVisitsTableVisit): string | undefined => {
   if (visit.isPhantom) {
     return "phantomDone";
   }
@@ -51,7 +51,7 @@ const RecentVisitsTablePage = () => {
     isError,
   } = useQuery({ queryKey: ["recentVisitsTablePage"], queryFn: fetchRecentVisits });
 
-  const columns = useMemo<MRTColumnDef<IRecentVisitsTableVisit>[]>(
+  const columns = useMemo<MRTColumnDef<RecentVisitsTableVisit>[]>(
     () => [
       {
         header: "Visit ID",
@@ -96,7 +96,7 @@ const RecentVisitsTablePage = () => {
         header: t("header.state"),
         id: "state",
         // eslint-disable-next-line react/no-unstable-nested-components
-        Cell: ({ row }: { row: MRTRow<IRecentVisitsTableVisit> }) => {
+        Cell: ({ row }: { row: MRTRow<RecentVisitsTableVisit> }) => {
           const stateLocalizationString = getStateLocalizationString(row.original);
           return stateLocalizationString === undefined ? null : (
             <TranslatedTableCell localizationKey={`recentVisitsTablePage.visitState.${stateLocalizationString}`} />
@@ -109,7 +109,7 @@ const RecentVisitsTablePage = () => {
         id: "actionButtons",
         columnDefType: "display", // turns off data column features like sorting, filtering, etc.
         // eslint-disable-next-line react/no-unstable-nested-components
-        Cell: ({ row }: { row: MRTRow<IRecentVisitsTableVisit> }) => (
+        Cell: ({ row }: { row: MRTRow<RecentVisitsTableVisit> }) => (
           <RecentVisitsTableActionButtons visit={row.original} />
         ),
         minSize: 300,

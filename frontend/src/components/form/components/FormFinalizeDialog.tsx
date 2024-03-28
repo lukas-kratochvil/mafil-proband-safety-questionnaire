@@ -16,14 +16,14 @@ import type { FormPropType, ValidatedOperatorFormData } from "@app/model/form";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { getValidatedOperatorFormData } from "../util/utils";
 
-type IFormFinalizeDialogProps = {
+type FormFinalizeDialogProps = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
   onContinue: (data: ValidatedOperatorFormData) => Promise<void>;
 };
 
 // Warning dialog that the visit form has to be approved by an operator with higher permissions
-export const FormFinalizeDialog = ({ isOpen, setIsOpen, onContinue }: IFormFinalizeDialogProps) => {
+export const FormFinalizeDialog = ({ isOpen, setIsOpen, onContinue }: FormFinalizeDialogProps) => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.finalizeDialog" });
   const { handleSubmit } = useFormContext<FormPropType>();

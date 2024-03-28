@@ -3,18 +3,18 @@ import { compareAsc } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { defaultNS } from "@app/i18n/i18n";
-import type { IRecentVisitsTableVisit } from "@app/model/visit";
+import type { RecentVisitsTableVisit } from "@app/model/visit";
 import { RoutingPath } from "@app/routing-paths";
 import { LocalizedError } from "@app/util/error-handling/LocalizedError";
 import { fetchCurrentQuestions } from "@app/util/server_API/calls";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
-type IRecentVisitsTableActionButtonsProps = {
-  visit: IRecentVisitsTableVisit;
+type RecentVisitsTableActionButtonsProps = {
+  visit: RecentVisitsTableVisit;
 };
 
-export const RecentVisitsTableActionButtons = ({ visit }: IRecentVisitsTableActionButtonsProps) => {
+export const RecentVisitsTableActionButtons = ({ visit }: RecentVisitsTableActionButtonsProps) => {
   const { t } = useTranslation(defaultNS);
   const navigate = useNavigate();
 

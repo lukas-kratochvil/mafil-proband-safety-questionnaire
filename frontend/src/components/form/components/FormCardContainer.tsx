@@ -2,11 +2,11 @@ import { Grid } from "@mui/material";
 import { type PropsWithChildren } from "react";
 import { CardContainer } from "@app/components/card/CardContainer";
 
-type IFormCardContainerProps = {
+type FormCardContainerProps = {
   title: string;
 };
 
-export const FormCardContainer = ({ children, title }: PropsWithChildren<IFormCardContainerProps>) => (
+export const FormCardContainer = ({ children, title }: PropsWithChildren<FormCardContainerProps>) => (
   <CardContainer title={title}>
     <Grid
       container

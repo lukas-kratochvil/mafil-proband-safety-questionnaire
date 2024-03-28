@@ -1,16 +1,16 @@
 import { devicesTest } from "@app/__tests__/data/devices";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { subjectsTest } from "@app/__tests__/data/subjects";
-import type { IVisit } from "@app/model/visit";
+import type { Visit } from "@app/model/visit";
 import {
   MDB_ApprovalState,
   MDB_SignatureState,
-  type MDB_ICreateVisitInput,
-  type MDB_IUpdateVisitSignatureStateInput,
+  type MDB_CreateVisitInput,
+  type MDB_UpdateVisitSignatureStateInput,
 } from "@app/util/mafildb_API/dto";
-import type { IOperatorDTO } from "../server_API/dto";
+import type { OperatorDTO } from "../server_API/dto";
 
-const operatorFinalizer: IOperatorDTO = {
+const operatorFinalizer: OperatorDTO = {
   id: "1",
   name: "Julie",
   surname: "Novotná",
@@ -31,12 +31,12 @@ export const generateVisitId = (): string => {
 
 const createDummyVisits = (
   count: number,
-  initialVisit: IVisit,
-  approvalState: MDB_ICreateVisitInput["checked"],
-  signatureState: MDB_IUpdateVisitSignatureStateInput["registration_signature_status"] = MDB_SignatureState.NOT_SET,
+  initialVisit: Visit,
+  approvalState: MDB_CreateVisitInput["checked"],
+  signatureState: MDB_UpdateVisitSignatureStateInput["registration_signature_status"] = MDB_SignatureState.NOT_SET,
   isPhantom = false
-): IVisit[] => {
-  const visits: IVisit[] = [];
+): Visit[] => {
+  const visits: Visit[] = [];
 
   for (let i = 0; i < count; i++) {
     const visitId = generateVisitId();
@@ -53,7 +53,7 @@ const createDummyVisits = (
   return visits;
 };
 
-const initialDummyVisit: IVisit = {
+const initialDummyVisit: Visit = {
   uuid: "1",
   created: new Date(1663390000000),
   visitId: generateVisitId(),
@@ -75,7 +75,7 @@ const initialDummyVisit: IVisit = {
   signatureState: MDB_SignatureState.NOT_SET,
 };
 
-export const dummyVisits: IVisit[] = [
+export const dummyVisits: Visit[] = [
   initialDummyVisit,
   ...createDummyVisits(2, initialDummyVisit, MDB_ApprovalState.DISAPPROVED),
   ...createDummyVisits(2, initialDummyVisit, MDB_ApprovalState.APPROVED),

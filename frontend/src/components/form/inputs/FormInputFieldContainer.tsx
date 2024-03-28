@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n/i18n";
 import { ErrorMessage } from "./ErrorMessage";
 
-export type IFormInputFieldContainerProps = {
+export type FormInputFieldContainerProps = {
   label: string;
   name: string;
   isOptional?: boolean;
@@ -15,7 +15,7 @@ export const FormInputFieldContainer = ({
   label,
   name,
   isOptional,
-}: PropsWithChildren<IFormInputFieldContainerProps>) => {
+}: PropsWithChildren<FormInputFieldContainerProps>) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
 
   return (

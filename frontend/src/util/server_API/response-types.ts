@@ -1,15 +1,15 @@
 import type {
-  IApprovalRoomTableVisitFormDTO,
-  IApprovalRoomVisitFormDTO,
-  IGenderDTO,
-  IHandednessDTO,
-  IHTMLCardDTO,
-  IOperatorDTO,
-  IOrderedQuestionDTO,
-  IPdfDTO,
-  IQuestionDTO,
-  IWaitingRoomTableVisitFormDTO,
-  IWaitingRoomVisitFormDTO,
+  ApprovalRoomTableVisitFormDTO,
+  ApprovalRoomVisitFormDTO,
+  GenderDTO,
+  HandednessDTO,
+  HTMLCardDTO,
+  OperatorDTO,
+  OrderedQuestionDTO,
+  PdfDTO,
+  QuestionDTO,
+  WaitingRoomTableVisitFormDTO,
+  WaitingRoomVisitFormDTO,
 } from "./dto";
 
 // Server GraphQL API error type
@@ -30,41 +30,41 @@ type DataErrorsResponse<TData> = {
   errors?: GraphQlError[];
 };
 
-export type AuthenticateOperatorResponse = DataErrorsResponse<{ authenticateOperator: IOperatorDTO }>;
+export type AuthenticateOperatorResponse = DataErrorsResponse<{ authenticateOperator: OperatorDTO }>;
 
-export type OperatorResponse = DataErrorsResponse<{ operator: IOperatorDTO }>;
+export type OperatorResponse = DataErrorsResponse<{ operator: OperatorDTO }>;
 
-export type GendersResponse = DataErrorsResponse<{ genders: IGenderDTO[] }>;
+export type GendersResponse = DataErrorsResponse<{ genders: GenderDTO[] }>;
 
-export type GenderResponse = DataErrorsResponse<{ gender: IGenderDTO }>;
+export type GenderResponse = DataErrorsResponse<{ gender: GenderDTO }>;
 
-export type HandednessesResponse = DataErrorsResponse<{ handednesses: IHandednessDTO[] }>;
+export type HandednessesResponse = DataErrorsResponse<{ handednesses: HandednessDTO[] }>;
 
-export type HandednessResponse = DataErrorsResponse<{ handedness: IHandednessDTO }>;
+export type HandednessResponse = DataErrorsResponse<{ handedness: HandednessDTO }>;
 
-export type CurrentQuestionsResponse = DataErrorsResponse<{ questions: IOrderedQuestionDTO[] }>;
+export type CurrentQuestionsResponse = DataErrorsResponse<{ questions: OrderedQuestionDTO[] }>;
 
-export type QuestionResponse = DataErrorsResponse<{ question: IQuestionDTO }>;
+export type QuestionResponse = DataErrorsResponse<{ question: QuestionDTO }>;
 
-export type EntryInfoResponse = DataErrorsResponse<{ entryInfo: IHTMLCardDTO }>;
+export type EntryInfoResponse = DataErrorsResponse<{ entryInfo: HTMLCardDTO }>;
 
-export type SafetyInfoResponse = DataErrorsResponse<{ safetyInfo: IHTMLCardDTO }>;
+export type SafetyInfoResponse = DataErrorsResponse<{ safetyInfo: HTMLCardDTO }>;
 
-export type BeforeExaminationResponse = DataErrorsResponse<{ beforeExamination: IHTMLCardDTO }>;
+export type BeforeExaminationResponse = DataErrorsResponse<{ beforeExamination: HTMLCardDTO }>;
 
-export type ExaminationConsentResponse = DataErrorsResponse<{ examinationConsent: IHTMLCardDTO }>;
+export type ExaminationConsentResponse = DataErrorsResponse<{ examinationConsent: HTMLCardDTO }>;
 
-export type ProbandContactRequestResponse = DataErrorsResponse<{ probandContactRequest: IHTMLCardDTO }>;
+export type ProbandContactRequestResponse = DataErrorsResponse<{ probandContactRequest: HTMLCardDTO }>;
 
-export type ProbandContactConsentResponse = DataErrorsResponse<{ probandContactConsent: IHTMLCardDTO }>;
+export type ProbandContactConsentResponse = DataErrorsResponse<{ probandContactConsent: HTMLCardDTO }>;
 
-export type WaitingRoomTableVisitFormsResponse = DataErrorsResponse<{ visitForms: IWaitingRoomTableVisitFormDTO[] }>;
+export type WaitingRoomTableVisitFormsResponse = DataErrorsResponse<{ visitForms: WaitingRoomTableVisitFormDTO[] }>;
 
-export type WaitingRoomVisitFormResponse = DataErrorsResponse<{ visitForm: IWaitingRoomVisitFormDTO }>;
+export type WaitingRoomVisitFormResponse = DataErrorsResponse<{ visitForm: WaitingRoomVisitFormDTO }>;
 
-export type ApprovalRoomTableVisitFormsResponse = DataErrorsResponse<{ visitForms: IApprovalRoomTableVisitFormDTO[] }>;
+export type ApprovalRoomTableVisitFormsResponse = DataErrorsResponse<{ visitForms: ApprovalRoomTableVisitFormDTO[] }>;
 
-export type ApprovalRoomVisitFormResponse = DataErrorsResponse<{ visitForm: IApprovalRoomVisitFormDTO }>;
+export type ApprovalRoomVisitFormResponse = DataErrorsResponse<{ visitForm: ApprovalRoomVisitFormDTO }>;
 
 export type CreateVisitFormResponse = DataErrorsResponse<{
   createVisitForm: {
@@ -80,4 +80,4 @@ export type UpdateVisitFormResponse = DataErrorsResponse<{
 
 export type RemoveVisitFormResponse = DataErrorsResponse<{ removeVisitForm: null }>;
 
-export type GeneratePdfResponse = DataErrorsResponse<{ generatePDF: IPdfDTO }>;
+export type GeneratePdfResponse = DataErrorsResponse<{ generatePDF: PdfDTO }>;

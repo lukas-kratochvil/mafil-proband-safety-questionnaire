@@ -8,12 +8,12 @@ import { pdfTest } from "@app/__tests__/data/pdf";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { questionsTest } from "@app/__tests__/data/questions";
 import { subjectsTest } from "@app/__tests__/data/subjects";
-import type { IDevice } from "@app/model/device";
-import type { INativeLanguage } from "@app/model/language";
-import type { IProject } from "@app/model/project";
-import type { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
+import type { Device } from "@app/model/device";
+import type { NativeLanguage } from "@app/model/language";
+import type { Project } from "@app/model/project";
+import type { DuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
-import type { IGenderDTO, IHandednessDTO, IOrderedQuestionDTO, IPdfDTO } from "@app/util/server_API/dto";
+import type { GenderDTO, HandednessDTO, OrderedQuestionDTO, PdfDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -22,7 +22,7 @@ import { render, screen, waitFor, within } from "@test-utils";
 const id = "ID1";
 const commentText = "Comment";
 
-const visit: IDuplicatedVisitIncludingQuestions = {
+const visit: DuplicatedVisitIncludingQuestions = {
   uuid: "1",
   visitId: "VisitId1",
   isPhantom: false,
@@ -82,22 +82,22 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
 const newDuplicatedVisitFormId = "id123";
 
 vi.mock("@app/util/server_API/calls", async () => ({
-  fetchGenders: async (): Promise<IGenderDTO[]> => gendersTest,
-  fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesTest,
-  fetchCurrentQuestions: async (): Promise<IOrderedQuestionDTO[]> => questionsTest,
+  fetchGenders: async (): Promise<GenderDTO[]> => gendersTest,
+  fetchHandednesses: async (): Promise<HandednessDTO[]> => handednessesTest,
+  fetchCurrentQuestions: async (): Promise<OrderedQuestionDTO[]> => questionsTest,
   createDuplicatedVisitFormForApproval: async (): Promise<string> => newDuplicatedVisitFormId,
-  generateProbandPdf: async (): Promise<IPdfDTO> => pdfTest,
-  generatePhantomPdf: async (): Promise<IPdfDTO> => pdfTest,
+  generateProbandPdf: async (): Promise<PdfDTO> => pdfTest,
+  generatePhantomPdf: async (): Promise<PdfDTO> => pdfTest,
 }));
 
 //----------------------------------------------------------------------
 // Mocking MAFILDB API calls
 //----------------------------------------------------------------------
 vi.mock("@app/util/mafildb_API/calls", async () => ({
-  fetchNativeLanguages: async (): Promise<INativeLanguage[]> => nativeLanguagesTest,
-  fetchProjects: async (): Promise<IProject[]> => projectsTest,
-  fetchDevices: async (): Promise<IDevice[]> => devicesTest,
-  fetchDuplicatedVisit: async (): Promise<IDuplicatedVisitIncludingQuestions> => visit,
+  fetchNativeLanguages: async (): Promise<NativeLanguage[]> => nativeLanguagesTest,
+  fetchProjects: async (): Promise<Project[]> => projectsTest,
+  fetchDevices: async (): Promise<Device[]> => devicesTest,
+  fetchDuplicatedVisit: async (): Promise<DuplicatedVisitIncludingQuestions> => visit,
   createFinalizedVisit: async (): Promise<string> => "visitId",
   createPhantomVisit: async (): Promise<string> => "visitId",
   addPdfToVisit: async (): Promise<string> => "fileId",

@@ -5,26 +5,26 @@ import type {
   ValidatedProbandFormData,
 } from "@app/model/form";
 import type { ProbandVisitLanguageCode } from "@app/model/visit";
-import type { IApprovalRoomTableVisitForm, IWaitingRoomTableVisitForm } from "@app/model/visitForm";
+import type { ApprovalRoomTableVisitForm, WaitingRoomTableVisitForm } from "@app/model/visitForm";
 import { serverApi } from "@app/util/axios/serverApi";
 import type {
-  IApprovalRoomVisitFormIncludingQuestionsDTO,
-  ICreateDuplicatedVisitFormForApprovalInput,
-  ICreateProbandVisitFormInput,
-  IGenderDTO,
-  IGeneratePdfInput,
-  IHandednessDTO,
-  IHTMLCardDTO,
-  IOperatorAuthInput,
-  IOperatorDTO,
-  IOrderedQuestionDTO,
-  IPdfDTO,
-  IQuestionDTO,
-  ISendVisitFormFromWaitingRoomForApprovalInput,
-  IUpdateVisitFormStateInput,
-  IWaitingRoomVisitFormIncludingQuestions,
+  ApprovalRoomVisitFormIncludingQuestionsDTO,
+  CreateDuplicatedVisitFormForApprovalInput,
+  CreateProbandVisitFormInput,
+  GenderDTO,
+  GeneratePdfInput,
+  HandednessDTO,
+  HTMLCardDTO,
+  OperatorAuthInput,
+  OperatorDTO,
+  OrderedQuestionDTO,
+  PdfDTO,
+  QuestionDTO,
+  SendVisitFormFromWaitingRoomForApprovalInput,
+  UpdateVisitFormStateInput,
   VisitFormAnswerIncludingQuestion,
   VisitFormState,
+  WaitingRoomVisitFormIncludingQuestions,
 } from "@app/util/server_API/dto";
 import { createServerApiCallError } from "../error-handling/server-utils";
 import { fetchNativeLanguage, fetchProject } from "../mafildb_API/calls";
@@ -75,8 +75,8 @@ import type {
   WaitingRoomVisitFormResponse,
 } from "./response-types";
 
-export const authenticateOperator = async (loggingOperator: IOperatorAuthInput): Promise<IOperatorDTO | never> => {
-  const variables: IOperatorAuthInput = { ...loggingOperator };
+export const authenticateOperator = async (loggingOperator: OperatorAuthInput): Promise<OperatorDTO | never> => {
+  const variables: OperatorAuthInput = { ...loggingOperator };
   const { data } = await serverApi.post<AuthenticateOperatorResponse>("", {
     query: AUTHENTICATE_OPERATOR,
     variables,
@@ -89,7 +89,7 @@ export const authenticateOperator = async (loggingOperator: IOperatorAuthInput):
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchOperator = async (username: string): Promise<IOperatorDTO | never> => {
+export const fetchOperator = async (username: string): Promise<OperatorDTO | never> => {
   const variables = { username };
   const { data } = await serverApi.post<OperatorResponse>("", { query: GET_OPERATOR, variables });
 
@@ -100,7 +100,7 @@ export const fetchOperator = async (username: string): Promise<IOperatorDTO | ne
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchGenders = async (): Promise<IGenderDTO[] | never> => {
+export const fetchGenders = async (): Promise<GenderDTO[] | never> => {
   const { data } = await serverApi.post<GendersResponse>("", { query: GET_GENDERS });
 
   if (data.data) {
@@ -110,7 +110,7 @@ export const fetchGenders = async (): Promise<IGenderDTO[] | never> => {
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchGender = async (code: string): Promise<IGenderDTO | never> => {
+export const fetchGender = async (code: string): Promise<GenderDTO | never> => {
   const variables = { code };
   const { data } = await serverApi.post<GenderResponse>("", { query: GET_GENDER, variables });
 
@@ -121,7 +121,7 @@ export const fetchGender = async (code: string): Promise<IGenderDTO | never> => 
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchHandednesses = async (): Promise<IHandednessDTO[] | never> => {
+export const fetchHandednesses = async (): Promise<HandednessDTO[] | never> => {
   const { data } = await serverApi.post<HandednessesResponse>("", { query: GET_HANDEDNESSES });
 
   if (data.data) {
@@ -131,7 +131,7 @@ export const fetchHandednesses = async (): Promise<IHandednessDTO[] | never> => 
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchHandedness = async (code: string): Promise<IHandednessDTO | never> => {
+export const fetchHandedness = async (code: string): Promise<HandednessDTO | never> => {
   const variables = { code };
   const { data } = await serverApi.post<HandednessResponse>("", { query: GET_HANDEDNESS, variables });
 
@@ -142,7 +142,7 @@ export const fetchHandedness = async (code: string): Promise<IHandednessDTO | ne
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchCurrentQuestions = async (): Promise<IOrderedQuestionDTO[] | never> => {
+export const fetchCurrentQuestions = async (): Promise<OrderedQuestionDTO[] | never> => {
   const { data } = await serverApi.post<CurrentQuestionsResponse>("", { query: GET_CURRENT_QUESTIONS });
 
   if (data.data) {
@@ -152,7 +152,7 @@ export const fetchCurrentQuestions = async (): Promise<IOrderedQuestionDTO[] | n
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO | never> => {
+export const fetchQuestion = async (questionId: string): Promise<QuestionDTO | never> => {
   const variables = { id: questionId };
   const { data } = await serverApi.post<QuestionResponse>("", { query: GET_QUESTION, variables });
 
@@ -163,7 +163,7 @@ export const fetchQuestion = async (questionId: string): Promise<IQuestionDTO | 
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchEntryInfo = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
+export const fetchEntryInfo = async (locale: LanguageCode): Promise<HTMLCardDTO | never> => {
   const variables = { locale };
   const { data } = await serverApi.post<EntryInfoResponse>("", {
     query: GET_ENTRY_INFO,
@@ -177,7 +177,7 @@ export const fetchEntryInfo = async (locale: LanguageCode): Promise<IHTMLCardDTO
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchSafetyInfo = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
+export const fetchSafetyInfo = async (locale: LanguageCode): Promise<HTMLCardDTO | never> => {
   const variables = { locale };
   const { data } = await serverApi.post<SafetyInfoResponse>("", {
     query: GET_SAFETY_INFO,
@@ -191,7 +191,7 @@ export const fetchSafetyInfo = async (locale: LanguageCode): Promise<IHTMLCardDT
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchBeforeExamination = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
+export const fetchBeforeExamination = async (locale: LanguageCode): Promise<HTMLCardDTO | never> => {
   const variables = { locale };
   const { data } = await serverApi.post<BeforeExaminationResponse>("", {
     query: GET_BEFORE_EXAMINATION,
@@ -205,7 +205,7 @@ export const fetchBeforeExamination = async (locale: LanguageCode): Promise<IHTM
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchExaminationConsent = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
+export const fetchExaminationConsent = async (locale: LanguageCode): Promise<HTMLCardDTO | never> => {
   const variables = { locale };
   const { data } = await serverApi.post<ExaminationConsentResponse>("", {
     query: GET_EXAMINATION_CONSENT,
@@ -225,7 +225,7 @@ export const fetchProbandContactRequest = async (
   surname: string,
   birthdateStr: string,
   currentDateStr: string
-): Promise<IHTMLCardDTO | never> => {
+): Promise<HTMLCardDTO | never> => {
   const variables = { locale, name, surname, birthdateStr, currentDateStr };
   const { data } = await serverApi.post<ProbandContactRequestResponse>("", {
     query: GET_PROBAND_CONTACT_REQUEST,
@@ -239,7 +239,7 @@ export const fetchProbandContactRequest = async (
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchProbandContactConsent = async (locale: LanguageCode): Promise<IHTMLCardDTO | never> => {
+export const fetchProbandContactConsent = async (locale: LanguageCode): Promise<HTMLCardDTO | never> => {
   const variables = { locale };
   const { data } = await serverApi.post<ProbandContactConsentResponse>("", {
     query: GET_PROBAND_CONTACT_CONSENT,
@@ -253,7 +253,7 @@ export const fetchProbandContactConsent = async (locale: LanguageCode): Promise<
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchWaitingRoomTableVisitForms = async (): Promise<IWaitingRoomTableVisitForm[] | never> => {
+export const fetchWaitingRoomTableVisitForms = async (): Promise<WaitingRoomTableVisitForm[] | never> => {
   const variables = { state: "NEW" };
   const { data } = await serverApi.post<WaitingRoomTableVisitFormsResponse>("", {
     query: GET_WAITING_ROOM_TABLE_VISIT_FORMS,
@@ -277,7 +277,7 @@ export const fetchWaitingRoomTableVisitForms = async (): Promise<IWaitingRoomTab
 
 export const fetchWaitingRoomVisitForm = async (
   id: string | undefined
-): Promise<IWaitingRoomVisitFormIncludingQuestions | never> => {
+): Promise<WaitingRoomVisitFormIncludingQuestions | never> => {
   if (id === undefined) {
     throw new Error("Missing visit form ID!");
   }
@@ -312,7 +312,7 @@ export const fetchWaitingRoomVisitForm = async (
   return { ...visitForm, probandLanguageCode: visitForm.probandLanguage.code, answersIncludingQuestions };
 };
 
-export const fetchApprovalRoomTableVisitForms = async (): Promise<IApprovalRoomTableVisitForm[] | never> => {
+export const fetchApprovalRoomTableVisitForms = async (): Promise<ApprovalRoomTableVisitForm[] | never> => {
   const variables = { state: "IN_APPROVAL" };
   const { data } = await serverApi.post<ApprovalRoomTableVisitFormsResponse>("", {
     query: GET_APPROVAL_ROOM_TABLE_VISIT_FORMS,
@@ -338,7 +338,7 @@ export const fetchApprovalRoomTableVisitForms = async (): Promise<IApprovalRoomT
 
 export const fetchApprovalRoomVisitForm = async (
   id: string | undefined
-): Promise<IApprovalRoomVisitFormIncludingQuestionsDTO | never> => {
+): Promise<ApprovalRoomVisitFormIncludingQuestionsDTO | never> => {
   if (id === undefined) {
     throw new Error("Missing visit ID!");
   }
@@ -374,7 +374,7 @@ export const fetchApprovalRoomVisitForm = async (
 };
 
 export const createProbandVisitForm = async (visitFormData: ValidatedProbandFormData): Promise<string | never> => {
-  const variables: ICreateProbandVisitFormInput = {
+  const variables: CreateProbandVisitFormInput = {
     createVisitFormInput: {
       probandLanguageCode: i18n.language as LanguageCode,
       name: visitFormData.name,
@@ -415,7 +415,7 @@ export const createDuplicatedVisitFormForApproval = async (
     throw new Error("Missing ID of the operator who finalized the visit!");
   }
 
-  const variables: ICreateDuplicatedVisitFormForApprovalInput = {
+  const variables: CreateDuplicatedVisitFormForApprovalInput = {
     createVisitFormInput: {
       state: "IN_APPROVAL",
       name: visitFormData.name,
@@ -462,7 +462,7 @@ export const sendVisitFormForApproval = async (
   visitFormData: ValidatedOperatorModifiedFormData,
   finalizerId: string
 ): Promise<string | never> => {
-  const variables: ISendVisitFormFromWaitingRoomForApprovalInput = {
+  const variables: SendVisitFormFromWaitingRoomForApprovalInput = {
     updateVisitFormInput: {
       id: visitFormId,
       state: "IN_APPROVAL",
@@ -509,7 +509,7 @@ const updateVisitFormState = async (visitFormId: string | undefined, state: Visi
     throw new Error("Visit form id is undefined!");
   }
 
-  const variables: IUpdateVisitFormStateInput = {
+  const variables: UpdateVisitFormStateInput = {
     updateVisitFormInput: {
       id: visitFormId,
       state,
@@ -552,12 +552,12 @@ const generatePdf = async (
   finalizerUsername: string | undefined,
   probandLanguageCode?: LanguageCode,
   approverUsername?: string
-): Promise<IPdfDTO | never> => {
+): Promise<PdfDTO | never> => {
   if (finalizerUsername === undefined) {
     throw new Error("Missing username of the operator who finalized the visit!");
   }
 
-  const variables: IGeneratePdfInput = {
+  const variables: GeneratePdfInput = {
     isPhantom,
     visitId,
     probandLanguageCode,
@@ -605,7 +605,7 @@ export const generateProbandPdf = async (
   finalizerUsername: string | undefined,
   probandLanguageCode: ProbandVisitLanguageCode | undefined,
   approverUsername?: string
-): Promise<IPdfDTO | never> => {
+): Promise<PdfDTO | never> => {
   if (probandLanguageCode === undefined || probandLanguageCode === "") {
     throw new Error("Proband language code is undefined!");
   }
@@ -617,4 +617,4 @@ export const generatePhantomPdf = async (
   visitId: string,
   visitFormData: ValidatedOperatorFormData,
   finalizerUsername: string | undefined
-): Promise<IPdfDTO> => generatePdf(true, visitId, visitFormData, finalizerUsername);
+): Promise<PdfDTO> => generatePdf(true, visitId, visitFormData, finalizerUsername);

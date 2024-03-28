@@ -11,9 +11,9 @@ import { FormAutocompleteDevices } from "../inputs/FormAutocompleteDevices";
 import { FormAutocompleteProjects } from "../inputs/FormAutocompleteProjects";
 import { FormDatePicker } from "../inputs/FormDatePicker";
 import { FormCardContainer } from "./FormCardContainer";
-import type { IPhantomFormCardProps } from "./form-card";
+import type { PhantomFormCardProps } from "./form-card";
 
-export const FormProjectInfo = ({ isPhantom, disableInputs }: IPhantomFormCardProps) => {
+export const FormProjectInfo = ({ isPhantom, disableInputs }: PhantomFormCardProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.projectInfo" });
   const { getValues, setValue } = useFormContext<FormPropType>();
 

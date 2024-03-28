@@ -2,40 +2,40 @@ import { devicesTest } from "@app/__tests__/data/devices";
 import { nativeLanguagesTest } from "@app/__tests__/data/languages";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { subjectsTest } from "@app/__tests__/data/subjects";
-import type { IDevice } from "@app/model/device";
+import type { Device } from "@app/model/device";
 import { type ValidatedOperatorFormData } from "@app/model/form";
-import type { ILanguage } from "@app/model/language";
-import type { IProject } from "@app/model/project";
-import type { ISubject } from "@app/model/subject";
+import type { Language } from "@app/model/language";
+import type { Project } from "@app/model/project";
+import type { Subject } from "@app/model/subject";
 import type {
   CreatedVisitData,
-  IDuplicatedVisitIncludingQuestions,
-  IRecentVisitsTableVisit,
-  IVisitDetail,
+  DuplicatedVisitIncludingQuestions,
+  RecentVisitsTableVisit,
+  VisitDetail,
 } from "@app/model/visit";
-import type { IVisitPDF } from "@app/model/visitPdf";
+import type { VisitPDF } from "@app/model/visitPdf";
 import { dummyVisits, generateVisitId, PDF_CONTENT } from "@app/util/mafildb_API/data.dev";
 import { fetchCurrentQuestions, fetchGender, fetchHandedness, fetchOperator, fetchQuestion } from "../server_API/calls";
-import type { IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
-import { MDB_SignatureState, type MDB_ICreateVisitInput, type MDB_IUpdateVisitSignatureStateInput } from "./dto";
+import type { PdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
+import { MDB_SignatureState, type MDB_CreateVisitInput, type MDB_UpdateVisitSignatureStateInput } from "./dto";
 
-export const fetchLanguagesDev = async (): Promise<ILanguage[]> => nativeLanguagesTest;
+export const fetchLanguagesDev = async (): Promise<Language[]> => nativeLanguagesTest;
 
-export const fetchLanguageDev = async (code: string): Promise<ILanguage> =>
+export const fetchLanguageDev = async (code: string): Promise<Language> =>
   nativeLanguagesTest.find((language) => code === language.code) ?? nativeLanguagesTest[0]!;
 
-export const fetchSubjectsDev = async (): Promise<ISubject[]> => subjectsTest;
+export const fetchSubjectsDev = async (): Promise<Subject[]> => subjectsTest;
 
-export const fetchProjectsDev = async (): Promise<IProject[]> => projectsTest;
+export const fetchProjectsDev = async (): Promise<Project[]> => projectsTest;
 
-export const fetchProjectDev = async (uuid: string): Promise<IProject> =>
+export const fetchProjectDev = async (uuid: string): Promise<Project> =>
   projectsTest.find((project) => uuid === project.uuid) ?? projectsTest[0]!;
 
-export const fetchDevicesDev = async (): Promise<IDevice[]> => devicesTest;
+export const fetchDevicesDev = async (): Promise<Device[]> => devicesTest;
 
 export const createVisitDev = async (
   visitFormData: ValidatedOperatorFormData,
-  approvalState: MDB_ICreateVisitInput["checked"],
+  approvalState: MDB_CreateVisitInput["checked"],
   isPhantom: boolean,
   finalizerUsername: string,
   finalizedAt: Date,
@@ -68,7 +68,7 @@ export const createVisitDev = async (
   return dummyVisits[dummyVisits.length - 1]!;
 };
 
-export const addPdfToVisitDev = async (pdf: IPdfDTO): Promise<IVisitPDF> => ({
+export const addPdfToVisitDev = async (pdf: PdfDTO): Promise<VisitPDF> => ({
   id: 1,
   uploaded: new Date(),
   name: pdf.name,
@@ -77,7 +77,7 @@ export const addPdfToVisitDev = async (pdf: IPdfDTO): Promise<IVisitPDF> => ({
   content: pdf.content,
 });
 
-export const fetchRecentVisitsDev = async (): Promise<IRecentVisitsTableVisit[]> => {
+export const fetchRecentVisitsDev = async (): Promise<RecentVisitsTableVisit[]> => {
   const currentQuestions = await fetchCurrentQuestions();
   return dummyVisits.map((dummyVisit) => {
     // eslint-disable-next-line no-param-reassign
@@ -95,7 +95,7 @@ export const fetchRecentVisitsDev = async (): Promise<IRecentVisitsTableVisit[]>
 
 export const fetchDuplicatedVisitDev = async (
   visitUuid: string
-): Promise<IDuplicatedVisitIncludingQuestions | never> => {
+): Promise<DuplicatedVisitIncludingQuestions | never> => {
   const visit = dummyVisits.find((dummyVisit) => dummyVisit.uuid === visitUuid);
 
   if (visit === undefined) {
@@ -120,7 +120,7 @@ export const fetchDuplicatedVisitDev = async (
   };
 };
 
-export const fetchVisitDetailDev = async (visitUuid: string): Promise<IVisitDetail | never> => {
+export const fetchVisitDetailDev = async (visitUuid: string): Promise<VisitDetail | never> => {
   const visit = dummyVisits.find((dummyVisit) => dummyVisit.uuid === visitUuid);
 
   if (visit === undefined) {
@@ -138,7 +138,7 @@ export const fetchVisitDetailDev = async (visitUuid: string): Promise<IVisitDeta
 
 export const updateVisitSignatureStateDev = async (
   visitUuid: string,
-  signatureState: MDB_IUpdateVisitSignatureStateInput["registration_signature_status"]
+  signatureState: MDB_UpdateVisitSignatureStateInput["registration_signature_status"]
 ): Promise<string | never> => {
   const visit = dummyVisits.find((dummyVisit) => dummyVisit.uuid === visitUuid);
 

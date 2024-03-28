@@ -2,12 +2,12 @@ import { Card, Divider, Typography } from "@mui/material";
 import { lime } from "@mui/material/colors";
 import { type PropsWithChildren } from "react";
 
-type ICardContainerProps = {
+type CardContainerProps = {
   title: string;
   maxWidth?: string;
 };
 
-export const CardContainer = ({ children, title, maxWidth }: PropsWithChildren<ICardContainerProps>) => (
+export const CardContainer = ({ children, title, maxWidth }: PropsWithChildren<CardContainerProps>) => (
   <Card
     sx={{
       width: "100%",

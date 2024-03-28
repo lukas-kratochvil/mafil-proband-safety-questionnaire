@@ -2,18 +2,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RoutingPath } from "@app/routing-paths";
 import { authenticateOperator } from "@app/util/server_API/calls";
-import type { IOperatorAuthInput } from "@app/util/server_API/dto";
-import { type IAuth, type Operator } from "./AuthProvider";
+import type { OperatorAuthInput } from "@app/util/server_API/dto";
+import type { Auth, Operator } from "./AuthProvider";
 
 const SESSION_STORAGE_OPERATOR_KEY = "operator";
-const DEV_OPERATOR: IOperatorAuthInput = {
+const DEV_OPERATOR: OperatorAuthInput = {
   name: import.meta.env.VITE_OPERATOR_FIRSTNAME,
   surname: import.meta.env.VITE_OPERATOR_SURNAME,
   username: import.meta.env.VITE_OPERATOR_USERNAME,
   email: import.meta.env.VITE_OPERATOR_EMAIL,
 };
 
-export const useAuthProviderDev = (): IAuth => {
+export const useAuthProviderDev = (): Auth => {
   const navigate = useNavigate();
   const [operator, setOperator] = useState<Operator>(() => {
     const storedOperator = window.sessionStorage.getItem(SESSION_STORAGE_OPERATOR_KEY);

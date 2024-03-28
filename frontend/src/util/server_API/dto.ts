@@ -1,10 +1,10 @@
 import { type LanguageCode } from "@app/i18n/i18n";
 import type { AnswerOption } from "@app/model/form";
-import type { MDB_ILanguageDTO } from "../mafildb_API/dto";
+import type { MDB_LanguageDTO } from "../mafildb_API/dto";
 
 export type OperatorRole = "MR" | "MR_HIGH_PERM";
 
-export type IOperatorDTO = {
+export type OperatorDTO = {
   id: string;
   name: string;
   surname: string;
@@ -13,22 +13,22 @@ export type IOperatorDTO = {
   role: OperatorRole;
 };
 
-export type IOperatorAuthInput = Pick<IOperatorDTO, "name" | "surname" | "username" | "email">;
+export type OperatorAuthInput = Pick<OperatorDTO, "name" | "surname" | "username" | "email">;
 
-export type ITranslation = {
+export type Translation = {
   text: string;
   language: {
     code: string;
   };
 };
 
-type ITranslations = {
-  translations: ITranslation[];
+type Translations = {
+  translations: Translation[];
 };
 
 export type GenderCode = "M" | "F" | "O";
 
-export type IGenderDTO = ITranslations & {
+export type GenderDTO = Translations & {
   id: string;
   code: GenderCode;
   order: number;
@@ -36,20 +36,20 @@ export type IGenderDTO = ITranslations & {
 
 export type HandednessCode = "RH" | "LH" | "FL" | "UN";
 
-export type IHandednessDTO = ITranslations & {
+export type HandednessDTO = Translations & {
   id: string;
   code: HandednessCode;
   order: number;
 };
 
-export type IHTMLCardDTO = {
+export type HTMLCardDTO = {
   title: string;
   html: string;
 };
 
 type QuestionPartNumber = 1 | 2;
 
-export type IQuestionDTO = ITranslations & {
+export type QuestionDTO = Translations & {
   id: string;
   updatedAt: Date;
   partNumber: QuestionPartNumber;
@@ -60,22 +60,22 @@ export type IQuestionDTO = ITranslations & {
   }[];
 };
 
-export type IOrderedQuestionDTO = IQuestionDTO & {
+export type OrderedQuestionDTO = QuestionDTO & {
   order: number;
 };
 
-type IProbandAnswerDTO = {
+type ProbandAnswerDTO = {
   questionId: string;
   answer: AnswerOption;
 };
 
-type IOperatorAnswerDTO = IProbandAnswerDTO & {
+type OperatorAnswerDTO = ProbandAnswerDTO & {
   comment: string;
 };
 
 export type VisitFormState = "NEW" | "IN_APPROVAL" | "SENT_TO_MAFILDB" | "PDF_GENERATED";
 
-export type IWaitingRoomTableVisitFormDTO = {
+export type WaitingRoomTableVisitFormDTO = {
   id: string;
   state: VisitFormState;
   createdAt?: Date;
@@ -83,50 +83,50 @@ export type IWaitingRoomTableVisitFormDTO = {
   surname: string;
   personalId: string;
   birthdate: Date;
-  gender: IGenderDTO;
-  nativeLanguageCode: MDB_ILanguageDTO["code"];
+  gender: GenderDTO;
+  nativeLanguageCode: MDB_LanguageDTO["code"];
   heightCm: number;
   weightKg: number;
   visualCorrectionDioptre: number;
-  handedness: IHandednessDTO;
+  handedness: HandednessDTO;
   email: string;
   phone: string;
 };
 
-export type IWaitingRoomVisitFormDTO = IWaitingRoomTableVisitFormDTO & {
+export type WaitingRoomVisitFormDTO = WaitingRoomTableVisitFormDTO & {
   probandLanguage: {
     code: LanguageCode;
   };
-  answers: IProbandAnswerDTO[];
+  answers: ProbandAnswerDTO[];
 };
 
-export type QuestionHiddenByGendersWithoutId = Omit<IOrderedQuestionDTO, "id">;
+export type QuestionHiddenByGendersWithoutId = Omit<OrderedQuestionDTO, "id">;
 
-export type VisitFormAnswerIncludingQuestion = IOperatorAnswerDTO & QuestionHiddenByGendersWithoutId;
+export type VisitFormAnswerIncludingQuestion = OperatorAnswerDTO & QuestionHiddenByGendersWithoutId;
 
-export type IWaitingRoomVisitFormIncludingQuestions = IWaitingRoomTableVisitFormDTO & {
+export type WaitingRoomVisitFormIncludingQuestions = WaitingRoomTableVisitFormDTO & {
   probandLanguageCode: LanguageCode;
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
 };
 
-export type IApprovalRoomTableVisitFormDTO = IWaitingRoomTableVisitFormDTO & {
+export type ApprovalRoomTableVisitFormDTO = WaitingRoomTableVisitFormDTO & {
   additionalInfo: {
     projectUuid: string;
     deviceId: number;
     measuredAt: Date;
-    finalizer: Pick<IOperatorDTO, "username">;
+    finalizer: Pick<OperatorDTO, "username">;
     finalizedAt: Date;
   };
 };
 
-export type IApprovalRoomVisitFormDTO = IApprovalRoomTableVisitFormDTO & {
+export type ApprovalRoomVisitFormDTO = ApprovalRoomTableVisitFormDTO & {
   probandLanguage: {
     code: LanguageCode;
   };
-  answers: IOperatorAnswerDTO[];
+  answers: OperatorAnswerDTO[];
 };
 
-export type IApprovalRoomVisitFormIncludingQuestionsDTO = IApprovalRoomTableVisitFormDTO & {
+export type ApprovalRoomVisitFormIncludingQuestionsDTO = ApprovalRoomTableVisitFormDTO & {
   probandLanguageCode: LanguageCode;
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
 };
@@ -145,7 +145,7 @@ type CreateProbandInfoInput = {
   personalId: string;
   birthdate: Date;
   genderId: string;
-  nativeLanguageCode: MDB_ILanguageDTO["code"];
+  nativeLanguageCode: MDB_LanguageDTO["code"];
   heightCm: number;
   weightKg: number;
   visualCorrectionDioptre: number;
@@ -158,16 +158,16 @@ type CreateVisitFormInput = CreateProbandInfoInput & {
   state: VisitFormState;
   additionalInfo: AdditionalInfo;
   probandLanguageCode: LanguageCode;
-  answers: IOperatorAnswerDTO[];
+  answers: OperatorAnswerDTO[];
 };
 
-export type ICreateProbandVisitFormInput = {
+export type CreateProbandVisitFormInput = {
   createVisitFormInput: Omit<CreateVisitFormInput, "state" | "additionalInfo" | "answers"> & {
-    answers: IProbandAnswerDTO[];
+    answers: ProbandAnswerDTO[];
   };
 };
 
-export type ICreateDuplicatedVisitFormForApprovalInput = {
+export type CreateDuplicatedVisitFormForApprovalInput = {
   createVisitFormInput: CreateVisitFormInput;
 };
 
@@ -175,25 +175,25 @@ type UpdateVisitFormInput = Partial<CreateProbandInfoInput> & {
   id: string;
   state: Partial<Omit<VisitFormState, "NEW">>;
   additionalInfo: Partial<AdditionalInfo>;
-  answers: Partial<IOperatorAnswerDTO>[] | undefined;
+  answers: Partial<OperatorAnswerDTO>[] | undefined;
 };
 
-export type ISendVisitFormFromWaitingRoomForApprovalInput = {
+export type SendVisitFormFromWaitingRoomForApprovalInput = {
   updateVisitFormInput: Omit<UpdateVisitFormInput, "additionalInfo"> & {
     additionalInfo: AdditionalInfo;
   };
 };
 
-export type IUpdateVisitFormStateInput = {
+export type UpdateVisitFormStateInput = {
   updateVisitFormInput: Pick<UpdateVisitFormInput, "id" | "state">;
 };
 
-export type IPdfDTO = {
+export type PdfDTO = {
   name: string; // also contains extension, for example: my_doc.pdf
   content: string; // Base64 encoded PDF content
 };
 
-export type IGeneratePdfInput = {
+export type GeneratePdfInput = {
   visitId: string;
   isPhantom: boolean;
   probandLanguageCode?: LanguageCode;

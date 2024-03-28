@@ -1,6 +1,6 @@
 import { updatedDiff } from "deep-object-diff";
 import { type Operator } from "@app/hooks/auth/AuthProvider";
-import type { IDevice } from "@app/model/device";
+import type { Device } from "@app/model/device";
 import type {
   AnswerOption,
   FormPropType,
@@ -8,9 +8,9 @@ import type {
   ValidatedOperatorFormData,
   ValidatedProbandFormData,
 } from "@app/model/form";
-import type { INativeLanguage } from "@app/model/language";
-import type { IProject } from "@app/model/project";
-import type { IGenderDTO, IHandednessDTO } from "@app/util/server_API/dto";
+import type { NativeLanguage } from "@app/model/language";
+import type { Project } from "@app/model/project";
+import type { GenderDTO, HandednessDTO } from "@app/util/server_API/dto";
 
 export const getModifiedFieldsOnly = (
   initialData: FormPropType | undefined,
@@ -47,11 +47,11 @@ export const getValidatedProbandFormData = (data: FormPropType): ValidatedProban
   surname: data.surname,
   personalId: data.personalId,
   birthdate: data.birthdate as Date,
-  gender: data.gender as IGenderDTO,
-  nativeLanguage: data.nativeLanguage as INativeLanguage,
+  gender: data.gender as GenderDTO,
+  nativeLanguage: data.nativeLanguage as NativeLanguage,
   heightCm: typeof data.heightCm === "string" ? +data.heightCm : data.heightCm,
   weightKg: typeof data.weightKg === "string" ? +data.weightKg : data.weightKg,
-  handedness: data.handedness as IHandednessDTO,
+  handedness: data.handedness as HandednessDTO,
   visualCorrectionDioptre:
     typeof data.visualCorrectionDioptre === "string" ? +data.visualCorrectionDioptre : data.visualCorrectionDioptre,
   answers: data.answers.map((answer) => ({
@@ -66,8 +66,8 @@ export const getValidatedProbandFormData = (data: FormPropType): ValidatedProban
 
 export const getValidatedOperatorFormData = (data: FormPropType): ValidatedOperatorFormData => ({
   ...getValidatedProbandFormData(data),
-  project: data.project as IProject,
-  device: data.device as IDevice,
+  project: data.project as Project,
+  device: data.device as Device,
   measuredAt: data.measuredAt as Date,
   disapprovalReason: data.disapprovalReason as string,
 });

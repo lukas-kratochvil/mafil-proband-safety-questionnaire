@@ -33,14 +33,14 @@ export const getCommonTabSx = (location: Location, urlPrefix: RoutingPath): SxPr
   };
 };
 
-export type ITabProps = {
+export type TabProps = {
   localizationKey: string;
   urlPrefix: RoutingPath;
   onClick: () => void;
   Icon: SvgIconComponent;
 };
 
-export const getTabs = (navigate: NavigateFunction): ITabProps[] => [
+export const getTabs = (navigate: NavigateFunction): TabProps[] => [
   {
     localizationKey: "waitingRoom",
     urlPrefix: RoutingPath.WAITING_ROOM,

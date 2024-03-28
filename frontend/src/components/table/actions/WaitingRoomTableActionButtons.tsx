@@ -20,12 +20,12 @@ import { deleteVisitForm } from "@app/util/server_API/calls";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
-type IWaitingRoomTableActionButtonsProps = {
+type WaitingRoomTableActionButtonsProps = {
   visitFormId: string;
   queryKey: QueryKey;
 };
 
-export const WaitingRoomTableActionButtons = ({ visitFormId, queryKey }: IWaitingRoomTableActionButtonsProps) => {
+export const WaitingRoomTableActionButtons = ({ visitFormId, queryKey }: WaitingRoomTableActionButtonsProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomTablePage.actions" });
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const navigate = useNavigate();

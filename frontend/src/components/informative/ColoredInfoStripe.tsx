@@ -21,12 +21,12 @@ const mapBackgroundColor = (color: StripeColor): string => {
   }
 };
 
-export type IColoredInfoStripeProps = {
+export type ColoredInfoStripeProps = {
   textLocalizationKey: string;
   color: StripeColor;
 };
 
-export const ColoredInfoStripe = ({ textLocalizationKey, color }: IColoredInfoStripeProps) => {
+export const ColoredInfoStripe = ({ textLocalizationKey, color }: ColoredInfoStripeProps) => {
   const { t } = useTranslation(defaultNS);
 
   return (

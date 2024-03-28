@@ -1,11 +1,11 @@
-import type { ISubject } from "@app/model/subject";
+import type { Subject } from "@app/model/subject";
 import { nativeLanguagesTest } from "./languages";
 
 const today = new Date();
 const birthdate = new Date(today);
 birthdate.setFullYear(today.getFullYear() - 20);
 
-export const subjectsTest: ISubject[] = [
+export const subjectsTest: Subject[] = [
   {
     uuid: "1",
     preferredLanguageCode: "cs",

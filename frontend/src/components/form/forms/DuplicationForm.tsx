@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { type IFormButtonsProps } from "@app/components/form/components/FormButtons";
+import { type FormButtonsProps } from "@app/components/form/components/FormButtons";
 import { FormProbandContact } from "@app/components/form/components/FormProbandContact";
 import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo";
 import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo";
@@ -52,7 +52,7 @@ export const DuplicationForm = () => {
   const [isDisapproved, setIsDisapproved] = useState<boolean>(false);
   const [openFinalizeDialog, setOpenFinalizeDialog] = useState<boolean>(false);
   const [qacs, setQacs] = useState<FormQac[]>([]);
-  const [formButtons, setFormButtons] = useState<IFormButtonsProps<ValidatedOperatorFormData>>();
+  const [formButtons, setFormButtons] = useState<FormButtonsProps<ValidatedOperatorFormData>>();
 
   // Setting default values
   useEffect(() => {

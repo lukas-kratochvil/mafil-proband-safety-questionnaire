@@ -2,12 +2,12 @@ import { Autocomplete } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n/i18n";
-import type { IProject } from "@app/model/project";
+import type { Project } from "@app/model/project";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import type { IFormAsyncAutocompleteProps } from "./input-props";
+import type { FormAsyncAutocompleteProps } from "./input-props";
 
-const getProjectText = (project: IProject): string => {
+const getProjectText = (project: Project): string => {
   const acronym = project.acronym.trim();
   const name = project.name.trim();
   return name === "" ? acronym : `${acronym} - ${name}`;
@@ -20,7 +20,7 @@ export const FormAutocompleteProjects = ({
   disabled,
   options,
   isLoading,
-}: IFormAsyncAutocompleteProps<IProject>) => {
+}: FormAsyncAutocompleteProps<Project>) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
 
   return (

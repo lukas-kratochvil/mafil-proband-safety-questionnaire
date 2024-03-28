@@ -1,11 +1,11 @@
-import type { MDB_ILanguageDTO } from "@app/util/mafildb_API/dto";
+import type { MDB_LanguageDTO } from "@app/util/mafildb_API/dto";
 
-export type ILanguage = {
-  code: MDB_ILanguageDTO["code"];
-  nativeName: MDB_ILanguageDTO["name"];
-  nameCs: MDB_ILanguageDTO["name_cs"];
-  nameEn: MDB_ILanguageDTO["name_en"];
-  priority: MDB_ILanguageDTO["priority"];
+export type Language = {
+  code: MDB_LanguageDTO["code"];
+  nativeName: MDB_LanguageDTO["name"];
+  nameCs: MDB_LanguageDTO["name_cs"];
+  nameEn: MDB_LanguageDTO["name_en"];
+  priority: MDB_LanguageDTO["priority"];
 };
 
-export type INativeLanguage = ILanguage;
+export type NativeLanguage = Language;

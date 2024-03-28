@@ -2,9 +2,9 @@ import { InputAdornment, TextField, useMediaQuery, type Theme } from "@mui/mater
 import { type HTMLInputTypeAttribute, type ReactNode } from "react";
 import { Controller } from "react-hook-form";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import type { IFormDefaultInputProps } from "./input-props";
+import type { FormDefaultInputProps } from "./input-props";
 
-type IFormTextFieldProps = IFormDefaultInputProps & {
+type FormTextFieldProps = FormDefaultInputProps & {
   type?: HTMLInputTypeAttribute;
   isSmall?: boolean;
   isMultiline?: boolean;
@@ -24,7 +24,7 @@ export const FormTextField = ({
   hasAutocomplete,
   endAdornmentLabel,
   hasAutoFocus,
-}: IFormTextFieldProps) => {
+}: FormTextFieldProps) => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
   return (

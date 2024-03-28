@@ -1,7 +1,7 @@
-import type { IHandednessDTO } from "@app/util/server_API/dto";
+import type { HandednessDTO } from "@app/util/server_API/dto";
 import { NEUTRAL_LANGUAGE_CODE } from "../neutral-language-code";
 
-export const handednessesTest: IHandednessDTO[] = [
+export const handednessesTest: HandednessDTO[] = [
   {
     id: "1",
     order: 1,

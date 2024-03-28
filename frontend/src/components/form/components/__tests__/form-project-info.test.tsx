@@ -1,5 +1,5 @@
 import { operatorMRTest } from "@app/__tests__/data/operators";
-import type { IOperatorDTO } from "@app/util/server_API/dto";
+import type { OperatorDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor } from "@test-utils";
 import { FormProjectInfo } from "../FormProjectInfo";
 
@@ -18,7 +18,7 @@ vi.mock("react-hook-form", () => ({
 // Mocking server API calls
 //----------------------------------------------------------------------
 vi.mock("@app/util/server_API/calls", async () => ({
-  fetchOperator: async (): Promise<IOperatorDTO> => operatorMRTest,
+  fetchOperator: async (): Promise<OperatorDTO> => operatorMRTest,
 }));
 
 //----------------------------------------------------------------------

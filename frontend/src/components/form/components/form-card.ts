@@ -1,7 +1,7 @@
-export type IFormCardProps = {
+export type FormCardProps = {
   disableInputs?: boolean;
 };
 
-export type IPhantomFormCardProps = IFormCardProps & {
+export type PhantomFormCardProps = FormCardProps & {
   isPhantom?: boolean;
 };

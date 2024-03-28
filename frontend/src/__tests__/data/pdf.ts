@@ -1,6 +1,6 @@
-import type { IPdfDTO } from "@app/util/server_API/dto";
+import type { PdfDTO } from "@app/util/server_API/dto";
 
-export const pdfTest: IPdfDTO = {
+export const pdfTest: PdfDTO = {
   name: "name",
   content: "content",
 };

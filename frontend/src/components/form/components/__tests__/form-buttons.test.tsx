@@ -1,4 +1,4 @@
-import { type IButtonProps } from "@app/util/utils";
+import { type ButtonProps } from "@app/util/utils";
 import { render, screen } from "@test-utils";
 import { FormButtons } from "../FormButtons";
 
@@ -54,7 +54,7 @@ describe("form buttons", () => {
 
   describe("other buttons", () => {
     test("are visible", () => {
-      const buttonsProps: IButtonProps[] = [
+      const buttonsProps: ButtonProps[] = [
         {
           onClick: vi.fn(),
           titleLocalizationKey: "title1",
@@ -83,7 +83,7 @@ describe("form buttons", () => {
     test("have titles", () => {
       const titleLocalizationKey1 = "title1";
       const titleLocalizationKey2 = "title2";
-      const buttonsProps: IButtonProps[] = [
+      const buttonsProps: ButtonProps[] = [
         {
           onClick: vi.fn(),
           titleLocalizationKey: titleLocalizationKey1,
@@ -111,7 +111,7 @@ describe("form buttons", () => {
     const submitButtonTitle = "submitButtonTitle";
     const titleButton1 = "title1";
     const titleButton2 = "title2";
-    const buttonsProps: IButtonProps[] = [
+    const buttonsProps: ButtonProps[] = [
       {
         onClick: vi.fn(),
         titleLocalizationKey: titleButton1,

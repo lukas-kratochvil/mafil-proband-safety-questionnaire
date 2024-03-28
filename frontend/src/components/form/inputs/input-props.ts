@@ -1,10 +1,10 @@
-import { type IFormInputFieldContainerProps } from "./FormInputFieldContainer";
+import { type FormInputFieldContainerProps } from "./FormInputFieldContainer";
 
-export type IFormDefaultInputProps = IFormInputFieldContainerProps & {
+export type FormDefaultInputProps = FormInputFieldContainerProps & {
   disabled?: boolean;
 };
 
-export type IFormAsyncAutocompleteProps<T> = IFormDefaultInputProps & {
+export type FormAsyncAutocompleteProps<T> = FormDefaultInputProps & {
   options: T[] | undefined;
   isLoading: boolean;
 };

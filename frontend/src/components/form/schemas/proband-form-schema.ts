@@ -1,8 +1,8 @@
 import { array, boolean, date, mixed, number, object, string } from "yup";
 import type { AnswerOption } from "@app/model/form";
 import { answerOptions } from "@app/model/form";
-import type { INativeLanguage } from "@app/model/language";
-import type { IGenderDTO, IHandednessDTO } from "@app/util/server_API/dto";
+import type { NativeLanguage } from "@app/model/language";
+import type { GenderDTO, HandednessDTO } from "@app/util/server_API/dto";
 import {
   getAutocompleteOption,
   visualCorrectionOptions,
@@ -36,8 +36,8 @@ export const probandFormSchema = object().shape(
       .typeError("form.validation.notValid")
       .max(new Date(), "form.validation.birthdateMaxDate")
       .required("form.validation.required"),
-    gender: mixed<IGenderDTO>().nullable().required("form.validation.required"),
-    nativeLanguage: mixed<INativeLanguage>().nullable().required("form.validation.required"),
+    gender: mixed<GenderDTO>().nullable().required("form.validation.required"),
+    nativeLanguage: mixed<NativeLanguage>().nullable().required("form.validation.required"),
     heightCm: number()
       .typeError("form.validation.notValid")
       // integer() accepts integer numbers in decimal notation (will not throw an error), but converts them to integers
@@ -52,7 +52,7 @@ export const probandFormSchema = object().shape(
       .integer("form.validation.integer")
       .positive("form.validation.positive")
       .required("form.validation.required"),
-    handedness: mixed<IHandednessDTO>().nullable().required("form.validation.required"),
+    handedness: mixed<HandednessDTO>().nullable().required("form.validation.required"),
     visualCorrection: mixed<AutocompleteOption<VisualCorrection>>().nullable().required("form.validation.required"),
     visualCorrectionDioptre: number()
       .default(0)

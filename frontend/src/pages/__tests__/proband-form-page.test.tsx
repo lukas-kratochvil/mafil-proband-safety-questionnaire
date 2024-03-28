@@ -3,9 +3,9 @@ import { gendersTest } from "@app/__tests__/data/genders";
 import { handednessesTest } from "@app/__tests__/data/handednesses";
 import { nativeLanguagesTest } from "@app/__tests__/data/languages";
 import { questionsTest } from "@app/__tests__/data/questions";
-import type { INativeLanguage } from "@app/model/language";
+import type { NativeLanguage } from "@app/model/language";
 import ProbandFormPage from "@app/pages/ProbandFormPage";
-import type { IGenderDTO, IHandednessDTO, IHTMLCardDTO, IOrderedQuestionDTO } from "@app/util/server_API/dto";
+import type { GenderDTO, HandednessDTO, HTMLCardDTO, OrderedQuestionDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -36,30 +36,30 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
 //----------------------------------------------------------------------
 // Mocking server API calls
 //----------------------------------------------------------------------
-const htmlCard: IHTMLCardDTO = {
+const htmlCard: HTMLCardDTO = {
   title: "title",
   html: "text only",
 };
 const newProbandVisitFormId = "id123";
 
 vi.mock("@app/util/server_API/calls", async () => ({
-  fetchGenders: async (): Promise<IGenderDTO[]> => gendersTest,
-  fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesTest,
-  fetchCurrentQuestions: async (): Promise<IOrderedQuestionDTO[]> => questionsTest,
+  fetchGenders: async (): Promise<GenderDTO[]> => gendersTest,
+  fetchHandednesses: async (): Promise<HandednessDTO[]> => handednessesTest,
+  fetchCurrentQuestions: async (): Promise<OrderedQuestionDTO[]> => questionsTest,
   createProbandVisitForm: async (): Promise<string> => newProbandVisitFormId,
-  fetchEntryInfo: async (): Promise<IHTMLCardDTO> => htmlCard,
-  fetchSafetyInfo: async (): Promise<IHTMLCardDTO> => htmlCard,
-  fetchBeforeExamination: async (): Promise<IHTMLCardDTO> => htmlCard,
-  fetchExaminationConsent: async (): Promise<IHTMLCardDTO> => htmlCard,
-  fetchProbandContactRequest: async (): Promise<IHTMLCardDTO> => htmlCard,
-  fetchProbandContactConsent: async (): Promise<IHTMLCardDTO> => htmlCard,
+  fetchEntryInfo: async (): Promise<HTMLCardDTO> => htmlCard,
+  fetchSafetyInfo: async (): Promise<HTMLCardDTO> => htmlCard,
+  fetchBeforeExamination: async (): Promise<HTMLCardDTO> => htmlCard,
+  fetchExaminationConsent: async (): Promise<HTMLCardDTO> => htmlCard,
+  fetchProbandContactRequest: async (): Promise<HTMLCardDTO> => htmlCard,
+  fetchProbandContactConsent: async (): Promise<HTMLCardDTO> => htmlCard,
 }));
 
 //----------------------------------------------------------------------
 // Mocking MAFILDB API calls
 //----------------------------------------------------------------------
 vi.mock("@app/util/mafildb_API/calls", async () => ({
-  fetchNativeLanguages: async (): Promise<INativeLanguage[]> => nativeLanguagesTest,
+  fetchNativeLanguages: async (): Promise<NativeLanguage[]> => nativeLanguagesTest,
 }));
 
 //----------------------------------------------------------------------

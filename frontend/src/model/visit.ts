@@ -1,53 +1,48 @@
 import { type LanguageCode } from "@app/i18n/i18n";
-import type { MDB_IAnswerDTO, MDB_IVisitDTO } from "@app/util/mafildb_API/dto";
-import type {
-  IGenderDTO,
-  IHandednessDTO,
-  IOperatorDTO,
-  VisitFormAnswerIncludingQuestion,
-} from "@app/util/server_API/dto";
-import type { IDevice } from "./device";
-import type { IProject } from "./project";
-import type { ISubject } from "./subject";
-import type { IVisitPDF } from "./visitPdf";
+import type { MDB_AnswerDTO, MDB_VisitDTO } from "@app/util/mafildb_API/dto";
+import type { GenderDTO, HandednessDTO, OperatorDTO, VisitFormAnswerIncludingQuestion } from "@app/util/server_API/dto";
+import type { Device } from "./device";
+import type { Project } from "./project";
+import type { Subject } from "./subject";
+import type { VisitPDF } from "./visitPdf";
 
 export type ProbandVisitLanguageCode = LanguageCode | "";
 
-type IAnswer = {
-  questionId: MDB_IAnswerDTO["question_id"];
-  answer: MDB_IAnswerDTO["answer"];
-  comment: MDB_IAnswerDTO["comment"];
+type Answer = {
+  questionId: MDB_AnswerDTO["question_id"];
+  answer: MDB_AnswerDTO["answer"];
+  comment: MDB_AnswerDTO["comment"];
 };
 
-export type IVisit = {
-  uuid: MDB_IVisitDTO["uuid"];
-  visitId: MDB_IVisitDTO["visit_name"];
-  created: MDB_IVisitDTO["created"];
-  approvalState: MDB_IVisitDTO["checked"];
-  isPhantom: MDB_IVisitDTO["is_phantom"];
-  measurementDate: MDB_IVisitDTO["date"];
-  subject: ISubject;
-  project: IProject;
-  device: IDevice;
-  heightCm: MDB_IVisitDTO["height"];
-  weightKg: MDB_IVisitDTO["weight"];
-  visualCorrectionDioptre: MDB_IVisitDTO["visual_correction_dioptre"];
-  answers: IAnswer[];
-  finalizer: IOperatorDTO;
-  finalizationDate: MDB_IVisitDTO["registration_finalize_date"];
-  approver: IOperatorDTO | null;
-  approvalDate: MDB_IVisitDTO["registration_approve_date"];
-  signatureState: MDB_IVisitDTO["registration_signature_status"];
-  disapprovalReason: MDB_IVisitDTO["registration_disapprove_reason"];
+export type Visit = {
+  uuid: MDB_VisitDTO["uuid"];
+  visitId: MDB_VisitDTO["visit_name"];
+  created: MDB_VisitDTO["created"];
+  approvalState: MDB_VisitDTO["checked"];
+  isPhantom: MDB_VisitDTO["is_phantom"];
+  measurementDate: MDB_VisitDTO["date"];
+  subject: Subject;
+  project: Project;
+  device: Device;
+  heightCm: MDB_VisitDTO["height"];
+  weightKg: MDB_VisitDTO["weight"];
+  visualCorrectionDioptre: MDB_VisitDTO["visual_correction_dioptre"];
+  answers: Answer[];
+  finalizer: OperatorDTO;
+  finalizationDate: MDB_VisitDTO["registration_finalize_date"];
+  approver: OperatorDTO | null;
+  approvalDate: MDB_VisitDTO["registration_approve_date"];
+  signatureState: MDB_VisitDTO["registration_signature_status"];
+  disapprovalReason: MDB_VisitDTO["registration_disapprove_reason"];
 };
 
-export type CreatedVisitData = Pick<IVisit, "uuid" | "visitId">;
+export type CreatedVisitData = Pick<Visit, "uuid" | "visitId">;
 
 // TODO: correct the type
-export type IRecentVisitsTableVisit = IVisit;
+export type RecentVisitsTableVisit = Visit;
 
-export type IDuplicatedVisitIncludingQuestions = Omit<
-  IVisit,
+export type DuplicatedVisitIncludingQuestions = Omit<
+  Visit,
   | "created"
   | "approvalState"
   | "signatureState"
@@ -58,13 +53,13 @@ export type IDuplicatedVisitIncludingQuestions = Omit<
   | "approvalDate"
   | "disapprovalReason"
 > & {
-  gender: IGenderDTO;
-  handedness: IHandednessDTO;
+  gender: GenderDTO;
+  handedness: HandednessDTO;
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
 };
 
-export type IVisitDetailPDF = Pick<IVisitPDF, "name" | "content">;
+export type VisitDetailPDF = Pick<VisitPDF, "name" | "content">;
 
-export type IVisitDetail = Pick<IVisit, "uuid" | "visitId" | "approvalState" | "isPhantom" | "signatureState"> & {
-  pdf: IVisitDetailPDF;
+export type VisitDetail = Pick<Visit, "uuid" | "visitId" | "approvalState" | "isPhantom" | "signatureState"> & {
+  pdf: VisitDetailPDF;
 };

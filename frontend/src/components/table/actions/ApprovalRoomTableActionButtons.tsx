@@ -5,11 +5,11 @@ import { defaultNS } from "@app/i18n/i18n";
 import { RoutingPath } from "@app/routing-paths";
 import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
-type IApprovalRoomTableActionButtonsProps = {
+type ApprovalRoomTableActionButtonsProps = {
   visitFormId: string;
 };
 
-export const ApprovalRoomTableActionButtons = ({ visitFormId }: IApprovalRoomTableActionButtonsProps) => {
+export const ApprovalRoomTableActionButtons = ({ visitFormId }: ApprovalRoomTableActionButtonsProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "approvalRoomTablePage.actions" });
   const navigate = useNavigate();
 

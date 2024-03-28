@@ -5,11 +5,11 @@ import { nativeLanguagesTest } from "@app/__tests__/data/languages";
 import { operatorMRTest } from "@app/__tests__/data/operators";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { subjectsTest } from "@app/__tests__/data/subjects";
-import type { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
+import type { DuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import type {
-  IApprovalRoomVisitFormIncludingQuestionsDTO,
-  IWaitingRoomVisitFormIncludingQuestions,
+  ApprovalRoomVisitFormIncludingQuestionsDTO,
   VisitFormAnswerIncludingQuestion,
+  WaitingRoomVisitFormIncludingQuestions,
 } from "@app/util/server_API/dto";
 import {
   loadEmptyDefaultValues,
@@ -34,7 +34,7 @@ const answerIncludingQuestion: VisitFormAnswerIncludingQuestion = {
   translations: [],
 };
 
-const waitingRoomVisitForm: IWaitingRoomVisitFormIncludingQuestions = {
+const waitingRoomVisitForm: WaitingRoomVisitFormIncludingQuestions = {
   id: "123",
   state: "NEW",
   probandLanguageCode: "cs",
@@ -53,7 +53,7 @@ const waitingRoomVisitForm: IWaitingRoomVisitFormIncludingQuestions = {
   answersIncludingQuestions: [answerIncludingQuestion],
 };
 
-const approvalRoomVisitForm: IApprovalRoomVisitFormIncludingQuestionsDTO = {
+const approvalRoomVisitForm: ApprovalRoomVisitFormIncludingQuestionsDTO = {
   ...waitingRoomVisitForm,
   answersIncludingQuestions: [{ ...answerIncludingQuestion, comment: "comment" }],
   additionalInfo: {
@@ -65,7 +65,7 @@ const approvalRoomVisitForm: IApprovalRoomVisitFormIncludingQuestionsDTO = {
   },
 };
 
-const duplicatedVisit: IDuplicatedVisitIncludingQuestions = {
+const duplicatedVisit: DuplicatedVisitIncludingQuestions = {
   uuid: "1",
   visitId: "1",
   isPhantom: false,

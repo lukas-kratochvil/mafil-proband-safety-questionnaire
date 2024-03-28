@@ -7,11 +7,11 @@ import { nativeLanguagesTest } from "@app/__tests__/data/languages";
 import { operatorMRTest } from "@app/__tests__/data/operators";
 import { pdfTest } from "@app/__tests__/data/pdf";
 import { projectsTest } from "@app/__tests__/data/projects";
-import type { IDevice } from "@app/model/device";
-import type { INativeLanguage } from "@app/model/language";
-import type { IProject } from "@app/model/project";
+import type { Device } from "@app/model/device";
+import type { NativeLanguage } from "@app/model/language";
+import type { Project } from "@app/model/project";
 import PhantomFormPage from "@app/pages/PhantomFormPage";
-import type { IGenderDTO, IHandednessDTO, IPdfDTO } from "@app/util/server_API/dto";
+import type { GenderDTO, HandednessDTO, PdfDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -43,18 +43,18 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
 // Mocking server API calls
 //----------------------------------------------------------------------
 vi.mock("@app/util/server_API/calls", async () => ({
-  fetchGenders: async (): Promise<IGenderDTO[]> => gendersTest,
-  fetchHandednesses: async (): Promise<IHandednessDTO[]> => handednessesTest,
-  generatePhantomPdf: async (): Promise<IPdfDTO> => pdfTest,
+  fetchGenders: async (): Promise<GenderDTO[]> => gendersTest,
+  fetchHandednesses: async (): Promise<HandednessDTO[]> => handednessesTest,
+  generatePhantomPdf: async (): Promise<PdfDTO> => pdfTest,
 }));
 
 //----------------------------------------------------------------------
 // Mocking MAFILDB API calls
 //----------------------------------------------------------------------
 vi.mock("@app/util/mafildb_API/calls", async () => ({
-  fetchNativeLanguages: async (): Promise<INativeLanguage[]> => nativeLanguagesTest,
-  fetchProjects: async (): Promise<IProject[]> => projectsTest,
-  fetchDevices: async (): Promise<IDevice[]> => devicesTest,
+  fetchNativeLanguages: async (): Promise<NativeLanguage[]> => nativeLanguagesTest,
+  fetchProjects: async (): Promise<Project[]> => projectsTest,
+  fetchDevices: async (): Promise<Device[]> => devicesTest,
   createPhantomVisit: async (): Promise<string> => "visitId",
   addPdfToVisit: async (): Promise<string> => "fileId",
 }));

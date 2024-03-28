@@ -7,7 +7,7 @@ import { TranslatedEntityTableCell } from "@app/components/table/TranslatedEntit
 import { WaitingRoomTableActionButtons } from "@app/components/table/actions/WaitingRoomTableActionButtons";
 import { defaultTableProps, type DefaultSorting } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n/i18n";
-import type { IWaitingRoomTableVisitForm } from "@app/model/visitForm";
+import type { WaitingRoomTableVisitForm } from "@app/model/visitForm";
 import { fetchWaitingRoomTableVisitForms } from "@app/util/server_API/calls";
 import { PageContainer } from "./PageContainer";
 
@@ -25,7 +25,7 @@ const WaitingRoomTablePage = () => {
     isError,
   } = useQuery({ queryKey, queryFn: fetchWaitingRoomTableVisitForms });
 
-  const columns = useMemo<MRTColumnDef<IWaitingRoomTableVisitForm>[]>(
+  const columns = useMemo<MRTColumnDef<WaitingRoomTableVisitForm>[]>(
     () => [
       {
         header: t("header.registrationDate"),
@@ -64,7 +64,7 @@ const WaitingRoomTablePage = () => {
         header: t("header.gender"),
         accessorKey: "gender",
         // eslint-disable-next-line react/no-unstable-nested-components
-        Cell: ({ row }: { row: MRTRow<IWaitingRoomTableVisitForm> }) => (
+        Cell: ({ row }: { row: MRTRow<WaitingRoomTableVisitForm> }) => (
           <TranslatedEntityTableCell translations={row.original.gender.translations} />
         ),
         maxSize: 0,
@@ -80,7 +80,7 @@ const WaitingRoomTablePage = () => {
         id: "actionButtons",
         columnDefType: "display", // turns off data column features like sorting, filtering, etc.
         // eslint-disable-next-line react/no-unstable-nested-components
-        Cell: ({ row }: { row: MRTRow<IWaitingRoomTableVisitForm> }) => (
+        Cell: ({ row }: { row: MRTRow<WaitingRoomTableVisitForm> }) => (
           <WaitingRoomTableActionButtons
             visitFormId={row.original.id}
             queryKey={queryKey}

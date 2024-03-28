@@ -1,6 +1,6 @@
-import type { IOperatorDTO } from "@app/util/server_API/dto";
+import type { OperatorDTO } from "@app/util/server_API/dto";
 
-export const operatorMRTest: IOperatorDTO = {
+export const operatorMRTest: OperatorDTO = {
   id: "1",
   name: "Operator",
   surname: "MR",
@@ -9,7 +9,7 @@ export const operatorMRTest: IOperatorDTO = {
   username: "123456",
 };
 
-export const operatorMRHigPermTest: IOperatorDTO = {
+export const operatorMRHigPermTest: OperatorDTO = {
   id: "2",
   name: "Operator",
   surname: "Special",

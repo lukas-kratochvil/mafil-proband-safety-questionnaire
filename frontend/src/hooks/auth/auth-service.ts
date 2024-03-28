@@ -2,7 +2,7 @@ import { UserManager, type User, type UserManagerSettings } from "oidc-client-ts
 import { RoutingPath } from "@app/routing-paths";
 import { LocalizedError } from "@app/util/error-handling/LocalizedError";
 import { authenticateOperator } from "@app/util/server_API/calls";
-import type { IOperatorDTO } from "@app/util/server_API/dto";
+import type { OperatorDTO } from "@app/util/server_API/dto";
 
 // Using OIDC Authorization Code Flow
 const config: UserManagerSettings = {
@@ -42,7 +42,7 @@ export class AuthService {
     return this.userManager.signinRedirect();
   }
 
-  public async completeSignIn(): Promise<IOperatorDTO | null> {
+  public async completeSignIn(): Promise<OperatorDTO | null> {
     const user = await this.userManager.signinRedirectCallback();
 
     // Check the presence of required OIDC claims

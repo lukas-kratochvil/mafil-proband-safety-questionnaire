@@ -1,5 +1,5 @@
 import { addYears, differenceInCalendarYears, getDate, getMonth, getYear, isExists } from "date-fns";
-import type { IGenderDTO } from "@app/util/server_API/dto";
+import type { GenderDTO } from "@app/util/server_API/dto";
 
 const FEMALE_CONST = 50;
 
@@ -92,7 +92,7 @@ export class CzechPersonalId {
   };
 }
 
-export const getPersonalIdPart = (birthdate: Date, gender: IGenderDTO): string => {
+export const getPersonalIdPart = (birthdate: Date, gender: GenderDTO): string => {
   const year = getYear(birthdate) % 100;
   // month can be plus extra 20 when all the IDs are used up on the given day, but it's really a rare case
   const month = getMonth(birthdate) + 1 + (gender.code === "F" ? FEMALE_CONST : 0);

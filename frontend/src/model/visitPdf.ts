@@ -1,10 +1,10 @@
-import type { MDB_IVisitFileDTO } from "@app/util/mafildb_API/dto";
+import type { MDB_VisitFileDTO } from "@app/util/mafildb_API/dto";
 
-export type IVisitPDF = {
-  id: MDB_IVisitFileDTO["id"];
-  name: MDB_IVisitFileDTO["name"]; // also contains extension, for example: my_doc.pdf
-  uploaded: MDB_IVisitFileDTO["uploaded"];
-  fileType: MDB_IVisitFileDTO["file_type"];
-  mimeType: MDB_IVisitFileDTO["mime_type"];
-  content: MDB_IVisitFileDTO["content"]; // Base64 encoded PDF content
+export type VisitPDF = {
+  id: MDB_VisitFileDTO["id"];
+  name: MDB_VisitFileDTO["name"]; // also contains extension, for example: my_doc.pdf
+  uploaded: MDB_VisitFileDTO["uploaded"];
+  fileType: MDB_VisitFileDTO["file_type"];
+  mimeType: MDB_VisitFileDTO["mime_type"];
+  content: MDB_VisitFileDTO["content"]; // Base64 encoded PDF content
 };

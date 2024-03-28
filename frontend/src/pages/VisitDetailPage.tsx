@@ -4,22 +4,22 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { CardContainer } from "@app/components/card/CardContainer";
-import { ColoredInfoStripe, type IColoredInfoStripeProps } from "@app/components/informative/ColoredInfoStripe";
+import { ColoredInfoStripe, type ColoredInfoStripeProps } from "@app/components/informative/ColoredInfoStripe";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
-import type { IVisitDetail, IVisitDetailPDF } from "@app/model/visit";
+import type { VisitDetail, VisitDetailPDF } from "@app/model/visit";
 import { fetchVisitDetail, updateVisitSignatureState } from "@app/util/mafildb_API/calls";
 import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
-import { getBackButtonProps, handleErrorsWithToast, type IButtonProps } from "@app/util/utils";
+import { getBackButtonProps, handleErrorsWithToast, type ButtonProps } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
 
 const getVisitDetailQueryKey = (visitId: string | undefined) => ["visit", visitId];
 
-type IVisitDetailButtonProps = IButtonProps & {
+type VisitDetailButtonProps = ButtonProps & {
   disabled?: boolean;
 };
 
-const getColoredInfoStripe = (visitDetail: IVisitDetail): IColoredInfoStripeProps | undefined => {
+const getColoredInfoStripe = (visitDetail: VisitDetail): ColoredInfoStripeProps | undefined => {
   if (visitDetail.isPhantom) {
     return {
       textLocalizationKey: "visitDetailPage.infoStripes.completed",
@@ -60,9 +60,9 @@ const getColoredInfoStripe = (visitDetail: IVisitDetail): IColoredInfoStripeProp
   }
 };
 
-const createBase64EncodedPdfDataUrl = (pdf: IVisitDetailPDF) => `data:application/pdf;base64,${pdf.content}`;
+const createBase64EncodedPdfDataUrl = (pdf: VisitDetailPDF) => `data:application/pdf;base64,${pdf.content}`;
 
-const downloadPdf = (pdf: IVisitDetailPDF): void => {
+const downloadPdf = (pdf: VisitDetailPDF): void => {
   const downloadLink = document.createElement("a");
   downloadLink.href = createBase64EncodedPdfDataUrl(pdf);
   downloadLink.download = pdf.name;
@@ -72,7 +72,7 @@ const downloadPdf = (pdf: IVisitDetailPDF): void => {
   document.body.removeChild(downloadLink);
 };
 
-const getButtons = (queryClient: QueryClient, visitDetail: IVisitDetail): IVisitDetailButtonProps[] => {
+const getButtons = (queryClient: QueryClient, visitDetail: VisitDetail): VisitDetailButtonProps[] => {
   if (visitDetail.isPhantom) {
     return [
       {
@@ -161,11 +161,11 @@ const VisitDetailPage = () => {
   } = useQuery({ queryKey: getVisitDetailQueryKey(id), queryFn: () => fetchVisitDetail(id) });
   const navigate = useNavigate();
 
-  const [coloredInfoStripe, setColoredInfoStripe] = useState<IColoredInfoStripeProps>();
-  const [buttons, setButtons] = useState<IVisitDetailButtonProps[]>();
+  const [coloredInfoStripe, setColoredInfoStripe] = useState<ColoredInfoStripeProps>();
+  const [buttons, setButtons] = useState<VisitDetailButtonProps[]>();
 
   useEffect(() => {
-    const stateButtons: IVisitDetailButtonProps[] = [];
+    const stateButtons: VisitDetailButtonProps[] = [];
 
     if (visitDetail !== undefined) {
       setColoredInfoStripe(getColoredInfoStripe(visitDetail));

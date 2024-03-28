@@ -4,15 +4,15 @@ import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
 import type { FormQac } from "@app/model/form";
 import { FormCardContainer } from "./FormCardContainer";
 import { FormQuestion } from "./FormQuestion";
-import type { IFormCardProps } from "./form-card";
+import type { FormCardProps } from "./form-card";
 
-type IFormQuestionsProps = IFormCardProps & {
+type FormQuestionsProps = FormCardProps & {
   titleLocalizationKey: string;
   qacs: FormQac[];
   disableComment?: boolean;
 };
 
-export const FormQuestions = ({ titleLocalizationKey, qacs, disableInputs, disableComment }: IFormQuestionsProps) => {
+export const FormQuestions = ({ titleLocalizationKey, qacs, disableInputs, disableComment }: FormQuestionsProps) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form.safetyQuestions" });
 
   return (

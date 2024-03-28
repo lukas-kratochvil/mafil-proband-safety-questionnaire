@@ -5,9 +5,9 @@ import { defaultNS } from "@app/i18n/i18n";
 import type { AutocompleteOption } from "../util/options";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import type { IFormDefaultInputProps } from "./input-props";
+import type { FormDefaultInputProps } from "./input-props";
 
-type IFormAutocompleteOptionsProps<T> = IFormDefaultInputProps & {
+type FormAutocompleteOptionsProps<T> = FormDefaultInputProps & {
   options: AutocompleteOption<T>[];
 };
 
@@ -17,7 +17,7 @@ export const FormAutocompleteOptions = <T,>({
   isOptional,
   disabled,
   options,
-}: IFormAutocompleteOptionsProps<T>) => {
+}: FormAutocompleteOptionsProps<T>) => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "form" });
   const isLoading = options.length === 0;
 

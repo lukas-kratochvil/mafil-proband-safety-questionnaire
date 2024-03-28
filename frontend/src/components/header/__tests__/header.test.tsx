@@ -1,15 +1,15 @@
 import ScienceIcon from "@mui/icons-material/Science";
 import { operatorMRTest } from "@app/__tests__/data/operators";
 import { RoutingPath } from "@app/routing-paths";
-import type { IOperatorDTO } from "@app/util/server_API/dto";
+import type { OperatorDTO } from "@app/util/server_API/dto";
 import { render, screen, within } from "@test-utils";
 import { Header } from "../Header";
-import { type ITabProps } from "../navigation/tabs";
+import { type TabProps } from "../navigation/tabs";
 
 //----------------------------------------------------------------------
 // Mocking custom authentication
 //----------------------------------------------------------------------
-let mockOperator: IOperatorDTO | undefined;
+let mockOperator: OperatorDTO | undefined;
 
 vi.mock("@app/hooks/auth/AuthProvider", () => ({
   useAuth: () => ({
@@ -20,7 +20,7 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
 //----------------------------------------------------------------------
 // Mocking common header navigation functions
 //----------------------------------------------------------------------
-const tabs: ITabProps[] = [
+const tabs: TabProps[] = [
   {
     localizationKey: "1",
     urlPrefix: RoutingPath.WAITING_ROOM,

@@ -8,13 +8,13 @@ import { ServerApiValidationError } from "./error-handling/ServerApiValidationEr
 
 export type ObjectValues<T> = T[keyof T];
 
-export type IButtonProps = {
+export type ButtonProps = {
   titleLocalizationKey: string;
   onClick: () => Promise<void>;
   showErrorColor?: boolean;
 };
 
-export const getBackButtonProps = (navigate: NavigateFunction, customTitleLocalizationKey?: string): IButtonProps => ({
+export const getBackButtonProps = (navigate: NavigateFunction, customTitleLocalizationKey?: string): ButtonProps => ({
   titleLocalizationKey: customTitleLocalizationKey ?? "common.backButton",
   onClick: async () => navigate(-1),
 });

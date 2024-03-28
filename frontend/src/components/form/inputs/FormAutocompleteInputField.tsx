@@ -7,14 +7,14 @@ import {
 } from "@mui/material";
 import { type ControllerRenderProps, type FieldValues } from "react-hook-form";
 
-type IFormAutocompleteInputFieldProps = {
+type FormAutocompleteInputFieldProps = {
   name: string;
   isLoading: boolean;
   field: Pick<ControllerRenderProps<FieldValues, string>, "name" | "ref">;
   params: AutocompleteRenderInputParams;
 };
 
-export const FormAutocompleteInputField = ({ name, isLoading, field, params }: IFormAutocompleteInputFieldProps) => {
+export const FormAutocompleteInputField = ({ name, isLoading, field, params }: FormAutocompleteInputFieldProps) => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
   return (

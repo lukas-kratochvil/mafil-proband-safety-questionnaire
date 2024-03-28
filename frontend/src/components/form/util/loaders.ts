@@ -1,9 +1,9 @@
 import type { FormAnswer, FormPropType } from "@app/model/form";
-import type { IDuplicatedVisitIncludingQuestions } from "@app/model/visit";
+import type { DuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import type {
-  IApprovalRoomVisitFormIncludingQuestionsDTO,
-  IWaitingRoomVisitFormIncludingQuestions,
+  ApprovalRoomVisitFormIncludingQuestionsDTO,
   VisitFormAnswerIncludingQuestion,
+  WaitingRoomVisitFormIncludingQuestions,
 } from "@app/util/server_API/dto";
 import { getAutocompleteOption, visualCorrectionOptions } from "./options";
 
@@ -51,7 +51,7 @@ const loadAnswers = (
 
 // Autocomplete component default value must be one of the options provided or null
 export const loadFormDefaultValuesFromWaitingRoomVisitForm = (
-  visitForm: IWaitingRoomVisitFormIncludingQuestions
+  visitForm: WaitingRoomVisitFormIncludingQuestions
 ): FormPropType => ({
   project: null,
   device: null,
@@ -74,7 +74,7 @@ export const loadFormDefaultValuesFromWaitingRoomVisitForm = (
 
 // Autocomplete component default value must be one of the options provided or null
 export const loadFormDefaultValuesFromApprovalRoomVisitForm = (
-  visitForm: IApprovalRoomVisitFormIncludingQuestionsDTO
+  visitForm: ApprovalRoomVisitFormIncludingQuestionsDTO
 ): FormPropType => ({
   ...loadFormDefaultValuesFromWaitingRoomVisitForm(visitForm),
   // selected project is set in the FormProjectInfo component
@@ -93,7 +93,7 @@ export const loadFormDefaultValuesFromApprovalRoomVisitForm = (
 });
 
 // Autocomplete component default value must be one of the options provided or null
-export const loadFormDefaultValuesVisitDuplication = (visit: IDuplicatedVisitIncludingQuestions): FormPropType => ({
+export const loadFormDefaultValuesVisitDuplication = (visit: DuplicatedVisitIncludingQuestions): FormPropType => ({
   ...visit,
   project: null,
   device: null,

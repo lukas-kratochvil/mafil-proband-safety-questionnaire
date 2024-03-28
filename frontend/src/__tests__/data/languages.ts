@@ -1,6 +1,6 @@
-import type { ILanguage, INativeLanguage } from "@app/model/language";
+import type { Language, NativeLanguage } from "@app/model/language";
 
-const languagesTest: ILanguage[] = [
+const languagesTest: Language[] = [
   {
     code: "cs",
     nativeName: "Čeština",
@@ -24,4 +24,4 @@ const languagesTest: ILanguage[] = [
   },
 ];
 
-export const nativeLanguagesTest: INativeLanguage[] = languagesTest;
+export const nativeLanguagesTest: NativeLanguage[] = languagesTest;

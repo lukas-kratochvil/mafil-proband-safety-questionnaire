@@ -1,11 +1,11 @@
 import { createContext, useContext, type PropsWithChildren } from "react";
-import type { IOperatorDTO } from "@app/util/server_API/dto";
+import type { OperatorDTO } from "@app/util/server_API/dto";
 import { useAuthProvider } from "./auth-provider";
 import { useAuthProviderDev } from "./auth-provider-dev";
 
-export type Operator = IOperatorDTO | undefined;
+export type Operator = OperatorDTO | undefined;
 
-export type IAuth = {
+export type Auth = {
   logIn: () => Promise<void>;
   logInCallback: () => Promise<boolean>;
   logOut: () => Promise<void>;
@@ -14,7 +14,7 @@ export type IAuth = {
 };
 
 // defaultValue argument is only used when a component does not have a matching Provider above it in the tree – helpful for testing components in isolation
-const authContext = createContext<IAuth>(undefined as unknown as IAuth);
+const authContext = createContext<Auth>(undefined as unknown as Auth);
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   // Ignoring the eslint React hook rule because the code is resolved during build

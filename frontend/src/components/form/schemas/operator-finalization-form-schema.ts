@@ -1,6 +1,6 @@
 import { array, date, mixed, string } from "yup";
-import type { IDevice } from "@app/model/device";
-import type { IProject } from "@app/model/project";
+import type { Device } from "@app/model/device";
+import type { Project } from "@app/model/project";
 import { answersSchema, probandFormSchema } from "./proband-form-schema";
 
 const operatorAnswersSchema = answersSchema.shape({
@@ -13,8 +13,8 @@ const operatorAnswersSchema = answersSchema.shape({
 });
 
 export const operatorFinalizationFormSchema = probandFormSchema.shape({
-  project: mixed<IProject>().nullable().required("form.validation.required"),
-  device: mixed<IDevice>().nullable().required("form.validation.required"),
+  project: mixed<Project>().nullable().required("form.validation.required"),
+  device: mixed<Device>().nullable().required("form.validation.required"),
   measuredAt: date().nullable().required("form.validation.required"),
   answers: array().of(operatorAnswersSchema).required("form.validation.safetyQuestionsRequired"),
 });

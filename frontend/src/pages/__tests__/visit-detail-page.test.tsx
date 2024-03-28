@@ -1,17 +1,17 @@
 import { operatorMRTest } from "@app/__tests__/data/operators";
-import type { IVisitDetail } from "@app/model/visit";
+import type { VisitDetail } from "@app/model/visit";
 import VisitDetailPage from "@app/pages/VisitDetailPage";
 import * as mafildbCalls from "@app/util/mafildb_API/calls";
 import { PDF_CONTENT } from "@app/util/mafildb_API/data.dev";
 import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
-import type { IOperatorDTO } from "@app/util/server_API/dto";
+import type { OperatorDTO } from "@app/util/server_API/dto";
 import { render, screen } from "@test-utils";
 
 //----------------------------------------------------------------------
 // Default visit detail
 //----------------------------------------------------------------------
 const id = "ID1";
-const defaultVisit: IVisitDetail = {
+const defaultVisit: VisitDetail = {
   uuid: "1",
   visitId: "VisitId1",
   isPhantom: false,
@@ -49,7 +49,7 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
 // Mocking server API calls
 //----------------------------------------------------------------------
 vi.mock("@app/util/server_API/calls", async () => ({
-  fetchOperator: async (): Promise<IOperatorDTO> => operatorMRTest,
+  fetchOperator: async (): Promise<OperatorDTO> => operatorMRTest,
 }));
 
 //----------------------------------------------------------------------
@@ -68,7 +68,7 @@ describe("visit detail page", () => {
   });
 
   test("is disapproved", async () => {
-    const disapprovedVisit: IVisitDetail = {
+    const disapprovedVisit: VisitDetail = {
       ...defaultVisit,
       approvalState: MDB_ApprovalState.DISAPPROVED,
     };
@@ -84,7 +84,7 @@ describe("visit detail page", () => {
   });
 
   test("is approved", async () => {
-    const approvedVisit: IVisitDetail = {
+    const approvedVisit: VisitDetail = {
       ...defaultVisit,
       approvalState: MDB_ApprovalState.APPROVED,
     };
@@ -106,7 +106,7 @@ describe("visit detail page", () => {
   });
 
   test("is for signature physically", async () => {
-    const forSignatureVisit: IVisitDetail = {
+    const forSignatureVisit: VisitDetail = {
       ...defaultVisit,
       signatureState: MDB_SignatureState.FOR_SIGNATURE_PHYSICALLY,
     };
@@ -124,7 +124,7 @@ describe("visit detail page", () => {
   });
 
   test("is for signature electronically", async () => {
-    const forSignatureVisit: IVisitDetail = {
+    const forSignatureVisit: VisitDetail = {
       ...defaultVisit,
       signatureState: MDB_SignatureState.FOR_SIGNATURE_ELECTRONICALLY,
     };
@@ -142,7 +142,7 @@ describe("visit detail page", () => {
   });
 
   test("is signed physically", async () => {
-    const signedVisit: IVisitDetail = {
+    const signedVisit: VisitDetail = {
       ...defaultVisit,
       signatureState: MDB_SignatureState.SIGNED_PHYSICALLY,
     };
@@ -160,7 +160,7 @@ describe("visit detail page", () => {
   });
 
   test("is signed electronically", async () => {
-    const signedVisit: IVisitDetail = {
+    const signedVisit: VisitDetail = {
       ...defaultVisit,
       signatureState: MDB_SignatureState.SIGNED_ELECTRONICALLY,
     };
@@ -178,7 +178,7 @@ describe("visit detail page", () => {
   });
 
   test("is phantom done", async () => {
-    const signedPhantomVisit: IVisitDetail = {
+    const signedPhantomVisit: VisitDetail = {
       ...defaultVisit,
       isPhantom: true,
     };
@@ -198,7 +198,7 @@ describe("visit detail page", () => {
   // TODO: repair these tests that switch visit detail state
   // describe("state switching", () => {
   //   test("switches from approved to for-signature state", async () => {
-  //     const approvedVisit: IVisitDetail = {
+  //     const approvedVisit: VisitDetail = {
   //       ...defaultVisit,
   //       approvalState: ApprovalState.APPROVED,
   //     };
@@ -217,7 +217,7 @@ describe("visit detail page", () => {
   //   });
 
   //   test("switches from for-signature to signed state", async () => {
-  //     const forSignatureVisit: IVisitDetail = {
+  //     const forSignatureVisit: VisitDetail = {
   //       ...defaultVisit,
   //       signatureState: SignatureState.FOR_SIGNATURE_PHYSICALLY,
   //     };

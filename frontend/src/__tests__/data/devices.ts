@@ -1,6 +1,6 @@
-import type { IDevice } from "@app/model/device";
+import type { Device } from "@app/model/device";
 
-export const devicesTest: IDevice[] = [
+export const devicesTest: Device[] = [
   {
     id: 1,
     name: "Magnet 1",

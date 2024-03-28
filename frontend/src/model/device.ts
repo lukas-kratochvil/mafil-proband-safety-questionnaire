@@ -1,6 +1,6 @@
-import type { MDB_IDeviceDTO } from "@app/util/mafildb_API/dto";
+import type { MDB_DeviceDTO } from "@app/util/mafildb_API/dto";
 
-export type IDevice = {
-  id: MDB_IDeviceDTO["id"];
-  name: MDB_IDeviceDTO["name"];
+export type Device = {
+  id: MDB_DeviceDTO["id"];
+  name: MDB_DeviceDTO["name"];
 };

@@ -1,19 +1,19 @@
 import { compareAsc, subDays } from "date-fns";
-import type { IDevice } from "@app/model/device";
+import type { Device } from "@app/model/device";
 import type { ValidatedOperatorFormData } from "@app/model/form";
-import type { ILanguage, INativeLanguage } from "@app/model/language";
-import type { IProject } from "@app/model/project";
+import type { Language, NativeLanguage } from "@app/model/language";
+import type { Project } from "@app/model/project";
 import type {
   CreatedVisitData,
-  IDuplicatedVisitIncludingQuestions,
-  IRecentVisitsTableVisit,
-  IVisitDetail,
+  DuplicatedVisitIncludingQuestions,
   ProbandVisitLanguageCode,
+  RecentVisitsTableVisit,
+  VisitDetail,
 } from "@app/model/visit";
-import type { IVisitPDF } from "@app/model/visitPdf";
+import type { VisitPDF } from "@app/model/visitPdf";
 import { mafildbApi } from "@app/util/axios/mafildbApi";
 import { fetchGender, fetchHandedness, fetchOperator, fetchQuestion } from "../server_API/calls";
-import type { IOperatorDTO, IPdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
+import type { OperatorDTO, PdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import {
   addPdfToVisitDev,
   createVisitDev,
@@ -30,12 +30,12 @@ import {
 import { transformGenderCodeForMDB, transformHandednessCodeForMDB } from "./codeMappers";
 import {
   MDB_ApprovalState,
-  type MDB_IAddPdfToVisitInput,
-  type MDB_ICreateSubjectInput,
-  type MDB_ICreateVisitInput,
-  type MDB_IUpdateVisitSignatureStateInput,
-  type MDB_IVisitDTO,
-  type MDB_IVisitFileDTO,
+  type MDB_AddPdfToVisitInput,
+  type MDB_CreateSubjectInput,
+  type MDB_CreateVisitInput,
+  type MDB_UpdateVisitSignatureStateInput,
+  type MDB_VisitDTO,
+  type MDB_VisitFileDTO,
   type MDB_VisitFileType,
 } from "./dto";
 import {
@@ -54,7 +54,7 @@ import {
   type MDB_UpdateVisitSignatureStateResponse,
 } from "./response-types";
 
-const fetchLanguages = async (): Promise<ILanguage[]> => {
+const fetchLanguages = async (): Promise<Language[]> => {
   if (import.meta.env.DEV) {
     return fetchLanguagesDev();
   }
@@ -73,7 +73,7 @@ const fetchLanguages = async (): Promise<ILanguage[]> => {
   }));
 };
 
-const fetchLanguage = async (code: string): Promise<ILanguage> => {
+const fetchLanguage = async (code: string): Promise<Language> => {
   if (import.meta.env.DEV) {
     return fetchLanguageDev(code);
   }
@@ -92,11 +92,11 @@ const fetchLanguage = async (code: string): Promise<ILanguage> => {
   };
 };
 
-export const fetchNativeLanguages = async (): Promise<INativeLanguage[]> => fetchLanguages();
+export const fetchNativeLanguages = async (): Promise<NativeLanguage[]> => fetchLanguages();
 
-export const fetchNativeLanguage = async (code: string): Promise<INativeLanguage> => fetchLanguage(code);
+export const fetchNativeLanguage = async (code: string): Promise<NativeLanguage> => fetchLanguage(code);
 
-export const fetchProjects = async (): Promise<IProject[]> => {
+export const fetchProjects = async (): Promise<Project[]> => {
   if (import.meta.env.DEV) {
     return fetchProjectsDev();
   }
@@ -110,7 +110,7 @@ export const fetchProjects = async (): Promise<IProject[]> => {
   return data.results.map((projectDTO) => ({ ...projectDTO }));
 };
 
-export const fetchProject = async (uuid: string): Promise<IProject> => {
+export const fetchProject = async (uuid: string): Promise<Project> => {
   if (import.meta.env.DEV) {
     return fetchProjectDev(uuid);
   }
@@ -124,7 +124,7 @@ export const fetchProject = async (uuid: string): Promise<IProject> => {
   return data;
 };
 
-export const fetchDevices = async (): Promise<IDevice[]> => {
+export const fetchDevices = async (): Promise<Device[]> => {
   if (import.meta.env.DEV) {
     return fetchDevicesDev();
   }
@@ -144,7 +144,7 @@ const createVisitSubject = async (
   visitFormData: ValidatedOperatorFormData,
   probandLanguageCode?: ProbandVisitLanguageCode
 ): Promise<string | never> => {
-  const createData: MDB_ICreateSubjectInput = {
+  const createData: MDB_CreateSubjectInput = {
     first_name: visitFormData.name,
     last_name: visitFormData.surname,
     // TODO: phantom visits do not have the probandLanguageCode filled
@@ -168,7 +168,7 @@ const createVisitSubject = async (
 
 const createVisit = async (
   visitFormData: ValidatedOperatorFormData,
-  approvalState: MDB_ICreateVisitInput["checked"],
+  approvalState: MDB_CreateVisitInput["checked"],
   isPhantom: boolean,
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
@@ -197,7 +197,7 @@ const createVisit = async (
   }
 
   const subjectUuid = await createVisitSubject(visitFormData, probandLanguageCode);
-  const createData: MDB_ICreateVisitInput = {
+  const createData: MDB_CreateVisitInput = {
     checked: approvalState,
     is_phantom: isPhantom,
     subject_uuid: subjectUuid,
@@ -232,7 +232,7 @@ const createVisit = async (
 
 export const createFinalizedVisit = async (
   visitFormData: ValidatedOperatorFormData,
-  approvalState: MDB_ICreateVisitInput["checked"],
+  approvalState: MDB_CreateVisitInput["checked"],
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
   probandLanguageCode: ProbandVisitLanguageCode | undefined
@@ -246,7 +246,7 @@ export const createFinalizedVisit = async (
 
 export const createVisitFromApproval = async (
   visitFormData: ValidatedOperatorFormData,
-  state: MDB_ICreateVisitInput["checked"],
+  state: MDB_CreateVisitInput["checked"],
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
   probandLanguageCode: ProbandVisitLanguageCode | undefined,
@@ -284,12 +284,12 @@ export const createPhantomVisit = async (
 ): Promise<CreatedVisitData | never> =>
   createVisit(visitFormData, MDB_ApprovalState.APPROVED, true, finalizerUsername, finalizedAt);
 
-export const addPdfToVisit = async (visitUuid: string, pdf: IPdfDTO): Promise<IVisitPDF> => {
+export const addPdfToVisit = async (visitUuid: string, pdf: PdfDTO): Promise<VisitPDF> => {
   if (import.meta.env.DEV) {
     return addPdfToVisitDev(pdf);
   }
 
-  const addPdfToVisitData: MDB_IAddPdfToVisitInput = {
+  const addPdfToVisitData: MDB_AddPdfToVisitInput = {
     file_type: "reg_form",
     name: pdf.name,
     mime_type: "application/pdf",
@@ -309,7 +309,7 @@ export const addPdfToVisit = async (visitUuid: string, pdf: IPdfDTO): Promise<IV
   };
 };
 
-export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> => {
+export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => {
   if (import.meta.env.DEV) {
     return fetchRecentVisitsDev();
   }
@@ -325,15 +325,15 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
     throw new Error(data.detail);
   }
 
-  const visits: IRecentVisitsTableVisit[] = [];
+  const visits: RecentVisitsTableVisit[] = [];
   data.results
     // Check if 14 days bound is really satisfied ('newer_than' query param may not work)
     .filter((visit) => compareAsc(visit.created, newerThanDateBound) > 0)
     .forEach(async (visit) => {
       const nativeLanguage = await fetchNativeLanguage(visit.subject.native_language_code);
 
-      let finalizer: IOperatorDTO;
-      let approver: IOperatorDTO | null = null;
+      let finalizer: OperatorDTO;
+      let approver: OperatorDTO | null = null;
 
       try {
         finalizer = await fetchOperator(visit.registration_finalize_user.username);
@@ -396,7 +396,7 @@ export const fetchRecentVisits = async (): Promise<IRecentVisitsTableVisit[]> =>
   return visits;
 };
 
-const fetchVisit = async (visitUuid: string): Promise<MDB_IVisitDTO | never> => {
+const fetchVisit = async (visitUuid: string): Promise<MDB_VisitDTO | never> => {
   const { data } = await mafildbApi.get<MDB_GetVisitResponse>(`visits/${visitUuid}`);
 
   if (MDB_RESPONSE_ERROR_ATTR in data) {
@@ -408,7 +408,7 @@ const fetchVisit = async (visitUuid: string): Promise<MDB_IVisitDTO | never> => 
 
 export const fetchDuplicatedVisit = async (
   visitUuid: string | undefined
-): Promise<IDuplicatedVisitIncludingQuestions | never> => {
+): Promise<DuplicatedVisitIncludingQuestions | never> => {
   if (visitUuid === undefined) {
     throw new Error("Missing visit ID!");
   }
@@ -464,7 +464,7 @@ export const fetchDuplicatedVisit = async (
   };
 };
 
-const fetchVisitPDF = async (visitUuid: string): Promise<MDB_IVisitFileDTO> => {
+const fetchVisitPDF = async (visitUuid: string): Promise<MDB_VisitFileDTO> => {
   type VisitFilesParams = {
     file_type: MDB_VisitFileType;
   };
@@ -484,7 +484,7 @@ const fetchVisitPDF = async (visitUuid: string): Promise<MDB_IVisitFileDTO> => {
   return pdf;
 };
 
-export const fetchVisitDetail = async (visitUuid: string | undefined): Promise<IVisitDetail | never> => {
+export const fetchVisitDetail = async (visitUuid: string | undefined): Promise<VisitDetail | never> => {
   if (visitUuid === undefined) {
     throw new Error("Missing visit ID!");
   }
@@ -509,13 +509,13 @@ export const fetchVisitDetail = async (visitUuid: string | undefined): Promise<I
 
 export const updateVisitSignatureState = async (
   visitUuid: string,
-  signatureState: MDB_IUpdateVisitSignatureStateInput["registration_signature_status"]
+  signatureState: MDB_UpdateVisitSignatureStateInput["registration_signature_status"]
 ): Promise<string | never> => {
   if (import.meta.env.DEV) {
     return updateVisitSignatureStateDev(visitUuid, signatureState);
   }
 
-  const updateData: MDB_IUpdateVisitSignatureStateInput = {
+  const updateData: MDB_UpdateVisitSignatureStateInput = {
     registration_signature_status: signatureState,
   };
   const { data } = await mafildbApi.patch<MDB_UpdateVisitSignatureStateResponse>(`visits/${visitUuid}`, updateData);

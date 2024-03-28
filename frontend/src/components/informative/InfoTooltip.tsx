@@ -2,11 +2,11 @@ import InfoIcon from "@mui/icons-material/Info";
 import { ClickAwayListener, IconButton, Tooltip, useMediaQuery } from "@mui/material";
 import { useState } from "react";
 
-type IInfoTooltipProps = {
+type InfoTooltipProps = {
   text: string;
 };
 
-export const InfoTooltip = ({ text }: IInfoTooltipProps) => {
+export const InfoTooltip = ({ text }: InfoTooltipProps) => {
   const matchesPointerDevice = useMediaQuery("(pointer: fine)");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleTooltipClose = () => setIsOpen(false);

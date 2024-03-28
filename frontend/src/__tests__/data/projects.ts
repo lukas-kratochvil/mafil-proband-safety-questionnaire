@@ -1,6 +1,6 @@
-import type { IProject } from "@app/model/project";
+import type { Project } from "@app/model/project";
 
-export const projectsTest: IProject[] = [
+export const projectsTest: Project[] = [
   {
     uuid: "1",
     name: "Projekt 1",

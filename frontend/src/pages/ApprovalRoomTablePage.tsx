@@ -7,7 +7,7 @@ import { TranslatedEntityTableCell } from "@app/components/table/TranslatedEntit
 import { ApprovalRoomTableActionButtons } from "@app/components/table/actions/ApprovalRoomTableActionButtons";
 import { defaultTableProps } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n/i18n";
-import type { IApprovalRoomTableVisitForm } from "@app/model/visitForm";
+import type { ApprovalRoomTableVisitForm } from "@app/model/visitForm";
 import { fetchApprovalRoomTableVisitForms } from "@app/util/server_API/calls";
 import { PageContainer } from "./PageContainer";
 
@@ -23,7 +23,7 @@ const ApprovalRoomTablePage = () => {
     isError,
   } = useQuery({ queryKey: ["approvalRoomVisitForms"], queryFn: fetchApprovalRoomTableVisitForms });
 
-  const columns = useMemo<MRTColumnDef<IApprovalRoomTableVisitForm>[]>(
+  const columns = useMemo<MRTColumnDef<ApprovalRoomTableVisitForm>[]>(
     () => [
       {
         header: t("header.registrationDate"),
@@ -67,7 +67,7 @@ const ApprovalRoomTablePage = () => {
         header: t("header.gender"),
         accessorKey: "gender",
         // eslint-disable-next-line react/no-unstable-nested-components
-        Cell: ({ row }: { row: MRTRow<IApprovalRoomTableVisitForm> }) => (
+        Cell: ({ row }: { row: MRTRow<ApprovalRoomTableVisitForm> }) => (
           <TranslatedEntityTableCell translations={row.original.gender.translations} />
         ),
         maxSize: 0,
@@ -83,7 +83,7 @@ const ApprovalRoomTablePage = () => {
         id: "actionButtons",
         columnDefType: "display", // turns off data column features like sorting, filtering, etc.
         // eslint-disable-next-line react/no-unstable-nested-components
-        Cell: ({ row }: { row: MRTRow<IApprovalRoomTableVisitForm> }) => (
+        Cell: ({ row }: { row: MRTRow<ApprovalRoomTableVisitForm> }) => (
           <ApprovalRoomTableActionButtons visitFormId={row.original.id} />
         ),
         maxSize: 0,

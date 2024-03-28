@@ -7,14 +7,14 @@ import { defaultNS } from "@app/i18n/i18n";
 import { answerOptions, type FormPropType, type FormQac } from "@app/model/form";
 import { FormRadioGroup } from "../inputs/FormRadioGroup";
 import { FormTextField } from "../inputs/FormTextField";
-import type { IFormCardProps } from "./form-card";
+import type { FormCardProps } from "./form-card";
 
-type IFormQuestionProps = IFormCardProps & {
+type FormQuestionProps = FormCardProps & {
   qac: FormQac;
   disableComment?: boolean;
 };
 
-export const FormQuestion = ({ qac, disableInputs, disableComment }: IFormQuestionProps) => {
+export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestionProps) => {
   const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.safetyQuestions" });
   const matchesUpSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
   const { operator } = useAuth();

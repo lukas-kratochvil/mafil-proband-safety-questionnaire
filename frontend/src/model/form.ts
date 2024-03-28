@@ -1,9 +1,9 @@
 import type { AutocompleteOption, VisualCorrection } from "@app/components/form/util/options";
 import type { ObjectValues } from "@app/util/utils";
-import type { IGenderDTO, IHandednessDTO, QuestionHiddenByGendersWithoutId } from "../util/server_API/dto";
-import type { IDevice } from "./device";
-import type { INativeLanguage } from "./language";
-import type { IProject } from "./project";
+import type { GenderDTO, HandednessDTO, QuestionHiddenByGendersWithoutId } from "../util/server_API/dto";
+import type { Device } from "./device";
+import type { NativeLanguage } from "./language";
+import type { Project } from "./project";
 
 // Form fields having this data type are validated as numbers
 type TextFieldNumberInput = string | number;
@@ -30,8 +30,8 @@ export type FormQac = FormAnswer &
 
 export type FormPropType = {
   // Project info
-  project: IProject | null;
-  device: IDevice | null;
+  project: Project | null;
+  device: Device | null;
   measuredAt: Date | null;
 
   // Proband info
@@ -39,11 +39,11 @@ export type FormPropType = {
   surname: string;
   personalId: string;
   birthdate: Date | null;
-  gender: IGenderDTO | null;
-  nativeLanguage: INativeLanguage | null;
+  gender: GenderDTO | null;
+  nativeLanguage: NativeLanguage | null;
   heightCm: TextFieldNumberInput;
   weightKg: TextFieldNumberInput;
-  handedness: IHandednessDTO | null;
+  handedness: HandednessDTO | null;
   visualCorrection: AutocompleteOption<VisualCorrection> | null;
   visualCorrectionDioptre: TextFieldNumberInput;
 
@@ -71,11 +71,11 @@ export type ValidatedProbandFormData = {
   surname: string;
   personalId: string;
   birthdate: Date;
-  gender: IGenderDTO;
-  nativeLanguage: INativeLanguage;
+  gender: GenderDTO;
+  nativeLanguage: NativeLanguage;
   heightCm: number;
   weightKg: number;
-  handedness: IHandednessDTO;
+  handedness: HandednessDTO;
   visualCorrectionDioptre: number;
 
   // Safety questions
@@ -88,8 +88,8 @@ export type ValidatedProbandFormData = {
 
 type OperatorAddedFormData = {
   // Project info
-  project: IProject;
-  device: IDevice;
+  project: Project;
+  device: Device;
   measuredAt: Date;
 
   // Visit form disapproval

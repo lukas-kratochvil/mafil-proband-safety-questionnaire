@@ -2,10 +2,10 @@ import { Autocomplete } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n/i18n";
-import type { IHandednessDTO } from "@app/util/server_API/dto";
+import type { HandednessDTO } from "@app/util/server_API/dto";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
-import type { IFormAsyncAutocompleteProps } from "./input-props";
+import type { FormAsyncAutocompleteProps } from "./input-props";
 
 export const FormAutocompleteHandednesses = ({
   name,
@@ -14,7 +14,7 @@ export const FormAutocompleteHandednesses = ({
   disabled,
   options,
   isLoading,
-}: IFormAsyncAutocompleteProps<IHandednessDTO>) => {
+}: FormAsyncAutocompleteProps<HandednessDTO>) => {
   const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
 
   return (
@@ -29,7 +29,7 @@ export const FormAutocompleteHandednesses = ({
           <Autocomplete
             id={name}
             options={options?.sort((a, b) => a.order - b.order) ?? []}
-            getOptionLabel={(option: IHandednessDTO) =>
+            getOptionLabel={(option: HandednessDTO) =>
               option.translations.find((trans) => trans.language.code === i18n.language)?.text ?? ""
             }
             isOptionEqualToValue={(option, value) => option.id === value.id}

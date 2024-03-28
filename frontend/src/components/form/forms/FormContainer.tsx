@@ -2,17 +2,17 @@ import { Stack, useMediaQuery, type Theme } from "@mui/material";
 import { type PropsWithChildren } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { FormButtons, type IFormButtonsProps } from "@app/components/form/components/FormButtons";
+import { FormButtons, type FormButtonsProps } from "@app/components/form/components/FormButtons";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { defaultNS } from "@app/i18n/i18n";
 import type { FormPropType } from "@app/model/form";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { FormSkeleton } from "./FormSkeleton";
 
-type IFormContainerProps<TValidatedData> = {
+type FormContainerProps<TValidatedData> = {
   isLoading: boolean;
   isError: boolean;
-  buttons: IFormButtonsProps<TValidatedData> | undefined;
+  buttons: FormButtonsProps<TValidatedData> | undefined;
   getFormData: (data: FormPropType) => TValidatedData;
 };
 
@@ -22,7 +22,7 @@ export const FormContainer = <TValidatedData,>({
   isError,
   buttons,
   getFormData,
-}: PropsWithChildren<IFormContainerProps<TValidatedData>>) => {
+}: PropsWithChildren<FormContainerProps<TValidatedData>>) => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const { t } = useTranslation(defaultNS);
   const { handleSubmit } = useFormContext<FormPropType>();

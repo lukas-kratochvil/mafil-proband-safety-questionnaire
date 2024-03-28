@@ -2,7 +2,7 @@ import type { AnswerOption } from "@app/model/form";
 import type { ProbandVisitLanguageCode } from "@app/model/visit";
 import type { ObjectValues } from "../utils";
 
-export type MDB_ILanguageDTO = {
+export type MDB_LanguageDTO = {
   code: string;
   name: string;
   name_cs: string;
@@ -10,13 +10,13 @@ export type MDB_ILanguageDTO = {
   priority: number | null;
 };
 
-export type MDB_IProjectDTO = {
+export type MDB_ProjectDTO = {
   uuid: string;
   name: string;
   acronym: string;
 };
 
-export type MDB_IDeviceDTO = {
+export type MDB_DeviceDTO = {
   id: number;
   name: string;
 };
@@ -24,7 +24,7 @@ export type MDB_IDeviceDTO = {
 export type MDB_GenderCode = "ns" | "m" | "f" | "o";
 export type MDB_HandednessCode = "ns" | "rh" | "lh" | "fl" | "un";
 
-export type MDB_ICreateSubjectInput = {
+export type MDB_CreateSubjectInput = {
   preferred_language_code: ProbandVisitLanguageCode;
   first_name: string;
   last_name: string;
@@ -37,7 +37,7 @@ export type MDB_ICreateSubjectInput = {
   phone: string;
 };
 
-export type MDB_ISubjectDTO = MDB_ICreateSubjectInput & {
+export type MDB_SubjectDTO = MDB_CreateSubjectInput & {
   uuid: string;
 };
 
@@ -48,14 +48,14 @@ export const MDB_ApprovalState = {
 
 type MDB_ApprovalState = ObjectValues<typeof MDB_ApprovalState>;
 
-export type MDB_IAnswerDTO = {
+export type MDB_AnswerDTO = {
   question_id: string;
   answer: AnswerOption;
   comment: string;
 };
 
 // TODO: check for nullable fields against the MAFILDB model: https://github.com/lukas-kratochvil/mafil-proband-safety-questionnaire/issues/19
-export type MDB_ICreateVisitInput = {
+export type MDB_CreateVisitInput = {
   checked: MDB_ApprovalState;
   is_phantom: boolean;
   date: Date;
@@ -65,7 +65,7 @@ export type MDB_ICreateVisitInput = {
   height: number;
   weight: number;
   visual_correction_dioptre: number;
-  registration_answers: MDB_IAnswerDTO[];
+  registration_answers: MDB_AnswerDTO[];
   registration_finalize_username: string;
   registration_finalize_date: Date;
   registration_approve_username: string;
@@ -73,7 +73,7 @@ export type MDB_ICreateVisitInput = {
   registration_disapprove_reason: string;
 };
 
-type MDB_IRegistrationUserDTO = {
+type MDB_RegistrationUserDTO = {
   id: number;
   username: string;
 };
@@ -88,39 +88,39 @@ export const MDB_SignatureState = {
 
 type MDB_SignatureState = ObjectValues<typeof MDB_SignatureState>;
 
-export type MDB_IVisitDTO = Omit<
-  MDB_ICreateVisitInput,
+export type MDB_VisitDTO = Omit<
+  MDB_CreateVisitInput,
   "subject_uuid" | "project_uuid" | "device_id" | "registration_finalize_username" | "registration_approve_username"
 > & {
   uuid: string;
   visit_name: string;
   created: Date;
-  subject: MDB_ISubjectDTO;
+  subject: MDB_SubjectDTO;
   // TODO: only 'uuid' and 'acronym' properties - missing 'name' attribute
-  project: MDB_IProjectDTO;
+  project: MDB_ProjectDTO;
   // TODO: only 'id' and 'type' properties - missing 'name' attribute
   // TODO: could any device ever be null in the devel/prod env?
-  device: MDB_IDeviceDTO;
-  registration_finalize_user: MDB_IRegistrationUserDTO;
-  registration_approve_user: MDB_IRegistrationUserDTO | null;
+  device: MDB_DeviceDTO;
+  registration_finalize_user: MDB_RegistrationUserDTO;
+  registration_approve_user: MDB_RegistrationUserDTO | null;
   // TODO: create type for one of: “ns” | ”pp” | ”pe” | ”sp” | ”se”
   registration_signature_status: MDB_SignatureState;
 };
 
-export type MDB_IUpdateVisitSignatureStateInput = Pick<MDB_IVisitDTO, "registration_signature_status">;
+export type MDB_UpdateVisitSignatureStateInput = Pick<MDB_VisitDTO, "registration_signature_status">;
 
 export type MDB_VisitFileType = "reg_form";
 
 type MDB_VisitFileMimeType = "application/pdf";
 
-export type MDB_IAddPdfToVisitInput = {
+export type MDB_AddPdfToVisitInput = {
   file_type: MDB_VisitFileType;
   name: string; // also contains extension, for example: my_doc.pdf
   mime_type: MDB_VisitFileMimeType;
   content: string; // Base64 encoded PDF content
 };
 
-export type MDB_IVisitFileDTO = MDB_IAddPdfToVisitInput & {
+export type MDB_VisitFileDTO = MDB_AddPdfToVisitInput & {
   id: number;
   uploaded: Date;
 };

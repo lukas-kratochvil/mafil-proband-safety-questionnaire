@@ -1,18 +1,18 @@
 import { Button, Grid, useMediaQuery, type Theme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
-import { handleErrorsWithToast, type IButtonProps } from "@app/util/utils";
+import { handleErrorsWithToast, type ButtonProps } from "@app/util/utils";
 
-type IFormSubmitButtonProps<TValidatedData> = Omit<IButtonProps, "onClick"> & {
+type FormSubmitButtonProps<TValidatedData> = Omit<ButtonProps, "onClick"> & {
   onClick: (data: TValidatedData) => Promise<void>;
 };
 
-export type IFormButtonsProps<TValidatedData> = {
-  submitButtonProps: IFormSubmitButtonProps<TValidatedData> | undefined;
-  buttonsProps: IButtonProps[];
+export type FormButtonsProps<TValidatedData> = {
+  submitButtonProps: FormSubmitButtonProps<TValidatedData> | undefined;
+  buttonsProps: ButtonProps[];
 };
 
-export const FormButtons = <T,>({ submitButtonProps, buttonsProps }: IFormButtonsProps<T>) => {
+export const FormButtons = <T,>({ submitButtonProps, buttonsProps }: FormButtonsProps<T>) => {
   const { t } = useTranslation(defaultNS);
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
