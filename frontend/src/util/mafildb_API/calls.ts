@@ -332,6 +332,15 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
     .forEach(async (visit) => {
       const nativeLanguage = await fetchNativeLanguage(visit.subject.native_language_code);
 
+      try {
+        if (visit.device === null) {
+          throw new Error("Device is null!");
+        }
+      } catch (e) {
+        // TODO: what to do when device is null? Skip the visit?
+        return;
+      }
+
       let finalizer: OperatorDTO;
       let approver: OperatorDTO | null = null;
 
@@ -361,6 +370,7 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
 
       visits.push({
         ...visit,
+        device: { ...visit.device },
         visitId: visit.visit_name,
         isPhantom: visit.is_phantom,
         measurementDate: visit.date,
@@ -418,6 +428,12 @@ export const fetchDuplicatedVisit = async (
   }
 
   const visit = await fetchVisit(visitUuid);
+
+  // TODO: what to do when device is null? Throw error? We should disable the 'Duplication' button for these visits or not load them in the 'Recent visits table' at all
+  if (visit.device === null) {
+    throw new Error("Device is null!");
+  }
+
   const [gender, nativeLanguage, handedness, answersIncludingQuestions] = await Promise.all([
     fetchGender(visit.subject.gender),
     fetchNativeLanguage(visit.subject.native_language_code),
@@ -441,6 +457,7 @@ export const fetchDuplicatedVisit = async (
   ]);
   return {
     ...visit,
+    device: visit.device,
     visitId: visit.visit_name,
     isPhantom: visit.is_phantom,
     measurementDate: visit.date,

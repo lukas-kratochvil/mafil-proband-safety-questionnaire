@@ -54,7 +54,6 @@ export type MDB_AnswerDTO = {
   comment: string;
 };
 
-// TODO: check for nullable fields against the MAFILDB model: https://github.com/lukas-kratochvil/mafil-proband-safety-questionnaire/issues/19
 export type MDB_CreateVisitInput = {
   checked: MDB_ApprovalState;
   is_phantom: boolean;
@@ -88,6 +87,7 @@ export const MDB_SignatureState = {
 
 type MDB_SignatureState = ObjectValues<typeof MDB_SignatureState>;
 
+// TODO: check for nullable fields against the MAFILDB model: https://github.com/lukas-kratochvil/mafil-proband-safety-questionnaire/issues/19
 export type MDB_VisitDTO = Omit<
   MDB_CreateVisitInput,
   "subject_uuid" | "project_uuid" | "device_id" | "registration_finalize_username" | "registration_approve_username"
@@ -96,11 +96,8 @@ export type MDB_VisitDTO = Omit<
   visit_name: string;
   created: Date;
   subject: MDB_SubjectDTO;
-  // TODO: only 'uuid' and 'acronym' properties - missing 'name' attribute
   project: MDB_ProjectDTO;
-  // TODO: only 'id' and 'type' properties - missing 'name' attribute
-  // TODO: could any device ever be null in the devel/prod env?
-  device: MDB_DeviceDTO;
+  device: MDB_DeviceDTO | null;
   registration_finalize_user: MDB_RegistrationUserDTO;
   registration_approve_user: MDB_RegistrationUserDTO | null;
   // TODO: create type for one of: “ns” | ”pp” | ”pe” | ”sp” | ”se”
