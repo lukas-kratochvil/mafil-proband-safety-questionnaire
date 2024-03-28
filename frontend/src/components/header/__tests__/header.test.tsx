@@ -41,7 +41,7 @@ const tabs: TabProps[] = [
   },
 ];
 
-vi.mock("@app/components/header/navigation/common", async () => ({
+vi.mock("@app/components/header/navigation/tabs", async () => ({
   getTabs: () => tabs,
   getCommonTabSx: () => ({}),
 }));
