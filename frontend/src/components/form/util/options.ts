@@ -7,9 +7,9 @@ export type IOption<T> = {
 };
 
 /**
- * Creates options from the provided enum entries.
+ * Creates options from values of the provided object.
  * @param optionsObject options object
- * @param i18nPrefix enum key i18n prefix that will be prepended to 'translations.form' prefix
+ * @param i18nPrefix i18n prefix that will be prepended to 'translations.form' prefix
  * @return options array
  */
 const createOptions = <T>(optionsObject: Record<string, T>, i18nPrefix: string): IOption<T>[] =>
@@ -21,7 +21,7 @@ const createOptions = <T>(optionsObject: Record<string, T>, i18nPrefix: string):
 /**
  * Get option object by its value.
  * @param options options array
- * @param value value from enum specific to options array values
+ * @param value one of the option's values
  * @return option or null if options do not contain provided value
  */
 export const getOption = <T>(options: IOption<T>[], value: T): IOption<T> | null =>
