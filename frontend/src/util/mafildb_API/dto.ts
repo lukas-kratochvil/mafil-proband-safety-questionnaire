@@ -45,6 +45,7 @@ export const MDB_ApprovalState = {
   APPROVED: "ra",
   DISAPPROVED: "rd",
 } as const;
+
 type MDB_ApprovalState = ObjectValues<typeof MDB_ApprovalState>;
 
 type MDB_IAnswerDTO = {
@@ -84,6 +85,7 @@ export const MDB_SignatureState = {
   SIGNED_PHYSICALLY: "sp",
   SIGNED_ELECTRONICALLY: "se",
 } as const;
+
 type MDB_SignatureState = ObjectValues<typeof MDB_SignatureState>;
 
 export type MDB_IVisitDTO = Omit<

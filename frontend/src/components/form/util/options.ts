@@ -7,14 +7,14 @@ export type IOption<T> = {
 
 /**
  * Creates options from the provided enum entries.
- * @param entries enum entries obtained from Object.entries(T)
+ * @param optionsObject options object
  * @param i18nPrefix enum key i18n prefix that will be prepended to 'translations.form' prefix
  * @return options array
  */
-const createOptions = <T>(entries: [key: string, value: T][], i18nPrefix: string): IOption<T>[] =>
-  entries.map(([key, value]) => ({
+const createOptions = <T>(optionsObject: Record<string, T>, i18nPrefix: string): IOption<T>[] =>
+  Object.values(optionsObject).map((value) => ({
     value,
-    localizationKey: `${i18nPrefix}.${key}`,
+    localizationKey: `${i18nPrefix}.${value}`,
   }));
 
 /**
@@ -37,7 +37,4 @@ const visualCorrectionOptionsObject = {
 
 export type VisualCorrection = ObjectValues<typeof visualCorrectionOptionsObject>;
 
-export const visualCorrectionOptions = createOptions(
-  Object.entries(visualCorrectionOptionsObject),
-  "visualCorrection"
-);
+export const visualCorrectionOptions = createOptions(visualCorrectionOptionsObject, "visualCorrection");
