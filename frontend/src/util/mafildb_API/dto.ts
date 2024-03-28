@@ -87,7 +87,6 @@ export const MDB_SignatureState = {
 
 type MDB_SignatureState = ObjectValues<typeof MDB_SignatureState>;
 
-// TODO: check for nullable fields against the MAFILDB model: https://github.com/lukas-kratochvil/mafil-proband-safety-questionnaire/issues/19
 export type MDB_VisitDTO = Omit<
   MDB_CreateVisitInput,
   "subject_uuid" | "project_uuid" | "device_id" | "registration_finalize_username" | "registration_approve_username"
@@ -100,7 +99,6 @@ export type MDB_VisitDTO = Omit<
   device: MDB_DeviceDTO | null;
   registration_finalize_user: MDB_RegistrationUserDTO | null;
   registration_approve_user: MDB_RegistrationUserDTO | null;
-  // TODO: create type for one of: “ns” | ”pp” | ”pe” | ”sp” | ”se”
   registration_signature_status: MDB_SignatureState;
 };
 
