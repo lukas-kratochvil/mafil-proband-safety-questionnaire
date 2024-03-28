@@ -1,6 +1,6 @@
 import { Card, Divider, Typography } from "@mui/material";
 import { lime } from "@mui/material/colors";
-import { type PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 
 type CardContainerProps = {
   title: string;

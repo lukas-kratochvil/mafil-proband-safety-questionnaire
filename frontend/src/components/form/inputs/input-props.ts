@@ -1,4 +1,4 @@
-import { type FormInputFieldContainerProps } from "./FormInputFieldContainer";
+import type { FormInputFieldContainerProps } from "./FormInputFieldContainer";
 
 export type FormDefaultInputProps = FormInputFieldContainerProps & {
   disabled?: boolean;

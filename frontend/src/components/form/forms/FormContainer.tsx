@@ -1,5 +1,5 @@
 import { Stack, useMediaQuery, type Theme } from "@mui/material";
-import { type PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormButtons, type FormButtonsProps } from "@app/components/form/components/FormButtons";

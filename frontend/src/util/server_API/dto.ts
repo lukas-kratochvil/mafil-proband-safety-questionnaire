@@ -1,4 +1,4 @@
-import { type LanguageCode } from "@app/i18n/i18n";
+import type { LanguageCode } from "@app/i18n/i18n";
 import type { AnswerOption } from "@app/model/form";
 import type { MDB_LanguageDTO } from "../mafildb_API/dto";
 

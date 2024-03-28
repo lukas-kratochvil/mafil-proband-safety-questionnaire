@@ -5,7 +5,7 @@ import {
   type AutocompleteRenderInputParams,
   type Theme,
 } from "@mui/material";
-import { type ControllerRenderProps, type FieldValues } from "react-hook-form";
+import type { ControllerRenderProps, FieldValues } from "react-hook-form";
 
 type FormAutocompleteInputFieldProps = {
   name: string;

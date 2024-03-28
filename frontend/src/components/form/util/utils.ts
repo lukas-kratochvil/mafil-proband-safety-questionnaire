@@ -1,5 +1,5 @@
 import { updatedDiff } from "deep-object-diff";
-import { type Operator } from "@app/hooks/auth/AuthProvider";
+import type { Operator } from "@app/hooks/auth/AuthProvider";
 import type { Device } from "@app/model/device";
 import type {
   AnswerOption,

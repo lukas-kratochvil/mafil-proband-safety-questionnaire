@@ -8,7 +8,7 @@ import {
   useMediaQuery,
   type Theme,
 } from "@mui/material";
-import { type SetStateAction } from "react";
+import type { SetStateAction } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n/i18n";

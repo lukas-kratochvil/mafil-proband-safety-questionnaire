@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FormBeforeExamination } from "@app/components/form/components/FormBeforeExamination";
-import { type FormButtonsProps } from "@app/components/form/components/FormButtons";
+import type { FormButtonsProps } from "@app/components/form/components/FormButtons";
 import { FormEntryInfo } from "@app/components/form/components/FormEntryInfo";
 import { FormExaminationConsent } from "@app/components/form/components/FormExaminationConsent";
 import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo";

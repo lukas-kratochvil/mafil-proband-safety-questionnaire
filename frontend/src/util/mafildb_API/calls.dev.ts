@@ -3,7 +3,7 @@ import { nativeLanguagesTest } from "@app/__tests__/data/languages";
 import { projectsTest } from "@app/__tests__/data/projects";
 import { subjectsTest } from "@app/__tests__/data/subjects";
 import type { Device } from "@app/model/device";
-import { type ValidatedOperatorFormData } from "@app/model/form";
+import type { ValidatedOperatorFormData } from "@app/model/form";
 import type { Language } from "@app/model/language";
 import type { Project } from "@app/model/project";
 import type { Subject } from "@app/model/subject";

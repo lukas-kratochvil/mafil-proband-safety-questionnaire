@@ -4,7 +4,7 @@ import { RoutingPath } from "@app/routing-paths";
 import type { OperatorDTO } from "@app/util/server_API/dto";
 import { render, screen, within } from "@test-utils";
 import { Header } from "../Header";
-import { type TabProps } from "../navigation/tabs";
+import type { TabProps } from "../navigation/tabs";
 
 //----------------------------------------------------------------------
 // Mocking custom authentication

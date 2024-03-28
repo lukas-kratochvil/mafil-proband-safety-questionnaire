@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { type AnyObjectSchema } from "yup";
+import type { AnyObjectSchema } from "yup";
 import { loadEmptyDefaultValues } from "@app/components/form/util/loaders";
 import type { FormPropType } from "@app/model/form";
 import { PageContainer } from "@app/pages/PageContainer";

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { type FormButtonsProps } from "@app/components/form/components/FormButtons";
+import type { FormButtonsProps } from "@app/components/form/components/FormButtons";
 import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo";
 import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
