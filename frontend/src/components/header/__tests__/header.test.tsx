@@ -78,11 +78,11 @@ describe("header", () => {
   });
 
   describe("auth user is logged in", () => {
-    test("contains all tabs", () => {
+    test("contains all tabs", async () => {
       mockOperator = operatorMRTest;
 
       const { container } = render(<Header />);
-      const headerTabs = within(container).getAllByRole("tab");
+      const headerTabs = await within(container).findAllByRole("tab");
 
       expect(headerTabs.length).toBe(tabs.length);
     });
