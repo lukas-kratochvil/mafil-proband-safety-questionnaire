@@ -147,7 +147,8 @@ describe("duplication form page", () => {
       phone: visit.subject.phone,
     };
 
-    await waitFor(async () => expect(await screen.findByRole("form")).toHaveFormValues(expectedFormValues));
+    const form = await screen.findByRole("form");
+    await waitFor(() => expect(form).toHaveFormValues(expectedFormValues));
 
     const questions = await screen.findAllByRole("radiogroup");
     expect(questions.length).toEqual(questionsTest.length);

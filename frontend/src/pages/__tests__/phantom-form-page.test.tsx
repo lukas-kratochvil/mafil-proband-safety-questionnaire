@@ -12,7 +12,7 @@ import type { NativeLanguage } from "@app/model/language";
 import type { Project } from "@app/model/project";
 import PhantomFormPage from "@app/pages/PhantomFormPage";
 import type { GenderDTO, HandednessDTO, PdfDTO } from "@app/util/server_API/dto";
-import { render, screen, waitFor } from "@test-utils";
+import { render, screen } from "@test-utils";
 
 //----------------------------------------------------------------------
 // Mocking react-router-dom hooks
@@ -86,24 +86,24 @@ describe("phantom form page", () => {
   test("renders new form default values", async () => {
     setup();
 
-    await waitFor(async () =>
-      expect(screen.getByRole("form")).toHaveFormValues({
-        project: "",
-        device: "",
-        measuredAt: format(new Date(), "dd.MM.yyyy"),
-        name: "",
-        surname: "",
-        personalId: "",
-        birthdate: "",
-        gender: "", // is set to 'Other' in the FormProbandInfo component
-        nativeLanguage: "",
-        heightCm: "",
-        weightKg: "",
-        handedness: "",
-        visualCorrection: "",
-        visualCorrectionDioptre: "0",
-      })
-    );
+    const form = await screen.findByRole("form");
+
+    expect(form).toHaveFormValues({
+      project: "",
+      device: "",
+      measuredAt: format(new Date(), "dd.MM.yyyy"),
+      name: "",
+      surname: "",
+      personalId: "",
+      birthdate: "",
+      gender: "", // is set to 'Other' in the FormProbandInfo component
+      nativeLanguage: "",
+      heightCm: "",
+      weightKg: "",
+      handedness: "",
+      visualCorrection: "",
+      visualCorrectionDioptre: "0",
+    });
   });
 
   describe("auto-fills", () => {
