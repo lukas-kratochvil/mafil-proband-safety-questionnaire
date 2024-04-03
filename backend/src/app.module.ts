@@ -31,7 +31,7 @@ const TIMEZONE_REGEX = "^[A-Z][a-z]*/[A-Z][a-z_-]*(/[A-Z][a-z_-]*)?$";
         TZ: Joi.string().trim().pattern(new RegExp(TIMEZONE_REGEX)).required(),
         THROTTLE_TTL: Joi.number().integer().required(),
         THROTTLE_LIMIT: Joi.number().integer().required(),
-        WEB_DOMAIN: Joi.string().uri().required(),
+        WEB_URI: Joi.string().uri({ scheme: ["http", "https"] }).required(),
       }).required(),
     }),
     ScheduleModule.forRoot(),

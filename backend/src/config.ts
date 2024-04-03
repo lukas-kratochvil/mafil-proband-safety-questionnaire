@@ -15,5 +15,5 @@ export type EnvironmentVariables = {
   THROTTLE_LIMIT: number;
   WEB_API_KEY: string;
   PDF_OPERATOR_LANGUAGE_CODE: PdfLanguageCode;
-  WEB_DOMAIN: string;
+  WEB_URI: string;
 };
