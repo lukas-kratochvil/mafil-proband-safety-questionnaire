@@ -1,7 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { useFormContext } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { lazy, useEffect, useState } from "react";
 import { FormBeforeExamination } from "@app/components/form/components/FormBeforeExamination";
 import type { FormButtonsProps } from "@app/components/form/components/FormButtons";
 import { FormEntryInfo } from "@app/components/form/components/FormEntryInfo";
@@ -9,25 +7,19 @@ import { FormExaminationConsent } from "@app/components/form/components/FormExam
 import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo";
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { FormSafetyInfo } from "@app/components/form/components/FormSafetyInfo";
-import type { FormPropType, FormQac, ValidatedProbandFormData } from "@app/model/form";
-import { RoutingPath } from "@app/routing-paths";
-import { createProbandVisitForm, fetchCurrentQuestions } from "@app/util/server_API/calls";
-import { FormProbandContactCheckbox } from "../components/FormProbandContactCheckbox";
-import { FormProbandContactConsent } from "../components/FormProbandContactConsent";
-import { FormProbandContactRequest } from "../components/FormProbandContactRequest";
+import type { FormQac, ValidatedProbandFormData } from "@app/model/form";
+import { fetchCurrentQuestions } from "@app/util/server_API/calls";
 import { getValidatedProbandFormData } from "../util/utils";
 import { FormContainer } from "./FormContainer";
+
+const ProbandFormContacts = lazy(() => import("./ProbandFormContacts"));
 
 type ProbandFormStep = "examination" | "contacts";
 
 export const ProbandForm = () => {
-  const navigate = useNavigate();
-  const { setError } = useFormContext<FormPropType>();
-
   const [step, setStep] = useState<ProbandFormStep>("examination");
   const [qacs, setQacs] = useState<FormQac[]>([]);
   const [formButtons, setFormButtons] = useState<FormButtonsProps<ValidatedProbandFormData>>();
-  const [isContactsRequestShown, setIsContactsRequestShown] = useState<boolean>(false);
 
   const {
     data: questions,
@@ -70,45 +62,8 @@ export const ProbandForm = () => {
         },
         buttonsProps: [],
       });
-    } else if (step === "contacts") {
-      if (isContactsRequestShown) {
-        setFormButtons({
-          submitButtonProps: {
-            titleLocalizationKey: "form.common.buttons.agree",
-            onClick: async (data) => {
-              let isValidationError = false;
-
-              if (data.email === "") {
-                setError("email", { message: "form.validation.probandContacts" }, { shouldFocus: true });
-                isValidationError = true;
-              }
-              if (data.phone === "") {
-                setError("phone", { message: "form.validation.probandContacts" }, { shouldFocus: !isValidationError });
-                isValidationError = true;
-              }
-
-              if (!isValidationError) {
-                await createProbandVisitForm(data);
-                navigate(RoutingPath.PROBAND_HOME);
-              }
-            },
-          },
-          buttonsProps: [],
-        });
-      } else {
-        setFormButtons({
-          submitButtonProps: {
-            titleLocalizationKey: "form.common.buttons.complete",
-            onClick: async (data) => {
-              await createProbandVisitForm(data);
-              navigate(RoutingPath.PROBAND_HOME);
-            },
-          },
-          buttonsProps: [],
-        });
-      }
     }
-  }, [isContactsRequestShown, navigate, setError, step]);
+  }, [step]);
 
   return (
     <FormContainer<ValidatedProbandFormData>
@@ -131,17 +86,7 @@ export const ProbandForm = () => {
           <FormExaminationConsent />
         </>
       )}
-      {step === "contacts" && (
-        <>
-          <FormProbandContactCheckbox setIsContactsRequestShown={setIsContactsRequestShown} />
-          {isContactsRequestShown && (
-            <>
-              <FormProbandContactRequest />
-              <FormProbandContactConsent />
-            </>
-          )}
-        </>
-      )}
+      {step === "contacts" && <ProbandFormContacts setFormButtons={setFormButtons} />}
     </FormContainer>
   );
 };
