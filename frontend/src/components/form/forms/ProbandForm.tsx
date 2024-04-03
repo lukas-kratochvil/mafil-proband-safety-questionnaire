@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { lazy, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { FormBeforeExamination } from "@app/components/form/components/FormBeforeExamination";
 import type { FormButtonsProps } from "@app/components/form/components/FormButtons";
 import { FormEntryInfo } from "@app/components/form/components/FormEntryInfo";
@@ -86,7 +86,11 @@ export const ProbandForm = () => {
           <FormExaminationConsent />
         </>
       )}
-      {step === "contacts" && <ProbandFormContacts setFormButtons={setFormButtons} />}
+      {step === "contacts" && (
+        <Suspense>
+          <ProbandFormContacts setFormButtons={setFormButtons} />
+        </Suspense>
+      )}
     </FormContainer>
   );
 };

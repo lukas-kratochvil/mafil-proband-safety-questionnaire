@@ -6,7 +6,7 @@ import { questionsTest } from "@app/__tests__/data/questions";
 import type { NativeLanguage } from "@app/model/language";
 import ProbandFormPage from "@app/pages/ProbandFormPage";
 import type { GenderDTO, HandednessDTO, HTMLCardDTO, OrderedQuestionDTO } from "@app/util/server_API/dto";
-import { render, screen, waitFor, within } from "@test-utils";
+import { render, screen, within } from "@test-utils";
 
 //----------------------------------------------------------------------
 // Mocking react-router-dom hooks
@@ -88,21 +88,21 @@ describe("proband form page", () => {
   test("renders new form default values", async () => {
     setup();
 
-    await waitFor(async () =>
-      expect(screen.getByRole("form")).toHaveFormValues({
-        name: "",
-        surname: "",
-        personalId: "",
-        birthdate: "",
-        gender: "",
-        nativeLanguage: "",
-        heightCm: "",
-        weightKg: "",
-        visualCorrection: "",
-        visualCorrectionDioptre: "0",
-        handedness: "",
-      })
-    );
+    const form = await screen.findByRole("form");
+
+    expect(form).toHaveFormValues({
+      name: "",
+      surname: "",
+      personalId: "",
+      birthdate: "",
+      gender: "",
+      nativeLanguage: "",
+      heightCm: "",
+      weightKg: "",
+      visualCorrection: "",
+      visualCorrectionDioptre: "0",
+      handedness: "",
+    });
     const questions = await screen.findAllByRole("radiogroup");
     expect(questions.length).toEqual(questionsTest.length);
   });
@@ -239,7 +239,8 @@ describe("proband form page", () => {
       await user.click(agreeButton);
 
       // click on the checkbox to show contacts form
-      await user.click(screen.getByRole("checkbox"));
+      const checkbox = await screen.findByRole("checkbox");
+      await user.click(checkbox);
 
       const typedEmail = "name.surname@mail.com";
       await user.type(screen.getByLabelText("email"), typedEmail);
@@ -321,7 +322,7 @@ describe("proband form page", () => {
       const agreeButton = screen.getByRole("button", { name: "form.common.buttons.agree" });
       await user.click(agreeButton);
 
-      const completeButton = screen.getByRole("button", { name: "form.common.buttons.complete" });
+      const completeButton = await screen.findByRole("button", { name: "form.common.buttons.complete" });
       await user.click(completeButton);
       // TODO: change this to check calling POST method that will create a visit
       expect(mockedUseNavigate).toHaveBeenCalledOnce();
@@ -391,7 +392,8 @@ describe("proband form page", () => {
       await user.click(agreeButton);
 
       // click on the checkbox to show contacts form
-      await user.click(screen.getByRole("checkbox"));
+      const checkbox = await screen.findByRole("checkbox");
+      await user.click(checkbox);
 
       const typedEmail = "name.surname@mail.com";
       await user.type(screen.getByLabelText("email"), typedEmail);
@@ -471,7 +473,8 @@ describe("proband form page", () => {
       await user.click(agreeButton);
 
       // click on the checkbox to show contacts form
-      await user.click(screen.getByRole("checkbox"));
+      const checkbox = await screen.findByRole("checkbox");
+      await user.click(checkbox);
 
       const typedPhone = "123456789";
       await user.type(screen.getByLabelText("phone"), typedPhone);
