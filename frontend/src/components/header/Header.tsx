@@ -1,10 +1,12 @@
 import { AppBar, Grid, Toolbar, useMediaQuery, type Theme } from "@mui/material";
+import { lazy } from "react";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
 import { CeitecMafilLogo } from "./CeitecMafilLogo";
 import { LanguageMenu } from "./LanguageMenu";
 import { LoginOperator } from "./LoginOperator";
-import { Navigation } from "./navigation/Navigation";
 import { NavigationMobile } from "./navigation/mobile/NavigationMobile";
+
+const Navigation = lazy(() => import("./navigation/Navigation"));
 
 export const Header = () => {
   const { operator } = useAuth();

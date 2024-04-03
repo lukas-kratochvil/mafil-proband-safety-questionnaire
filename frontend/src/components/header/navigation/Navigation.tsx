@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { NavigationTab } from "./NavigationTab";
 import { getTabs, TAB_DEFAULT_COLOR } from "./tabs";
 
-export const Navigation = () => {
+const Navigation = () => {
   const navigate = useNavigate();
   const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
 
@@ -46,3 +46,5 @@ export const Navigation = () => {
     </Box>
   );
 };
+
+export default Navigation;
