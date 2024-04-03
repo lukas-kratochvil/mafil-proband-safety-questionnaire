@@ -1,10 +1,7 @@
-import { Autocomplete } from "@mui/material";
-import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n/i18n";
 import type { AutocompleteOption } from "../util/options";
-import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
-import { FormInputFieldContainer } from "./FormInputFieldContainer";
+import { FormAutocomplete } from "./FormAutocomplete";
 import type { FormDefaultInputProps } from "./input-props";
 
 type FormAutocompleteOptionsProps<T> = FormDefaultInputProps & {
@@ -22,37 +19,15 @@ export const FormAutocompleteOptions = <T,>({
   const isLoading = options.length === 0;
 
   return (
-    <FormInputFieldContainer
+    <FormAutocomplete<AutocompleteOption<T>>
       label={label}
       name={name}
       isOptional={isOptional}
-    >
-      <Controller
-        name={name}
-        render={({ field }) => (
-          <Autocomplete<AutocompleteOption<T>>
-            id={name}
-            options={options}
-            getOptionLabel={(option) => t(option.localizationKey)}
-            isOptionEqualToValue={(option, value) => option.value === value.value}
-            value={field.value}
-            onChange={(_event, val) => field.onChange(val)}
-            onBlur={field.onBlur}
-            disabled={disabled}
-            loading={isLoading}
-            loadingText={`${t("common.loading")}…`}
-            noOptionsText={t("common.noOptions")}
-            renderInput={(params) => (
-              <FormAutocompleteInputField
-                name={name}
-                isLoading={isLoading}
-                field={field}
-                params={params}
-              />
-            )}
-          />
-        )}
-      />
-    </FormInputFieldContainer>
+      options={options}
+      isLoading={isLoading}
+      disabled={disabled}
+      getOptionLabel={(option) => t(option.localizationKey)}
+      isOptionEqualToValue={(option, value) => option.value === value.value}
+    />
   );
 };

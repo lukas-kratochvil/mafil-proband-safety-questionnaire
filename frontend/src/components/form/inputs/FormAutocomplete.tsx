@@ -1,21 +1,41 @@
-import { Autocomplete } from "@mui/material";
+import { Autocomplete, type FilterOptionsState } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { defaultNS } from "@app/i18n/i18n";
-import type { GenderDTO } from "@app/util/server_API/dto";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import type { FormAsyncAutocompleteProps } from "./input-props";
 
-export const FormAutocompleteGenders = ({
+const getOptions = <T,>(
+  options: FormAutocompleteProps<T>["options"],
+  sortComparator: FormAutocompleteProps<T>["sortComparator"]
+): NonNullable<FormAutocompleteProps<T>["options"]> => {
+  if (options === undefined) {
+    return [];
+  }
+  return sortComparator === undefined ? options : options.sort(sortComparator);
+};
+
+type FormAutocompleteProps<T> = FormAsyncAutocompleteProps<T> & {
+  sortComparator?: (a: T, b: T) => number;
+  filterOptions?: (options: T[], state: FilterOptionsState<T>) => T[];
+  getOptionLabel: (option: T) => string;
+  isOptionEqualToValue: (option: T, value: T) => boolean;
+};
+
+export const FormAutocomplete = <T,>({
   name,
   label,
   isOptional,
-  disabled,
   options,
   isLoading,
-}: FormAsyncAutocompleteProps<GenderDTO>) => {
-  const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
+  disabled,
+  sortComparator,
+  filterOptions,
+  getOptionLabel,
+  isOptionEqualToValue,
+}: FormAutocompleteProps<T>) => {
+  const { t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
 
   return (
     <FormInputFieldContainer
@@ -26,13 +46,12 @@ export const FormAutocompleteGenders = ({
       <Controller
         name={name}
         render={({ field }) => (
-          <Autocomplete<GenderDTO>
+          <Autocomplete<T>
             id={name}
-            options={options?.sort((a, b) => a.order - b.order) ?? []}
-            getOptionLabel={(option) =>
-              option.translations.find((trans) => trans.language.code === i18n.language)?.text ?? ""
-            }
-            isOptionEqualToValue={(option, value) => option.id === value.id}
+            options={getOptions(options, sortComparator)}
+            getOptionLabel={getOptionLabel}
+            isOptionEqualToValue={isOptionEqualToValue}
+            filterOptions={filterOptions}
             value={field.value}
             onChange={(_event, val) => field.onChange(val)}
             onBlur={field.onBlur}

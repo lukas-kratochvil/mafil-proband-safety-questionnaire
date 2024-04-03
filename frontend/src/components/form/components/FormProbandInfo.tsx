@@ -1,4 +1,4 @@
-import { Divider, Grid, Typography } from "@mui/material";
+import { Divider, Grid, Typography, type FilterOptionsState } from "@mui/material";
 import { useQueries } from "@tanstack/react-query";
 import { differenceInCalendarYears, isValid } from "date-fns";
 import { useEffect } from "react";
@@ -7,11 +7,11 @@ import { useTranslation } from "react-i18next";
 import { InfoTooltip } from "@app/components/informative/InfoTooltip";
 import { defaultNS } from "@app/i18n/i18n";
 import type { FormPropType } from "@app/model/form";
+import type { NativeLanguage } from "@app/model/language";
 import { fetchNativeLanguages } from "@app/util/mafildb_API/calls";
 import { fetchGenders, fetchHandednesses } from "@app/util/server_API/calls";
-import { FormAutocompleteGenders } from "../inputs/FormAutocompleteGenders";
-import { FormAutocompleteHandednesses } from "../inputs/FormAutocompleteHandednesses";
-import { FormAutocompleteNativeLanguages } from "../inputs/FormAutocompleteNativeLanguages";
+import type { GenderDTO, HandednessDTO } from "@app/util/server_API/dto";
+import { FormAutocomplete } from "../inputs/FormAutocomplete";
 import { FormAutocompleteOptions } from "../inputs/FormAutocompleteOptions";
 import { FormDatePicker } from "../inputs/FormDatePicker";
 import { FormTextField } from "../inputs/FormTextField";
@@ -20,8 +20,26 @@ import { CzechPersonalId, getPersonalIdPart } from "../util/personal-id";
 import { FormCardContainer } from "./FormCardContainer";
 import type { PhantomFormCardProps } from "./form-card";
 
+const compareNativeLanguages = (a: NativeLanguage, b: NativeLanguage): number => {
+  if (a.priority && b.priority) {
+    return a.priority - b.priority;
+  }
+  if (a.priority) {
+    return -1;
+  }
+  return b.priority ? 1 : a.nameEn.localeCompare(b.nameEn);
+};
+
+const filterNativeLanguages = (options: NativeLanguage[], state: FilterOptionsState<NativeLanguage>) => {
+  const inputValue = state.inputValue.trim().toLowerCase();
+  return options.filter((option) => {
+    const valuesToBeMatched = [option.nativeName, option.nameCs, option.nameEn];
+    return valuesToBeMatched.some((optionValue) => optionValue.trim().toLowerCase().startsWith(inputValue));
+  });
+};
+
 export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardProps) => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandInfo" });
+  const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.probandInfo" });
   const { getFieldState, getValues, resetField, setValue } = useFormContext<FormPropType>();
   const personalIdValue = useWatch<FormPropType, "personalId">({ name: "personalId" });
   const birthdateValue = useWatch<FormPropType, "birthdate">({ name: "birthdate" });
@@ -211,12 +229,17 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
           sm={6}
           md={4}
         >
-          <FormAutocompleteGenders
+          <FormAutocomplete<GenderDTO>
             name="gender"
             label={t("gender")}
             options={genders.data}
             isLoading={genders.isLoading}
             disabled={disableInputs || isPhantom}
+            sortComparator={(a, b) => a.order - b.order}
+            getOptionLabel={(gender) =>
+              gender.translations.find((trans) => trans.language.code === i18n.language)?.text ?? ""
+            }
+            isOptionEqualToValue={(option, value) => option.id === value.id}
           />
         </Grid>
         <Grid
@@ -225,12 +248,16 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
           sm={6}
           md={4}
         >
-          <FormAutocompleteNativeLanguages
+          <FormAutocomplete<NativeLanguage>
             name="nativeLanguage"
             label={t("nativeLanguage")}
             options={nativeLanguages.data}
             isLoading={nativeLanguages.isLoading}
             disabled={disableInputs}
+            sortComparator={compareNativeLanguages}
+            filterOptions={filterNativeLanguages}
+            getOptionLabel={(nativeLanguage) => nativeLanguage.nativeName}
+            isOptionEqualToValue={(option, value) => option.code === value.code}
           />
         </Grid>
         <Grid
@@ -296,12 +323,17 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
           sm={6}
           md={4}
         >
-          <FormAutocompleteHandednesses
+          <FormAutocomplete<HandednessDTO>
             name="handedness"
             label={t("handedness")}
             options={handednesses.data}
             isLoading={handednesses.isLoading}
             disabled={disableInputs}
+            sortComparator={(a, b) => a.order - b.order}
+            getOptionLabel={(handedness) =>
+              handedness.translations.find((trans) => trans.language.code === i18n.language)?.text ?? ""
+            }
+            isOptionEqualToValue={(option, value) => option.id === value.id}
           />
         </Grid>
       </Grid>

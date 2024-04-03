@@ -5,10 +5,11 @@ import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ColoredInfoStripe } from "@app/components/informative/ColoredInfoStripe";
 import { defaultNS } from "@app/i18n/i18n";
+import type { Device } from "@app/model/device";
 import type { FormPropType } from "@app/model/form";
+import type { Project } from "@app/model/project";
 import { fetchDevices, fetchProjects } from "@app/util/mafildb_API/calls";
-import { FormAutocompleteDevices } from "../inputs/FormAutocompleteDevices";
-import { FormAutocompleteProjects } from "../inputs/FormAutocompleteProjects";
+import { FormAutocomplete } from "../inputs/FormAutocomplete";
 import { FormDatePicker } from "../inputs/FormDatePicker";
 import { FormCardContainer } from "./FormCardContainer";
 import type { PhantomFormCardProps } from "./form-card";
@@ -65,12 +66,14 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
           item
           xs={12}
         >
-          <FormAutocompleteProjects
+          <FormAutocomplete<Project>
             name="project"
             label={t("project")}
             options={projects.data}
             isLoading={projects.isLoading}
             disabled={disableInputs}
+            getOptionLabel={(project) => `${project.acronym.trim()} - ${project.name.trim()}`}
+            isOptionEqualToValue={(option, value) => option.uuid === value.uuid}
           />
         </Grid>
         <Grid
@@ -79,12 +82,14 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
           sm={6}
           md={8}
         >
-          <FormAutocompleteDevices
+          <FormAutocomplete<Device>
             name="device"
             label={t("device")}
             options={devices.data}
             isLoading={devices.isLoading}
             disabled={disableInputs}
+            getOptionLabel={(device) => device.name}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
           />
         </Grid>
         <Grid
