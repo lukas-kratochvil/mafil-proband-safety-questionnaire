@@ -7,12 +7,6 @@ import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import type { FormAsyncAutocompleteProps } from "./input-props";
 
-const getProjectText = (project: Project): string => {
-  const acronym = project.acronym.trim();
-  const name = project.name.trim();
-  return name === "" ? acronym : `${acronym} - ${name}`;
-};
-
 export const FormAutocompleteProjects = ({
   name,
   label,
@@ -35,7 +29,7 @@ export const FormAutocompleteProjects = ({
           <Autocomplete
             id={name}
             options={options === undefined ? [] : options}
-            getOptionLabel={getProjectText}
+            getOptionLabel={(project: Project) => `${project.acronym.trim()} - ${project.name.trim()}`}
             isOptionEqualToValue={(option, value) => option.uuid === value.uuid}
             value={field.value}
             onChange={(_event, val) => field.onChange(val)}
