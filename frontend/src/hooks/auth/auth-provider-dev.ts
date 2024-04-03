@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { RoutingPath } from "@app/routing-paths";
 import { authenticateOperator } from "@app/util/server_API/calls";
 import type { OperatorAuthInput } from "@app/util/server_API/dto";
-import type { Auth, Operator } from "./AuthProvider";
+import type { Auth } from "./AuthProvider";
 
 const SESSION_STORAGE_OPERATOR_KEY = "operator";
 const DEV_OPERATOR: OperatorAuthInput = {
@@ -15,7 +15,7 @@ const DEV_OPERATOR: OperatorAuthInput = {
 
 export const useAuthProviderDev = (): Auth => {
   const navigate = useNavigate();
-  const [operator, setOperator] = useState<Operator>(() => {
+  const [operator, setOperator] = useState<Auth["operator"]>(() => {
     const storedOperator = window.sessionStorage.getItem(SESSION_STORAGE_OPERATOR_KEY);
     return storedOperator === null ? undefined : JSON.parse(storedOperator);
   });

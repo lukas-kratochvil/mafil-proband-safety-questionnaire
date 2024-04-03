@@ -1,10 +1,10 @@
 import { useState } from "react";
-import type { Auth, Operator } from "./AuthProvider";
+import type { Auth } from "./AuthProvider";
 import { AuthService } from "./auth-service";
 
 export const useAuthProvider = (): Auth => {
   const authService = AuthService.getInstance();
-  const [operator, setOperator] = useState<Operator>();
+  const [operator, setOperator] = useState<Auth["operator"]>();
 
   // Initiate the sign-in process - user authenticates himself in the OIDC provider side
   const logIn = async (): Promise<void> => authService.signIn();

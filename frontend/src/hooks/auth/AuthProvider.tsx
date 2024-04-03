@@ -3,14 +3,12 @@ import type { OperatorDTO } from "@app/util/server_API/dto";
 import { useAuthProvider } from "./auth-provider";
 import { useAuthProviderDev } from "./auth-provider-dev";
 
-export type Operator = OperatorDTO | undefined;
-
 export type Auth = {
   logIn: () => Promise<void>;
   logInCallback: () => Promise<boolean>;
   logOut: () => Promise<void>;
   logOutCallback: () => Promise<void>;
-  operator: Operator;
+  operator: OperatorDTO | undefined;
 };
 
 // defaultValue argument is only used when a component does not have a matching Provider above it in the tree – helpful for testing components in isolation
