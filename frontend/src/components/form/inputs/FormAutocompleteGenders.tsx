@@ -26,10 +26,10 @@ export const FormAutocompleteGenders = ({
       <Controller
         name={name}
         render={({ field }) => (
-          <Autocomplete
+          <Autocomplete<GenderDTO>
             id={name}
             options={options?.sort((a, b) => a.order - b.order) ?? []}
-            getOptionLabel={(option: GenderDTO) =>
+            getOptionLabel={(option) =>
               option.translations.find((trans) => trans.language.code === i18n.language)?.text ?? ""
             }
             isOptionEqualToValue={(option, value) => option.id === value.id}

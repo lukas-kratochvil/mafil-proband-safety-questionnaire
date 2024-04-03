@@ -26,10 +26,10 @@ export const FormAutocompleteDevices = ({
       <Controller
         name={name}
         render={({ field }) => (
-          <Autocomplete
+          <Autocomplete<Device>
             id={name}
             options={options === undefined ? [] : options}
-            getOptionLabel={(option: Device) => option.name}
+            getOptionLabel={(option) => option.name}
             isOptionEqualToValue={(option, value) => option.id === value.id}
             value={field.value}
             onChange={(_event, val) => field.onChange(val)}

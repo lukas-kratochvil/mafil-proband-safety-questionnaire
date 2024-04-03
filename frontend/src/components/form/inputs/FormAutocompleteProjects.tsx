@@ -26,10 +26,10 @@ export const FormAutocompleteProjects = ({
       <Controller
         name={name}
         render={({ field }) => (
-          <Autocomplete
+          <Autocomplete<Project>
             id={name}
             options={options === undefined ? [] : options}
-            getOptionLabel={(project: Project) => `${project.acronym.trim()} - ${project.name.trim()}`}
+            getOptionLabel={(project) => `${project.acronym.trim()} - ${project.name.trim()}`}
             isOptionEqualToValue={(option, value) => option.uuid === value.uuid}
             value={field.value}
             onChange={(_event, val) => field.onChange(val)}

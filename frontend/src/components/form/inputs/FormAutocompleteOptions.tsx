@@ -30,10 +30,10 @@ export const FormAutocompleteOptions = <T,>({
       <Controller
         name={name}
         render={({ field }) => (
-          <Autocomplete
+          <Autocomplete<AutocompleteOption<T>>
             id={name}
             options={options}
-            getOptionLabel={(option: AutocompleteOption<T>) => t(option.localizationKey)}
+            getOptionLabel={(option) => t(option.localizationKey)}
             isOptionEqualToValue={(option, value) => option.value === value.value}
             value={field.value}
             onChange={(_event, val) => field.onChange(val)}
