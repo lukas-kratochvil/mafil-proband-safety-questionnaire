@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { Prisma, VisitFormState } from "@prisma/client";
 import { PrismaService } from "@app/prisma/prisma.service";
-import { translationsIncludeSchema } from "../utils/utils";
+import { translationsSelect } from "../utils/utils";
 import { CreateVisitFormInput } from "./dto/create-visit-form.input";
 import { UpdateVisitFormInput } from "./dto/update-visit-form.input";
 
-const visitFormInclude = Prisma.validator<Prisma.VisitFormInclude>()({
+const visitFormInclude = {
   additionalInfo: {
     include: {
       finalizer: true,
@@ -14,24 +14,18 @@ const visitFormInclude = Prisma.validator<Prisma.VisitFormInclude>()({
   probandLanguage: true,
   answers: true,
   gender: {
-    include: translationsIncludeSchema,
+    include: { translations: translationsSelect },
   },
   handedness: {
-    include: translationsIncludeSchema,
+    include: { translations: translationsSelect },
   },
-});
-
-const visitFormArgs = Prisma.validator<Prisma.VisitFormDefaultArgs>()({
-  include: visitFormInclude,
-});
-
-type VisitFormInclude = Prisma.VisitFormGetPayload<typeof visitFormArgs>;
+} satisfies Prisma.VisitFormInclude;
 
 @Injectable()
 export class VisitFormService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createVisitFormInput: CreateVisitFormInput): Promise<VisitFormInclude> {
+  async create(createVisitFormInput: CreateVisitFormInput) {
     return this.prisma.visitForm.create({
       data: {
         state: createVisitFormInput.state ?? VisitFormState.NEW,
@@ -77,7 +71,7 @@ export class VisitFormService {
     });
   }
 
-  async findAll(state?: VisitFormState): Promise<VisitFormInclude[]> {
+  async findAll(state?: VisitFormState) {
     return this.prisma.visitForm.findMany({
       where: {
         state,
@@ -87,7 +81,7 @@ export class VisitFormService {
     });
   }
 
-  async findOne(id: string): Promise<VisitFormInclude> {
+  async findOne(id: string) {
     return this.prisma.visitForm.findUniqueOrThrow({
       where: {
         id,
@@ -96,7 +90,7 @@ export class VisitFormService {
     });
   }
 
-  async update(id: string, updateVisitFormInput: UpdateVisitFormInput): Promise<VisitFormInclude | never> {
+  async update(id: string, updateVisitFormInput: UpdateVisitFormInput) {
     return await this.prisma.$transaction(async (tx) => {
       // check if the visit form state wasn't already updated by another user
       if (updateVisitFormInput.state) {
@@ -184,7 +178,7 @@ export class VisitFormService {
     });
   }
 
-  async remove(id: string): Promise<VisitFormInclude> {
+  async remove(id: string) {
     return this.prisma.visitForm.update({
       where: {
         id,

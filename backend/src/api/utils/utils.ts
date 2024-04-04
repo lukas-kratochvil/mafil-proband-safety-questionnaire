@@ -1,12 +1,10 @@
 import { Language } from "@prisma/client";
 import { TranslationInput } from "@app/api/utils/dto/create-translation.input";
 
-export const translationsIncludeSchema = {
-  translations: {
-    select: {
-      text: true,
-      language: true,
-    },
+export const translationsSelect = {
+  select: {
+    text: true,
+    language: true,
   },
 };
 

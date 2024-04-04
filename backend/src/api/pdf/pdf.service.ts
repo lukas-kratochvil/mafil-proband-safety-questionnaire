@@ -112,7 +112,7 @@ export class PDFService {
       }
     }
 
-    const languageOrderBy = Prisma.validator<Prisma.LanguageOrderByWithAggregationInput>()({ code: languageCodeOrder });
+    const languageOrderBy = { code: languageCodeOrder } satisfies Prisma.LanguageOrderByWithAggregationInput;
     const getTranslatedTexts = (translations: EntityTranslations): IPDFEntityTexts => ({
       text: translations[0]?.text,
       secondaryText: languageCodes.length === 1 ? undefined : translations[1]?.text,

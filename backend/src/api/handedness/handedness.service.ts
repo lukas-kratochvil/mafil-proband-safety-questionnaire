@@ -1,24 +1,18 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 import { LanguageService } from "@app/api/language/language.service";
-import { areTranslationsComplete, areUpdateCodesValid, translationsIncludeSchema } from "@app/api/utils/utils";
+import { areTranslationsComplete, areUpdateCodesValid, translationsSelect } from "@app/api/utils/utils";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { CreateHandednessInput } from "./dto/create-handedness.input";
 import { UpdateHandednessInput } from "./dto/update-handedness.input";
 
-const handednessTranslations = Prisma.validator<Prisma.HandednessInclude>()(translationsIncludeSchema);
-
-const handednessTranslationsArgs = Prisma.validator<Prisma.HandednessDefaultArgs>()({
-  include: handednessTranslations,
-});
-
-type HandednessIncludingTranslations = Prisma.HandednessGetPayload<typeof handednessTranslationsArgs>;
+const handednessInclude = { translations: translationsSelect } satisfies Prisma.GenderInclude;
 
 @Injectable()
 export class HandednessService {
   constructor(private readonly prisma: PrismaService, private readonly languageService: LanguageService) {}
 
-  async create(createHandednessInput: CreateHandednessInput): Promise<HandednessIncludingTranslations | never> {
+  async create(createHandednessInput: CreateHandednessInput) {
     const languages = await this.languageService.findAll();
 
     if (areTranslationsComplete(languages, createHandednessInput.translations)) {
@@ -34,35 +28,32 @@ export class HandednessService {
             },
           },
         },
-        include: handednessTranslations,
+        include: handednessInclude,
       });
     }
 
     throw new BadRequestException("Handedness doesn't contain all the possible translations!");
   }
 
-  async findAll(): Promise<HandednessIncludingTranslations[]> {
+  async findAll() {
     return this.prisma.handedness.findMany({
       where: {
         deletedAt: null,
       },
-      include: handednessTranslations,
+      include: handednessInclude,
     });
   }
 
-  async findOne(code: string): Promise<HandednessIncludingTranslations> {
+  async findOne(code: string) {
     return this.prisma.handedness.findUniqueOrThrow({
       where: {
         code,
       },
-      include: handednessTranslations,
+      include: handednessInclude,
     });
   }
 
-  async update(
-    id: string,
-    updateHandednessInput: UpdateHandednessInput
-  ): Promise<HandednessIncludingTranslations | never> {
+  async update(id: string, updateHandednessInput: UpdateHandednessInput) {
     const languages = await this.languageService.findAll();
 
     if (areUpdateCodesValid(languages, updateHandednessInput.translations)) {
@@ -87,14 +78,14 @@ export class HandednessService {
                   },
                 },
         },
-        include: handednessTranslations,
+        include: handednessInclude,
       });
     }
 
     throw new BadRequestException("Handedness contains invalid locales!");
   }
 
-  async remove(id: string): Promise<HandednessIncludingTranslations> {
+  async remove(id: string) {
     return this.prisma.handedness.update({
       where: {
         id,
@@ -102,7 +93,7 @@ export class HandednessService {
       data: {
         deletedAt: new Date(),
       },
-      include: handednessTranslations,
+      include: handednessInclude,
     });
   }
 }

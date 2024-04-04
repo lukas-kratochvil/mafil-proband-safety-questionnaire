@@ -1,28 +1,22 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 import { LanguageService } from "@app/api/language/language.service";
-import { areTranslationsComplete, translationsIncludeSchema } from "@app/api/utils/utils";
+import { areTranslationsComplete, translationsSelect } from "@app/api/utils/utils";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { CreateQuestionInput } from "./dto/create-question.input";
 import { UpdateQuestionTextsInput } from "./dto/update-question-texts.input";
 import { UpdateQuestionInput } from "./dto/update-question.input";
 
-const questionInclude = Prisma.validator<Prisma.QuestionInclude>()({
-  ...translationsIncludeSchema,
+const questionInclude = {
+  translations: translationsSelect,
   hiddenByGenders: true,
-});
-
-const questionTranslationsArgs = Prisma.validator<Prisma.QuestionDefaultArgs>()({
-  include: questionInclude,
-});
-
-type QuestionIncludingTranslations = Prisma.QuestionGetPayload<typeof questionTranslationsArgs>;
+} satisfies Prisma.QuestionInclude;
 
 @Injectable()
 export class QuestionService {
   constructor(private readonly prisma: PrismaService, private readonly languageService: LanguageService) {}
 
-  async create(createQuestionInput: CreateQuestionInput): Promise<QuestionIncludingTranslations | never> {
+  async create(createQuestionInput: CreateQuestionInput) {
     const languages = await this.languageService.findAll();
 
     if (areTranslationsComplete(languages, createQuestionInput.translations)) {
@@ -47,7 +41,7 @@ export class QuestionService {
     throw new BadRequestException("Question doesn't contain all the possible translations!");
   }
 
-  async findAll(): Promise<QuestionIncludingTranslations[]> {
+  async findAll() {
     return this.prisma.question.findMany({
       where: {
         isValid: true,
@@ -57,7 +51,7 @@ export class QuestionService {
     });
   }
 
-  async findOne(id: string): Promise<QuestionIncludingTranslations> {
+  async findOne(id: string) {
     return this.prisma.question.findUniqueOrThrow({
       where: {
         id,
@@ -66,7 +60,7 @@ export class QuestionService {
     });
   }
 
-  async update(id: string, updateQuestionInput: UpdateQuestionInput): Promise<QuestionIncludingTranslations> {
+  async update(id: string, updateQuestionInput: UpdateQuestionInput) {
     return this.prisma.question.update({
       where: {
         id,
@@ -76,10 +70,7 @@ export class QuestionService {
     });
   }
 
-  async updateTexts(
-    id: string,
-    updateQuestionTextsInput: UpdateQuestionTextsInput
-  ): Promise<QuestionIncludingTranslations | never> {
+  async updateTexts(id: string, updateQuestionTextsInput: UpdateQuestionTextsInput) {
     const languages = await this.languageService.findAll();
 
     if (areTranslationsComplete(languages, updateQuestionTextsInput.translations)) {
@@ -129,7 +120,7 @@ export class QuestionService {
     throw new BadRequestException("Question contains invalid locales!");
   }
 
-  async remove(id: string): Promise<QuestionIncludingTranslations> {
+  async remove(id: string) {
     return this.prisma.question.update({
       where: {
         id,
