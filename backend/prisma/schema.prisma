@@ -18,7 +18,7 @@ model Operator {
   finalizedVisits AdditionalVisitFormInfo[] @relation(name: "FinalizedBy")
 
   createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
   deletedAt DateTime?
 
   name     String       @db.VarChar(200)
@@ -48,7 +48,7 @@ model VisitForm {
   additionalInfo    AdditionalVisitFormInfo?
 
   createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
   deletedAt DateTime?
 
   state                   VisitFormState @default(NEW)
@@ -84,7 +84,7 @@ model AdditionalVisitFormInfo {
   finalizerId String    @db.Uuid
 
   createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
   deletedAt DateTime?
 
   projectUuid String   @db.VarChar(35)
@@ -107,7 +107,7 @@ model Answer {
   questionId  String    @db.Uuid
 
   createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
   deletedAt DateTime?
 
   answer  AnswerOption
@@ -125,7 +125,7 @@ model Question {
   hiddenByGenders    GenderHiddenQuestion[]
 
   createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
   deletedAt DateTime?
 
   partNumber     Int     @db.SmallInt
@@ -143,7 +143,7 @@ model QuestionTranslation {
   languageId String   @db.Uuid
 
   createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
   deletedAt DateTime?
 
   text String
@@ -170,7 +170,7 @@ model Gender {
   hiddenQuestions GenderHiddenQuestion[]
 
   createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
   deletedAt DateTime?
 
   code  String @unique @db.VarChar(1)
@@ -186,7 +186,7 @@ model GenderTranslation {
   languageId String   @db.Uuid
 
   createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
   deletedAt DateTime?
 
   text String
@@ -201,7 +201,7 @@ model Handedness {
   translations HandednessTranslation[]
 
   createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
   deletedAt DateTime?
 
   code  String @unique @db.VarChar(2)
@@ -217,7 +217,7 @@ model HandednessTranslation {
   languageId   String     @db.Uuid
 
   createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
   deletedAt DateTime?
 
   text String
@@ -234,7 +234,7 @@ model Language {
   questionTranslations   QuestionTranslation[]
 
   createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
   deletedAt DateTime?
 
   code String @unique @db.VarChar(5)
