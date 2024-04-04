@@ -2,16 +2,18 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [pgcrypto]
 }
 
 model Operator {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
   finalizedVisits AdditionalVisitFormInfo[] @relation(name: "FinalizedBy")
 
@@ -34,7 +36,7 @@ enum OperatorRole {
 }
 
 model VisitForm {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
   probandLanguage   Language                 @relation(fields: [probandLanguageId], references: [id])
   probandLanguageId String                   @db.Uuid
@@ -74,7 +76,7 @@ enum VisitFormState {
 }
 
 model AdditionalVisitFormInfo {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
   visitForm   VisitForm @relation(fields: [visitFormId], references: [id], onDelete: Cascade)
   visitFormId String    @unique @db.Uuid
@@ -85,10 +87,10 @@ model AdditionalVisitFormInfo {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  projectUuid    String   @db.VarChar(35)
-  deviceId       Int
-  measuredAt     DateTime
-  finalizedAt    DateTime
+  projectUuid String   @db.VarChar(35)
+  deviceId    Int
+  measuredAt  DateTime
+  finalizedAt DateTime
 }
 
 enum AnswerOption {
@@ -97,7 +99,7 @@ enum AnswerOption {
 }
 
 model Answer {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
   visitForm   VisitForm @relation(fields: [visitFormId], references: [id], onDelete: Cascade)
   visitFormId String    @db.Uuid
@@ -113,7 +115,7 @@ model Answer {
 }
 
 model Question {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
   answers            Answer[]
   translations       QuestionTranslation[]
@@ -133,7 +135,7 @@ model Question {
 }
 
 model QuestionTranslation {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
   question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId String   @db.Uuid
@@ -150,7 +152,7 @@ model QuestionTranslation {
 }
 
 model GenderHiddenQuestion {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
   gender     Gender   @relation(fields: [genderCode], references: [code], onDelete: Cascade, onUpdate: Cascade)
   genderCode String   @db.VarChar(1)
@@ -161,7 +163,7 @@ model GenderHiddenQuestion {
 }
 
 model Gender {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
   visitForms      VisitForm[]
   translations    GenderTranslation[]
@@ -176,7 +178,7 @@ model Gender {
 }
 
 model GenderTranslation {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
   gender     Gender   @relation(fields: [genderId], references: [id], onDelete: Cascade)
   genderId   String   @db.Uuid
@@ -193,7 +195,7 @@ model GenderTranslation {
 }
 
 model Handedness {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
   visitForms   VisitForm[]
   translations HandednessTranslation[]
@@ -207,7 +209,7 @@ model Handedness {
 }
 
 model HandednessTranslation {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
   handedness   Handedness @relation(fields: [handednessId], references: [id], onDelete: Cascade)
   handednessId String     @db.Uuid
@@ -224,12 +226,12 @@ model HandednessTranslation {
 }
 
 model Language {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
-  visitForms                 VisitForm[]
-  genderTranslations         GenderTranslation[]
-  handednessTranslations     HandednessTranslation[]
-  questionTranslations       QuestionTranslation[]
+  visitForms             VisitForm[]
+  genderTranslations     GenderTranslation[]
+  handednessTranslations HandednessTranslation[]
+  questionTranslations   QuestionTranslation[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
