@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate {
     }
 
     const ip = request.ip ?? "";
-    this.logger.error(`Request from ${ip} has invalid API key: '${apiKey}'!`);
+    this.logger.error(`Request from '${ip}' has invalid API key: '${apiKey}'!`);
     return false;
   }
 }

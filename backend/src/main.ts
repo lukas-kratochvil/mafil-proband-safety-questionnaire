@@ -29,20 +29,25 @@ const devHelmetOptions: HelmetOptions = {
 };
 
 async function bootstrap() {
-  const logger = createWinstonLogger();
-  const app = await NestFactory.create(AppModule, { logger });
+  const app = await NestFactory.create(AppModule);
   const config = app.get(ConfigService<EnvironmentVariables, true>);
+  const nodeEnv = config.get("NODE_ENV", { infer: true });
+
+  // Setup logger
+  const logger = createWinstonLogger(nodeEnv);
+  app.useLogger(logger);
 
   // Create a folder for generated files such as GraphQL schema
   createFolder(GENERATED_DIR_PATH, logger);
 
   // Create a folder for generated development PDFs
-  if (config.get("NODE_ENV", { infer: true }) === "development") {
+  if (nodeEnv === "development") {
     createFolder(GENERATED_PDF_DIR_PATH, logger);
   }
 
   // Protection from some well-known web vulnerabilities by setting HTTP headers appropriately
-  app.use(helmet(config.get("NODE_ENV", { infer: true }) === "development" ? devHelmetOptions : undefined));
+  const helmetOptions = nodeEnv === "development" ? devHelmetOptions : undefined;
+  app.use(helmet(helmetOptions));
 
   // Enabling input data validation
   app.useGlobalPipes(
