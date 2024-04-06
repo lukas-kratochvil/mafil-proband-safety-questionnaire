@@ -35,8 +35,6 @@ server {
   # MAFILDB API calls
   location /mafildb-api/ {
     access_log /var/log/nginx/mafildb.log mafildblog;
-    # rewrite any URI starting with 'mafildb-api' to start with '/api/v2' (we use the 2. version of MAFILDB API)
-    rewrite ^/mafildb-api/(.*)$ /api/v2/$1 break;
     proxy_pass ${MAFILDB_API_URL};
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
