@@ -34,17 +34,33 @@ export class OperatorService {
   private readonly logger = new Logger(OperatorService.name);
 
   async authenticate(authenticateOperatorArgs: AuthenticateOperatorArgs): Promise<Operator | never> {
-    const operator = await this.prisma.operator.findUniqueOrThrow({
-      where: {
-        username: authenticateOperatorArgs.username,
-      },
-    });
+    let operator: Operator;
+
+    try {
+      operator = await this.prisma.operator.findUniqueOrThrow({
+        where: {
+          username: authenticateOperatorArgs.username,
+        },
+      });
+    } catch (e) {
+      this.logger.error(`Operator [${authenticateOperatorArgs.username}] is unknown!`);
+      throw e;
+    }
 
     if (!operator.isValid) {
       this.logger.error(`Operator [${operator.username}] is invalid!`);
       throw new UnauthorizedException("Operator is invalid!");
     }
+
     this.logger.log(`Operator [${operator.username}] authenticated.`);
+    operator = await this.prisma.operator.update({
+      where: {
+        id: operator.id,
+      },
+      data: {
+        lastLoggedAt: new Date(),
+      },
+    });
 
     // Update operator data if changed
     const updatedOperatorData: Prisma.OperatorUpdateInput = {};
