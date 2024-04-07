@@ -1,6 +1,17 @@
-import type { GraphQlError } from "../server_API/response-types";
 import { LocalizedError } from "./LocalizedError";
 import { ServerApiValidationError } from "./ServerApiValidationError";
+
+// Server GraphQL API error type
+export type GraphQlError = {
+  message: string;
+  extensions: {
+    code: string;
+    errors?: {
+      field: string;
+      errors: string[];
+    }[];
+  };
+};
 
 // show only validation errors and hide all the others (mostly internal server errors) under one customizable message
 export const createServerApiCallError = (errors: GraphQlError[] | undefined): Error => {

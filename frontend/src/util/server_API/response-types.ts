@@ -12,72 +12,54 @@ import type {
   WaitingRoomVisitFormDTO,
 } from "./dto";
 
-// Server GraphQL API error type
-export type GraphQlError = {
-  message: string;
-  extensions: {
-    code: string;
-    errors?: {
-      field: string;
-      errors: string[];
-    }[];
-  };
-};
+export type AuthenticateOperatorResponse = { authenticateOperator: OperatorDTO };
 
-// Generic server GraphQL API response type
-type DataErrorsResponse<TData> = {
-  data?: TData | null;
-  errors?: GraphQlError[];
-};
+export type OperatorResponse = { operator: OperatorDTO };
 
-export type AuthenticateOperatorResponse = DataErrorsResponse<{ authenticateOperator: OperatorDTO }>;
+export type GendersResponse = { genders: GenderDTO[] };
 
-export type OperatorResponse = DataErrorsResponse<{ operator: OperatorDTO }>;
+export type GenderResponse = { gender: GenderDTO };
 
-export type GendersResponse = DataErrorsResponse<{ genders: GenderDTO[] }>;
+export type HandednessesResponse = { handednesses: HandednessDTO[] };
 
-export type GenderResponse = DataErrorsResponse<{ gender: GenderDTO }>;
+export type HandednessResponse = { handedness: HandednessDTO };
 
-export type HandednessesResponse = DataErrorsResponse<{ handednesses: HandednessDTO[] }>;
+export type CurrentQuestionsResponse = { questions: OrderedQuestionDTO[] };
 
-export type HandednessResponse = DataErrorsResponse<{ handedness: HandednessDTO }>;
+export type QuestionResponse = { question: QuestionDTO };
 
-export type CurrentQuestionsResponse = DataErrorsResponse<{ questions: OrderedQuestionDTO[] }>;
+export type EntryInfoResponse = { entryInfo: HTMLCardDTO };
 
-export type QuestionResponse = DataErrorsResponse<{ question: QuestionDTO }>;
+export type SafetyInfoResponse = { safetyInfo: HTMLCardDTO };
 
-export type EntryInfoResponse = DataErrorsResponse<{ entryInfo: HTMLCardDTO }>;
+export type BeforeExaminationResponse = { beforeExamination: HTMLCardDTO };
 
-export type SafetyInfoResponse = DataErrorsResponse<{ safetyInfo: HTMLCardDTO }>;
+export type ExaminationConsentResponse = { examinationConsent: HTMLCardDTO };
 
-export type BeforeExaminationResponse = DataErrorsResponse<{ beforeExamination: HTMLCardDTO }>;
+export type ProbandContactRequestResponse = { probandContactRequest: HTMLCardDTO };
 
-export type ExaminationConsentResponse = DataErrorsResponse<{ examinationConsent: HTMLCardDTO }>;
+export type ProbandContactConsentResponse = { probandContactConsent: HTMLCardDTO };
 
-export type ProbandContactRequestResponse = DataErrorsResponse<{ probandContactRequest: HTMLCardDTO }>;
+export type WaitingRoomTableVisitFormsResponse = { visitForms: WaitingRoomTableVisitFormDTO[] };
 
-export type ProbandContactConsentResponse = DataErrorsResponse<{ probandContactConsent: HTMLCardDTO }>;
+export type WaitingRoomVisitFormResponse = { visitForm: WaitingRoomVisitFormDTO };
 
-export type WaitingRoomTableVisitFormsResponse = DataErrorsResponse<{ visitForms: WaitingRoomTableVisitFormDTO[] }>;
+export type ApprovalRoomTableVisitFormsResponse = { visitForms: ApprovalRoomTableVisitFormDTO[] };
 
-export type WaitingRoomVisitFormResponse = DataErrorsResponse<{ visitForm: WaitingRoomVisitFormDTO }>;
+export type ApprovalRoomVisitFormResponse = { visitForm: ApprovalRoomVisitFormDTO };
 
-export type ApprovalRoomTableVisitFormsResponse = DataErrorsResponse<{ visitForms: ApprovalRoomTableVisitFormDTO[] }>;
-
-export type ApprovalRoomVisitFormResponse = DataErrorsResponse<{ visitForm: ApprovalRoomVisitFormDTO }>;
-
-export type CreateVisitFormResponse = DataErrorsResponse<{
+export type CreateVisitFormResponse = {
   createVisitForm: {
     id: string;
   };
-}>;
+};
 
-export type UpdateVisitFormResponse = DataErrorsResponse<{
+export type UpdateVisitFormResponse = {
   updateVisitForm: {
     id: string;
   };
-}>;
+};
 
-export type RemoveVisitFormResponse = DataErrorsResponse<{ removeVisitForm: null }>;
+export type RemoveVisitFormResponse = { removeVisitForm: null };
 
-export type GeneratePdfResponse = DataErrorsResponse<{ generatePDF: PdfDTO }>;
+export type GeneratePdfResponse = { generatePDF: PdfDTO };

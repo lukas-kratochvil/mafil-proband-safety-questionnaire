@@ -1,3 +1,4 @@
+import type { AxiosResponse } from "axios";
 import i18n, { type LanguageCode } from "@app/i18n/i18n";
 import type {
   ValidatedOperatorFormData,
@@ -26,7 +27,7 @@ import type {
   VisitFormState,
   WaitingRoomVisitFormIncludingQuestions,
 } from "@app/util/server_API/dto";
-import { createServerApiCallError } from "../error-handling/server-utils";
+import { createServerApiCallError, type GraphQlError } from "../error-handling/server-utils";
 import { fetchNativeLanguage, fetchProject } from "../mafildb_API/calls";
 import { CREATE_VISIT_FORM, REMOVE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
 import {
@@ -75,148 +76,97 @@ import type {
   WaitingRoomVisitFormResponse,
 } from "./response-types";
 
-export const authenticateOperator = async (loggingOperator: OperatorAuthInput): Promise<OperatorDTO | never> => {
-  const variables: OperatorAuthInput = { ...loggingOperator };
-  const { data } = await serverApi.post<AuthenticateOperatorResponse>("", {
-    query: AUTHENTICATE_OPERATOR,
+const serverApiCall = async <TData, TVariables = Record<string, unknown>>(
+  query: string,
+  variables?: TVariables
+): Promise<TData> => {
+  type RequestData = {
+    query: string;
+    variables?: TVariables;
+  };
+  // Generic server GraphQL API response type
+  type ResponseData = {
+    data?: TData | null;
+    errors?: GraphQlError[];
+  };
+  const { data } = await serverApi.post<ResponseData, AxiosResponse<ResponseData>, RequestData>("", {
+    query,
     variables,
   });
 
   if (data.data) {
-    return data.data.authenticateOperator;
+    return data.data;
   }
 
   throw createServerApiCallError(data.errors);
 };
 
-export const fetchOperator = async (username: string): Promise<OperatorDTO | never> => {
+export const authenticateOperator = async (loggingOperator: OperatorAuthInput): Promise<OperatorDTO> => {
+  const data = await serverApiCall<AuthenticateOperatorResponse>(AUTHENTICATE_OPERATOR, loggingOperator);
+  return data.authenticateOperator;
+};
+
+export const fetchOperator = async (username: string): Promise<OperatorDTO> => {
   const variables = { username };
-  const { data } = await serverApi.post<OperatorResponse>("", { query: GET_OPERATOR, variables });
-
-  if (data.data) {
-    return data.data.operator;
-  }
-
-  throw createServerApiCallError(data.errors);
+  const data = await serverApiCall<OperatorResponse, typeof variables>(GET_OPERATOR, variables);
+  return data.operator;
 };
 
-export const fetchGenders = async (): Promise<GenderDTO[] | never> => {
-  const { data } = await serverApi.post<GendersResponse>("", { query: GET_GENDERS });
-
-  if (data.data) {
-    return data.data.genders;
-  }
-
-  throw createServerApiCallError(data.errors);
+export const fetchGenders = async (): Promise<GenderDTO[]> => {
+  const data = await serverApiCall<GendersResponse>(GET_GENDERS);
+  return data.genders;
 };
 
-export const fetchGender = async (code: string): Promise<GenderDTO | never> => {
+export const fetchGender = async (code: string): Promise<GenderDTO> => {
   const variables = { code };
-  const { data } = await serverApi.post<GenderResponse>("", { query: GET_GENDER, variables });
-
-  if (data.data) {
-    return data.data.gender;
-  }
-
-  throw createServerApiCallError(data.errors);
+  const data = await serverApiCall<GenderResponse>(GET_GENDER, variables);
+  return data.gender;
 };
 
-export const fetchHandednesses = async (): Promise<HandednessDTO[] | never> => {
-  const { data } = await serverApi.post<HandednessesResponse>("", { query: GET_HANDEDNESSES });
-
-  if (data.data) {
-    return data.data.handednesses;
-  }
-
-  throw createServerApiCallError(data.errors);
+export const fetchHandednesses = async (): Promise<HandednessDTO[]> => {
+  const data = await serverApiCall<HandednessesResponse>(GET_HANDEDNESSES);
+  return data.handednesses;
 };
 
-export const fetchHandedness = async (code: string): Promise<HandednessDTO | never> => {
+export const fetchHandedness = async (code: string): Promise<HandednessDTO> => {
   const variables = { code };
-  const { data } = await serverApi.post<HandednessResponse>("", { query: GET_HANDEDNESS, variables });
-
-  if (data.data) {
-    return data.data.handedness;
-  }
-
-  throw createServerApiCallError(data.errors);
+  const data = await serverApiCall<HandednessResponse>(GET_HANDEDNESS, variables);
+  return data.handedness;
 };
 
-export const fetchCurrentQuestions = async (): Promise<OrderedQuestionDTO[] | never> => {
-  const { data } = await serverApi.post<CurrentQuestionsResponse>("", { query: GET_CURRENT_QUESTIONS });
-
-  if (data.data) {
-    return data.data.questions;
-  }
-
-  throw createServerApiCallError(data.errors);
+export const fetchCurrentQuestions = async (): Promise<OrderedQuestionDTO[]> => {
+  const data = await serverApiCall<CurrentQuestionsResponse>(GET_CURRENT_QUESTIONS);
+  return data.questions;
 };
 
-export const fetchQuestion = async (questionId: string): Promise<QuestionDTO | never> => {
+export const fetchQuestion = async (questionId: string): Promise<QuestionDTO> => {
   const variables = { id: questionId };
-  const { data } = await serverApi.post<QuestionResponse>("", { query: GET_QUESTION, variables });
-
-  if (data.data) {
-    return data.data.question;
-  }
-
-  throw createServerApiCallError(data.errors);
+  const data = await serverApiCall<QuestionResponse>(GET_QUESTION, variables);
+  return data.question;
 };
 
-export const fetchEntryInfo = async (locale: LanguageCode): Promise<HTMLCardDTO | never> => {
+export const fetchEntryInfo = async (locale: LanguageCode): Promise<HTMLCardDTO> => {
   const variables = { locale };
-  const { data } = await serverApi.post<EntryInfoResponse>("", {
-    query: GET_ENTRY_INFO,
-    variables,
-  });
-
-  if (data.data) {
-    return data.data.entryInfo;
-  }
-
-  throw createServerApiCallError(data.errors);
+  const data = await serverApiCall<EntryInfoResponse>(GET_ENTRY_INFO, variables);
+  return data.entryInfo;
 };
 
-export const fetchSafetyInfo = async (locale: LanguageCode): Promise<HTMLCardDTO | never> => {
+export const fetchSafetyInfo = async (locale: LanguageCode): Promise<HTMLCardDTO> => {
   const variables = { locale };
-  const { data } = await serverApi.post<SafetyInfoResponse>("", {
-    query: GET_SAFETY_INFO,
-    variables,
-  });
-
-  if (data.data) {
-    return data.data.safetyInfo;
-  }
-
-  throw createServerApiCallError(data.errors);
+  const data = await serverApiCall<SafetyInfoResponse>(GET_SAFETY_INFO, variables);
+  return data.safetyInfo;
 };
 
-export const fetchBeforeExamination = async (locale: LanguageCode): Promise<HTMLCardDTO | never> => {
+export const fetchBeforeExamination = async (locale: LanguageCode): Promise<HTMLCardDTO> => {
   const variables = { locale };
-  const { data } = await serverApi.post<BeforeExaminationResponse>("", {
-    query: GET_BEFORE_EXAMINATION,
-    variables,
-  });
-
-  if (data.data) {
-    return data.data.beforeExamination;
-  }
-
-  throw createServerApiCallError(data.errors);
+  const data = await serverApiCall<BeforeExaminationResponse>(GET_BEFORE_EXAMINATION, variables);
+  return data.beforeExamination;
 };
 
-export const fetchExaminationConsent = async (locale: LanguageCode): Promise<HTMLCardDTO | never> => {
+export const fetchExaminationConsent = async (locale: LanguageCode): Promise<HTMLCardDTO> => {
   const variables = { locale };
-  const { data } = await serverApi.post<ExaminationConsentResponse>("", {
-    query: GET_EXAMINATION_CONSENT,
-    variables,
-  });
-
-  if (data.data) {
-    return data.data.examinationConsent;
-  }
-
-  throw createServerApiCallError(data.errors);
+  const data = await serverApiCall<ExaminationConsentResponse>(GET_EXAMINATION_CONSENT, variables);
+  return data.examinationConsent;
 };
 
 export const fetchProbandContactRequest = async (
@@ -225,47 +175,23 @@ export const fetchProbandContactRequest = async (
   surname: string,
   birthdateStr: string,
   currentDateStr: string
-): Promise<HTMLCardDTO | never> => {
+): Promise<HTMLCardDTO> => {
   const variables = { locale, name, surname, birthdateStr, currentDateStr };
-  const { data } = await serverApi.post<ProbandContactRequestResponse>("", {
-    query: GET_PROBAND_CONTACT_REQUEST,
-    variables,
-  });
-
-  if (data.data) {
-    return data.data.probandContactRequest;
-  }
-
-  throw createServerApiCallError(data.errors);
+  const data = await serverApiCall<ProbandContactRequestResponse>(GET_PROBAND_CONTACT_REQUEST, variables);
+  return data.probandContactRequest;
 };
 
-export const fetchProbandContactConsent = async (locale: LanguageCode): Promise<HTMLCardDTO | never> => {
+export const fetchProbandContactConsent = async (locale: LanguageCode): Promise<HTMLCardDTO> => {
   const variables = { locale };
-  const { data } = await serverApi.post<ProbandContactConsentResponse>("", {
-    query: GET_PROBAND_CONTACT_CONSENT,
-    variables,
-  });
-
-  if (data.data) {
-    return data.data.probandContactConsent;
-  }
-
-  throw createServerApiCallError(data.errors);
+  const data = await serverApiCall<ProbandContactConsentResponse>(GET_PROBAND_CONTACT_CONSENT, variables);
+  return data.probandContactConsent;
 };
 
-export const fetchWaitingRoomTableVisitForms = async (): Promise<WaitingRoomTableVisitForm[] | never> => {
+export const fetchWaitingRoomTableVisitForms = async (): Promise<WaitingRoomTableVisitForm[]> => {
   const variables = { state: "NEW" };
-  const { data } = await serverApi.post<WaitingRoomTableVisitFormsResponse>("", {
-    query: GET_WAITING_ROOM_TABLE_VISIT_FORMS,
-    variables,
-  });
-
-  if (data.data === null || data.data === undefined) {
-    throw createServerApiCallError(data.errors);
-  }
-
+  const data = await serverApiCall<WaitingRoomTableVisitFormsResponse>(GET_WAITING_ROOM_TABLE_VISIT_FORMS, variables);
   return Promise.all(
-    data.data.visitForms.map(async (visitForm) => {
+    data.visitForms.map(async (visitForm) => {
       const nativeLanguage = await fetchNativeLanguage(visitForm.nativeLanguageCode);
       return {
         ...visitForm,
@@ -277,24 +203,15 @@ export const fetchWaitingRoomTableVisitForms = async (): Promise<WaitingRoomTabl
 
 export const fetchWaitingRoomVisitForm = async (
   id: string | undefined
-): Promise<WaitingRoomVisitFormIncludingQuestions | never> => {
+): Promise<WaitingRoomVisitFormIncludingQuestions> => {
   if (id === undefined) {
     throw new Error("Missing visit form ID!");
   }
 
   const variables = { id };
-  const { data } = await serverApi.post<WaitingRoomVisitFormResponse>("", {
-    query: GET_WAITING_ROOM_VISIT_FORM,
-    variables,
-  });
-
-  if (data.data === null || data.data === undefined) {
-    throw createServerApiCallError(data.errors);
-  }
-
-  const { visitForm } = data.data;
+  const data = await serverApiCall<WaitingRoomVisitFormResponse>(GET_WAITING_ROOM_VISIT_FORM, variables);
   const answersIncludingQuestions = await Promise.all(
-    visitForm.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
+    data.visitForm.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
       const question = await fetchQuestion(answer.questionId);
       return {
         answer: answer.answer,
@@ -309,22 +226,14 @@ export const fetchWaitingRoomVisitForm = async (
       };
     })
   );
-  return { ...visitForm, probandLanguageCode: visitForm.probandLanguage.code, answersIncludingQuestions };
+  return { ...data.visitForm, probandLanguageCode: data.visitForm.probandLanguage.code, answersIncludingQuestions };
 };
 
-export const fetchApprovalRoomTableVisitForms = async (): Promise<ApprovalRoomTableVisitForm[] | never> => {
+export const fetchApprovalRoomTableVisitForms = async (): Promise<ApprovalRoomTableVisitForm[]> => {
   const variables = { state: "IN_APPROVAL" };
-  const { data } = await serverApi.post<ApprovalRoomTableVisitFormsResponse>("", {
-    query: GET_APPROVAL_ROOM_TABLE_VISIT_FORMS,
-    variables,
-  });
-
-  if (data.data === null || data.data === undefined) {
-    throw createServerApiCallError(data.errors);
-  }
-
+  const data = await serverApiCall<ApprovalRoomTableVisitFormsResponse>(GET_APPROVAL_ROOM_TABLE_VISIT_FORMS, variables);
   return Promise.all(
-    data.data.visitForms.map(async (visitForm) => {
+    data.visitForms.map(async (visitForm) => {
       const project = await fetchProject(visitForm.additionalInfo.projectUuid);
       const nativeLanguage = await fetchNativeLanguage(visitForm.nativeLanguageCode);
       return {
@@ -338,24 +247,15 @@ export const fetchApprovalRoomTableVisitForms = async (): Promise<ApprovalRoomTa
 
 export const fetchApprovalRoomVisitForm = async (
   id: string | undefined
-): Promise<ApprovalRoomVisitFormIncludingQuestionsDTO | never> => {
+): Promise<ApprovalRoomVisitFormIncludingQuestionsDTO> => {
   if (id === undefined) {
     throw new Error("Missing visit ID!");
   }
 
   const variables = { id };
-  const { data } = await serverApi.post<ApprovalRoomVisitFormResponse>("", {
-    query: GET_APPROVAL_ROOM_VISIT_FORM,
-    variables,
-  });
-
-  if (data.data === null || data.data === undefined) {
-    throw createServerApiCallError(data.errors);
-  }
-
-  const { visitForm } = data.data;
+  const data = await serverApiCall<ApprovalRoomVisitFormResponse>(GET_APPROVAL_ROOM_VISIT_FORM, variables);
   const answersIncludingQuestions = await Promise.all(
-    visitForm.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
+    data.visitForm.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
       const question = await fetchQuestion(answer.questionId);
       return {
         answer: answer.answer,
@@ -370,10 +270,10 @@ export const fetchApprovalRoomVisitForm = async (
       };
     })
   );
-  return { ...visitForm, probandLanguageCode: visitForm.probandLanguage.code, answersIncludingQuestions };
+  return { ...data.visitForm, probandLanguageCode: data.visitForm.probandLanguage.code, answersIncludingQuestions };
 };
 
-export const createProbandVisitForm = async (visitFormData: ValidatedProbandFormData): Promise<string | never> => {
+export const createProbandVisitForm = async (visitFormData: ValidatedProbandFormData): Promise<string> => {
   const variables: CreateProbandVisitFormInput = {
     createVisitFormInput: {
       probandLanguageCode: i18n.language as LanguageCode,
@@ -395,22 +295,14 @@ export const createProbandVisitForm = async (visitFormData: ValidatedProbandForm
       })),
     },
   };
-  const { data } = await serverApi.post<CreateVisitFormResponse>("", {
-    query: CREATE_VISIT_FORM,
-    variables,
-  });
-
-  if (data.data) {
-    return data.data.createVisitForm.id;
-  }
-
-  throw createServerApiCallError(data.errors);
+  const data = await serverApiCall<CreateVisitFormResponse>(CREATE_VISIT_FORM, variables);
+  return data.createVisitForm.id;
 };
 
 export const createDuplicatedVisitFormForApproval = async (
   visitFormData: ValidatedOperatorFormData,
   finalizerId: string | undefined
-): Promise<string | never> => {
+): Promise<string> => {
   if (finalizerId === undefined) {
     throw new Error("Missing ID of the operator who finalized the visit!");
   }
@@ -445,23 +337,15 @@ export const createDuplicatedVisitFormForApproval = async (
       })),
     },
   };
-  const { data } = await serverApi.post<CreateVisitFormResponse>("", {
-    query: CREATE_VISIT_FORM,
-    variables,
-  });
-
-  if (data.data) {
-    return data.data.createVisitForm.id;
-  }
-
-  throw createServerApiCallError(data.errors);
+  const data = await serverApiCall<CreateVisitFormResponse>(CREATE_VISIT_FORM, variables);
+  return data.createVisitForm.id;
 };
 
 export const sendVisitFormForApproval = async (
   visitFormId: string,
   visitFormData: ValidatedOperatorModifiedFormData,
   finalizerId: string
-): Promise<string | never> => {
+): Promise<string> => {
   const variables: SendVisitFormFromWaitingRoomForApprovalInput = {
     updateVisitFormInput: {
       id: visitFormId,
@@ -492,19 +376,11 @@ export const sendVisitFormForApproval = async (
       })),
     },
   };
-  const { data } = await serverApi.post<UpdateVisitFormResponse>("", {
-    query: UPDATE_VISIT_FORM,
-    variables,
-  });
-
-  if (data.data) {
-    return data.data.updateVisitForm.id;
-  }
-
-  throw createServerApiCallError(data.errors);
+  const data = await serverApiCall<UpdateVisitFormResponse>(UPDATE_VISIT_FORM, variables);
+  return data.updateVisitForm.id;
 };
 
-const updateVisitFormState = async (visitFormId: string | undefined, state: VisitFormState): Promise<void | never> => {
+const updateVisitFormState = async (visitFormId: string | undefined, state: VisitFormState): Promise<void> => {
   if (visitFormId === undefined) {
     throw new Error("Visit form id is undefined!");
   }
@@ -515,16 +391,7 @@ const updateVisitFormState = async (visitFormId: string | undefined, state: Visi
       state,
     },
   };
-  const { data } = await serverApi.post<UpdateVisitFormResponse>("", {
-    query: UPDATE_VISIT_FORM,
-    variables,
-  });
-
-  if (data.data) {
-    return;
-  }
-
-  throw createServerApiCallError(data.errors);
+  void serverApiCall<UpdateVisitFormResponse>(UPDATE_VISIT_FORM, variables);
 };
 
 export const markVisitFormAsSentToMafilDb = async (visitFormId: string | undefined): Promise<void> =>
@@ -533,16 +400,9 @@ export const markVisitFormAsSentToMafilDb = async (visitFormId: string | undefin
 export const markVisitFormAsPdfGenerated = async (visitFormId: string | undefined): Promise<void> =>
   updateVisitFormState(visitFormId, "PDF_GENERATED");
 
-export const deleteVisitForm = async (visitFormId: string): Promise<void | never> => {
+export const deleteVisitForm = async (visitFormId: string): Promise<void> => {
   const variables = { id: visitFormId };
-  const { data } = await serverApi.post<RemoveVisitFormResponse>("", {
-    query: REMOVE_VISIT_FORM,
-    variables,
-  });
-
-  if (data.errors) {
-    throw createServerApiCallError(data.errors);
-  }
+  void serverApiCall<RemoveVisitFormResponse>(REMOVE_VISIT_FORM, variables);
 };
 
 const generatePdf = async (
@@ -552,7 +412,7 @@ const generatePdf = async (
   finalizerUsername: string | undefined,
   probandLanguageCode?: LanguageCode,
   approverUsername?: string
-): Promise<PdfDTO | never> => {
+): Promise<PdfDTO> => {
   if (finalizerUsername === undefined) {
     throw new Error("Missing username of the operator who finalized the visit!");
   }
@@ -586,17 +446,8 @@ const generatePdf = async (
       comment: answer.comment,
     })),
   };
-
-  const { data } = await serverApi.post<GeneratePdfResponse>("", {
-    query: GENERATE_PDF,
-    variables,
-  });
-
-  if (data.data) {
-    return data.data.generatePDF;
-  }
-
-  throw createServerApiCallError(data.errors);
+  const data = await serverApiCall<GeneratePdfResponse>(GENERATE_PDF, variables);
+  return data.generatePDF;
 };
 
 export const generateProbandPdf = async (
@@ -605,7 +456,7 @@ export const generateProbandPdf = async (
   finalizerUsername: string | undefined,
   probandLanguageCode: ProbandVisitLanguageCode | undefined,
   approverUsername?: string
-): Promise<PdfDTO | never> => {
+): Promise<PdfDTO> => {
   if (probandLanguageCode === undefined || probandLanguageCode === "") {
     throw new Error("Proband language code is undefined!");
   }
