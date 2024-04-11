@@ -64,13 +64,13 @@ services:
       - backend-network
     environment:
       - NODE_ENV=production
-      - PORT=${SERVER_PORT}
-      - DATABASE_URL=${DATABASE_URL}
-      - THROTTLE_TTL=${THROTTLE_TTL}
-      - THROTTLE_LIMIT=${THROTTLE_LIMIT}
-      - WEB_API_KEY=${WEB_API_KEY}
-      - PDF_OPERATOR_LANGUAGE_CODE=${PDF_OPERATOR_LANGUAGE_CODE}
-      - WEB_URL=${WEB_URL}
+      - DATABASE_URL=${REG_DATABASE_URL}
+      - PORT=${REG_SERVER_PORT}
+      - THROTTLE_TTL=${REG_THROTTLE_TTL}
+      - THROTTLE_LIMIT=${REG_THROTTLE_LIMIT}
+      - PDF_OPERATOR_LANGUAGE_CODE=${REG_PDF_OPERATOR_LANGUAGE_CODE}
+      - WEB_URL=${REG_WEB_URL}
+      - WEB_API_KEY=${REG_WEB_API_KEY}
     volumes:
       - ./logs/server:/usr/src/app/logs
     restart: unless-stopped
@@ -89,11 +89,11 @@ services:
     environment:
       - NODE_ENV=production
       # 'server' is the name of our docker-compose backend API service that runs on the same machine as this Nginx reverse proxy
-      - SERVER_ADDRESS=server:${SERVER_PORT}
-      - WEB_API_KEY=${WEB_API_KEY}
-      - MAFILDB_API_URL=${MAFILDB_API_URL}
+      - SERVER_ADDRESS=server:${REG_SERVER_PORT}
+      - WEB_API_KEY=${REG_WEB_API_KEY}
+      - MAFILDB_API_URL=${REG_MAFILDB_API_URL}
     volumes:
-      - ./certs:/etc/nginx/certs
+      # - ./certs:/etc/nginx/certs
       - ./logs/web:/var/log/nginx
     restart: unless-stopped
     depends_on:
