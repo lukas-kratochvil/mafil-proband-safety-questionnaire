@@ -24,11 +24,9 @@ server {
   }
 
   # Our backend server API calls
-  location ~ /server-api$ {
-    # rewrite any URI ending with '.../server-api' just to '/graphql'
-    rewrite ^ /graphql break;
+  location ~ ^/server-api$ {
     # proxy_pass must end without the trailing slash '/' to make the location regex rewrite work
-    proxy_pass http://server_api;
+    proxy_pass http://server_api/graphql;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection 'upgrade';
