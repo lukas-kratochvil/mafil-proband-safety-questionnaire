@@ -12,6 +12,9 @@ server {
   listen 80;      # IPv4
   listen [::]:80; # IPv6
 
+  # Using the Docker DNS resolver
+  resolver 127.0.0.11;
+
   # MAFILDB API calls
   location /mafildb-api/ {
     proxy_pass http://mafildb_api;
