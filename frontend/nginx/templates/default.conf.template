@@ -2,6 +2,10 @@ upstream server_api {
   server ${SERVER_ADDRESS};
 }
 
+upstream mafildb_api {
+  server ${MAFILDB_API_ADDRESS};
+}
+
 # HTTP requests
 server {
   # SSL/TLS is realized at the MAFIL Docker container level
@@ -10,7 +14,7 @@ server {
 
   # MAFILDB API calls
   location /mafildb-api/ {
-    proxy_pass ${MAFILDB_API_URL};
+    proxy_pass http://mafildb_api;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection 'upgrade';

@@ -88,10 +88,11 @@ services:
       - frontend-network
     environment:
       - NODE_ENV=production
+      - WEB_API_KEY=${REG_WEB_API_KEY}
       # 'server' is the name of our docker-compose backend API service that runs on the same machine as this Nginx reverse proxy
       - SERVER_ADDRESS=server:${REG_SERVER_PORT}
-      - WEB_API_KEY=${REG_WEB_API_KEY}
-      - MAFILDB_API_URL=${REG_MAFILDB_API_URL}
+      # MAFILDB_API_ADDRESS has the same structure as SERVER_ADDRESS
+      - MAFILDB_API_ADDRESS=
     volumes:
       # - ./certs:/etc/nginx/certs
       - ./logs/web:/var/log/nginx
