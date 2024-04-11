@@ -29,12 +29,8 @@ server {
   ssl_certificate /etc/nginx/certs/certificate.pem;
   ssl_certificate_key /etc/nginx/certs/private_key.pem;
 
-  access_log /var/log/nginx/access.log;
-  error_log /var/log/nginx/error.log;
-
   # MAFILDB API calls
   location /mafildb-api/ {
-    access_log /var/log/nginx/mafildb.log mafildblog;
     proxy_pass ${MAFILDB_API_URL};
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
