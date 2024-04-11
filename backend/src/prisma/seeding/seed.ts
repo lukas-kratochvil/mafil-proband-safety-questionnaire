@@ -41,9 +41,9 @@ async function seed() {
   });
 
   // Genders
-  genders.forEach(
-    async (gender) =>
-      await prisma.gender.create({
+  await Promise.all(
+    genders.map((gender) =>
+      prisma.handedness.create({
         data: {
           code: gender.code,
           order: gender.order,
@@ -54,12 +54,13 @@ async function seed() {
           },
         },
       })
+    )
   );
 
   // Handednesses
-  handednesses.forEach(
-    async (handedness) =>
-      await prisma.handedness.create({
+  await Promise.all(
+    handednesses.map((handedness) =>
+      prisma.handedness.create({
         data: {
           code: handedness.code,
           order: handedness.order,
@@ -70,12 +71,13 @@ async function seed() {
           },
         },
       })
+    )
   );
 
   // Questions
-  questions.forEach(
-    async (question) =>
-      await prisma.question.create({
+  await Promise.all(
+    questions.map((question) =>
+      prisma.question.create({
         data: {
           partNumber: question.partNumber,
           mustBeApproved: question.partNumber === 2,
@@ -96,6 +98,7 @@ async function seed() {
           },
         },
       })
+    )
   );
 }
 
