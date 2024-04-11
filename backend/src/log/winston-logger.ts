@@ -5,33 +5,31 @@ import type { EnvironmentVariables } from "@app/config";
 
 const defaultFileTransportOptions: winston.transports.FileTransportOptions = {
   dirname: "logs",
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.ms(),
+    winston.format.prettyPrint()
+  ),
 };
 
 export const createWinstonLogger = (nodeEnv: EnvironmentVariables["NODE_ENV"]): LoggerService => {
   const winstonLogger = winston.createLogger({
     level: "info",
-    format: winston.format.combine(winston.format.timestamp(), winston.format.prettyPrint()),
     transports: [
       new winston.transports.File({ ...defaultFileTransportOptions, filename: "error.log", level: "error" }),
       new winston.transports.File({ ...defaultFileTransportOptions, filename: "all.log" }),
-    ],
-  });
-
-  // Log to the console if we're not in the production
-  if (nodeEnv !== "production") {
-    winstonLogger.add(
       new winston.transports.Console({
         format: winston.format.combine(
           winston.format.timestamp(),
           winston.format.ms(),
-          nestWinstonModuleUtilities.format.nestLike("MAFIL-PSQ", {
+          nestWinstonModuleUtilities.format.nestLike("REG_BACKEND", {
             colors: true,
-            prettyPrint: true,
-          })
+            prettyPrint: nodeEnv !== "production",
+          }),
         ),
-      })
-    );
-  }
+      }),
+    ],
+  });
 
   return WinstonModule.createLogger(winstonLogger);
 };
