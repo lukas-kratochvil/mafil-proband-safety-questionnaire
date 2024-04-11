@@ -11,8 +11,6 @@ import { AuthGuard } from "./guards/auth/auth.guard";
 import { ThrottlerGuard } from "./guards/throttler/throttler.guard";
 import { LoggerMiddleware } from "./middleware/logger.middleware";
 
-const TIMEZONE_REGEX = "^[A-Z][a-z]*/[A-Z][a-z_-]*(/[A-Z][a-z_-]*)?$";
-
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -28,7 +26,6 @@ const TIMEZONE_REGEX = "^[A-Z][a-z]*/[A-Z][a-z_-]*(/[A-Z][a-z_-]*)?$";
           .trim()
           .valid(...ALLOWED_PDF_LANGUAGE_CODES)
           .required(),
-        TZ: Joi.string().trim().pattern(new RegExp(TIMEZONE_REGEX)).required(),
         THROTTLE_TTL: Joi.number().integer().required(),
         THROTTLE_LIMIT: Joi.number().integer().required(),
         WEB_URL: Joi.string()

@@ -11,8 +11,6 @@ services:
     volumes:
       - ./backend/database-storage:/var/lib/postgresql/data
     environment:
-      TZ: ${TIMEZONE}
-      PGTZ: ${TIMEZONE}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
@@ -27,7 +25,6 @@ services:
     networks:
       - backend-network
     environment:
-      TZ: ${TIMEZONE}
       ADMINER_DESIGN: nette
     restart: unless-stopped
     depends_on:
@@ -55,7 +52,6 @@ services:
       - backend-network
     environment:
       - NODE_ENV=development
-      - TZ=${TIMEZONE}
       - PORT=${SERVER_PORT}
       - DATABASE_URL=${DATABASE_URL}
       - THROTTLE_TTL=${THROTTLE_TTL}
@@ -95,7 +91,6 @@ services:
       - frontend-network
     environment:
       - NODE_ENV=development
-      - TZ=${TIMEZONE}
       - PORT=${WEB_PORT}
       - VITE_WEB_API_KEY=${WEB_API_KEY}
       - VITE_SERVER_URL=http://localhost:${SERVER_PORT}

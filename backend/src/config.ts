@@ -8,7 +8,6 @@ type PdfLanguageCode = StringArrayToUnion<typeof ALLOWED_PDF_LANGUAGE_CODES>;
 
 export type EnvironmentVariables = {
   NODE_ENV: NodeEnv;
-  TZ: number;
   PORT: number;
   DATABASE_URL: string;
   THROTTLE_TTL: number;

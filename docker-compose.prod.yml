@@ -11,8 +11,6 @@ services:
     volumes:
       - ./database-storage:/var/lib/postgresql/data
     environment:
-      TZ: ${TIMEZONE}
-      PGTZ: ${TIMEZONE}
       POSTGRES_DB: ${DB_NAME}
       PGPORT: ${DB_PORT}
       POSTGRES_USER: ${DB_USER}
@@ -28,7 +26,6 @@ services:
     volumes:
       - ./database-backups:/backups
     environment:
-      TZ: ${TIMEZONE}
       POSTGRES_HOST: postgres
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_PORT: ${DB_PORT}
@@ -53,7 +50,6 @@ services:
     networks:
       - backend-network
     environment:
-      TZ: ${TIMEZONE}
       ADMINER_DESIGN: pappu687
     restart: unless-stopped
     depends_on:
@@ -68,7 +64,6 @@ services:
       - backend-network
     environment:
       - NODE_ENV=production
-      - TZ=${TIMEZONE}
       - PORT=${SERVER_PORT}
       - DATABASE_URL=${DATABASE_URL}
       - THROTTLE_TTL=${THROTTLE_TTL}
@@ -93,7 +88,6 @@ services:
       - frontend-network
     environment:
       - NODE_ENV=production
-      - TZ=${TIMEZONE}
       # 'server' is the name of our docker-compose backend API service that runs on the same machine as this Nginx reverse proxy
       - SERVER_ADDRESS=server:${SERVER_PORT}
       - WEB_API_KEY=${WEB_API_KEY}
