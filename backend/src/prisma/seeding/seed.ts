@@ -43,7 +43,7 @@ async function seed() {
   // Genders
   await Promise.all(
     genders.map((gender) =>
-      prisma.handedness.create({
+      prisma.gender.create({
         data: {
           code: gender.code,
           order: gender.order,
