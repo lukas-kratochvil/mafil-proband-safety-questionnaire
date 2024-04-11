@@ -95,8 +95,8 @@ services:
       - NODE_ENV=production
       - TZ=${TIMEZONE}
       - WEB_DOMAIN=${WEB_DOMAIN}
-      - SERVER_PORT=${SERVER_PORT}
-      - ADMINER_PORT=${ADMINER_PORT}
+      # 'server' is the name of our docker-compose backend API service that runs on the same machine as this Nginx reverse proxy
+      - SERVER_ADDRESS=server:${SERVER_PORT}
       - WEB_API_KEY=${WEB_API_KEY}
       - MAFILDB_API_URL=${MAFILDB_API_URL}
     volumes:

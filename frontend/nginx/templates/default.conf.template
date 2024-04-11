@@ -1,11 +1,5 @@
 upstream server_api {
-  # 'server' is the name of our docker-compose backend API service that runs on the same machine as this Nginx reverse proxy
-  server server:${SERVER_PORT};
-}
-
-upstream adminer {
-  # 'adminer' is the name of our docker-compose Adminer service that runs on the same machine as this Nginx reverse proxy
-  server adminer:${ADMINER_PORT};
+  server ${SERVER_ADDRESS};
 }
 
 # HTTP requests
@@ -27,12 +21,6 @@ server {
     # pass the HTTP Authorization header containing user's OIDC access_token to the MAFILDB API, so the request will proceed
     proxy_set_header Authorization $http_authorization;
     proxy_cache_bypass $http_upgrade;
-  }
-
-  # Adminer - our database manager
-  location /adminer {
-    proxy_pass http://adminer/;
-    proxy_set_header Host $host;
   }
 
   # Our backend server API calls
