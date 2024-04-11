@@ -75,7 +75,7 @@ services:
       - THROTTLE_LIMIT=${THROTTLE_LIMIT}
       - WEB_API_KEY=${WEB_API_KEY}
       - PDF_OPERATOR_LANGUAGE_CODE=${PDF_OPERATOR_LANGUAGE_CODE}
-      - WEB_URI=https://${WEB_DOMAIN}
+      - WEB_URL=${WEB_URL}
     volumes:
       - ./logs/server:/usr/src/app/logs
     restart: unless-stopped
@@ -94,7 +94,6 @@ services:
     environment:
       - NODE_ENV=production
       - TZ=${TIMEZONE}
-      - WEB_DOMAIN=${WEB_DOMAIN}
       # 'server' is the name of our docker-compose backend API service that runs on the same machine as this Nginx reverse proxy
       - SERVER_ADDRESS=server:${SERVER_PORT}
       - WEB_API_KEY=${WEB_API_KEY}

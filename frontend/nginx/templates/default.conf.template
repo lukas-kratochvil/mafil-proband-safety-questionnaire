@@ -4,8 +4,6 @@ upstream server_api {
 
 # HTTP requests
 server {
-  server_name ${WEB_DOMAIN};
-
   # SSL/TLS is realized at the MAFIL Docker container level
   listen 80;      # IPv4
   listen [::]:80; # IPv6
