@@ -20,6 +20,7 @@ server {
   location /mafildb-api/ {
     proxy_pass http://mafildb_api/api/v${MAFILDB_API_VERSION}/;
     proxy_http_version 1.1;
+    proxy_cache_bypass $http_upgrade;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection 'upgrade';
     proxy_set_header Host ${MAFILDB_DOMAIN};
@@ -28,7 +29,6 @@ server {
     proxy_set_header X-Forwarded-Proto $scheme;
     # pass the HTTP Authorization header containing user's OIDC access_token to the MAFILDB API, so the request will proceed
     proxy_set_header Authorization $http_authorization;
-    proxy_cache_bypass $http_upgrade;
   }
 
   # Our backend server API calls
@@ -38,6 +38,7 @@ server {
     # proxy_pass must end without the trailing slash '/' to make the location regex rewrite work
     proxy_pass http://server_api;
     proxy_http_version 1.1;
+    proxy_cache_bypass $http_upgrade;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection 'upgrade';
     proxy_set_header Host $host;
@@ -46,7 +47,6 @@ server {
     proxy_set_header X-Forwarded-Proto $scheme;
     # authorization header to access our server API methods
     proxy_set_header API-KEY "${WEB_API_KEY}";
-    proxy_cache_bypass $http_upgrade;
   }
 
   location / {
