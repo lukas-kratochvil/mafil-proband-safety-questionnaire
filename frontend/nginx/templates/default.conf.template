@@ -3,7 +3,7 @@ upstream server_api {
 }
 
 upstream mafildb_api {
-  server ${MAFILDB_API_ADDRESS};
+  server ${MAFILDB_DOMAIN};
 }
 
 # HTTP requests
@@ -12,17 +12,17 @@ server {
   listen 80;      # IPv4
   listen [::]:80; # IPv6
 
-  # Using the Docker DNS resolver
-  resolver 127.0.0.11;
+  # Using the Docker internal DNS resolver
+  resolver 127.0.0.11 valid=10s;
+  resolver_timeout 5s;
 
   # MAFILDB API calls
   location /mafildb-api/ {
-    proxy_pass http://mafildb_api;
+    proxy_pass http://mafildb_api/api/v${MAFILDB_API_VERSION}/;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection 'upgrade';
-    # TODO: is the Host header correct?
-    proxy_set_header Host $host;
+    proxy_set_header Host ${MAFILDB_DOMAIN};
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
