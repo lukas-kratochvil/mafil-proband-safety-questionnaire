@@ -19,7 +19,11 @@ server {
   # MAFILDB API calls
   # also match any URL /auth/.../mafildb-api/...
   location ~ ^(?:\/auth(?:\/.*)?)?\/mafildb-api\/(.*)$ {
-    proxy_pass http://mafildb_api/api/v${MAFILDB_API_VERSION}/$1;
+    # rewrite '/mafildb-api' URI to the actual MAFILDB API endpoint
+    rewrite ^(?:.*)?/mafildb-api/(.*)$ /api/v${MAFILDB_API_VERSION}/$1 break;
+    # "proxy_pass" cannot have URI part in location given by regular expression
+    # "proxy_pass" must end without the trailing slash '/' to make the location regex rewrite work
+    proxy_pass http://mafildb_api;
     proxy_http_version 1.1;
     proxy_cache_bypass $http_upgrade;
     proxy_set_header Upgrade $http_upgrade;
@@ -35,7 +39,11 @@ server {
   # Our backend server API calls
   # also match any URL /auth/.../server-api
   location ~ ^(?:\/auth(?:\/.*)?)?\/server-api$ {
-    proxy_pass http://server_api/graphql;
+    # rewrite URI to '/graphql'
+    rewrite ^ /graphql break;
+    # "proxy_pass" cannot have URI part in location given by regular expression
+    # "proxy_pass" must end without the trailing slash '/' to make the location regex rewrite work
+    proxy_pass http://server_api;
     proxy_http_version 1.1;
     proxy_cache_bypass $http_upgrade;
     proxy_set_header Upgrade $http_upgrade;
