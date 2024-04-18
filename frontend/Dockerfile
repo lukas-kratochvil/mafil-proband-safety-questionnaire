@@ -44,6 +44,7 @@ RUN npm ci --omit='dev' && npm cache clean --force
 FROM nginx:1.25.5-alpine AS production
 
 # inject environment variables into the Nginx container JavaScript files using the start-nginx.sh script
+# that's how we do it: https://developers.redhat.com/blog/making-environment-variables-accessible-in-front-end-containers
 ENV JSFOLDER=/usr/share/nginx/html/assets/*.js
 COPY ./frontend/start-nginx.sh /usr/bin/start-nginx.sh
 RUN chmod +x /usr/bin/start-nginx.sh
