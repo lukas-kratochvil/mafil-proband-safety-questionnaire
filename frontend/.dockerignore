@@ -14,5 +14,8 @@ dist
 # Environment variables
 .env*
 
+# Documentation
+docs
+
 # IDEs and editors
 .vscode

@@ -27,8 +27,8 @@ COPY --from=development ["/usr/src/app/backend/package.json", "/usr/src/app/back
 COPY --from=development /usr/src/app/backend/node_modules ./node_modules
 COPY --from=development /usr/src/app/. ../.
 
+# build with devDependencies because we use Nest CLI etc. in the build process and then we generate the production-ready node_modules
 RUN npm run build
-
 RUN npm ci --omit='dev' && npm cache clean --force
 
 
