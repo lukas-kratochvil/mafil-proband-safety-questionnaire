@@ -13,8 +13,6 @@ Web application for ensuring the registration and safety of MR measurements in t
   - [Populating the database with initial data](#populating-the-database-with-initial-data-1)
   - [Changing the database schema and applying database migrations](#changing-the-database-schema-and-applying-database-migrations)
   - [Useful tools](#useful-tools)
-- [Repository owner notes](#repository-owner-notes)
-  - [Repository secrets and variables](#repository-secrets-and-variables)
 
 ## Repository structure
 This repository contains the following most important directories and files:
@@ -149,14 +147,3 @@ npx prisma generate
 ### Useful tools
 * GraphQL playground to test the server GraphQL API: use `server` URL with the path `/graphql`
   * You must specify the same `API_KEY` HTTP header value when sending requests.
-
-## Repository owner notes
-### Repository secrets and variables
-Repository secrets and variables are currently defined directly in the GitHub repository as GitHub secrets and GitHub variables. They are used in this project's GitHub Workflows to pass different values for different app environments.
-  * Secrets:
-    * JPM_CLIENT_ID
-      * Client ID of the service registered in the [Jednotné přihlášení MUNI](https://it.muni.cz/sluzby/jednotne-prihlaseni-na-muni) OIDC provider
-      * OIDC service admin can manage the service here: https://spreg.aai.muni.cz/
-  * Variables:
-    * DEV_APP_BAR_COLOR
-      * App bar color for the development environment (used in the build stage of the `devel` branch Docker image)

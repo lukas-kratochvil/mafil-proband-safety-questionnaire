@@ -18,19 +18,23 @@ COPY ./frontend .
 #-------------------------------------------
 FROM node:18-alpine AS build
 
+# jq tool makes it easy to edit the contents of a config.json from the CLI
+ENV JQ_VERSION=1.7.1
+RUN wget --no-check-certificate https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-linux64 -O /tmp/jq-linux64
+RUN cp /tmp/jq-linux64 /usr/bin/jq
+RUN chmod +x /usr/bin/jq
+
 WORKDIR /usr/src/app/frontend
 
 COPY --from=development ["/usr/src/app/frontend/package.json", "/usr/src/app/frontend/package-lock.json", "./"]
 COPY --from=development /usr/src/app/frontend/node_modules ./node_modules
 COPY --from=development /usr/src/app/. ../.
 
-# Jednotné přihlášení MUNI client_id is set in the GitHub Actions
-ARG JPM_CLIENT_ID
-# App bar color to differentiate environments is set in the GitHub Actions
-ARG APP_BAR_COLOR
+# jq takes original config.json and adds key value as key name prefixed with "$"
+RUN jq 'to_entries | map_values({ (.key) : ("$" + .key) }) | reduce .[] as $item ({}; . + $item)' ./src/config.json > ./src/config.tmp.json && mv ./src/config.tmp.json ./src/config.json
 
-RUN VITE_JPM_CLIENT_ID=$JPM_CLIENT_ID VITE_APP_BAR_COLOR=$APP_BAR_COLOR npm run build
-
+# build with devDependencies because we use Vite, TypeScript etc. in the build process and then we generate the production-ready node_modules
+RUN npm run build
 RUN npm ci --omit='dev' && npm cache clean --force
 
 
@@ -39,8 +43,13 @@ RUN npm ci --omit='dev' && npm cache clean --force
 #-------------------------------------------
 FROM nginx:1.23.3-alpine AS production
 
+# inject environment variables into the Nginx container JavaScript files using the start-nginx.sh script
+ENV JSFOLDER=/usr/share/nginx/html/assets/*.js
+COPY ./frontend/start-nginx.sh /usr/bin/start-nginx.sh
+RUN chmod +x /usr/bin/start-nginx.sh
+
 COPY --from=build /usr/src/app/frontend/dist /usr/share/nginx/html
 
 COPY ./frontend/nginx /etc/nginx
 
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["start-nginx.sh"]

@@ -86,26 +86,10 @@ jobs:
             org.opencontainers.image.title=MAFIL - Proband Safety Questionnaire - web
 
       - name: Build and push the image to the GitHub Container registry
-        if: ${{ github.ref_name == 'devel' }}
         uses: docker/build-push-action@v4
         with:
           context: .
           file: ./frontend/Dockerfile
-          build-args: |
-            JPM_CLIENT_ID=${{ secrets.JPM_CLIENT_ID }}
-            APP_BAR_COLOR=${{ vars.DEV_APP_BAR_COLOR }}
-          push: true
-          tags: ${{ steps.metadata.outputs.tags }}
-          labels: ${{ steps.metadata.outputs.labels }}
-
-      - name: Build and push the image to the GitHub Container registry
-        if: ${{ github.ref_name == 'main' }}
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: ./frontend/Dockerfile
-          build-args: |
-            JPM_CLIENT_ID=${{ secrets.JPM_CLIENT_ID }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}

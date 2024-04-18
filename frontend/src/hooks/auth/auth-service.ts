@@ -3,12 +3,13 @@ import { RoutingPath } from "@app/routing-paths";
 import { LocalizedError } from "@app/util/error-handling/LocalizedError";
 import { authenticateOperator } from "@app/util/server_API/calls";
 import type { OperatorDTO } from "@app/util/server_API/dto";
+import config from "config.json";
 
 // Using OIDC Authorization Code Flow
-const config: UserManagerSettings = {
+const oidcConfig: UserManagerSettings = {
   // Using "Jednotné přihlášení MUNI" OIDC provider
   authority: "https://oidc.muni.cz/oidc",
-  client_id: import.meta.env.VITE_JPM_CLIENT_ID,
+  client_id: config.JPM_CLIENT_ID,
   redirect_uri: `${window.location.origin}${RoutingPath.OIDC_LOGIN}`,
   scope: "openid profile email eduperson_entitlement",
   /**
@@ -26,7 +27,7 @@ const config: UserManagerSettings = {
 export class AuthService {
   private static instance: AuthService;
 
-  private userManager = new UserManager(config);
+  private userManager = new UserManager(oidcConfig);
 
   /* eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-empty-function */
   private constructor() {}
