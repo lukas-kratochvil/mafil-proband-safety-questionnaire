@@ -52,4 +52,7 @@ COPY --from=build /usr/src/app/frontend/dist /usr/share/nginx/html
 
 COPY ./frontend/nginx /etc/nginx
 
+# install bash to be able to execute start-nginx.sh script
+RUN apk add --no-cache bash
+
 ENTRYPOINT ["start-nginx.sh"]
