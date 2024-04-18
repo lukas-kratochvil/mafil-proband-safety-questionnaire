@@ -31,7 +31,7 @@ COPY --from=development /usr/src/app/frontend/node_modules ./node_modules
 COPY --from=development /usr/src/app/. ../.
 
 # jq takes original config.json and adds key value as key name prefixed with "$"
-RUN jq 'to_entries | map_values({ (.key) : ("$" + .key) }) | reduce .[] as $item ({}; . + $item)' ./src/config.json > ./src/config.tmp.json && mv ./src/config.tmp.json ./src/config.json
+RUN jq 'to_entries | map_values({ (.key) : ("$" + .key) }) | reduce .[] as $item ({}; . + $item)' config.json > config.tmp.json && mv config.tmp.json config.json
 
 # build with devDependencies because we use Vite, TypeScript etc. in the build process and then we generate the production-ready node_modules
 RUN npm run build
