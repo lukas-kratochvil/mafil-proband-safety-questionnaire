@@ -41,7 +41,7 @@ RUN npm ci --omit='dev' && npm cache clean --force
 #-------------------------------------------
 # PRODUCTION
 #-------------------------------------------
-FROM nginx:1.23.3-alpine AS production
+FROM nginx:1.25.5-alpine AS production
 
 # inject environment variables into the Nginx container JavaScript files using the start-nginx.sh script
 ENV JSFOLDER=/usr/share/nginx/html/assets/*.js
