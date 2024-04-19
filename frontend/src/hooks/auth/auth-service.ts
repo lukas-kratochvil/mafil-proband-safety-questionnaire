@@ -1,15 +1,15 @@
 import { UserManager, type User, type UserManagerSettings } from "oidc-client-ts";
+import envVars from "@app/envVars";
 import { RoutingPath } from "@app/routing-paths";
 import { LocalizedError } from "@app/util/error-handling/LocalizedError";
 import { authenticateOperator } from "@app/util/server_API/calls";
 import type { OperatorDTO } from "@app/util/server_API/dto";
-import config from "config.json";
 
 // Using OIDC Authorization Code Flow
 const oidcConfig: UserManagerSettings = {
   // Using "Jednotné přihlášení MUNI" OIDC provider
   authority: "https://oidc.muni.cz/oidc",
-  client_id: config.JPM_CLIENT_ID,
+  client_id: envVars.JPM_CLIENT_ID,
   redirect_uri: `${window.location.origin}${RoutingPath.OIDC_LOGIN}`,
   scope: "openid profile email eduperson_entitlement",
   /**
