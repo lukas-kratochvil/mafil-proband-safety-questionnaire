@@ -88,8 +88,8 @@ services:
       - frontend-network
     environment:
       - NODE_ENV=production
-      - APP_BAR_COLOR=${REG_APP_BAR_COLOR}
-      - JPM_CLIENT_ID=${REG_JPM_CLIENT_ID}
+      - INJECT_APP_BAR_COLOR=${REG_APP_BAR_COLOR}
+      - INJECT_JPM_CLIENT_ID=${REG_JPM_CLIENT_ID}
       - WEB_API_KEY=${REG_WEB_API_KEY}
       # 'server' is the name of our docker-compose backend API service that runs on the same machine as this Nginx reverse proxy
       - SERVER_ADDRESS=server:${REG_SERVER_PORT}
