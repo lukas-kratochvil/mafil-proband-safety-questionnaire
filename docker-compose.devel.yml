@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.8'
 
 services:
   postgres:
@@ -59,7 +59,7 @@ services:
     container_name: server
     image: ghcr.io/lukas-kratochvil/mafil-psq-server:devel
     ports:
-      - ${SERVER_PORT}:${SERVER_PORT}
+      - ${REG_SERVER_PORT}:${REG_SERVER_PORT}
     networks:
       - backend-network
     environment:
