@@ -37,14 +37,13 @@ FROM nginx:1.25.5-alpine AS production
 # inject environment variables into the Nginx container JavaScript files using the start-nginx.sh script
 # that's how we do it: https://developers.redhat.com/blog/making-environment-variables-accessible-in-front-end-containers
 ENV JSFILES=/usr/share/nginx/html/assets/*.js
-COPY ./frontend/start-nginx.sh /usr/bin/start-nginx.sh
+# Problem of specifying custom ENTRYPOINT shell script in Nginx image: https://github.com/nginxinc/docker-nginx/issues/422#issuecomment-644299743
+# That's why we copy our script to the '/docker-entrypoint.d' directory. Scripts inside this directory are executed before Nginx is.
+COPY ./frontend/start-nginx.sh /docker-entrypoint.d/start-nginx.sh
 RUN chmod +x /usr/bin/start-nginx.sh
 
 COPY --from=build /usr/src/app/frontend/dist /usr/share/nginx/html
 
 COPY ./frontend/nginx /etc/nginx
 
-# install bash to be able to execute start-nginx.sh script
-RUN apk add --no-cache bash
-
-ENTRYPOINT ["start-nginx.sh"]
+CMD ["nginx", "-g", "daemon off;"]

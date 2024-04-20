@@ -20,5 +20,3 @@ for file in $JSFILES; do
     sed -i "s/$key:\"\$$key\"/$key:\"$value\"/g" "$file"
   done
 done
-
-nginx -g 'daemon off;'
