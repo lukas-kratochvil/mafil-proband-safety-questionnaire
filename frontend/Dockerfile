@@ -8,7 +8,7 @@ WORKDIR /usr/src/app/frontend
 COPY ["frontend/package.json", "frontend/package-lock.json", "./"]
 RUN npm ci
 
-# copy shared tsconfig file between the projects inside the monorepo.. must be in the parental folder of the `frontend` project
+# Copy shared tsconfig file between the projects inside the monorepo.. must be in the parental folder of the `frontend` project.
 COPY tsconfig.base.json ../.
 COPY ./frontend .
 
@@ -24,7 +24,7 @@ COPY --from=development ["/usr/src/app/frontend/package.json", "/usr/src/app/fro
 COPY --from=development /usr/src/app/frontend/node_modules ./node_modules
 COPY --from=development /usr/src/app/. ../.
 
-# build with devDependencies because we use Vite, TypeScript etc. in the build process and then we generate the production-ready node_modules
+# Build with devDependencies because we use TypeScript, Vite etc. in the build process and then we generate the production-ready 'node_modules'.
 RUN npm run build
 RUN npm ci --omit='dev' && npm cache clean --force
 
@@ -34,8 +34,7 @@ RUN npm ci --omit='dev' && npm cache clean --force
 #-------------------------------------------
 FROM nginx:1.25.5-alpine AS production
 
-# inject environment variables into the Nginx container JavaScript files using the start-nginx.sh script
-# that's how we do it: https://developers.redhat.com/blog/making-environment-variables-accessible-in-front-end-containers
+# Inject environment variables into the Nginx container JavaScript files using the 'start-nginx.sh' script.
 ENV JSFILES=/usr/share/nginx/html/assets/*.js
 # Problem of specifying custom ENTRYPOINT shell script in Nginx image: https://github.com/nginxinc/docker-nginx/issues/422#issuecomment-644299743
 # That's why we copy our script to the '/docker-entrypoint.d' directory. Scripts inside this directory are executed before Nginx is.
