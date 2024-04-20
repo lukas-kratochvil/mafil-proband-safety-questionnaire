@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 #-----------------------------------------------------------------------------------------------------------------------
 # This script injects environment variables in frontend JavaScript files and then starts the Nginx server.
