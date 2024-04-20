@@ -34,12 +34,12 @@ RUN npm ci --omit='dev' && npm cache clean --force
 #-------------------------------------------
 FROM nginx:1.25.5-alpine AS production
 
-# Inject environment variables into the Nginx container JavaScript files using the 'start-nginx.sh' script.
+# Inject environment variables into the Nginx container JavaScript files using the 'replace-env-vars-in-js-files.sh' script.
 ENV JSFILES=/usr/share/nginx/html/assets/*.js
 # Problem of specifying custom ENTRYPOINT shell script in Nginx image: https://github.com/nginxinc/docker-nginx/issues/422#issuecomment-644299743
 # That's why we copy our script to the '/docker-entrypoint.d' directory. Scripts inside this directory are executed before Nginx is.
-COPY ./frontend/start-nginx.sh /docker-entrypoint.d/start-nginx.sh
-RUN chmod +x /docker-entrypoint.d/start-nginx.sh
+COPY ./frontend/replace-env-vars-in-js-files.sh /docker-entrypoint.d/replace-env-vars-in-js-files.sh
+RUN chmod +x /docker-entrypoint.d/replace-env-vars-in-js-files.sh
 
 COPY --from=build /usr/src/app/frontend/dist /usr/share/nginx/html
 
