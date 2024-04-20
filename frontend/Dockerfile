@@ -40,6 +40,8 @@ ENV JSFILES=/usr/share/nginx/html/assets/*.js
 # That's why we copy our script to the '/docker-entrypoint.d' directory. Scripts inside this directory are executed before Nginx is.
 COPY ./frontend/replace-env-vars-in-js-files.sh /docker-entrypoint.d/replace-env-vars-in-js-files.sh
 RUN chmod +x /docker-entrypoint.d/replace-env-vars-in-js-files.sh
+# Install bash to be able to execute 'replace-env-vars-in-js-files.sh' script.
+RUN apk add --no-cache bash
 
 COPY --from=build /usr/src/app/frontend/dist /usr/share/nginx/html
 
