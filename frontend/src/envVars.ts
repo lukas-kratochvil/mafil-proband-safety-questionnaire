@@ -1,10 +1,8 @@
 /**
  * These are environment variables.
- * They will be substituted during Nginx Docker container startup using 'envsubst' command.
+ * They will be substituted during Nginx Docker container startup.
  *
- * Required format is one of:
- *    - key: "$key"
- *    - key: "${key}"
+ * Required format is: ```key: "$key"```
  */
 const envVars = {
   APP_BAR_COLOR: "$APP_BAR_COLOR",
