@@ -88,12 +88,13 @@ services:
       - frontend-network
     environment:
       - NODE_ENV=production
+      # careful! - 'sed' command is using '~' as delimiter so there must not be any '~' in the 'INJECT_...' env var value
       - INJECT_APP_BAR_COLOR=${REG_APP_BAR_COLOR}
       - INJECT_JPM_CLIENT_ID=${REG_JPM_CLIENT_ID}
       - INJECT_MAFILDB_API_URL=${REG_MAFILDB_API_URL}
-      - WEB_API_KEY=${REG_WEB_API_KEY}
       # 'server' is the name of our docker-compose backend API service that runs on the same machine as this Nginx reverse proxy
       - SERVER_ADDRESS=server:${REG_SERVER_PORT}
+      - WEB_API_KEY=${REG_WEB_API_KEY}
     volumes:
       # - ./certs:/etc/nginx/certs
       - ./logs/web:/var/log/nginx
