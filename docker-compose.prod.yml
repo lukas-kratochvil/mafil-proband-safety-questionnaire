@@ -92,6 +92,7 @@ services:
       - INJECT_APP_BAR_COLOR=${REG_APP_BAR_COLOR}
       - INJECT_JPM_CLIENT_ID=${REG_JPM_CLIENT_ID}
       - INJECT_MAFILDB_API_URL=${REG_MAFILDB_API_URL}
+      - INJECT_MAFILDB_VISITS_MAX_DAYS_OLD=${REG_MAFILDB_VISITS_MAX_DAYS_OLD}
       # 'server' is the name of our docker-compose backend API service that runs on the same machine as this Nginx reverse proxy
       - SERVER_ADDRESS=server:${REG_SERVER_PORT}
       - WEB_API_KEY=${REG_WEB_API_KEY}

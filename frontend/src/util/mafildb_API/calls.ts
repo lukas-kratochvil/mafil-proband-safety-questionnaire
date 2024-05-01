@@ -1,4 +1,5 @@
 import { compareAsc, subDays } from "date-fns";
+import envVars from "@app/envVars";
 import type { Device } from "@app/model/device";
 import type { ValidatedOperatorFormData } from "@app/model/form";
 import type { Language, NativeLanguage } from "@app/model/language";
@@ -316,7 +317,8 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
 
   // Set limitation to fetch only visits created 14 days ago and newer.
   // MAFILDB returns only visits created X days ago and newer where X is given by the permissions acquired from the provided OIDC access token.
-  const newerThanDateBound = subDays(new Date().setHours(0, 0, 0, 0), 14);
+  // MAFILDB_VISITS_MAX_DAYS_OLD env var is used as the upper limit - absolute max value.
+  const newerThanDateBound = subDays(new Date().setHours(0, 0, 0, 0), +envVars.MAFILDB_VISITS_MAX_DAYS_OLD);
 
   const params = { newer_than: newerThanDateBound.valueOf() };
   const { data } = await mafildbApi.get<MDB_GetVisitsResponse>("visits", { params });
