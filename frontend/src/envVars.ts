@@ -7,6 +7,7 @@
 const envVars = {
   APP_BAR_COLOR: "$APP_BAR_COLOR",
   JPM_CLIENT_ID: "$JPM_CLIENT_ID",
-};
+  MAFILDB_API_URL: "$MAFILDB_API_URL"
+} as const;
 
 export default envVars;

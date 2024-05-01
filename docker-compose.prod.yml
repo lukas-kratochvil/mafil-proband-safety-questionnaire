@@ -90,11 +90,10 @@ services:
       - NODE_ENV=production
       - INJECT_APP_BAR_COLOR=${REG_APP_BAR_COLOR}
       - INJECT_JPM_CLIENT_ID=${REG_JPM_CLIENT_ID}
+      - INJECT_MAFILDB_API_URL=${REG_MAFILDB_API_URL}
       - WEB_API_KEY=${REG_WEB_API_KEY}
       # 'server' is the name of our docker-compose backend API service that runs on the same machine as this Nginx reverse proxy
       - SERVER_ADDRESS=server:${REG_SERVER_PORT}
-      - MAFILDB_DOMAIN=${REG_MAFILDB_DOMAIN}
-      - MAFILDB_API_VERSION=${REG_MAFILDB_API_VERSION}
     volumes:
       # - ./certs:/etc/nginx/certs
       - ./logs/web:/var/log/nginx

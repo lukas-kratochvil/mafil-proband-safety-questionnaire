@@ -1,4 +1,5 @@
 import axios from "axios";
+import envVars from "@app/envVars";
 import { AuthService } from "@app/hooks/auth/auth-service";
 import { transformDateStringToDate } from "./axios-transformers";
 
@@ -7,8 +8,7 @@ import { transformDateStringToDate } from "./axios-transformers";
  */
 export const mafildbApi = axios.create({
   // we do not communicate with MAFILDB API when developing locally due to the OIDC authentication that cannot be done
-  // 'mafildb-api' URL is rewritten in the Nginx conf to the correct URL
-  baseURL: import.meta.env.PROD ? "mafildb-api" : undefined,
+  baseURL: import.meta.env.PROD ? envVars.MAFILDB_API_URL : undefined,
   headers: {
     "Content-Type": "application/json",
   },

@@ -2,10 +2,6 @@ upstream server_api {
   server ${SERVER_ADDRESS};
 }
 
-upstream mafildb_api {
-  server ${MAFILDB_DOMAIN};
-}
-
 # HTTP requests
 server {
   # SSL/TLS is realized at the MAFIL Docker container level
@@ -15,26 +11,6 @@ server {
   # Using the Docker internal DNS resolver
   resolver 127.0.0.11 valid=10s;
   resolver_timeout 5s;
-
-  # MAFILDB API calls
-  # also match any URL /auth/.../mafildb-api/...
-  location ~ ^(?:\/auth(?:\/.*)?)?\/mafildb-api\/(.*)$ {
-    # rewrite '/mafildb-api' URI to the actual MAFILDB API endpoint
-    rewrite ^(?:.*)?/mafildb-api/(.*)$ /api/v${MAFILDB_API_VERSION}/$1 break;
-    # "proxy_pass" cannot have URI part in location given by regular expression
-    # "proxy_pass" must end without the trailing slash '/' to make the location regex rewrite work
-    proxy_pass http://mafildb_api;
-    proxy_http_version 1.1;
-    proxy_cache_bypass $http_upgrade;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection 'upgrade';
-    proxy_set_header Host ${MAFILDB_DOMAIN};
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-    # pass the HTTP Authorization header containing user's OIDC access_token to the MAFILDB API, so the request will proceed
-    proxy_set_header Authorization $http_authorization;
-  }
 
   # Our backend server API calls
   # also match any URL /auth/.../server-api
