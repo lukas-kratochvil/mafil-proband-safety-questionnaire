@@ -10,6 +10,7 @@ export const mafildbApi = axios.create({
   // we do not communicate with MAFILDB API when developing locally due to the OIDC authentication that cannot be done
   baseURL: import.meta.env.PROD ? envVars.MAFILDB_API_URL : undefined,
   headers: {
+    "Accept": "application/json",
     "Content-Type": "application/json",
   },
 });
