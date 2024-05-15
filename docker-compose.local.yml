@@ -88,7 +88,7 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=${WEB_PORT}
-      - VITE_WEB_API_KEY=${WEB_API_KEY}
+      - VITE_REG_APP_API_KEY=${WEB_API_KEY}
       - VITE_SERVER_URL=http://localhost:${SERVER_PORT}
       - VITE_OPERATOR_FIRSTNAME=${OPERATOR_FIRSTNAME}
       - VITE_OPERATOR_SURNAME=${OPERATOR_SURNAME}

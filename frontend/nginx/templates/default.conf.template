@@ -28,8 +28,8 @@ server {
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
-    # authorization header to access our server API methods
-    proxy_set_header REG-API-KEY "${WEB_API_KEY}";
+    # Custom authorization header to access our server API methods
+    proxy_set_header REG-API-KEY "${REG_APP_API_KEY}";
   }
 
   location / {

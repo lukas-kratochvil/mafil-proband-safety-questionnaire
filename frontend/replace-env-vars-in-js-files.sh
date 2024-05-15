@@ -10,6 +10,7 @@ INJECT_VARS=$(printenv | grep '^INJECT_' | sed 's/^INJECT_//' | paste -sd,);
 # split the $INJECT_VARS into an array
 IFS=',' read -ra INJECT_VARS_ARRAY <<< "$INJECT_VARS"
 
+echo '--------------------------------------------------------------------------------'
 echo 'Replacing environment variables prefixed with "INJECT_" ...'
 
 # loop through each JavaScript file in the production folder and replace any $VARIABLE with the actual value of that environment variable
@@ -26,3 +27,4 @@ for pair in "${INJECT_VARS_ARRAY[@]}"; do
 done
 
 echo 'Successfully completed environment variables replacement!'
+echo '--------------------------------------------------------------------------------'

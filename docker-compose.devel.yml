@@ -95,7 +95,7 @@ services:
       - INJECT_MAFILDB_VISITS_MAX_DAYS_OLD=${REG_MAFILDB_VISITS_MAX_DAYS_OLD}
       # 'server' is the name of our docker-compose backend API service that runs on the same machine as this Nginx reverse proxy
       - SERVER_ADDRESS=server:${REG_SERVER_PORT}
-      - WEB_API_KEY=${REG_WEB_API_KEY}
+      - REG_APP_API_KEY=${REG_WEB_API_KEY}
     volumes:
       # - ./certs:/etc/nginx/certs
       - ./logs/web:/var/log/nginx
