@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     container_name: postgres
@@ -32,7 +30,6 @@ services:
 
   server:
     container_name: server
-    image: mafil-psq-server
     build:
       context: .
       dockerfile: ./backend/Dockerfile
@@ -70,7 +67,6 @@ services:
 
   web:
     container_name: web
-    image: mafil-psq-web
     build:
       context: .
       dockerfile: ./frontend/Dockerfile
