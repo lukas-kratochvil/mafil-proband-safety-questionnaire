@@ -88,7 +88,7 @@ docker-compose -f docker-compose.ENV.yml exec server npm run seed
 Then users that are eligible to access the authenticated part of the app must be defined. Login to the Adminer at `/adminer` URL path and create accounts in the `Operator` table in the database.
 
 ## Services update
-It may be necessary to update `.env` variables according to `.env.example` before running the commands below.
+It may be necessary to update `.env` variables according to `.env.example` and also `docker-compose.yml` according to the specific environment `docker-compose.ENV.yml` before running the commands below.
 
 To update services run these commands in the root directory:
 ```
