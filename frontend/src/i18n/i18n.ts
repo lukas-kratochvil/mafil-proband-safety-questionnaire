@@ -10,7 +10,8 @@ export const convertStringToLocalizationKey = (str: string): TemplateStringsArra
 // TODO: is it necessary to use it explicitly in the translation function inside React components?
 export const defaultNS = "translation";
 
-// Object attributes must be ISO 639-1 language codes: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+// Object attributes must be ISO 639-1 language codes: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes.
+// Order of languages matters! It is used in i18n init options - the first language is used as a fallback.
 export const resources = {
   cs,
   en,
@@ -21,6 +22,9 @@ export const resources = {
  */
 export type LanguageCode = keyof typeof resources;
 
+// Supported languages in our app.
+const supportedLanguages = Object.keys(resources);
+
 void i18n
   // detect user language
   .use(LanguageDetector)
@@ -30,7 +34,8 @@ void i18n
   .init({
     debug: process.env.NODE_ENV === "development",
     defaultNS,
-    fallbackLng: "cs",
+    supportedLngs: supportedLanguages,
+    fallbackLng: supportedLanguages[0],
     interpolation: {
       escapeValue: false, // not needed for React as it escapes by default
     },

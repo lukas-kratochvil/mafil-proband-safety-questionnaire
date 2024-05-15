@@ -7,7 +7,6 @@ Web application for ensuring the registration and safety of MR measurements in t
 - [Installation](#installation)
   - [Populating the database with initial data](#populating-the-database-with-initial-data)
 - [Services update](#services-update)
-- [What to be aware of](#what-to-be-aware-of)
 - [Local development](#local-development)
   - [Installation](#installation-1)
   - [Populating the database with initial data](#populating-the-database-with-initial-data-1)
@@ -96,10 +95,6 @@ docker-compose -f docker-compose.ENV.yml pull [SERVICE]
 docker-compose -f docker-compose.ENV.yml up -d --force-recreate --no-deps [SERVICE]
 docker image prune -f
 ```
-
-## What to be aware of
-1. Sometimes the client app has a problem with obtaining data from the server API due to an invalid locale.
-   * Fix: change the language of the application using the language menu in the app GUI.
 
 ## Local development
 ### Installation
