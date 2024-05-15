@@ -146,4 +146,4 @@ npx prisma generate
 
 ### Useful tools
 * GraphQL playground to test the server GraphQL API: use `server` URL with the path `/graphql`
-  * You must specify the same `API_KEY` HTTP header value when sending requests.
+  * You must specify the same `REG-API-KEY` HTTP header value when sending requests.
