@@ -20,7 +20,7 @@ const oidcConfig: UserManagerSettings = {
    * logged in using MFA a moment ago so the user does not need to undergo the second factor authentication on every
    * login. Because of that we have to trust the OIDC provider that it manages the MFA correctly!
    */
-  acr_values: "https://refeds.org/profile/mfa",
+  acr_values: envVars.JPM_MFA_ENDPOINT,
   post_logout_redirect_uri: `${window.location.origin}${RoutingPath.LOGOUT}`,
 };
 

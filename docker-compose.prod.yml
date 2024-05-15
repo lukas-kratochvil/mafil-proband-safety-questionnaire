@@ -90,6 +90,7 @@ services:
       - INJECT_APP_BAR_COLOR=${REG_APP_BAR_COLOR}
       - INJECT_JPM_AUTHORIZATION_ENDPOINT=${REG_JPM_AUTHORIZATION_ENDPOINT}
       - INJECT_JPM_CLIENT_ID=${REG_JPM_CLIENT_ID}
+      - INJECT_JPM_MFA_ENDPOINT=${REG_JPM_MFA_ENDPOINT}
       - INJECT_MAFILDB_API_URL=${REG_MAFILDB_API_URL}
       - INJECT_MAFILDB_VISITS_MAX_DAYS_OLD=${REG_MAFILDB_VISITS_MAX_DAYS_OLD}
       # 'server' is the name of our docker-compose backend API service that runs on the same machine as this Nginx reverse proxy
