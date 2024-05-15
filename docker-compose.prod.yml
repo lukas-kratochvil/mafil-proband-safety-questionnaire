@@ -90,6 +90,7 @@ services:
       - NODE_ENV=production
       # careful! - 'sed' command is using '~' as delimiter so there must not be any '~' in the 'INJECT_...' env var value
       - INJECT_APP_BAR_COLOR=${REG_APP_BAR_COLOR}
+      - INJECT_JPM_AUTHORIZATION_ENDPOINT=${REG_JPM_AUTHORIZATION_ENDPOINT}
       - INJECT_JPM_CLIENT_ID=${REG_JPM_CLIENT_ID}
       - INJECT_MAFILDB_API_URL=${REG_MAFILDB_API_URL}
       - INJECT_MAFILDB_VISITS_MAX_DAYS_OLD=${REG_MAFILDB_VISITS_MAX_DAYS_OLD}

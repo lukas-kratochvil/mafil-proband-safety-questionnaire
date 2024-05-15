@@ -8,7 +8,7 @@ import type { OperatorDTO } from "@app/util/server_API/dto";
 // Using OIDC Authorization Code Flow
 const oidcConfig: UserManagerSettings = {
   // Using "Jednotné přihlášení MUNI" OIDC provider
-  authority: "https://oidc.muni.cz/oidc",
+  authority: envVars.JPM_AUTHORIZATION_ENDPOINT,
   client_id: envVars.JPM_CLIENT_ID,
   redirect_uri: `${window.location.origin}${RoutingPath.OIDC_LOGIN}`,
   scope: "openid profile email eduperson_entitlement",
