@@ -10,7 +10,6 @@ import type { FormPropType } from "@app/model/form";
 import type { NativeLanguage } from "@app/model/language";
 import { fetchNativeLanguages } from "@app/util/mafildb_API/calls";
 import { fetchGenders, fetchHandednesses } from "@app/util/server_API/calls";
-import type { GenderDTO, HandednessDTO } from "@app/util/server_API/dto";
 import { FormAutocomplete } from "../inputs/FormAutocomplete";
 import { FormAutocompleteOptions } from "../inputs/FormAutocompleteOptions";
 import { FormDatePicker } from "../inputs/FormDatePicker";
@@ -229,7 +228,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
           sm={6}
           md={4}
         >
-          <FormAutocomplete<GenderDTO>
+          <FormAutocomplete
             name="gender"
             label={t("gender")}
             options={genders.data}
@@ -248,7 +247,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
           sm={6}
           md={4}
         >
-          <FormAutocomplete<NativeLanguage>
+          <FormAutocomplete
             name="nativeLanguage"
             label={t("nativeLanguage")}
             options={nativeLanguages.data}
@@ -323,7 +322,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
           sm={6}
           md={4}
         >
-          <FormAutocomplete<HandednessDTO>
+          <FormAutocomplete
             name="handedness"
             label={t("handedness")}
             options={handednesses.data}

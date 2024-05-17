@@ -5,9 +5,7 @@ import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ColoredInfoStripe } from "@app/components/informative/ColoredInfoStripe";
 import { defaultNS } from "@app/i18n/i18n";
-import type { Device } from "@app/model/device";
 import type { FormPropType } from "@app/model/form";
-import type { Project } from "@app/model/project";
 import { fetchDevices, fetchProjects } from "@app/util/mafildb_API/calls";
 import { FormAutocomplete } from "../inputs/FormAutocomplete";
 import { FormDatePicker } from "../inputs/FormDatePicker";
@@ -66,7 +64,7 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
           item
           xs={12}
         >
-          <FormAutocomplete<Project>
+          <FormAutocomplete
             name="project"
             label={t("project")}
             options={projects.data}
@@ -82,7 +80,7 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
           sm={6}
           md={8}
         >
-          <FormAutocomplete<Device>
+          <FormAutocomplete
             name="device"
             label={t("device")}
             options={devices.data}

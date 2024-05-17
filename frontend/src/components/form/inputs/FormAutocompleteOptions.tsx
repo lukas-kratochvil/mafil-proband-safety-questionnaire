@@ -19,7 +19,7 @@ export const FormAutocompleteOptions = <T,>({
   const isLoading = options.length === 0;
 
   return (
-    <FormAutocomplete<AutocompleteOption<T>>
+    <FormAutocomplete
       label={label}
       name={name}
       isOptional={isOptional}
