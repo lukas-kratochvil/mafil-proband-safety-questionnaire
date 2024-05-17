@@ -9,8 +9,8 @@ import type { Project } from "./project";
 type TextFieldNumberInput = string | number;
 
 export const answerOptions = {
-  yes: "yes",
-  no: "no",
+  yes: "YES",
+  no: "NO",
 } as const;
 
 export type AnswerOption = ObjectValues<typeof answerOptions>;

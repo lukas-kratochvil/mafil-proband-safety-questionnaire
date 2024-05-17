@@ -39,7 +39,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestio
   useEffect(() => {
     if (selectedGender !== null && qac.hiddenByGenders.map((hbg) => hbg.genderCode).includes(selectedGender.code)) {
       setHideQuestion(true);
-      setValue(`answers.${qac.index}.answer`, "no");
+      setValue(`answers.${qac.index}.answer`, "NO");
     } else {
       setValue(`answers.${qac.index}.answer`, qac.answer);
       setHideQuestion(false);
@@ -48,7 +48,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestio
 
   // Reset comment if the current answer is 'NO'
   useEffect(() => {
-    if (questionAnswer !== "yes") {
+    if (questionAnswer !== "YES") {
       setValue(`answers.${qac.index}.comment`, "");
     }
   }, [qac.index, questionAnswer, setValue]);
@@ -56,6 +56,8 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestio
   if (hideQuestion) {
     return null;
   }
+
+  type AnswerOptionRadioLabel = keyof typeof answerOptions;
 
   return (
     <Grid
@@ -90,14 +92,14 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestio
           defaultValue={qac.answer}
           radios={Object.values(answerOptions).map((answer) => ({
             id: `${answer}-radio[${qac.questionId}]`,
-            label: t(answer),
+            label: t(answer.toLowerCase() as AnswerOptionRadioLabel),
             value: answer,
           }))}
           disabled={disableInputs}
           sx={{ justifyContent: matchesUpSmBreakpoint ? "flex-end" : "flex-start" }}
         />
       </Grid>
-      {operator !== undefined && questionAnswer === "yes" && (
+      {operator !== undefined && questionAnswer === "YES" && (
         <Grid
           item
           xs={1}
@@ -108,7 +110,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestio
             isSmall
             isMultiline
             hasAutocomplete
-            disabled={disableComment || (questionAnswer !== "yes" && disableInputs)}
+            disabled={disableComment || (questionAnswer !== "YES" && disableInputs)}
           />
         </Grid>
       )}
