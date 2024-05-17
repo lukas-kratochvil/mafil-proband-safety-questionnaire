@@ -12,8 +12,10 @@ import type {
   ApprovalRoomVisitFormIncludingQuestionsDTO,
   CreateDuplicatedVisitFormForApprovalInput,
   CreateProbandVisitFormInput,
+  GenderCode,
   GenderDTO,
   GeneratePdfInput,
+  HandednessCode,
   HandednessDTO,
   HTMLCardDTO,
   OperatorAuthInput,
@@ -117,7 +119,7 @@ export const fetchGenders = async (): Promise<GenderDTO[]> => {
   return data.genders;
 };
 
-export const fetchGender = async (code: string): Promise<GenderDTO> => {
+export const fetchGender = async (code: GenderCode): Promise<GenderDTO> => {
   const variables = { code };
   const data = await serverApiCall<GenderResponse>(GET_GENDER, variables);
   return data.gender;
@@ -128,7 +130,7 @@ export const fetchHandednesses = async (): Promise<HandednessDTO[]> => {
   return data.handednesses;
 };
 
-export const fetchHandedness = async (code: string): Promise<HandednessDTO> => {
+export const fetchHandedness = async (code: HandednessCode): Promise<HandednessDTO> => {
   const variables = { code };
   const data = await serverApiCall<HandednessResponse>(GET_HANDEDNESS, variables);
   return data.handedness;

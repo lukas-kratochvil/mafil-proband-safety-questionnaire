@@ -28,7 +28,7 @@ import {
   fetchVisitDetailDev,
   updateVisitSignatureStateDev,
 } from "./calls.dev";
-import { transformGenderCodeForMDB, transformHandednessCodeForMDB } from "./codeMappers";
+import { transformGenderCodeForMDB, transformHandednessCodeForMDB, transformMDBGenderCode, transformMDBHandednessCode } from "./codeMappers";
 import {
   MDB_ApprovalState,
   type MDB_AddPdfToVisitInput,
@@ -442,9 +442,9 @@ export const fetchDuplicatedVisit = async (
   }
 
   const [gender, nativeLanguage, handedness, answersIncludingQuestions] = await Promise.all([
-    fetchGender(visit.subject.gender),
+    fetchGender(transformMDBGenderCode(visit.subject.gender)),
     fetchNativeLanguage(visit.subject.native_language_code),
-    fetchHandedness(visit.subject.handedness),
+    fetchHandedness(transformMDBHandednessCode(visit.subject.handedness)),
     Promise.all(
       visit.registration_answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
         const question = await fetchQuestion(answer.question_id);
