@@ -2,19 +2,19 @@ import { FormControlLabel, Radio, RadioGroup, type SxProps, type Theme } from "@
 import { Controller } from "react-hook-form";
 import type { FormDefaultInputProps } from "./input-props";
 
-export type RadioProps = {
+type RadioProps<T> = {
   id: string;
   label: string;
-  value: string;
+  value: T;
 };
 
-type FormRadioGroupProps = FormDefaultInputProps & {
-  radios: RadioProps[];
-  defaultValue: string | null;
+type FormRadioGroupProps<T> = FormDefaultInputProps & {
+  radios: RadioProps<T>[];
+  defaultValue: T | null;
   sx?: SxProps<Theme>;
 };
 
-export const FormRadioGroup = ({ name, disabled, radios, defaultValue, sx }: FormRadioGroupProps) => (
+export const FormRadioGroup = <T,>({ name, disabled, radios, defaultValue, sx }: FormRadioGroupProps<T>) => (
   <Controller
     name={name}
     // useForm() does not set default value for the radio group component, we need to set the defaultValue manually here due to: https://github.com/react-hook-form/react-hook-form/discussions/8153#discussioncomment-2533857
