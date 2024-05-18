@@ -38,7 +38,7 @@ const visit: DuplicatedVisitIncludingQuestions = {
   answersIncludingQuestions: questionsTest.map((question, index) => ({
     questionId: question.id,
     mustBeApproved: index % 2 === 0,
-    answer: index % 2 === 0 ? "yes" : "no",
+    answer: index % 2 === 0 ? "YES" : "NO",
     comment: index % 2 === 0 ? commentText : "",
     order: question.order,
     hiddenByGenders: question.hiddenByGenders,

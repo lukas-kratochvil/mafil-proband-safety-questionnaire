@@ -74,4 +74,4 @@ export const getValidatedOperatorFormData = (data: FormPropType): ValidatedOpera
 
 export const isVisitFormForApproval = (operator: Auth["operator"], data: ValidatedOperatorFormData) =>
   operator === undefined
-  || (operator.role !== "MR_HIGH_PERM" && data.answers.some((answer) => answer.mustBeApproved && answer.answer === "yes"));
+  || (operator.role !== "MR_HIGH_PERM" && data.answers.some((answer) => answer.mustBeApproved && answer.answer === "YES"));

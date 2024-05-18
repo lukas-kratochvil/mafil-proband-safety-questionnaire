@@ -7,7 +7,7 @@ const operatorAnswersSchema = answersSchema.shape({
   comment: string()
     .default("")
     .when("answer", {
-      is: "yes",
+      is: "YES",
       then: string().trim().required("form.validation.required"),
     }),
 });

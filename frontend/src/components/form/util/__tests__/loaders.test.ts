@@ -25,7 +25,7 @@ import {
 const answerIncludingQuestion: VisitFormAnswerIncludingQuestion = {
   questionId: "1",
   updatedAt: new Date(),
-  answer: "no",
+  answer: "NO",
   comment: "",
   partNumber: 1,
   mustBeApproved: false,

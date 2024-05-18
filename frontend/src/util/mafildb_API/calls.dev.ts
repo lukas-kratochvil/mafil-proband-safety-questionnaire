@@ -86,7 +86,7 @@ export const fetchRecentVisitsDev = async (): Promise<RecentVisitsTableVisit[]> 
       const rand = Math.floor(Math.random() * 100) % 2 === 0;
       return {
         questionId: question.id,
-        answer: rand ? "yes" : "no",
+        answer: rand ? "YES" : "NO",
         comment: rand ? "Comment" : "",
       };
     });
