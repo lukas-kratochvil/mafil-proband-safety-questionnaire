@@ -19,17 +19,35 @@ export const getBackButtonProps = (navigate: NavigateFunction, customTitleLocali
   onClick: async () => navigate(-1),
 });
 
+const logError = (errorMessage: string) => {
+  fetch("/client-error-log", {
+    method: "post",
+    headers: {
+      Accept: "text/plain",
+      "Content-Type": "text/plain",
+    },
+    body: errorMessage,
+  });
+}
+
 export const handleErrorsWithToast = (e: unknown, t: TFunction<"translation">): void => {
   let errorMessage: string;
 
-  if (e instanceof ServerApiValidationError) {
-    errorMessage = `${t("common.errors.serverValidationError")}:\n${e.message}`;
-  } else if (e instanceof LocalizedError) {
-    errorMessage = t(convertStringToLocalizationKey(e.localizationKey));
-  } else if (e instanceof AxiosError) {
-    errorMessage = t("common.errors.serverCommunicationError");
+  if (e instanceof Error) {
+    if (e instanceof ServerApiValidationError) {
+      errorMessage = `${t("common.errors.serverValidationError")}:\n${e.message}`;
+    } else if (e instanceof LocalizedError) {
+      errorMessage = t(convertStringToLocalizationKey(e.localizationKey));
+    } else if (e instanceof AxiosError) {
+      errorMessage = t("common.errors.serverCommunicationError");
+    } else {
+      errorMessage = t("common.errors.contactAdmin");
+    }
+
+    logError(`[Error]: ${e.message}`);
   } else {
     errorMessage = t("common.errors.contactAdmin");
+    logError(`[Unpredicted error]: ${e}`);
   }
 
   toast.error(errorMessage, { duration: 6000 });
