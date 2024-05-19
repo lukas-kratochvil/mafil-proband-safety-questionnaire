@@ -5,7 +5,7 @@
 #-----------------------------------------------------------------------------------------------------------------------
 
 # get names of all environment variables that should be injected into Nginx JavaScript files (prefixed with 'INJECT_') and store them in the $INJECT_VARS
-INJECT_VARS=$(printenv | grep '^INJECT_' | sed 's/^INJECT_//' | paste -sd,);
+INJECT_VARS=$(printenv | grep '^INJECT_' | sort | sed 's/^INJECT_//' | paste -sd,);
 
 # split the $INJECT_VARS into an array
 IFS=',' read -ra INJECT_VARS_ARRAY <<< "$INJECT_VARS"
