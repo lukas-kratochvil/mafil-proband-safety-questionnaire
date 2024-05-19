@@ -1,4 +1,4 @@
-import type { AxiosResponse } from "axios";
+import type { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { parseISO } from "date-fns";
 
 /**
