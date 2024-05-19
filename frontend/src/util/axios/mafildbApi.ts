@@ -1,8 +1,7 @@
 import axios from "axios";
 import envVars from "@app/envVars";
 import { AuthService } from "@app/hooks/auth/auth-service";
-import { transformDateStringToDate } from "./transformers/datestring-transformer";
-import { transformDateToDateString } from "./transformers/date-transformer";
+import { transformDateStringToDate, transformDateToDateString } from "./transformers/dates-transformers";
 
 /**
  * MAFILDB instance

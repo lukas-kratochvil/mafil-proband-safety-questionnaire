@@ -28,7 +28,12 @@ import {
   fetchVisitDetailDev,
   updateVisitSignatureStateDev,
 } from "./calls.dev";
-import { transformGenderCodeForMDB, transformHandednessCodeForMDB, transformMDBGenderCode, transformMDBHandednessCode } from "./codeMappers";
+import {
+  transformGenderCodeForMDB,
+  transformHandednessCodeForMDB,
+  transformMDBGenderCode,
+  transformMDBHandednessCode,
+} from "./codeMappers";
 import {
   MDB_ApprovalState,
   type MDB_AddPdfToVisitInput,

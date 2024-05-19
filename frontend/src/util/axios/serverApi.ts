@@ -1,5 +1,5 @@
 import axios from "axios";
-import { transformDateStringToDate } from "./transformers/datestring-transformer";
+import { transformDateStringToDate } from "./transformers/dates-transformers";
 
 /**
  * SERVER instance
