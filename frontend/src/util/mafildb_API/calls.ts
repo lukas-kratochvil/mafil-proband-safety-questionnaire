@@ -29,13 +29,6 @@ import {
   updateVisitSignatureStateDev,
 } from "./calls.dev";
 import {
-  transformDateToMafildbFormat,
-  transformGenderCodeForMDB,
-  transformHandednessCodeForMDB,
-  transformMDBGenderCode,
-  transformMDBHandednessCode,
-} from "./codeMappers";
-import {
   MDB_ApprovalState,
   type MDB_AddPdfToVisitInput,
   type MDB_CreateSubjectInput,
@@ -60,6 +53,13 @@ import {
   type MDB_GetVisitsResponse,
   type MDB_UpdateVisitSignatureStateResponse,
 } from "./response-types";
+import {
+  transformDateToMafildbFormat,
+  transformGenderCodeForMDB,
+  transformHandednessCodeForMDB,
+  transformMDBGenderCode,
+  transformMDBHandednessCode,
+} from "./transformers";
 
 const fetchLanguages = async (): Promise<Language[]> => {
   if (import.meta.env.DEV) {
