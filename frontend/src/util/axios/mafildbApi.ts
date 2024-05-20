@@ -1,7 +1,7 @@
 import axios from "axios";
 import envVars from "@app/envVars";
 import { AuthService } from "@app/hooks/auth/auth-service";
-import { transformDateStringToDate, transformDateToDateString } from "./transformers/dates-transformers";
+import { transformRequestDateToDateString, transformResponseDateStringToDate } from "./transformers/dates-transformers";
 
 /**
  * MAFILDB instance
@@ -27,7 +27,7 @@ mafildbApi.interceptors.request.use(async (config) => {
 });
 
 // Transform all dates in the request into date-strings in the format "YYYY-MM-DD"
-mafildbApi.interceptors.request.use(transformDateToDateString);
+mafildbApi.interceptors.request.use(transformRequestDateToDateString);
 
 // Transform all date-strings in the response into Date objects
-mafildbApi.interceptors.response.use(transformDateStringToDate);
+mafildbApi.interceptors.response.use(transformResponseDateStringToDate);
