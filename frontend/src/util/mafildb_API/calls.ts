@@ -210,7 +210,7 @@ const createVisit = async (
     subject_uuid: subjectUuid,
     project_uuid: visitFormData.project.uuid,
     device_id: visitFormData.device.id,
-    date: visitFormData.measuredAt,
+    date: transformDateToMafildbFormat(visitFormData.measuredAt),
     height: visitFormData.heightCm,
     weight: visitFormData.weightKg,
     visual_correction_dioptre: visitFormData.visualCorrectionDioptre,

@@ -58,7 +58,7 @@ export type MDB_AnswerDTO = {
 export type MDB_CreateVisitInput = {
   checked: MDB_ApprovalState;
   is_phantom: boolean;
-  date: Date;
+  date: string;
   subject_uuid: string;
   project_uuid: string;
   device_id: number;
@@ -90,13 +90,19 @@ type MDB_SignatureState = ObjectValues<typeof MDB_SignatureState>;
 
 export type MDB_VisitDTO = Omit<
   MDB_CreateVisitInput,
-  "subject_uuid" | "project_uuid" | "device_id" | "registration_finalize_username" | "registration_approve_username"
+  | "date"
+  | "subject_uuid"
+  | "project_uuid"
+  | "device_id"
+  | "registration_finalize_username"
+  | "registration_approve_username"
 > & {
   uuid: string;
   visit_name: string;
   created: Date;
   subject: MDB_SubjectDTO;
   project: MDB_ProjectDTO;
+  date: Date;
   device: MDB_DeviceDTO | null;
   registration_finalize_user: MDB_RegistrationUserDTO | null;
   registration_approve_user: MDB_RegistrationUserDTO | null;
