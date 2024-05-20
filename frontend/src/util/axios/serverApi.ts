@@ -1,5 +1,5 @@
 import axios from "axios";
-import { transformDateStringToDate } from "./transformers/dates-transformers";
+import { transformResponseDateStringToDate } from "./transformers/dates-transformers";
 
 /**
  * SERVER instance
@@ -15,4 +15,4 @@ export const serverApi = axios.create({
 });
 
 // Transform all date-strings in the response into Date objects
-serverApi.interceptors.response.use(transformDateStringToDate);
+serverApi.interceptors.response.use(transformResponseDateStringToDate);

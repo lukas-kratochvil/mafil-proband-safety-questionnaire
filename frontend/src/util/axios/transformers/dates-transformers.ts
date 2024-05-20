@@ -37,19 +37,17 @@ const handleDates = <T>(body: any, transform: (value: string) => T): any => {
   return body;
 };
 
-// TODO: create tests for this function
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const transformDateStringToDate = (response: AxiosResponse<any, any>): AxiosResponse<any, any> => {
-  handleDates(response.data, parseISO);
-  return response;
-};
-
-// TODO: create tests for this function
-export const transformDateToDateString = (
+export const transformRequestDateToDateString = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   request: InternalAxiosRequestConfig<any>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): InternalAxiosRequestConfig<any> => {
   handleDates(request.data, (value) => format(parseISO(value), "yyyy-MM-dd"));
   return request;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const transformResponseDateStringToDate = (response: AxiosResponse<any, any>): AxiosResponse<any, any> => {
+  handleDates(response.data, parseISO);
+  return response;
 };
