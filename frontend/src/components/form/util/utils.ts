@@ -69,7 +69,7 @@ export const getValidatedOperatorFormData = (data: FormPropType): ValidatedOpera
   project: data.project as Project,
   device: data.device as Device,
   measuredAt: data.measuredAt as Date,
-  disapprovalReason: data.disapprovalReason as string,
+  disapprovalReason: data.disapprovalReason ?? "",
 });
 
 export const isVisitFormForApproval = (operator: Auth["operator"], data: ValidatedOperatorFormData) =>
