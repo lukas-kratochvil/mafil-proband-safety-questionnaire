@@ -28,7 +28,7 @@ export type MDB_CreateSubjectInput = {
   preferred_language_code: ProbandVisitLanguageCode;
   first_name: string;
   last_name: string;
-  birth_date: Date;
+  birth_date: string;
   personal_ID: string;
   gender: MDB_GenderCode;
   native_language_code: string;
@@ -37,8 +37,9 @@ export type MDB_CreateSubjectInput = {
   phone: string;
 };
 
-export type MDB_SubjectDTO = MDB_CreateSubjectInput & {
+export type MDB_SubjectDTO = Omit<MDB_CreateSubjectInput, "birth_date"> & {
   uuid: string;
+  birth_date: Date;
 };
 
 export const MDB_ApprovalState = {

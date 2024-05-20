@@ -29,6 +29,7 @@ import {
   updateVisitSignatureStateDev,
 } from "./calls.dev";
 import {
+  transformDateToMafildbFormat,
   transformGenderCodeForMDB,
   transformHandednessCodeForMDB,
   transformMDBGenderCode,
@@ -155,7 +156,7 @@ const createVisitSubject = async (
     last_name: visitFormData.surname,
     // TODO: phantom visits do not have the probandLanguageCode filled
     preferred_language_code: probandLanguageCode ?? "",
-    birth_date: visitFormData.birthdate,
+    birth_date: transformDateToMafildbFormat(visitFormData.birthdate),
     personal_ID: visitFormData.personalId,
     gender: transformGenderCodeForMDB(visitFormData.gender.code),
     native_language_code: visitFormData.nativeLanguage.code,

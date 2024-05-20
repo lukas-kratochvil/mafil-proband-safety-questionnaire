@@ -1,5 +1,5 @@
-import type { AxiosResponse, InternalAxiosRequestConfig } from "axios";
-import { format, parseISO } from "date-fns";
+import type { AxiosResponse } from "axios";
+import { parseISO } from "date-fns";
 
 /**
  * Transforming date strings to dates in the response body. The date is of type string in the response.
@@ -35,15 +35,6 @@ const handleDates = <T>(body: any, transform: (value: string) => T): any => {
   });
 
   return body;
-};
-
-export const transformRequestDateToDateString = (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  request: InternalAxiosRequestConfig<any>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): InternalAxiosRequestConfig<any> => {
-  handleDates(request.data, (value) => format(parseISO(value), "yyyy-MM-dd"));
-  return request;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

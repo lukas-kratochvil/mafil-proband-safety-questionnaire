@@ -1,5 +1,11 @@
+import { format } from "date-fns";
 import type { GenderCode, HandednessCode } from "../server_API/dto";
 import type { MDB_GenderCode, MDB_HandednessCode } from "./dto";
+
+/**
+ * Transform dates to MAFILDB format 'yyyy-MM-dd'.
+ */
+export const transformDateToMafildbFormat = (date: Date) => format(date, "yyyy-MM-dd");
 
 /**
  * Transforms our gender code to match MDB gender values.
