@@ -50,6 +50,6 @@ export const transformDateToDateString = (
   request: InternalAxiosRequestConfig<any>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): InternalAxiosRequestConfig<any> => {
-  handleDates(request.data, (value) => format(parseISO(value), "YYYY-MM-DD"));
+  handleDates(request.data, (value) => format(parseISO(value), "yyyy-MM-dd"));
   return request;
 };
