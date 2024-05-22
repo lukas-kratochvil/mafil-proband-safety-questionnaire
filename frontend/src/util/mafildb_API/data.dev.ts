@@ -70,7 +70,7 @@ const initialDummyVisit: Visit = {
   finalizer: operatorFinalizer,
   finalizationDate: new Date(1663390000000),
   approver: null,
-  approvalDate: null,
+  approvalDate: undefined,
   disapprovalReason: "",
   signatureState: MDB_SignatureState.NOT_SET,
 };
