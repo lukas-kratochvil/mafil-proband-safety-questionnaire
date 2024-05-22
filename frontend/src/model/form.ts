@@ -92,8 +92,8 @@ type OperatorAddedFormData = {
   device: Device;
   measuredAt: Date;
 
-  // Visit form disapproval
-  disapprovalReason: string;
+  // Visit form disapproval reason - null if not disapproved
+  disapprovalReason: string | null;
 };
 
 export type ValidatedOperatorModifiedFormData = OperatorAddedFormData & Partial<ValidatedProbandFormData>;

@@ -191,6 +191,10 @@ const createVisit = async (
     throw new Error("Missing visit finalization date!");
   }
 
+  if (approvalState === MDB_ApprovalState.DISAPPROVED && visitFormData.disapprovalReason?.length === 0) {
+    throw new Error("Disapproval reason must be properly filled!");
+  }
+
   if (import.meta.env.DEV) {
     return createVisitDev(
       visitFormData,
@@ -223,7 +227,7 @@ const createVisit = async (
     registration_finalize_date: finalizedAt,
     registration_approve_username: approverUsername,
     registration_approve_date: approvedAt,
-    registration_disapprove_reason: visitFormData.disapprovalReason,
+    registration_disapprove_reason: visitFormData.disapprovalReason ?? undefined,
   };
   const { data } = await mafildbApi.post<MDB_CreateVisitResponse>("visits", createData);
 

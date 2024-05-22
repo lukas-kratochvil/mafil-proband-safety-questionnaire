@@ -70,7 +70,7 @@ export type MDB_CreateVisitInput = {
   registration_finalize_date: Date;
   registration_approve_username?: string;
   registration_approve_date?: Date;
-  registration_disapprove_reason: string;
+  registration_disapprove_reason?: string;
 };
 
 type MDB_RegistrationUserDTO = {
