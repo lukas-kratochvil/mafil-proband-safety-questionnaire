@@ -221,8 +221,8 @@ const createVisit = async (
     })),
     registration_finalize_username: finalizerUsername,
     registration_finalize_date: finalizedAt,
-    registration_approve_username: approverUsername ?? "",
-    registration_approve_date: approvedAt ?? null,
+    registration_approve_username: approverUsername,
+    registration_approve_date: approvedAt,
     registration_disapprove_reason: visitFormData.disapprovalReason,
   };
   const { data } = await mafildbApi.post<MDB_CreateVisitResponse>("visits", createData);

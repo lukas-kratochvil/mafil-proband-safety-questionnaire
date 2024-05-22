@@ -68,8 +68,8 @@ export type MDB_CreateVisitInput = {
   registration_answers: MDB_AnswerDTO[];
   registration_finalize_username: string;
   registration_finalize_date: Date;
-  registration_approve_username: string;
-  registration_approve_date: Date | null;
+  registration_approve_username?: string;
+  registration_approve_date?: Date;
   registration_disapprove_reason: string;
 };
 
