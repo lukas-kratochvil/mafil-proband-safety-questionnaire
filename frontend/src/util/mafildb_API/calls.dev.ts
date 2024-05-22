@@ -62,7 +62,7 @@ export const createVisitDev = async (
     finalizer: await fetchOperator(finalizerUsername),
     finalizationDate: finalizedAt,
     approver: approverUsername ? await fetchOperator(approverUsername) : null,
-    approvalDate: approvedAt,
+    approvalDate: approvedAt ?? null,
     disapprovalReason: "",
     answers: visitFormData.answers.map((answer) => ({ ...answer })),
   });

@@ -96,6 +96,7 @@ export type MDB_VisitDTO = Omit<
   | "device_id"
   | "registration_finalize_username"
   | "registration_approve_username"
+  | "registration_approve_date"
 > & {
   uuid: string;
   visit_name: string;
@@ -106,6 +107,7 @@ export type MDB_VisitDTO = Omit<
   device: MDB_DeviceDTO | null;
   registration_finalize_user: MDB_RegistrationUserDTO | null;
   registration_approve_user: MDB_RegistrationUserDTO | null;
+  registration_approve_date: Date | null;
   registration_signature_status: MDB_SignatureState;
 };
 
