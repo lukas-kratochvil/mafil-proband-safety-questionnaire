@@ -1,4 +1,5 @@
 import axios from "axios";
+import { AuthService } from "@app/hooks/auth/auth-service";
 import { transformResponseDateStringToDate } from "./transformers/dates-transformers";
 
 /**
@@ -13,6 +14,17 @@ export const serverApi = axios.create({
     // REG-API-KEY header is set in the Nginx conf for all the environments except the local development environment
     "REG-API-KEY": import.meta.env.PROD ? undefined : import.meta.env.VITE_REG_APP_API_KEY,
   },
+});
+
+// Add OIDC Access token to a request
+serverApi.interceptors.request.use(async (config) => {
+  const authService = AuthService.getInstance();
+  const authUser = await authService.getAuthUser();
+  if (authUser) {
+    // set user's OIDC access_token in the Authorization header, so that a request to our backend API will proceed
+    config.headers.Authorization = `Bearer ${authUser.access_token}`; // eslint-disable-line no-param-reassign
+  }
+  return config;
 });
 
 // Transform all date-strings in the response into Date objects
