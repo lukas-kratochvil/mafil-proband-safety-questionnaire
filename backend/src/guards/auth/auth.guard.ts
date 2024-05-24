@@ -7,7 +7,7 @@ import { EnvironmentVariables } from "@app/config";
 
 const SKIP_OIDC_AUTH_KEY = "skipOidcAuth";
 /**
- * Decorator for the endpoints which shouldn't authorize requests against HTTP Authorization header.
+ * Decorator for the endpoints which shouldn't authorize requests against HTTP Authorization header OIDC access token.
  */
 export const SkipOidcAuth = () => SetMetadata(SKIP_OIDC_AUTH_KEY, true);
 
@@ -17,7 +17,12 @@ export class AuthGuard implements CanActivate {
 
   constructor(private readonly config: ConfigService<EnvironmentVariables, true>, private reflector: Reflector) {}
 
-  async canActivate(exContext: ExecutionContext): Promise<boolean> {
+  private extractAccessToken(request: Request) {
+    const [type, accessToken] = request.headers.authorization?.split(' ') ?? [];
+    return type === 'Bearer' ? accessToken : undefined;
+  }
+
+  async canActivate(exContext: ExecutionContext) {
     if (exContext.getType<GqlContextType>() !== "graphql") {
       this.logger.error(`Invalid execution context type '${exContext.getType()}'!`);
       return false;
@@ -31,7 +36,7 @@ export class AuthGuard implements CanActivate {
     // api key HTTP header name must be in the lower case
     const apiKey = request.headers["reg-api-key"] ?? "";
     if (apiKey !== this.config.get("WEB_API_KEY", { infer: true })) {
-      this.logger.error(`Request from origin '${request.headers.origin}' [${request.headers["user-agent"]}] has invalid API key: '${apiKey}'!`);
+      this.logger.error(`Request from origin '${request.headers.origin}' has invalid API key: '${apiKey}'!`);
       return false;
     }
 
@@ -41,11 +46,17 @@ export class AuthGuard implements CanActivate {
       gqlExContext.getClass(),
     ]);
     if (!skipOidcAuth) {
-      const authHeaderValue = request.headers.authorization;
+      const accessToken = this.extractAccessToken(request);
+
+      if (accessToken === undefined) {
+        this.logger.error(`Request from origin '${request.headers.origin}' doesn't contain OIDC access token!`);
+        return false;
+      }
+
       // TODO: verify against JPM OIDC Introspection endpoint
 
       // if () {
-      //   this.logger.error(`Request from origin '${request.hostname}' [${request.headers["user-agent"]}] has invalid access token!`);
+      //   this.logger.error(`Request from origin '${request.headers.origin}' has invalid access token!`);
       //   return false;
       // }
     }
