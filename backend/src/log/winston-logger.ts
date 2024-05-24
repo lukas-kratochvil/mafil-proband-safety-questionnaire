@@ -24,7 +24,7 @@ export const createWinstonLogger = (nodeEnv: EnvironmentVariables["NODE_ENV"]): 
           winston.format.ms(),
           nestWinstonModuleUtilities.format.nestLike("REG_BACKEND", {
             colors: true,
-            prettyPrint: nodeEnv !== "production",
+            prettyPrint: true,
           }),
         ),
       }),
