@@ -43,16 +43,16 @@ export class OperatorService {
         },
       });
     } catch (e) {
-      this.logger.error(`Operator [${authenticateOperatorArgs.username}] is unknown!`);
+      this.logger.error(`Operator "${authenticateOperatorArgs.username}" is unknown!`);
       throw e;
     }
 
     if (!operator.isValid) {
-      this.logger.error(`Operator [${operator.username}] is invalid!`);
+      this.logger.error(`Operator "${operator.username}" is invalid!`);
       throw new UnauthorizedException("Operator is invalid!");
     }
 
-    this.logger.log(`Operator [${operator.username}] authenticated.`);
+    this.logger.log(`Operator "${operator.username}" authenticated.`);
     operator = await this.prisma.operator.update({
       where: {
         id: operator.id,
@@ -81,7 +81,7 @@ export class OperatorService {
     }
 
     const operatorChangedData = getOperatorChangedDataStr(operator, updatedOperatorData);
-    this.logger.error(`Operator [${operator.username}] data changed: ${operatorChangedData}!`);
+    this.logger.error(`Operator "${operator.username}" data changed: ${operatorChangedData}!`);
     return this.prisma.operator.update({
       where: {
         username: authenticateOperatorArgs.username,
