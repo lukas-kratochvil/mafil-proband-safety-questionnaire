@@ -5,11 +5,7 @@ import type { EnvironmentVariables } from "@app/config";
 
 const defaultFileTransportOptions: winston.transports.FileTransportOptions = {
   dirname: "logs",
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.ms(),
-    winston.format.prettyPrint()
-  ),
+  format: winston.format.combine(winston.format.timestamp(), winston.format.ms(), winston.format.prettyPrint()),
 };
 
 export const createWinstonLogger = (nodeEnv: EnvironmentVariables["NODE_ENV"]): LoggerService => {
