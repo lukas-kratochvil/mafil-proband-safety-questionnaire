@@ -1,8 +1,8 @@
-import type { Request } from "express";
 import { CanActivate, ExecutionContext, Injectable, Logger, SetMetadata } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Reflector } from "@nestjs/core";
 import { GqlContextType, GqlExecutionContext } from "@nestjs/graphql";
+import type { Request } from "express";
 import { EnvironmentVariables } from "@app/config";
 
 const SKIP_OIDC_AUTH_KEY = "skipOidcAuth";
@@ -18,8 +18,8 @@ export class AuthGuard implements CanActivate {
   constructor(private readonly config: ConfigService<EnvironmentVariables, true>, private reflector: Reflector) {}
 
   private extractAccessToken(request: Request) {
-    const [type, accessToken] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? accessToken : undefined;
+    const [type, accessToken] = request.headers.authorization?.split(" ") ?? [];
+    return type === "Bearer" ? accessToken : undefined;
   }
 
   async canActivate(exContext: ExecutionContext) {
