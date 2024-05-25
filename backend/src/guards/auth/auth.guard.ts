@@ -7,7 +7,7 @@ import { EnvironmentVariables } from "@app/config";
 
 const SKIP_OIDC_AUTH_KEY = "skipOidcAuth";
 /**
- * Decorator for the endpoints which shouldn't authorize requests against HTTP Authorization header OIDC access token.
+ * Decorator for endpoints (for resolver classes and their methods) which should skip OIDC access token request authorization.
  */
 export const SkipOidcAuth = () => SetMetadata(SKIP_OIDC_AUTH_KEY, true);
 
