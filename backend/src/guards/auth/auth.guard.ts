@@ -35,8 +35,13 @@ export class AuthGuard implements CanActivate {
     // check if issued API key is valid, other services will be denied access
     // api key HTTP header name must be in the lower case
     const apiKey = request.headers["reg-api-key"] ?? "";
-    if (apiKey !== this.config.get("WEB_API_KEY", { infer: true })) {
-      this.logger.error(`Request from origin '${request.headers.origin}' has invalid API key: '${apiKey}'!`);
+    if (
+      apiKey !== this.config.get("ADMIN_API_KEY", { infer: true })
+      && apiKey !== this.config.get("WEB_API_KEY", { infer: true })
+    ) {
+      this.logger.error(
+        `Request from origin '${request.headers.origin}' [User-Agent: ${request.headers["user-agent"]}] has invalid API key: '${apiKey}'!`
+      );
       return false;
     }
 

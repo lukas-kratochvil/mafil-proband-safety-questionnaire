@@ -69,6 +69,7 @@ services:
       - PDF_OPERATOR_LANGUAGE_CODE=${REG_PDF_OPERATOR_LANGUAGE_CODE}
       - WEB_URL=${REG_WEB_URL}
       - WEB_API_KEY=${REG_WEB_API_KEY}
+      - ADMIN_API_KEY=${REG_ADMIN_API_KEY}
     volumes:
       - ./logs/server:/usr/src/app/logs
     restart: unless-stopped

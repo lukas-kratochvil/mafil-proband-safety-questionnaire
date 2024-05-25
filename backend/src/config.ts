@@ -14,6 +14,7 @@ export type EnvironmentVariables = {
   DATABASE_URL: string;
   THROTTLE_TTL: number;
   THROTTLE_LIMIT: number;
+  ADMIN_API_KEY: string;
   WEB_API_KEY: string;
   PDF_OPERATOR_LANGUAGE_CODE: PdfLanguageCode;
   WEB_URL: string;
@@ -26,6 +27,7 @@ export const envVarsValidationSchema = Joi.object<EnvironmentVariables>({
     .required(),
   PORT: Joi.number().integer().required(),
   DATABASE_URL: Joi.string().trim().required(),
+  ADMIN_API_KEY: Joi.string().trim().required(),
   WEB_API_KEY: Joi.string().trim().required(),
   PDF_OPERATOR_LANGUAGE_CODE: Joi.string()
     .trim()
