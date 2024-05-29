@@ -28,8 +28,9 @@ COPY --from=development /usr/src/app/backend/node_modules ./node_modules
 COPY --from=development /usr/src/app/. ../.
 
 # Build with devDependencies because we use TypeScript, Nest CLI etc. in the build process and then we generate the production-ready 'node_modules'.
-RUN npm run build
-RUN npm ci --omit='dev' && npm cache clean --force
+RUN npm run build && \
+    npm ci --omit='dev' && \
+    npm cache clean --force
 
 
 #-------------------------------------------
@@ -41,8 +42,8 @@ WORKDIR /usr/src/app
 
 COPY --from=build ["/usr/src/app/backend/package.json", "/usr/src/app/backend/package-lock.json", "./"]
 COPY --from=build /usr/src/app/backend/node_modules ./node_modules
-COPY --from=build /usr/src/app/backend/prisma ./prisma
-COPY --from=build /usr/src/app/backend/assets ./assets
 COPY --from=build /usr/src/app/backend/dist ./dist
+COPY --from=build /usr/src/app/backend/assets ./assets
+COPY --from=build /usr/src/app/backend/prisma ./prisma
 
 CMD [ "npm", "run", "start:migrate:prod" ]
