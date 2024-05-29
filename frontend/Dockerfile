@@ -16,13 +16,7 @@ COPY ./frontend .
 #-------------------------------------------
 # BUILD FOR PRODUCTION
 #-------------------------------------------
-FROM node:18-alpine AS build
-
-WORKDIR /usr/src/app/frontend
-
-COPY --from=development ["/usr/src/app/frontend/package.json", "/usr/src/app/frontend/package-lock.json", "./"]
-COPY --from=development /usr/src/app/frontend/node_modules ./node_modules
-COPY --from=development /usr/src/app/. ../.
+FROM development AS build
 
 # Build with devDependencies because we use TypeScript, Vite etc. in the build process and then we generate the production-ready 'node_modules'.
 RUN npm run build && \

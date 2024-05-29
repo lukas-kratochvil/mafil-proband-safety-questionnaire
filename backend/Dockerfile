@@ -19,13 +19,7 @@ COPY ./backend .
 #-------------------------------------------
 # BUILD FOR PRODUCTION
 #-------------------------------------------
-FROM node:18-alpine AS build
-
-WORKDIR /usr/src/app/backend
-
-COPY --from=development ["/usr/src/app/backend/package.json", "/usr/src/app/backend/package-lock.json", "./"]
-COPY --from=development /usr/src/app/backend/node_modules ./node_modules
-COPY --from=development /usr/src/app/. ../.
+FROM development AS build
 
 # Build with devDependencies because we use TypeScript, Nest CLI etc. in the build process and then we generate the production-ready 'node_modules'.
 RUN npm run build && \
