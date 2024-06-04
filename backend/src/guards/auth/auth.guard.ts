@@ -5,17 +5,20 @@ import { GqlContextType, GqlExecutionContext } from "@nestjs/graphql";
 import type { Request } from "express";
 import { EnvironmentVariables } from "@app/config";
 
-const SKIP_OIDC_AUTH_KEY = "skipOidcAuth";
+const SKIP_OIDC_AUTH_METADATA_KEY = "skipOidcAuth";
 /**
  * Decorator for endpoints (for resolver classes and their methods) which should skip OIDC access token request authorization.
  */
-export const SkipOidcAuth = () => SetMetadata(SKIP_OIDC_AUTH_KEY, true);
+export const SkipOidcAuth = () => SetMetadata(SKIP_OIDC_AUTH_METADATA_KEY, true);
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   private readonly logger = new Logger(AuthGuard.name);
 
-  constructor(private readonly config: ConfigService<EnvironmentVariables, true>, private reflector: Reflector) {}
+  constructor(
+    private readonly config: ConfigService<EnvironmentVariables, true>,
+    private readonly reflector: Reflector
+  ) {}
 
   private extractAccessToken(request: Request) {
     const [type, accessToken] = request.headers.authorization?.split(" ") ?? [];
@@ -48,7 +51,7 @@ export class AuthGuard implements CanActivate {
 
     // for auth endpoints check the OIDC access token in the HTTP Authorization header
     if (this.config.get("NODE_ENV", { infer: true }) === "production") {
-      const skipOidcAuth = this.reflector.getAllAndOverride<boolean>(SKIP_OIDC_AUTH_KEY, [
+      const skipOidcAuth = this.reflector.getAllAndOverride<boolean>(SKIP_OIDC_AUTH_METADATA_KEY, [
         gqlExContext.getHandler(),
         gqlExContext.getClass(),
       ]);
