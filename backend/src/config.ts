@@ -18,6 +18,9 @@ export type EnvironmentVariables = {
   WEB_API_KEY: string;
   PDF_OPERATOR_LANGUAGE_CODE: PdfLanguageCode;
   WEB_URL: string;
+  JPM_CLIENT_ID: string;
+  JPM_CLIENT_SECRET: string;
+  JPM_INTROSPECTION_ENDPOINT: string;
 };
 
 export const envVarsValidationSchema = Joi.object<EnvironmentVariables>({
@@ -36,6 +39,11 @@ export const envVarsValidationSchema = Joi.object<EnvironmentVariables>({
   THROTTLE_TTL: Joi.number().integer().required(),
   THROTTLE_LIMIT: Joi.number().integer().required(),
   WEB_URL: Joi.string()
+    .uri({ scheme: ["http", "https"] })
+    .required(),
+  JPM_CLIENT_ID: Joi.string().trim().required(),
+  JPM_CLIENT_SECRET: Joi.string().trim().required(),
+  JPM_INTROSPECTION_ENDPOINT: Joi.string()
     .uri({ scheme: ["http", "https"] })
     .required(),
 }).required();

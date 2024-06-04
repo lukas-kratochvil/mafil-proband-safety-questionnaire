@@ -45,6 +45,7 @@
     "prisma": "^5.6.0",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
+    "token-introspection": "^3.3.0",
     "winston": "^3.8.2"
   },
   "devDependencies": {
@@ -59,6 +60,7 @@
     "@types/node": "^16.18.14",
     "@types/pdfkit": "^0.12.9",
     "@types/supertest": "^2.0.11",
+    "@types/token-introspection": "^3.0.3",
     "cross-env": "^7.0.3",
     "eslint": "^8.0.1",
     "jest": "^29.4.3",
