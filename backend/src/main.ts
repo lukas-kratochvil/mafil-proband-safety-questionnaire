@@ -34,7 +34,7 @@ async function bootstrap() {
   const nodeEnv = config.get("NODE_ENV", { infer: true });
 
   // Setup logger
-  const logger = createWinstonLogger(nodeEnv);
+  const logger = createWinstonLogger();
   app.useLogger(logger);
 
   // Create a folder for generated files such as GraphQL schema
