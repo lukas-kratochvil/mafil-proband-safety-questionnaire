@@ -3,6 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { Reflector } from "@nestjs/core";
 import { GqlContextType, GqlExecutionContext } from "@nestjs/graphql";
 import type { Request } from "express";
+import tokenIntrospect from "token-introspection";
 import { EnvironmentVariables } from "@app/config";
 
 const SKIP_OIDC_AUTH_METADATA_KEY = "skipOidcAuth";
@@ -14,11 +15,18 @@ export const SkipOidcAuth = () => SetMetadata(SKIP_OIDC_AUTH_METADATA_KEY, true)
 @Injectable()
 export class AuthGuard implements CanActivate {
   private readonly logger = new Logger(AuthGuard.name);
+  private readonly introspectToken: tokenIntrospect.IntrospectionFunction;
 
   constructor(
     private readonly config: ConfigService<EnvironmentVariables, true>,
     private readonly reflector: Reflector
-  ) {}
+  ) {
+    this.introspectToken = tokenIntrospect({
+      client_id: config.get("JPM_CLIENT_ID"),
+      client_secret: config.get("JPM_CLIENT_SECRET"),
+      endpoint: config.get("JPM_INTROSPECTION_ENDPOINT"),
+    });
+  }
 
   private extractAccessToken(request: Request) {
     const [type, accessToken] = request.headers.authorization?.split(" ") ?? [];
@@ -64,11 +72,19 @@ export class AuthGuard implements CanActivate {
           return false;
         }
 
-        // TODO: verify against JPM OIDC Introspection endpoint
-        // if () {
-        //   this.logger.error(`Request from origin '${request.headers.origin}' has invalid access token!`);
-        //   return false;
-        // }
+        try {
+          const tokenInfo = await this.introspectToken(accessToken);
+          // TODO: verify introspected token data against database
+        } catch (error) {
+          let errorMsg = `Request from origin '${request.headers.origin}' has invalid access token!`;
+
+          if (error instanceof Error) {
+            errorMsg += `\nToken introspection error: ${error.message}`;
+          }
+
+          this.logger.error(errorMsg);
+          return false;
+        }
       }
     }
 

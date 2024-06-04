@@ -70,6 +70,9 @@ services:
       - WEB_URL=${REG_WEB_URL}
       - WEB_API_KEY=${REG_WEB_API_KEY}
       - ADMIN_API_KEY=${REG_ADMIN_API_KEY}
+      - JPM_CLIENT_ID=${REG_JPM_CLIENT_ID_BACKEND}
+      - JPM_CLIENT_SECRET=${REG_JPM_CLIENT_SECRET_BACKEND}
+      - JPM_INTROSPECTION_ENDPOINT=${REG_JPM_INTROSPECTION_ENDPOINT}
     volumes:
       - ./logs/server:/usr/src/app/logs
     restart: unless-stopped
@@ -90,7 +93,7 @@ services:
       # careful! - 'sed' command is using '~' as delimiter so there must not be any '~' in the 'INJECT_...' env var value
       - INJECT_APP_BAR_COLOR=${REG_APP_BAR_COLOR}
       - INJECT_JPM_AUTHORIZATION_ENDPOINT=${REG_JPM_AUTHORIZATION_ENDPOINT}
-      - INJECT_JPM_CLIENT_ID=${REG_JPM_CLIENT_ID}
+      - INJECT_JPM_CLIENT_ID=${REG_JPM_CLIENT_ID_FRONTEND}
       - INJECT_JPM_MFA_ENDPOINT=${REG_JPM_MFA_ENDPOINT}
       - INJECT_MAFILDB_API_URL=${REG_MAFILDB_API_URL}
       - INJECT_MAFILDB_VISITS_MAX_DAYS_OLD=${REG_MAFILDB_VISITS_MAX_DAYS_OLD}
