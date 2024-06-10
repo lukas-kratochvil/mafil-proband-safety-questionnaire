@@ -1,4 +1,4 @@
-import { compareAsc, subDays } from "date-fns";
+import { compareAsc, getUnixTime, subDays } from "date-fns";
 import envVars from "@app/envVars";
 import type { Device } from "@app/model/device";
 import type { ValidatedOperatorFormData } from "@app/model/form";
@@ -330,7 +330,8 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
   // MAFILDB_VISITS_MAX_DAYS_OLD env var is used as the upper limit - absolute max value.
   const newerThanDateBound = subDays(new Date().setHours(0, 0, 0, 0), +envVars.MAFILDB_VISITS_MAX_DAYS_OLD);
 
-  const params = { newer_than: newerThanDateBound.valueOf() };
+  // 'newer_than' query param is in seconds
+  const params = { newer_than: getUnixTime(newerThanDateBound) };
   const { data } = await mafildbApi.get<MDB_GetVisitsResponse>("visits", { params });
 
   if (MDB_RESPONSE_ERROR_ATTR in data) {
