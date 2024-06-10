@@ -167,7 +167,7 @@ export const WaitingRoomForm = () => {
               );
               await addPdfToVisit(visit.uuid, pdf);
               await markVisitFormAsPdfGenerated(id);
-              navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.visitId}`);
+              navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.uuid}`);
             }
           },
         },

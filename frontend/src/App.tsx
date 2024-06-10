@@ -24,7 +24,12 @@ export const App = () => (
     <Routes>
       <Route
         path="/"
-        element={<Navigate to={RoutingPath.PROBAND_FORM} replace />}
+        element={
+          <Navigate
+            to={RoutingPath.PROBAND_FORM}
+            replace
+          />
+        }
       />
       <Route
         path={RoutingPath.PROBAND_HOME}

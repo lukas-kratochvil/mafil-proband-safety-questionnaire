@@ -22,7 +22,7 @@ export const PhantomForm = () => {
         const visit = await createPhantomVisit(data, operator?.username, new Date());
         const pdf = await generatePhantomPdf(visit.visitId, data, operator?.username);
         await addPdfToVisit(visit.uuid, pdf);
-        navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.visitId}`);
+        navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.uuid}`);
       },
     },
     buttonsProps: [getBackButtonProps(navigate, "form.common.buttons.cancel")],
