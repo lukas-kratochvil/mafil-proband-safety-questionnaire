@@ -25,13 +25,13 @@ export type MDB_GenderCode = "ns" | "m" | "f" | "o";
 export type MDB_HandednessCode = "ns" | "rh" | "lh" | "fl" | "un";
 
 export type MDB_CreateSubjectInput = {
-  preferred_language_code: ProbandVisitLanguageCode;
+  preferred_language_id: ProbandVisitLanguageCode;
   first_name: string;
   last_name: string;
   birth_date: string;
   personal_ID: string;
   gender: MDB_GenderCode;
-  native_language_code: string;
+  native_language_id: string;
   handedness: MDB_HandednessCode;
   email: string;
   phone: string;
