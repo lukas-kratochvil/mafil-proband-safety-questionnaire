@@ -91,7 +91,16 @@ export const fetchRecentVisitsDev = async (): Promise<RecentVisitsTableVisit[]> 
       };
     });
     return dummyVisit;
-  });
+  }).map((dummyVisit) => (
+    {
+      ...dummyVisit,
+      subject: {
+        ...dummyVisit.subject,
+        preferredLanguageCode: null,
+        nativeLanguage: null,
+      },
+    }
+  ));
 };
 
 export const fetchDuplicatedVisitDev = async (

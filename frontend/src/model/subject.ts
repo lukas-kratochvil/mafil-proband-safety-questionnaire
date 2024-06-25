@@ -8,15 +8,14 @@ export type RecentVisitSubject = {
   surname: MDB_SubjectDTO["last_name"];
   birthdate: MDB_SubjectDTO["birth_date"];
   personalId: MDB_SubjectDTO["personal_ID"];
-  // TODO: should Gender and Handedness be objects or just codes?
   genderCode: MDB_SubjectDTO["gender"];
   handednessCode: MDB_SubjectDTO["handedness"];
-  nativeLanguage: NativeLanguage | null;
+  nativeLanguage: MDB_SubjectDTO["native_language_id"];
   email: MDB_SubjectDTO["email"];
   phone: MDB_SubjectDTO["phone"];
 };
 
 export type Subject = Omit<RecentVisitSubject, "preferredLanguageCode" | "nativeLanguage"> & {
   preferredLanguageCode: NonNullable<RecentVisitSubject["preferredLanguageCode"]>;
-  nativeLanguage: NonNullable<RecentVisitSubject["nativeLanguage"]>;
+  nativeLanguage: NativeLanguage;
 };
