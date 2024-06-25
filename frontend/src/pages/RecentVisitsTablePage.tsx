@@ -74,7 +74,8 @@ const RecentVisitsTablePage = () => {
       },
       {
         header: t("header.device"),
-        accessorKey: "device.name",
+        id: "device",
+        accessorFn: (visit) => visit.device?.name ?? "",
         maxSize: 0,
       },
       {
@@ -92,7 +93,7 @@ const RecentVisitsTablePage = () => {
       {
         header: t("header.operatorProcessed"),
         id: "processUser",
-        accessorFn: (visit) => `${visit.finalizer.surname}, ${visit.finalizer.name}`,
+        accessorFn: (visit) => (visit.finalizer ? `${visit.finalizer.surname}, ${visit.finalizer.name}` : ""),
         maxSize: 0,
       },
       {

@@ -80,27 +80,27 @@ export const addPdfToVisitDev = async (pdf: PdfDTO): Promise<VisitPDF> => ({
 
 export const fetchRecentVisitsDev = async (): Promise<RecentVisitsTableVisit[]> => {
   const currentQuestions = await fetchCurrentQuestions();
-  return dummyVisits.map((dummyVisit) => {
-    // eslint-disable-next-line no-param-reassign
-    dummyVisit.answers = currentQuestions.map((question) => {
-      const rand = Math.floor(Math.random() * 100) % 2 === 0;
-      return {
-        questionId: question.id,
-        answer: rand ? "YES" : "NO",
-        comment: rand ? "Comment" : "",
-      };
-    });
-    return dummyVisit;
-  }).map((dummyVisit) => (
-    {
+  return dummyVisits
+    .map((dummyVisit) => {
+      // eslint-disable-next-line no-param-reassign
+      dummyVisit.answers = currentQuestions.map((question) => {
+        const rand = Math.floor(Math.random() * 100) % 2 === 0;
+        return {
+          questionId: question.id,
+          answer: rand ? "YES" : "NO",
+          comment: rand ? "Comment" : "",
+        };
+      });
+      return dummyVisit;
+    })
+    .map((dummyVisit) => ({
       ...dummyVisit,
       subject: {
         ...dummyVisit.subject,
         preferredLanguageCode: null,
         nativeLanguage: null,
       },
-    }
-  ));
+    }));
 };
 
 export const fetchDuplicatedVisitDev = async (

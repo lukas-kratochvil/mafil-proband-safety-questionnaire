@@ -14,7 +14,7 @@ import type {
 import type { VisitPDF } from "@app/model/visitPdf";
 import { mafildbApi } from "@app/util/axios/mafildbApi";
 import { fetchGender, fetchHandedness, fetchOperator, fetchQuestion } from "../server_API/calls";
-import type { OperatorDTO, PdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
+import type { PdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import {
   addPdfToVisitDev,
   createVisitDev,
@@ -338,93 +338,51 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
     throw new Error(data.detail);
   }
 
-  const visits: RecentVisitsTableVisit[] = [];
-  data.results
-    // Check if 14 days bound is really satisfied ('newer_than' query param may not work)
-    .filter((visit) => {
-      console.log(visit.visit_name);
-      console.log(compareAsc(visit.created, newerThanDateBound) > 0 ? "accepted" : "discarded");
-      return compareAsc(visit.created, newerThanDateBound) > 0;
-    })
-    .forEach(async (visit) => {
-      try {
-        // TODO: what to do when device is null? Skip the visit?
-        if (visit.device === null) {
-          throw new Error("Visit device is null!");
-        }
-      } catch (e) {
-        return;
-      }
-
-      let finalizer: OperatorDTO;
-      let approver: OperatorDTO | null = null;
-
-      try {
-        // TODO: what to do when finalizer is null? Skip the visit?
-        if (visit.registration_finalize_user === null) {
-          throw new Error("Visit finalizer is null!");
-        }
-
-        finalizer = await fetchOperator(visit.registration_finalize_user.username);
-
-        // TODO: what to do when finalizer not found? Skip the visit?
-        if (finalizer === undefined) {
-          throw new Error("Visit finalizer not found!");
-        }
-      } catch (e) {
-        return;
-      }
-
-      try {
-        if (visit.registration_approve_user !== null) {
-          approver = await fetchOperator(visit.registration_approve_user.username);
-
-          // TODO: what to do when approver not found? Skip the visit?
-          if (approver === undefined) {
-            throw new Error("Visit approver not found!");
-          }
-        }
-      } catch (e) {
-        return;
-      }
-
-      visits.push({
-        ...visit,
-        device: { ...visit.device },
-        visitId: visit.visit_name,
-        isPhantom: visit.is_phantom,
-        measurementDate: visit.date,
-        heightCm: visit.height,
-        weightKg: visit.weight,
-        visualCorrectionDioptre: visit.visual_correction_dioptre,
-        answers: visit.registration_answers.map((answer) => ({
-          questionId: answer.question_id,
-          answer: answer.answer,
-          comment: answer.comment,
-        })),
-        subject: {
-          ...visit.subject,
-          preferredLanguageCode: visit.subject.preferred_language_id,
-          name: visit.subject.first_name,
-          surname: visit.subject.last_name,
-          birthdate: visit.subject.birth_date,
-          personalId: visit.subject.personal_ID,
-          genderCode: visit.subject.gender,
-          nativeLanguage: visit.subject.native_language_id,
-          handednessCode: visit.subject.handedness,
-        },
-        finalizer,
-        finalizationDate: visit.registration_finalize_date,
-        approver,
-        approvalDate: visit.registration_approve_date,
-        disapprovalReason: visit.registration_disapprove_reason,
-        approvalState: visit.checked,
-        signatureState: visit.registration_signature_status,
-      });
-    });
-
-  console.log(visits);
-  return visits;
+  return Promise.all(
+    data.results
+      // Check if 14 days bound is really satisfied ('newer_than' query param may not work)
+      .filter((visit) => compareAsc(visit.created, newerThanDateBound) > 0)
+      .map(async (visit) => {
+        const finalizer = visit.registration_finalize_user
+          ? await fetchOperator(visit.registration_finalize_user.username)
+          : null;
+        const approver = visit.registration_approve_user
+          ? await fetchOperator(visit.registration_approve_user.username)
+          : null;
+        return {
+          ...visit,
+          visitId: visit.visit_name,
+          isPhantom: visit.is_phantom,
+          measurementDate: visit.date,
+          heightCm: visit.height,
+          weightKg: visit.weight,
+          visualCorrectionDioptre: visit.visual_correction_dioptre,
+          answers: visit.registration_answers.map((answer) => ({
+            questionId: answer.question_id,
+            answer: answer.answer,
+            comment: answer.comment,
+          })),
+          subject: {
+            ...visit.subject,
+            preferredLanguageCode: visit.subject.preferred_language_id,
+            name: visit.subject.first_name,
+            surname: visit.subject.last_name,
+            birthdate: visit.subject.birth_date,
+            personalId: visit.subject.personal_ID,
+            genderCode: visit.subject.gender,
+            nativeLanguage: visit.subject.native_language_id,
+            handednessCode: visit.subject.handedness,
+          },
+          finalizer,
+          finalizationDate: visit.registration_finalize_date,
+          approver,
+          approvalDate: visit.registration_approve_date,
+          disapprovalReason: visit.registration_disapprove_reason,
+          approvalState: visit.checked,
+          signatureState: visit.registration_signature_status,
+        };
+      })
+  );
 };
 
 const fetchVisit = async (visitUuid: string): Promise<MDB_VisitDTO | never> => {
