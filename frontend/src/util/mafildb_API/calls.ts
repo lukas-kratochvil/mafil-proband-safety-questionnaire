@@ -343,7 +343,9 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
     // Check if 14 days bound is really satisfied ('newer_than' query param may not work)
     .filter((visit) => compareAsc(visit.created, newerThanDateBound) > 0)
     .forEach(async (visit) => {
-      const nativeLanguage = visit.subject.native_language_id ? await fetchNativeLanguage(visit.subject.native_language_id) : null;
+      const nativeLanguage = visit.subject.native_language_id
+        ? await fetchNativeLanguage(visit.subject.native_language_id)
+        : null;
 
       try {
         // TODO: what to do when device is null? Skip the visit?
