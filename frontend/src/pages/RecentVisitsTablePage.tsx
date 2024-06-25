@@ -12,7 +12,8 @@ import { fetchRecentVisits } from "@app/util/mafildb_API/calls";
 import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
 import { PageContainer } from "./PageContainer";
 
-const processedDateFormat = "d.M.y H:mm";
+const measurementDateFormat = "d.M.y";
+const createdDateFormat = "d.M.y H:mm";
 
 const getStateLocalizationString = (visit: RecentVisitsTableVisit): string | undefined => {
   if (visit.isPhantom) {
@@ -78,12 +79,12 @@ const RecentVisitsTablePage = () => {
       {
         header: t("header.processedDate"),
         id: "processedDate",
-        accessorFn: (visit) => format(visit.measurementDate, processedDateFormat),
+        accessorFn: (visit) => format(visit.measurementDate, measurementDateFormat),
         sortingFn: (rowA, rowB) =>
           // Sorting is done by 'created' attribute, because the 'date' attribute does not contain the time
           compareAsc(
-            parse(`${rowA.original.created}`, processedDateFormat, new Date()),
-            parse(`${rowB.original.created}`, processedDateFormat, new Date())
+            parse(`${rowA.original.created}`, createdDateFormat, new Date()),
+            parse(`${rowB.original.created}`, createdDateFormat, new Date())
           ),
         maxSize: 0,
       },
