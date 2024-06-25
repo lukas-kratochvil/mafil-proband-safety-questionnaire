@@ -51,9 +51,6 @@ const RecentVisitsTablePage = () => {
     isError,
   } = useQuery({ queryKey: ["recentVisitsTablePage"], queryFn: fetchRecentVisits });
 
-  console.log("Recent visits table");
-  console.log(visits);
-
   const columns = useMemo<MRTColumnDef<RecentVisitsTableVisit>[]>(
     () => [
       {
