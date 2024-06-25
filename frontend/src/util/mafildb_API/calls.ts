@@ -341,7 +341,11 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
   const visits: RecentVisitsTableVisit[] = [];
   data.results
     // Check if 14 days bound is really satisfied ('newer_than' query param may not work)
-    .filter((visit) => compareAsc(visit.created, newerThanDateBound) > 0)
+    .filter((visit) => {
+      console.log(visit.visit_name);
+      console.log(compareAsc(visit.created, newerThanDateBound) > 0 ? "accepted" : "discarded");
+      return compareAsc(visit.created, newerThanDateBound) > 0;
+    })
     .forEach(async (visit) => {
       try {
         // TODO: what to do when device is null? Skip the visit?
@@ -419,6 +423,7 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
       });
     });
 
+  console.log(visits);
   return visits;
 };
 
