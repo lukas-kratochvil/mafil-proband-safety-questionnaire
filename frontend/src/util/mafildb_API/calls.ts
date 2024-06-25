@@ -14,7 +14,7 @@ import type {
 import type { VisitPDF } from "@app/model/visitPdf";
 import { mafildbApi } from "@app/util/axios/mafildbApi";
 import { fetchGender, fetchHandedness, fetchOperator, fetchQuestion } from "../server_API/calls";
-import type { PdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
+import type { OperatorDTO, PdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import {
   addPdfToVisitDev,
   createVisitDev,
@@ -343,12 +343,25 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
       // Check if 14 days bound is really satisfied ('newer_than' query param may not work)
       .filter((visit) => compareAsc(visit.created, newerThanDateBound) > 0)
       .map(async (visit) => {
-        const finalizer = visit.registration_finalize_user
-          ? await fetchOperator(visit.registration_finalize_user.username)
-          : null;
-        const approver = visit.registration_approve_user
-          ? await fetchOperator(visit.registration_approve_user.username)
-          : null;
+        let finalizer: OperatorDTO | null = null;
+        let approver: OperatorDTO | null = null;
+
+        if (visit.registration_finalize_user) {
+          try {
+            finalizer = await fetchOperator(visit.registration_finalize_user.username);
+          } catch {
+            finalizer = null;
+          }
+        }
+
+        if (visit.registration_approve_user) {
+          try {
+            approver = await fetchOperator(visit.registration_approve_user.username);
+          } catch {
+            approver = null;
+          }
+        }
+
         return {
           ...visit,
           visitId: visit.visit_name,
