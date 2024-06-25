@@ -3,7 +3,7 @@ import type { MDB_AnswerDTO, MDB_VisitDTO } from "@app/util/mafildb_API/dto";
 import type { GenderDTO, HandednessDTO, OperatorDTO, VisitFormAnswerIncludingQuestion } from "@app/util/server_API/dto";
 import type { Device } from "./device";
 import type { Project } from "./project";
-import type { Subject } from "./subject";
+import type { RecentVisitSubject, Subject } from "./subject";
 import type { VisitPDF } from "./visitPdf";
 
 export type ProbandVisitLanguageCode = LanguageCode | "";
@@ -38,8 +38,9 @@ export type Visit = {
 
 export type CreatedVisitData = Pick<Visit, "uuid" | "visitId">;
 
-// TODO: correct the type
-export type RecentVisitsTableVisit = Visit;
+export type RecentVisitsTableVisit = Omit<Visit, "subject"> & {
+  subject: RecentVisitSubject;
+};
 
 export type DuplicatedVisitIncludingQuestions = Omit<
   Visit,

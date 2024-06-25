@@ -343,7 +343,7 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
     // Check if 14 days bound is really satisfied ('newer_than' query param may not work)
     .filter((visit) => compareAsc(visit.created, newerThanDateBound) > 0)
     .forEach(async (visit) => {
-      const nativeLanguage = await fetchNativeLanguage(visit.subject.native_language_id);
+      const nativeLanguage = visit.subject.native_language_id ? await fetchNativeLanguage(visit.subject.native_language_id) : null;
 
       try {
         // TODO: what to do when device is null? Skip the visit?
@@ -450,6 +450,14 @@ export const fetchDuplicatedVisit = async (
   // TODO: what to do when device is null? Throw error? We should disable the 'Duplication' button for these visits or not load them in the 'Recent visits table' at all
   if (visit.device === null) {
     throw new Error("Visit device is null!");
+  }
+
+  if (visit.subject.preferred_language_id === null) {
+    throw new Error("Visit subject preferred language is null!");
+  }
+
+  if (visit.subject.native_language_id === null) {
+    throw new Error("Visit subject native language is null!");
   }
 
   const [gender, nativeLanguage, handedness, answersIncludingQuestions] = await Promise.all([

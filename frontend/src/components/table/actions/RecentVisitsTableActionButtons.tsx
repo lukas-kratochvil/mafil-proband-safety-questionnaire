@@ -43,6 +43,11 @@ export const RecentVisitsTableActionButtons = ({ visit }: RecentVisitsTableActio
     }
   };
 
+  // Don't allow actions if the visit is not complete
+  if (visit.subject.preferredLanguageCode === null || visit.subject.nativeLanguage === null) {
+    return <></>;
+  }
+
   return (
     <TableActionButtonsContainer>
       <Button

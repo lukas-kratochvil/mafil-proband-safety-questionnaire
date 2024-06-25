@@ -37,9 +37,11 @@ export type MDB_CreateSubjectInput = {
   phone: string;
 };
 
-export type MDB_SubjectDTO = Omit<MDB_CreateSubjectInput, "birth_date"> & {
+export type MDB_SubjectDTO = Omit<MDB_CreateSubjectInput, "birth_date" | "preferred_language_id" | "native_language_id"> & {
   uuid: string;
   birth_date: Date;
+  preferred_language_id: MDB_CreateSubjectInput["preferred_language_id"] | null;
+  native_language_id: MDB_CreateSubjectInput["native_language_id"] | null;
 };
 
 export const MDB_ApprovalState = {
