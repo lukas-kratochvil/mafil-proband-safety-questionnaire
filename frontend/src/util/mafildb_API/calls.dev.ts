@@ -98,7 +98,7 @@ export const fetchRecentVisitsDev = async (): Promise<RecentVisitsTableVisit[]> 
       subject: {
         ...dummyVisit.subject,
         nativeLanguage: nativeLanguagesTest[0]!.code,
-      }
+      },
     }));
 };
 

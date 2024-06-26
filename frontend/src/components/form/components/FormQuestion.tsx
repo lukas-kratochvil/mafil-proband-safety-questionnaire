@@ -78,6 +78,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestio
         item
         xs={1}
         sm
+        paddingY={matchesUpSmBreakpoint ? "0.6rem" : undefined}
       >
         <Typography>{qac.translations.find((trans) => trans.language.code === i18n.language)?.text ?? ""}</Typography>
       </Grid>
@@ -103,6 +104,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestio
         <Grid
           item
           xs={1}
+          marginBottom="0.5rem"
         >
           <FormTextField
             label={t("comment")}
