@@ -104,6 +104,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestio
         <Grid
           item
           xs={1}
+          marginBottom="0.5rem"
         >
           <FormTextField
             label={t("comment")}
