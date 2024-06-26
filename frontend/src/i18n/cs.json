@@ -193,7 +193,8 @@
       },
       "actions": {
         "showDetailButton": "Zobrazit detail",
-        "duplicateButton": "Duplikovat"
+        "duplicateButton": "Duplikovat",
+        "incompleteVisit": "Neúplná data"
       },
       "header": {
         "proband": "Proband",

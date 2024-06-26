@@ -50,7 +50,7 @@ export const RecentVisitsTableActionButtons = ({ visit }: RecentVisitsTableActio
     || visit.subject.preferredLanguageCode === null
     || visit.subject.nativeLanguage === null
   ) {
-    return null; // TODO: show missing data message
+    return <>{t("recentVisitsTablePage.actions.incompleteVisit")}</>;
   }
 
   return (

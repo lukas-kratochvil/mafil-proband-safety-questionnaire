@@ -193,7 +193,8 @@
       },
       "actions": {
         "showDetailButton": "Show detail",
-        "duplicateButton": "Duplicate"
+        "duplicateButton": "Duplicate",
+        "incompleteVisit": "Incomplete data"
       },
       "header": {
         "proband": "Proband",
