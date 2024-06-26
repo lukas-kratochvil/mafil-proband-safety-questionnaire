@@ -40,6 +40,7 @@ export const PageContainer = ({ children, center, isTablePage }: PropsWithChildr
       <main>
         <Stack
           spacing="1.5rem"
+          paddingX="1rem"
           sx={{
             // content height is minus 4rem header and minus 3rem navigation (if viewed in the auth version).. added both sizes 2x so that the content is centered
             height: center ? `calc(100vh - 8rem ${operator === undefined ? "" : "- 6rem"})` : undefined,
