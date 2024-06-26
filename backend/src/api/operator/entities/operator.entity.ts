@@ -1,6 +1,6 @@
 import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Operator, OperatorRole } from "@prisma/client";
-import { IsBoolean, IsDate, IsEmail, IsEnum, IsOptional, MaxLength } from "class-validator";
+import { IsBoolean, IsDate, IsEmail, IsEnum, IsOptional, MaxDate, MaxLength } from "class-validator";
 import { BaseEntity } from "@app/api/utils/entities/base.entity";
 
 registerEnumType(OperatorRole, {
@@ -45,6 +45,7 @@ export class OperatorEntity extends BaseEntity implements Operator {
 
   @IsOptional()
   @IsDate()
-  @Field(() => Date)
+  @MaxDate(() => new Date())
+  @Field()
   lastLoggedAt: Date | null;
 }
