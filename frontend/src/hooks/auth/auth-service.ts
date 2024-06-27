@@ -23,6 +23,7 @@ const oidcConfig: UserManagerSettings = {
   acr_values: envVars.JPM_MFA_ENDPOINT,
   post_logout_redirect_uri: `${window.location.origin}${RoutingPath.LOGOUT}`,
   automaticSilentRenew: true,
+  accessTokenExpiringNotificationTimeInSeconds: 3540, // TODO: delete - only for testing purposes (JPM access token expiration is 1 hour = 3600 seconds)
 };
 
 export class AuthService {
