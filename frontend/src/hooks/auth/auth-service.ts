@@ -34,12 +34,12 @@ export class AuthService {
   private constructor() {
     this.userManager.events.addSilentRenewError((error) => {
       console.log(error);
-    })
+    });
 
-    this.userManager.events.addAccessTokenExpiring(() => {
+    this.userManager.events.addAccessTokenExpiring(async () => {
       console.log("Revoking access token.");
-      this.userManager.revokeTokens(["access_token"]);
-    })
+      await this.userManager.revokeTokens(["access_token"]);
+    });
   }
 
   public static getInstance(): AuthService {
