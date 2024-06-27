@@ -35,6 +35,11 @@ export class AuthService {
     this.userManager.events.addSilentRenewError((error) => {
       console.log(error);
     })
+
+    this.userManager.events.addAccessTokenExpiring(() => {
+      console.log("Revoking access token.");
+      this.userManager.revokeTokens(["access_token"]);
+    })
   }
 
   public static getInstance(): AuthService {
