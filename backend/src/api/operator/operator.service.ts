@@ -81,7 +81,7 @@ export class OperatorService {
     }
 
     const operatorChangedData = getOperatorChangedDataStr(operator, updatedOperatorData);
-    this.logger.error(`Operator [${operator.username}] data changed: ${operatorChangedData}!`);
+    this.logger.warn(`Operator [${operator.username}] data changed: ${operatorChangedData}!`);
     return this.prisma.operator.update({
       where: {
         username: authenticateOperatorArgs.username,
