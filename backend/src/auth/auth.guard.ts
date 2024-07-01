@@ -5,6 +5,7 @@ import { GqlContextType, GqlExecutionContext } from "@nestjs/graphql";
 import type { Request } from "express";
 import tokenIntrospect from "token-introspection";
 import { EnvironmentVariables } from "@app/config";
+import type { AuthService } from "./auth.service";
 
 const SKIP_OIDC_AUTH_METADATA_KEY = "skipOidcAuth";
 /**
@@ -18,6 +19,7 @@ export class AuthGuard implements CanActivate {
   private readonly introspectToken: tokenIntrospect.IntrospectionFunction;
 
   constructor(
+    private readonly authService: AuthService,
     private readonly config: ConfigService<EnvironmentVariables, true>,
     private readonly reflector: Reflector
   ) {
@@ -47,6 +49,7 @@ export class AuthGuard implements CanActivate {
     // api key HTTP header name must be in the lower case
     const apiKey = request.headers["reg-api-key"] ?? "";
 
+    // TODO: delete API key after OIDC auth is done
     if (
       apiKey !== this.config.get("ADMIN_API_KEY", { infer: true })
       && apiKey !== this.config.get("WEB_API_KEY", { infer: true })
@@ -74,7 +77,7 @@ export class AuthGuard implements CanActivate {
 
         try {
           const tokenInfo = await this.introspectToken(accessToken);
-          // TODO: verify introspected token data against database
+          await this.authService.verify(tokenInfo.sub ?? "");
         } catch (error) {
           let errorMsg = `Request from origin '${request.headers.origin}' has invalid access token!`;
 
