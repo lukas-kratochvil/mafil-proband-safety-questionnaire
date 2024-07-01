@@ -4,9 +4,9 @@ import { APP_GUARD } from "@nestjs/core";
 import { ScheduleModule } from "@nestjs/schedule";
 import { ThrottlerModule } from "@nestjs/throttler";
 import { GraphQLApiModule } from "./api/graphql-api.module";
+import { AuthModule } from "./auth/auth.module";
 import { EnvironmentVariables, envVarsValidationSchema } from "./config";
 import { CronModule } from "./cron/cron.module";
-import { AuthGuard } from "./guards/auth/auth.guard";
 import { ThrottlerGuard } from "./guards/throttler/throttler.guard";
 import { LoggerMiddleware } from "./middleware/logger.middleware";
 
@@ -24,6 +24,7 @@ import { LoggerMiddleware } from "./middleware/logger.middleware";
         limit: config.get("THROTTLE_LIMIT", { infer: true }),
       }),
     }),
+    AuthModule,
     GraphQLApiModule,
     CronModule,
   ],
@@ -32,10 +33,6 @@ import { LoggerMiddleware } from "./middleware/logger.middleware";
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
     },
   ],
 })
