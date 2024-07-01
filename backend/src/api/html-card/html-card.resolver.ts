@@ -1,5 +1,5 @@
 import { Args, Query, Resolver } from "@nestjs/graphql";
-import { SkipOidcAuth } from "@app/auth/auth.guard";
+import { SkipOidcAuth } from "../operator/auth.guard";
 import { ProbandContactRequestArgs } from "./dto/proband-contact-request.args";
 import { HTMLCardEntity } from "./entities/html-card.entity";
 import { HTMLCardService } from "./html-card.service";

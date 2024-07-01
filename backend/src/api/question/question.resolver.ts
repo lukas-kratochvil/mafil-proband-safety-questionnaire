@@ -1,6 +1,6 @@
 import { Args, Query, Resolver } from "@nestjs/graphql";
 import { UUID } from "@app/api/utils/scalars/uuid-scalar";
-import { SkipOidcAuth } from "@app/auth/auth.guard";
+import { SkipOidcAuth } from "../operator/auth.guard";
 import { CreateQuestionInput } from "./dto/create-question.input";
 import { UpdateQuestionTextsInput } from "./dto/update-question-texts.input";
 import { UpdateQuestionInput } from "./dto/update-question.input";

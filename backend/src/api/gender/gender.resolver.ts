@@ -1,6 +1,6 @@
 import { Args, Query, Resolver } from "@nestjs/graphql";
 import { UUID } from "@app/api/utils/scalars/uuid-scalar";
-import { SkipOidcAuth } from "@app/auth/auth.guard";
+import { SkipOidcAuth } from "../operator/auth.guard";
 import { CreateGenderInput } from "./dto/create-gender.input";
 import { UpdateGenderInput } from "./dto/update-gender.input";
 import { GenderEntity } from "./entities/gender.entity";
