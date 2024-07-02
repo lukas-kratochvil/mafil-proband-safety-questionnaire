@@ -2,8 +2,10 @@ import { CanActivate, ExecutionContext, Inject, Injectable, Logger, SetMetadata 
 import { ConfigService } from "@nestjs/config";
 import { Reflector } from "@nestjs/core";
 import { GqlContextType, GqlExecutionContext } from "@nestjs/graphql";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import type { Request } from "express";
 import tokenIntrospect from "token-introspection";
+import { IntrospectionError } from "token-introspection/errors";
 import { EnvironmentVariables } from "@app/config";
 import type { AuthService } from "./auth.service";
 import { AUTH_SERVICE } from "./constants";
@@ -68,27 +70,33 @@ export class AuthGuard implements CanActivate {
         gqlExContext.getClass(),
       ]);
 
-      if (!skipOidcAuth) {
-        const accessToken = this.extractAccessToken(request);
+      if (skipOidcAuth) {
+        return true;
+      }
 
-        if (accessToken === undefined) {
-          this.logger.error(`Request from origin '${request.headers.origin}' does not contain OIDC access token!`);
-          return false;
+      const accessToken = this.extractAccessToken(request);
+      if (accessToken === undefined) {
+        this.logger.error(`Request from origin '${request.headers.origin}' does not contain OIDC access token!`);
+        return false;
+      }
+
+      let username = "";
+      try {
+        const tokenInfo = await this.introspectToken(accessToken);
+        username = tokenInfo.sub ?? "";
+        await this.authService.verify(username);
+      } catch (error) {
+        if (error instanceof IntrospectionError) {
+          this.logger.error(
+            `Request from origin '${request.headers.origin}' has invalid access token!\nToken introspection error: ${error.message}`
+          );
+        } else if (error instanceof PrismaClientKnownRequestError) {
+          this.logger.error(`\nUsername '${username}' verification error: ${error.message}`);
+        } else {
+          this.logger.error(error);
         }
 
-        try {
-          const tokenInfo = await this.introspectToken(accessToken);
-          await this.authService.verify(tokenInfo.sub ?? "");
-        } catch (error) {
-          let errorMsg = `Request from origin '${request.headers.origin}' has invalid access token!`;
-
-          if (error instanceof Error) {
-            errorMsg += `\nToken introspection error: ${error.message}`;
-          }
-
-          this.logger.error(errorMsg);
-          return false;
-        }
+        return false;
       }
     }
 
