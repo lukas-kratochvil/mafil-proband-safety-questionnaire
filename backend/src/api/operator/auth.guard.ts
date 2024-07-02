@@ -4,8 +4,7 @@ import { Reflector } from "@nestjs/core";
 import { GqlContextType, GqlExecutionContext } from "@nestjs/graphql";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import type { Request } from "express";
-import tokenIntrospect from "token-introspection";
-import { IntrospectionError } from "token-introspection/errors";
+import tokenIntrospect, { errors } from "token-introspection";
 import { EnvironmentVariables } from "@app/config";
 import type { AuthService } from "./auth.service";
 import { AUTH_SERVICE } from "./constants";
@@ -86,7 +85,7 @@ export class AuthGuard implements CanActivate {
         username = tokenInfo.sub ?? "";
         await this.authService.verify(username);
       } catch (error) {
-        if (error instanceof IntrospectionError) {
+        if (error instanceof errors.IntrospectionError) {
           this.logger.error(
             `Request from origin '${request.headers.origin}' has invalid access token!\nToken introspection error: ${error.message}`
           );
