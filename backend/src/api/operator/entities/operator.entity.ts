@@ -45,6 +45,6 @@ export class OperatorEntity extends BaseEntity implements Operator {
 
   @IsOptional()
   @IsDate()
-  @Field(() => Date)
+  @Field(() => Date, { nullable: true })
   lastLoggedAt: Date | null;
 }

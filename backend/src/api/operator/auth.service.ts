@@ -41,16 +41,16 @@ export class AuthService {
         },
       });
     } catch (e) {
-      this.logger.error(`Operator "${username}" is unknown!`);
+      this.logger.error(`Operator '${username}' is unknown!`);
       throw e;
     }
 
     if (!operator.isValid) {
-      this.logger.error(`Operator "${operator.username}" is invalid!`);
+      this.logger.error(`Operator '${operator.username}' is invalid!`);
       throw new UnauthorizedException("Operator is invalid!");
     }
 
-    this.logger.log(`Operator "${operator.username}" authenticated.`);
+    this.logger.log(`Operator '${operator.username}' authenticated.`);
     operator = await this.prisma.operator.update({
       where: {
         id: operator.id,
@@ -79,7 +79,7 @@ export class AuthService {
     }
 
     const operatorChangedData = getOperatorChangedDataStr(operator, updatedOperatorData);
-    this.logger.error(`Operator "${operator.username}" data changed: ${operatorChangedData}!`);
+    this.logger.warn(`Operator '${operator.username}' data changed: ${operatorChangedData}!`);
     return this.prisma.operator.update({
       where: {
         username,

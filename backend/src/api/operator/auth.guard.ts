@@ -87,10 +87,10 @@ export class AuthGuard implements CanActivate {
       } catch (error) {
         if (error instanceof errors.IntrospectionError) {
           this.logger.error(
-            `Request from origin '${request.headers.origin}' has invalid access token!\nToken introspection error: ${error.message}`
+            `Request from origin '${request.headers.origin}' has invalid access token! Token introspection error: ${error.message}`
           );
         } else if (error instanceof PrismaClientKnownRequestError) {
-          this.logger.error(`\nUsername '${username}' verification error: ${error.message}`);
+          this.logger.error(`Username '${username}' not verified: ${error.message}`);
         } else {
           this.logger.error(error);
         }
