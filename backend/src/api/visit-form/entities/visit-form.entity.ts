@@ -93,7 +93,7 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   personalId: string;
 
   @IsDate()
-  @MaxDate(new Date())
+  @MaxDate(() => new Date())
   @Field()
   birthdate: Date;
 
