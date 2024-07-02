@@ -12,6 +12,7 @@ import { LoggerMiddleware } from "./middleware/logger.middleware";
 @Module({
   imports: [
     ConfigModule.forRoot({
+      cache: true,
       validationSchema: envVarsValidationSchema,
     }),
     ScheduleModule.forRoot(),

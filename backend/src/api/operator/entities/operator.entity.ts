@@ -1,4 +1,4 @@
-import { Field, HideField, ObjectType, registerEnumType } from "@nestjs/graphql";
+import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Operator, OperatorRole } from "@prisma/client";
 import { IsBoolean, IsDate, IsEmail, IsEnum, IsOptional, MaxDate, MaxLength } from "class-validator";
 import { BaseEntity } from "@app/api/utils/entities/base.entity";
