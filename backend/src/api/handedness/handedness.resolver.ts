@@ -1,5 +1,6 @@
 import { Args, Query, Resolver } from "@nestjs/graphql";
 import { UUID } from "@app/api/utils/scalars/uuid-scalar";
+import { SkipOidcAuth } from "../operator/auth.guard";
 import { CreateHandednessInput } from "./dto/create-handedness.input";
 import { UpdateHandednessInput } from "./dto/update-handedness.input";
 import { HandednessEntity } from "./entities/handedness.entity";
@@ -14,6 +15,7 @@ export class HandednessResolver {
     return this.handednessService.create(createHandednessInput);
   }
 
+  @SkipOidcAuth()
   @Query(() => [HandednessEntity], { name: "handednesses" })
   async getHandednesses() {
     return this.handednessService.findAll();

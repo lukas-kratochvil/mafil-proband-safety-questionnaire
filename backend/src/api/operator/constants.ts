@@ -1,0 +1,2 @@
+export const AUTH_SERVICE = "AUTH_SERVICE";
+export const AUTH_PRISMA_SERVICE = "AUTH_PRISMA_SERVICE";
