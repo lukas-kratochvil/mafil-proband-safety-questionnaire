@@ -6,12 +6,12 @@ import { authenticateOperator } from "@app/util/server_API/calls";
 import type { OperatorDTO } from "@app/util/server_API/dto";
 
 // Using OIDC Authorization Code Flow
+// Using "Jednotné přihlášení MUNI" OIDC provider
 const oidcConfig: UserManagerSettings = {
-  // Using "Jednotné přihlášení MUNI" OIDC provider
   authority: envVars.JPM_AUTHORIZATION_ENDPOINT,
   client_id: envVars.JPM_CLIENT_ID,
-  redirect_uri: `${window.location.origin}${RoutingPath.OIDC_LOGIN}`,
-  scope: "openid profile email eduperson_entitlement",
+  redirect_uri: envVars.JPM_REDIRECT_URI,
+  scope: envVars.JPM_SCOPES,
   /**
    * Multi-factor authentication - URL of the second factor authentication provider.
    *
@@ -21,7 +21,7 @@ const oidcConfig: UserManagerSettings = {
    * login. Because of that we have to trust the OIDC provider that it manages the MFA correctly!
    */
   acr_values: envVars.JPM_MFA_ENDPOINT,
-  post_logout_redirect_uri: `${window.location.origin}${RoutingPath.LOGOUT}`,
+  post_logout_redirect_uri: envVars.JPM_POST_LOGOUT_REDIRECT_URI,
 };
 
 export class AuthService {
