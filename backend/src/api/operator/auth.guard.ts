@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable, Logger, SetMetadata } from "@nestjs/common";
+import { CanActivate, ExecutionContext, Inject, Injectable, Logger, SetMetadata } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Reflector } from "@nestjs/core";
 import { GqlContextType, GqlExecutionContext } from "@nestjs/graphql";
@@ -6,6 +6,7 @@ import type { Request } from "express";
 import tokenIntrospect from "token-introspection";
 import { EnvironmentVariables } from "@app/config";
 import type { AuthService } from "./auth.service";
+import { AUTH_SERVICE } from "./constants";
 
 const SKIP_OIDC_AUTH_METADATA_KEY = "skipOidcAuth";
 /**
@@ -19,7 +20,7 @@ export class AuthGuard implements CanActivate {
   private readonly introspectToken: tokenIntrospect.IntrospectionFunction;
 
   constructor(
-    private readonly authService: AuthService,
+    @Inject(AUTH_SERVICE) private readonly authService: AuthService,
     private readonly config: ConfigService<EnvironmentVariables, true>,
     private readonly reflector: Reflector
   ) {

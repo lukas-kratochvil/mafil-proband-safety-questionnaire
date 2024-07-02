@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, UnauthorizedException } from "@nestjs/common";
 import type { Operator, Prisma } from "@prisma/client";
-import { AUTH_PRISMA_SERVICE } from "@app/constants";
 import type { PrismaService } from "@app/prisma/prisma.service";
+import { AUTH_PRISMA_SERVICE } from "./constants";
 
 const getChangedAttrStr = (
   attrName: keyof Operator,

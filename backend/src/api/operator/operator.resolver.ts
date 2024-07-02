@@ -1,9 +1,9 @@
 import { Inject } from "@nestjs/common";
 import { Args, Query, Resolver } from "@nestjs/graphql";
 import { UUID } from "@app/api/utils/scalars/uuid-scalar";
-import { AUTH_SERVICE } from "@app/constants";
 import { SkipOidcAuth } from "./auth.guard";
 import type { AuthService } from "./auth.service";
+import { AUTH_SERVICE } from "./constants";
 import { AuthenticateOperatorArgs } from "./dto/authenticate-operator.args";
 import { CreateOperatorInput } from "./dto/create-operator.input";
 import { UpdateOperatorInput } from "./dto/update-operator.input";
