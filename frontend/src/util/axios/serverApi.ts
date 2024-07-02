@@ -11,8 +11,6 @@ export const serverApi = axios.create({
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
-    // REG-API-KEY header is set in the Nginx conf for all the environments except the local development environment
-    "REG-API-KEY": import.meta.env.PROD ? undefined : import.meta.env.VITE_REG_APP_API_KEY,
   },
 });
 

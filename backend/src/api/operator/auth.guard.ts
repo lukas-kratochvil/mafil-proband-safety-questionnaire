@@ -22,13 +22,13 @@ export class AuthGuard implements CanActivate {
 
   constructor(
     @Inject(AUTH_SERVICE) private readonly authService: AuthService,
-    private readonly config: ConfigService<EnvironmentVariables, true>,
-    private readonly reflector: Reflector
+    private readonly reflector: Reflector,
+    config: ConfigService<EnvironmentVariables, true>
   ) {
     this.introspectToken = tokenIntrospect({
-      client_id: config.get("JPM_CLIENT_ID"),
-      client_secret: config.get("JPM_CLIENT_SECRET"),
-      endpoint: config.get("JPM_INTROSPECTION_ENDPOINT"),
+      client_id: config.get("JPM_CLIENT_ID", { infer: true }),
+      client_secret: config.get("JPM_CLIENT_SECRET", { infer: true }),
+      endpoint: config.get("JPM_INTROSPECTION_ENDPOINT", { infer: true }),
     });
   }
 
@@ -47,56 +47,39 @@ export class AuthGuard implements CanActivate {
     const gqlContext = gqlExContext.getContext();
     const request = gqlContext.req as Request;
 
-    // check if issued API key is valid, other services will be denied access
-    // api key HTTP header name must be in the lower case
-    const apiKey = request.headers["reg-api-key"] ?? "";
+    // for auth endpoints check the OIDC access token in the HTTP Authorization header
+    const skipOidcAuth = this.reflector.getAllAndOverride<boolean>(SKIP_OIDC_AUTH_METADATA_KEY, [
+      gqlExContext.getHandler(),
+      gqlExContext.getClass(),
+    ]);
 
-    // TODO: delete API key after OIDC auth is done
-    if (
-      apiKey !== this.config.get("ADMIN_API_KEY", { infer: true })
-      && apiKey !== this.config.get("WEB_API_KEY", { infer: true })
-    ) {
-      this.logger.error(
-        `Request from origin '${request.headers.origin}' [User-Agent: ${request.headers["user-agent"]}] has invalid API key: '${apiKey}'!`
-      );
+    if (skipOidcAuth) {
+      return true;
+    }
+
+    const accessToken = this.extractAccessToken(request);
+    if (accessToken === undefined) {
+      this.logger.error(`Request from origin '${request.headers.origin}' does not contain OIDC access token!`);
       return false;
     }
 
-    // for auth endpoints check the OIDC access token in the HTTP Authorization header
-    if (this.config.get("NODE_ENV", { infer: true }) === "production") {
-      const skipOidcAuth = this.reflector.getAllAndOverride<boolean>(SKIP_OIDC_AUTH_METADATA_KEY, [
-        gqlExContext.getHandler(),
-        gqlExContext.getClass(),
-      ]);
-
-      if (skipOidcAuth) {
-        return true;
+    let username = "";
+    try {
+      const tokenInfo = await this.introspectToken(accessToken);
+      username = tokenInfo.sub ?? "";
+      await this.authService.verify(username);
+    } catch (error) {
+      if (error instanceof errors.IntrospectionError) {
+        this.logger.error(
+          `Request from origin '${request.headers.origin}' has invalid access token! Token introspection error: ${error.message}`
+        );
+      } else if (error instanceof PrismaClientKnownRequestError) {
+        this.logger.error(`Username '${username}' not verified: ${error.message}`);
+      } else {
+        this.logger.error(error);
       }
 
-      const accessToken = this.extractAccessToken(request);
-      if (accessToken === undefined) {
-        this.logger.error(`Request from origin '${request.headers.origin}' does not contain OIDC access token!`);
-        return false;
-      }
-
-      let username = "";
-      try {
-        const tokenInfo = await this.introspectToken(accessToken);
-        username = tokenInfo.sub ?? "";
-        await this.authService.verify(username);
-      } catch (error) {
-        if (error instanceof errors.IntrospectionError) {
-          this.logger.error(
-            `Request from origin '${request.headers.origin}' has invalid access token! Token introspection error: ${error.message}`
-          );
-        } else if (error instanceof PrismaClientKnownRequestError) {
-          this.logger.error(`Username '${username}' not verified: ${error.message}`);
-        } else {
-          this.logger.error(error);
-        }
-
-        return false;
-      }
+      return false;
     }
 
     return true;
