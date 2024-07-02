@@ -1,5 +1,6 @@
 import { Args, Query, Resolver } from "@nestjs/graphql";
 import { UUID } from "@app/api/utils/scalars/uuid-scalar";
+import { SkipOidcAuth } from "../operator/auth.guard";
 import { CreateGenderInput } from "./dto/create-gender.input";
 import { UpdateGenderInput } from "./dto/update-gender.input";
 import { GenderEntity } from "./entities/gender.entity";
@@ -14,6 +15,7 @@ export class GenderResolver {
     return this.genderService.create(createGenderInput);
   }
 
+  @SkipOidcAuth()
   @Query(() => [GenderEntity], { name: "genders" })
   async getGenders() {
     return this.genderService.findAll();

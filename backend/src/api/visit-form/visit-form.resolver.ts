@@ -2,6 +2,7 @@ import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { VisitFormState } from "@prisma/client";
 import { UUID } from "@app/api/utils/scalars/uuid-scalar";
 import { Void } from "@app/api/utils/scalars/void-scalar";
+import { SkipOidcAuth } from "../operator/auth.guard";
 import { CreateVisitFormInput } from "./dto/create-visit-form.input";
 import { UpdateVisitFormInput } from "./dto/update-visit-form.input";
 import { VisitFormEntity } from "./entities/visit-form.entity";
@@ -11,6 +12,7 @@ import { VisitFormService } from "./visit-form.service";
 export class VisitFormResolver {
   constructor(private readonly visitFormService: VisitFormService) {}
 
+  @SkipOidcAuth()
   @Mutation(() => VisitFormEntity)
   async createVisitForm(@Args("createVisitFormInput") createVisitFormInput: CreateVisitFormInput) {
     return this.visitFormService.create(createVisitFormInput);

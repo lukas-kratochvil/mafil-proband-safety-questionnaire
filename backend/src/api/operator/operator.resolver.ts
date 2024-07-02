@@ -1,5 +1,9 @@
+import { Inject } from "@nestjs/common";
 import { Args, Query, Resolver } from "@nestjs/graphql";
 import { UUID } from "@app/api/utils/scalars/uuid-scalar";
+import { SkipOidcAuth } from "./auth.guard";
+import type { AuthService } from "./auth.service";
+import { AUTH_SERVICE } from "./constants";
 import { AuthenticateOperatorArgs } from "./dto/authenticate-operator.args";
 import { CreateOperatorInput } from "./dto/create-operator.input";
 import { UpdateOperatorInput } from "./dto/update-operator.input";
@@ -8,11 +12,20 @@ import { OperatorService } from "./operator.service";
 
 @Resolver(() => OperatorEntity)
 export class OperatorResolver {
-  constructor(private readonly operatorService: OperatorService) {}
+  constructor(
+    private readonly operatorService: OperatorService,
+    @Inject(AUTH_SERVICE) private readonly authService: AuthService
+  ) {}
 
+  @SkipOidcAuth()
   @Query(() => OperatorEntity)
   async authenticateOperator(@Args() authenticateOperatorArgs: AuthenticateOperatorArgs) {
-    return this.operatorService.authenticate(authenticateOperatorArgs);
+    return this.authService.authenticate(
+      authenticateOperatorArgs.name,
+      authenticateOperatorArgs.surname,
+      authenticateOperatorArgs.username,
+      authenticateOperatorArgs.email
+    );
   }
 
   // @Mutation(() => OperatorEntity)
