@@ -22,6 +22,9 @@ const oidcConfig: UserManagerSettings = {
   acr_values: envVars.JPM_MFA_ENDPOINT,
   post_logout_redirect_uri: envVars.JPM_POST_LOGOUT_REDIRECT_URI,
   automaticSilentRenew: true,
+  // Revoke access token and refresh token on signout to avoid accessing secured APIs using these tokens
+  revokeTokensOnSignout: true,
+  revokeTokenTypes: ["access_token", "refresh_token"],
 };
 
 export class AuthService {
