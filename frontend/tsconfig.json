@@ -39,6 +39,7 @@
     "src",
   ],
   "exclude": [
+    "src/**/*.dev.[ts, tsx]",
     "src/**/__tests__/**/*.[ts, tsx]",
     "src/**/__mocks__/**/*.[ts, tsx]",
   ],

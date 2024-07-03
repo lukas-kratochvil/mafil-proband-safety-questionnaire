@@ -16,19 +16,6 @@ import { mafildbApi } from "@app/util/axios/mafildbApi";
 import { fetchGender, fetchHandedness, fetchOperator, fetchQuestion } from "../server_API/calls";
 import type { OperatorDTO, PdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import {
-  addPdfToVisitDev,
-  createVisitDev,
-  fetchDevicesDev,
-  fetchDuplicatedVisitDev,
-  fetchLanguageDev,
-  fetchLanguagesDev,
-  fetchProjectDev,
-  fetchProjectsDev,
-  fetchRecentVisitsDev,
-  fetchVisitDetailDev,
-  updateVisitSignatureStateDev,
-} from "./calls.dev";
-import {
   MDB_ApprovalState,
   type MDB_AddPdfToVisitInput,
   type MDB_CreateSubjectInput,
@@ -63,7 +50,7 @@ import {
 
 const fetchLanguages = async (): Promise<Language[]> => {
   if (import.meta.env.DEV) {
-    return fetchLanguagesDev();
+    return (await import("./calls.dev")).fetchLanguagesDev();
   }
 
   const { data } = await mafildbApi.get<MDB_GetLanguagesResponse>("languages");
@@ -82,7 +69,7 @@ const fetchLanguages = async (): Promise<Language[]> => {
 
 const fetchLanguage = async (code: string): Promise<Language> => {
   if (import.meta.env.DEV) {
-    return fetchLanguageDev(code);
+    return (await import("./calls.dev")).fetchLanguageDev(code);
   }
 
   const { data } = await mafildbApi.get<MDB_GetLanguageResponse>(`languages/${code}`);
@@ -105,7 +92,7 @@ export const fetchNativeLanguage = async (code: string): Promise<NativeLanguage>
 
 export const fetchProjects = async (): Promise<Project[]> => {
   if (import.meta.env.DEV) {
-    return fetchProjectsDev();
+    return (await import("./calls.dev")).fetchProjectsDev();
   }
 
   const { data } = await mafildbApi.get<MDB_GetProjectsResponse>("projects");
@@ -119,7 +106,7 @@ export const fetchProjects = async (): Promise<Project[]> => {
 
 export const fetchProject = async (uuid: string): Promise<Project> => {
   if (import.meta.env.DEV) {
-    return fetchProjectDev(uuid);
+    return (await import("./calls.dev")).fetchProjectDev(uuid);
   }
 
   const { data } = await mafildbApi.get<MDB_GetProjectResponse>(`projects/${uuid}`);
@@ -133,7 +120,7 @@ export const fetchProject = async (uuid: string): Promise<Project> => {
 
 export const fetchDevices = async (): Promise<Device[]> => {
   if (import.meta.env.DEV) {
-    return fetchDevicesDev();
+    return (await import("./calls.dev")).fetchDevicesDev();
   }
 
   // Only MR devices are relevant for this app
@@ -196,7 +183,7 @@ const createVisit = async (
   }
 
   if (import.meta.env.DEV) {
-    return createVisitDev(
+    return (await import("./calls.dev")).createVisitDev(
       visitFormData,
       approvalState,
       isPhantom,
@@ -297,7 +284,7 @@ export const createPhantomVisit = async (
 
 export const addPdfToVisit = async (visitUuid: string, pdf: PdfDTO): Promise<VisitPDF> => {
   if (import.meta.env.DEV) {
-    return addPdfToVisitDev(pdf);
+    return (await import("./calls.dev")).addPdfToVisitDev(pdf);
   }
 
   const addPdfToVisitData: MDB_AddPdfToVisitInput = {
@@ -322,7 +309,7 @@ export const addPdfToVisit = async (visitUuid: string, pdf: PdfDTO): Promise<Vis
 
 export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => {
   if (import.meta.env.DEV) {
-    return fetchRecentVisitsDev();
+    return (await import("./calls.dev")).fetchRecentVisitsDev();
   }
 
   // Set limitation to fetch only visits created 14 days ago and newer.
@@ -416,7 +403,7 @@ export const fetchDuplicatedVisit = async (
   }
 
   if (import.meta.env.DEV) {
-    return fetchDuplicatedVisitDev(visitUuid);
+    return (await import("./calls.dev")).fetchDuplicatedVisitDev(visitUuid);
   }
 
   const visit = await fetchVisit(visitUuid);
@@ -507,7 +494,7 @@ export const fetchVisitDetail = async (visitUuid: string | undefined): Promise<V
   }
 
   if (import.meta.env.DEV) {
-    return fetchVisitDetailDev(visitUuid);
+    return (await import("./calls.dev")).fetchVisitDetailDev(visitUuid);
   }
 
   const [visit, visitPDF] = await Promise.all([fetchVisit(visitUuid), fetchVisitPDF(visitUuid)]);
@@ -529,7 +516,7 @@ export const updateVisitSignatureState = async (
   signatureState: MDB_UpdateVisitSignatureStateInput["registration_signature_status"]
 ): Promise<string | never> => {
   if (import.meta.env.DEV) {
-    return updateVisitSignatureStateDev(visitUuid, signatureState);
+    return (await import("./calls.dev")).updateVisitSignatureStateDev(visitUuid, signatureState);
   }
 
   const updateData: MDB_UpdateVisitSignatureStateInput = {
