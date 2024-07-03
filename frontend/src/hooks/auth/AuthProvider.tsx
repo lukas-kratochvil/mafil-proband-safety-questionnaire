@@ -1,7 +1,7 @@
 import { createContext, useContext, type PropsWithChildren } from "react";
 import type { OperatorDTO } from "@app/util/server_API/dto";
 import { useAuthProvider } from "./auth-provider";
-import { useAuthProviderDev } from "./auth-provider-dev";
+import { useAuthProviderDev } from "./auth-provider.dev";
 
 export type Auth = {
   logIn: () => Promise<void>;
