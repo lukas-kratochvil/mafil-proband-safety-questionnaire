@@ -1,5 +1,5 @@
 import { ConfigService } from "@nestjs/config";
-import { Test, TestingModule } from "@nestjs/testing";
+import { Test } from "@nestjs/testing";
 import { PrismaClient } from "@prisma/client";
 import { DeepMockProxy, mockDeep } from "jest-mock-extended";
 import { EnvironmentVariables } from "@app/config";
@@ -13,7 +13,7 @@ describe("PDFResolver", () => {
   let prisma: DeepMockProxy<PrismaClient>;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    const module = await Test.createTestingModule({
       providers: [PDFResolver, PDFService, ConfigService, PrismaService],
     })
       .overrideProvider(PrismaService)

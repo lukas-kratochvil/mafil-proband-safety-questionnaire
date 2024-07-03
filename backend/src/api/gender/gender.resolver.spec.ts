@@ -1,4 +1,4 @@
-import { Test, TestingModule } from "@nestjs/testing";
+import { Test } from "@nestjs/testing";
 import { PrismaClient } from "@prisma/client";
 import { DeepMockProxy, mockDeep } from "jest-mock-extended";
 import { LanguageService } from "@app/api/language/language.service";
@@ -11,7 +11,7 @@ describe("GenderResolver", () => {
   let prisma: DeepMockProxy<PrismaClient>;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    const module = await Test.createTestingModule({
       providers: [GenderResolver, GenderService, PrismaService, LanguageService],
     })
       .overrideProvider(PrismaService)
