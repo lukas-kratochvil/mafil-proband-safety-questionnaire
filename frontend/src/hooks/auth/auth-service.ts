@@ -21,6 +21,8 @@ const oidcConfig: UserManagerSettings = {
    */
   acr_values: envVars.JPM_MFA_ENDPOINT,
   post_logout_redirect_uri: envVars.JPM_POST_LOGOUT_REDIRECT_URI,
+  automaticSilentRenew: true,
+  accessTokenExpiringNotificationTimeInSeconds: 3540,  // TODO: delete
 };
 
 export class AuthService {
@@ -29,7 +31,16 @@ export class AuthService {
   private userManager = new UserManager(oidcConfig);
 
   /* eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-empty-function */
-  private constructor() {}
+  private constructor() {
+    // TODO: delete
+    this.userManager.events.addAccessTokenExpiring(async () => {
+      try {
+        console.log(await this.userManager.signinSilent());
+      } catch(error) {
+        console.error('Silent renew error', error);
+      };
+    });
+  }
 
   public static getInstance(): AuthService {
     if (!this.instance) {
