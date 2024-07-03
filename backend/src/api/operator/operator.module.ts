@@ -1,8 +1,10 @@
 import { Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { APP_GUARD } from "@nestjs/core";
+import { APP_GUARD, Reflector } from "@nestjs/core";
+import type { EnvironmentVariables } from "@app/config";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { AuthGuard } from "./auth.guard";
+import { AuthGuardDev } from "./auth.guard.dev";
 import { AuthService } from "./auth.service";
 import { AUTH_PRISMA_SERVICE, AUTH_SERVICE } from "./constants";
 import { OperatorResolver } from "./operator.resolver";
@@ -25,7 +27,11 @@ import { OperatorService } from "./operator.service";
     ConfigService,
     {
       provide: APP_GUARD,
-      useClass: AuthGuard,
+      inject: [AUTH_SERVICE, ConfigService, Reflector],
+      useFactory: (authService: AuthService, config: ConfigService<EnvironmentVariables, true>, reflector: Reflector) =>
+        config.get("NODE_ENV", { infer: true }) === "production"
+          ? new AuthGuard(authService, reflector, config)
+          : new AuthGuardDev(),
     },
     // Operator service
     OperatorService,

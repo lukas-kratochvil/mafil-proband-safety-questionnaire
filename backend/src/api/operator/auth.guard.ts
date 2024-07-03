@@ -1,11 +1,12 @@
-import { CanActivate, ExecutionContext, Inject, Injectable, Logger, SetMetadata } from "@nestjs/common";
+import { ExecutionContext, Inject, Injectable, SetMetadata } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Reflector } from "@nestjs/core";
-import { GqlContextType, GqlExecutionContext } from "@nestjs/graphql";
+import { GqlExecutionContext } from "@nestjs/graphql";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import type { Request } from "express";
 import tokenIntrospect, { errors } from "token-introspection";
 import { EnvironmentVariables } from "@app/config";
+import { AuthGuardDev } from "./auth.guard.dev";
 import type { AuthService } from "./auth.service";
 import { AUTH_SERVICE } from "./constants";
 
@@ -16,8 +17,8 @@ const SKIP_OIDC_AUTH_METADATA_KEY = "skipOidcAuth";
 export const SkipOidcAuth = () => SetMetadata(SKIP_OIDC_AUTH_METADATA_KEY, true);
 
 @Injectable()
-export class AuthGuard implements CanActivate {
-  private readonly logger = new Logger(AuthGuard.name);
+// eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
+export class AuthGuard extends AuthGuardDev {
   private readonly introspectToken: tokenIntrospect.IntrospectionFunction;
 
   constructor(
@@ -25,6 +26,7 @@ export class AuthGuard implements CanActivate {
     private readonly reflector: Reflector,
     config: ConfigService<EnvironmentVariables, true>
   ) {
+    super();
     this.introspectToken = tokenIntrospect({
       client_id: config.get("JPM_CLIENT_ID", { infer: true }),
       client_secret: config.get("JPM_CLIENT_SECRET", { infer: true }),
@@ -38,8 +40,7 @@ export class AuthGuard implements CanActivate {
   }
 
   async canActivate(exContext: ExecutionContext) {
-    if (exContext.getType<GqlContextType>() !== "graphql") {
-      this.logger.error(`Invalid execution context type '${exContext.getType()}'!`);
+    if (!(await super.canActivate(exContext))) {
       return false;
     }
 

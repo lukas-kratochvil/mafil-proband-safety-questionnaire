@@ -26,6 +26,7 @@ const getOperatorChangedDataStr = (operator: Operator, updatedOperatorData: Pris
 };
 
 @Injectable()
+// eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
 export class AuthService {
   constructor(@Inject(AUTH_PRISMA_SERVICE) private readonly prisma: PrismaService) {}
 

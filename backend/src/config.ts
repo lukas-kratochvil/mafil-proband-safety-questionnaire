@@ -37,9 +37,15 @@ export const envVarsValidationSchema = Joi.object<EnvironmentVariables>({
   WEB_URL: Joi.string()
     .uri({ scheme: ["http", "https"] })
     .required(),
-  JPM_CLIENT_ID: Joi.string().trim().required(),
-  JPM_CLIENT_SECRET: Joi.string().trim().required(),
-  JPM_INTROSPECTION_ENDPOINT: Joi.string()
-    .uri({ scheme: ["http", "https"] })
-    .required(),
+  JPM_CLIENT_ID: Joi.alternatives().conditional("NODE_ENV", { is: "production", then: Joi.string().trim().required() }),
+  JPM_CLIENT_SECRET: Joi.alternatives().conditional("NODE_ENV", {
+    is: "production",
+    then: Joi.string().trim().required(),
+  }),
+  JPM_INTROSPECTION_ENDPOINT: Joi.alternatives().conditional("NODE_ENV", {
+    is: "production",
+    then: Joi.string()
+      .uri({ scheme: ["http", "https"] })
+      .required(),
+  }),
 }).required();
