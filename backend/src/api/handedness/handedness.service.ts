@@ -40,6 +40,9 @@ export class HandednessService {
       where: {
         deletedAt: null,
       },
+      orderBy: {
+        order: "asc",
+      },
       include: handednessInclude,
     });
   }

@@ -47,6 +47,9 @@ export class QuestionService {
         isValid: true,
         deletedAt: null,
       },
+      orderBy: {
+        order: "asc",
+      },
       include: questionInclude,
     });
   }

@@ -40,6 +40,9 @@ export class GenderService {
       where: {
         deletedAt: null,
       },
+      orderBy: {
+        order: "asc",
+      },
       include: genderInclude,
     });
   }
