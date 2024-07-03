@@ -76,6 +76,7 @@ export const GET_QUESTION = gql`
     question(id: $id) {
       id
       partNumber
+      order
       mustBeApproved
       ${TRANSLATIONS_FRAGMENT}
       hiddenByGenders {
