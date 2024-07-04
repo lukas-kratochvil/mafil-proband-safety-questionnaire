@@ -18,7 +18,7 @@ const isIso8601DateString = (value: any): boolean =>
   value && typeof value === "string" && ISO_8601_DATE_FORMAT_REGEX.test(value);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const handleDates = <T>(body: any, transform: (value: string) => T): any => {
+const handleDates = (body: any, transform: (value: string) => Date): any => {
   if (body === null || body === undefined || typeof body !== "object") {
     return body;
   }
