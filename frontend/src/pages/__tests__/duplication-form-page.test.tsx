@@ -112,7 +112,7 @@ describe("duplication form page", () => {
   };
 
   test("contains correct form buttons", async () => {
-    setup();
+    // ARRANGE
     const buttonNames: string[] = [
       "form.common.buttons.finalize",
       "form.common.buttons.disapprove",
@@ -120,14 +120,17 @@ describe("duplication form page", () => {
       "form.common.buttons.cancel",
     ];
 
+    // ACT
+    setup();
     const buttons = await screen.findAllByRole("button", { name: /^form\.common\.buttons/ });
+
+    // ASSERT
     expect(buttons.length).toBe(buttonNames.length);
     buttonNames.forEach(async (buttonName, index) => expect(buttons[index]?.textContent).toBe(buttonName));
   });
 
   test("renders values from the visit being duplicated", async () => {
-    setup();
-
+    // ARRANGE
     const expectedFormValues = {
       project: "",
       device: "",
@@ -147,15 +150,17 @@ describe("duplication form page", () => {
       phone: visit.subject.phone,
     };
 
+    // ACT
+    setup();
     const form = await screen.findByRole("form");
+    const questionsRadios = await screen.findAllByRole("radiogroup");
+
+    // ASSERT
     await waitFor(() => expect(form).toHaveFormValues(expectedFormValues));
-
-    const questions = await screen.findAllByRole("radiogroup");
-    expect(questions.length).toEqual(questionsTest.length);
-
-    questions.forEach((question, i) => {
-      const yesRadio = within(question).getByRole("radio", { name: "form.safetyQuestions.yes" });
-      const noRadio = within(question).getByRole("radio", { name: "form.safetyQuestions.no" });
+    expect(questionsRadios.length).toEqual(questionsTest.length);
+    questionsRadios.forEach((questionInput, i) => {
+      const yesRadio = within(questionInput).getByRole("radio", { name: "form.safetyQuestions.yes" });
+      const noRadio = within(questionInput).getByRole("radio", { name: "form.safetyQuestions.no" });
       const commentField = screen.queryByRole("textbox", { name: `answers.${i}.comment` });
 
       if (i % 2 === 0) {

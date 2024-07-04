@@ -32,22 +32,31 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
 // Tests
 //----------------------------------------------------------------------
 describe("home page", () => {
-  test("contains translations", () => {
-    const { container } = render(<HomePage />);
+  const setup = () => {
+    render(<HomePage />);
+  };
 
-    expect(container).toHaveTextContent(/homePage.title/);
+  test("contains translations", () => {
+    // ACT
+    setup();
+    const title = screen.getByText(/homePage.title/);
     const openNewFormButton = screen.getByRole("button", { name: "homePage.openNewFormButton" });
+
+    // ASSERT
+    expect(title).toBeInTheDocument();
     expect(openNewFormButton).toBeInTheDocument();
   });
 
   test("clicks open new form button", async () => {
-    render(<HomePage />);
+    // ARRANGE
     const user = userEvent.setup();
 
+    // ACT
+    setup();
     const openNewForButton = screen.getByRole("button");
     await user.click(openNewForButton);
 
-    expect(mockedUseNavigate).toHaveBeenCalledOnce();
-    expect(mockedUseNavigate).toHaveBeenLastCalledWith(RoutingPath.PROBAND_FORM);
+    // ASSERT
+    expect(mockedUseNavigate).toHaveBeenCalledWith(RoutingPath.PROBAND_FORM);
   });
 });

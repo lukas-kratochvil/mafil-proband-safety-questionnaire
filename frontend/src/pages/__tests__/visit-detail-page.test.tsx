@@ -1,3 +1,4 @@
+import userEvent from "@testing-library/user-event";
 import { operatorMRTest } from "@app/__tests__/data/operators";
 import type { VisitDetail } from "@app/model/visit";
 import VisitDetailPage from "@app/pages/VisitDetailPage";
@@ -61,175 +62,197 @@ describe("visit detail page", () => {
   };
 
   test("contains translations", async () => {
+    // ARRANGE
     vi.spyOn(mafildbCalls, "fetchVisitDetail").mockImplementationOnce(async () => defaultVisit);
+
+    // ACT
     setup();
 
+    // ASSERT
     await screen.findByText(/visitDetailPage.title: /);
   });
 
   test("is disapproved", async () => {
+    // ARRANGE
     const disapprovedVisit: VisitDetail = {
       ...defaultVisit,
       approvalState: MDB_ApprovalState.DISAPPROVED,
     };
     vi.spyOn(mafildbCalls, "fetchVisitDetail").mockImplementationOnce(async () => disapprovedVisit);
-    setup();
 
-    expect(await screen.findByText(`visitDetailPage.title: ${disapprovedVisit.visitId}`)).toBeDefined();
-    await screen.findByText(/visitDetailPage.infoStripes.disapproved/);
-    const iframe = await screen.findByTitle("Visit detail");
+    // ACT
+    setup();
+    const visitTitle = await screen.findByText(`visitDetailPage.title: ${disapprovedVisit.visitId}`);
+    const infoStripe = await screen.findByText(/visitDetailPage.infoStripes.disapproved/);
+    const iframe = screen.getByTitle("Visit detail");
+    const backButton = screen.getByText(/common.backButton/);
+
+    // ASSERT
+    expect(visitTitle).toBeInTheDocument();
+    expect(infoStripe).toBeInTheDocument();
     expect(iframe).toBeInTheDocument();
-    const backButton = await screen.findByText(/common.backButton/);
     expect(backButton).toBeInTheDocument();
   });
 
   test("is approved", async () => {
+    // ARRANGE
+    const user = userEvent.setup();
+    const updateVisitSignatureStateSpy = vi.spyOn(mafildbCalls, "updateVisitSignatureState");
     const approvedVisit: VisitDetail = {
       ...defaultVisit,
       approvalState: MDB_ApprovalState.APPROVED,
     };
     vi.spyOn(mafildbCalls, "fetchVisitDetail").mockImplementationOnce(async () => approvedVisit);
-    setup();
 
-    expect(await screen.findByText(`visitDetailPage.title: ${approvedVisit.visitId}`)).toBeDefined();
-    await screen.findByText(/visitDetailPage.infoStripes.signatureChoice/);
+    // ACT
+    setup();
+    const visitTitle = await screen.findByText(`visitDetailPage.title: ${approvedVisit.visitId}`);
+    const infoStripe = await screen.findByText(/visitDetailPage.infoStripes.signatureChoice/);
     const iframe = screen.getByTitle("Visit detail");
+    const downloadPDFAndPhysicallySignButton = screen.getByText(/visitDetailPage.buttons.downloadPDFAndPhysicallySign/);
+    const signElectronicallyButton = screen.getByText(/visitDetailPage.buttons.signElectronically/);
+    const backButton = screen.getByText(/common.backButton/);
+
+    // ASSERT
+    expect(visitTitle).toBeInTheDocument();
+    expect(infoStripe).toBeInTheDocument();
     expect(iframe).toBeInTheDocument();
-    const downloadPDFAndPhysicallySignButton = await screen.findByText(
-      /visitDetailPage.buttons.downloadPDFAndPhysicallySign/
-    );
     expect(downloadPDFAndPhysicallySignButton).toBeInTheDocument();
-    const signElectronicallyButton = await screen.findByText(/visitDetailPage.buttons.signElectronically/);
     expect(signElectronicallyButton).toBeDisabled();
-    const backButton = await screen.findByText(/common.backButton/);
     expect(backButton).toBeInTheDocument();
+
+    await user.click(downloadPDFAndPhysicallySignButton);
+    expect(updateVisitSignatureStateSpy).toHaveBeenCalledWith(
+      approvedVisit.uuid,
+      MDB_SignatureState.FOR_SIGNATURE_PHYSICALLY
+    );
   });
 
   test("is for signature physically", async () => {
+    // ARRANGE
+    const user = userEvent.setup();
+    const updateVisitSignatureStateSpy = vi.spyOn(mafildbCalls, "updateVisitSignatureState");
     const forSignatureVisit: VisitDetail = {
       ...defaultVisit,
       signatureState: MDB_SignatureState.FOR_SIGNATURE_PHYSICALLY,
     };
     vi.spyOn(mafildbCalls, "fetchVisitDetail").mockImplementationOnce(async () => forSignatureVisit);
-    setup();
 
-    expect(await screen.findByText(`visitDetailPage.title: ${forSignatureVisit.visitId}`)).toBeDefined();
-    await screen.findByText(/visitDetailPage.infoStripes.waitingForSignatureConfirmation/);
+    // ACT
+    setup();
+    const visitTitle = await screen.findByText(`visitDetailPage.title: ${forSignatureVisit.visitId}`);
+    const infoStripe = await screen.findByText(/visitDetailPage.infoStripes.waitingForSignatureConfirmation/);
     const iframe = screen.getByTitle("Visit detail");
+    const confirmSignatureButton = screen.getByText(/visitDetailPage.buttons.confirmSignature/);
+    const backButton = screen.getByText(/common.backButton/);
+
+    // ASSERT
+    expect(visitTitle).toBeInTheDocument();
+    expect(infoStripe).toBeInTheDocument();
     expect(iframe).toBeInTheDocument();
-    const confirmSignatureButton = await screen.findByText(/visitDetailPage.buttons.confirmSignature/);
     expect(confirmSignatureButton).toBeInTheDocument();
-    const backButton = await screen.findByText(/common.backButton/);
     expect(backButton).toBeInTheDocument();
+
+    await user.click(confirmSignatureButton);
+    expect(updateVisitSignatureStateSpy).toHaveBeenCalledWith(
+      forSignatureVisit.uuid,
+      MDB_SignatureState.SIGNED_PHYSICALLY
+    );
   });
 
   test("is for signature electronically", async () => {
+    // ARRANGE
     const forSignatureVisit: VisitDetail = {
       ...defaultVisit,
       signatureState: MDB_SignatureState.FOR_SIGNATURE_ELECTRONICALLY,
     };
     vi.spyOn(mafildbCalls, "fetchVisitDetail").mockImplementationOnce(async () => forSignatureVisit);
-    setup();
 
-    expect(await screen.findByText(`visitDetailPage.title: ${forSignatureVisit.visitId}`)).toBeDefined();
-    await screen.findByText(/visitDetailPage.infoStripes.waitingForSignatureConfirmation/);
+    // ACT
+    setup();
+    const visitTitle = await screen.findByText(`visitDetailPage.title: ${forSignatureVisit.visitId}`);
+    const infoStripe = await screen.findByText(/visitDetailPage.infoStripes.waitingForSignatureConfirmation/);
     const iframe = screen.getByTitle("Visit detail");
+    const confirmSignatureButton = screen.getByText(/visitDetailPage.buttons.confirmSignature/);
+    const backButton = screen.getByText(/common.backButton/);
+
+    // ASSERT
+    expect(visitTitle).toBeInTheDocument();
+    expect(infoStripe).toBeInTheDocument();
     expect(iframe).toBeInTheDocument();
-    const confirmSignatureButton = await screen.findByText(/visitDetailPage.buttons.confirmSignature/);
     expect(confirmSignatureButton).toBeInTheDocument();
-    const backButton = await screen.findByText(/common.backButton/);
     expect(backButton).toBeInTheDocument();
   });
 
   test("is signed physically", async () => {
+    // ARRANGE
     const signedVisit: VisitDetail = {
       ...defaultVisit,
       signatureState: MDB_SignatureState.SIGNED_PHYSICALLY,
     };
     vi.spyOn(mafildbCalls, "fetchVisitDetail").mockImplementationOnce(async () => signedVisit);
-    setup();
 
-    expect(await screen.findByText(`visitDetailPage.title: ${signedVisit.visitId}`)).toBeDefined();
-    await screen.findByText(/visitDetailPage.infoStripes.signed/);
+    // ACT
+    setup();
+    const visitTitle = await screen.findByText(`visitDetailPage.title: ${signedVisit.visitId}`);
+    const infoStripe = await screen.findByText(/visitDetailPage.infoStripes.signed/);
     const iframe = screen.getByTitle("Visit detail");
+    const downloadPDFButton = screen.getByText(/visitDetailPage.buttons.downloadPDF/);
+    const backButton = screen.getByText(/common.backButton/);
+
+    // ASSERT
+    expect(visitTitle).toBeInTheDocument();
+    expect(infoStripe).toBeInTheDocument();
     expect(iframe).toBeInTheDocument();
-    const downloadPDFButton = await screen.findByText(/visitDetailPage.buttons.downloadPDF/);
     expect(downloadPDFButton).toBeInTheDocument();
-    const backButton = await screen.findByText(/common.backButton/);
     expect(backButton).toBeInTheDocument();
   });
 
   test("is signed electronically", async () => {
+    // ARRANGE
     const signedVisit: VisitDetail = {
       ...defaultVisit,
       signatureState: MDB_SignatureState.SIGNED_ELECTRONICALLY,
     };
     vi.spyOn(mafildbCalls, "fetchVisitDetail").mockImplementationOnce(async () => signedVisit);
-    setup();
 
-    expect(await screen.findByText(`visitDetailPage.title: ${signedVisit.visitId}`)).toBeDefined();
-    await screen.findByText(/visitDetailPage.infoStripes.signed/);
+    // ACT
+    setup();
+    const visitTitle = await screen.findByText(`visitDetailPage.title: ${signedVisit.visitId}`);
+    const infoStripe = await screen.findByText(/visitDetailPage.infoStripes.signed/);
     const iframe = screen.getByTitle("Visit detail");
+    const downloadPDFButton = screen.getByText(/visitDetailPage.buttons.downloadPDF/);
+    const backButton = screen.getByText(/common.backButton/);
+
+    // ASSERT
+    expect(visitTitle).toBeInTheDocument();
+    expect(infoStripe).toBeInTheDocument();
     expect(iframe).toBeInTheDocument();
-    const downloadPDFButton = await screen.findByText(/visitDetailPage.buttons.downloadPDF/);
     expect(downloadPDFButton).toBeInTheDocument();
-    const backButton = await screen.findByText(/common.backButton/);
     expect(backButton).toBeInTheDocument();
   });
 
   test("is phantom done", async () => {
+    // ARRANGE
     const signedPhantomVisit: VisitDetail = {
       ...defaultVisit,
       isPhantom: true,
     };
     vi.spyOn(mafildbCalls, "fetchVisitDetail").mockImplementationOnce(async () => signedPhantomVisit);
-    setup();
 
-    expect(await screen.findByText(`visitDetailPage.title: ${signedPhantomVisit.visitId}`)).toBeDefined();
-    await screen.findByText(/visitDetailPage.infoStripes.completed/);
+    // ACT
+    setup();
+    const visitTitle = await screen.findByText(`visitDetailPage.title: ${signedPhantomVisit.visitId}`);
+    const infoStripe = await screen.findByText(/visitDetailPage.infoStripes.completed/);
     const iframe = screen.getByTitle("Visit detail");
+    const downloadPDFButton = screen.getByText(/visitDetailPage.buttons.downloadPDF/);
+    const backButton = screen.getByText(/common.backButton/);
+
+    // ASSERT
+    expect(visitTitle).toBeInTheDocument();
+    expect(infoStripe).toBeInTheDocument();
     expect(iframe).toBeInTheDocument();
-    const downloadPDFButton = await screen.findByText(/visitDetailPage.buttons.downloadPDF/);
     expect(downloadPDFButton).toBeInTheDocument();
-    const backButton = await screen.findByText(/common.backButton/);
     expect(backButton).toBeInTheDocument();
   });
-
-  // TODO: repair these tests that switch visit detail state
-  // describe("state switching", () => {
-  //   test("switches from approved to for-signature state", async () => {
-  //     const approvedVisit: VisitDetail = {
-  //       ...defaultVisit,
-  //       approvalState: ApprovalState.APPROVED,
-  //     };
-  //     vi.spyOn(mafildbCalls, "fetchVisitDetail").mockImplementationOnce(async () => approvedVisit);
-  //     setup();
-  //     const user = userEvent.setup();
-
-  //     const downloadPDFAndPhysicallySignButton = await screen.findByText(
-  //       /visitDetailPage.buttons.downloadPDFAndPhysicallySign/
-  //     );
-  //     await user.click(downloadPDFAndPhysicallySignButton);
-
-  //     expect(await screen.findByText(/visitDetailPage.infoStripes.waitingForSignatureConfirmation/)).toBeInTheDocument();
-  //     expect(await screen.findByText(/visitDetailPage.buttons.confirmSignature/)).toBeInTheDocument();
-  //     expect(await screen.findByText(/common.backButton/)).toBeInTheDocument();
-  //   });
-
-  //   test("switches from for-signature to signed state", async () => {
-  //     const forSignatureVisit: VisitDetail = {
-  //       ...defaultVisit,
-  //       signatureState: SignatureState.FOR_SIGNATURE_PHYSICALLY,
-  //     };
-  //     vi.spyOn(mafildbCalls, "fetchVisitDetail").mockImplementationOnce(async () => forSignatureVisit);
-  //     setup();
-
-  //     const confirmSignatureButton = await screen.findByText(/visitDetailPage.buttons.confirmSignature/);
-  //     await userEvent.click(confirmSignatureButton);
-
-  //     expect(await screen.findByText(/visitDetailPage.infoStripes.signed/)).toBeInTheDocument();
-  //     expect(await screen.findByText(/visitDetailPage.buttons.downloadPDF/)).toBeInTheDocument();
-  //     expect(await screen.findByText(/common.backButton/)).toBeInTheDocument();
-  //   });
-  // });
 });

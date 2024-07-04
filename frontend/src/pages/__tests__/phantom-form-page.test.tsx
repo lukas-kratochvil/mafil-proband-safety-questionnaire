@@ -11,6 +11,9 @@ import type { Device } from "@app/model/device";
 import type { NativeLanguage } from "@app/model/language";
 import type { Project } from "@app/model/project";
 import PhantomFormPage from "@app/pages/PhantomFormPage";
+import { RoutingPath } from "@app/routing-paths";
+import * as mafildbCalls from "@app/util/mafildb_API/calls";
+import * as serverCalls from "@app/util/server_API/calls";
 import type { GenderDTO, HandednessDTO, PdfDTO } from "@app/util/server_API/dto";
 import { render, screen } from "@test-utils";
 
@@ -52,10 +55,10 @@ vi.mock("@app/util/server_API/calls", async () => ({
 // Mocking MAFILDB API calls
 //----------------------------------------------------------------------
 vi.mock("@app/util/mafildb_API/calls", async () => ({
+  ...(await import("@app/util/mafildb_API/calls")),
   fetchNativeLanguages: async (): Promise<NativeLanguage[]> => nativeLanguagesTest,
   fetchProjects: async (): Promise<Project[]> => projectsTest,
   fetchDevices: async (): Promise<Device[]> => devicesTest,
-  createPhantomVisit: async (): Promise<string> => "visitId",
   addPdfToVisit: async (): Promise<string> => "fileId",
 }));
 
@@ -67,6 +70,19 @@ describe("phantom form page", () => {
     render(<PhantomFormPage />);
   };
 
+  const visitUuid = "visitUuid";
+  const createPhantomVisitSpy = vi
+    .spyOn(mafildbCalls, "createPhantomVisit")
+    .mockReturnValue(Promise.resolve({ visitId: "visitId", uuid: visitUuid }));
+  const generatePhantomPdfSpy = vi.spyOn(serverCalls, "generatePhantomPdf");
+  const addPdfToVisitSpy = vi.spyOn(mafildbCalls, "addPdfToVisit");
+
+  afterEach(() => {
+    createPhantomVisitSpy.mockClear();
+    generatePhantomPdfSpy.mockClear();
+    addPdfToVisitSpy.mockClear();
+  });
+
   // Data
   const genderOther = gendersTest[2]?.translations[0]?.text;
   const nativeLanguageCzech = nativeLanguagesTest[0]?.nativeName;
@@ -75,23 +91,34 @@ describe("phantom form page", () => {
   const device1Name = devicesTest[0]?.name;
 
   test("contains correct form buttons", async () => {
-    setup();
+    // ARRANGE
     const buttonNames: string[] = ["form.common.buttons.finalize", "form.common.buttons.cancel"];
 
+    // ACT
+    setup();
     const buttons = await screen.findAllByRole("button", { name: /^form\.common\.buttons/ });
+
+    // ASSERT
     expect(buttons.length).toBe(buttonNames.length);
     buttonNames.forEach(async (buttonName, index) => expect(buttons[index]?.textContent).toBe(buttonName));
   });
 
   test("renders new form default values", async () => {
-    setup();
+    // ARRANGE
+    vi.useFakeTimers();
+    const currentDate = new Date();
+    vi.setSystemTime(currentDate);
 
+    // ACT
+    setup();
+    vi.useRealTimers();
     const form = await screen.findByRole("form");
 
+    // ASSERT
     expect(form).toHaveFormValues({
       project: "",
       device: "",
-      measuredAt: format(new Date(), "dd.MM.yyyy"),
+      measuredAt: format(currentDate, "dd.MM.yyyy"),
       name: "",
       surname: "",
       personalId: "",
@@ -108,32 +135,38 @@ describe("phantom form page", () => {
 
   describe("auto-fills", () => {
     test("birthdate is filled automatically from valid personal ID value and gender stays the same", async () => {
-      setup();
+      // ARRANGE
       const user = userEvent.setup();
 
+      // ACT
+      setup();
       await user.type(await screen.findByLabelText("personalId"), "9606301232");
 
+      // ASSERT
       expect(screen.getByLabelText("birthdate")).toHaveValue("30.06.1996");
       expect(screen.getByLabelText("gender")).toHaveValue(genderOther);
     });
 
     test("part of personal ID is filled automatically from valid birthdate", async () => {
-      setup();
+      // ARRANGE
       const user = userEvent.setup();
 
+      // ACT
+      setup();
       await user.type(await screen.findByLabelText("birthdate"), "30.06.1996");
 
+      // ASSERT
       expect(screen.getByLabelText("personalId")).toHaveValue("960630");
     });
 
     test("auto-fill 0 for the visual correction value when visual correction is YES", async () => {
-      setup();
+      // ARRANGE
       const user = userEvent.setup();
 
+      // ACT
+      setup();
       const visualCorrectionInput = await screen.findByRole("combobox", { name: "visualCorrection" });
       const visualCorrectionDioptreInput = screen.getByLabelText("visualCorrectionDioptre");
-
-      expect(visualCorrectionDioptreInput).toHaveValue("0");
 
       await user.click(visualCorrectionInput);
       await user.click(screen.getByRole("option", { name: "form.options.visualCorrection.yes" }));
@@ -142,14 +175,22 @@ describe("phantom form page", () => {
       await user.click(visualCorrectionInput);
       await user.click(screen.getByRole("option", { name: "form.options.visualCorrection.no" }));
 
+      // ASSERT
       expect(visualCorrectionDioptreInput).toHaveValue("0");
     });
   });
 
   describe("submitting", () => {
     test("submits form", async () => {
-      setup();
+      // ARRANGE
       const user = userEvent.setup();
+      vi.useFakeTimers();
+      const currentDate = new Date();
+      vi.setSystemTime(currentDate);
+
+      // ACT
+      setup();
+      vi.useRealTimers();
 
       await user.click(screen.getByRole("combobox", { name: "project" }));
       const selectedProject = project1Text;
@@ -192,10 +233,15 @@ describe("phantom form page", () => {
       const selectedHandedness = handednessUndetermined;
       await user.click(screen.getByRole("option", { name: selectedHandedness }));
 
+      // get form data
+      const form = screen.getByRole("form");
+      const finalizeButton = screen.getByRole("button", { name: "form.common.buttons.finalize" });
+
+      // ASSERT
       const expectedFormValues = {
         project: selectedProject,
         device: selectedDevice,
-        measuredAt: format(new Date(), "dd.MM.yyyy"),
+        measuredAt: format(currentDate, "dd.MM.yyyy"),
         name: typedName,
         surname: typedSurname,
         personalId: typedPersonalId,
@@ -208,16 +254,21 @@ describe("phantom form page", () => {
         visualCorrection: selectedVisualCorrection,
         visualCorrectionDioptre: typedVisualCorrectionDioptre,
       };
-      expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);
+      expect(form).toHaveFormValues(expectedFormValues);
 
-      const finalizeButton = screen.getByRole("button", { name: "form.common.buttons.finalize" });
       await user.click(finalizeButton);
-      expect(mockedUseNavigate).toHaveBeenCalledOnce();
+      expect(createPhantomVisitSpy).toHaveBeenCalledOnce();
+      expect(generatePhantomPdfSpy).toHaveBeenCalledOnce();
+      expect(addPdfToVisitSpy).toHaveBeenCalledWith(visitUuid, pdfTest);
+      expect(mockedUseNavigate).toHaveBeenCalledWith(`${RoutingPath.RECENT_VISITS_VISIT}/${visitUuid}`);
     });
 
     test("invalid visual correction value", async () => {
-      setup();
+      // ARRANGE
       const user = userEvent.setup();
+
+      // ACT
+      setup();
 
       await user.click(screen.getByRole("combobox", { name: "project" }));
       await user.click(screen.getByRole("option", { name: project1Text }));
@@ -244,6 +295,7 @@ describe("phantom form page", () => {
 
       const finalizeButton = screen.getByRole("button", { name: "form.common.buttons.finalize" });
 
+      // ASSERT
       /**
        * Test case: visualCorrection = YES and visualCorrectionDioptre = 0
        * Expected result: does not submit the form
@@ -251,8 +303,10 @@ describe("phantom form page", () => {
       await user.click(screen.getByRole("combobox", { name: "visualCorrection" }));
       await user.click(screen.getByRole("option", { name: "form.options.visualCorrection.yes" }));
       await user.click(finalizeButton);
-      expect(mockedUseNavigate).toHaveBeenCalledTimes(0);
-      mockedUseNavigate.mockClear();
+      expect(createPhantomVisitSpy).not.toHaveBeenCalled();
+      expect(generatePhantomPdfSpy).not.toHaveBeenCalled();
+      expect(addPdfToVisitSpy).not.toHaveBeenCalled();
+      expect(mockedUseNavigate).not.toHaveBeenCalled();
 
       /**
        * Test case: visualCorrection = YES and visualCorrectionDioptre != 0
@@ -261,8 +315,10 @@ describe("phantom form page", () => {
       await user.clear(screen.getByLabelText("visualCorrectionDioptre"));
       await user.type(screen.getByLabelText("visualCorrectionDioptre"), "-1,5");
       await user.click(finalizeButton);
-      expect(mockedUseNavigate).toHaveBeenCalledOnce();
-      mockedUseNavigate.mockClear();
+      expect(createPhantomVisitSpy).toHaveBeenCalledOnce();
+      expect(generatePhantomPdfSpy).toHaveBeenCalledOnce();
+      expect(addPdfToVisitSpy).toHaveBeenCalledWith(visitUuid, pdfTest);
+      expect(mockedUseNavigate).toHaveBeenCalledWith(`${RoutingPath.RECENT_VISITS_VISIT}/${visitUuid}`);
     });
   });
 });

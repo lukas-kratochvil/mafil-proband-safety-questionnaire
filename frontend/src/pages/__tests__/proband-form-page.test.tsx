@@ -5,6 +5,8 @@ import { nativeLanguagesTest } from "@app/__tests__/data/languages";
 import { questionsTest } from "@app/__tests__/data/questions";
 import type { NativeLanguage } from "@app/model/language";
 import ProbandFormPage from "@app/pages/ProbandFormPage";
+import { RoutingPath } from "@app/routing-paths";
+import * as serverCalls from "@app/util/server_API/calls";
 import type { GenderDTO, HandednessDTO, HTMLCardDTO, OrderedQuestionDTO } from "@app/util/server_API/dto";
 import { render, screen, within } from "@test-utils";
 
@@ -70,6 +72,12 @@ describe("proband form page", () => {
     render(<ProbandFormPage />);
   };
 
+  const createProbandVisitFormSpy = vi.spyOn(serverCalls, "createProbandVisitForm");
+
+  afterEach(() => {
+    createProbandVisitFormSpy.mockClear();
+  });
+
   // Data
   const genderMan = gendersTest[0]?.translations[0]?.text;
   const genderWoman = gendersTest[1]?.translations[0]?.text;
@@ -77,20 +85,26 @@ describe("proband form page", () => {
   const handednessUndetermined = handednessesTest[3]?.translations[0]?.text;
 
   test("contains correct form buttons", async () => {
-    setup();
+    // ARRANGE
     const buttonNames: string[] = ["form.common.buttons.agree"];
 
+    // ACT
+    setup();
     const buttons = await screen.findAllByRole("button", { name: /^form\.common\.buttons/ });
+
+    // ASSERT
     expect(buttons.length).toBe(buttonNames.length);
     buttonNames.forEach(async (buttonName, index) => expect(buttons[index]?.textContent).toBe(buttonName));
   });
 
   test("renders new form default values", async () => {
+    // ACT
     setup();
-
     const form = await screen.findByRole("form");
+    const questions = await screen.findAllByRole("radiogroup");
 
-    expect(form).toHaveFormValues({
+    // ASSERT
+    const expectedValues = {
       name: "",
       surname: "",
       personalId: "",
@@ -102,62 +116,80 @@ describe("proband form page", () => {
       visualCorrection: "",
       visualCorrectionDioptre: "0",
       handedness: "",
-    });
-    const questions = await screen.findAllByRole("radiogroup");
+    };
+    expect(form).toHaveFormValues(expectedValues);
     expect(questions.length).toEqual(questionsTest.length);
   });
 
   describe("auto-fills", () => {
     test("birthdate and MALE gender is auto-filled from valid personal ID value", async () => {
-      setup();
+      // ARRANGE
       const user = userEvent.setup();
 
+      // ACT
+      setup();
       await user.type(await screen.findByLabelText("personalId"), "9606301232");
+      const birthdateInput = screen.getByLabelText("birthdate");
+      const genderInput = screen.getByLabelText("gender");
 
-      expect(screen.getByLabelText("birthdate")).toHaveValue("30.06.1996");
-      expect(screen.getByLabelText("gender")).toHaveValue(genderMan);
+      // ASSERT
+      expect(birthdateInput).toHaveValue("30.06.1996");
+      expect(genderInput).toHaveValue(genderMan);
     });
 
     test("birthdate and FEMALE gender is auto-filled from valid personal ID value", async () => {
-      setup();
+      // ARRANGE
       const user = userEvent.setup();
 
+      // ACT
+      setup();
       await user.type(await screen.findByLabelText("personalId"), "9656301237");
+      const birthdateInput = screen.getByLabelText("birthdate");
+      const genderInput = screen.getByLabelText("gender");
 
-      expect(screen.getByLabelText("birthdate")).toHaveValue("30.06.1996");
-      expect(screen.getByLabelText("gender")).toHaveValue(genderWoman);
+      // ASSERT
+      expect(birthdateInput).toHaveValue("30.06.1996");
+      expect(genderInput).toHaveValue(genderWoman);
     });
 
     test("part of personal ID is auto-filled from valid birthdate and MALE gender", async () => {
-      setup();
+      // ARRANGE
       const user = userEvent.setup();
 
+      // ACT
+      setup();
       await user.type(await screen.findByLabelText("birthdate"), "30.06.1996");
       await user.click(screen.getByRole("combobox", { name: "gender" }));
       await user.click(screen.getByRole("option", { name: genderMan }));
+      const personalIdInput = screen.getByLabelText("personalId");
 
-      expect(screen.getByLabelText("personalId")).toHaveValue("960630");
+      // ASSERT
+      expect(personalIdInput).toHaveValue("960630");
     });
 
     test("part of personal ID is auto-filled from valid birthdate and FEMALE gender", async () => {
-      setup();
+      // ARRANGE
       const user = userEvent.setup();
 
+      // ACT
+      setup();
       await user.type(await screen.findByLabelText("birthdate"), "30.06.1996");
       await user.click(screen.getByRole("combobox", { name: "gender" }));
       await user.click(screen.getByRole("option", { name: genderWoman }));
+      const personalIdInput = screen.getByLabelText("personalId");
 
-      expect(screen.getByLabelText("personalId")).toHaveValue("965630");
+      // ASSERT
+      expect(personalIdInput).toHaveValue("965630");
     });
 
     test("auto-fill 0 for the visual correction value when visual correction is YES", async () => {
-      setup();
+      // ARRANGE
       const user = userEvent.setup();
 
+      // ACT
+      setup();
       const visualCorrectionInput = await screen.findByRole("combobox", { name: "visualCorrection" });
       const visualCorrectionDioptreInput = screen.getByLabelText("visualCorrectionDioptre");
-
-      expect(visualCorrectionDioptreInput).toHaveValue("0");
 
       await user.click(visualCorrectionInput);
       await user.click(screen.getByRole("option", { name: "form.options.visualCorrection.yes" }));
@@ -166,14 +198,18 @@ describe("proband form page", () => {
       await user.click(visualCorrectionInput);
       await user.click(screen.getByRole("option", { name: "form.options.visualCorrection.no" }));
 
+      // ASSERT
       expect(visualCorrectionDioptreInput).toHaveValue("0");
     });
   });
 
   describe("submitting", () => {
-    test("submits form with all fields filled", async () => {
-      setup();
+    test("do not submit when questions not filled", async () => {
+      // ARRANGE
       const user = userEvent.setup();
+
+      // ACT
+      setup();
 
       const typedName = "John";
       await user.type(await screen.findByLabelText("name"), typedName);
@@ -203,13 +239,19 @@ describe("proband form page", () => {
       await user.click(screen.getByRole("option", { name: selectedVisualCorrection }));
 
       const typedVisualCorrectionDioptre = "-1,5";
-      await user.clear(screen.getByLabelText("visualCorrectionDioptre"));
-      await user.type(screen.getByLabelText("visualCorrectionDioptre"), typedVisualCorrectionDioptre);
+      const visualCorrectionDioptreInput = screen.getByLabelText("visualCorrectionDioptre");
+      await user.clear(visualCorrectionDioptreInput);
+      await user.type(visualCorrectionDioptreInput, typedVisualCorrectionDioptre);
 
       await user.click(screen.getByRole("combobox", { name: "handedness" }));
       const selectedHandedness = handednessUndetermined;
       await user.click(screen.getByRole("option", { name: selectedHandedness }));
 
+      const formWithoutQuestionsFilled = screen.getByRole("form");
+
+      const agreeButton = screen.getByRole("button", { name: "form.common.buttons.agree" });
+
+      // ASSERT
       const expectedFormValues = {
         name: typedName,
         surname: typedSurname,
@@ -223,19 +265,43 @@ describe("proband form page", () => {
         visualCorrectionDioptre: typedVisualCorrectionDioptre,
         handedness: selectedHandedness,
       };
-      expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);
+      expect(formWithoutQuestionsFilled).toHaveFormValues(expectedFormValues);
 
-      const agreeButton = screen.getByRole("button", { name: "form.common.buttons.agree" });
-      // error - questions aren't filled yet
       await user.click(agreeButton);
+      expect(createProbandVisitFormSpy).not.toHaveBeenCalled();
+      expect(mockedUseNavigate).not.toHaveBeenCalled();
+    });
 
-      const questions = screen.getAllByRole("radiogroup");
-      questions.forEach(async (question, index) => {
+    test("submits form with all fields filled", async () => {
+      // ARRANGE
+      const user = userEvent.setup();
+
+      // ACT
+      setup();
+
+      await user.type(await screen.findByLabelText("name"), "John");
+      await user.type(screen.getByLabelText("surname"), "Wick");
+      await user.type(screen.getByLabelText("personalId"), "9656301237");
+      await user.click(screen.getByRole("combobox", { name: "nativeLanguage" }));
+      await user.click(screen.getByRole("option", { name: nativeLanguageCzech }));
+      await user.type(screen.getByLabelText("heightCm"), "173");
+      await user.type(screen.getByLabelText("weightKg"), "70");
+      await user.click(screen.getByRole("combobox", { name: "visualCorrection" }));
+      await user.click(screen.getByRole("option", { name: "form.options.visualCorrection.yes" }));
+      const visualCorrectionDioptreInput = screen.getByLabelText("visualCorrectionDioptre");
+      await user.clear(visualCorrectionDioptreInput);
+      await user.type(visualCorrectionDioptreInput, "-1,5");
+      await user.click(screen.getByRole("combobox", { name: "handedness" }));
+      await user.click(screen.getByRole("option", { name: handednessUndetermined }));
+
+      const questionsRadios = screen.getAllByRole("radiogroup");
+      questionsRadios.forEach(async (question, index) => {
         const answerLabel = index % 2 === 0 ? "form.safetyQuestions.yes" : "form.safetyQuestions.no";
         await user.click(within(question).getByRole("radio", { name: answerLabel }));
       });
 
-      // should get to the second form page
+      // takes us to the second part of the proband form
+      const agreeButton = screen.getByRole("button", { name: "form.common.buttons.agree" });
       await user.click(agreeButton);
 
       // click on the checkbox to show contacts form
@@ -248,146 +314,91 @@ describe("proband form page", () => {
       const typedPhone = "123456789";
       await user.type(screen.getByLabelText("phone"), typedPhone);
 
-      expect(screen.getByRole("form")).toHaveFormValues({
+      const contactsForm = screen.getByRole("form");
+      const agreeButton2 = screen.getByRole("button", { name: "form.common.buttons.agree" });
+
+      // ASSERT
+      const expectedValues = {
         email: typedEmail,
         phone: typedPhone,
-      });
+      };
+      expect(contactsForm).toHaveFormValues(expectedValues);
 
-      const agreeButton2 = screen.getByRole("button", { name: "form.common.buttons.agree" });
       await user.click(agreeButton2);
-      // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUseNavigate).toHaveBeenCalledOnce();
+      expect(createProbandVisitFormSpy).toHaveBeenCalledOnce();
+      expect(mockedUseNavigate).toHaveBeenCalledWith(RoutingPath.PROBAND_HOME);
     });
 
     test("submits form without proband contact fields filled", async () => {
-      setup();
+      // ARRANGE
       const user = userEvent.setup();
 
-      const typedName = "John";
-      await user.type(await screen.findByLabelText("name"), typedName);
+      // ACT
+      setup();
 
-      const typedSurname = "Wick";
-      await user.type(screen.getByLabelText("surname"), typedSurname);
-
-      const typedPersonalId = "9656301237";
-      await user.type(screen.getByLabelText("personalId"), typedPersonalId);
-      // birthdate is filled automatically
-      const expectedBirthdate = "30.06.1996";
-      // gender is filled automatically
-      const expectedGender = genderWoman;
-
+      await user.type(await screen.findByLabelText("name"), "John");
+      await user.type(screen.getByLabelText("surname"), "Wick");
+      await user.type(screen.getByLabelText("personalId"), "9656301237");
       await user.click(screen.getByRole("combobox", { name: "nativeLanguage" }));
-      const selectedNativeLanguage = nativeLanguageCzech;
-      await user.click(screen.getByRole("option", { name: selectedNativeLanguage }));
-
-      const typedHeight = "173";
-      await user.type(screen.getByLabelText("heightCm"), typedHeight);
-
-      const typedWeight = "70";
-      await user.type(screen.getByLabelText("weightKg"), typedWeight);
-
+      await user.click(screen.getByRole("option", { name: nativeLanguageCzech }));
+      await user.type(screen.getByLabelText("heightCm"), "173");
+      await user.type(screen.getByLabelText("weightKg"), "70");
       await user.click(screen.getByRole("combobox", { name: "visualCorrection" }));
-      const selectedVisualCorrection = "form.options.visualCorrection.yes";
-      await user.click(screen.getByRole("option", { name: selectedVisualCorrection }));
-
-      const typedVisualCorrectionDioptre = "-1,5";
-      await user.clear(screen.getByLabelText("visualCorrectionDioptre"));
-      await user.type(screen.getByLabelText("visualCorrectionDioptre"), typedVisualCorrectionDioptre);
-
+      await user.click(screen.getByRole("option", { name: "form.options.visualCorrection.yes" }));
+      const visualCorrectionDioptreInput = screen.getByLabelText("visualCorrectionDioptre");
+      await user.clear(visualCorrectionDioptreInput);
+      await user.type(visualCorrectionDioptreInput, "-1,5");
       await user.click(screen.getByRole("combobox", { name: "handedness" }));
-      const selectedHandedness = handednessUndetermined;
-      await user.click(screen.getByRole("option", { name: selectedHandedness }));
+      await user.click(screen.getByRole("option", { name: handednessUndetermined }));
 
-      const questions = screen.getAllByRole("radiogroup");
-      questions.forEach(async (question, index) => {
+      const questionsRadios = screen.getAllByRole("radiogroup");
+      questionsRadios.forEach(async (question, index) => {
         const answerLabel = index % 2 === 0 ? "form.safetyQuestions.yes" : "form.safetyQuestions.no";
         await user.click(within(question).getByRole("radio", { name: answerLabel }));
       });
 
-      const expectedFormValues = {
-        name: typedName,
-        surname: typedSurname,
-        personalId: typedPersonalId,
-        birthdate: expectedBirthdate,
-        gender: expectedGender,
-        nativeLanguage: selectedNativeLanguage,
-        heightCm: typedHeight,
-        weightKg: typedWeight,
-        visualCorrection: selectedVisualCorrection,
-        visualCorrectionDioptre: typedVisualCorrectionDioptre,
-        handedness: selectedHandedness,
-      };
-      expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);
-
+      // takes us to the second part of the proband form
       const agreeButton = screen.getByRole("button", { name: "form.common.buttons.agree" });
       await user.click(agreeButton);
 
-      const completeButton = await screen.findByRole("button", { name: "form.common.buttons.complete" });
+      // submit
+      const completeButton = screen.getByRole("button", { name: "form.common.buttons.complete" });
       await user.click(completeButton);
-      // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUseNavigate).toHaveBeenCalledOnce();
+
+      // ASSERT
+      expect(createProbandVisitFormSpy).toHaveBeenCalledOnce();
+      expect(mockedUseNavigate).toHaveBeenCalledWith(RoutingPath.PROBAND_HOME);
     });
 
     test("does not submit when email filled and phone number not", async () => {
-      setup();
+      // ARRANGE
       const user = userEvent.setup();
 
-      const typedName = "John";
-      await user.type(await screen.findByLabelText("name"), typedName);
+      // ACT
+      setup();
 
-      const typedSurname = "Wick";
-      await user.type(screen.getByLabelText("surname"), typedSurname);
-
-      const typedPersonalId = "9656301237";
-      await user.type(screen.getByLabelText("personalId"), typedPersonalId);
-      // birthdate is filled automatically
-      const expectedBirthdate = "30.06.1996";
-      // gender is filled automatically
-      const expectedGender = genderWoman;
-
+      await user.type(await screen.findByLabelText("name"), "John");
+      await user.type(screen.getByLabelText("surname"), "Wick");
+      await user.type(screen.getByLabelText("personalId"), "9656301237");
       await user.click(screen.getByRole("combobox", { name: "nativeLanguage" }));
-      const selectedNativeLanguage = nativeLanguageCzech;
-      await user.click(screen.getByRole("option", { name: selectedNativeLanguage }));
-
-      const typedHeight = "173";
-      await user.type(screen.getByLabelText("heightCm"), typedHeight);
-
-      const typedWeight = "70";
-      await user.type(screen.getByLabelText("weightKg"), typedWeight);
-
+      await user.click(screen.getByRole("option", { name: nativeLanguageCzech }));
+      await user.type(screen.getByLabelText("heightCm"), "173");
+      await user.type(screen.getByLabelText("weightKg"), "70");
       await user.click(screen.getByRole("combobox", { name: "visualCorrection" }));
-      const selectedVisualCorrection = "form.options.visualCorrection.yes";
-      await user.click(screen.getByRole("option", { name: selectedVisualCorrection }));
-
-      const typedVisualCorrectionDioptre = "-1,5";
-      await user.clear(screen.getByLabelText("visualCorrectionDioptre"));
-      await user.type(screen.getByLabelText("visualCorrectionDioptre"), typedVisualCorrectionDioptre);
-
+      await user.click(screen.getByRole("option", { name: "form.options.visualCorrection.yes" }));
+      const visualCorrectionDioptreInput = screen.getByLabelText("visualCorrectionDioptre");
+      await user.clear(visualCorrectionDioptreInput);
+      await user.type(visualCorrectionDioptreInput, "-1,5");
       await user.click(screen.getByRole("combobox", { name: "handedness" }));
-      const selectedHandedness = handednessUndetermined;
-      await user.click(screen.getByRole("option", { name: selectedHandedness }));
+      await user.click(screen.getByRole("option", { name: handednessUndetermined }));
 
-      const questions = screen.getAllByRole("radiogroup");
-      questions.forEach(async (question, index) => {
+      const questionsRadios = screen.getAllByRole("radiogroup");
+      questionsRadios.forEach(async (question, index) => {
         const answerLabel = index % 2 === 0 ? "form.safetyQuestions.yes" : "form.safetyQuestions.no";
         await user.click(within(question).getByRole("radio", { name: answerLabel }));
       });
 
-      const expectedFormValues = {
-        name: typedName,
-        surname: typedSurname,
-        personalId: typedPersonalId,
-        birthdate: expectedBirthdate,
-        gender: expectedGender,
-        nativeLanguage: selectedNativeLanguage,
-        heightCm: typedHeight,
-        weightKg: typedWeight,
-        visualCorrection: selectedVisualCorrection,
-        visualCorrectionDioptre: typedVisualCorrectionDioptre,
-        handedness: selectedHandedness,
-      };
-      expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);
-
+      // takes us to the second part of the proband form
       const agreeButton = screen.getByRole("button", { name: "form.common.buttons.agree" });
       await user.click(agreeButton);
 
@@ -398,77 +409,50 @@ describe("proband form page", () => {
       const typedEmail = "name.surname@mail.com";
       await user.type(screen.getByLabelText("email"), typedEmail);
 
-      expect(screen.getByRole("form")).toHaveFormValues({
+      const contactsForm = screen.getByRole("form");
+      const agreeButton2 = screen.getByRole("button", { name: "form.common.buttons.agree" });
+
+      // ASSERT
+      const expectedValues = {
         email: typedEmail,
         phone: "",
-      });
+      };
+      expect(contactsForm).toHaveFormValues(expectedValues);
 
-      const agreeButton2 = screen.getByRole("button", { name: "form.common.buttons.agree" });
       await user.click(agreeButton2);
-      // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUseNavigate).toHaveBeenCalledTimes(0);
+      expect(createProbandVisitFormSpy).not.toHaveBeenCalled();
+      expect(mockedUseNavigate).not.toHaveBeenCalled();
     });
 
     test("does not submit when phone number filled and email not", async () => {
-      setup();
+      // ARRANGE
       const user = userEvent.setup();
 
-      const typedName = "John";
-      await user.type(await screen.findByLabelText("name"), typedName);
+      // ACT
+      setup();
 
-      const typedSurname = "Wick";
-      await user.type(screen.getByLabelText("surname"), typedSurname);
-
-      const typedPersonalId = "9656301237";
-      await user.type(screen.getByLabelText("personalId"), typedPersonalId);
-      // birthdate is filled automatically
-      const expectedBirthdate = "30.06.1996";
-      // gender is filled automatically
-      const expectedGender = genderWoman;
-
+      await user.type(await screen.findByLabelText("name"), "John");
+      await user.type(screen.getByLabelText("surname"), "Wick");
+      await user.type(screen.getByLabelText("personalId"), "9656301237");
       await user.click(screen.getByRole("combobox", { name: "nativeLanguage" }));
-      const selectedNativeLanguage = nativeLanguageCzech;
-      await user.click(screen.getByRole("option", { name: selectedNativeLanguage }));
-
-      const typedHeight = "173";
-      await user.type(screen.getByLabelText("heightCm"), typedHeight);
-
-      const typedWeight = "70";
-      await user.type(screen.getByLabelText("weightKg"), typedWeight);
-
+      await user.click(screen.getByRole("option", { name: nativeLanguageCzech }));
+      await user.type(screen.getByLabelText("heightCm"), "173");
+      await user.type(screen.getByLabelText("weightKg"), "70");
       await user.click(screen.getByRole("combobox", { name: "visualCorrection" }));
-      const selectedVisualCorrection = "form.options.visualCorrection.yes";
-      await user.click(screen.getByRole("option", { name: selectedVisualCorrection }));
-
-      const typedVisualCorrectionDioptre = "-1,5";
-      await user.clear(screen.getByLabelText("visualCorrectionDioptre"));
-      await user.type(screen.getByLabelText("visualCorrectionDioptre"), typedVisualCorrectionDioptre);
-
+      await user.click(screen.getByRole("option", { name: "form.options.visualCorrection.yes" }));
+      const visualCorrectionDioptreInput = screen.getByLabelText("visualCorrectionDioptre");
+      await user.clear(visualCorrectionDioptreInput);
+      await user.type(visualCorrectionDioptreInput, "-1,5");
       await user.click(screen.getByRole("combobox", { name: "handedness" }));
-      const selectedHandedness = handednessUndetermined;
-      await user.click(screen.getByRole("option", { name: selectedHandedness }));
+      await user.click(screen.getByRole("option", { name: handednessUndetermined }));
 
-      const questions = screen.getAllByRole("radiogroup");
-      questions.forEach(async (question, index) => {
+      const questionsRadios = screen.getAllByRole("radiogroup");
+      questionsRadios.forEach(async (question, index) => {
         const answerLabel = index % 2 === 0 ? "form.safetyQuestions.yes" : "form.safetyQuestions.no";
         await user.click(within(question).getByRole("radio", { name: answerLabel }));
       });
 
-      const expectedFormValues = {
-        name: typedName,
-        surname: typedSurname,
-        personalId: typedPersonalId,
-        birthdate: expectedBirthdate,
-        gender: expectedGender,
-        nativeLanguage: selectedNativeLanguage,
-        heightCm: typedHeight,
-        weightKg: typedWeight,
-        visualCorrection: selectedVisualCorrection,
-        visualCorrectionDioptre: typedVisualCorrectionDioptre,
-        handedness: selectedHandedness,
-      };
-      expect(screen.getByRole("form")).toHaveFormValues(expectedFormValues);
-
+      // takes us to the second part of the proband form
       const agreeButton = screen.getByRole("button", { name: "form.common.buttons.agree" });
       await user.click(agreeButton);
 
@@ -479,15 +463,19 @@ describe("proband form page", () => {
       const typedPhone = "123456789";
       await user.type(screen.getByLabelText("phone"), typedPhone);
 
-      expect(screen.getByRole("form")).toHaveFormValues({
+      const contactsForm = screen.getByRole("form");
+      const agreeButton2 = screen.getByRole("button", { name: "form.common.buttons.agree" });
+
+      // ASSERT
+      const expectedValues = {
         email: "",
         phone: typedPhone,
-      });
+      };
+      expect(contactsForm).toHaveFormValues(expectedValues);
 
-      const agreeButton2 = screen.getByRole("button", { name: "form.common.buttons.agree" });
       await user.click(agreeButton2);
-      // TODO: change this to check calling POST method that will create a visit
-      expect(mockedUseNavigate).toHaveBeenCalledTimes(0);
+      expect(createProbandVisitFormSpy).not.toHaveBeenCalled();
+      expect(mockedUseNavigate).not.toHaveBeenCalled();
     });
   });
 });
