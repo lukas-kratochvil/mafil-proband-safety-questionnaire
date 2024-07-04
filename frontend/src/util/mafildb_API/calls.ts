@@ -408,7 +408,6 @@ export const fetchDuplicatedVisit = async (
 
   const visit = await fetchVisit(visitUuid);
 
-  // TODO: what to do when device is null? Throw error? We should disable the 'Duplication' button for these visits or not load them in the 'Recent visits table' at all
   if (visit.device === null) {
     throw new Error("Visit device is null!");
   }
