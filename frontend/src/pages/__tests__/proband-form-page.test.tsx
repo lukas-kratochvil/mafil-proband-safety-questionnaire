@@ -361,8 +361,11 @@ describe("proband form page", () => {
       const agreeButton = screen.getByRole("button", { name: "form.common.buttons.agree" });
       await user.click(agreeButton);
 
+      // must be here to properly load the second part of the proband form, otherwise 'complete button' will not be found
+      await screen.findByRole("checkbox");
+
       // submit
-      const completeButton = screen.getByRole("button", { name: "form.common.buttons.complete" });
+      const completeButton = await screen.findByRole("button", { name: "form.common.buttons.complete" });
       await user.click(completeButton);
 
       // ASSERT
