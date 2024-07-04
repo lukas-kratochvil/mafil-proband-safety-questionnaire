@@ -2,6 +2,22 @@ import { AxiosHeaders, type AxiosResponse } from "axios";
 import { transformResponseDateStringToDate } from "../dates-transformers";
 
 //----------------------------------------------------------------------
+// Mock timezone
+//----------------------------------------------------------------------
+vi.spyOn(Intl, "DateTimeFormat").mockImplementation(() => ({
+  resolvedOptions: () => ({
+    timeZone: "Europe/Prague", // timezone is importnant, rest is irrelevant
+    calendar: "gregory",
+    locale: "en-US",
+    numberingSystem: "latn",
+  }),
+  format: () => "",
+  formatRange: () => "",
+  formatRangeToParts: () => [],
+  formatToParts: () => [],
+}));
+
+//----------------------------------------------------------------------
 // Tests
 //----------------------------------------------------------------------
 describe("ISO 8601 dates transformers", () => {
@@ -35,6 +51,7 @@ describe("ISO 8601 dates transformers", () => {
         date: resDate,
       };
 
+      console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
       expect(transformedResponse.data).toEqual(expectedResponseData);
     });
   });
