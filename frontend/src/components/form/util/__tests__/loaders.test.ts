@@ -86,8 +86,10 @@ const duplicatedVisit: DuplicatedVisitIncludingQuestions = {
 //----------------------------------------------------------------------
 describe("form loaders", () => {
   test("empty form default values", () => {
+    // ACT
     const emptyFormDefaultValues = loadEmptyDefaultValues();
 
+    // ASSERT
     expect(emptyFormDefaultValues.project).toBeNull();
     expect(emptyFormDefaultValues.device).toBeNull();
     expect(emptyFormDefaultValues.measuredAt).toBeNull();
@@ -108,11 +110,14 @@ describe("form loaders", () => {
   });
 
   test("phantom form default values", () => {
+    // ARRANGE
     const currentDate = new Date();
     vi.spyOn(global, "Date").mockImplementationOnce(() => currentDate as unknown as string);
 
+    // ACT
     const phantomFormDefaultValues = loadPhantomFormDefaultValues();
 
+    // ASSERT
     expect(phantomFormDefaultValues.project).toBeNull();
     expect(phantomFormDefaultValues.device).toBeNull();
     expect(phantomFormDefaultValues.measuredAt).toEqual(currentDate);
@@ -133,9 +138,13 @@ describe("form loaders", () => {
   });
 
   test("waiting room visit form default values", () => {
+    // ARRANGE
     const fetchedVisit = waitingRoomVisitForm;
+
+    // ACT
     const loadedFormValues = loadFormDefaultValuesFromWaitingRoomVisitForm(fetchedVisit);
 
+    // ASSERT
     expect(loadedFormValues.name).toEqual(fetchedVisit.name);
     expect(loadedFormValues.surname).toEqual(fetchedVisit.surname);
     expect(loadedFormValues.personalId).toEqual(fetchedVisit.personalId);
@@ -157,9 +166,13 @@ describe("form loaders", () => {
   });
 
   test("approval room visit form default values", () => {
+    // ARRANGE
     const fetchedVisit = approvalRoomVisitForm;
+
+    // ACT
     const loadedFormValues = loadFormDefaultValuesFromApprovalRoomVisitForm(fetchedVisit);
 
+    // ASSERT
     expect(loadedFormValues.project?.uuid).toEqual(fetchedVisit.additionalInfo.projectUuid); // project is loaded in the FormProjectInfo component using the projectUuid
     expect(loadedFormValues.device?.id).toEqual(fetchedVisit.additionalInfo.deviceId); // device is loaded in the FormProjectInfo component using the deviceId
     expect(loadedFormValues.measuredAt).toEqual(fetchedVisit.additionalInfo.measuredAt);
@@ -184,11 +197,14 @@ describe("form loaders", () => {
   });
 
   test("duplicated visit form default values", () => {
+    // ARRANGE
     const currentDate = new Date();
     vi.spyOn(global, "Date").mockImplementationOnce(() => currentDate as unknown as string);
 
+    // ACT
     const formDefaultValuesVisitDuplication = loadFormDefaultValuesVisitDuplication(duplicatedVisit);
 
+    // ASSERT
     expect(formDefaultValuesVisitDuplication.project).toBeNull();
     expect(formDefaultValuesVisitDuplication.device).toBeNull();
     expect(formDefaultValuesVisitDuplication.measuredAt).toEqual(currentDate);

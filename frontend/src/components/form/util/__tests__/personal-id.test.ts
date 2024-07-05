@@ -30,8 +30,10 @@ describe("personal ID", () => {
       "000606/1001", // 10-digit personal ID where mod 11 is 1
       "000606/4090", // 10-digit personal ID where mod 11 is 10
     ])("'%s'", (personalIdInput: string) => {
+      // ACT
       const personalId = new CzechPersonalId(personalIdInput);
 
+      // ASSERT
       expect(personalId.isValid()).toBeFalsy();
     });
   });
@@ -41,8 +43,10 @@ describe("personal ID", () => {
       ["000606915", new Date(1900, 5, 6)],
       ["000606/915", new Date(1900, 5, 6)],
     ])("valid MALE personal ID %s", (personalIdInput: string, expectedBirthdate: Date) => {
+      // ACT
       const personalId = new CzechPersonalId(personalIdInput);
 
+      // ASSERT
       expect(personalId.isValid()).toBeTruthy();
       expect(personalId.isMale()).toBeTruthy();
       expect(personalId.isFemale()).toBeFalsy();
@@ -53,8 +57,10 @@ describe("personal ID", () => {
       ["006206915", new Date(1900, 11, 6)],
       ["006206/915", new Date(1900, 11, 6)],
     ])("valid FEMALE personal ID %s", (personalIdInput: string, expectedBirthdate: Date) => {
+      // ACT
       const personalId = new CzechPersonalId(personalIdInput);
 
+      // ASSERT
       expect(personalId.isValid()).toBeTruthy();
       expect(personalId.isFemale()).toBeTruthy();
       expect(personalId.isMale()).toBeFalsy();
@@ -71,8 +77,10 @@ describe("personal ID", () => {
       ["0032061205", new Date(2000, 11, 6)], // month plus extra 20
       ["003206/1205", new Date(2000, 11, 6)], // month plus extra 20
     ])("valid MALE personal ID %s", (personalIdInput: string, expectedBirthdate: Date) => {
+      // ACT
       const personalId = new CzechPersonalId(personalIdInput);
 
+      // ASSERT
       expect(personalId.isValid()).toBeTruthy();
       expect(personalId.isMale()).toBeTruthy();
       expect(personalId.isFemale()).toBeFalsy();
@@ -87,8 +95,10 @@ describe("personal ID", () => {
       ["0082061100", new Date(2000, 11, 6)], // month plus extra 20
       ["008206/1100", new Date(2000, 11, 6)], // month plus extra 20
     ])("valid FEMALE personal ID %s", (personalIdInput: string, expectedBirthdate: Date) => {
+      // ACT
       const personalId = new CzechPersonalId(personalIdInput);
 
+      // ASSERT
       expect(personalId.isValid()).toBeTruthy();
       expect(personalId.isFemale()).toBeTruthy();
       expect(personalId.isMale()).toBeFalsy();
@@ -103,9 +113,13 @@ describe("personal ID", () => {
       { birthdate: new Date(2010, 2, 1), expectedPersonalIdPart: "100301" },
       { birthdate: new Date(2099, 2, 1), expectedPersonalIdPart: "990301" },
     ])("valid MALE personalID part $expectedPersonalIdPart", ({ birthdate, expectedPersonalIdPart }) => {
+      // ARRANGE
       const maleGender = gendersTest[0]!;
+
+      // ACT
       const personalIdPart = getPersonalIdPart(birthdate, maleGender);
 
+      // ASSERT
       expect(personalIdPart.length).toBe(6);
       expect(personalIdPart).toBe(expectedPersonalIdPart);
     });
@@ -116,9 +130,13 @@ describe("personal ID", () => {
       { birthdate: new Date(2010, 2, 1), expectedPersonalIdPart: "105301" },
       { birthdate: new Date(2099, 2, 1), expectedPersonalIdPart: "995301" },
     ])("valid FEMALE personalID part $expectedPersonalIdPart", ({ birthdate, expectedPersonalIdPart }) => {
+      // ARRANGE
       const femaleGender = gendersTest[1]!;
+
+      // ACT
       const personalIdPart = getPersonalIdPart(birthdate, femaleGender);
 
+      // ASSERT
       expect(personalIdPart.length).toBe(6);
       expect(personalIdPart).toBe(expectedPersonalIdPart);
     });
