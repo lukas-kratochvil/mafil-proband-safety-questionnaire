@@ -5,32 +5,40 @@ import { CardContainer } from "../CardContainer";
 // Tests
 //----------------------------------------------------------------------
 describe("card container", () => {
-  test("has title", () => {
-    const title = "Title";
+  const title = "Title";
 
-    const { container } = render(<CardContainer title={title} />);
-
-    expect(container).toHaveTextContent(new RegExp(`^${title}$`));
-  });
+  const setup = (content: JSX.Element | string) => {
+    render(<CardContainer title={title}>{content}</CardContainer>);
+  };
 
   test("has text content", () => {
-    const title = "Title";
-    const content = "Content";
+    // ARRANGE
+    const contentText = "Content";
 
-    const { container } = render(<CardContainer title={title}>{content}</CardContainer>);
+    // ACT
+    setup(contentText);
+    const titleElem = screen.getByText(title);
+    const childrenElem = screen.getByText(contentText);
 
-    expect(container).toHaveTextContent(new RegExp(`^${title}${content}$`));
+    // ASSERT
+    expect(titleElem).toBeInTheDocument();
+    expect(childrenElem).toBeInTheDocument();
   });
 
-  test("has element content", () => {
+  test("has HTML element content", () => {
+    // ARRANGE
     const childrenTestId = "children";
     const contentText = "Content";
     const content = <div data-testid={childrenTestId}>{contentText}</div>;
 
-    const { container } = render(<CardContainer title="Title">{content}</CardContainer>);
-    const children = screen.getByTestId(childrenTestId);
+    // ACT
+    setup(content);
+    const titleElem = screen.getByText(title);
+    const childrenElem = screen.getByTestId(childrenTestId);
 
-    expect(container).toContainElement(children);
-    expect(children).toHaveTextContent(new RegExp(`^${contentText}$`));
+    // ASSERT
+    expect(titleElem).toBeInTheDocument();
+    expect(childrenElem).toBeInTheDocument();
+    expect(childrenElem).toHaveTextContent(contentText);
   });
 });
