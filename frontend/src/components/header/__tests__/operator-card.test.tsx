@@ -1,17 +1,14 @@
 import type { OperatorDTO } from "@app/util/server_API/dto";
-import { render } from "@test-utils";
+import { render, screen } from "@test-utils";
 import { OperatorCard } from "../OperatorCard";
 
 //----------------------------------------------------------------------
 // Mocking custom authentication
 //----------------------------------------------------------------------
-const operatorName = "Name";
-const operatorSurname = "Surname";
-
-const mockOperator: OperatorDTO = {
+const operator: OperatorDTO = {
   id: "1",
-  name: operatorName,
-  surname: operatorSurname,
+  name: "Name",
+  surname: "Surname",
   email: "",
   role: "MR",
   username: "",
@@ -19,7 +16,7 @@ const mockOperator: OperatorDTO = {
 
 vi.mock("@app/hooks/auth/AuthProvider", () => ({
   useAuth: () => ({
-    operator: mockOperator,
+    operator,
   }),
 }));
 
@@ -27,9 +24,16 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
 // Tests
 //----------------------------------------------------------------------
 describe("operator card", () => {
-  test("shows operator fullname", () => {
-    const { container } = render(<OperatorCard />);
+  const setup = () => {
+    render(<OperatorCard />);
+  };
 
-    expect(container).toHaveTextContent(`${operatorName} ${operatorSurname}`);
+  test("shows operator fullname", () => {
+    // ACT
+    setup();
+    const operatorFullnameElem = screen.getByText(`${operator.name} ${operator.surname}`);
+
+    // ASSERT
+    expect(operatorFullnameElem).toBeInTheDocument();
   });
 });

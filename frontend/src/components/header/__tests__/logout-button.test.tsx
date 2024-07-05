@@ -17,21 +17,29 @@ vi.mock("@app/hooks/auth/AuthProvider", () => ({
 // Tests
 //----------------------------------------------------------------------
 describe("logout button", () => {
-  test("has title", () => {
+  const setup = () => {
     render(<LogOutButton />);
+  };
 
+  test("has title", () => {
+    // ACT
+    setup();
     const logOutButton = screen.getByRole("button");
 
+    // ASSERT
     expect(logOutButton).toHaveTextContent(/^common.logOutButton$/);
   });
 
   test("log out if is clicked", async () => {
+    // ARRANGE
     const user = userEvent.setup();
-    render(<LogOutButton />);
 
+    // ACT
+    setup();
     const logOutButton = screen.getByRole("button");
     await user.click(logOutButton);
 
-    expect(logOutSpy).toHaveBeenCalledTimes(1);
+    // ASSERT
+    expect(logOutSpy).toHaveBeenCalledOnce();
   });
 });

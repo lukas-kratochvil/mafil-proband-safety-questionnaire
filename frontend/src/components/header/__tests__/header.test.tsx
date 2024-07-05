@@ -2,7 +2,7 @@ import ScienceIcon from "@mui/icons-material/Science";
 import { operatorMRTest } from "@app/__tests__/data/operators";
 import { RoutingPath } from "@app/routing-paths";
 import type { OperatorDTO } from "@app/util/server_API/dto";
-import { render, screen, within } from "@test-utils";
+import { render, screen } from "@test-utils";
 import { Header } from "../Header";
 import type { TabProps } from "../navigation/tabs";
 
@@ -50,41 +50,40 @@ vi.mock("@app/components/header/navigation/tabs", async () => ({
 // Tests
 //----------------------------------------------------------------------
 describe("header", () => {
-  describe("auth user isn't logged in", () => {
-    test("contains CEITEC logo", () => {
-      mockOperator = undefined;
+  const setup = () => {
+    render(<Header />);
+  };
 
-      render(<Header />);
+  test("user is not logged in", () => {
+    // ARRANGE
+    mockOperator = undefined;
 
-      expect(screen.getByAltText("CEITEC-MAFIL logo")).toBeInTheDocument();
-    });
+    // ACT
+    setup();
+    const ceitecMafilLogo = screen.getByAltText("CEITEC-MAFIL logo");
+    const languageMenu = screen.getByTestId("language-menu");
+    const headerTabs = screen.queryAllByRole("tab");
 
-    test("contains language menu", () => {
-      mockOperator = undefined;
-
-      render(<Header />);
-
-      expect(screen.getByTestId("language-menu")).toBeInTheDocument();
-    });
-
-    test("contains no tabs", () => {
-      mockOperator = undefined;
-
-      const { container } = render(<Header />);
-      const headerTabs = within(container).queryAllByRole("tab");
-
-      expect(headerTabs.length).toBe(0);
-    });
+    // ASSERT
+    expect(ceitecMafilLogo).toBeInTheDocument();
+    expect(languageMenu).toBeInTheDocument();
+    expect(headerTabs.length).toBe(0);
   });
 
-  describe("auth user is logged in", () => {
-    test("contains all tabs", async () => {
-      mockOperator = operatorMRTest;
+  test("user is logged in", async () => {
+    // ARRANGE
+    mockOperator = operatorMRTest;
 
-      const { container } = render(<Header />);
-      const headerTabs = await within(container).findAllByRole("tab");
+    // ACT
+    setup();
+    const ceitecMafilLogo = await screen.findByAltText("CEITEC-MAFIL logo");
+    const languageMenu = screen.getByTestId("language-menu");
+    const headerTabs = await screen.findAllByRole("tab");
 
-      expect(headerTabs.length).toBe(tabs.length);
-    });
+    // ASSERT
+    expect(`${operatorMRTest.name} ${operatorMRTest.surname}`).toBeDefined();
+    expect(ceitecMafilLogo).toBeInTheDocument();
+    expect(languageMenu).toBeInTheDocument();
+    expect(headerTabs.length).toBe(tabs.length);
   });
 });
