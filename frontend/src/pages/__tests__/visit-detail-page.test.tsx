@@ -122,6 +122,7 @@ describe("visit detail page", () => {
     expect(backButton).toBeInTheDocument();
 
     // this is a bit hacky workaround to not print JSDOM error message when clicking on 'downloadPDFAndPhysicallySignButton': "Error: Not implemented: navigation (except hash changes)"
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     vi.spyOn(console, "error").mockImplementationOnce(() => {});
     await user.click(downloadPDFAndPhysicallySignButton);
     expect(updateVisitSignatureStateSpy).toHaveBeenCalledWith(
