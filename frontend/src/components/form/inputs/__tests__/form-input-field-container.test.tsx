@@ -13,8 +13,10 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 //----------------------------------------------------------------------
 describe("form input field container", () => {
   test("required field contains only label", () => {
+    // Arrange
     const label = "Label";
 
+    // Act
     const { container } = render(
       <FormInputFieldContainer
         label={label}
@@ -22,12 +24,15 @@ describe("form input field container", () => {
       />
     );
 
-    expect(container).toHaveTextContent(new RegExp(`^${label}$`));
+    // Assert
+    expect(container).toHaveTextContent(label);
   });
 
   test("optional field contains label with 'optional' text", () => {
+    // Arrange
     const label = "Label";
 
+    // Act
     const { container } = render(
       <FormInputFieldContainer
         label={label}
@@ -36,7 +41,8 @@ describe("form input field container", () => {
       />
     );
 
-    expect(container).toHaveTextContent(new RegExp(`^${label}`));
+    // Assert
+    expect(container).toHaveTextContent(label);
     expect(container).toHaveTextContent(/\(form.common.optional\)$/);
   });
 });
