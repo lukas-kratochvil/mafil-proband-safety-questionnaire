@@ -5,7 +5,7 @@ import { FormQuestions } from "../FormQuestions";
 // Mocking react-hook-form
 //----------------------------------------------------------------------
 vi.mock("react-hook-form", () => ({
-  Controller: () => <div data-testid="input" />,
+  Controller: () => <div />,
   useFormContext: () => ({
     setValue: vi.fn(),
   }),
@@ -16,16 +16,21 @@ vi.mock("react-hook-form", () => ({
 // Tests
 //----------------------------------------------------------------------
 describe("form questions", () => {
-  test("contains translated title", async () => {
-    const title = "title";
+  const title = "title";
 
-    const { container } = render(
+  const setup = () =>
+    render(
       <FormQuestions
         titleLocalizationKey={title}
         qacs={[]}
       />
     );
 
+  test("contains translated title", async () => {
+    // ACT
+    const { container } = setup();
+
+    // ASSERT
     expect(container).toHaveTextContent(`form.safetyQuestions.${title}`);
   });
 });

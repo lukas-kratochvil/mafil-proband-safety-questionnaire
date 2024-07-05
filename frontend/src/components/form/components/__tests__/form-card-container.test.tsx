@@ -5,29 +5,38 @@ import { FormCardContainer } from "../FormCardContainer";
 // Tests
 //----------------------------------------------------------------------
 describe("form card container", () => {
-  test("has title", () => {
-    const title = "Title";
+  const title = "Title";
 
-    render(<FormCardContainer title={title} />);
-
-    expect(screen.getByText(title)).toBeInTheDocument();
-  });
+  const setup = (content: JSX.Element | string) => {
+    render(<FormCardContainer title={title}>{content}</FormCardContainer>);
+  };
 
   test("has text content", () => {
+    // ARRANGE
     const content = "Content";
 
-    const { container } = render(<FormCardContainer title="Title">{content}</FormCardContainer>);
+    // ACT
+    setup(content);
+    const titleElem = screen.getByText(title);
+    const childrenElem = screen.getByText(content);
 
-    expect(container).toHaveTextContent(content);
+    // ASSERT
+    expect(titleElem).toBeInTheDocument();
+    expect(childrenElem).toBeInTheDocument();
   });
 
   test("has element content", () => {
+    // ARRANGE
     const childrenTestId = "children";
     const content = <div data-testid={childrenTestId}>Content</div>;
 
-    const { container } = render(<FormCardContainer title="Title">{content}</FormCardContainer>);
-    const children = screen.getByTestId(childrenTestId);
+    // ACT
+    setup(content);
+    const titleElem = screen.getByText(title);
+    const childrenElem = screen.getByTestId(childrenTestId);
 
-    expect(container).toContainElement(children);
+    // ASSERT
+    expect(titleElem).toBeInTheDocument();
+    expect(childrenElem).toBeInTheDocument();
   });
 });

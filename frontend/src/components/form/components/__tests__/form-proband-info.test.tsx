@@ -20,8 +20,9 @@ vi.mock("react", () => ({
 //----------------------------------------------------------------------
 // Mocking react-hook-form
 //----------------------------------------------------------------------
+const inputTestId = "input";
 vi.mock("react-hook-form", () => ({
-  Controller: () => <div data-testid="input" />,
+  Controller: () => <div data-testid={inputTestId} />,
   useFormContext: () => ({
     getFieldState: vi.fn(),
     resetField: vi.fn(),
@@ -41,9 +42,13 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 // Tests
 //----------------------------------------------------------------------
 describe("form proband info", () => {
-  test("contains translations", () => {
-    const { container } = render(<FormProbandInfo />);
+  const setup = () => render(<FormProbandInfo />);
 
+  test("contains translations", () => {
+    // ACT
+    const { container } = setup();
+
+    // ASSERT
     expect(container).toHaveTextContent(/form.probandInfo.title/);
     expect(container).toHaveTextContent(/form.probandInfo.name/);
     expect(container).toHaveTextContent(/form.probandInfo.surname/);
@@ -59,10 +64,11 @@ describe("form proband info", () => {
   });
 
   test("has all input fields", () => {
-    render(<FormProbandInfo />);
+    // ACT
+    setup();
+    const inputs = screen.getAllByTestId(inputTestId);
 
-    const inputs = screen.getAllByTestId("input");
-
+    // ASSERT
     expect(inputs.length).toEqual(11);
   });
 });

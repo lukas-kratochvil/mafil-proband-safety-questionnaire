@@ -32,20 +32,25 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 // Tests
 //----------------------------------------------------------------------
 describe("form project info", () => {
-  test("contains translations", async () => {
-    const { container } = render(<FormProjectInfo />);
+  const setup = () => render(<FormProjectInfo />);
 
+  test("contains translations", () => {
+    // ACT
+    const { container } = setup();
+
+    // ASSERT
     expect(container).toHaveTextContent(/form.projectInfo.title/);
     expect(container).toHaveTextContent(/form.projectInfo.project/);
     expect(container).toHaveTextContent(/form.projectInfo.device/);
     expect(container).toHaveTextContent(/form.projectInfo.measuredAt/);
   });
 
-  test("has all input fields", async () => {
-    render(<FormProjectInfo />);
+  test("has all input fields", () => {
+    // ACT
+    setup();
+    const inputs = screen.getAllByTestId("input");
 
-    const inputs = await screen.findAllByTestId("input");
-
+    // ASSERT
     expect(inputs.length).toEqual(3);
   });
 });

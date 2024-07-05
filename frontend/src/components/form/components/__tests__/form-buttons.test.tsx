@@ -7,107 +7,77 @@ import { FormButtons } from "../FormButtons";
 //----------------------------------------------------------------------
 describe("form buttons", () => {
   test("no buttons visible", () => {
+    // ACT
     render(
       <FormButtons
         submitButtonProps={undefined}
         buttonsProps={[]}
       />
     );
+    const buttons = screen.queryAllByRole("button");
 
-    expect(screen.queryAllByRole("button").length).toEqual(0);
+    // ASSERT
+    expect(buttons.length).toEqual(0);
   });
 
-  describe("submit button", () => {
-    test("is visible", () => {
-      render(
-        <FormButtons
-          submitButtonProps={{
-            onClick: vi.fn(),
-            titleLocalizationKey: "",
-          }}
-          buttonsProps={[]}
-        />
-      );
-      const buttons = screen.getAllByRole("button");
+  test("only submit button", () => {
+    // ARRANGE
+    const titleLocalizationKey = "submitButtonTitle";
 
-      expect(buttons.length).toEqual(1);
-      expect(buttons[0]).toHaveProperty("type", "submit");
-    });
+    // ACT
+    render(
+      <FormButtons
+        submitButtonProps={{
+          onClick: vi.fn(),
+          titleLocalizationKey,
+        }}
+        buttonsProps={[]}
+      />
+    );
+    const buttons = screen.getAllByRole("button");
 
-    test("has title", () => {
-      const titleLocalizationKey = "submitButtonTitle";
-
-      render(
-        <FormButtons
-          submitButtonProps={{
-            onClick: vi.fn(),
-            titleLocalizationKey,
-          }}
-          buttonsProps={[]}
-        />
-      );
-      const submitButton = screen.getByRole("button");
-
-      expect(submitButton).toHaveTextContent(titleLocalizationKey);
-    });
+    // ASSERT
+    expect(buttons.length).toEqual(1);
+    expect(buttons[0]).toHaveProperty("type", "submit");
+    expect(buttons[0]).toHaveTextContent(titleLocalizationKey);
   });
 
-  describe("other buttons", () => {
-    test("are visible", () => {
-      const buttonsProps: ButtonProps[] = [
-        {
-          onClick: vi.fn(),
-          titleLocalizationKey: "title1",
-        },
-        {
-          onClick: vi.fn(),
-          titleLocalizationKey: "title2",
-        },
-      ];
+  test("only other buttons", () => {
+    // ARRANGE
+    const titleLocalizationKey1 = "title1";
+    const titleLocalizationKey2 = "title2";
+    const buttonsProps: ButtonProps[] = [
+      {
+        onClick: vi.fn(),
+        titleLocalizationKey: titleLocalizationKey1,
+      },
+      {
+        onClick: vi.fn(),
+        titleLocalizationKey: titleLocalizationKey2,
+      },
+    ];
 
-      render(
-        <FormButtons
-          submitButtonProps={undefined}
-          buttonsProps={buttonsProps}
-        />
-      );
-      const buttons = screen.getAllByRole("button");
+    // ACT
+    render(
+      <FormButtons
+        submitButtonProps={undefined}
+        buttonsProps={buttonsProps}
+      />
+    );
+    const buttons = screen.getAllByRole("button");
 
-      expect(buttons.length).toEqual(buttonsProps.length);
-      buttons.forEach((button) => {
-        expect(button).not.toHaveProperty("type", "submit");
-        expect(button).not.toHaveProperty("color", "error");
-      });
+    // ASSERT
+    expect(buttons.length).toEqual(buttonsProps.length);
+    buttons.forEach((button) => {
+      expect(button).not.toHaveProperty("type", "submit");
+      expect(button).not.toHaveProperty("color", "error");
     });
-
-    test("have titles", () => {
-      const titleLocalizationKey1 = "title1";
-      const titleLocalizationKey2 = "title2";
-      const buttonsProps: ButtonProps[] = [
-        {
-          onClick: vi.fn(),
-          titleLocalizationKey: titleLocalizationKey1,
-        },
-        {
-          onClick: vi.fn(),
-          titleLocalizationKey: titleLocalizationKey2,
-        },
-      ];
-
-      render(
-        <FormButtons
-          submitButtonProps={undefined}
-          buttonsProps={buttonsProps}
-        />
-      );
-      const buttons = screen.getAllByRole("button");
-
-      expect(buttons[0]).toHaveTextContent(titleLocalizationKey1);
-      expect(buttons[1]).toHaveTextContent(titleLocalizationKey2);
-    });
+    expect(buttons[0]).toHaveTextContent(titleLocalizationKey1);
+    expect(buttons[1]).toHaveTextContent(titleLocalizationKey2);
   });
 
   test("all buttons visible", () => {
+    // ARRANGE
     const submitButtonTitle = "submitButtonTitle";
     const titleButton1 = "title1";
     const titleButton2 = "title2";
@@ -122,6 +92,7 @@ describe("form buttons", () => {
       },
     ];
 
+    // ACT
     render(
       <FormButtons
         submitButtonProps={{
@@ -133,7 +104,8 @@ describe("form buttons", () => {
     );
     const buttons = screen.getAllByRole("button");
 
-    expect(buttons.length).toEqual(3);
+    // ASSERT
+    expect(buttons.length).toEqual(buttonsProps.length + 1);
     expect(buttons[0]).toHaveTextContent(submitButtonTitle);
     expect(buttons[0]).toHaveProperty("type", "submit");
     expect(buttons[1]).toHaveTextContent(titleButton1);
