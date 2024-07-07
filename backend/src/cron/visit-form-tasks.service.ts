@@ -6,8 +6,8 @@ import { PrismaService } from "@app/prisma/prisma.service";
 const MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000;
 
 @Injectable()
-export class CronPrismaTasksService {
-  private readonly logger = new Logger(CronPrismaTasksService.name);
+export class VisitFormTasksService {
+  private readonly logger = new Logger(VisitFormTasksService.name);
 
   constructor(private readonly prisma: PrismaService) {}
 
