@@ -11,63 +11,43 @@ export class VisitFormTasksService {
 
   constructor(private readonly prisma: PrismaService) {}
 
-  @Cron(CronExpression.EVERY_DAY_AT_3AM)
-  async deleteDeletedVisitForms() {
-    const sameTimeYesterday = new Date(Date.now() - MILLISECONDS_IN_DAY).toISOString();
-    const deletedState = VisitFormState.DELETED;
-
+  private readonly deleteVisitForms = async (visitFormState: VisitFormState, deleteLowerThanDate: string) => {
     const { count } = await this.prisma.visitForm.deleteMany({
       where: {
         AND: [
           {
             deletedAt: {
-              lte: sameTimeYesterday,
+              lte: deleteLowerThanDate,
             },
           },
           {
-            state: deletedState,
+            state: visitFormState,
           },
         ],
       },
     });
 
-    if (count > 0) {
-      const isSingle = count === 1;
-      this.logger.log(
-        `Deleted ${count} visit form${isSingle ? "" : "s"} that ${
-          isSingle ? "was" : "were"
-        } marked as ${deletedState} before ${sameTimeYesterday}.`
-      );
+    if (count === 0) {
+      return;
     }
+
+    const isSingle = count === 1;
+    this.logger.log(
+      `Deleted ${count} visit form${isSingle ? "" : "s"} that ${
+        isSingle ? "was" : "were"
+      } marked as '${visitFormState}' before ${deleteLowerThanDate}.`
+    );
+  };
+
+  @Cron(CronExpression.EVERY_DAY_AT_3AM)
+  async deleteDeletedVisitForms() {
+    const sameTimeYesterday = new Date(Date.now() - MILLISECONDS_IN_DAY).toISOString();
+    await this.deleteVisitForms(VisitFormState.DELETED, sameTimeYesterday);
   }
 
   @Cron(CronExpression.EVERY_DAY_AT_3AM)
   async deletePdfGeneratedVisitForms() {
     const sameTimeYesterday = new Date(Date.now() - MILLISECONDS_IN_DAY).toISOString();
-    const pdfGeneratedState = VisitFormState.PDF_GENERATED;
-
-    const { count } = await this.prisma.visitForm.deleteMany({
-      where: {
-        AND: [
-          {
-            deletedAt: {
-              lte: sameTimeYesterday,
-            },
-          },
-          {
-            state: pdfGeneratedState,
-          },
-        ],
-      },
-    });
-
-    if (count > 0) {
-      const isSingle = count === 1;
-      this.logger.log(
-        `Deleted ${count} visit form${isSingle ? "" : "s"} that ${
-          isSingle ? "was" : "were"
-        } marked as ${pdfGeneratedState} before ${sameTimeYesterday}.`
-      );
-    }
+    await this.deleteVisitForms(VisitFormState.PDF_GENERATED, sameTimeYesterday);
   }
 }
