@@ -1,11 +1,11 @@
-type IHandedness = {
+type Handedness = {
   code: string;
   order: number;
   csText: string;
   enText: string;
 };
 
-const handednesses: Omit<IHandedness, "order">[] = [
+const handednesses: Omit<Handedness, "order">[] = [
   {
     code: "RH",
     csText: "Pravák",
@@ -28,7 +28,7 @@ const handednesses: Omit<IHandedness, "order">[] = [
   },
 ];
 
-const orderedHandednesses: IHandedness[] = handednesses.map((handedness, i) => ({
+const orderedHandednesses: Handedness[] = handednesses.map((handedness, i) => ({
   ...handedness,
   order: i + 1,
 }));

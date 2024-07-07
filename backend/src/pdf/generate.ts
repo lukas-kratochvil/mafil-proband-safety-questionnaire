@@ -11,7 +11,7 @@ import {
   getLocalizedTextsFile,
   LocalizedTextsFile,
 } from "@app/utils/assets-loaders";
-import { IPDFData, IPDFQuestionAnswer } from "./types";
+import { PDFData, PDFQuestionAnswer } from "./types";
 
 // Type of PDF document
 type PDFDoc = typeof PDFDocument;
@@ -75,7 +75,7 @@ const IN_BRNO_ON_DASHES = "_ _ _ _ _ _ _ _ _ _ _ _";
 const SIGNATURE_DASHES = "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _";
 //--------------------------------------
 
-type ITitleValueRow = {
+type TitleValueRow = {
   title: string;
   secondaryTitle?: string;
   value: string;
@@ -128,7 +128,7 @@ const addBlockTitle = (
     .text(title, x, y, { lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: gapAfterTitle });
 };
 
-const addTitleValue = (doc: PDFDoc, row: ITitleValueRow, x: number, y?: number): void => {
+const addTitleValue = (doc: PDFDoc, row: TitleValueRow, x: number, y?: number): void => {
   const title = `${row.title}:`;
   const titleWidth = 150;
   const valueStartPosition = x + titleWidth + 10;
@@ -165,7 +165,7 @@ const addTitleValueRows = (
   y: number,
   blockTitle: string,
   secondaryBlockTitle: string | undefined,
-  rows: ITitleValueRow[]
+  rows: TitleValueRow[]
 ): void => {
   addBlockTitle(doc, x, y, CHAPTER_FONT_SIZE, GAP_AFTER_CHAPTER_TITLE, blockTitle, secondaryBlockTitle);
   doc.font(REGULAR_FONT, TEXT_FONT_SIZE).lineGap(LINE_GAP_INSIDE_PARAGRAPH);
@@ -179,9 +179,9 @@ const addVisitData = (
   visitIdTitle: string,
   texts: LocalizedVisitData,
   secondaryTexts: LocalizedVisitData | undefined,
-  data: IPDFData
+  data: PDFData
 ): void => {
-  const visitInfoRows: ITitleValueRow[] = [
+  const visitInfoRows: TitleValueRow[] = [
     { title: visitIdTitle, value: data.visitId },
     { title: texts.project, secondaryTitle: secondaryTexts?.project, value: data.projectAcronym },
     {
@@ -208,9 +208,9 @@ const addPersonalData = (
   y: number,
   texts: LocalizedPersonalData,
   secondaryTexts: LocalizedPersonalData | undefined,
-  data: IPDFData
+  data: PDFData
 ): void => {
-  const probandInfoRows: ITitleValueRow[] = [
+  const probandInfoRows: TitleValueRow[] = [
     { title: texts.name, secondaryTitle: secondaryTexts?.name, value: data.name },
     { title: texts.surname, secondaryTitle: secondaryTexts?.surname, value: data.surname },
     { title: texts.personalId, secondaryTitle: secondaryTexts?.personalId, value: data.personalId },
@@ -287,7 +287,7 @@ const addQuestions = (
   y: number,
   texts: LocalizedQuestions,
   secondaryTexts: LocalizedQuestions | undefined,
-  questions: IPDFQuestionAnswer[]
+  questions: PDFQuestionAnswer[]
 ): void => {
   addBlockTitle(doc, x, y, CHAPTER_FONT_SIZE, GAP_AFTER_CHAPTER_TITLE, texts.title, secondaryTexts?.title);
   questions.forEach(({ text, secondaryText, answer, comment }) => {
@@ -359,7 +359,7 @@ const addExaminationConsent = (
   commonTexts: CommonExaminationConsent,
   texts: LocalizedExaminationConsent,
   secondaryTexts: LocalizedExaminationConsent | undefined,
-  data: IPDFData
+  data: PDFData
 ): void => {
   doc.font(MEDIUM_FONT, HEADING_FONT_SIZE).text(texts.title, x, y, {
     align: "center",
@@ -498,7 +498,7 @@ const addProbandContactRequest = (
   x: number,
   y: number,
   texts: LocalizedProbandContactRequest,
-  data: IPDFData
+  data: PDFData
 ): void => {
   doc.font(MEDIUM_FONT, HEADING_FONT_SIZE).text(texts.title, x, y, {
     align: "center",
@@ -615,7 +615,7 @@ const streamToString = (stream: Readable): Promise<string | never> => {
 };
 
 export const generateBase64PDF = async (
-  data: IPDFData,
+  data: PDFData,
   locale: string,
   secondaryLocale?: string
 ): Promise<string | never> => {

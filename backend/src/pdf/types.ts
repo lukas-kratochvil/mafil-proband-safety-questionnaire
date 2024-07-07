@@ -1,26 +1,26 @@
 import { AnswerOption, Operator } from "@prisma/client";
 
-export type IPDFOperator = Pick<Operator, "name" | "surname">;
+export type PDFOperator = Pick<Operator, "name" | "surname">;
 
-export type IPDFEntityTexts = {
+export type PDFEntityTexts = {
   text: string | undefined;
   secondaryText?: string;
 };
 
-export type IPDFQuestionAnswer = IPDFEntityTexts & {
+export type PDFQuestionAnswer = PDFEntityTexts & {
   answer: AnswerOption;
   comment?: string;
 };
 
-type IPDFNativeLanguage = {
+type PDFNativeLanguage = {
   nativeName: string;
   nameCs: string;
 };
 
-export type IPDFData = {
+export type PDFData = {
   isPhantom: boolean;
-  operatorFinalizer: IPDFOperator;
-  operatorApprover?: IPDFOperator;
+  operatorFinalizer: PDFOperator;
+  operatorApprover?: PDFOperator;
   visitId: string;
   projectAcronym: string;
   measurementDate: Date;
@@ -28,13 +28,13 @@ export type IPDFData = {
   surname: string;
   personalId: string;
   birthdate: Date;
-  gender: IPDFEntityTexts;
-  nativeLanguage: IPDFNativeLanguage;
+  gender: PDFEntityTexts;
+  nativeLanguage: PDFNativeLanguage;
   heightCm: number;
   weightKg: number;
   visualCorrectionDioptre: number;
-  handedness: IPDFEntityTexts;
+  handedness: PDFEntityTexts;
   email?: string;
   phone?: string;
-  answers: IPDFQuestionAnswer[];
+  answers: PDFQuestionAnswer[];
 };

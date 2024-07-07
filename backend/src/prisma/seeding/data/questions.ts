@@ -2,7 +2,7 @@ import { GenderCode } from "./genders";
 
 type PartNumberType = 1 | 2;
 
-type IQuestion = {
+type Question = {
   partNumber: PartNumberType;
   order: number;
   csText: string;
@@ -10,7 +10,7 @@ type IQuestion = {
   hiddenByGender?: GenderCode[];
 };
 
-const questions: Omit<IQuestion, "order">[] = [
+const questions: Omit<Question, "order">[] = [
   {
     partNumber: 1,
     csText: "Jste těhotná?",
@@ -120,7 +120,7 @@ const questions: Omit<IQuestion, "order">[] = [
   },
 ];
 
-const orderedQuestions: IQuestion[] = questions.map((question, i) => ({
+const orderedQuestions: Question[] = questions.map((question, i) => ({
   ...question,
   order: (i + 1) * 10, // multiplying by 10 makes space for possible future additions
 }));

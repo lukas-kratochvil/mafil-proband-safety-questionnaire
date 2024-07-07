@@ -1,13 +1,13 @@
 export type GenderCode = "F" | "M" | "O";
 
-type IGender = {
+type Gender = {
   code: GenderCode;
   order: number;
   csText: string;
   enText: string;
 };
 
-const genders: Omit<IGender, "order">[] = [
+const genders: Omit<Gender, "order">[] = [
   {
     code: "M",
     csText: "Muž",
@@ -25,7 +25,7 @@ const genders: Omit<IGender, "order">[] = [
   },
 ];
 
-const orderedGenders: IGender[] = genders.map((gender, i) => ({
+const orderedGenders: Gender[] = genders.map((gender, i) => ({
   ...gender,
   order: i + 1,
 }));

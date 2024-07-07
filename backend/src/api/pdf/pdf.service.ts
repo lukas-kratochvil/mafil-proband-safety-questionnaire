@@ -4,7 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { AnswerOption, Prisma } from "@prisma/client";
 import { EnvironmentVariables } from "@app/config";
 import { generateBase64PDF } from "@app/pdf/generate";
-import { IPDFData, IPDFEntityTexts, IPDFOperator, IPDFQuestionAnswer } from "@app/pdf/types";
+import { PDFData, PDFEntityTexts, PDFOperator, PDFQuestionAnswer } from "@app/pdf/types";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { GENERATED_PDF_DIR_PATH } from "@app/utils/paths";
 import { GeneratePDFArgs } from "./dto/generate-pdf.args";
@@ -33,10 +33,7 @@ export class PDFService {
     return `${generatePDFInput.visitId}_${generatePDFInput.surname}_${generatePDFInput.name}.pdf`;
   }
 
-  private async getPhantomPDFData(
-    generatePDFInput: GeneratePDFArgs,
-    operatorFinalizer: IPDFOperator
-  ): Promise<IPDFData> {
+  private async getPhantomPDFData(generatePDFInput: GeneratePDFArgs, operatorFinalizer: PDFOperator): Promise<PDFData> {
     // Get gender translations
     const gender = await this.prisma.gender.findFirstOrThrow({
       where: {
@@ -97,9 +94,9 @@ export class PDFService {
 
   private async getProbandPDFData(
     generatePDFInput: GenerateProbandPDFArgs,
-    operatorFinalizer: IPDFOperator,
+    operatorFinalizer: PDFOperator,
     useSecondaryLanguage: boolean
-  ): Promise<IPDFData> {
+  ): Promise<PDFData> {
     const languageCodes = [generatePDFInput.probandLanguageCode];
     let languageCodeOrder: Prisma.SortOrder = "asc";
 
@@ -113,7 +110,7 @@ export class PDFService {
     }
 
     const languageOrderBy = { code: languageCodeOrder } satisfies Prisma.LanguageOrderByWithAggregationInput;
-    const getTranslatedTexts = (translations: EntityTranslations): IPDFEntityTexts => ({
+    const getTranslatedTexts = (translations: EntityTranslations): PDFEntityTexts => ({
       text: translations[0]?.text,
       secondaryText: languageCodes.length === 1 ? undefined : translations[1]?.text,
     });
@@ -168,7 +165,7 @@ export class PDFService {
     });
 
     // Get answers with questions texts
-    const answers: IPDFQuestionAnswer[] = (
+    const answers: PDFQuestionAnswer[] = (
       await Promise.all(
         generatePDFInput.answers.map((answer) =>
           this.prisma.question.findFirstOrThrow({
@@ -212,7 +209,7 @@ export class PDFService {
       });
 
     // Get operator who approved the visit
-    let operatorApprover: IPDFOperator | undefined;
+    let operatorApprover: PDFOperator | undefined;
 
     if (generatePDFInput.approverUsername) {
       operatorApprover = await this.prisma.operator.findUniqueOrThrow({
@@ -269,7 +266,7 @@ export class PDFService {
     const pdfName = this.createPDFName(generatePDFInput);
 
     // Get operator who finalized the visit
-    const operatorFinalizer: IPDFOperator = await this.prisma.operator.findUniqueOrThrow({
+    const operatorFinalizer: PDFOperator = await this.prisma.operator.findUniqueOrThrow({
       where: {
         username: generatePDFInput.finalizerUsername,
       },
