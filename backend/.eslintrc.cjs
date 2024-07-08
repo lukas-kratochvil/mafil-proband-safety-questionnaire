@@ -28,4 +28,12 @@ module.exports = {
       { additionalTypeDecorators: ["Field", "HideField"] },
     ],
   },
+  overrides: [
+    {
+      files: ["./**/*.spec.ts", "./**/*.test.ts"],
+      rules: {
+        "@typescript-eslint/no-floating-promises": "off"
+      }
+    }
+  ]
 };
