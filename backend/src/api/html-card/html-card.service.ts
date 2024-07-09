@@ -4,68 +4,57 @@ import { getCommonTextsFile, getLocalizedTextsFile } from "@app/utils/assets-loa
 import { ProbandContactRequestArgs } from "./dto/proband-contact-request.args";
 import { HTMLCardEntity } from "./entities/html-card.entity";
 
-const checkLocaleValidity = async (prisma: PrismaService, locale: string): Promise<void | never> => {
-  try {
-    await prisma.language.findUniqueOrThrow({
-      where: {
-        code: locale,
-      },
-    });
-  } catch {
-    throw new BadRequestException(`Locale '${locale}' is not supported!`);
-  }
-};
-
-const createHTMLCard = (title: string, html: string): HTMLCardEntity => {
-  const probandContactConsent = new HTMLCardEntity();
-  probandContactConsent.title = title;
-  probandContactConsent.html = html;
-  return probandContactConsent;
-};
-
 @Injectable()
 export class HTMLCardService {
   constructor(private readonly prisma: PrismaService) {}
 
+  private async checkLocaleValidity(locale: string): Promise<void | never> {
+    try {
+      await this.prisma.language.findUniqueOrThrow({
+        where: {
+          code: locale,
+        },
+      });
+    } catch {
+      throw new BadRequestException(`Locale '${locale}' is not supported!`);
+    }
+  }
+
+  private createHTMLCard(title: string, html: string) {
+    const htmlCard = new HTMLCardEntity();
+    htmlCard.title = title;
+    htmlCard.html = html;
+    return htmlCard;
+  }
+
   async getEntryInfo(locale: string): Promise<HTMLCardEntity | never> {
-    await checkLocaleValidity(this.prisma, locale);
-
+    await this.checkLocaleValidity(locale);
     const texts = getLocalizedTextsFile(locale);
-
     const html = `
       <p style="margin-top: 0">${texts.entryInfo.text1}</p>
       <p style="margin-bottom: 0">${texts.entryInfo.text2}</p>
     `;
-
-    return createHTMLCard(texts.entryInfo.title, html);
+    return this.createHTMLCard(texts.entryInfo.title, html);
   }
 
   async getSafetyInfo(locale: string): Promise<HTMLCardEntity | never> {
-    await checkLocaleValidity(this.prisma, locale);
-
+    await this.checkLocaleValidity(locale);
     const texts = getLocalizedTextsFile(locale);
-
     const html = `${texts.safetyInfo.textPart1} <strong>${texts.safetyInfo.textPart2}</strong>`;
-
-    return createHTMLCard(texts.safetyInfo.title, html);
+    return this.createHTMLCard(texts.safetyInfo.title, html);
   }
 
   async getBeforeExamination(locale: string): Promise<HTMLCardEntity | never> {
-    await checkLocaleValidity(this.prisma, locale);
-
+    await this.checkLocaleValidity(locale);
     const texts = getLocalizedTextsFile(locale);
-
     const html = `${texts.beforeExamination.textPart1} <strong>${texts.beforeExamination.textPart2}</strong> ${texts.beforeExamination.textPart3} <strong>${texts.beforeExamination.textPart4}</strong>, ${texts.beforeExamination.textPart5} <u><strong>${texts.beforeExamination.textPart6}</strong></u> ${texts.beforeExamination.textPart7}`;
-
-    return createHTMLCard(texts.beforeExamination.title, html);
+    return this.createHTMLCard(texts.beforeExamination.title, html);
   }
 
   async getExaminationConsent(locale: string): Promise<HTMLCardEntity | never> {
-    await checkLocaleValidity(this.prisma, locale);
-
+    await this.checkLocaleValidity(locale);
     const texts = getLocalizedTextsFile(locale);
     const commonTexts = getCommonTextsFile();
-
     const html = `
       <p style="margin-top: 0">${texts.examinationConsent.text1}</p>
       <p>${texts.examinationConsent.text2}</p>
@@ -81,26 +70,20 @@ export class HTMLCardService {
         <br /><a href="${texts.examinationConsent.personalInfoProtectionSite}" target="_blank">${texts.examinationConsent.personalInfoProtectionSite}</a>
       </p>
     `;
-
-    return createHTMLCard(texts.examinationConsent.title, html);
+    return this.createHTMLCard(texts.examinationConsent.title, html);
   }
 
   async getProbandContactRequest(locale: string, data: ProbandContactRequestArgs): Promise<HTMLCardEntity | never> {
-    await checkLocaleValidity(this.prisma, locale);
-
+    await this.checkLocaleValidity(locale);
     const texts = getLocalizedTextsFile(locale);
-
     const html = `${texts.probandContact.request.text1Part1}, ${data.name} ${data.surname}, ${texts.probandContact.request.text1Part2} ${data.birthdateStr}, ${texts.probandContact.request.text2} ${data.currentDateStr} ${texts.probandContact.request.text3}:`;
-
-    return createHTMLCard(texts.probandContact.request.title, html);
+    return this.createHTMLCard(texts.probandContact.request.title, html);
   }
 
   async getProbandContactConsent(locale: string): Promise<HTMLCardEntity | never> {
-    await checkLocaleValidity(this.prisma, locale);
-
+    await this.checkLocaleValidity(locale);
     const texts = getLocalizedTextsFile(locale);
     const commonTexts = getCommonTextsFile();
-
     const html = `
       <p style="margin-top: 0">${texts.probandContact.consent.text1}</p>
       <p>
@@ -124,7 +107,6 @@ export class HTMLCardService {
         <br /><u>${texts.probandContact.consent.text5Part3ApplicationOfDataSubjectRightsSite}</u>.
       </p>
     `;
-
-    return createHTMLCard(texts.probandContact.consent.title, html);
+    return this.createHTMLCard(texts.probandContact.consent.title, html);
   }
 }

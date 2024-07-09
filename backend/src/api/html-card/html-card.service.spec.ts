@@ -4,6 +4,7 @@ import { DeepMockProxy, mockDeep } from "jest-mock-extended";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { HTMLCardService } from "./html-card.service";
 
+// TODO: how should be tests for HTMLService created?
 describe("HTMLCardService", () => {
   let htmlCardService: HTMLCardService;
   let prisma: DeepMockProxy<PrismaClient>;
@@ -22,5 +23,6 @@ describe("HTMLCardService", () => {
 
   it("should be defined", () => {
     expect(htmlCardService).toBeDefined();
+    expect(prisma).toBeDefined();
   });
 });
