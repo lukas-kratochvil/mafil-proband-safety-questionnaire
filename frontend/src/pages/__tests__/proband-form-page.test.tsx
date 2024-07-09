@@ -42,13 +42,12 @@ const htmlCard: HTMLCardDTO = {
   title: "title",
   html: "text only",
 };
-const newProbandVisitFormId = "id123";
 
 vi.mock("@app/util/server_API/calls", async () => ({
   fetchGenders: async (): Promise<GenderDTO[]> => gendersTest,
   fetchHandednesses: async (): Promise<HandednessDTO[]> => handednessesTest,
   fetchCurrentQuestions: async (): Promise<OrderedQuestionDTO[]> => questionsTest,
-  createProbandVisitForm: async (): Promise<string> => newProbandVisitFormId,
+  createProbandVisitForm: async (): Promise<string> => "",
   fetchEntryInfo: async (): Promise<HTMLCardDTO> => htmlCard,
   fetchSafetyInfo: async (): Promise<HTMLCardDTO> => htmlCard,
   fetchBeforeExamination: async (): Promise<HTMLCardDTO> => htmlCard,

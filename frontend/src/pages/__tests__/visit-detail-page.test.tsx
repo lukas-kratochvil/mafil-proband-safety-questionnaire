@@ -9,7 +9,7 @@ import type { OperatorDTO } from "@app/util/server_API/dto";
 import { render, screen } from "@test-utils";
 
 //----------------------------------------------------------------------
-// Default visit detail
+// Test data
 //----------------------------------------------------------------------
 const id = "ID1";
 const defaultVisit: VisitDetail = {

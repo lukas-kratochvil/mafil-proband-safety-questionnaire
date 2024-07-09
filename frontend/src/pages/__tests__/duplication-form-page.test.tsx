@@ -17,7 +17,7 @@ import type { GenderDTO, HandednessDTO, OrderedQuestionDTO, PdfDTO } from "@app/
 import { render, screen, waitFor, within } from "@test-utils";
 
 //----------------------------------------------------------------------
-// Default data
+// Test data
 //----------------------------------------------------------------------
 const id = "ID1";
 const commentText = "Comment";

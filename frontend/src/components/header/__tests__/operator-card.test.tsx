@@ -3,7 +3,7 @@ import { render, screen } from "@test-utils";
 import { OperatorCard } from "../OperatorCard";
 
 //----------------------------------------------------------------------
-// Mocking custom authentication
+// Test data
 //----------------------------------------------------------------------
 const operator: OperatorDTO = {
   id: "1",
@@ -14,6 +14,9 @@ const operator: OperatorDTO = {
   username: "",
 };
 
+//----------------------------------------------------------------------
+// Mocking custom authentication
+//----------------------------------------------------------------------
 vi.mock("@app/hooks/auth/AuthProvider", () => ({
   useAuth: () => ({
     operator,
