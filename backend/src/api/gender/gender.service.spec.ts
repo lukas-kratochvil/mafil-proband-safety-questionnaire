@@ -96,7 +96,7 @@ describe("GenderService", () => {
     expect(createdGender).rejects.toThrow(BadRequestException);
   });
 
-  it("return gender", () => {
+  it("find gender", () => {
     // ARRANGE
     prisma.gender.findUniqueOrThrow.mockResolvedValueOnce(genderM);
 
@@ -107,7 +107,7 @@ describe("GenderService", () => {
     expect(foundGender).resolves.toStrictEqual(genderM);
   });
 
-  it("return all genders", () => {
+  it("find all genders", () => {
     // ARRANGE
     const genders: Gender[] = [
       genderM,

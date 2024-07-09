@@ -96,7 +96,7 @@ describe("HandednessService", () => {
     expect(createdHandedness).rejects.toThrow(BadRequestException);
   });
 
-  it("return handedness", () => {
+  it("find handedness", () => {
     // ARRANGE
     prisma.handedness.findUniqueOrThrow.mockResolvedValueOnce(handednessR);
 
@@ -107,7 +107,7 @@ describe("HandednessService", () => {
     expect(foundHandedness).resolves.toStrictEqual(handednessR);
   });
 
-  it("return all handednesses", () => {
+  it("find all handednesses", () => {
     // ARRANGE
     const handednesses: Handedness[] = [
       handednessR,
