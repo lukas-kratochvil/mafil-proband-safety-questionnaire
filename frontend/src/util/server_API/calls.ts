@@ -459,7 +459,7 @@ export const generateProbandPdf = async (
   probandLanguageCode: ProbandVisitLanguageCode | undefined,
   approverUsername?: string
 ): Promise<PdfDTO> => {
-  if (probandLanguageCode === undefined || probandLanguageCode === "") {
+  if (probandLanguageCode === undefined || probandLanguageCode === null) {
     throw new Error("Proband language code is undefined!");
   }
 

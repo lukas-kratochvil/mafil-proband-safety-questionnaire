@@ -136,13 +136,12 @@ export const fetchDevices = async (): Promise<Device[]> => {
 
 const createVisitSubject = async (
   visitFormData: ValidatedOperatorFormData,
-  probandLanguageCode?: ProbandVisitLanguageCode
+  probandLanguageCode: ProbandVisitLanguageCode
 ): Promise<string | never> => {
   const createData: MDB_CreateSubjectInput = {
     first_name: visitFormData.name,
     last_name: visitFormData.surname,
-    // TODO: phantom visits do not have the probandLanguageCode filled
-    preferred_language_id: probandLanguageCode ?? "",
+    preferred_language_id: probandLanguageCode,
     birth_date: transformDateToMafildbFormat(visitFormData.birthdate),
     personal_ID: visitFormData.personalId,
     gender: transformGenderCodeForMDB(visitFormData.gender.code),
@@ -166,7 +165,7 @@ const createVisit = async (
   isPhantom: boolean,
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
-  probandLanguageCode?: ProbandVisitLanguageCode,
+  probandLanguageCode: ProbandVisitLanguageCode,
   approverUsername?: string,
   approvedAt?: Date
 ): Promise<CreatedVisitData | never> => {
@@ -280,7 +279,7 @@ export const createPhantomVisit = async (
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined
 ): Promise<CreatedVisitData | never> =>
-  createVisit(visitFormData, MDB_ApprovalState.APPROVED, true, finalizerUsername, finalizedAt);
+  createVisit(visitFormData, MDB_ApprovalState.APPROVED, true, finalizerUsername, finalizedAt, null);
 
 export const addPdfToVisit = async (visitUuid: string, pdf: PdfDTO): Promise<VisitPDF> => {
   if (import.meta.env.DEV) {

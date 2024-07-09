@@ -6,7 +6,7 @@ import type { Project } from "./project";
 import type { RecentVisitSubject, Subject } from "./subject";
 import type { VisitPDF } from "./visitPdf";
 
-export type ProbandVisitLanguageCode = LanguageCode | "";
+export type ProbandVisitLanguageCode = LanguageCode | null;
 
 type Answer = {
   questionId: MDB_AnswerDTO["question_id"];
