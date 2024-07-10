@@ -168,7 +168,7 @@ describe("GenderService", () => {
     const updatedGender = genderService.update(updateGenderInput.id, updateGenderInput);
 
     // ASSERT
-    expect(updatedGender).rejects.toBeInstanceOf(BadRequestException);
+    expect(updatedGender).rejects.toThrow(BadRequestException);
   });
 
   it("remove gender", () => {

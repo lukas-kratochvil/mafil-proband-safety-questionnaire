@@ -197,7 +197,7 @@ describe("QuestionService", () => {
     const updatedQuestionTexts = questionService.updateTexts(updateQuestionTexts.id, updateQuestionTexts);
 
     // ASSERT
-    expect(updatedQuestionTexts).rejects.toBeInstanceOf(BadRequestException);
+    expect(updatedQuestionTexts).rejects.toThrow(BadRequestException);
   });
 
   it("remove question", () => {

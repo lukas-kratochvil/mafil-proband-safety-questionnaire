@@ -168,7 +168,7 @@ describe("HandednessService", () => {
     const updatedHandedness = handednessService.update(updateHandednessInput.id, updateHandednessInput);
 
     // ASSERT
-    expect(updatedHandedness).rejects.toBeInstanceOf(BadRequestException);
+    expect(updatedHandedness).rejects.toThrow(BadRequestException);
   });
 
   it("remove handedness", () => {
