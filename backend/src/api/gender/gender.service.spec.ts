@@ -69,7 +69,7 @@ describe("GenderService", () => {
     expect(createdGender).resolves.toStrictEqual(genderM);
   });
 
-  it("create gender incomplete translations", () => {
+  it("create gender - incomplete translations", () => {
     // ARRANGE
     const languages: Language[] = [
       languageEn,
@@ -96,17 +96,6 @@ describe("GenderService", () => {
     expect(createdGender).rejects.toThrow(BadRequestException);
   });
 
-  it("find gender", () => {
-    // ARRANGE
-    prisma.gender.findUniqueOrThrow.mockResolvedValueOnce(genderM);
-
-    // ACT
-    const foundGender = genderService.findOne(genderM.code);
-
-    // ASSERT
-    expect(foundGender).resolves.toStrictEqual(genderM);
-  });
-
   it("find all genders", () => {
     // ARRANGE
     const genders: Gender[] = [
@@ -127,6 +116,17 @@ describe("GenderService", () => {
 
     // ASSERT
     expect(foundGenders).resolves.toStrictEqual(genders);
+  });
+
+  it("find gender", () => {
+    // ARRANGE
+    prisma.gender.findUniqueOrThrow.mockResolvedValueOnce(genderM);
+
+    // ACT
+    const foundGender = genderService.findOne(genderM.code);
+
+    // ASSERT
+    expect(foundGender).resolves.toStrictEqual(genderM);
   });
 
   it("update gender", () => {
@@ -153,7 +153,7 @@ describe("GenderService", () => {
     });
   });
 
-  it("update gender invalid language", () => {
+  it("update gender - invalid language", () => {
     // ARRANGE
     const languages: Language[] = [];
     languageService.findAll.mockResolvedValueOnce(languages);

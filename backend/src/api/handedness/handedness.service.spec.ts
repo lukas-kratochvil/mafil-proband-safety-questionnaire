@@ -69,7 +69,7 @@ describe("HandednessService", () => {
     expect(createdHandedness).resolves.toStrictEqual(handednessR);
   });
 
-  it("create handedness incomplete translations", () => {
+  it("create handedness - incomplete translations", () => {
     // ARRANGE
     const languages: Language[] = [
       languageEn,
@@ -96,17 +96,6 @@ describe("HandednessService", () => {
     expect(createdHandedness).rejects.toThrow(BadRequestException);
   });
 
-  it("find handedness", () => {
-    // ARRANGE
-    prisma.handedness.findUniqueOrThrow.mockResolvedValueOnce(handednessR);
-
-    // ACT
-    const foundHandedness = handednessService.findOne(handednessR.code);
-
-    // ASSERT
-    expect(foundHandedness).resolves.toStrictEqual(handednessR);
-  });
-
   it("find all handednesses", () => {
     // ARRANGE
     const handednesses: Handedness[] = [
@@ -127,6 +116,17 @@ describe("HandednessService", () => {
 
     // ASSERT
     expect(foundHandednesses).resolves.toStrictEqual(handednesses);
+  });
+
+  it("find handedness", () => {
+    // ARRANGE
+    prisma.handedness.findUniqueOrThrow.mockResolvedValueOnce(handednessR);
+
+    // ACT
+    const foundHandedness = handednessService.findOne(handednessR.code);
+
+    // ASSERT
+    expect(foundHandedness).resolves.toStrictEqual(handednessR);
   });
 
   it("update handedness", async () => {
@@ -153,7 +153,7 @@ describe("HandednessService", () => {
     });
   });
 
-  it("update handedness invalid language", () => {
+  it("update handedness - invalid language", () => {
     // ARRANGE
     const languages: Language[] = [];
     languageService.findAll.mockResolvedValueOnce(languages);
