@@ -25,26 +25,23 @@ export type MDB_GenderCode = "ns" | "m" | "f" | "o";
 export type MDB_HandednessCode = "ns" | "rh" | "lh" | "fl" | "un";
 
 export type MDB_CreateSubjectInput = {
-  preferred_language_id: ProbandVisitLanguageCode;
+  preferred_language: ProbandVisitLanguageCode;
   first_name: string;
   last_name: string;
   birth_date: string;
   personal_ID: string;
   gender: MDB_GenderCode;
-  native_language_id: string;
+  native_language: string;
   handedness: MDB_HandednessCode;
   email: string;
   phone: string;
 };
 
-export type MDB_SubjectDTO = Omit<
-  MDB_CreateSubjectInput,
-  "birth_date" | "preferred_language_id" | "native_language_id"
-> & {
+export type MDB_SubjectDTO = Omit<MDB_CreateSubjectInput, "birth_date" | "preferred_language" | "native_language"> & {
   uuid: string;
   birth_date: Date;
-  preferred_language_id: MDB_CreateSubjectInput["preferred_language_id"] | null;
-  native_language_id: MDB_CreateSubjectInput["native_language_id"] | null;
+  preferred_language: MDB_CreateSubjectInput["preferred_language"] | null;
+  native_language: MDB_CreateSubjectInput["native_language"] | null;
 };
 
 export const MDB_ApprovalState = {

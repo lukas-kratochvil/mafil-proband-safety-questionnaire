@@ -141,11 +141,11 @@ const createVisitSubject = async (
   const createData: MDB_CreateSubjectInput = {
     first_name: visitFormData.name,
     last_name: visitFormData.surname,
-    preferred_language_id: probandLanguageCode,
+    preferred_language: probandLanguageCode,
     birth_date: transformDateToMafildbFormat(visitFormData.birthdate),
     personal_ID: visitFormData.personalId,
     gender: transformGenderCodeForMDB(visitFormData.gender.code),
-    native_language_id: visitFormData.nativeLanguage.code,
+    native_language: visitFormData.nativeLanguage.code,
     handedness: transformHandednessCodeForMDB(visitFormData.handedness.code),
     email: visitFormData.email,
     phone: visitFormData.phone,
@@ -363,13 +363,13 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
           })),
           subject: {
             ...visit.subject,
-            preferredLanguageCode: visit.subject.preferred_language_id,
+            preferredLanguageCode: visit.subject.preferred_language,
             name: visit.subject.first_name,
             surname: visit.subject.last_name,
             birthdate: visit.subject.birth_date,
             personalId: visit.subject.personal_ID,
             genderCode: visit.subject.gender,
-            nativeLanguage: visit.subject.native_language_id,
+            nativeLanguage: visit.subject.native_language,
             handednessCode: visit.subject.handedness,
           },
           finalizer,
@@ -411,17 +411,17 @@ export const fetchDuplicatedVisit = async (
     throw new Error("Visit device is null!");
   }
 
-  if (visit.subject.preferred_language_id === null) {
+  if (visit.subject.preferred_language === null) {
     throw new Error("Visit subject preferred language is null!");
   }
 
-  if (visit.subject.native_language_id === null) {
+  if (visit.subject.native_language === null) {
     throw new Error("Visit subject native language is null!");
   }
 
   const [gender, nativeLanguage, handedness, answersIncludingQuestions] = await Promise.all([
     fetchGender(transformMDBGenderCode(visit.subject.gender)),
-    fetchNativeLanguage(visit.subject.native_language_id),
+    fetchNativeLanguage(visit.subject.native_language),
     fetchHandedness(transformMDBHandednessCode(visit.subject.handedness)),
     Promise.all(
       visit.registration_answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
@@ -454,7 +454,7 @@ export const fetchDuplicatedVisit = async (
     answersIncludingQuestions,
     subject: {
       ...visit.subject,
-      preferredLanguageCode: visit.subject.preferred_language_id,
+      preferredLanguageCode: visit.subject.preferred_language,
       name: visit.subject.first_name,
       surname: visit.subject.last_name,
       birthdate: visit.subject.birth_date,
