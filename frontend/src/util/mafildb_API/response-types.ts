@@ -34,6 +34,8 @@ export type MDB_GetProjectResponse = MDB_GetOneResponse<MDB_ProjectDTO>;
 
 export type MDB_GetDevicesResponse = MDB_GetManyResponse<MDB_DeviceDTO>;
 
+export type MDB_GetDeviceResponse = MDB_GetOneResponse<MDB_DeviceDTO>;
+
 export type MDB_CreateSubjectResponse = MDB_GetOneResponse<MDB_SubjectDTO>;
 
 export type MDB_CreateVisitResponse = MDB_GetOneResponse<MDB_VisitDTO>;

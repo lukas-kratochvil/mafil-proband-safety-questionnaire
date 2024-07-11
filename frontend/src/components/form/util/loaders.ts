@@ -95,6 +95,7 @@ export const loadFormDefaultValuesFromApprovalRoomVisitForm = (
 // Autocomplete component default value must be one of the options provided or null
 export const loadFormDefaultValuesVisitDuplication = (visit: DuplicatedVisitIncludingQuestions): FormPropType => ({
   ...visit,
+  // project and device must be selected by the operator
   project: null,
   device: null,
   measuredAt: new Date(),

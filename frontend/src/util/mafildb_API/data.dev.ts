@@ -62,7 +62,7 @@ const initialDummyVisit: Visit = {
   measurementDate: new Date(1663390000000),
   subject: subjectsTest[0]!,
   project: projectsTest[0]!,
-  device: devicesTest[0]!,
+  deviceId: devicesTest[0]!.id,
   heightCm: 180,
   weightKg: 85,
   visualCorrectionDioptre: 0,

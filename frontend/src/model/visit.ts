@@ -23,7 +23,7 @@ export type Visit = {
   measurementDate: MDB_VisitDTO["date"];
   subject: Subject;
   project: Project;
-  device: Device;
+  deviceId: MDB_VisitDTO["registration_device"];
   heightCm: MDB_VisitDTO["height"];
   weightKg: MDB_VisitDTO["weight"];
   visualCorrectionDioptre: MDB_VisitDTO["visual_correction_dioptre"];
@@ -38,7 +38,7 @@ export type Visit = {
 
 export type CreatedVisitData = Pick<Visit, "uuid" | "visitId">;
 
-export type RecentVisitsTableVisit = Omit<Visit, "device" | "finalizer" | "subject"> & {
+export type RecentVisitsTableVisit = Omit<Visit, "deviceId" | "finalizer" | "subject"> & {
   device: Device | null;
   finalizer: OperatorDTO | null;
   subject: RecentVisitSubject;

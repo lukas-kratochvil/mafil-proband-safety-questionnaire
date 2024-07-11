@@ -1,4 +1,3 @@
-import { devicesTest } from "@app/__tests__/data/devices";
 import { gendersTest } from "@app/__tests__/data/genders";
 import { handednessesTest } from "@app/__tests__/data/handednesses";
 import { nativeLanguagesTest } from "@app/__tests__/data/languages";
@@ -72,7 +71,7 @@ const duplicatedVisit: DuplicatedVisitIncludingQuestions = {
   measurementDate: new Date(),
   subject: subjectsTest[0]!,
   project: projectsTest[0]!,
-  device: devicesTest[0]!,
+  deviceId: 1,
   gender: gendersTest[0]!,
   heightCm: 180,
   weightKg: 80,

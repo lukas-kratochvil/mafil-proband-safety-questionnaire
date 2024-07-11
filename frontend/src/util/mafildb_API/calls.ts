@@ -30,6 +30,7 @@ import {
   type MDB_AddPdfToVisitResponse,
   type MDB_CreateSubjectResponse,
   type MDB_CreateVisitResponse,
+  type MDB_GetDeviceResponse,
   type MDB_GetDevicesResponse,
   type MDB_GetLanguageResponse,
   type MDB_GetLanguagesResponse,
@@ -134,6 +135,22 @@ export const fetchDevices = async (): Promise<Device[]> => {
   return data.results.map((deviceDTO) => ({ ...deviceDTO }));
 };
 
+const fetchDevice = async (id: number): Promise<Device> => {
+  if (import.meta.env.DEV) {
+    return (await import("./calls.dev")).fetchDeviceDev(id);
+  }
+
+  // Only MR devices are relevant for this app
+  const params = { type: "MR" };
+  const { data } = await mafildbApi.get<MDB_GetDeviceResponse>(`devices/${id}`, { params });
+
+  if (MDB_RESPONSE_ERROR_ATTR in data) {
+    throw new Error(data.detail);
+  }
+
+  return data;
+};
+
 const createVisitSubject = async (
   visitFormData: ValidatedOperatorFormData,
   probandLanguageCode: ProbandVisitLanguageCode
@@ -199,7 +216,7 @@ const createVisit = async (
     is_phantom: isPhantom,
     subject_uuid: subjectUuid,
     project_uuid: visitFormData.project.uuid,
-    device_id: visitFormData.device.id,
+    registration_device: visitFormData.device.id,
     date: transformDateToMafildbFormat(visitFormData.measuredAt),
     height: visitFormData.heightCm,
     weight: visitFormData.weightKg,
@@ -329,14 +346,21 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
       // Check if 14 days bound is really satisfied ('newer_than' query param may not work)
       .filter((visit) => compareAsc(visit.created, newerThanDateBound) > 0)
       .map(async (visit) => {
+        let device: Device | null = null;
         let finalizer: OperatorDTO | null = null;
         let approver: OperatorDTO | null = null;
+
+        try {
+          device = await fetchDevice(visit.registration_device);
+        } catch {
+          // ignore - device already defaults to null
+        }
 
         if (visit.registration_finalize_user) {
           try {
             finalizer = await fetchOperator(visit.registration_finalize_user.username);
           } catch {
-            finalizer = null;
+            // ignore - finalizer already defaults to null
           }
         }
 
@@ -344,7 +368,7 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
           try {
             approver = await fetchOperator(visit.registration_approve_user.username);
           } catch {
-            approver = null;
+            // ignore - approver already defaults to null
           }
         }
 
@@ -352,6 +376,7 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
           ...visit,
           visitId: visit.visit_name,
           isPhantom: visit.is_phantom,
+          device,
           measurementDate: visit.date,
           heightCm: visit.height,
           weightKg: visit.weight,
@@ -407,10 +432,6 @@ export const fetchDuplicatedVisit = async (
 
   const visit = await fetchVisit(visitUuid);
 
-  if (visit.device === null) {
-    throw new Error("Visit device is null!");
-  }
-
   if (visit.subject.preferred_language === null) {
     throw new Error("Visit subject preferred language is null!");
   }
@@ -442,9 +463,9 @@ export const fetchDuplicatedVisit = async (
   ]);
   return {
     ...visit,
-    device: visit.device,
     visitId: visit.visit_name,
     isPhantom: visit.is_phantom,
+    deviceId: visit.registration_device,
     measurementDate: visit.date,
     gender,
     heightCm: visit.height,

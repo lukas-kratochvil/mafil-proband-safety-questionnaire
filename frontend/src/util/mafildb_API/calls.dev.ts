@@ -34,6 +34,9 @@ export const fetchProjectDev = async (uuid: string): Promise<Project> =>
 
 export const fetchDevicesDev = async (): Promise<Device[]> => devicesTest;
 
+export const fetchDeviceDev = async (id: number): Promise<Device> =>
+  devicesTest.find((device) => id === device.id) ?? devicesTest[0]!;
+
 export const createVisitDev = async (
   visitFormData: ValidatedOperatorFormData,
   approvalState: MDB_CreateVisitInput["checked"],
@@ -54,8 +57,7 @@ export const createVisitDev = async (
     created: new Date(),
     isPhantom,
     subject: (await fetchSubjectsDev())[0]!,
-    project: (await fetchProjectsDev())[0]!,
-    device: (await fetchDevicesDev())[0]!,
+    deviceId: visitFormData.device.id,
     heightCm: visitFormData.heightCm,
     weightKg: visitFormData.weightKg,
     visualCorrectionDioptre: visitFormData.visualCorrectionDioptre,
@@ -95,6 +97,7 @@ export const fetchRecentVisitsDev = async (): Promise<RecentVisitsTableVisit[]> 
     })
     .map((dummyVisit) => ({
       ...dummyVisit,
+      device: devicesTest[0]!,
       subject: {
         ...dummyVisit.subject,
         nativeLanguage: nativeLanguagesTest[0]!.code,

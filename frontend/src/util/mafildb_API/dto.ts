@@ -63,7 +63,7 @@ export type MDB_CreateVisitInput = {
   date: string;
   subject_uuid: string;
   project_uuid: string;
-  device_id: number;
+  registration_device: number;
   height: number;
   weight: number;
   visual_correction_dioptre: number;
@@ -95,7 +95,6 @@ export type MDB_VisitDTO = Omit<
   | "date"
   | "subject_uuid"
   | "project_uuid"
-  | "device_id"
   | "registration_finalize_username"
   | "registration_approve_username"
   | "registration_approve_date"
@@ -106,7 +105,6 @@ export type MDB_VisitDTO = Omit<
   subject: MDB_SubjectDTO;
   project: MDB_ProjectDTO;
   date: Date;
-  device: MDB_DeviceDTO | null;
   registration_finalize_user: MDB_RegistrationUserDTO | null;
   registration_approve_user: MDB_RegistrationUserDTO | null;
   registration_approve_date: Date | null;

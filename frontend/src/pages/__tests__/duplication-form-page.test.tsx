@@ -29,7 +29,7 @@ const visit: DuplicatedVisitIncludingQuestions = {
   measurementDate: new Date(),
   subject: subjectsTest[0]!,
   project: projectsTest[0]!,
-  device: devicesTest[0]!,
+  deviceId: 1,
   gender: gendersTest[0]!,
   heightCm: 179,
   weightKg: 75,
