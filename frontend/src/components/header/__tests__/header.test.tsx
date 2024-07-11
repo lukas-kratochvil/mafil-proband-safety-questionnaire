@@ -78,7 +78,7 @@ describe("header", () => {
     setup();
     const ceitecMafilLogo = await screen.findByAltText("CEITEC-MAFIL logo");
     const languageMenu = screen.getByTestId("language-menu");
-    const headerTabs = await screen.findAllByRole("tab");
+    const headerTabs = screen.getAllByRole("tab");
 
     // ASSERT
     expect(`${operatorMRTest.name} ${operatorMRTest.surname}`).toBeDefined();
