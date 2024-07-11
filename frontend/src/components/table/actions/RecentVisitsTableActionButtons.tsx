@@ -47,8 +47,9 @@ export const RecentVisitsTableActionButtons = ({ visit }: RecentVisitsTableActio
   if (
     visit.device === null
     || visit.finalizer === null
-    || visit.subject.preferredLanguageCode === null
     || visit.subject.nativeLanguage === null
+    // phantom visit does not have proband preferred language filled
+    || (!visit.isPhantom && visit.subject.preferredLanguageCode === null)
   ) {
     return <>{t("recentVisitsTablePage.actions.incompleteVisit")}</>;
   }
