@@ -19,7 +19,6 @@ import type {
   HTMLCardDTO,
   OperatorAuthInput,
   OperatorDTO,
-  OrderedQuestionDTO,
   PdfDTO,
   QuestionDTO,
   SendVisitFormFromWaitingRoomForApprovalInput,
@@ -135,7 +134,7 @@ export const fetchHandedness = async (code: HandednessCode): Promise<HandednessD
   return data.handedness;
 };
 
-export const fetchCurrentQuestions = async (): Promise<OrderedQuestionDTO[]> => {
+export const fetchCurrentQuestions = async (): Promise<QuestionDTO[]> => {
   const data = await serverApiCall<CurrentQuestionsResponse>(GET_CURRENT_QUESTIONS);
   return data.questions;
 };

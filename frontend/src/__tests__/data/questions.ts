@@ -1,7 +1,7 @@
-import type { OrderedQuestionDTO } from "@app/util/server_API/dto";
+import type { QuestionDTO } from "@app/util/server_API/dto";
 import { NEUTRAL_LANGUAGE_CODE } from "../neutral-language-code";
 
-export const questionsTest: OrderedQuestionDTO[] = [
+export const questionsTest: QuestionDTO[] = [
   {
     id: "p1q01",
     order: 1,

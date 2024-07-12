@@ -5,7 +5,6 @@ import type {
   HandednessDTO,
   HTMLCardDTO,
   OperatorDTO,
-  OrderedQuestionDTO,
   PdfDTO,
   QuestionDTO,
   WaitingRoomTableVisitFormDTO,
@@ -24,7 +23,7 @@ export type HandednessesResponse = { handednesses: HandednessDTO[] };
 
 export type HandednessResponse = { handedness: HandednessDTO };
 
-export type CurrentQuestionsResponse = { questions: OrderedQuestionDTO[] };
+export type CurrentQuestionsResponse = { questions: QuestionDTO[] };
 
 export type QuestionResponse = { question: QuestionDTO };
 

@@ -60,10 +60,6 @@ export type QuestionDTO = Translations & {
   }[];
 };
 
-export type OrderedQuestionDTO = QuestionDTO & {
-  order: number;
-};
-
 type ProbandAnswerDTO = {
   questionId: string;
   answer: AnswerOption;
@@ -100,7 +96,7 @@ export type WaitingRoomVisitFormDTO = WaitingRoomTableVisitFormDTO & {
   answers: ProbandAnswerDTO[];
 };
 
-export type QuestionHiddenByGendersWithoutId = Omit<OrderedQuestionDTO, "id">;
+export type QuestionHiddenByGendersWithoutId = Omit<QuestionDTO, "id">;
 
 export type VisitFormAnswerIncludingQuestion = OperatorAnswerDTO & QuestionHiddenByGendersWithoutId;
 

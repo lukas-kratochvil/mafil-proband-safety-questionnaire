@@ -7,7 +7,7 @@ import type { NativeLanguage } from "@app/model/language";
 import ProbandFormPage from "@app/pages/ProbandFormPage";
 import { RoutingPath } from "@app/routing-paths";
 import * as serverCalls from "@app/util/server_API/calls";
-import type { GenderDTO, HandednessDTO, HTMLCardDTO, OrderedQuestionDTO } from "@app/util/server_API/dto";
+import type { GenderDTO, HandednessDTO, HTMLCardDTO, QuestionDTO } from "@app/util/server_API/dto";
 import { render, screen, within } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -46,7 +46,7 @@ const htmlCard: HTMLCardDTO = {
 vi.mock("@app/util/server_API/calls", async () => ({
   fetchGenders: async (): Promise<GenderDTO[]> => gendersTest,
   fetchHandednesses: async (): Promise<HandednessDTO[]> => handednessesTest,
-  fetchCurrentQuestions: async (): Promise<OrderedQuestionDTO[]> => questionsTest,
+  fetchCurrentQuestions: async (): Promise<QuestionDTO[]> => questionsTest,
   createProbandVisitForm: async (): Promise<string> => "",
   fetchEntryInfo: async (): Promise<HTMLCardDTO> => htmlCard,
   fetchSafetyInfo: async (): Promise<HTMLCardDTO> => htmlCard,

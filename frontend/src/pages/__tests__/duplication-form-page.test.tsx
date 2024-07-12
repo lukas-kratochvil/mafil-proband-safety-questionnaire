@@ -13,7 +13,7 @@ import type { NativeLanguage } from "@app/model/language";
 import type { Project } from "@app/model/project";
 import type { DuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import DuplicationFormPage from "@app/pages/DuplicationFormPage";
-import type { GenderDTO, HandednessDTO, OrderedQuestionDTO, PdfDTO } from "@app/util/server_API/dto";
+import type { GenderDTO, HandednessDTO, PdfDTO, QuestionDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@test-utils";
 
 //----------------------------------------------------------------------
@@ -84,7 +84,7 @@ const newDuplicatedVisitFormId = "id123";
 vi.mock("@app/util/server_API/calls", async () => ({
   fetchGenders: async (): Promise<GenderDTO[]> => gendersTest,
   fetchHandednesses: async (): Promise<HandednessDTO[]> => handednessesTest,
-  fetchCurrentQuestions: async (): Promise<OrderedQuestionDTO[]> => questionsTest,
+  fetchCurrentQuestions: async (): Promise<QuestionDTO[]> => questionsTest,
   createDuplicatedVisitFormForApproval: async (): Promise<string> => newDuplicatedVisitFormId,
   generateProbandPdf: async (): Promise<PdfDTO> => pdfTest,
   generatePhantomPdf: async (): Promise<PdfDTO> => pdfTest,

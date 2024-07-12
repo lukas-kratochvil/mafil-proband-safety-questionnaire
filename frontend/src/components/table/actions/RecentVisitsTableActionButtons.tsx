@@ -7,11 +7,11 @@ import type { RecentVisitsTableVisit } from "@app/model/visit";
 import { RoutingPath } from "@app/routing-paths";
 import { LocalizedError } from "@app/util/error-handling/LocalizedError";
 import { fetchCurrentQuestions } from "@app/util/server_API/calls";
-import type { OrderedQuestionDTO } from "@app/util/server_API/dto";
+import type { QuestionDTO } from "@app/util/server_API/dto";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
-const currentQuestionsIdComparator = (a: OrderedQuestionDTO, b: OrderedQuestionDTO) => {
+const currentQuestionsIdComparator = (a: QuestionDTO, b: QuestionDTO) => {
   if (a.id < b.id) {
     return -1;
   }
