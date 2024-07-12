@@ -1,4 +1,4 @@
-import { compareAsc, getUnixTime, subDays } from "date-fns";
+import { compareAsc, compareDesc, getUnixTime, subDays } from "date-fns";
 import envVars from "@app/envVars";
 import type { Device } from "@app/model/device";
 import type { ValidatedOperatorFormData } from "@app/model/form";
@@ -498,13 +498,11 @@ const fetchVisitPDF = async (visitUuid: string): Promise<MDB_VisitFileDTO> => {
     throw new Error(data.detail);
   }
 
-  const pdf = data.results.find((file) => file.file_type.includes("reg_form"));
-
-  if (pdf === undefined) {
+  if (data.results.length === 0) {
     throw new Error("Visit PDF not provided!");
   }
 
-  return pdf;
+  return data.results.sort((a, b) => compareDesc(a.uploaded, b.uploaded))[0]!;
 };
 
 export const fetchVisitDetail = async (visitUuid: string | undefined): Promise<VisitDetail | never> => {
