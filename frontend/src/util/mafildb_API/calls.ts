@@ -498,11 +498,11 @@ const fetchVisitPDF = async (visitUuid: string): Promise<MDB_VisitFileDTO> => {
     throw new Error(data.detail);
   }
 
-  if (data.results.length === 0) {
+  if (data.length === 0) {
     throw new Error("Visit PDF not provided!");
   }
 
-  return data.results.sort((a, b) => compareDesc(a.uploaded, b.uploaded))[0]!;
+  return data.sort((a, b) => compareDesc(a.uploaded, b.uploaded))[0]!;
 };
 
 export const fetchVisitDetail = async (visitUuid: string | undefined): Promise<VisitDetail | never> => {

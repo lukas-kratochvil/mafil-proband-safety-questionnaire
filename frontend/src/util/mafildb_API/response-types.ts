@@ -52,4 +52,4 @@ export type MDB_AddPdfToVisitResponse = MDB_GetOneResponse<
   Pick<MDB_VisitFileDTO, "id" | "uploaded" | "name" | "file_type" | "mime_type">
 >;
 
-export type MDB_GetVisitFilesResponse = MDB_GetManyResponse<MDB_VisitFileDTO>;
+export type MDB_GetVisitFilesResponse = MDB_GetOneResponse<MDB_VisitFileDTO[]>;
