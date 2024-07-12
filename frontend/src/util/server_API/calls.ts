@@ -5,7 +5,6 @@ import type {
   ValidatedOperatorModifiedFormData,
   ValidatedProbandFormData,
 } from "@app/model/form";
-import type { ProbandVisitLanguageCode } from "@app/model/visit";
 import type { ApprovalRoomTableVisitForm, WaitingRoomTableVisitForm } from "@app/model/visitForm";
 import { serverApi } from "@app/util/axios/serverApi";
 import type {
@@ -456,7 +455,7 @@ export const generateProbandPdf = async (
   visitId: string,
   visitFormData: ValidatedOperatorFormData,
   finalizerUsername: string | undefined,
-  probandLanguageCode: ProbandVisitLanguageCode | undefined,
+  probandLanguageCode: LanguageCode | undefined,
   approverUsername?: string
 ): Promise<PdfDTO> => {
   if (probandLanguageCode === undefined) {

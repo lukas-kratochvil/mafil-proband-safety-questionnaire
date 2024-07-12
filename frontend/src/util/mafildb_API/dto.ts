@@ -1,5 +1,5 @@
+import type { LanguageCode } from "@app/i18n/i18n";
 import type { AnswerOption } from "@app/model/form";
-import type { ProbandVisitLanguageCode } from "@app/model/visit";
 import type { ObjectValues } from "../utils";
 
 export type MDB_LanguageDTO = {
@@ -22,7 +22,7 @@ export type MDB_DeviceDTO = {
 };
 
 // phantom has preferred language 'null'
-export type MDB_PreferredLanguageCode = ProbandVisitLanguageCode | null;
+export type MDB_PreferredLanguageCode = LanguageCode | null;
 export type MDB_GenderCode = "ns" | "m" | "f" | "o";
 export type MDB_HandednessCode = "ns" | "rh" | "lh" | "fl" | "un";
 

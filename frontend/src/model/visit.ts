@@ -1,12 +1,9 @@
-import type { LanguageCode } from "@app/i18n/i18n";
 import type { MDB_AnswerDTO, MDB_VisitDTO } from "@app/util/mafildb_API/dto";
 import type { GenderDTO, HandednessDTO, OperatorDTO, VisitFormAnswerIncludingQuestion } from "@app/util/server_API/dto";
 import type { Device } from "./device";
 import type { Project } from "./project";
 import type { RecentVisitSubject, Subject } from "./subject";
 import type { VisitPDF } from "./visitPdf";
-
-export type ProbandVisitLanguageCode = LanguageCode;
 
 type Answer = {
   questionId: MDB_AnswerDTO["question_id"];
