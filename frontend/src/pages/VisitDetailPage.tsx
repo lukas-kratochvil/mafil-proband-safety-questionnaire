@@ -163,7 +163,7 @@ const VisitDetailPage = () => {
 
     stateButtons.push(getBackButtonProps(navigate));
     setButtons(stateButtons);
-  }, [navigate, visitDetail]);
+  }, [navigate, refetch, visitDetail]);
 
   if (isError) {
     return (
