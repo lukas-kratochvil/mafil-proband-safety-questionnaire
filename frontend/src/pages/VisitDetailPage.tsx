@@ -146,6 +146,7 @@ const VisitDetailPage = () => {
     data: visitDetail,
     isLoading,
     isError,
+    error: err,
     refetch,
   } = useQuery({ queryKey: ["visit", id], queryFn: () => fetchVisitDetail(id) });
   const navigate = useNavigate();
@@ -169,6 +170,7 @@ const VisitDetailPage = () => {
     return (
       <PageContainer>
         <ErrorAlert />
+        {/* TODO: remove error message */ err instanceof Error && <div>{err.message}</div>}
       </PageContainer>
     );
   }
