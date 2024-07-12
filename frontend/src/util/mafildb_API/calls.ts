@@ -20,6 +20,7 @@ import {
   type MDB_AddPdfToVisitInput,
   type MDB_CreateSubjectInput,
   type MDB_CreateVisitInput,
+  type MDB_PreferredLanguageCode,
   type MDB_UpdateVisitSignatureStateInput,
   type MDB_VisitDTO,
   type MDB_VisitFileDTO,
@@ -153,7 +154,7 @@ const fetchDevice = async (id: number): Promise<Device> => {
 
 const createVisitSubject = async (
   visitFormData: ValidatedOperatorFormData,
-  probandLanguageCode: ProbandVisitLanguageCode
+  probandLanguageCode: MDB_PreferredLanguageCode
 ): Promise<string | never> => {
   const createData: MDB_CreateSubjectInput = {
     first_name: visitFormData.name,
@@ -182,10 +183,14 @@ const createVisit = async (
   isPhantom: boolean,
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
-  probandLanguageCode: ProbandVisitLanguageCode,
+  probandLanguageCode: MDB_PreferredLanguageCode | undefined,
   approverUsername?: string,
   approvedAt?: Date
 ): Promise<CreatedVisitData | never> => {
+  if (probandLanguageCode === undefined || (!isPhantom && probandLanguageCode === null)) {
+    throw new Error("Missing proband language code!");
+  }
+
   if (finalizerUsername === undefined) {
     throw new Error("Missing username of the operator who finalized the visit!");
   }
@@ -249,14 +254,9 @@ export const createFinalizedVisit = async (
   approvalState: MDB_CreateVisitInput["checked"],
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
-  probandLanguageCode: ProbandVisitLanguageCode | undefined
-): Promise<CreatedVisitData | never> => {
-  if (probandLanguageCode === undefined) {
-    throw new Error("Missing proband language code!");
-  }
-
-  return createVisit(visitFormData, approvalState, false, finalizerUsername, finalizedAt, probandLanguageCode);
-};
+  probandLanguageCode: MDB_PreferredLanguageCode | undefined
+): Promise<CreatedVisitData | never> =>
+  createVisit(visitFormData, approvalState, false, finalizerUsername, finalizedAt, probandLanguageCode);
 
 export const createVisitFromApproval = async (
   visitFormData: ValidatedOperatorFormData,
@@ -267,10 +267,6 @@ export const createVisitFromApproval = async (
   approverUsername: string | undefined,
   approvedAt: Date | undefined
 ): Promise<CreatedVisitData | never> => {
-  if (probandLanguageCode === undefined) {
-    throw new Error("Missing proband language code!");
-  }
-
   if (approverUsername === undefined) {
     throw new Error("Missing visit approver username!");
   }

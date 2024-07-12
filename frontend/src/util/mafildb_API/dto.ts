@@ -21,11 +21,13 @@ export type MDB_DeviceDTO = {
   name: string;
 };
 
+// phantom has preferred language 'null'
+export type MDB_PreferredLanguageCode = ProbandVisitLanguageCode | null;
 export type MDB_GenderCode = "ns" | "m" | "f" | "o";
 export type MDB_HandednessCode = "ns" | "rh" | "lh" | "fl" | "un";
 
 export type MDB_CreateSubjectInput = {
-  preferred_language: ProbandVisitLanguageCode;
+  preferred_language: MDB_PreferredLanguageCode;
   first_name: string;
   last_name: string;
   birth_date: string;
