@@ -7,8 +7,19 @@ import type { RecentVisitsTableVisit } from "@app/model/visit";
 import { RoutingPath } from "@app/routing-paths";
 import { LocalizedError } from "@app/util/error-handling/LocalizedError";
 import { fetchCurrentQuestions } from "@app/util/server_API/calls";
+import type { OrderedQuestionDTO } from "@app/util/server_API/dto";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
+
+const currentQuestionsIdComparator = (a: OrderedQuestionDTO, b: OrderedQuestionDTO) => {
+  if (a.id < b.id) {
+    return -1;
+  }
+  if (a.id > b.id) {
+    return 1;
+  }
+  return 0;
+};
 
 type RecentVisitsTableActionButtonsProps = {
   visit: RecentVisitsTableVisit;
@@ -21,16 +32,16 @@ export const RecentVisitsTableActionButtons = ({ visit }: RecentVisitsTableActio
   const onDuplicate = async () => {
     try {
       if (!visit.isPhantom) {
-        const currentQuestions = await fetchCurrentQuestions();
-        const visitQuestionIds = visit.answers.map((answer) => answer.questionId);
+        // MAFILDB visit contains even those questions that are hidden in the form by the subject gender
+        const currentQuestions = (await fetchCurrentQuestions()).sort(currentQuestionsIdComparator);
+        const visitQuestionIds = visit.answers.map((answer) => answer.questionId).sort();
 
-        // Check that current questions weren't modified after this visit was created in the MAFILDB
+        // Check that current questions weren't modified after this visit was finalized
         if (
           currentQuestions.length !== visitQuestionIds.length
           || currentQuestions.some(
-            (currentQuestion) =>
-              !visitQuestionIds.includes(currentQuestion.id)
-              || compareAsc(currentQuestion.updatedAt, visit.created) !== 1
+            (question, i) =>
+              question.id !== visitQuestionIds[i] || compareAsc(question.updatedAt, visit.finalizationDate) === 1
           )
         ) {
           throw new LocalizedError("cannotDuplicateVisitDueToDifferentSafetyQuestions");
