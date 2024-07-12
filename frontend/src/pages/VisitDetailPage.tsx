@@ -1,5 +1,5 @@
 import { Button, Grid, Skeleton, Stack } from "@mui/material";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
@@ -12,8 +12,6 @@ import { fetchVisitDetail, updateVisitSignatureState } from "@app/util/mafildb_A
 import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
 import { getBackButtonProps, handleErrorsWithToast, type ButtonProps } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
-
-const getVisitDetailQueryKey = (visitId: string | undefined) => ["visit", visitId];
 
 type VisitDetailButtonProps = ButtonProps & {
   disabled?: boolean;
@@ -72,7 +70,7 @@ const downloadPdf = (pdf: VisitDetailPDF): void => {
   document.body.removeChild(downloadLink);
 };
 
-const getButtons = (visitDetail: VisitDetail, invalidateVisitDetail: () => void): VisitDetailButtonProps[] => {
+const getButtons = (visitDetail: VisitDetail, refetch: () => void): VisitDetailButtonProps[] => {
   if (visitDetail.isPhantom) {
     return [
       {
@@ -94,7 +92,7 @@ const getButtons = (visitDetail: VisitDetail, invalidateVisitDetail: () => void)
               onClick: async () => {
                 downloadPdf(visitDetail.pdf);
                 await updateVisitSignatureState(visitDetail.uuid, MDB_SignatureState.FOR_SIGNATURE_PHYSICALLY);
-                invalidateVisitDetail();
+                refetch();
               },
             },
             {
@@ -111,7 +109,7 @@ const getButtons = (visitDetail: VisitDetail, invalidateVisitDetail: () => void)
               titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
               onClick: async () => {
                 await updateVisitSignatureState(visitDetail.uuid, MDB_SignatureState.SIGNED_PHYSICALLY);
-                invalidateVisitDetail();
+                refetch();
               },
             },
           ];
@@ -121,7 +119,7 @@ const getButtons = (visitDetail: VisitDetail, invalidateVisitDetail: () => void)
               titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
               onClick: async () => {
                 await updateVisitSignatureState(visitDetail.uuid, MDB_SignatureState.SIGNED_ELECTRONICALLY);
-                invalidateVisitDetail();
+                refetch();
               },
             },
           ];
@@ -144,12 +142,12 @@ const getButtons = (visitDetail: VisitDetail, invalidateVisitDetail: () => void)
 const VisitDetailPage = () => {
   const { t } = useTranslation(defaultNS);
   const { id } = useParams();
-  const queryClient = useQueryClient();
   const {
     data: visitDetail,
     isLoading,
     isError,
-  } = useQuery({ queryKey: getVisitDetailQueryKey(id), queryFn: () => fetchVisitDetail(id) });
+    refetch,
+  } = useQuery({ queryKey: ["visit", id], queryFn: () => fetchVisitDetail(id) });
   const navigate = useNavigate();
 
   const [coloredInfoStripe, setColoredInfoStripe] = useState<ColoredInfoStripeProps>();
@@ -160,18 +158,12 @@ const VisitDetailPage = () => {
 
     if (visitDetail !== undefined) {
       setColoredInfoStripe(getColoredInfoStripe(visitDetail));
-      const invalidateVisitDetail = () => {
-        void queryClient.invalidateQueries({
-          queryKey: getVisitDetailQueryKey(visitDetail.visitId),
-          exact: true,
-        });
-      };
-      stateButtons.push(...getButtons(visitDetail, invalidateVisitDetail));
+      stateButtons.push(...getButtons(visitDetail, refetch));
     }
 
     stateButtons.push(getBackButtonProps(navigate));
     setButtons(stateButtons);
-  }, [queryClient, navigate, visitDetail]);
+  }, [navigate, visitDetail]);
 
   if (isError) {
     return (
