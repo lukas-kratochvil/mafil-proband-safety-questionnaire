@@ -15,7 +15,4 @@ export type RecentVisitSubject = {
   phone: MDB_SubjectDTO["phone"];
 };
 
-export type Subject = Omit<RecentVisitSubject, "preferredLanguageCode" | "nativeLanguage"> & {
-  preferredLanguageCode: NonNullable<RecentVisitSubject["preferredLanguageCode"]>;
-  nativeLanguage: NativeLanguage;
-};
+export type Subject = Omit<RecentVisitSubject, "nativeLanguage"> & { nativeLanguage: NativeLanguage };

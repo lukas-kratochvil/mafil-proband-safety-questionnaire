@@ -7,7 +7,6 @@ import type { Project } from "@app/model/project";
 import type {
   CreatedVisitData,
   DuplicatedVisitIncludingQuestions,
-  ProbandVisitLanguageCode,
   RecentVisitsTableVisit,
   VisitDetail,
 } from "@app/model/visit";
@@ -263,7 +262,7 @@ export const createVisitFromApproval = async (
   state: MDB_CreateVisitInput["checked"],
   finalizerUsername: string | undefined,
   finalizedAt: Date | undefined,
-  probandLanguageCode: ProbandVisitLanguageCode | undefined,
+  probandLanguageCode: MDB_PreferredLanguageCode | undefined,
   approverUsername: string | undefined,
   approvedAt: Date | undefined
 ): Promise<CreatedVisitData | never> => {
@@ -428,7 +427,7 @@ export const fetchDuplicatedVisit = async (
 
   const visit = await fetchVisit(visitUuid);
 
-  if (visit.subject.preferred_language === null) {
+  if (!visit.is_phantom && visit.subject.preferred_language === null) {
     throw new Error("Visit subject preferred language is null!");
   }
 

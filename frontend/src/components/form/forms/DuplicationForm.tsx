@@ -166,7 +166,7 @@ export const DuplicationForm = () => {
                 visit.visitId,
                 data,
                 operator?.username,
-                duplicatedVisit?.subject.preferredLanguageCode
+                duplicatedVisit?.subject.preferredLanguageCode ?? undefined
               );
               await addPdfToVisit(visit.uuid, pdf);
               navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.uuid}`);
