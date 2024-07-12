@@ -1,4 +1,5 @@
 import type { MDB_SubjectDTO } from "@app/util/mafildb_API/dto";
+import type { GenderCode, HandednessCode } from "@app/util/server_API/dto";
 import type { NativeLanguage } from "./language";
 
 export type RecentVisitSubject = {
@@ -8,8 +9,8 @@ export type RecentVisitSubject = {
   surname: MDB_SubjectDTO["last_name"];
   birthdate: MDB_SubjectDTO["birth_date"];
   personalId: MDB_SubjectDTO["personal_ID"];
-  genderCode: MDB_SubjectDTO["gender"];
-  handednessCode: MDB_SubjectDTO["handedness"];
+  genderCode: GenderCode;
+  handednessCode: HandednessCode;
   nativeLanguage: MDB_SubjectDTO["native_language"];
   email: MDB_SubjectDTO["email"];
   phone: MDB_SubjectDTO["phone"];

@@ -18,7 +18,6 @@ import { dummyVisits, generateVisitId, PDF_CONTENT } from "@app/util/mafildb_API
 import { fetchCurrentQuestions, fetchGender, fetchHandedness, fetchOperator, fetchQuestion } from "../server_API/calls";
 import type { PdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import { MDB_SignatureState, type MDB_CreateVisitInput, type MDB_UpdateVisitSignatureStateInput } from "./dto";
-import { transformMDBGenderCode, transformMDBHandednessCode } from "./transformers";
 
 export const fetchLanguagesDev = async (): Promise<Language[]> => nativeLanguagesTest;
 
@@ -115,8 +114,8 @@ export const fetchDuplicatedVisitDev = async (
   }
 
   const [gender, handedness, answersIncludingQuestions] = await Promise.all([
-    fetchGender(transformMDBGenderCode(visit.subject.genderCode)),
-    fetchHandedness(transformMDBHandednessCode(visit.subject.handednessCode)),
+    fetchGender(visit.subject.genderCode),
+    fetchHandedness(visit.subject.handednessCode),
     Promise.all(
       visit.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
         const question = await fetchQuestion(answer.questionId);

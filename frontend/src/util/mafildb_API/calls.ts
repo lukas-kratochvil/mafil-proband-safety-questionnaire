@@ -388,9 +388,9 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
             surname: visit.subject.last_name,
             birthdate: visit.subject.birth_date,
             personalId: visit.subject.personal_ID,
-            genderCode: visit.subject.gender,
+            genderCode: transformMDBGenderCode(visit.subject.gender),
             nativeLanguage: visit.subject.native_language,
-            handednessCode: visit.subject.handedness,
+            handednessCode: transformMDBHandednessCode(visit.subject.handedness),
           },
           finalizer,
           finalizationDate: visit.registration_finalize_date,
@@ -475,9 +475,9 @@ export const fetchDuplicatedVisit = async (
       surname: visit.subject.last_name,
       birthdate: visit.subject.birth_date,
       personalId: visit.subject.personal_ID,
-      genderCode: visit.subject.gender,
+      genderCode: transformMDBGenderCode(visit.subject.gender),
       nativeLanguage,
-      handednessCode: visit.subject.handedness,
+      handednessCode: transformMDBHandednessCode(visit.subject.handedness),
     },
   };
 };
