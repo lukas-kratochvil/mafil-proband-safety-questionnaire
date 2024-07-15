@@ -81,7 +81,7 @@ const WaitingRoomTablePage = () => {
     [t]
   );
 
-  const defaultSorting: DefaultSorting = [{ id: "createdAt", desc: false }];
+  const defaultSorting: DefaultSorting = [{ id: "createdAt", desc: true }];
 
   return (
     <PageContainer isTablePage>

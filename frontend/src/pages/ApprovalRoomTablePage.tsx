@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { TranslatedEntityTableCell } from "@app/components/table/TranslatedEntityTableCell";
 import { ApprovalRoomTableActionButtons } from "@app/components/table/actions/ApprovalRoomTableActionButtons";
-import { defaultTableProps } from "@app/components/table/default-table-props";
+import { defaultTableProps, type DefaultSorting } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n/i18n";
 import type { ApprovalRoomTableVisitForm } from "@app/model/visitForm";
 import { fetchApprovalRoomTableVisitForms } from "@app/util/server_API/calls";
@@ -81,9 +81,13 @@ const ApprovalRoomTablePage = () => {
     [t]
   );
 
+  const defaultSorting: DefaultSorting = [{ id: "createdAt", desc: true }];
+
   return (
     <PageContainer isTablePage>
-      <MaterialReactTable {...defaultTableProps(t("title"), columns, visitForms, isFetching, isLoading, isError)} />
+      <MaterialReactTable
+        {...defaultTableProps(t("title"), columns, visitForms, isFetching, isLoading, isError, defaultSorting)}
+      />
     </PageContainer>
   );
 };

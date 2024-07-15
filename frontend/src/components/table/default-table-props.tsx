@@ -2,7 +2,8 @@ import { Typography } from "@mui/material";
 import type { MaterialReactTableProps, MRT_ColumnDef as MRTColumnDef } from "material-react-table";
 
 export type DefaultSorting = {
-  id: string; // column id
+  /** Column id */
+  id: string;
   desc: boolean;
 }[];
 
