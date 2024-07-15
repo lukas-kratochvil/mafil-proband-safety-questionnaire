@@ -29,6 +29,7 @@ import type {
 } from "@app/util/server_API/dto";
 import { createServerApiCallError, type GraphQlError } from "../error-handling/server-utils";
 import { fetchNativeLanguage, fetchProject } from "../mafildb_API/calls";
+import { isBase64PDFContent } from "../utils";
 import { CREATE_VISIT_FORM, REMOVE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
 import {
   AUTHENTICATE_OPERATOR,
@@ -447,6 +448,11 @@ const generatePdf = async (
     })),
   };
   const data = await serverApiCall<GeneratePdfResponse>(GENERATE_PDF, variables);
+
+  if (!isBase64PDFContent(data.generatePDF.content)) {
+    throw new Error("Generated PDF has malformed content!");
+  }
+
   return data.generatePDF;
 };
 

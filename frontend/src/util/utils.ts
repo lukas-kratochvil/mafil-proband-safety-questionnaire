@@ -1,4 +1,5 @@
 import { AxiosError } from "axios";
+import isBase64 from "is-base64";
 import toast from "react-hot-toast";
 import type { TFunction } from "react-i18next";
 import type { NavigateFunction } from "react-router-dom";
@@ -34,3 +35,6 @@ export const handleErrorsWithToast = (e: unknown, t: TFunction<"translation">): 
 
   toast.error(errorMessage, { duration: 6000 });
 };
+
+export const isBase64PDFContent = (content: string): boolean =>
+  isBase64(content, { allowEmpty: false, paddingRequired: true });

@@ -14,6 +14,7 @@ import type { VisitPDF } from "@app/model/visitPdf";
 import { mafildbApi } from "@app/util/axios/mafildbApi";
 import { fetchGender, fetchHandedness, fetchOperator, fetchQuestion } from "../server_API/calls";
 import type { OperatorDTO, PdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
+import { isBase64PDFContent } from "../utils";
 import {
   MDB_ApprovalState,
   type MDB_AddPdfToVisitInput,
@@ -494,10 +495,16 @@ const fetchVisitPDF = async (visitUuid: string): Promise<MDB_VisitFileDTO> => {
   }
 
   if (data.length === 0) {
-    throw new Error("Visit PDF not provided!");
+    throw new Error("Visit registration PDF not provided!");
   }
 
-  return data.sort((a, b) => compareDesc(a.uploaded, b.uploaded))[0]!;
+  const visitFile = data.sort((a, b) => compareDesc(a.uploaded, b.uploaded))[0]!;
+
+  if (!isBase64PDFContent(visitFile.content)) {
+    throw new Error("Visit registration PDF has malformed content!");
+  }
+
+  return visitFile;
 };
 
 export const fetchVisitDetail = async (visitUuid: string | undefined): Promise<VisitDetail | never> => {
