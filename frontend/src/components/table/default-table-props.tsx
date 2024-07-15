@@ -31,11 +31,13 @@ export const defaultTableProps = <T extends Record<string, any>>(
         children: "Error loading data",
       }
     : undefined,
+  initialState: {
+    sorting: defaultSorting,
+  },
   state: {
     isLoading,
     showAlertBanner: isError,
     showProgressBars: isFetching,
-    sorting: defaultSorting,
   },
   renderTopToolbarCustomActions: () => (
     <Typography
