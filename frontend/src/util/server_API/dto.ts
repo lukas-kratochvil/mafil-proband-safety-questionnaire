@@ -74,7 +74,7 @@ export type VisitFormState = "NEW" | "IN_APPROVAL" | "SENT_TO_MAFILDB" | "PDF_GE
 export type WaitingRoomTableVisitFormDTO = {
   id: string;
   state: VisitFormState;
-  createdAt?: Date;
+  createdAt: Date;
   name: string;
   surname: string;
   personalId: string;

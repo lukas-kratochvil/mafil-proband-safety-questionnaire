@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { compareAsc, format, parse } from "date-fns";
+import { compareAsc, format } from "date-fns";
 import MaterialReactTable, { type MRT_ColumnDef as MRTColumnDef, type MRT_Row as MRTRow } from "material-react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -11,9 +11,6 @@ import type { RecentVisitsTableVisit } from "@app/model/visit";
 import { fetchRecentVisits } from "@app/util/mafildb_API/calls";
 import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
 import { PageContainer } from "./PageContainer";
-
-const measurementDateFormat = "d.M.y";
-const createdDateFormat = "d.M.y H:mm";
 
 const getStateLocalizationString = (visit: RecentVisitsTableVisit): string | undefined => {
   if (visit.isPhantom) {
@@ -79,13 +76,9 @@ const RecentVisitsTablePage = () => {
       {
         header: t("header.processedDate"),
         id: "processedDate",
-        accessorFn: (visit) => format(visit.measurementDate, measurementDateFormat),
-        sortingFn: (rowA, rowB) =>
-          // Sorting is done by 'created' attribute, because the 'date' attribute does not contain the time
-          compareAsc(
-            parse(`${rowA.original.created}`, createdDateFormat, new Date()),
-            parse(`${rowB.original.created}`, createdDateFormat, new Date())
-          ),
+        accessorFn: (visit) => format(visit.measurementDate, "d.M.y"),
+        // Sorting is done by 'created' attribute, because the 'measurementDate' does not contain the time
+        sortingFn: (rowA, rowB) => compareAsc(rowA.original.created, rowB.original.created),
         maxSize: 0,
       },
       {

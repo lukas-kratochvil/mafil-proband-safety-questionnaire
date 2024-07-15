@@ -35,6 +35,7 @@ const answerIncludingQuestion: VisitFormAnswerIncludingQuestion = {
 
 const waitingRoomVisitForm: WaitingRoomVisitFormIncludingQuestions = {
   id: "123",
+  createdAt: new Date(),
   state: "NEW",
   probandLanguageCode: "cs",
   name: "Name",

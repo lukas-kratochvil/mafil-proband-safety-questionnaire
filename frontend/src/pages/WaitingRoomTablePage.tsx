@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { compareAsc, format, parse } from "date-fns";
+import { compareAsc, format } from "date-fns";
 import MaterialReactTable, { type MRT_ColumnDef as MRTColumnDef, type MRT_Row as MRTRow } from "material-react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -11,10 +11,7 @@ import type { WaitingRoomTableVisitForm } from "@app/model/visitForm";
 import { fetchWaitingRoomTableVisitForms } from "@app/util/server_API/calls";
 import { PageContainer } from "./PageContainer";
 
-const createdAtFormat = "d.M.y H:mm";
-const probandBirthdateFormat = "d.M.y";
-
-const queryKey = ["waitingRoomVisitForms"];
+const queryKey = ["waitingRoomVisitForms"] as const;
 
 const WaitingRoomTablePage = () => {
   const { t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomTablePage" });
@@ -30,12 +27,8 @@ const WaitingRoomTablePage = () => {
       {
         header: t("header.registrationDate"),
         id: "createdAt",
-        accessorFn: (visit) => (visit.createdAt ? format(visit.createdAt, createdAtFormat) : ""),
-        sortingFn: (rowA, rowB, columnId) =>
-          compareAsc(
-            parse(`${rowA.getValue(columnId)}`, createdAtFormat, new Date()),
-            parse(`${rowB.getValue(columnId)}`, createdAtFormat, new Date())
-          ),
+        accessorFn: (visit) => format(visit.createdAt, "d.M.y H:mm"),
+        sortingFn: (rowA, rowB) => compareAsc(rowA.original.createdAt, rowB.original.createdAt),
         maxSize: 0,
       },
       {
@@ -52,12 +45,8 @@ const WaitingRoomTablePage = () => {
       {
         header: t("header.birthdate"),
         id: "birthdate",
-        accessorFn: (visit) => format(visit.birthdate, probandBirthdateFormat),
-        sortingFn: (rowA, rowB, columnId) =>
-          compareAsc(
-            parse(`${rowA.getValue(columnId)}`, probandBirthdateFormat, new Date()),
-            parse(`${rowB.getValue(columnId)}`, probandBirthdateFormat, new Date())
-          ),
+        accessorFn: (visit) => format(visit.birthdate, "d.M.y"),
+        sortingFn: (rowA, rowB) => compareAsc(rowA.original.birthdate, rowB.original.birthdate),
         maxSize: 0,
       },
       {
