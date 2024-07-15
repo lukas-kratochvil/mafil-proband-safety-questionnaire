@@ -41,7 +41,8 @@ const getStateLocalizationString = (visit: RecentVisitsTableVisit): string | und
 };
 
 const RecentVisitsTablePage = () => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "recentVisitsTablePage" });
+  const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "recentVisitsTablePage" });
+  const collator = useMemo(() => new Intl.Collator(i18n.language), [i18n.language]);
   const {
     data: visits,
     isFetching,
@@ -60,17 +61,20 @@ const RecentVisitsTablePage = () => {
         header: t("header.proband"),
         id: "proband",
         accessorFn: (visit) => `${visit.subject.surname}, ${visit.subject.name}`,
+        sortingFn: (rowA, rowB, columnId) => collator.compare(rowA.getValue(columnId), rowB.getValue(columnId)),
         minSize: 150,
       },
       {
         header: t("header.project"),
         accessorKey: "project.acronym",
+        sortingFn: (rowA, rowB, columnId) => collator.compare(rowA.getValue(columnId), rowB.getValue(columnId)),
         minSize: 300,
       },
       {
         header: t("header.device"),
         id: "device",
         accessorFn: (visit) => visit.device?.name ?? "",
+        sortingFn: (rowA, rowB, columnId) => collator.compare(rowA.getValue(columnId), rowB.getValue(columnId)),
         maxSize: 0,
       },
       {
@@ -85,11 +89,13 @@ const RecentVisitsTablePage = () => {
         header: t("header.operatorProcessed"),
         id: "processUser",
         accessorFn: (visit) => (visit.finalizer ? `${visit.finalizer.surname}, ${visit.finalizer.name}` : ""),
+        sortingFn: (rowA, rowB, columnId) => collator.compare(rowA.getValue(columnId), rowB.getValue(columnId)),
         maxSize: 0,
       },
       {
         header: t("header.state"),
         id: "state",
+        columnDefType: "display", // turns off data column features like sorting, filtering, etc.
         // eslint-disable-next-line react/no-unstable-nested-components
         Cell: ({ row }: { row: MRTRow<RecentVisitsTableVisit> }) => {
           const stateLocalizationString = getStateLocalizationString(row.original);
@@ -110,7 +116,7 @@ const RecentVisitsTablePage = () => {
         minSize: 300,
       },
     ],
-    [t]
+    [collator, t]
   );
 
   const defaultSorting: DefaultSorting = [{ id: "processedDate", desc: true }];

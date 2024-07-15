@@ -12,7 +12,8 @@ import { fetchApprovalRoomTableVisitForms } from "@app/util/server_API/calls";
 import { PageContainer } from "./PageContainer";
 
 const ApprovalRoomTablePage = () => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "approvalRoomTablePage" });
+  const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "approvalRoomTablePage" });
+  const collator = useMemo(() => new Intl.Collator(i18n.language), [i18n.language]);
   const {
     data: visitForms,
     isFetching,
@@ -32,12 +33,14 @@ const ApprovalRoomTablePage = () => {
       {
         header: t("header.project"),
         accessorKey: "project.acronym",
+        sortingFn: (rowA, rowB, columnId) => collator.compare(rowA.getValue(columnId), rowB.getValue(columnId)),
         minSize: 300,
       },
       {
         header: t("header.proband"),
         id: "proband",
         accessorFn: (visit) => `${visit.surname}, ${visit.name}`,
+        sortingFn: (rowA, rowB, columnId) => collator.compare(rowA.getValue(columnId), rowB.getValue(columnId)),
         minSize: 150,
       },
       {
@@ -53,18 +56,20 @@ const ApprovalRoomTablePage = () => {
         maxSize: 0,
       },
       {
+        header: t("header.nativeLanguage"),
+        id: "nativeLanguage",
+        accessorFn: (visit) => visit.nativeLanguage.nativeName,
+        sortingFn: (rowA, rowB, columnId) => collator.compare(rowA.getValue(columnId), rowB.getValue(columnId)),
+        maxSize: 0,
+      },
+      {
         header: t("header.gender"),
         accessorKey: "gender",
+        columnDefType: "display", // turns off data column features like sorting, filtering, etc.
         // eslint-disable-next-line react/no-unstable-nested-components
         Cell: ({ row }: { row: MRTRow<ApprovalRoomTableVisitForm> }) => (
           <TranslatedEntityTableCell translations={row.original.gender.translations} />
         ),
-        maxSize: 0,
-      },
-      {
-        header: t("header.nativeLanguage"),
-        id: "nativeLanguage",
-        accessorFn: (visit) => visit.nativeLanguage.nativeName,
         maxSize: 0,
       },
       {
@@ -78,7 +83,7 @@ const ApprovalRoomTablePage = () => {
         maxSize: 0,
       },
     ],
-    [t]
+    [collator, t]
   );
 
   const defaultSorting: DefaultSorting = [{ id: "createdAt", desc: true }];

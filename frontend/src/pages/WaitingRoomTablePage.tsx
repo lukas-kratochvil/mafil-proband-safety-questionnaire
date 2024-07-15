@@ -14,7 +14,8 @@ import { PageContainer } from "./PageContainer";
 const queryKey = ["waitingRoomVisitForms"] as const;
 
 const WaitingRoomTablePage = () => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomTablePage" });
+  const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomTablePage" });
+  const collator = useMemo(() => new Intl.Collator(i18n.language), [i18n.language]);
   const {
     data: visitForms,
     isFetching,
@@ -35,6 +36,7 @@ const WaitingRoomTablePage = () => {
         header: t("header.proband"),
         id: "proband",
         accessorFn: (visit) => `${visit.surname}, ${visit.name}`,
+        sortingFn: (rowA, rowB, columnId) => collator.compare(rowA.getValue(columnId), rowB.getValue(columnId)),
         minSize: 150,
       },
       {
@@ -50,18 +52,20 @@ const WaitingRoomTablePage = () => {
         maxSize: 0,
       },
       {
+        header: t("header.nativeLanguage"),
+        id: "nativeLanguage",
+        accessorFn: (visit) => visit.nativeLanguage.nativeName,
+        sortingFn: (rowA, rowB, columnId) => collator.compare(rowA.getValue(columnId), rowB.getValue(columnId)),
+        maxSize: 0,
+      },
+      {
         header: t("header.gender"),
         accessorKey: "gender",
+        columnDefType: "display", // turns off data column features like sorting, filtering, etc.
         // eslint-disable-next-line react/no-unstable-nested-components
         Cell: ({ row }: { row: MRTRow<WaitingRoomTableVisitForm> }) => (
           <TranslatedEntityTableCell translations={row.original.gender.translations} />
         ),
-        maxSize: 0,
-      },
-      {
-        header: t("header.nativeLanguage"),
-        id: "nativeLanguage",
-        accessorFn: (visit) => visit.nativeLanguage.nativeName,
         maxSize: 0,
       },
       {
@@ -78,7 +82,7 @@ const WaitingRoomTablePage = () => {
         maxSize: 0,
       },
     ],
-    [t]
+    [collator, t]
   );
 
   const defaultSorting: DefaultSorting = [{ id: "createdAt", desc: true }];
