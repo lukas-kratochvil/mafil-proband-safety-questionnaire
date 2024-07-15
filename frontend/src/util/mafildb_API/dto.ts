@@ -120,8 +120,8 @@ export type MDB_VisitFileType = "reg_form";
 type MDB_VisitFileMimeType = "application/pdf";
 
 export type MDB_AddPdfToVisitInput = {
-  file_type: MDB_VisitFileType;
   name: string; // also contains extension, for example: my_doc.pdf
+  file_type: MDB_VisitFileType;
   mime_type: MDB_VisitFileMimeType;
   content: string; // Base64 encoded PDF content
 };

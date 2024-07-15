@@ -48,8 +48,6 @@ export type MDB_GetVisitsResponse = MDB_GetResponseComplex<MDB_VisitDTO>;
 
 export type MDB_GetVisitResponse = MDB_GetResponse<MDB_VisitDTO>;
 
-export type MDB_AddPdfToVisitResponse = MDB_GetResponse<
-  Pick<MDB_VisitFileDTO, "id" | "uploaded" | "name" | "file_type" | "mime_type">
->;
+export type MDB_AddPdfToVisitResponse = MDB_GetResponse<Omit<MDB_VisitFileDTO, "content">>;
 
 export type MDB_GetVisitFilesResponse = MDB_GetResponse<MDB_VisitFileDTO[]>;

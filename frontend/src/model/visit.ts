@@ -37,7 +37,7 @@ export type CreatedVisitData = Pick<Visit, "uuid" | "visitId">;
 
 export type RecentVisitsTableVisit = Omit<Visit, "deviceId" | "finalizer" | "subject"> & {
   device: Device | null;
-  finalizer: OperatorDTO | null;
+  finalizer: Visit["finalizer"] | null;
   subject: RecentVisitSubject;
 };
 
