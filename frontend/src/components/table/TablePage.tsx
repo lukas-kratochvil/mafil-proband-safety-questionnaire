@@ -29,14 +29,11 @@ export const TablePage = <T extends MRTRowData>({
   const table = useMaterialReactTable({
     columns,
     data: data ?? [],
-    enableDensityToggle: false,
     enableEditing: false,
     enableColumnActions: false,
-    enableColumnFilters: false,
     enableHiding: false,
     enableBottomToolbar: false,
     enablePagination: false,
-    memoMode: "rows", // breaks some dynamic rendering features (read: https://www.material-react-table.com/docs/guides/memoize-components)
     muiToolbarAlertBannerProps: isError
       ? {
           color: "error",
