@@ -15,7 +15,7 @@ export const defaultTableProps = <T extends Record<string, any>>(
   isFetching: boolean,
   isLoading: boolean,
   isError: boolean,
-  defaultSorting?: DefaultSorting
+  defaultSorting: DefaultSorting
 ): MaterialReactTableProps<T> => ({
   columns,
   data: data ?? [],
