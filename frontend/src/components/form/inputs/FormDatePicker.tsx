@@ -1,8 +1,11 @@
 import { useMediaQuery, type Theme } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import CsLocale from "date-fns/locale/cs";
+import csLocale from "date-fns/locale/cs";
+import enLocale from "date-fns/locale/en-US";
+import { useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import type { FormDefaultInputProps } from "./input-props";
 
@@ -12,6 +15,12 @@ type FormDatePickerProps = FormDefaultInputProps & {
 
 export const FormDatePicker = ({ name, label, isOptional, disabled, maxDate }: FormDatePickerProps) => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
+  const { i18n } = useTranslation();
+  const [locale, setLocale] = useState<Locale>();
+
+  useEffect(() => {
+    setLocale(i18n.language === "cs" ? csLocale : enLocale);
+  }, [i18n.language]);
 
   return (
     <FormInputFieldContainer
@@ -24,8 +33,7 @@ export const FormDatePicker = ({ name, label, isOptional, disabled, maxDate }: F
         render={({ field }) => (
           <LocalizationProvider
             dateAdapter={AdapterDateFns}
-            // TODO: change when different language is chosen - find 'Answer : 6' on this page https://www.anycodings.com/2022/01/reactjs-material-ui-how-to-use.html and create similar language mapping
-            adapterLocale={CsLocale}
+            adapterLocale={locale}
           >
             <DatePicker
               value={field.value}
