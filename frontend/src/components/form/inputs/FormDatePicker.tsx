@@ -1,4 +1,4 @@
-import { TextField, useMediaQuery, type Theme } from "@mui/material";
+import { useMediaQuery, type Theme } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import CsLocale from "date-fns/locale/cs";
@@ -24,33 +24,25 @@ export const FormDatePicker = ({ name, label, isOptional, disabled, maxDate }: F
         render={({ field }) => (
           <LocalizationProvider
             dateAdapter={AdapterDateFns}
-            /**
-             * TODO:
-             *  - change when different language is chosen
-             *  - find 'Answer : 6' on this page https://www.anycodings.com/2022/01/reactjs-material-ui-how-to-use.html and create similar language mapping
-             */
+            // TODO: change when different language is chosen - find 'Answer : 6' on this page https://www.anycodings.com/2022/01/reactjs-material-ui-how-to-use.html and create similar language mapping
             adapterLocale={CsLocale}
           >
             <DatePicker
               value={field.value}
               onChange={field.onChange}
               inputRef={field.ref}
-              inputFormat="dd.MM.yyyy"
+              format="dd.MM.yyyy"
               maxDate={maxDate}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  id={name}
-                  onBlur={field.onBlur}
-                  name={field.name}
-                  size={matchesDownSmBreakpoint ? "small" : "medium"}
-                  autoComplete="off"
-                  inputProps={{
-                    ...params.inputProps,
-                    "aria-label": name,
-                  }}
-                />
-              )}
+              slotProps={{
+                textField: {
+                  id: name,
+                  onBlur: field.onBlur,
+                  name: field.name,
+                  size: matchesDownSmBreakpoint ? "small" : "medium",
+                  autoComplete: "off",
+                  inputProps: { "aria-label": name },
+                },
+              }}
               disabled={disabled}
             />
           </LocalizationProvider>

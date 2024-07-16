@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { compareAsc, format } from "date-fns";
-import MaterialReactTable, { type MRT_ColumnDef as MRTColumnDef, type MRT_Row as MRTRow } from "material-react-table";
+import { MaterialReactTable, type MRT_ColumnDef as MRTColumnDef, type MRT_Row as MRTRow } from "material-react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { TranslatedTableCell } from "@app/components/table/TranslatedTableCell";
