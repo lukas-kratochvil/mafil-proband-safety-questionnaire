@@ -26,7 +26,6 @@ export const TablePage = <T extends MRTRowData>({
   isError,
   defaultSorting,
 }: TablePageProps<T>) => {
-  // FIXME: does not show more than 10 rows
   const table = useMaterialReactTable({
     columns,
     data: data ?? [],
@@ -36,6 +35,7 @@ export const TablePage = <T extends MRTRowData>({
     enableColumnFilters: false,
     enableHiding: false,
     enableBottomToolbar: false,
+    enablePagination: false,
     memoMode: "rows", // breaks some dynamic rendering features (read: https://www.material-react-table.com/docs/guides/memoize-components)
     muiToolbarAlertBannerProps: isError
       ? {
