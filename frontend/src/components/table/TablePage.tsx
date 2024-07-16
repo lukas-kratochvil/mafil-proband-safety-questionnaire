@@ -32,6 +32,7 @@ export const TablePage = <T extends MRTRowData>({
     data: data ?? [],
     enableDensityToggle: false,
     enableEditing: false,
+    enableColumnActions: false,
     enableColumnFilters: false,
     enableHiding: false,
     enableBottomToolbar: false,
