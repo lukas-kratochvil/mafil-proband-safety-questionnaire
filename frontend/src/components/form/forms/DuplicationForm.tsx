@@ -196,6 +196,7 @@ export const DuplicationForm = () => {
       });
     }
   }, [
+    duplicatedVisit,
     getValues,
     isDisapproved,
     isEditing,
@@ -205,7 +206,6 @@ export const DuplicationForm = () => {
     setValue,
     trigger,
     valuesBeforeEditing,
-    duplicatedVisit?.subject.preferredLanguageCode,
   ]);
 
   const createVisitFormInApprovalRoom = async (data: ValidatedOperatorFormData) => {
