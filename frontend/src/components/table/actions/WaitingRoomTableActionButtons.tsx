@@ -14,7 +14,6 @@ import { useQueryClient, type QueryKey } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { defaultNS } from "@app/i18n/i18n";
 import { RoutingPath } from "@app/routing-paths";
 import { deleteVisitForm } from "@app/util/server_API/calls";
 import { handleErrorsWithToast } from "@app/util/utils";
@@ -26,7 +25,7 @@ type WaitingRoomTableActionButtonsProps = {
 };
 
 export const WaitingRoomTableActionButtons = ({ visitFormId, queryKey }: WaitingRoomTableActionButtonsProps) => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomTablePage.actions" });
+  const { t } = useTranslation("translation", { keyPrefix: "waitingRoomTablePage.actions" });
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const navigate = useNavigate();
   const queryClient = useQueryClient();

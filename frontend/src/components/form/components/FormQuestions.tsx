@@ -1,6 +1,6 @@
 import { Stack, useMediaQuery, type Theme } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
+import { convertStringToLocalizationKey } from "@app/i18n/i18n";
 import type { FormQac } from "@app/model/form";
 import { FormCardContainer } from "./FormCardContainer";
 import { FormQuestion } from "./FormQuestion";
@@ -13,7 +13,7 @@ type FormQuestionsProps = FormCardProps & {
 };
 
 export const FormQuestions = ({ titleLocalizationKey, qacs, disableInputs, disableComment }: FormQuestionsProps) => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "form.safetyQuestions" });
+  const { t } = useTranslation("translation", { keyPrefix: "form.safetyQuestions" });
   const matchesUpSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
 
   return (

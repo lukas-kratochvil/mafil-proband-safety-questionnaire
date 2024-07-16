@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import { TablePage } from "@app/components/table/TablePage";
 import { TranslatedTableCell } from "@app/components/table/TranslatedTableCell";
 import { RecentVisitsTableActionButtons } from "@app/components/table/actions/RecentVisitsTableActionButtons";
-import { defaultNS } from "@app/i18n/i18n";
 import type { RecentVisitsTableVisit } from "@app/model/visit";
 import { fetchRecentVisits } from "@app/util/mafildb_API/calls";
 import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
@@ -40,7 +39,7 @@ const getStateLocalizationString = (visit: RecentVisitsTableVisit): string | und
 };
 
 const RecentVisitsTablePage = () => {
-  const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "recentVisitsTablePage" });
+  const { i18n, t } = useTranslation("translation", { keyPrefix: "recentVisitsTablePage" });
   const collator = useMemo(() => new Intl.Collator(i18n.language), [i18n.language]);
   const {
     data: visits,

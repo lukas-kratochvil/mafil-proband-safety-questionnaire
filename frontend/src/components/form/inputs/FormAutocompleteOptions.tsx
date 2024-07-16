@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { defaultNS } from "@app/i18n/i18n";
 import type { AutocompleteOption } from "../util/options";
 import { FormAutocomplete } from "./FormAutocomplete";
 import type { FormDefaultInputProps } from "./input-props";
@@ -15,7 +14,7 @@ export const FormAutocompleteOptions = <T,>({
   disabled,
   options,
 }: FormAutocompleteOptionsProps<T>) => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "form" });
+  const { t } = useTranslation("translation", { keyPrefix: "form" });
   const isLoading = options.length === 0;
 
   return (

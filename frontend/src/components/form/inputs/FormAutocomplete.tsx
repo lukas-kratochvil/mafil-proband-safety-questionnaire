@@ -1,7 +1,6 @@
 import { Autocomplete, type FilterOptionsState } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { defaultNS } from "@app/i18n/i18n";
 import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import type { FormAsyncAutocompleteProps } from "./input-props";
@@ -35,7 +34,7 @@ export const FormAutocomplete = <T,>({
   getOptionLabel,
   isOptionEqualToValue,
 }: FormAutocompleteProps<T>) => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
+  const { t } = useTranslation("translation", { keyPrefix: "form.common" });
 
   return (
     <FormInputFieldContainer

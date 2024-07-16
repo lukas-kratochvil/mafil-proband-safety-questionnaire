@@ -2,7 +2,6 @@ import { Button } from "@mui/material";
 import { compareAsc } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { defaultNS } from "@app/i18n/i18n";
 import type { RecentVisitsTableVisit } from "@app/model/visit";
 import { RoutingPath } from "@app/routing-paths";
 import { LocalizedError } from "@app/util/error-handling/LocalizedError";
@@ -26,7 +25,7 @@ type RecentVisitsTableActionButtonsProps = {
 };
 
 export const RecentVisitsTableActionButtons = ({ visit }: RecentVisitsTableActionButtonsProps) => {
-  const { t } = useTranslation(defaultNS);
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const onDuplicate = async () => {

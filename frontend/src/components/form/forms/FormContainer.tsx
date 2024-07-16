@@ -4,7 +4,6 @@ import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormButtons, type FormButtonsProps } from "@app/components/form/components/FormButtons";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
-import { defaultNS } from "@app/i18n/i18n";
 import type { FormPropType } from "@app/model/form";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { FormSkeleton } from "./FormSkeleton";
@@ -24,7 +23,7 @@ export const FormContainer = <TValidatedData,>({
   getFormData,
 }: PropsWithChildren<FormContainerProps<TValidatedData>>) => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
-  const { t } = useTranslation(defaultNS);
+  const { t } = useTranslation();
   const { handleSubmit } = useFormContext<FormPropType>();
 
   const onValid = async (data: FormPropType) => {

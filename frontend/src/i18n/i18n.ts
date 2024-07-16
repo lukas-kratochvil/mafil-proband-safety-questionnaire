@@ -7,7 +7,6 @@ import en from "./en.json";
 export const convertStringToLocalizationKey = (str: string): TemplateStringsArray =>
   str as unknown as TemplateStringsArray;
 
-// TODO: is it necessary to use it explicitly in the translation function inside React components?
 export const defaultNS = "translation";
 
 // Object attributes must be ISO 639-1 language codes: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes.

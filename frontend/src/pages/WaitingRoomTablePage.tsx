@@ -6,14 +6,13 @@ import { useTranslation } from "react-i18next";
 import { TablePage } from "@app/components/table/TablePage";
 import { TranslatedEntityTableCell } from "@app/components/table/TranslatedEntityTableCell";
 import { WaitingRoomTableActionButtons } from "@app/components/table/actions/WaitingRoomTableActionButtons";
-import { defaultNS } from "@app/i18n/i18n";
 import type { WaitingRoomTableVisitForm } from "@app/model/visitForm";
 import { fetchWaitingRoomTableVisitForms } from "@app/util/server_API/calls";
 
 const queryKey = ["waitingRoomVisitForms"] as const;
 
 const WaitingRoomTablePage = () => {
-  const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "waitingRoomTablePage" });
+  const { i18n, t } = useTranslation("translation", { keyPrefix: "waitingRoomTablePage" });
   const collator = useMemo(() => new Intl.Collator(i18n.language), [i18n.language]);
   const {
     data: visitForms,

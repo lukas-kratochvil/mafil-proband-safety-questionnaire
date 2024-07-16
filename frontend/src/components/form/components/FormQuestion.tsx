@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
-import { defaultNS } from "@app/i18n/i18n";
 import { answerOptions, type FormPropType, type FormQac } from "@app/model/form";
 import { FormRadioGroup } from "../inputs/FormRadioGroup";
 import { FormTextField } from "../inputs/FormTextField";
@@ -15,7 +14,7 @@ type FormQuestionProps = FormCardProps & {
 };
 
 export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestionProps) => {
-  const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.safetyQuestions" });
+  const { i18n, t } = useTranslation("translation", { keyPrefix: "form.safetyQuestions" });
   const matchesUpSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
   const { operator } = useAuth();
   const { setValue } = useFormContext<FormPropType>();

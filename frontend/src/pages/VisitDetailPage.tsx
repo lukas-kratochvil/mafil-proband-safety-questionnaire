@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CardContainer } from "@app/components/card/CardContainer";
 import { ColoredInfoStripe, type ColoredInfoStripeProps } from "@app/components/informative/ColoredInfoStripe";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
-import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
+import { convertStringToLocalizationKey } from "@app/i18n/i18n";
 import type { VisitDetail, VisitDetailPDF } from "@app/model/visit";
 import { fetchVisitDetail, updateVisitSignatureState } from "@app/util/mafildb_API/calls";
 import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
@@ -140,7 +140,7 @@ const getButtons = (visitDetail: VisitDetail, refetch: () => void): VisitDetailB
 };
 
 const VisitDetailPage = () => {
-  const { t } = useTranslation(defaultNS);
+  const { t } = useTranslation();
   const { id } = useParams();
   const {
     data: visitDetail,

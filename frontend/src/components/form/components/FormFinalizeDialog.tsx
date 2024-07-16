@@ -11,7 +11,6 @@ import {
 import type { SetStateAction } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { defaultNS } from "@app/i18n/i18n";
 import type { FormPropType, ValidatedOperatorFormData } from "@app/model/form";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { getValidatedOperatorFormData } from "../util/utils";
@@ -25,7 +24,7 @@ type FormFinalizeDialogProps = {
 // Warning dialog that the visit form has to be approved by an operator with higher permissions
 export const FormFinalizeDialog = ({ isOpen, setIsOpen, onContinue }: FormFinalizeDialogProps) => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
-  const { t } = useTranslation(defaultNS, { keyPrefix: "form.finalizeDialog" });
+  const { t } = useTranslation("translation", { keyPrefix: "form.finalizeDialog" });
   const { handleSubmit } = useFormContext<FormPropType>();
 
   const onValid = async (data: FormPropType) => {

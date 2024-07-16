@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { InfoTooltip } from "@app/components/informative/InfoTooltip";
-import { defaultNS } from "@app/i18n/i18n";
 import type { FormPropType } from "@app/model/form";
 import type { NativeLanguage } from "@app/model/language";
 import { fetchNativeLanguages } from "@app/util/mafildb_API/calls";
@@ -38,7 +37,7 @@ const filterNativeLanguages = (options: NativeLanguage[], state: FilterOptionsSt
 };
 
 export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardProps) => {
-  const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "form.probandInfo" });
+  const { i18n, t } = useTranslation("translation", { keyPrefix: "form.probandInfo" });
   const { getFieldState, getValues, resetField, setValue } = useFormContext<FormPropType>();
   const personalIdValue = useWatch<FormPropType, "personalId">({ name: "personalId" });
   const birthdateValue = useWatch<FormPropType, "birthdate">({ name: "birthdate" });

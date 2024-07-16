@@ -1,7 +1,6 @@
 import { Grid, InputLabel, Typography } from "@mui/material";
 import type { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
-import { defaultNS } from "@app/i18n/i18n";
 import { ErrorMessage } from "./ErrorMessage";
 
 export type FormInputFieldContainerProps = {
@@ -16,7 +15,7 @@ export const FormInputFieldContainer = ({
   name,
   isOptional,
 }: PropsWithChildren<FormInputFieldContainerProps>) => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "form.common" });
+  const { t } = useTranslation("translation", { keyPrefix: "form.common" });
 
   return (
     <>

@@ -1,6 +1,5 @@
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { defaultNS } from "@app/i18n/i18n";
 import { FormCardContainer } from "./FormCardContainer";
 
 type FormProbandContactCheckboxProps = {
@@ -8,7 +7,7 @@ type FormProbandContactCheckboxProps = {
 };
 
 export const FormProbandContactCheckbox = ({ setIsContactsRequestShown }: FormProbandContactCheckboxProps) => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandContactCheckbox" });
+  const { t } = useTranslation("translation", { keyPrefix: "form.probandContactCheckbox" });
 
   return (
     <FormCardContainer title={t("title")}>

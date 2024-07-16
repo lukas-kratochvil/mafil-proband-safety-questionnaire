@@ -1,6 +1,6 @@
 import { Button, Grid, useMediaQuery, type Theme } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { convertStringToLocalizationKey, defaultNS } from "@app/i18n/i18n";
+import { convertStringToLocalizationKey } from "@app/i18n/i18n";
 import { handleErrorsWithToast, type ButtonProps } from "@app/util/utils";
 
 type FormSubmitButtonProps<TValidatedData> = Omit<ButtonProps, "onClick"> & {
@@ -13,7 +13,7 @@ export type FormButtonsProps<TValidatedData> = {
 };
 
 export const FormButtons = <T,>({ submitButtonProps, buttonsProps }: FormButtonsProps<T>) => {
-  const { t } = useTranslation(defaultNS);
+  const { t } = useTranslation();
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
   return (

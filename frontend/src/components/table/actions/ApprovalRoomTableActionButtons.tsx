@@ -1,7 +1,6 @@
 import { Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { defaultNS } from "@app/i18n/i18n";
 import { RoutingPath } from "@app/routing-paths";
 import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
@@ -10,7 +9,7 @@ type ApprovalRoomTableActionButtonsProps = {
 };
 
 export const ApprovalRoomTableActionButtons = ({ visitFormId }: ApprovalRoomTableActionButtonsProps) => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "approvalRoomTablePage.actions" });
+  const { t } = useTranslation("translation", { keyPrefix: "approvalRoomTablePage.actions" });
   const navigate = useNavigate();
 
   return (

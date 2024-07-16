@@ -2,12 +2,11 @@ import { Avatar, Button, Stack, Typography, useMediaQuery, type Theme } from "@m
 import { useTranslation } from "react-i18next";
 import { CardContainer } from "@app/components/card/CardContainer";
 import { useAuth } from "@app/hooks/auth/AuthProvider";
-import { defaultNS } from "@app/i18n/i18n";
 import { PageContainer } from "./PageContainer";
 
 const LoginPage = () => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
-  const { t } = useTranslation(defaultNS, { keyPrefix: "loginPage" });
+  const { t } = useTranslation("translation", { keyPrefix: "loginPage" });
   const { logIn } = useAuth();
 
   return (

@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import i18n, { defaultNS, type LanguageCode } from "@app/i18n/i18n";
+import type { LanguageCode } from "@app/i18n/i18n";
 import type { FormPropType } from "@app/model/form";
 import { sanitizeHtml } from "@app/util/htmlSanitization";
 import { fetchProbandContactRequest } from "@app/util/server_API/calls";
@@ -11,7 +11,7 @@ import { FormTextField } from "../inputs/FormTextField";
 import { FormCardContainer } from "./FormCardContainer";
 
 export const FormProbandContactRequest = () => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "form.probandContactRequest" });
+  const { i18n, t } = useTranslation("translation", { keyPrefix: "form.probandContactRequest" });
   const { getValues } = useFormContext<FormPropType>();
 
   const name = getValues("name");

@@ -6,12 +6,11 @@ import { useTranslation } from "react-i18next";
 import { TablePage } from "@app/components/table/TablePage";
 import { TranslatedEntityTableCell } from "@app/components/table/TranslatedEntityTableCell";
 import { ApprovalRoomTableActionButtons } from "@app/components/table/actions/ApprovalRoomTableActionButtons";
-import { defaultNS } from "@app/i18n/i18n";
 import type { ApprovalRoomTableVisitForm } from "@app/model/visitForm";
 import { fetchApprovalRoomTableVisitForms } from "@app/util/server_API/calls";
 
 const ApprovalRoomTablePage = () => {
-  const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "approvalRoomTablePage" });
+  const { i18n, t } = useTranslation("translation", { keyPrefix: "approvalRoomTablePage" });
   const collator = useMemo(() => new Intl.Collator(i18n.language), [i18n.language]);
   const {
     data: visitForms,

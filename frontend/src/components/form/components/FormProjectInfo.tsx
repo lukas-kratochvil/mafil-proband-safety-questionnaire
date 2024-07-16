@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ColoredInfoStripe } from "@app/components/informative/ColoredInfoStripe";
-import { defaultNS } from "@app/i18n/i18n";
 import type { FormPropType } from "@app/model/form";
 import { fetchDevices, fetchProjects } from "@app/util/mafildb_API/calls";
 import { FormAutocomplete } from "../inputs/FormAutocomplete";
@@ -13,7 +12,7 @@ import { FormCardContainer } from "./FormCardContainer";
 import type { PhantomFormCardProps } from "./form-card";
 
 export const FormProjectInfo = ({ isPhantom, disableInputs }: PhantomFormCardProps) => {
-  const { t } = useTranslation(defaultNS, { keyPrefix: "form.projectInfo" });
+  const { t } = useTranslation("translation", { keyPrefix: "form.projectInfo" });
   const { getValues, setValue } = useFormContext<FormPropType>();
 
   const [projects, devices] = useQueries({
