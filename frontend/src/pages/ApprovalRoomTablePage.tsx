@@ -1,15 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { compareAsc, format } from "date-fns";
-import { MaterialReactTable, type MRT_ColumnDef as MRTColumnDef, type MRT_Row as MRTRow } from "material-react-table";
+import type { MRT_ColumnDef as MRTColumnDef, MRT_Row as MRTRow } from "material-react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { TablePage } from "@app/components/table/TablePage";
 import { TranslatedEntityTableCell } from "@app/components/table/TranslatedEntityTableCell";
 import { ApprovalRoomTableActionButtons } from "@app/components/table/actions/ApprovalRoomTableActionButtons";
-import { defaultTableProps, type DefaultSorting } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n/i18n";
 import type { ApprovalRoomTableVisitForm } from "@app/model/visitForm";
 import { fetchApprovalRoomTableVisitForms } from "@app/util/server_API/calls";
-import { PageContainer } from "./PageContainer";
 
 const ApprovalRoomTablePage = () => {
   const { i18n, t } = useTranslation(defaultNS, { keyPrefix: "approvalRoomTablePage" });
@@ -86,14 +85,16 @@ const ApprovalRoomTablePage = () => {
     [collator, t]
   );
 
-  const defaultSorting: DefaultSorting = [{ id: "createdAt", desc: true }];
-
   return (
-    <PageContainer isTablePage>
-      <MaterialReactTable
-        {...defaultTableProps(t("title"), columns, visitForms, isFetching, isLoading, isError, defaultSorting)}
-      />
-    </PageContainer>
+    <TablePage
+      title={t("title")}
+      columns={columns}
+      data={visitForms}
+      isFetching={isFetching}
+      isLoading={isLoading}
+      isError={isError}
+      defaultSorting={[{ id: "createdAt", desc: true }]}
+    />
   );
 };
 

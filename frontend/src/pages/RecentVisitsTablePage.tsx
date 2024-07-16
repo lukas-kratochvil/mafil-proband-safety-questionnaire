@@ -1,16 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { compareAsc, format } from "date-fns";
-import { MaterialReactTable, type MRT_ColumnDef as MRTColumnDef, type MRT_Row as MRTRow } from "material-react-table";
+import type { MRT_ColumnDef as MRTColumnDef, MRT_Row as MRTRow } from "material-react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { TablePage } from "@app/components/table/TablePage";
 import { TranslatedTableCell } from "@app/components/table/TranslatedTableCell";
 import { RecentVisitsTableActionButtons } from "@app/components/table/actions/RecentVisitsTableActionButtons";
-import { defaultTableProps, type DefaultSorting } from "@app/components/table/default-table-props";
 import { defaultNS } from "@app/i18n/i18n";
 import type { RecentVisitsTableVisit } from "@app/model/visit";
 import { fetchRecentVisits } from "@app/util/mafildb_API/calls";
 import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
-import { PageContainer } from "./PageContainer";
 
 const getStateLocalizationString = (visit: RecentVisitsTableVisit): string | undefined => {
   if (visit.isPhantom) {
@@ -119,14 +118,16 @@ const RecentVisitsTablePage = () => {
     [collator, t]
   );
 
-  const defaultSorting: DefaultSorting = [{ id: "processedDate", desc: true }];
-
   return (
-    <PageContainer isTablePage>
-      <MaterialReactTable
-        {...defaultTableProps(t("title"), columns, visits, isFetching, isLoading, isError, defaultSorting)}
-      />
-    </PageContainer>
+    <TablePage
+      title={t("title")}
+      columns={columns}
+      data={visits}
+      isFetching={isFetching}
+      isLoading={isLoading}
+      isError={isError}
+      defaultSorting={[{ id: "processedDate", desc: true }]}
+    />
   );
 };
 
