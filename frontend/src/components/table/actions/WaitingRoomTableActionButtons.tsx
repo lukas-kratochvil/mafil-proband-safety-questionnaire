@@ -10,10 +10,11 @@ import {
   useMediaQuery,
   type Theme,
 } from "@mui/material";
-import { useQueryClient, type QueryKey } from "@tanstack/react-query";
+import type { QueryObserverResult, RefetchOptions, RefetchQueryFilters } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import type { WaitingRoomTableVisitForm } from "@app/model/visitForm";
 import { RoutingPath } from "@app/routing-paths";
 import { deleteVisitForm } from "@app/util/server_API/calls";
 import { handleErrorsWithToast } from "@app/util/utils";
@@ -21,14 +22,18 @@ import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
 type WaitingRoomTableActionButtonsProps = {
   visitFormId: string;
-  queryKey: QueryKey;
+  refetchWaitingRoomTable: <TPageData>(
+    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
+  ) => Promise<QueryObserverResult<WaitingRoomTableVisitForm[], unknown>>;
 };
 
-export const WaitingRoomTableActionButtons = ({ visitFormId, queryKey }: WaitingRoomTableActionButtonsProps) => {
+export const WaitingRoomTableActionButtons = ({
+  visitFormId,
+  refetchWaitingRoomTable,
+}: WaitingRoomTableActionButtonsProps) => {
   const { t } = useTranslation("translation", { keyPrefix: "waitingRoomTablePage.actions" });
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
 
   const onDelete = async () => {
@@ -38,7 +43,7 @@ export const WaitingRoomTableActionButtons = ({ visitFormId, queryKey }: Waiting
       handleErrorsWithToast(error, t);
     }
 
-    void queryClient.invalidateQueries({ queryKey, exact: true });
+    void refetchWaitingRoomTable();
     setOpenDeleteDialog(false);
   };
 

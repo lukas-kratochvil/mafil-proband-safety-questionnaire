@@ -1,5 +1,10 @@
 import { Button, Grid, Skeleton, Stack } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import {
+  useQuery,
+  type QueryObserverResult,
+  type RefetchOptions,
+  type RefetchQueryFilters,
+} from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
@@ -70,7 +75,12 @@ const downloadPdf = (pdf: VisitDetailPDF): void => {
   document.body.removeChild(downloadLink);
 };
 
-const getButtons = (visitDetail: VisitDetail, refetch: () => void): VisitDetailButtonProps[] => {
+const getButtons = (
+  visitDetail: VisitDetail,
+  refetchVisitDetail: <TPageData>(
+    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
+  ) => Promise<QueryObserverResult<VisitDetail, unknown>>
+): VisitDetailButtonProps[] => {
   if (visitDetail.isPhantom) {
     return [
       {
@@ -92,7 +102,7 @@ const getButtons = (visitDetail: VisitDetail, refetch: () => void): VisitDetailB
               onClick: async () => {
                 downloadPdf(visitDetail.pdf);
                 await updateVisitSignatureState(visitDetail.uuid, MDB_SignatureState.FOR_SIGNATURE_PHYSICALLY);
-                refetch();
+                void refetchVisitDetail();
               },
             },
             {
@@ -109,7 +119,7 @@ const getButtons = (visitDetail: VisitDetail, refetch: () => void): VisitDetailB
               titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
               onClick: async () => {
                 await updateVisitSignatureState(visitDetail.uuid, MDB_SignatureState.SIGNED_PHYSICALLY);
-                refetch();
+                void refetchVisitDetail();
               },
             },
           ];
@@ -119,7 +129,7 @@ const getButtons = (visitDetail: VisitDetail, refetch: () => void): VisitDetailB
               titleLocalizationKey: "visitDetailPage.buttons.confirmSignature",
               onClick: async () => {
                 await updateVisitSignatureState(visitDetail.uuid, MDB_SignatureState.SIGNED_ELECTRONICALLY);
-                refetch();
+                void refetchVisitDetail();
               },
             },
           ];

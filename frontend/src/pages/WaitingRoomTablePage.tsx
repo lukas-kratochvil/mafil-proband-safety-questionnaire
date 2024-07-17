@@ -9,8 +9,6 @@ import { WaitingRoomTableActionButtons } from "@app/components/table/actions/Wai
 import type { WaitingRoomTableVisitForm } from "@app/model/visitForm";
 import { fetchWaitingRoomTableVisitForms } from "@app/util/server_API/calls";
 
-const queryKey = ["waitingRoomVisitForms"] as const;
-
 const WaitingRoomTablePage = () => {
   const { i18n, t } = useTranslation("translation", { keyPrefix: "waitingRoomTablePage" });
   const collator = useMemo(() => new Intl.Collator(i18n.language), [i18n.language]);
@@ -19,7 +17,8 @@ const WaitingRoomTablePage = () => {
     isFetching,
     isLoading,
     isError,
-  } = useQuery({ queryKey, queryFn: fetchWaitingRoomTableVisitForms });
+    refetch,
+  } = useQuery({ queryKey: ["waitingRoomVisitForms"], queryFn: fetchWaitingRoomTableVisitForms });
 
   const columns = useMemo<MRTColumnDef<WaitingRoomTableVisitForm>[]>(
     () => [
@@ -74,13 +73,13 @@ const WaitingRoomTablePage = () => {
         Cell: ({ row }: { row: MRTRow<WaitingRoomTableVisitForm> }) => (
           <WaitingRoomTableActionButtons
             visitFormId={row.original.id}
-            queryKey={queryKey}
+            refetchWaitingRoomTable={refetch}
           />
         ),
         maxSize: 0,
       },
     ],
-    [collator, t]
+    [collator, refetch, t]
   );
 
   return (
