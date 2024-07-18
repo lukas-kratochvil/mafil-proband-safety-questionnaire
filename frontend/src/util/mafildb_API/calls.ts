@@ -494,11 +494,11 @@ const fetchVisitPDF = async (visitUuid: string): Promise<MDB_VisitFileDTO> => {
     throw new Error(data.detail);
   }
 
-  if (data.length === 0) {
+  if (data.results.length === 0) {
     throw new Error("Visit registration PDF not provided!");
   }
 
-  const visitFile = data.sort((a, b) => compareDesc(a.uploaded, b.uploaded))[0]!;
+  const visitFile = data.results.sort((a, b) => compareDesc(a.uploaded, b.uploaded))[0]!;
 
   if (!isBase64PDFContent(visitFile.content)) {
     throw new Error("Visit registration PDF has malformed content!");

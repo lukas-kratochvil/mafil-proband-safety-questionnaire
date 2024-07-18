@@ -15,6 +15,7 @@ type MDB_ErrorResponse = {
 
 type MDB_GetManySuccessResponse<T> = {
   count: number;
+  filtered_count: number | null;
   next: string | null;
   previous: string | null;
   results: T[];
@@ -50,4 +51,4 @@ export type MDB_GetVisitResponse = MDB_GetResponse<MDB_VisitDTO>;
 
 export type MDB_AddPdfToVisitResponse = MDB_GetResponse<Omit<MDB_VisitFileDTO, "content">>;
 
-export type MDB_GetVisitFilesResponse = MDB_GetResponse<MDB_VisitFileDTO[]>;
+export type MDB_GetVisitFilesResponse = MDB_GetResponseComplex<MDB_VisitFileDTO>;
