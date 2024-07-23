@@ -7,6 +7,9 @@ import type { UpdateHandednessInput } from "./dto/update-handedness.input";
 import { HandednessResolver } from "./handedness.resolver";
 import { HandednessService } from "./handedness.service";
 
+//----------------------------------------------------------------------
+// Test data
+//----------------------------------------------------------------------
 const handedness = {
   id: "1",
   code: "RH",
@@ -29,6 +32,9 @@ const handedness = {
   ],
 };
 
+//----------------------------------------------------------------------
+// Tests
+//----------------------------------------------------------------------
 describe("HandednessResolver", () => {
   let handednessResolver: HandednessResolver;
   let handednessService: DeepMockProxy<HandednessService>;

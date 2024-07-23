@@ -7,6 +7,9 @@ import type { UpdateGenderInput } from "./dto/update-gender.input";
 import { GenderResolver } from "./gender.resolver";
 import { GenderService } from "./gender.service";
 
+//----------------------------------------------------------------------
+// Test data
+//----------------------------------------------------------------------
 const gender = {
   id: "1",
   code: "M",
@@ -29,6 +32,9 @@ const gender = {
   ],
 };
 
+//----------------------------------------------------------------------
+// Tests
+//----------------------------------------------------------------------
 describe("GenderResolver", () => {
   let genderResolver: GenderResolver;
   let genderService: DeepMockProxy<GenderService>;
