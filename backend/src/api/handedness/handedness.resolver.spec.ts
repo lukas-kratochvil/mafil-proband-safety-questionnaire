@@ -1,7 +1,5 @@
 import { Test } from "@nestjs/testing";
 import { DeepMockProxy, mockDeep } from "jest-mock-extended";
-import { LanguageService } from "@app/api/language/language.service";
-import { PrismaService } from "@app/prisma/prisma.service";
 import type { CreateHandednessInput } from "./dto/create-handedness.input";
 import type { UpdateHandednessInput } from "./dto/update-handedness.input";
 import { HandednessResolver } from "./handedness.resolver";
@@ -41,7 +39,7 @@ describe("HandednessResolver", () => {
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
-      providers: [HandednessResolver, HandednessService, PrismaService, LanguageService],
+      providers: [HandednessResolver, HandednessService],
     })
       .overrideProvider(HandednessService)
       .useValue(mockDeep<HandednessService>())

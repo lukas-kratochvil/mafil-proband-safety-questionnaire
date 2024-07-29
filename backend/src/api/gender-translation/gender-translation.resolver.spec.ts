@@ -1,7 +1,6 @@
 import { Test } from "@nestjs/testing";
 import type { GenderTranslation } from "@prisma/client";
 import { DeepMockProxy, mockDeep } from "jest-mock-extended";
-import { PrismaService } from "@app/prisma/prisma.service";
 import type { CreateGenderTranslationInput } from "./dto/create-gender-translation.input";
 import type { UpdateGenderTranslationInput } from "./dto/update-gender-translation.input";
 import { GenderTranslationResolver } from "./gender-translation.resolver";
@@ -29,7 +28,7 @@ describe("GenderTranslationResolver", () => {
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
-      providers: [GenderTranslationResolver, GenderTranslationService, PrismaService],
+      providers: [GenderTranslationResolver, GenderTranslationService],
     })
       .overrideProvider(GenderTranslationService)
       .useValue(mockDeep<GenderTranslationService>())
