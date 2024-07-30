@@ -91,7 +91,7 @@ export class VisitFormService {
   }
 
   async update(id: string, updateVisitFormInput: UpdateVisitFormInput) {
-    return await this.prisma.$transaction(async (tx) => {
+    return this.prisma.$transaction(async (tx) => {
       // check if the visit form state wasn't already updated by another user
       if (updateVisitFormInput.state) {
         const visitForm = await tx.visitForm.findFirst({

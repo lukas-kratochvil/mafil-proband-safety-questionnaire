@@ -54,7 +54,7 @@ export class AuthService {
     this.logger.log(`Operator '${operator.username}' authenticated.`);
     operator = await this.prisma.operator.update({
       where: {
-        id: operator.id,
+        username,
       },
       data: {
         lastLoggedAt: new Date(),

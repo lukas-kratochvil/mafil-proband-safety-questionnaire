@@ -15,24 +15,24 @@ export class GenderService {
   async create(createGenderInput: CreateGenderInput) {
     const languages = await this.languageService.findAll();
 
-    if (areTranslationsComplete(languages, createGenderInput.translations)) {
-      return this.prisma.gender.create({
-        data: {
-          ...createGenderInput,
-          translations: {
-            createMany: {
-              data: createGenderInput.translations.map((translation) => ({
-                languageId: languages.find((language) => language.code === translation.code)?.id as string,
-                text: translation.text,
-              })),
-            },
-          },
-        },
-        include: genderInclude,
-      });
+    if (!areTranslationsComplete(languages, createGenderInput.translations)) {
+      throw new BadRequestException("Gender doesn't contain all the possible translations!");
     }
 
-    throw new BadRequestException("Gender doesn't contain all the possible translations!");
+    return this.prisma.gender.create({
+      data: {
+        ...createGenderInput,
+        translations: {
+          createMany: {
+            data: createGenderInput.translations.map((translation) => ({
+              languageId: languages.find((language) => language.code === translation.code)?.id as string,
+              text: translation.text,
+            })),
+          },
+        },
+      },
+      include: genderInclude,
+    });
   }
 
   async findAll() {
@@ -59,33 +59,33 @@ export class GenderService {
   async update(id: string, updateGenderInput: UpdateGenderInput) {
     const languages = await this.languageService.findAll();
 
-    if (areUpdateCodesValid(languages, updateGenderInput.translations)) {
-      return this.prisma.gender.update({
-        where: {
-          id,
-        },
-        data: {
-          ...updateGenderInput,
-          translations:
-            updateGenderInput.translations === undefined
-              ? undefined
-              : {
-                  updateMany: {
-                    where: {
-                      genderId: id,
-                    },
-                    data: updateGenderInput.translations.map((translation) => ({
-                      languageId: languages.find((language) => language.code === translation.code)?.id as string,
-                      text: translation.text,
-                    })),
-                  },
-                },
-        },
-        include: genderInclude,
-      });
+    if (!areUpdateCodesValid(languages, updateGenderInput.translations)) {
+      throw new BadRequestException("Gender contains invalid locales!");
     }
 
-    throw new BadRequestException("Gender contains invalid locales!");
+    return this.prisma.gender.update({
+      where: {
+        id,
+      },
+      data: {
+        ...updateGenderInput,
+        translations:
+          updateGenderInput.translations === undefined
+            ? undefined
+            : {
+                updateMany: {
+                  where: {
+                    genderId: id,
+                  },
+                  data: updateGenderInput.translations.map((translation) => ({
+                    languageId: languages.find((language) => language.code === translation.code)?.id as string,
+                    text: translation.text,
+                  })),
+                },
+              },
+      },
+      include: genderInclude,
+    });
   }
 
   async remove(id: string) {

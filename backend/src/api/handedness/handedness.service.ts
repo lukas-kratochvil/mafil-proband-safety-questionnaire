@@ -15,24 +15,24 @@ export class HandednessService {
   async create(createHandednessInput: CreateHandednessInput) {
     const languages = await this.languageService.findAll();
 
-    if (areTranslationsComplete(languages, createHandednessInput.translations)) {
-      return this.prisma.handedness.create({
-        data: {
-          ...createHandednessInput,
-          translations: {
-            createMany: {
-              data: createHandednessInput.translations.map((translation) => ({
-                languageId: languages.find((language) => language.code === translation.code)?.id as string,
-                text: translation.text,
-              })),
-            },
-          },
-        },
-        include: handednessInclude,
-      });
+    if (!areTranslationsComplete(languages, createHandednessInput.translations)) {
+      throw new BadRequestException("Handedness doesn't contain all the possible translations!");
     }
 
-    throw new BadRequestException("Handedness doesn't contain all the possible translations!");
+    return this.prisma.handedness.create({
+      data: {
+        ...createHandednessInput,
+        translations: {
+          createMany: {
+            data: createHandednessInput.translations.map((translation) => ({
+              languageId: languages.find((language) => language.code === translation.code)?.id as string,
+              text: translation.text,
+            })),
+          },
+        },
+      },
+      include: handednessInclude,
+    });
   }
 
   async findAll() {
@@ -59,33 +59,33 @@ export class HandednessService {
   async update(id: string, updateHandednessInput: UpdateHandednessInput) {
     const languages = await this.languageService.findAll();
 
-    if (areUpdateCodesValid(languages, updateHandednessInput.translations)) {
-      return this.prisma.handedness.update({
-        where: {
-          id,
-        },
-        data: {
-          ...updateHandednessInput,
-          translations:
-            updateHandednessInput.translations === undefined
-              ? undefined
-              : {
-                  updateMany: {
-                    where: {
-                      handednessId: id,
-                    },
-                    data: updateHandednessInput.translations.map((translation) => ({
-                      languageId: languages.find((language) => language.code === translation.code)?.id as string,
-                      text: translation.text,
-                    })),
-                  },
-                },
-        },
-        include: handednessInclude,
-      });
+    if (!areUpdateCodesValid(languages, updateHandednessInput.translations)) {
+      throw new BadRequestException("Handedness contains invalid locales!");
     }
 
-    throw new BadRequestException("Handedness contains invalid locales!");
+    return this.prisma.handedness.update({
+      where: {
+        id,
+      },
+      data: {
+        ...updateHandednessInput,
+        translations:
+          updateHandednessInput.translations === undefined
+            ? undefined
+            : {
+                updateMany: {
+                  where: {
+                    handednessId: id,
+                  },
+                  data: updateHandednessInput.translations.map((translation) => ({
+                    languageId: languages.find((language) => language.code === translation.code)?.id as string,
+                    text: translation.text,
+                  })),
+                },
+              },
+      },
+      include: handednessInclude,
+    });
   }
 
   async remove(id: string) {
