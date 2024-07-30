@@ -105,6 +105,8 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
     }
 
     const czechPersonalId = new CzechPersonalId(personalIdValue);
+
+    // If it's not Czech personal ID leave it like that and don't auto-fill anything
     if (!czechPersonalId.isValid()) {
       return;
     }
