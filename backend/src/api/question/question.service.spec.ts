@@ -175,6 +175,7 @@ describe("QuestionService", () => {
       hiddenByGenders: jest.fn().mockResolvedValueOnce([]),
     });
     prisma.question.create.mockResolvedValueOnce(question);
+    prisma.$transaction.mockImplementation((callback) => callback(prisma));
 
     // ACT
     const updatedQuestionTexts = questionService.updateTexts(updateQuestionTexts.id, updateQuestionTexts);

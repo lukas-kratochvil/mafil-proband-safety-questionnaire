@@ -19,26 +19,26 @@ export class QuestionService {
   async create(createQuestionInput: CreateQuestionInput) {
     const languages = await this.languageService.findAll();
 
-    if (areTranslationsComplete(languages, createQuestionInput.translations)) {
-      return this.prisma.question.create({
-        data: {
-          ...createQuestionInput,
-          isValid: true,
-          mustBeApproved: createQuestionInput.partNumber === 2,
-          translations: {
-            createMany: {
-              data: createQuestionInput.translations.map((translation) => ({
-                languageId: languages.find((language) => language.code === translation.code)?.id as string,
-                text: translation.text,
-              })),
-            },
-          },
-        },
-        include: questionInclude,
-      });
+    if (!areTranslationsComplete(languages, createQuestionInput.translations)) {
+      throw new BadRequestException("Question doesn't contain all the possible translations!");
     }
 
-    throw new BadRequestException("Question doesn't contain all the possible translations!");
+    return this.prisma.question.create({
+      data: {
+        ...createQuestionInput,
+        isValid: true,
+        mustBeApproved: createQuestionInput.partNumber === 2,
+        translations: {
+          createMany: {
+            data: createQuestionInput.translations.map((translation) => ({
+              languageId: languages.find((language) => language.code === translation.code)?.id as string,
+              text: translation.text,
+            })),
+          },
+        },
+      },
+      include: questionInclude,
+    });
   }
 
   async findAll() {
@@ -76,8 +76,12 @@ export class QuestionService {
   async updateTexts(id: string, updateQuestionTextsInput: UpdateQuestionTextsInput) {
     const languages = await this.languageService.findAll();
 
-    if (areTranslationsComplete(languages, updateQuestionTextsInput.translations)) {
-      const previousQuestion = await this.prisma.question.update({
+    if (!areTranslationsComplete(languages, updateQuestionTextsInput.translations)) {
+      throw new BadRequestException("Question contains invalid locales!");
+    }
+
+    return this.prisma.$transaction(async (tx) => {
+      const previousQuestion = await tx.question.update({
         where: {
           id,
         },
@@ -86,7 +90,7 @@ export class QuestionService {
         },
         include: questionInclude,
       });
-      return this.prisma.question.create({
+      return tx.question.create({
         data: {
           isValid: true,
           partNumber: updateQuestionTextsInput.partNumber
@@ -118,9 +122,7 @@ export class QuestionService {
         },
         include: questionInclude,
       });
-    }
-
-    throw new BadRequestException("Question contains invalid locales!");
+    });
   }
 
   async remove(id: string) {
