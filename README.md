@@ -12,6 +12,8 @@ Web application for ensuring the registration and safety of MR measurements in t
   - [Populating the database with initial data](#populating-the-database-with-initial-data-1)
   - [Changing the database schema and applying database migrations](#changing-the-database-schema-and-applying-database-migrations)
   - [Useful tools](#useful-tools)
+- [Possible issues](#possible-issues)
+  - [PDF not showing on the Visit detail page](#pdf-not-showing-on-the-visit-detail-page)
 
 ## Repository structure
 This repository contains the following most important directories and files:
@@ -143,9 +145,11 @@ npx prisma generate
 * GraphQL playground to test the server GraphQL API: use `server` URL with the path `/graphql`
 
 ## Possible issues
-### PDF not showing
+In this section, you can find solutions to some problems that are not directly related to the application itself.
+
+### PDF not showing on the Visit detail page
 PDF may not be shown on the `Visit detail` page. A possible solution is to set browser settings accordingly - open the PDF directly in your browser.
 
 For example in Firefox, you have to set it like this:
 
-<img src="docs/README/PDF_view_Firefox.png" alt="PDF view - Firefox" width="500"/>
+<img src="docs/README/PDF_view_Firefox.png" alt="PDF view - Firefox" width="600"/>
