@@ -6,7 +6,7 @@ import { PrismaService } from "@app/prisma/prisma.service";
 import { CreateHandednessInput } from "./dto/create-handedness.input";
 import { UpdateHandednessInput } from "./dto/update-handedness.input";
 
-const handednessInclude = { translations: translationsSelect } satisfies Prisma.GenderInclude;
+const handednessInclude = { translations: translationsSelect } satisfies Prisma.HandednessInclude;
 
 @Injectable()
 export class HandednessService {
@@ -60,7 +60,7 @@ export class HandednessService {
     const languages = await this.languageService.findAll();
 
     if (areUpdateCodesValid(languages, updateHandednessInput.translations)) {
-      return this.prisma.gender.update({
+      return this.prisma.handedness.update({
         where: {
           id,
         },
@@ -72,7 +72,7 @@ export class HandednessService {
               : {
                   updateMany: {
                     where: {
-                      genderId: id,
+                      handednessId: id,
                     },
                     data: updateHandednessInput.translations.map((translation) => ({
                       languageId: languages.find((language) => language.code === translation.code)?.id as string,
