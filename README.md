@@ -141,3 +141,11 @@ npx prisma generate
 
 ### Useful tools
 * GraphQL playground to test the server GraphQL API: use `server` URL with the path `/graphql`
+
+## Possible issues
+### PDF not showing
+PDF may not be shown on the `Visit detail` page. A possible solution is to set browser settings accordingly - open the PDF directly in your browser.
+
+For example in Firefox, you have to set it like this:
+
+<img src="docs/README/PDF_view_Firefox.png" alt="PDF view - Firefox" width="500"/>
