@@ -44,6 +44,9 @@ describe("AuthService", () => {
       .useValue(mockDeep<PrismaClient>())
       .compile();
 
+    // turn off logging
+    module.useLogger(false);
+
     authService = module.get<AuthService>(AuthService);
     prisma = module.get<PrismaService, DeepMockProxy<PrismaClient>>(AUTH_PRISMA_SERVICE);
   });
