@@ -22,6 +22,13 @@ const languagesTest: Language[] = [
     nameEn: "English",
     priority: 3,
   },
+  {
+    code: "ot",
+    nativeName: "Jiný/Other",
+    nameCs: "Jiný",
+    nameEn: "Other",
+    priority: 4,
+  },
 ];
 
 export const nativeLanguagesTest: NativeLanguage[] = languagesTest;

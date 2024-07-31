@@ -17,6 +17,7 @@ import {
   loadFormDefaultValuesVisitDuplication,
   loadPhantomFormDefaultValues,
 } from "../loaders";
+import { getAutocompleteOption, visualCorrectionOptions } from "../options";
 
 //----------------------------------------------------------------------
 // Test data
@@ -112,7 +113,7 @@ describe("form loaders", () => {
   test("phantom form default values", () => {
     // ARRANGE
     const currentDate = new Date();
-    vi.spyOn(global, "Date").mockImplementationOnce(() => currentDate as unknown as string);
+    const mockedDate = vi.spyOn(global, "Date").mockImplementation(() => currentDate as unknown as string);
 
     // ACT
     const phantomFormDefaultValues = loadPhantomFormDefaultValues();
@@ -124,17 +125,19 @@ describe("form loaders", () => {
     expect(phantomFormDefaultValues.name).toEqual("");
     expect(phantomFormDefaultValues.surname).toBe("");
     expect(phantomFormDefaultValues.personalId).toBe("");
-    expect(phantomFormDefaultValues.birthdate).toBeNull();
+    expect(phantomFormDefaultValues.birthdate).toEqual(currentDate);
     expect(phantomFormDefaultValues.gender).toBeNull(); // is set to 'Other' in the FormProbandInfo component
-    expect(phantomFormDefaultValues.nativeLanguage).toBeNull();
+    expect(phantomFormDefaultValues.nativeLanguage).toBeNull(); // is set to 'Other' in the FormProbandInfo component
     expect(phantomFormDefaultValues.heightCm).toBe("");
     expect(phantomFormDefaultValues.weightKg).toBe("");
-    expect(phantomFormDefaultValues.handedness).toBeNull();
-    expect(phantomFormDefaultValues.visualCorrection).toBeNull();
+    expect(phantomFormDefaultValues.handedness).toBeNull(); // is set to 'Undetermined' in the FormProbandInfo component
+    expect(phantomFormDefaultValues.visualCorrection).toEqual(getAutocompleteOption(visualCorrectionOptions, "no"));
     expect(phantomFormDefaultValues.visualCorrectionDioptre).toEqual(0);
     expect(phantomFormDefaultValues.email).toBe("");
     expect(phantomFormDefaultValues.phone).toBe("");
     expect(phantomFormDefaultValues.answers).toEqual([]);
+
+    mockedDate.mockRestore();
   });
 
   test("waiting room visit form default values", () => {

@@ -74,27 +74,39 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
   // Setting selected native language
   useEffect(() => {
     if (nativeLanguages.data !== undefined) {
-      const nativeLanguageCode = getValues("nativeLanguage.code");
+      if (isPhantom) {
+        // Setting native language to 'Other' in the phantom visit
+        const nativeLanguageOther = nativeLanguages.data.find((nativeLanguage) => nativeLanguage.code === "ot") ?? null;
+        setValue("nativeLanguage", nativeLanguageOther, { shouldTouch: true });
+      } else {
+        const nativeLanguageCode = getValues("nativeLanguage.code");
 
-      if (nativeLanguageCode !== null) {
-        const selectedNativeLanguage
-          = nativeLanguages.data.find((nativeLanguage) => nativeLanguage.code === nativeLanguageCode) ?? null;
-        setValue("nativeLanguage", selectedNativeLanguage, { shouldTouch: true });
+        if (nativeLanguageCode !== null) {
+          const selectedNativeLanguage
+            = nativeLanguages.data.find((nativeLanguage) => nativeLanguage.code === nativeLanguageCode) ?? null;
+          setValue("nativeLanguage", selectedNativeLanguage, { shouldTouch: true });
+        }
       }
     }
-  }, [nativeLanguages.data, getValues, setValue]);
+  }, [nativeLanguages.data, getValues, isPhantom, setValue]);
 
   // Setting selected handedness
   useEffect(() => {
     if (handednesses.data !== undefined) {
-      const handednessId = getValues("handedness.id");
+      if (isPhantom) {
+        // Setting handedness to 'Undetermined' in the phantom visit
+        const handednessUndetermined = handednesses.data.find((handedness) => handedness.code === "UN") ?? null;
+        setValue("handedness", handednessUndetermined, { shouldTouch: true });
+      } else {
+        const handednessId = getValues("handedness.id");
 
-      if (handednessId !== null) {
-        const selectedHandedness = handednesses.data.find((handedness) => handedness.id === handednessId) ?? null;
-        setValue("handedness", selectedHandedness, { shouldTouch: true });
+        if (handednessId !== null) {
+          const selectedHandedness = handednesses.data.find((handedness) => handedness.id === handednessId) ?? null;
+          setValue("handedness", selectedHandedness, { shouldTouch: true });
+        }
       }
     }
-  }, [handednesses.data, getValues, setValue]);
+  }, [handednesses.data, getValues, isPhantom, setValue]);
 
   // Auto-fill birthdate and gender from the personalId value
   useEffect(() => {
@@ -253,7 +265,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
             label={t("nativeLanguage")}
             options={nativeLanguages.data}
             isLoading={nativeLanguages.isLoading}
-            disabled={disableInputs}
+            disabled={disableInputs || isPhantom}
             sortComparator={compareNativeLanguages}
             filterOptions={filterNativeLanguages}
             getOptionLabel={(nativeLanguage) => nativeLanguage.nativeName}
@@ -296,7 +308,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
             name="visualCorrection"
             label={t("visualCorrection")}
             options={visualCorrectionOptions}
-            disabled={disableInputs}
+            disabled={disableInputs || isPhantom}
           />
         </Grid>
         <Grid
@@ -328,7 +340,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
             label={t("handedness")}
             options={handednesses.data}
             isLoading={handednesses.isLoading}
-            disabled={disableInputs}
+            disabled={disableInputs || isPhantom}
             sortComparator={(a, b) => a.order - b.order}
             getOptionLabel={(handedness) =>
               handedness.translations.find((trans) => trans.language.code === i18n.language)?.text ?? ""

@@ -1,3 +1,4 @@
+import { endOfToday } from "date-fns";
 import { array, boolean, date, mixed, number, object, string } from "yup";
 import type { AnswerOption } from "@app/model/form";
 import { answerOptions } from "@app/model/form";
@@ -34,7 +35,7 @@ export const probandFormSchema = object().shape(
     birthdate: date()
       .nullable()
       .typeError("form.validation.notValid")
-      .max(new Date(), "form.validation.birthdateMaxDate")
+      .max(endOfToday(), "form.validation.birthdateMaxDate")
       .required("form.validation.required"),
     gender: mixed<GenderDTO>().nullable().required("form.validation.required"),
     nativeLanguage: mixed<NativeLanguage>().nullable().required("form.validation.required"),

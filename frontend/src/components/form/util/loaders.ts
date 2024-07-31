@@ -33,7 +33,11 @@ export const loadEmptyDefaultValues = (): FormPropType => ({
 export const loadPhantomFormDefaultValues = (): FormPropType => ({
   ...loadEmptyDefaultValues(),
   measuredAt: new Date(),
-  // gender 'Other' is set in the FormProbandInfo component
+  birthdate: new Date(),
+  visualCorrection: getAutocompleteOption(visualCorrectionOptions, "no"),
+  // gender is set to 'Other' in the FormProbandInfo component
+  // native language is set to 'Other' in the FormProbandInfo component
+  // handedness is set to 'Undetermined' in the FormProbandInfo component
 });
 
 const loadAnswers = (
