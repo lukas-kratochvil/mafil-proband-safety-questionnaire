@@ -76,11 +76,17 @@ const RecentVisitsTablePage = () => {
         maxSize: 0,
       },
       {
-        header: t("header.processedDate"),
-        id: "processedDate",
-        accessorFn: (visit) => format(visit.measurementDate, "d.M.y"),
-        // Sorting is done by 'created' attribute, because the 'measurementDate' does not contain the time
+        header: t("header.created"),
+        id: "created",
+        accessorFn: (visit) => format(visit.created, "d.M.y H:mm"),
         sortingFn: (rowA, rowB) => compareAsc(rowA.original.created, rowB.original.created),
+        maxSize: 0,
+      },
+      {
+        header: t("header.visitDate"),
+        id: "visitDate",
+        accessorFn: (visit) => format(visit.measurementDate, "d.M.y"),
+        sortingFn: (rowA, rowB) => compareAsc(rowA.original.measurementDate, rowB.original.measurementDate),
         maxSize: 0,
       },
       {
@@ -125,7 +131,7 @@ const RecentVisitsTablePage = () => {
       isFetching={isFetching}
       isLoading={isLoading}
       isError={isError}
-      defaultSorting={[{ id: "processedDate", desc: true }]}
+      defaultSorting={[{ id: "created", desc: true }]}
     />
   );
 };

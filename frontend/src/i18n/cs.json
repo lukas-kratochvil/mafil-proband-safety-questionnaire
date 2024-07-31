@@ -200,7 +200,8 @@
         "proband": "Proband",
         "project": "Projekt",
         "device": "Přístroj",
-        "processedDate": "Zpracováno",
+        "created": "Vytvořeno",
+        "visitDate": "Datum návštěvy",
         "operatorProcessed": "Zpracoval",
         "state": "Stav",
         "actions": "Akce"

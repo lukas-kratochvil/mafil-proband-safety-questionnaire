@@ -200,7 +200,8 @@
         "proband": "Proband",
         "project": "Project",
         "device": "Device",
-        "processedDate": "Processed date",
+        "created": "Created",
+        "visitDate": "Visit date",
         "operatorProcessed": "Operator processed",
         "state": "State",
         "actions": "Actions"
