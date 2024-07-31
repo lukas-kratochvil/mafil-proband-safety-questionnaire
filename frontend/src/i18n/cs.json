@@ -75,7 +75,7 @@
         "name": "Jméno",
         "surname": "Příjmení",
         "personalId": "Rodné číslo",
-        "personalIdHint": "V případě, že nemáte české rodné číslo, zadejte, prosím, číslo pojištěnce.",
+        "personalIdHint": "V případě, že nemáte české nebo slovenské rodné číslo, zadejte, prosím, číslo pojištěnce.",
         "birthdate": "Datum narození",
         "gender": "Pohlaví",
         "nativeLanguage": "Mateřský jazyk",

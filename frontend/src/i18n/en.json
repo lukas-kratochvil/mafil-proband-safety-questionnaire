@@ -75,7 +75,7 @@
         "name": "Name",
         "surname": "Surname",
         "personalId": "Personal ID",
-        "personalIdHint": "If you do not have a Czech personal ID, please enter your insurance number.",
+        "personalIdHint": "If you do not have a Czech or Slovak personal ID, please enter your insurance number.",
         "birthdate": "Birthdate",
         "gender": "Gender",
         "nativeLanguage": "Native language",

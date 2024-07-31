@@ -14,7 +14,7 @@ import { FormAutocompleteOptions } from "../inputs/FormAutocompleteOptions";
 import { FormDatePicker } from "../inputs/FormDatePicker";
 import { FormTextField } from "../inputs/FormTextField";
 import { visualCorrectionOptions } from "../util/options";
-import { CzechPersonalId, getPersonalIdPart } from "../util/personal-id";
+import { CzechSlovakPersonalId, getPersonalIdPart } from "../util/personal-id";
 import { FormCardContainer } from "./FormCardContainer";
 import type { PhantomFormCardProps } from "./form-card";
 
@@ -104,22 +104,22 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
       return;
     }
 
-    const czechPersonalId = new CzechPersonalId(personalIdValue);
+    const personalId = new CzechSlovakPersonalId(personalIdValue);
 
-    // If it's not Czech personal ID leave it like that and don't auto-fill anything
-    if (!czechPersonalId.isValid()) {
+    // If it's not Czech or Slovak personal ID leave it like that and don't auto-fill anything
+    if (!personalId.isValid()) {
       return;
     }
 
-    setValue("birthdate", czechPersonalId.getBirthdate(), { shouldTouch: true });
+    setValue("birthdate", personalId.getBirthdate(), { shouldTouch: true });
 
     // Phantom visit has strictly gender 'Other' - we do not change it here
     if (!isPhantom && genders.data !== undefined) {
       let code: string | undefined;
 
-      if (czechPersonalId.isMale()) {
+      if (personalId.isMale()) {
         code = "M";
-      } else if (czechPersonalId.isFemale()) {
+      } else if (personalId.isFemale()) {
         code = "F";
       }
 

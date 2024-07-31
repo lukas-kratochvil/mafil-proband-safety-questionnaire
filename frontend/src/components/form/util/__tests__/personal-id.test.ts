@@ -1,5 +1,5 @@
 import { gendersTest } from "@app/__tests__/data/genders";
-import { CzechPersonalId, getPersonalIdPart } from "../personal-id";
+import { CzechSlovakPersonalId, getPersonalIdPart } from "../personal-id";
 
 //----------------------------------------------------------------------
 // Tests
@@ -31,7 +31,7 @@ describe("personal ID", () => {
       "000606/4090", // 10-digit personal ID where mod 11 is 10
     ])("'%s'", (personalIdInput: string) => {
       // ACT
-      const personalId = new CzechPersonalId(personalIdInput);
+      const personalId = new CzechSlovakPersonalId(personalIdInput);
 
       // ASSERT
       expect(personalId.isValid()).toBeFalsy();
@@ -44,7 +44,7 @@ describe("personal ID", () => {
       ["000606/915", new Date(1900, 5, 6)],
     ])("valid MALE personal ID %s", (personalIdInput: string, expectedBirthdate: Date) => {
       // ACT
-      const personalId = new CzechPersonalId(personalIdInput);
+      const personalId = new CzechSlovakPersonalId(personalIdInput);
 
       // ASSERT
       expect(personalId.isValid()).toBeTruthy();
@@ -58,7 +58,7 @@ describe("personal ID", () => {
       ["006206/915", new Date(1900, 11, 6)],
     ])("valid FEMALE personal ID %s", (personalIdInput: string, expectedBirthdate: Date) => {
       // ACT
-      const personalId = new CzechPersonalId(personalIdInput);
+      const personalId = new CzechSlovakPersonalId(personalIdInput);
 
       // ASSERT
       expect(personalId.isValid()).toBeTruthy();
@@ -79,7 +79,7 @@ describe("personal ID", () => {
       ["5511111210", new Date(1955, 10, 11)], // in special case personal ID has 10th digit equal to 0 if first 9 digits are equal to 0 modulo 11 (valid only 1954-1985)
     ])("valid MALE personal ID %s", (personalIdInput: string, expectedBirthdate: Date) => {
       // ACT
-      const personalId = new CzechPersonalId(personalIdInput);
+      const personalId = new CzechSlovakPersonalId(personalIdInput);
 
       // ASSERT
       expect(personalId.isValid()).toBeTruthy();
@@ -97,7 +97,7 @@ describe("personal ID", () => {
       ["008206/1100", new Date(2000, 11, 6)], // month plus extra 20
     ])("valid FEMALE personal ID %s", (personalIdInput: string, expectedBirthdate: Date) => {
       // ACT
-      const personalId = new CzechPersonalId(personalIdInput);
+      const personalId = new CzechSlovakPersonalId(personalIdInput);
 
       // ASSERT
       expect(personalId.isValid()).toBeTruthy();
