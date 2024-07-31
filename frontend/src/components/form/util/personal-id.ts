@@ -1,16 +1,19 @@
-import { addYears, differenceInCalendarYears, getDate, getMonth, getYear, isExists } from "date-fns";
+import { addYears, getDate, getMonth, getYear, isExists, subYears } from "date-fns";
 import type { GenderDTO } from "@app/util/server_API/dto";
 
 const MONTHS_IN_YEAR = 12;
 const MALE_CONST_EXHAUSTED = 20;
 const FEMALE_CONST = 50;
 const FEMALE_CONST_EXHAUSTED = 70;
+const INVALID_PERSONAL_ID = "";
 
 /**
- * Source about how I check Czech personal ID: https://www.skrblik.cz/navod/jak-se-generuje-rodne-cislo/
+ * Sources about how I check Czech personal ID:
+ *  - https://www.skrblik.cz/navod/jak-se-generuje-rodne-cislo/
+ *  - https://napovime.cz/navod/jak-zjistit-rodne-cislo/#Jak_zjistit_vek_a_pohlavi_z_rodneho_cisla
  */
 export class CzechPersonalId {
-  private readonly personalIdWithoutSlash: string = "";
+  private readonly personalIdWithoutSlash: string = INVALID_PERSONAL_ID;
 
   constructor(personalId: string) {
     const personalIdTrimmed = personalId.trim();
@@ -42,15 +45,23 @@ export class CzechPersonalId {
       return month - 1;
     }
     // male with special addition of 20 - if all valid 4-digit suffixes are used up on a given day (introduced in 2004)
-    if (CzechPersonalId.isNewPersonalId(personalId) && month > MALE_CONST_EXHAUSTED && month <= MALE_CONST_EXHAUSTED + MONTHS_IN_YEAR) {
+    if (
+      CzechPersonalId.isNewPersonalId(personalId)
+      && MALE_CONST_EXHAUSTED < month
+      && month <= MALE_CONST_EXHAUSTED + MONTHS_IN_YEAR
+    ) {
       return month - MALE_CONST_EXHAUSTED - 1;
     }
     // female
-    if (month > FEMALE_CONST && month <= FEMALE_CONST + MONTHS_IN_YEAR) {
+    if (FEMALE_CONST < month && month <= FEMALE_CONST + MONTHS_IN_YEAR) {
       return month - FEMALE_CONST - 1;
     }
     // female with special addition of 20 - if all valid 4-digit suffixes are used up on a given day (introduced in 2004)
-    if (CzechPersonalId.isNewPersonalId(personalId) && month > FEMALE_CONST_EXHAUSTED && month <= FEMALE_CONST_EXHAUSTED + MONTHS_IN_YEAR) {
+    if (
+      CzechPersonalId.isNewPersonalId(personalId)
+      && FEMALE_CONST_EXHAUSTED < month
+      && month <= FEMALE_CONST_EXHAUSTED + MONTHS_IN_YEAR
+    ) {
       return month - FEMALE_CONST_EXHAUSTED - 1;
     }
 
@@ -68,60 +79,41 @@ export class CzechPersonalId {
 
   // Check if the personal ID is valid.
   private static isValidPersonalId = (personalId: string): boolean => {
-    // the new personal ID should be equal to 0 modulo 11 or equal to 0 when you subtract the sum of the even numbers from the sum of the odd numbers
-    if (CzechPersonalId.isNewPersonalId(personalId)) {
-      let oddSum = 0;
-      let evenSum = 0;
-
-      for (let i = 0; i < personalId.length; i++) {
-        const char = personalId[i] as string;
-
-        if (!/\d/.test(char)) {
-          return false;
-        }
-
-        const num = parseInt(char);
-        if ((i + 1) % 2 === 0) {
-          evenSum += num;
-        } else {
-          oddSum += num;
-        }
-      }
-
-      if (+personalId % 11 !== 0 && oddSum - evenSum !== 0) {
-        return false;
-      }
+    const year = +personalId.substring(0, 2);
+    // the new personal ID should be equal to 0 modulo 11
+    // or in special case personal ID has 10th digit equal to 0 if first 9 digits are equal to 0 modulo 11 (valid only 1954-1985)
+    if (
+      CzechPersonalId.isNewPersonalId(personalId)
+      && (+personalId % 11 !== 0
+        || (year >= 54 && year <= 85 && !(+personalId.slice(0, 9) % 11 === 0 && personalId[9] === "0")))
+    ) {
+      return false;
     }
 
     return CzechPersonalId.isValidPersonalIdDate(personalId);
   };
 
-  public isValid = (): boolean => this.personalIdWithoutSlash !== "";
+  public isValid = (): boolean => this.personalIdWithoutSlash !== INVALID_PERSONAL_ID;
 
   public isMale = (): boolean => !this.isFemale();
 
   public isFemale = (): boolean => +this.personalIdWithoutSlash.substring(2, 4) > FEMALE_CONST;
 
-  private static correctBirthdate = (birthdate: Date): Date => {
-    let correctedBirthdate = birthdate;
-
-    // when proband's personal ID starts with '00' and current year is 2022, it's more likely proband was born in the year 2000 than 1900
-    while (differenceInCalendarYears(Date.now(), correctedBirthdate) >= 100) {
-      correctedBirthdate = addYears(correctedBirthdate, 100);
-    }
-
-    return correctedBirthdate;
-  };
-
   public getBirthdate = (): Date => {
-    const birthdate = new Date(
-      +this.personalIdWithoutSlash.substring(0, 2),
+    const year = +this.personalIdWithoutSlash.substring(0, 2);
+    const birthdateCentury19 = new Date(
+      year,
       CzechPersonalId.getMonthIndexFromPersonalId(this.personalIdWithoutSlash),
       +this.personalIdWithoutSlash.substring(4, 6)
     );
 
+    // 10-digit personal IDs are assigned after the year 1953
+    if (CzechPersonalId.isNewPersonalId(this.personalIdWithoutSlash)) {
+      return year < 53 ? addYears(birthdateCentury19, 100) : birthdateCentury19;
+    }
+
     // 9-digit personal IDs were assigned until the year 1953 including
-    return this.personalIdWithoutSlash.length === 9 ? birthdate : CzechPersonalId.correctBirthdate(birthdate);
+    return year > 53 ? subYears(birthdateCentury19, 100) : birthdateCentury19;
   };
 }
 

@@ -76,6 +76,7 @@ describe("personal ID", () => {
       ["002606/1200", new Date(2000, 5, 6)], // month plus extra 20
       ["0032061205", new Date(2000, 11, 6)], // month plus extra 20
       ["003206/1205", new Date(2000, 11, 6)], // month plus extra 20
+      ["5511111210", new Date(1955, 10, 11)], // in special case personal ID has 10th digit equal to 0 if first 9 digits are equal to 0 modulo 11 (valid only 1954-1985)
     ])("valid MALE personal ID %s", (personalIdInput: string, expectedBirthdate: Date) => {
       // ACT
       const personalId = new CzechPersonalId(personalIdInput);
