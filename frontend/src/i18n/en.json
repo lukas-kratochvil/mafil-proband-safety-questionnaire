@@ -202,7 +202,7 @@
         "device": "Device",
         "created": "Created",
         "visitDate": "Visit date",
-        "operatorProcessed": "Operator processed",
+        "operatorProcessed": "Processed by",
         "state": "State",
         "actions": "Actions"
       }
