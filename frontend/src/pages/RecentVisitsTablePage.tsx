@@ -89,7 +89,7 @@ const RecentVisitsTablePage = () => {
         size: 50,
       },
       {
-        header: t("header.operatorProcessed"),
+        header: t("header.processedBy"),
         id: "processUser",
         accessorFn: (visit) => (visit.finalizer ? `${visit.finalizer.surname}, ${visit.finalizer.name}` : ""),
         sortingFn: (rowA, rowB, columnId) => collator.compare(rowA.getValue(columnId), rowB.getValue(columnId)),

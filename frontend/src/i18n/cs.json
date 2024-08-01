@@ -202,7 +202,7 @@
         "device": "Přístroj",
         "created": "Vytvořeno",
         "visitDate": "Datum návštěvy",
-        "operatorProcessed": "Zpracoval",
+        "processedBy": "Zpracoval",
         "state": "Stav",
         "actions": "Akce"
       }
