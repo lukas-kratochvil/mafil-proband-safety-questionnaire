@@ -13,17 +13,17 @@ import {
 import "./yup-custom-methods";
 
 export const answersSchema = object({
-  questionId: string().trim().required("form.validation.required"),
+  questionId: string().removeWhitespace().required("form.validation.required"),
   mustBeApproved: boolean().required("form.validation.required"),
   answer: mixed<AnswerOption>().nullable().oneOf(Object.values(answerOptions)).required("form.validation.required"),
-  comment: string().trim().nullable(),
+  comment: string().normalizeWhitespace().nullable(),
 });
 
 export const probandFormSchema = object().shape(
   {
-    name: string().trim().required("form.validation.required"),
-    surname: string().trim().required("form.validation.required"),
-    personalId: string().trim().required("form.validation.required"),
+    name: string().normalizeWhitespace().required("form.validation.required"),
+    surname: string().normalizeWhitespace().required("form.validation.required"),
+    personalId: string().removeWhitespace().required("form.validation.required"),
     birthdate: date()
       .nullable()
       .typeError("form.validation.notValid")
@@ -61,7 +61,7 @@ export const probandFormSchema = object().shape(
       .required("form.validation.required"),
     answers: array().of(answersSchema).required("form.validation.required"),
     email: string()
-      .trim()
+      .removeWhitespace()
       .when("phone", {
         is: "",
         then: string().customEmail(),
