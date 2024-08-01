@@ -53,7 +53,7 @@ const RecentVisitsTablePage = () => {
       {
         header: "Visit ID",
         accessorKey: "visitId",
-        size: 40,
+        maxSize: 0,
       },
       {
         header: t("header.proband"),
@@ -72,21 +72,21 @@ const RecentVisitsTablePage = () => {
         id: "device",
         accessorFn: (visit) => visit.device?.name ?? "",
         sortingFn: (rowA, rowB, columnId) => collator.compare(rowA.getValue(columnId), rowB.getValue(columnId)),
-        size: 0,
+        maxSize: 0,
       },
       {
         header: t("header.created"),
         id: "created",
         accessorFn: (visit) => format(visit.created, "d.M.y H:mm"),
         sortingFn: (rowA, rowB) => compareAsc(rowA.original.created, rowB.original.created),
-        size: 50,
+        maxSize: 0,
       },
       {
         header: t("header.visitDate"),
         id: "visitDate",
         accessorFn: (visit) => format(visit.measurementDate, "d.M.y"),
         sortingFn: (rowA, rowB) => compareAsc(rowA.original.measurementDate, rowB.original.measurementDate),
-        size: 50,
+        maxSize: 0,
       },
       {
         header: t("header.processedBy"),
@@ -106,7 +106,7 @@ const RecentVisitsTablePage = () => {
             <TranslatedTableCell localizationKey={`recentVisitsTablePage.visitState.${stateLocalizationString}`} />
           );
         },
-        size: 50,
+        maxSize: 0,
       },
       {
         header: t("header.actions"),
@@ -116,7 +116,7 @@ const RecentVisitsTablePage = () => {
         Cell: ({ row }: { row: MRTRow<RecentVisitsTableVisit> }) => (
           <RecentVisitsTableActionButtons visit={row.original} />
         ),
-        minSize: 280,
+        minSize: 270,
       },
     ],
     [collator, t]
