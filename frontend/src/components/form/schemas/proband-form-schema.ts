@@ -10,15 +10,7 @@ import {
   type AutocompleteOption,
   type VisualCorrection,
 } from "../util/options";
-
-// using custom email regex due to very free yup email validator, inspired by: https://github.com/jquense/yup/issues/507#issuecomment-765799429
-// email can be empty if proband does not want to fill in contact info
-const EMAIL_REGEX
-  // eslint-disable-next-line no-useless-escape
-  = /^$|^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-// phone number can be empty if proband does not want to fill in contact info
-const PHONE_NUMBER_REGEX = /^$|^(\+|00)?[1-9]{1}[0-9]{3,}$/;
+import "./yup-custom-methods";
 
 export const answersSchema = object({
   questionId: string().trim().required("form.validation.required"),
@@ -72,10 +64,8 @@ export const probandFormSchema = object().shape(
       .trim()
       .when("phone", {
         is: "",
-        then: string().matches(EMAIL_REGEX, "form.validation.notValid"),
-        otherwise: string()
-          .matches(EMAIL_REGEX, "form.validation.notValid")
-          .required("form.validation.probandContacts"),
+        then: string().customEmail(),
+        otherwise: string().customEmail().required("form.validation.probandContacts"),
       }),
     phone: string()
       .transform((_value, originalValue: string) => {
@@ -91,10 +81,8 @@ export const probandFormSchema = object().shape(
       })
       .when("email", {
         is: "",
-        then: string().matches(PHONE_NUMBER_REGEX, "form.validation.notValid"),
-        otherwise: string()
-          .matches(PHONE_NUMBER_REGEX, "form.validation.notValid")
-          .required("form.validation.probandContacts"),
+        then: string().customPhoneNumber(),
+        otherwise: string().customPhoneNumber().required("form.validation.probandContacts"),
       }),
   },
   [["email", "phone"]]
