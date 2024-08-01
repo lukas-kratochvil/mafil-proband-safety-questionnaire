@@ -30,7 +30,17 @@ export class PDFService {
   }
 
   private createPDFName(generatePDFInput: GeneratePDFArgs): string {
-    return `${generatePDFInput.visitId}_${generatePDFInput.surname}_${generatePDFInput.name}.pdf`;
+    const name = `${generatePDFInput.visitId}_${generatePDFInput.surname}_${generatePDFInput.name}`
+      // normalize the string and remove diacritics
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      // replace all special characters including spaces with '_'
+      .replace(/[^a-zA-Z0-9]/g, "_")
+      // replace multiple underscores with a single underscore
+      .replace(/_+/g, "_")
+      // trim starting and ending '_'
+      .replace(/^_|_$/g, "");
+    return `${name}.pdf`;
   }
 
   private async getPhantomPDFData(generatePDFInput: GeneratePDFArgs, operatorFinalizer: PDFOperator): Promise<PDFData> {
@@ -249,7 +259,7 @@ export class PDFService {
   private createPDF(name: string, base64Content: string): PDFEntity {
     // TODO: delete - only for a development purpose to store generated PDF locally
     if (this.isDevelopment) {
-      const fileName = `${GENERATED_PDF_DIR_PATH}/visit_${Date.now()}.pdf`;
+      const fileName = `${GENERATED_PDF_DIR_PATH}/${name}`;
       fs.writeFile(fileName, Buffer.from(base64Content, "base64"), (err) =>
         console.log(err ? err : `Development PDF '${fileName}' successfully created!`)
       );
