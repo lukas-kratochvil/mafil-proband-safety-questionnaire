@@ -3,6 +3,7 @@ import { operatorFinalizationFormSchema } from "./operator-finalization-form-sch
 
 export const operatorApprovalFormSchema = operatorFinalizationFormSchema.shape({
   disapprovalReason: string()
+    .trim()
     .nullable()
     .test({
       name: "disapproval-reason-min-length",

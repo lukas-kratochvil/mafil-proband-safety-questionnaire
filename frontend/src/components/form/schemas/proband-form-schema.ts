@@ -16,7 +16,7 @@ export const answersSchema = object({
   questionId: string().trim().required("form.validation.required"),
   mustBeApproved: boolean().required("form.validation.required"),
   answer: mixed<AnswerOption>().nullable().oneOf(Object.values(answerOptions)).required("form.validation.required"),
-  comment: string().nullable(),
+  comment: string().trim().nullable(),
 });
 
 export const probandFormSchema = object().shape(
