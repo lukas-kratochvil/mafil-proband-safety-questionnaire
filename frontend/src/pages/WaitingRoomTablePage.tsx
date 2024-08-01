@@ -76,7 +76,7 @@ const WaitingRoomTablePage = () => {
             refetchWaitingRoomTable={refetch}
           />
         ),
-        maxSize: 0,
+        minSize: 150,
       },
     ],
     [collator, refetch, t]
