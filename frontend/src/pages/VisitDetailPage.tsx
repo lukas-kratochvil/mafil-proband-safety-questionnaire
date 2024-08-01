@@ -13,9 +13,10 @@ import { ColoredInfoStripe, type ColoredInfoStripeProps } from "@app/components/
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import { convertStringToLocalizationKey } from "@app/i18n/i18n";
 import type { VisitDetail, VisitDetailPDF } from "@app/model/visit";
+import { RoutingPath } from "@app/routing-paths";
 import { fetchVisitDetail, updateVisitSignatureState } from "@app/util/mafildb_API/calls";
 import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
-import { getBackButtonProps, handleErrorsWithToast, type ButtonProps } from "@app/util/utils";
+import { handleErrorsWithToast, type ButtonProps } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
 
 type VisitDetailButtonProps = ButtonProps & {
@@ -171,7 +172,11 @@ const VisitDetailPage = () => {
       stateButtons.push(...getButtons(visitDetail, refetch));
     }
 
-    stateButtons.push(getBackButtonProps(navigate));
+    // can't use back button because when a visit is submitted from a form and then the visit detail is displayed and then the user clicks the back button it redirects back to that form
+    stateButtons.push({
+      titleLocalizationKey: "common.backButton",
+      onClick: async () => navigate(RoutingPath.RECENT_VISITS),
+    });
     setButtons(stateButtons);
   }, [navigate, refetch, visitDetail]);
 
