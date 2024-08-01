@@ -32,7 +32,6 @@ const ApprovalRoomTablePage = () => {
         header: t("header.project"),
         accessorKey: "project.acronym",
         sortingFn: (rowA, rowB, columnId) => collator.compare(rowA.getValue(columnId), rowB.getValue(columnId)),
-        minSize: 300,
       },
       {
         header: t("header.proband"),
@@ -78,7 +77,7 @@ const ApprovalRoomTablePage = () => {
         Cell: ({ row }: { row: MRTRow<ApprovalRoomTableVisitForm> }) => (
           <ApprovalRoomTableActionButtons visitFormId={row.original.id} />
         ),
-        maxSize: 0,
+        minSize: 50,
       },
     ],
     [collator, t]
