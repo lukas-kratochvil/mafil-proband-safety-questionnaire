@@ -55,11 +55,6 @@ services:
       - THROTTLE_LIMIT=${THROTTLE_LIMIT}
       - PDF_OPERATOR_LANGUAGE_CODE=${PDF_OPERATOR_LANGUAGE_CODE}
       - WEB_URL=http://localhost:${WEB_PORT}
-      - OPERATOR_FIRSTNAME=${OPERATOR_FIRSTNAME}
-      - OPERATOR_SURNAME=${OPERATOR_SURNAME}
-      - OPERATOR_USERNAME=${OPERATOR_USERNAME}
-      - OPERATOR_EMAIL=${OPERATOR_EMAIL}
-      - OPERATOR_ROLE=${OPERATOR_ROLE}
     restart: unless-stopped
     depends_on:
       - postgres
@@ -87,11 +82,6 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=${WEB_PORT}
-      - VITE_SERVER_URL=http://localhost:${SERVER_PORT}
-      - VITE_OPERATOR_FIRSTNAME=${OPERATOR_FIRSTNAME}
-      - VITE_OPERATOR_SURNAME=${OPERATOR_SURNAME}
-      - VITE_OPERATOR_USERNAME=${OPERATOR_USERNAME}
-      - VITE_OPERATOR_EMAIL=${OPERATOR_EMAIL}
     restart: unless-stopped
     depends_on:
       - server

@@ -31,7 +31,7 @@ server {
   }
 
   location / {
-    # directory where the static content, mainly the index.html, is placed (the path is taken from the frontend/Dockerfile)
+    # directory where the static content, mainly the index.html and frontend config.json, is placed (the path is taken from the frontend/Dockerfile)
     root /usr/share/nginx/html;
 
     # setup fallback index.html file to use if it isn't found in the specified URI

@@ -6,6 +6,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { App } from "@app/App";
+import { loadConfig } from "./config";
 import { AuthProvider } from "./hooks/auth/AuthProvider";
 
 const queryClient = new QueryClient();
@@ -55,18 +56,28 @@ const theme = createTheme({
   },
 });
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <ThemeProvider theme={theme}>
-            <CssBaseline enableColorScheme />
-            <App />
-          </ThemeProvider>
-        </QueryClientProvider>
-      </AuthProvider>
-    </BrowserRouter>
-  </React.StrictMode>
-);
+const renderApp = async () => {
+  if (import.meta.env.PROD) {
+    await loadConfig();
+  } else {
+    await (await import("./config.dev")).loadConfigDev();
+  }
+
+  ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+    <React.StrictMode>
+      <BrowserRouter>
+        <AuthProvider>
+          <QueryClientProvider client={queryClient}>
+            <ReactQueryDevtools initialIsOpen={false} />
+            <ThemeProvider theme={theme}>
+              <CssBaseline enableColorScheme />
+              <App />
+            </ThemeProvider>
+          </QueryClientProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </React.StrictMode>
+  );
+};
+
+void renderApp();
