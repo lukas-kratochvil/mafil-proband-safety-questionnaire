@@ -30,29 +30,8 @@ import type {
 import { createServerApiCallError, type GraphQlError } from "../error-handling/server-utils";
 import { fetchNativeLanguage, fetchProject } from "../mafildb_API/calls";
 import { isBase64PDFContent } from "../utils";
-import { extractGraphQLOperationName } from "./gql-util";
-import { CREATE_VISIT_FORM, REMOVE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
-import {
-  AUTHENTICATE_OPERATOR,
-  GENERATE_PDF,
-  GET_APPROVAL_ROOM_TABLE_VISIT_FORMS,
-  GET_APPROVAL_ROOM_VISIT_FORM,
-  GET_BEFORE_EXAMINATION,
-  GET_CURRENT_QUESTIONS,
-  GET_ENTRY_INFO,
-  GET_EXAMINATION_CONSENT,
-  GET_GENDER,
-  GET_GENDERS,
-  GET_HANDEDNESS,
-  GET_HANDEDNESSES,
-  GET_OPERATOR,
-  GET_PROBAND_CONTACT_CONSENT,
-  GET_PROBAND_CONTACT_REQUEST,
-  GET_QUESTION,
-  GET_SAFETY_INFO,
-  GET_WAITING_ROOM_TABLE_VISIT_FORMS,
-  GET_WAITING_ROOM_VISIT_FORM,
-} from "./queries";
+import * as mutations from "./graphql/mutations";
+import * as queries from "./graphql/queries";
 import type {
   ApprovalRoomTableVisitFormsResponse,
   ApprovalRoomVisitFormResponse,
@@ -78,23 +57,35 @@ import type {
   WaitingRoomVisitFormResponse,
 } from "./response-types";
 
+// GraphQL request body format: https://graphql.org/learn/serving-over-http/#post-request
+type RequestData<TVariables> = {
+  query: string;
+  operationName?: string;
+  variables?: TVariables;
+};
+
+// Generic server GraphQL API response format: https://graphql.org/learn/serving-over-http/#response
+type ResponseData<TData> = {
+  data?: TData | null;
+  errors?: GraphQlError[];
+};
+
+// Extract operation name from the query
+const extractGraphQLOperationName = (query: string): string | undefined => {
+  const match = query.match(/^\s*(query|mutation)\s(\w+).*/);
+  return match ? match[2] : undefined;
+};
+
 // Using HTTP POST to transfer GraphQL queries/mutations: https://graphql.org/learn/serving-over-http/#post-request
 const serverApiCall = async <TData, TVariables = Record<string, unknown>>(
   query: string,
   variables?: TVariables
 ): Promise<TData> => {
-  // GraphQL request body format: https://graphql.org/learn/serving-over-http/#post-request
-  type RequestData = {
-    query: string;
-    operationName?: string;
-    variables?: TVariables;
-  };
-  // Generic server GraphQL API response format: https://graphql.org/learn/serving-over-http/#response
-  type ResponseData = {
-    data?: TData | null;
-    errors?: GraphQlError[];
-  };
-  const { data } = await serverApi.post<ResponseData, AxiosResponse<ResponseData>, RequestData>("", {
+  const { data } = await serverApi.post<
+    ResponseData<TData>,
+    AxiosResponse<ResponseData<TData>>,
+    RequestData<TVariables>
+  >("", {
     query,
     operationName: extractGraphQLOperationName(query),
     variables,
@@ -108,70 +99,70 @@ const serverApiCall = async <TData, TVariables = Record<string, unknown>>(
 };
 
 export const authenticateOperator = async (loggingOperator: OperatorAuthInput): Promise<OperatorDTO> => {
-  const data = await serverApiCall<AuthenticateOperatorResponse>(AUTHENTICATE_OPERATOR, loggingOperator);
+  const data = await serverApiCall<AuthenticateOperatorResponse>(queries.AUTHENTICATE_OPERATOR, loggingOperator);
   return data.authenticateOperator;
 };
 
 export const fetchOperator = async (username: string): Promise<OperatorDTO> => {
   const variables = { username };
-  const data = await serverApiCall<OperatorResponse, typeof variables>(GET_OPERATOR, variables);
+  const data = await serverApiCall<OperatorResponse, typeof variables>(queries.GET_OPERATOR, variables);
   return data.operator;
 };
 
 export const fetchGenders = async (): Promise<GenderDTO[]> => {
-  const data = await serverApiCall<GendersResponse>(GET_GENDERS);
+  const data = await serverApiCall<GendersResponse>(queries.GET_GENDERS);
   return data.genders;
 };
 
 export const fetchGender = async (code: GenderCode): Promise<GenderDTO> => {
   const variables = { code };
-  const data = await serverApiCall<GenderResponse>(GET_GENDER, variables);
+  const data = await serverApiCall<GenderResponse>(queries.GET_GENDER, variables);
   return data.gender;
 };
 
 export const fetchHandednesses = async (): Promise<HandednessDTO[]> => {
-  const data = await serverApiCall<HandednessesResponse>(GET_HANDEDNESSES);
+  const data = await serverApiCall<HandednessesResponse>(queries.GET_HANDEDNESSES);
   return data.handednesses;
 };
 
 export const fetchHandedness = async (code: HandednessCode): Promise<HandednessDTO> => {
   const variables = { code };
-  const data = await serverApiCall<HandednessResponse>(GET_HANDEDNESS, variables);
+  const data = await serverApiCall<HandednessResponse>(queries.GET_HANDEDNESS, variables);
   return data.handedness;
 };
 
 export const fetchCurrentQuestions = async (): Promise<QuestionDTO[]> => {
-  const data = await serverApiCall<CurrentQuestionsResponse>(GET_CURRENT_QUESTIONS);
+  const data = await serverApiCall<CurrentQuestionsResponse>(queries.GET_CURRENT_QUESTIONS);
   return data.questions;
 };
 
 export const fetchQuestion = async (questionId: string): Promise<QuestionDTO> => {
   const variables = { id: questionId };
-  const data = await serverApiCall<QuestionResponse>(GET_QUESTION, variables);
+  const data = await serverApiCall<QuestionResponse>(queries.GET_QUESTION, variables);
   return data.question;
 };
 
 export const fetchEntryInfo = async (locale: LanguageCode): Promise<HTMLCardDTO> => {
   const variables = { locale };
-  const data = await serverApiCall<EntryInfoResponse>(GET_ENTRY_INFO, variables);
+  const data = await serverApiCall<EntryInfoResponse>(queries.GET_ENTRY_INFO, variables);
   return data.entryInfo;
 };
 
 export const fetchSafetyInfo = async (locale: LanguageCode): Promise<HTMLCardDTO> => {
   const variables = { locale };
-  const data = await serverApiCall<SafetyInfoResponse>(GET_SAFETY_INFO, variables);
+  const data = await serverApiCall<SafetyInfoResponse>(queries.GET_SAFETY_INFO, variables);
   return data.safetyInfo;
 };
 
 export const fetchBeforeExamination = async (locale: LanguageCode): Promise<HTMLCardDTO> => {
   const variables = { locale };
-  const data = await serverApiCall<BeforeExaminationResponse>(GET_BEFORE_EXAMINATION, variables);
+  const data = await serverApiCall<BeforeExaminationResponse>(queries.GET_BEFORE_EXAMINATION, variables);
   return data.beforeExamination;
 };
 
 export const fetchExaminationConsent = async (locale: LanguageCode): Promise<HTMLCardDTO> => {
   const variables = { locale };
-  const data = await serverApiCall<ExaminationConsentResponse>(GET_EXAMINATION_CONSENT, variables);
+  const data = await serverApiCall<ExaminationConsentResponse>(queries.GET_EXAMINATION_CONSENT, variables);
   return data.examinationConsent;
 };
 
@@ -183,19 +174,22 @@ export const fetchProbandContactRequest = async (
   currentDateStr: string
 ): Promise<HTMLCardDTO> => {
   const variables = { locale, name, surname, birthdateStr, currentDateStr };
-  const data = await serverApiCall<ProbandContactRequestResponse>(GET_PROBAND_CONTACT_REQUEST, variables);
+  const data = await serverApiCall<ProbandContactRequestResponse>(queries.GET_PROBAND_CONTACT_REQUEST, variables);
   return data.probandContactRequest;
 };
 
 export const fetchProbandContactConsent = async (locale: LanguageCode): Promise<HTMLCardDTO> => {
   const variables = { locale };
-  const data = await serverApiCall<ProbandContactConsentResponse>(GET_PROBAND_CONTACT_CONSENT, variables);
+  const data = await serverApiCall<ProbandContactConsentResponse>(queries.GET_PROBAND_CONTACT_CONSENT, variables);
   return data.probandContactConsent;
 };
 
 export const fetchWaitingRoomTableVisitForms = async (): Promise<WaitingRoomTableVisitForm[]> => {
   const variables = { state: "NEW" };
-  const data = await serverApiCall<WaitingRoomTableVisitFormsResponse>(GET_WAITING_ROOM_TABLE_VISIT_FORMS, variables);
+  const data = await serverApiCall<WaitingRoomTableVisitFormsResponse>(
+    queries.GET_WAITING_ROOM_TABLE_VISIT_FORMS,
+    variables
+  );
   return Promise.all(
     data.visitForms.map(async (visitForm) => {
       const nativeLanguage = await fetchNativeLanguage(visitForm.nativeLanguageCode);
@@ -215,7 +209,7 @@ export const fetchWaitingRoomVisitForm = async (
   }
 
   const variables = { id };
-  const data = await serverApiCall<WaitingRoomVisitFormResponse>(GET_WAITING_ROOM_VISIT_FORM, variables);
+  const data = await serverApiCall<WaitingRoomVisitFormResponse>(queries.GET_WAITING_ROOM_VISIT_FORM, variables);
   const answersIncludingQuestions = await Promise.all(
     data.visitForm.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
       const question = await fetchQuestion(answer.questionId);
@@ -237,7 +231,10 @@ export const fetchWaitingRoomVisitForm = async (
 
 export const fetchApprovalRoomTableVisitForms = async (): Promise<ApprovalRoomTableVisitForm[]> => {
   const variables = { state: "IN_APPROVAL" };
-  const data = await serverApiCall<ApprovalRoomTableVisitFormsResponse>(GET_APPROVAL_ROOM_TABLE_VISIT_FORMS, variables);
+  const data = await serverApiCall<ApprovalRoomTableVisitFormsResponse>(
+    queries.GET_APPROVAL_ROOM_TABLE_VISIT_FORMS,
+    variables
+  );
   return Promise.all(
     data.visitForms.map(async (visitForm) => {
       const project = await fetchProject(visitForm.additionalInfo.projectUuid);
@@ -259,7 +256,7 @@ export const fetchApprovalRoomVisitForm = async (
   }
 
   const variables = { id };
-  const data = await serverApiCall<ApprovalRoomVisitFormResponse>(GET_APPROVAL_ROOM_VISIT_FORM, variables);
+  const data = await serverApiCall<ApprovalRoomVisitFormResponse>(queries.GET_APPROVAL_ROOM_VISIT_FORM, variables);
   const answersIncludingQuestions = await Promise.all(
     data.visitForm.answers.map(async (answer): Promise<VisitFormAnswerIncludingQuestion> => {
       const question = await fetchQuestion(answer.questionId);
@@ -301,7 +298,7 @@ export const createProbandVisitForm = async (visitFormData: ValidatedProbandForm
       })),
     },
   };
-  const data = await serverApiCall<CreateVisitFormResponse>(CREATE_VISIT_FORM, variables);
+  const data = await serverApiCall<CreateVisitFormResponse>(mutations.CREATE_VISIT_FORM, variables);
   return data.createVisitForm.id;
 };
 
@@ -343,7 +340,7 @@ export const createDuplicatedVisitFormForApproval = async (
       })),
     },
   };
-  const data = await serverApiCall<CreateVisitFormResponse>(CREATE_VISIT_FORM, variables);
+  const data = await serverApiCall<CreateVisitFormResponse>(mutations.CREATE_VISIT_FORM, variables);
   return data.createVisitForm.id;
 };
 
@@ -382,7 +379,7 @@ export const sendVisitFormForApproval = async (
       })),
     },
   };
-  const data = await serverApiCall<UpdateVisitFormResponse>(UPDATE_VISIT_FORM, variables);
+  const data = await serverApiCall<UpdateVisitFormResponse>(mutations.UPDATE_VISIT_FORM, variables);
   return data.updateVisitForm.id;
 };
 
@@ -397,7 +394,7 @@ const updateVisitFormState = async (visitFormId: string | undefined, state: Visi
       state,
     },
   };
-  void serverApiCall<UpdateVisitFormResponse>(UPDATE_VISIT_FORM, variables);
+  void serverApiCall<UpdateVisitFormResponse>(mutations.UPDATE_VISIT_FORM, variables);
 };
 
 export const markVisitFormAsSentToMafilDb = async (visitFormId: string | undefined): Promise<void> =>
@@ -408,7 +405,7 @@ export const markVisitFormAsPdfGenerated = async (visitFormId: string | undefine
 
 export const deleteVisitForm = async (visitFormId: string): Promise<void> => {
   const variables = { id: visitFormId };
-  void serverApiCall<RemoveVisitFormResponse>(REMOVE_VISIT_FORM, variables);
+  void serverApiCall<RemoveVisitFormResponse>(mutations.REMOVE_VISIT_FORM, variables);
 };
 
 const generatePdf = async (
@@ -452,7 +449,7 @@ const generatePdf = async (
       comment: answer.comment,
     })),
   };
-  const data = await serverApiCall<GeneratePdfResponse>(GENERATE_PDF, variables);
+  const data = await serverApiCall<GeneratePdfResponse>(queries.GENERATE_PDF, variables);
 
   if (!isBase64PDFContent(data.generatePDF.content)) {
     throw new Error("Generated PDF has malformed content!");

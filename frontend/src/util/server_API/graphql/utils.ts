@@ -1,9 +1,3 @@
-// Extract operation name from the query
-export const extractGraphQLOperationName = (query: string): string | undefined => {
-  const match = query.match(/^\s*(query|mutation)\s(\w+).*/);
-  return match ? match[2] : undefined;
-};
-
 // GraphQL tag
 export const gql = String.raw;
 

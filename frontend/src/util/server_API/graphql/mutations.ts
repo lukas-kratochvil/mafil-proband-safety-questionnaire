@@ -1,6 +1,6 @@
-import { gql } from "./gql-util";
+import { gql } from "./utils";
 
-export const CREATE_VISIT_FORM = gql`
+const CREATE_VISIT_FORM = gql`
   mutation CreateVisitForm($createVisitFormInput: CreateVisitFormInput!) {
     createVisitForm(createVisitFormInput: $createVisitFormInput) {
       id
@@ -8,7 +8,7 @@ export const CREATE_VISIT_FORM = gql`
   }
 `;
 
-export const UPDATE_VISIT_FORM = gql`
+const UPDATE_VISIT_FORM = gql`
   mutation UpdateVisitForm($updateVisitFormInput: UpdateVisitFormInput!) {
     updateVisitForm(updateVisitFormInput: $updateVisitFormInput) {
       id
@@ -16,8 +16,10 @@ export const UPDATE_VISIT_FORM = gql`
   }
 `;
 
-export const REMOVE_VISIT_FORM = gql`
+const REMOVE_VISIT_FORM = gql`
   mutation RemoveVisitForm($id: UUID!) {
     removeVisitForm(id: $id)
   }
 `;
+
+export { CREATE_VISIT_FORM, UPDATE_VISIT_FORM, REMOVE_VISIT_FORM };
