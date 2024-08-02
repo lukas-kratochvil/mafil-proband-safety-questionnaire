@@ -30,6 +30,7 @@ import type {
 import { createServerApiCallError, type GraphQlError } from "../error-handling/server-utils";
 import { fetchNativeLanguage, fetchProject } from "../mafildb_API/calls";
 import { isBase64PDFContent } from "../utils";
+import { extractGraphQLOperationName } from "./gql-util";
 import { CREATE_VISIT_FORM, REMOVE_VISIT_FORM, UPDATE_VISIT_FORM } from "./mutations";
 import {
   AUTHENTICATE_OPERATOR,
@@ -77,21 +78,25 @@ import type {
   WaitingRoomVisitFormResponse,
 } from "./response-types";
 
+// Using HTTP POST to transfer GraphQL queries/mutations: https://graphql.org/learn/serving-over-http/#post-request
 const serverApiCall = async <TData, TVariables = Record<string, unknown>>(
   query: string,
   variables?: TVariables
 ): Promise<TData> => {
+  // GraphQL request body format: https://graphql.org/learn/serving-over-http/#post-request
   type RequestData = {
     query: string;
+    operationName?: string;
     variables?: TVariables;
   };
-  // Generic server GraphQL API response type
+  // Generic server GraphQL API response format: https://graphql.org/learn/serving-over-http/#response
   type ResponseData = {
     data?: TData | null;
     errors?: GraphQlError[];
   };
   const { data } = await serverApi.post<ResponseData, AxiosResponse<ResponseData>, RequestData>("", {
     query,
+    operationName: extractGraphQLOperationName(query),
     variables,
   });
 

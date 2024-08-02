@@ -1,10 +1,15 @@
+// Extract operation name from the query
+export const extractGraphQLOperationName = (query: string): string | undefined => {
+  const match = query.match(/^\s*(query|mutation)\s(\w+).*/);
+  return match ? match[2] : undefined;
+};
+
 // GraphQL tag
 export const gql = String.raw;
 
-/**
- * Something like the GraphQL fragments, but just strings to be included in other strings
- */
-
+//------------------------------------------------------------------------------------------
+// Something like the GraphQL fragments, but just strings to be included in other strings.
+//------------------------------------------------------------------------------------------
 export const OPERATOR_PROPS = gql`
   id
   name
