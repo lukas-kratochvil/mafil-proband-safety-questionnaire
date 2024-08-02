@@ -1,6 +1,8 @@
 # MAFIL - Proband Safety Questionnaire
 Web application for ensuring the registration and safety of MR measurements in the [MAFIL laboratory (CEITEC)](https://mafil.ceitec.cz/en/).
 
+**&#33; This application relies on the central system of the MAFIL laboratory called MAFILDB &#33;**
+
 ## Table of contents
 - [Repository structure](#repository-structure)
 - [Base URL paths](#base-url-paths)
@@ -12,6 +14,7 @@ Web application for ensuring the registration and safety of MR measurements in t
   - [Populating the database with initial data](#populating-the-database-with-initial-data-1)
   - [Changing the database schema and applying database migrations](#changing-the-database-schema-and-applying-database-migrations)
   - [Useful tools](#useful-tools)
+- [Used MAFILDB API endpoints](#used-mafildb-api-endpoints)
 - [Possible issues](#possible-issues)
   - [PDF not showing on the Visit detail page](#pdf-not-showing-on-the-visit-detail-page)
 
@@ -143,6 +146,69 @@ npx prisma generate
 
 ### Useful tools
 * GraphQL playground to test the server GraphQL API: use `server` URL with the path `/graphql`
+
+## Used MAFILDB API endpoints
+This section describes used MAFILDB API endpoints, and whether they are used in the unauthenticated or authenticated part of this application and in what situations.
+
+- `GET /languages`
+  - unauthenticated
+    - proband form
+  - authenticated
+    - phantom form
+- `GET /languages/{code}`
+  - authenticated
+    - waiting room forms table
+    - approval room forms table
+    - duplication form
+- `GET /projects`
+  - authenticated
+    - waiting room form
+    - approval room form
+    - phantom form
+    - duplication form
+- `GET /projects/{uuid}`
+  - authenticated
+    - approval room forms table
+- `GET /devices?type=MR`
+  - authenticated
+    - waiting room form
+    - approval room form
+    - phantom form
+    - duplication form
+- `GET /devices/{id}?type=MR`
+  - authenticated
+    - recent visits table
+- `POST /subjects`
+  - authenticated
+    - waiting room form - submission
+    - approval room form - submission
+    - phantom form - submission
+    - duplication form - submission
+- `POST /visits`
+  - authenticated
+    - waiting room form - submission
+    - approval room form - submission
+    - phantom form - submission
+    - duplication form - submission
+- `POST /visits/{uuid}/files`
+  - authenticated
+    - waiting room form - add PDF to the submitted visit
+    - approval room form - add PDF to the submitted visit
+    - phantom form - add PDF to the submitted visit
+    - duplication form - add PDF to the submitted visit
+- `GET /visits?newer_than=conf_max_days_old_in_sec`
+  - authenticated
+    - recent visits table
+- `GET /visits/{uuid}`
+  - authenticated
+    - duplication form
+    - visit detail
+- `GET /visits/{uuid}/files?file_type=reg_form`
+  - authenticated
+    - visit detail
+- `PATCH visits/{uuid}`
+  - authenticated
+    - visit detail - updating visit signature state
 
 ## Possible issues
 In this section, you can find solutions to some problems that are not directly related to the application itself.
