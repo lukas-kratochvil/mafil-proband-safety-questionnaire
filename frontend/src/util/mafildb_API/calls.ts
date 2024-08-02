@@ -324,7 +324,7 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
     return (await import("./calls.dev")).fetchRecentVisitsDev();
   }
 
-  // Set limitation to fetch only visits created 14 days ago and newer.
+  // Set limitation to fetch only visits created X days ago and newer where max X is given by the MAFILDB_VISITS_MAX_DAYS_OLD env var.
   // MAFILDB returns only visits created X days ago and newer where X is given by the permissions acquired from the provided OIDC access token.
   // MAFILDB_VISITS_MAX_DAYS_OLD env var is used as the upper limit - absolute max value.
   const newerThanDateBound = subDays(new Date().setHours(0, 0, 0, 0), +envVars.MAFILDB_VISITS_MAX_DAYS_OLD);
@@ -405,8 +405,8 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
   );
 };
 
-const fetchVisit = async (visitUuid: string): Promise<MDB_VisitDTO | never> => {
-  const { data } = await mafildbApi.get<MDB_GetVisitResponse>(`visits/${visitUuid}`);
+const fetchVisit = async (uuid: string): Promise<MDB_VisitDTO | never> => {
+  const { data } = await mafildbApi.get<MDB_GetVisitResponse>(`visits/${uuid}`);
 
   if (MDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
