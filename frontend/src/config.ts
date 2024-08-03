@@ -26,17 +26,12 @@ const configSchema = object({
 
 type Config = InferType<typeof configSchema>;
 
-const config = {};
+let config: Config;
 
 export const loadConfig = async () => {
   const response = await fetch("/config.json");
   const data = await response.json();
-
-  // validate the data
-  await configSchema.validate(data);
-
-  // if validation passes, assign the data to the config object
-  Object.assign(config, data);
+  config = await configSchema.validate(data);
 };
 
-export default config as Config;
+export const getConfig = (): Config => config;

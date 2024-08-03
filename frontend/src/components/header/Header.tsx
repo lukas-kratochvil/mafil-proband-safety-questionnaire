@@ -1,7 +1,7 @@
 import { AppBar, Grid, Toolbar, useMediaQuery, type Theme } from "@mui/material";
 import { lazy } from "react";
-import config from "@app/config";
-import { useAuth } from "@app/hooks/auth/AuthProvider";
+import { getConfig } from "@app/config";
+import { useAuth } from "@app/hooks/auth/auth";
 import { CeitecMafilLogo } from "./CeitecMafilLogo";
 import { LanguageMenu } from "./LanguageMenu";
 import { LoginOperator } from "./LoginOperator";
@@ -17,7 +17,7 @@ export const Header = () => {
     <AppBar
       position="static"
       sx={{
-        backgroundColor: config.appBarColor,
+        backgroundColor: import.meta.env.PROD ? getConfig().appBarColor : undefined,
       }}
     >
       <Toolbar variant="dense">

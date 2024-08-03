@@ -1,13 +1,33 @@
+import { gendersTest } from "@app/__tests__/data/genders";
+import { handednessesTest } from "@app/__tests__/data/handednesses";
+import { nativeLanguagesTest } from "@app/__tests__/data/languages";
+import type { NativeLanguage } from "@app/model/language";
+import type { GenderDTO, HandednessDTO } from "@app/util/server_API/dto";
 import { render, screen } from "@test-utils";
 import { FormProbandInfo } from "../FormProbandInfo";
 
 //----------------------------------------------------------------------
 // Mocking custom authentication
 //----------------------------------------------------------------------
-vi.mock("@app/hooks/auth/AuthProvider", () => ({
+vi.mock("@app/hooks/auth/auth", () => ({
   useAuth: () => ({
     operator: undefined,
   }),
+}));
+
+//----------------------------------------------------------------------
+// Mocking server API calls
+//----------------------------------------------------------------------
+vi.mock("@app/util/server_API/calls", async () => ({
+  fetchGenders: async (): Promise<GenderDTO[]> => gendersTest,
+  fetchHandednesses: async (): Promise<HandednessDTO[]> => handednessesTest,
+}));
+
+//----------------------------------------------------------------------
+// Mocking MAFILDB API calls
+//----------------------------------------------------------------------
+vi.mock("@app/util/mafildb_API/calls", async () => ({
+  fetchNativeLanguages: async (): Promise<NativeLanguage[]> => nativeLanguagesTest,
 }));
 
 //----------------------------------------------------------------------

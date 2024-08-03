@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import configDev from "@app/config.dev";
+import { getConfigDev } from "@app/config.dev";
 import { RoutingPath } from "@app/routing-paths";
 import { authenticateOperator } from "@app/util/server_API/calls";
 import type { OperatorAuthInput } from "@app/util/server_API/dto";
-import type { Auth } from "./AuthProvider";
+import type { Auth } from "../auth";
 
 const SESSION_STORAGE_OPERATOR_KEY = "operator";
-const DEV_OPERATOR: OperatorAuthInput = { ...configDev.operator };
+const DEV_OPERATOR: OperatorAuthInput = { ...getConfigDev().operator };
 
 export const useAuthProviderDev = (): Auth => {
   const navigate = useNavigate();

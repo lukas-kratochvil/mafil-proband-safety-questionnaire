@@ -12,17 +12,12 @@ const configDevSchema = object({
 
 type ConfigDev = InferType<typeof configDevSchema>;
 
-const configDev = {};
+let configDev: ConfigDev;
 
 export const loadConfigDev = async () => {
   const response = await fetch("/config.local.json");
   const data = await response.json();
-
-  // validate the data
-  await configDevSchema.validate(data);
-
-  // if validation passes, assign the data to the config object
-  Object.assign(configDev, data);
+  configDev = await configDevSchema.validate(data);
 };
 
-export default configDev as ConfigDev;
+export const getConfigDev = (): ConfigDev => configDev;

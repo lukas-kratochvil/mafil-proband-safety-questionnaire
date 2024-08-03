@@ -1,6 +1,5 @@
 import axios from "axios";
-import configDev from "@app/config.dev";
-import { AuthService } from "@app/hooks/auth/auth-service";
+import { getConfigDev } from "@app/config.dev";
 import { transformResponseDateStringToDate } from "./transformers/dates-transformers";
 
 /**
@@ -8,7 +7,7 @@ import { transformResponseDateStringToDate } from "./transformers/dates-transfor
  */
 export const serverApi = axios.create({
   // 'server-api' URL is rewritten in the Nginx conf to the correct URL
-  baseURL: import.meta.env.PROD ? "server-api" : configDev.serverApiUrl,
+  baseURL: import.meta.env.PROD ? "server-api" : getConfigDev().serverApiUrl,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -17,12 +16,15 @@ export const serverApi = axios.create({
 
 // Add OIDC Access token to a request
 serverApi.interceptors.request.use(async (axiosConfig) => {
-  const authService = AuthService.getInstance();
-  const authUser = await authService.getAuthUser();
-  if (authUser) {
-    // set user's OIDC access_token in the Authorization header, so that a request to our backend API will proceed
-    axiosConfig.headers.Authorization = `Bearer ${authUser.access_token}`; // eslint-disable-line no-param-reassign
+  if (import.meta.env.PROD) {
+    const authService = (await import("@app/hooks/auth/auth-service")).AuthService.getInstance();
+    const authUser = await authService.getAuthUser();
+    if (authUser) {
+      // set user's OIDC access_token in the Authorization header, so that a request to our backend API will proceed
+      axiosConfig.headers.Authorization = `Bearer ${authUser.access_token}`; // eslint-disable-line no-param-reassign
+    }
   }
+
   return axiosConfig;
 });
 

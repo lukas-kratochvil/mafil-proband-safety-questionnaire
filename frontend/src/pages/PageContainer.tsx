@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import type { PropsWithChildren } from "react";
 import toast, { ToastBar, Toaster } from "react-hot-toast";
 import { Header } from "@app/components/header/Header";
-import { useAuth } from "@app/hooks/auth/AuthProvider";
+import { useAuth } from "@app/hooks/auth/auth";
 
 type PageContainerProps = {
   center?: boolean;

@@ -1,5 +1,5 @@
 import userEvent from "@testing-library/user-event";
-import * as authProvider from "@app/hooks/auth/AuthProvider";
+import * as auth from "@app/hooks/auth/auth";
 import LoginPage from "@app/pages/LoginPage";
 import { render, screen } from "@test-utils";
 
@@ -13,7 +13,7 @@ vi.mock("@app/components/header/LanguageMenu", () => ({
 //----------------------------------------------------------------------
 // Mocking custom authentication
 //----------------------------------------------------------------------
-vi.mock("@app/hooks/auth/AuthProvider", () => ({
+vi.mock("@app/hooks/auth/auth", () => ({
   useAuth: () => ({
     operator: undefined,
   }),
@@ -42,10 +42,10 @@ describe("login page", () => {
     test("MUNI OIDC provider", async () => {
       // ARRANGE
       const user = userEvent.setup();
-      const useAuth = vi.spyOn(authProvider, "useAuth");
+      const useAuthSpy = vi.spyOn(auth, "useAuth");
       const mockedLogIn = vi.fn();
-      useAuth.mockReturnValueOnce({
-        ...authProvider.useAuth(),
+      useAuthSpy.mockReturnValueOnce({
+        ...auth.useAuth(),
         logIn: mockedLogIn,
       });
 

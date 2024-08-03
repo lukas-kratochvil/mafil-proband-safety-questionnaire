@@ -19,7 +19,7 @@ const WaitingRoomTablePage = lazy(() => import("@app/pages/WaitingRoomTablePage"
 const VisitDetailPage = lazy(() => import("@app/pages/VisitDetailPage"));
 const NotFoundPage = lazy(() => import("@app/pages/NotFoundPage"));
 
-export const App = () => (
+const App = () => (
   <Suspense fallback={<SuspensePage />}>
     <Routes>
       <Route
@@ -95,3 +95,5 @@ export const App = () => (
     </Routes>
   </Suspense>
 );
+
+export default App;

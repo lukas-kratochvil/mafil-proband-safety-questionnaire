@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Auth } from "./AuthProvider";
+import type { Auth } from "./auth";
 import { AuthService } from "./auth-service";
 
 export const useAuthProvider = (): Auth => {
