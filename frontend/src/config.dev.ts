@@ -15,7 +15,7 @@ type ConfigDev = InferType<typeof configDevSchema>;
 let configDev: ConfigDev;
 
 export const loadConfigDev = async () => {
-  const response = await fetch("/config.local.json");
+  const response = await fetch("/config.json");
   const data = await response.json();
   configDev = await configDevSchema.validate(data);
 };

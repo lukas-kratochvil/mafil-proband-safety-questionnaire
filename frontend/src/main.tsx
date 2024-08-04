@@ -59,6 +59,7 @@ const theme = createTheme({
 });
 
 const renderApp = async () => {
+  // load the configuration before rendering any React component or importing any of the application's modules
   if (import.meta.env.PROD) {
     await (await import("./config")).loadConfig();
   } else {

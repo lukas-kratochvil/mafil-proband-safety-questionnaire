@@ -67,6 +67,7 @@ services:
       target: development
     command: npm run dev
     volumes:
+      - ./web-config.json:/usr/src/app/frontend/public/config.json:ro
       # Changes in host's ./frontend directory will be propagated to the container
       # This will also let us add packages during development without rebuilding the image
       # - We then need to install added packages (run 'npm i') inside the container in the folder '/usr/src/app/frontend'
