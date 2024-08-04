@@ -11,7 +11,7 @@ import type { TabProps } from "../navigation/tabs";
 //----------------------------------------------------------------------
 let mockOperator: OperatorDTO | undefined;
 
-vi.mock("@app/hooks/auth/AuthProvider", () => ({
+vi.mock("@app/hooks/auth/auth", () => ({
   useAuth: () => ({
     operator: mockOperator,
   }),

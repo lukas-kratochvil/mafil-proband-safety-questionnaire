@@ -17,7 +17,7 @@ const operator: OperatorDTO = {
 //----------------------------------------------------------------------
 // Mocking custom authentication
 //----------------------------------------------------------------------
-vi.mock("@app/hooks/auth/AuthProvider", () => ({
+vi.mock("@app/hooks/auth/auth", () => ({
   useAuth: () => ({
     operator,
   }),

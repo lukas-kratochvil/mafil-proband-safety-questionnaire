@@ -1,5 +1,5 @@
 import { UserManager, type User, type UserManagerSettings } from "oidc-client-ts";
-import envVars from "@app/envVars";
+import { getConfig } from "@app/config/config";
 import { LocalizedError } from "@app/util/error-handling/LocalizedError";
 import { authenticateOperator } from "@app/util/server_API/calls";
 import type { OperatorDTO } from "@app/util/server_API/dto";
@@ -7,10 +7,10 @@ import type { OperatorDTO } from "@app/util/server_API/dto";
 // Using OIDC Authorization Code Flow
 // Using "Jednotné přihlášení MUNI" OIDC provider
 const oidcConfig: UserManagerSettings = {
-  authority: envVars.JPM_AUTHORIZATION_ENDPOINT,
-  client_id: envVars.JPM_CLIENT_ID,
-  redirect_uri: envVars.JPM_REDIRECT_URI,
-  scope: envVars.JPM_SCOPES,
+  authority: getConfig().oidc.jpm.authorizationEndpoint,
+  client_id: getConfig().oidc.jpm.clientId,
+  redirect_uri: getConfig().oidc.jpm.redirectUri,
+  scope: getConfig().oidc.jpm.scopes,
   /**
    * Multi-factor authentication - URL of the second factor authentication provider.
    *
@@ -19,8 +19,8 @@ const oidcConfig: UserManagerSettings = {
    * logged in using MFA a moment ago so the user does not need to undergo the second factor authentication on every
    * login. Because of that we have to trust the OIDC provider that it manages the MFA correctly!
    */
-  acr_values: envVars.JPM_MFA_ENDPOINT,
-  post_logout_redirect_uri: envVars.JPM_POST_LOGOUT_REDIRECT_URI,
+  acr_values: getConfig().oidc.jpm.mfaEndpoint,
+  post_logout_redirect_uri: getConfig().oidc.jpm.postLogoutRedirectUri,
   automaticSilentRenew: true,
   // Revoke access token and refresh token on signout to avoid accessing secured APIs using these tokens
   revokeTokensOnSignout: true,

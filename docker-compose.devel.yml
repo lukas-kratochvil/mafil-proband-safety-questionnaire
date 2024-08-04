@@ -88,19 +88,10 @@ services:
       - frontend-network
     environment:
       - NODE_ENV=production
-      # careful! - 'sed' command is using '~' as delimiter so there must not be any '~' in the 'INJECT_...' env var value
-      - INJECT_APP_BAR_COLOR=${REG_APP_BAR_COLOR}
-      - INJECT_JPM_AUTHORIZATION_ENDPOINT=${REG_JPM_AUTHORIZATION_ENDPOINT}
-      - INJECT_JPM_CLIENT_ID=${REG_JPM_CLIENT_ID_FRONTEND}
-      - INJECT_JPM_REDIRECT_URI=${REG_JPM_REDIRECT_URI}
-      - INJECT_JPM_SCOPES=${REG_JPM_SCOPES}
-      - INJECT_JPM_MFA_ENDPOINT=${REG_JPM_MFA_ENDPOINT}
-      - INJECT_JPM_POST_LOGOUT_REDIRECT_URI=${REG_JPM_POST_LOGOUT_REDIRECT_URI}
-      - INJECT_MAFILDB_API_URL=${REG_MAFILDB_API_URL}
-      - INJECT_MAFILDB_VISITS_MAX_DAYS_OLD=${REG_MAFILDB_VISITS_MAX_DAYS_OLD}
-      # 'server' is the name of our docker-compose backend API service that runs on the same machine as this Nginx reverse proxy
+      # 'server' is the name of our docker-compose backend API service that runs on the same machine as this Nginx reverse proxy service
       - SERVER_ADDRESS=server:${REG_SERVER_PORT}
     volumes:
+      - ./web-config.json:/usr/share/nginx/html/config.json:ro
       # - ./certs:/etc/nginx/certs
       - ./logs/web:/var/log/nginx
     restart: unless-stopped

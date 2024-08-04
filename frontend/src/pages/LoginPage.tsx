@@ -1,7 +1,7 @@
 import { Avatar, Button, Stack, Typography, useMediaQuery, type Theme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { CardContainer } from "@app/components/card/CardContainer";
-import { useAuth } from "@app/hooks/auth/AuthProvider";
+import { useAuth } from "@app/hooks/auth/auth";
 import { PageContainer } from "./PageContainer";
 
 const LoginPage = () => {

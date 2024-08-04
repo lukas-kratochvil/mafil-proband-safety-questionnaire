@@ -22,7 +22,7 @@ vi.mock("react-router-dom", async () => ({
 //----------------------------------------------------------------------
 // Mocking custom authentication
 //----------------------------------------------------------------------
-vi.mock("@app/hooks/auth/AuthProvider", () => ({
+vi.mock("@app/hooks/auth/auth", () => ({
   useAuth: () => ({
     operator: undefined,
   }),

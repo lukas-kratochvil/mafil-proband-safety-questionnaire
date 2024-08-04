@@ -33,9 +33,9 @@ success () {
 Successfully completed!
 
 Next steps:
-  1. Change .env file variables to satisfy your needs and then copy these files to your server.
-  2. Uploud .env and docker-compose.ENV.yml on the server
-  3. Install or update the app
+  1. Change .env and web-config.json variable values to satisfy your needs
+  2. Copy these files to your server
+  3. Install or update the app on your server
 "
 }
 
@@ -105,5 +105,8 @@ download "$DEST_DIR_PATH/$DOCKER_COMPOSE_FILE" "$GITHUB_FILE_URL/$DOCKER_COMPOSE
 
 echo "Downloading latest '.env' from the '$GIT_BRANCH' branch of the GitHub repo…"
 download "$DEST_DIR_PATH/.env" "$GITHUB_FILE_URL/.env.example"
+
+echo "Downloading latest 'web-config.json' from the '$GIT_BRANCH' branch of the GitHub repo…"
+download "$DEST_DIR_PATH/web-config.json" "$GITHUB_FILE_URL/web-config.example.json"
 
 success

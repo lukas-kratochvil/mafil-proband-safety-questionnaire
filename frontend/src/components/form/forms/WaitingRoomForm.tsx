@@ -8,7 +8,7 @@ import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo
 import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo";
 import { FormQuestions } from "@app/components/form/components/FormQuestions";
 import { loadFormDefaultValuesFromWaitingRoomVisitForm } from "@app/components/form/util/loaders";
-import { useAuth } from "@app/hooks/auth/AuthProvider";
+import { useAuth } from "@app/hooks/auth/auth";
 import type {
   FormPropType,
   FormQac,

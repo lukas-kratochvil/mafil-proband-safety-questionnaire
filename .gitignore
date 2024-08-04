@@ -2,9 +2,12 @@
 dist/
 node_modules/
 
-# Environment variables
+# Configs
 .env*
 !.env.*.example
+web-config*.json
+!web-config*.example.json
+frontend/public/config.json
 
 # Database
 database-storage

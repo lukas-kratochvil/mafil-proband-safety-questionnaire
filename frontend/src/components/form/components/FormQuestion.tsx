@@ -2,7 +2,7 @@ import { Grid, Typography, useMediaQuery, type Theme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "@app/hooks/auth/AuthProvider";
+import { useAuth } from "@app/hooks/auth/auth";
 import { answerOptions, type FormPropType, type FormQac } from "@app/model/form";
 import { FormRadioGroup } from "../inputs/FormRadioGroup";
 import { FormTextField } from "../inputs/FormTextField";

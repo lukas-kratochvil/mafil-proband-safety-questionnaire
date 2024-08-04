@@ -1,5 +1,5 @@
 import { updatedDiff } from "deep-object-diff";
-import type { Auth } from "@app/hooks/auth/AuthProvider";
+import type { Auth } from "@app/hooks/auth/auth";
 import type { Device } from "@app/model/device";
 import type {
   AnswerOption,

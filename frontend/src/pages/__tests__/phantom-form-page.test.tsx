@@ -37,7 +37,7 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 //----------------------------------------------------------------------
 // Mocking custom authentication
 //----------------------------------------------------------------------
-vi.mock("@app/hooks/auth/AuthProvider", () => ({
+vi.mock("@app/hooks/auth/auth", () => ({
   useAuth: () => ({
     operator: operatorMRTest,
   }),

@@ -1,0 +1,17 @@
+{
+  "appBarColor": "",
+  "oidc": {
+    "jpm": {
+      "authorizationEndpoint": "",
+      "clientId": "",
+      "redirectUri": "",
+      "scopes": "",
+      "mfaEndpoint": "",
+      "postLogoutRedirectUri": ""
+    }
+  },
+  "mafildb": {
+    "apiUrl": "",
+    "visitsMaxDaysOld": ""
+  }
+}

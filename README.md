@@ -9,6 +9,7 @@ Web application for ensuring the registration and safety of MR measurements in t
 - [Installation](#installation)
   - [Populating the database with initial data](#populating-the-database-with-initial-data)
 - [Services update](#services-update)
+  - [Web config update](#web-config-update)
 - [Local development](#local-development)
   - [Installation](#installation-1)
   - [Populating the database with initial data](#populating-the-database-with-initial-data-1)
@@ -38,6 +39,7 @@ This repository contains the following most important directories and files:
 - *docker-compose.local.yml* - local development environment services configuration
 - *docker-compose.prod.yml* - production environment services configuration
 - *download.sh* - script to download files for deployment
+- *web-config.example.json* - example of the web service configuration
 
 ## Base URL paths
 - `/` - root path directs to the proband safety questionnaire
@@ -50,12 +52,13 @@ Firstly, install Docker and docker-compose ([see the official Docker docs](https
 After that use the `download.sh` script (located in the project root directory) to download files essential to run the app.
 - environment-specific docker-compose file
 - .env containing services configuration
+- web-config.json containing web service configuration
 
 ```bash
 ./download.sh -d [DOWNLOAD_PATH] -e [ENV]
 ```
 
-Edit `.env` configuration variables with your values.
+Edit `.env` and `web-config.json` configuration variables with your values.
 
 Then transfer the directory to the server. You can use this command template:
 ```sh
@@ -92,7 +95,10 @@ docker-compose -f docker-compose.ENV.yml exec server npm run seed
 Then users that are eligible to access the authenticated part of the app must be defined. Login to the Adminer at `/adminer` URL path and create accounts in the `Operator` table in the database.
 
 ## Services update
-It may be necessary to update `.env` variables according to `.env.example` and also `docker-compose.yml` according to the specific environment `docker-compose.ENV.yml` before running the commands below.
+It may be necessary to update configurations before running the commands below:
+- `.env` variables according to `.env.example`
+- `web-config.json` variables according to `web-config.example.json`
+- `docker-compose.yml` according to the specific environment `docker-compose.ENV.yml`
 
 To update services run these commands in the root directory:
 ```
@@ -101,9 +107,19 @@ docker-compose -f docker-compose.ENV.yml up -d --force-recreate --no-deps [SERVI
 docker image prune -f
 ```
 
+### Web config update
+If you only want to update the `web-config.json` file, just restart the web service afterward:
+```
+docker-compose -f docker-compose.ENV.yml restart [WEB_SERVICE]
+```
+
 ## Local development
 ### Installation
-Create a `.env` configuration file inspired by the `.env.local.example` in the root directory and edit `.env` configuration variables with your values.
+In the root directory create the following files:
+- `.env` configuration file inspired by the `.env.local.example`
+- `web-config.json` configuration file inspired by the `web-config.local.example.json`
+
+Edit `.env` and `web-config.json` configuration variables with your values.
 
 The docker-compose configuration file to use for the development is called `docker-compose.local.yml`.
 Start all the services with the command below:
