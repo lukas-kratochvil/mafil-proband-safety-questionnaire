@@ -113,6 +113,8 @@ If you only want to update the `web-config.json` file, just restart the web serv
 docker-compose -f docker-compose.ENV.yml restart [WEB_SERVICE]
 ```
 
+And do not forget to refresh the page to apply the changes.
+
 ## Local development
 ### Installation
 In the root directory create the following files:
@@ -129,7 +131,7 @@ docker-compose -f docker-compose.local.yml up -d
 
 The backend and frontend `package.json` and the source code directory are mapped as volumes in the corresponding container filesystem.
 
-Only `node_modules` aren't mapped to Docker containers due to potential platform-specific code. So they must be installed and updated separately on a local machine and in the `server` and `web` Docker containers.
+Only `node_modules` are not mapped to Docker containers due to potential platform-specific code. So they must be installed and updated separately on a local machine and in the `server` and `web` Docker containers.
 
 To install or update Node packages run the command:
 ```
@@ -144,6 +146,8 @@ To populate the local database with initial data (languages, genders, native lan
 ```
 npm run seed:local
 ```
+
+You also need to create the application user you specified in the `web-config.json` in the database.
 
 ### Changing the database schema and applying database migrations
 `postgres` and `server` services must be up and running to apply changes from the `schema.prisma` file.
