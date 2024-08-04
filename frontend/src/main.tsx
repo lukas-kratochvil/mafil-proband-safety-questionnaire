@@ -61,9 +61,9 @@ const theme = createTheme({
 const renderApp = async () => {
   // load the configuration before rendering any React component or importing any of the application's modules
   if (import.meta.env.PROD) {
-    await (await import("./config")).loadConfig();
+    await (await import("./config/config")).loadConfig();
   } else {
-    await (await import("./config.dev")).loadConfigDev();
+    await (await import("./config/config.dev")).loadConfigDev();
   }
 
   ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

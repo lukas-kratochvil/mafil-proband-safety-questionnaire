@@ -1,4 +1,5 @@
 import { number, object, string, type InferType } from "yup";
+import load from "./loader";
 
 const configSchema = object({
   appBarColor: string()
@@ -24,14 +25,10 @@ const configSchema = object({
   }).required(),
 }).required();
 
-type Config = InferType<typeof configSchema>;
-
-let config: Config;
+let config: InferType<typeof configSchema>;
 
 export const loadConfig = async () => {
-  const response = await fetch("/config.json");
-  const data = await response.json();
-  config = await configSchema.validate(data);
+  config = await load(configSchema);
 };
 
-export const getConfig = (): Config => config;
+export const getConfig = () => config;

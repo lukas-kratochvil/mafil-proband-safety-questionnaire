@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getConfigDev } from "@app/config.dev";
+import { getConfigDev } from "@app/config/config.dev";
 import { transformResponseDateStringToDate } from "./transformers/dates-transformers";
 
 /**

@@ -1,6 +1,6 @@
 import { AppBar, Grid, Toolbar, useMediaQuery, type Theme } from "@mui/material";
 import { lazy } from "react";
-import { getConfig } from "@app/config";
+import { getConfig } from "@app/config/config";
 import { useAuth } from "@app/hooks/auth/auth";
 import { CeitecMafilLogo } from "./CeitecMafilLogo";
 import { LanguageMenu } from "./LanguageMenu";

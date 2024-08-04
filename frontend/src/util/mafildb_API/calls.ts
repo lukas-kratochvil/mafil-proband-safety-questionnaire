@@ -1,5 +1,5 @@
 import { compareAsc, compareDesc, getUnixTime, subDays } from "date-fns";
-import { getConfig } from "@app/config";
+import { getConfig } from "@app/config/config";
 import type { Device } from "@app/model/device";
 import type { ValidatedOperatorFormData } from "@app/model/form";
 import type { Language, NativeLanguage } from "@app/model/language";

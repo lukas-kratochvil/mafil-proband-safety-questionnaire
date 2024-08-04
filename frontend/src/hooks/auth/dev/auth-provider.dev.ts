@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getConfigDev } from "@app/config.dev";
+import { getConfigDev } from "@app/config/config.dev";
 import { RoutingPath } from "@app/routing-paths";
 import { authenticateOperator } from "@app/util/server_API/calls";
 import type { OperatorAuthInput } from "@app/util/server_API/dto";

@@ -1,4 +1,5 @@
 import { object, string, type InferType } from "yup";
+import load from "./loader";
 
 const configDevSchema = object({
   serverApiUrl: string().trim().required(),
@@ -10,14 +11,10 @@ const configDevSchema = object({
   }).required(),
 }).required();
 
-type ConfigDev = InferType<typeof configDevSchema>;
-
-let configDev: ConfigDev;
+let configDev: InferType<typeof configDevSchema>;
 
 export const loadConfigDev = async () => {
-  const response = await fetch("/config.json");
-  const data = await response.json();
-  configDev = await configDevSchema.validate(data);
+  configDev = await load(configDevSchema);
 };
 
-export const getConfigDev = (): ConfigDev => configDev;
+export const getConfigDev = () => configDev;
