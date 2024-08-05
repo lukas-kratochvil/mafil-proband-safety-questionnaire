@@ -36,11 +36,7 @@ export class AuthService {
     let operator: Operator;
 
     try {
-      operator = await this.prisma.operator.findUniqueOrThrow({
-        where: {
-          username,
-        },
-      });
+      operator = await this.verify(username);
     } catch (e) {
       this.logger.error(`Operator '${username}' is unknown!`);
       throw e;

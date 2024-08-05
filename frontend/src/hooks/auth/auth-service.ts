@@ -30,7 +30,7 @@ const oidcConfig: UserManagerSettings = {
 export class AuthService {
   private static instance: AuthService;
 
-  private userManager = new UserManager(oidcConfig);
+  private readonly userManager = new UserManager(oidcConfig);
 
   /* eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-empty-function */
   private constructor() {}
