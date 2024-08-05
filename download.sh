@@ -2,7 +2,7 @@
 
 #-----------------------------------------------------------------------------------------------------------------------
 # Download the files necessary to install the app in the chosen environment:
-#   1. docker-compose.ENV.yml - defines app services as containers that will run in the Docker
+#   1. docker-compose.yml - defines app services as containers that will run in the Docker
 #   2. .env - contains configuration for the app services
 #-----------------------------------------------------------------------------------------------------------------------
 
@@ -98,15 +98,17 @@ mkdir $DEST_DIR_PATH
 echo "> DONE"
 
 GITHUB_FILE_URL="https://raw.githubusercontent.com/lukas-kratochvil/mafil-proband-safety-questionnaire/$GIT_BRANCH"
-DOCKER_COMPOSE_FILE="docker-compose.$ENVIRONMENT.yml"
 
+DOCKER_COMPOSE_FILE="docker-compose.yml"
 echo "Downloading latest '$DOCKER_COMPOSE_FILE' from the '$GIT_BRANCH' branch of the GitHub repo…"
 download "$DEST_DIR_PATH/$DOCKER_COMPOSE_FILE" "$GITHUB_FILE_URL/$DOCKER_COMPOSE_FILE"
 
-echo "Downloading latest '.env' from the '$GIT_BRANCH' branch of the GitHub repo…"
-download "$DEST_DIR_PATH/.env" "$GITHUB_FILE_URL/.env.example"
+ENV_FILE=".env"
+echo "Downloading latest '$ENV_FILE' from the '$GIT_BRANCH' branch of the GitHub repo…"
+download "$DEST_DIR_PATH/$ENV_FILE" "$GITHUB_FILE_URL/$ENV_FILE.example"
 
-echo "Downloading latest 'web-config.json' from the '$GIT_BRANCH' branch of the GitHub repo…"
-download "$DEST_DIR_PATH/web-config.json" "$GITHUB_FILE_URL/web-config.example.json"
+WEB_CONFIG_FILE="web-config.json"
+echo "Downloading latest '$WEB_CONFIG_FILE' from the '$GIT_BRANCH' branch of the GitHub repo…"
+download "$DEST_DIR_PATH/$WEB_CONFIG_FILE" "$GITHUB_FILE_URL/$WEB_CONFIG_FILE.example"
 
 success

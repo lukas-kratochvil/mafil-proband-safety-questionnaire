@@ -9,7 +9,6 @@ Web application for ensuring the registration and safety of MR measurements in t
 - [Installation](#installation)
   - [Populating the database with initial data](#populating-the-database-with-initial-data)
 - [Services update](#services-update)
-  - [Web config update](#web-config-update)
 - [Local development](#local-development)
   - [Installation](#installation-1)
   - [Populating the database with initial data](#populating-the-database-with-initial-data-1)
@@ -33,13 +32,11 @@ This repository contains the following most important directories and files:
   - *Dockerfile* - instructions for assembling client Docker image
 - *docs* – system documentation
 - *.env.example* - example of environment-specific variables configuration
+- *docker-compose.yml* - production environment Docker services configuration
+- *download.sh* - script to download files for deployment
 - *LICENSE* - system license
 - *README.md* - this README
-- *docker-compose.devel.yml* - development environment services configuration
-- *docker-compose.local.yml* - local development environment services configuration
-- *docker-compose.prod.yml* - production environment services configuration
-- *download.sh* - script to download files for deployment
-- *web-config.example.json* - example of the web service configuration
+- *web-config.json.example* - example of the web service configuration
 
 ## Base URL paths
 - `/` - root path directs to the proband safety questionnaire
@@ -50,17 +47,15 @@ This repository contains the following most important directories and files:
 Firstly, install Docker and docker-compose ([see the official Docker docs](https://docs.docker.com/engine/install/)) on the system you want to run this app on.
 
 After that use the `download.sh` script (located in the project root directory) to download files essential to run the app.
-- environment-specific docker-compose file
-- .env containing services configuration
-- web-config.json containing web service configuration
+- docker-compose.yml
+- .env
+- web-config.json
 
 ```bash
 ./download.sh -d [DOWNLOAD_PATH] -e [ENV]
 ```
 
-Edit `.env` and `web-config.json` configuration variables with your values.
-
-Then transfer the directory to the server. You can use this command template:
+Edit downloaded files and transfer the directory to the server. You can use this command template:
 ```sh
 scp -r -i SSH_PRIVATE_KEY_FILE_PATH LOCAL_DIR_PATH USER@SERVER:REMOTE_DIR_PATH
 ```
@@ -69,7 +64,7 @@ In the app root directory on the remote server create the `certs` directory and 
 
 Start all the services using this command:
 ```
-docker-compose -f docker-compose.ENV.yml up -d
+docker-compose up -d
 ```
 
 The command will start the services listed below:
@@ -89,21 +84,21 @@ These volumes will be created in the app root directory:
 ### Populating the database with initial data
 To populate the database with initial data (languages, genders, native languages, handednesses and safety questions), the command below must be run inside the `server` container.
 ```
-docker-compose -f docker-compose.ENV.yml exec server npm run seed
+docker-compose exec server npm run seed
 ```
 
 Then users that are eligible to access the authenticated part of the app must be defined. Login to the Adminer at `/adminer` URL path and create accounts in the `Operator` table in the database.
 
 ## Services update
 It may be necessary to update configurations before running the commands below:
+- `docker-compose.yml`
 - `.env` variables according to `.env.example`
-- `web-config.json` variables according to `web-config.example.json`
-- `docker-compose.yml` according to the specific environment `docker-compose.ENV.yml`
+- `web-config.json` variables according to `web-config.json.example`
 
 To update services run these commands in the root directory:
 ```
-docker-compose -f docker-compose.ENV.yml pull [SERVICE]
-docker-compose -f docker-compose.ENV.yml up -d --force-recreate --no-deps [SERVICE]
+docker-compose pull [SERVICE]
+docker-compose up -d --force-recreate --no-deps [SERVICE]
 docker image prune -f
 ```
 
@@ -111,7 +106,7 @@ docker image prune -f
 ### Installation
 In the root directory create the following files:
 - `.env` configuration file inspired by the `.env.local.example`
-- `web-config.json` configuration file inspired by the `web-config.local.example.json`
+- `web-config.json` configuration file inspired by the `web-config.local.json.example`
 
 Edit `.env` and `web-config.json` configuration variables with your values.
 

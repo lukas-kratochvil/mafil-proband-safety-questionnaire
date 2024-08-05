@@ -48,6 +48,7 @@ services:
     networks:
       - backend-network
     environment:
+      # all available designs are in the 'Alternative designs' section at: https://www.adminer.org/en/
       ADMINER_DESIGN: pappu687
     restart: unless-stopped
     depends_on:
@@ -55,6 +56,7 @@ services:
 
   server:
     container_name: server
+    # use 'latest' or 'devel' tag
     image: ghcr.io/lukas-kratochvil/mafil-psq-server:latest
     ports:
       - ${REG_SERVER_PORT}:${REG_SERVER_PORT}
@@ -79,6 +81,7 @@ services:
 
   web:
     container_name: web
+    # use 'latest' or 'devel' tag
     image: ghcr.io/lukas-kratochvil/mafil-psq-web:latest
     ports:
       - 80:80

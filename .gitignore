@@ -6,7 +6,7 @@ node_modules/
 .env*
 !.env.*.example
 web-config*.json
-!web-config*.example.json
+!web-config*.json.example
 frontend/public/config.json
 
 # Database
