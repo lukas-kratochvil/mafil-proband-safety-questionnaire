@@ -29,6 +29,11 @@ RUN npm run build && \
 #-------------------------------------------
 FROM nginx:1.25.5-alpine AS production
 
+# Problem of specifying custom ENTRYPOINT shell script in Nginx image: https://github.com/nginxinc/docker-nginx/issues/422#issuecomment-644299743
+# That's why we copy our script to the '/docker-entrypoint.d' directory. Scripts inside this directory are executed before Nginx is.
+COPY ./frontend/config-copy.sh /docker-entrypoint.d/config-copy.sh
+RUN chmod +x /docker-entrypoint.d/config-copy.sh
+
 COPY --from=build /usr/src/app/frontend/dist /usr/share/nginx/html
 
 COPY ./frontend/nginx /etc/nginx

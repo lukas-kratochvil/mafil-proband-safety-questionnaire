@@ -107,14 +107,6 @@ docker-compose -f docker-compose.ENV.yml up -d --force-recreate --no-deps [SERVI
 docker image prune -f
 ```
 
-### Web config update
-If you only want to update the `web-config.json` file, just restart the web service afterward:
-```
-docker-compose -f docker-compose.ENV.yml restart [WEB_SERVICE]
-```
-
-And do not forget to refresh the page to apply the changes.
-
 ## Local development
 ### Installation
 In the root directory create the following files:
@@ -147,7 +139,7 @@ To populate the local database with initial data (languages, genders, native lan
 npm run seed:local
 ```
 
-You also need to create the application user you specified in the `web-config.json` in the database.
+You also need to create the user you specified in the `web-config.json` in the database.
 
 ### Changing the database schema and applying database migrations
 `postgres` and `server` services must be up and running to apply changes from the `schema.prisma` file.

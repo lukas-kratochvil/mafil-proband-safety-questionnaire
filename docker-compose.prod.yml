@@ -91,7 +91,7 @@ services:
       # 'server' is the name of our docker-compose backend API service that runs on the same machine as this Nginx reverse proxy service
       - SERVER_ADDRESS=server:${REG_SERVER_PORT}
     volumes:
-      - ./web-config.json:/usr/share/nginx/html/config.json:ro
+      - ./web-config.json:/mnt/config.json:ro
       # - ./certs:/etc/nginx/certs
       - ./logs/web:/var/log/nginx
     restart: unless-stopped
