@@ -11,13 +11,10 @@ type FormPageContainerProps = {
   loadDefaultValues?: () => FormPropType;
 };
 
-// TODO: make this React component generic
 export const FormPageContainer = ({ FormPage, validationSchema, loadDefaultValues }: FormPageContainerProps) => {
-  const formMethods = useForm<FormPropType>({
+  const formMethods = useForm({
     mode: "onChange",
     defaultValues: loadDefaultValues === undefined ? loadEmptyDefaultValues() : loadDefaultValues(),
-    // TODO: correctly infer the type of resolver's validation schema - update of "react-hook-form" may help?
-    // @ts-expect-error ts(2322)
     resolver: yupResolver(validationSchema),
   });
 
