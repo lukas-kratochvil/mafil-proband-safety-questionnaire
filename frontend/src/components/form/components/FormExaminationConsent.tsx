@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { SanitizedHtml } from "@app/components/SanitizedHtml";
 import type { LanguageCode } from "@app/i18n/i18n";
-import { sanitizeHtml } from "@app/util/htmlSanitization";
 import { fetchExaminationConsent } from "@app/util/server_API/calls";
 import { FormCardContainer } from "./FormCardContainer";
 
@@ -20,8 +20,7 @@ export const FormExaminationConsent = () => {
 
   return (
     <FormCardContainer title={data.title}>
-      {/* eslint-disable-next-line react/no-danger */}
-      <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(data.html) }} />
+      <SanitizedHtml html={data.html} />
     </FormCardContainer>
   );
 };
