@@ -51,14 +51,18 @@ describe("AuthService", () => {
     prisma = module.get<PrismaService, DeepMockProxy<PrismaClient>>(AUTH_PRISMA_SERVICE);
   });
 
-  it.only("authenticate operator", () => {
+  it("authenticate operator", () => {
     // ARRANGE
     const lastLoggedAt = new Date();
     jest.spyOn(authService, "verify").mockResolvedValueOnce(operator);
     prisma.operator.update.mockResolvedValueOnce({ ...operator, lastLoggedAt });
 
     // ACT
-    const foundOperator = authService.authenticate(operator.username, { ...operator });
+    const foundOperator = authService.authenticate(operator.username, {
+      name: operator.name,
+      surname: operator.surname,
+      email: operator.email,
+    });
 
     // ASSERT
     expect(foundOperator).resolves.toStrictEqual({ ...operator, lastLoggedAt });
@@ -69,7 +73,11 @@ describe("AuthService", () => {
     jest.spyOn(authService, "verify").mockResolvedValueOnce(operator);
 
     // ACT
-    const foundOperator = authService.authenticate(operator.username, { ...operator });
+    const foundOperator = authService.authenticate(operator.username, {
+      name: operator.name,
+      surname: operator.surname,
+      email: operator.email,
+    });
 
     // ASSERT
     expect(foundOperator).rejects.toThrow(Error);
@@ -84,7 +92,11 @@ describe("AuthService", () => {
     jest.spyOn(authService, "verify").mockResolvedValueOnce(invalidOperator);
 
     // ACT
-    const foundOperator = authService.authenticate(operator.username, { ...operator });
+    const foundOperator = authService.authenticate(operator.username, {
+      name: operator.name,
+      surname: operator.surname,
+      email: operator.email,
+    });
 
     // ASSERT
     expect(foundOperator).rejects.toThrow(UnauthorizedException);

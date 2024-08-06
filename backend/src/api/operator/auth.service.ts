@@ -12,7 +12,7 @@ const getUpdatedOperatorData = (
   const updatedOperatorData: Prisma.OperatorUpdateInput = {};
   const changedData: string[] = [];
 
-  (Object.entries(modifiableData) as [keyof Operator, string][]).forEach(([key, value]) => {
+  (Object.entries(modifiableData) as [keyof typeof modifiableData, string][]).forEach(([key, value]) => {
     if (value !== operator[key]) {
       updatedOperatorData[key] = value;
       changedData.push(`${key} ('${operator[key]}' -> '${updatedOperatorData[key]}')`);
