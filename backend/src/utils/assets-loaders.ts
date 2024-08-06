@@ -9,7 +9,7 @@ export type CommonTextsFile = typeof commonTexts;
 const getFilePath = (dirPath: string, fileName: string): string => path.join(dirPath, fileName);
 
 export const getLocalizedTextsFile = (locale: string): LocalizedTextsFile => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(getFilePath(LOCALIZATIONS_DIR_PATH, `${locale}.json`));
 };
 

@@ -32,7 +32,7 @@ export class AuthService {
 
   private readonly userManager = new UserManager(oidcConfig);
 
-  /* eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-empty-function */
+  /* eslint-disable-next-line no-useless-constructor, no-empty-function */
   private constructor() {}
 
   public static getInstance(): AuthService {
