@@ -1,4 +1,4 @@
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import { gendersTest } from "@app/__tests__/data/genders";
 import { handednessesTest } from "@app/__tests__/data/handednesses";
 import { nativeLanguagesTest } from "@app/__tests__/data/languages";

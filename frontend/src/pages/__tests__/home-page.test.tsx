@@ -1,4 +1,4 @@
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import HomePage from "@app/pages/HomePage";
 import { RoutingPath } from "@app/routing-paths";
 import { render, screen } from "@test-utils";

@@ -1,4 +1,4 @@
-import userEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 import * as auth from "@app/hooks/auth/auth";
 import LoginPage from "@app/pages/LoginPage";
 import { render, screen } from "@test-utils";
