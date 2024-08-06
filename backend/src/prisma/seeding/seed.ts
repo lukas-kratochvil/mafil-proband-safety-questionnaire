@@ -1,4 +1,4 @@
-import { OperatorRole, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import genders from "./data/genders";
 import handednesses from "./data/handednesses";
 import questions from "./data/questions";

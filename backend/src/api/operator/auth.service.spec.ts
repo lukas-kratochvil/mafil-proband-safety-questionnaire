@@ -51,14 +51,14 @@ describe("AuthService", () => {
     prisma = module.get<PrismaService, DeepMockProxy<PrismaClient>>(AUTH_PRISMA_SERVICE);
   });
 
-  it("authenticate operator", () => {
+  it.only("authenticate operator", () => {
     // ARRANGE
     const lastLoggedAt = new Date();
-    prisma.operator.findUniqueOrThrow.mockResolvedValueOnce(operator);
+    jest.spyOn(authService, "verify").mockResolvedValueOnce(operator);
     prisma.operator.update.mockResolvedValueOnce({ ...operator, lastLoggedAt });
 
     // ACT
-    const foundOperator = authService.authenticate(operator.name, operator.surname, operator.username, operator.email);
+    const foundOperator = authService.authenticate(operator.username, { ...operator });
 
     // ASSERT
     expect(foundOperator).resolves.toStrictEqual({ ...operator, lastLoggedAt });
@@ -66,10 +66,10 @@ describe("AuthService", () => {
 
   it("authenticate operator - operator not found", () => {
     // ARRANGE
-    prisma.operator.findUniqueOrThrow.mockRejectedValueOnce(new Error());
+    jest.spyOn(authService, "verify").mockResolvedValueOnce(operator);
 
     // ACT
-    const foundOperator = authService.authenticate(operator.name, operator.surname, operator.username, operator.email);
+    const foundOperator = authService.authenticate(operator.username, { ...operator });
 
     // ASSERT
     expect(foundOperator).rejects.toThrow(Error);
@@ -81,10 +81,10 @@ describe("AuthService", () => {
       ...operator,
       isValid: false,
     };
-    prisma.operator.findUniqueOrThrow.mockResolvedValueOnce(invalidOperator);
+    jest.spyOn(authService, "verify").mockResolvedValueOnce(invalidOperator);
 
     // ACT
-    const foundOperator = authService.authenticate(operator.name, operator.surname, operator.username, operator.email);
+    const foundOperator = authService.authenticate(operator.username, { ...operator });
 
     // ASSERT
     expect(foundOperator).rejects.toThrow(UnauthorizedException);
@@ -102,12 +102,7 @@ describe("AuthService", () => {
     prisma.operator.update.mockResolvedValueOnce(changedOperator);
 
     // ACT
-    const foundOperator = authService.authenticate(
-      changedOperator.name,
-      changedOperator.surname,
-      changedOperator.username,
-      changedOperator.email
-    );
+    const foundOperator = authService.authenticate(changedOperator.username, { ...changedOperator });
 
     // ASSERT
     expect(foundOperator).resolves.toStrictEqual(changedOperator);

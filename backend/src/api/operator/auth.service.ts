@@ -3,26 +3,23 @@ import type { Operator, Prisma } from "@prisma/client";
 import type { PrismaService } from "@app/prisma/prisma.service";
 import { AUTH_PRISMA_SERVICE } from "./constants";
 
-const getChangedAttrStr = (
-  attrName: keyof Operator,
+type ModifiableOperatorData = Pick<Operator, "name" | "surname" | "email">;
+
+const getUpdatedOperatorData = (
   operator: Operator,
-  updatedOperatorData: Prisma.OperatorUpdateInput
-) => `${attrName} ('${operator[attrName]}' -> '${updatedOperatorData[attrName]}')`;
+  modifiableData: ModifiableOperatorData
+): [Prisma.OperatorUpdateInput, string] => {
+  const updatedOperatorData: Prisma.OperatorUpdateInput = {};
+  const changedData: string[] = [];
 
-const getOperatorChangedDataStr = (operator: Operator, updatedOperatorData: Prisma.OperatorUpdateInput) => {
-  const changedData = [];
+  (Object.entries(modifiableData) as [keyof Operator, string][]).forEach(([key, value]) => {
+    if (value !== operator[key]) {
+      updatedOperatorData[key] = value;
+      changedData.push(`${key} ('${operator[key]}' -> '${updatedOperatorData[key]}')`);
+    }
+  });
 
-  if (updatedOperatorData.name && operator.name !== updatedOperatorData.name) {
-    changedData.push(getChangedAttrStr("name", operator, updatedOperatorData));
-  }
-  if (updatedOperatorData.surname && operator.surname !== updatedOperatorData.surname) {
-    changedData.push(getChangedAttrStr("surname", operator, updatedOperatorData));
-  }
-  if (updatedOperatorData.email && operator.email !== updatedOperatorData.email) {
-    changedData.push(getChangedAttrStr("email", operator, updatedOperatorData));
-  }
-
-  return changedData.join(", ");
+  return [updatedOperatorData, changedData.join(", ")];
 };
 
 @Injectable()
@@ -32,7 +29,7 @@ export class AuthService {
 
   private readonly logger = new Logger(AuthService.name);
 
-  async authenticate(name: string, surname: string, username: string, email: string): Promise<Operator | never> {
+  async authenticate(username: string, modifiableData: ModifiableOperatorData): Promise<Operator | never> {
     let operator: Operator;
 
     try {
@@ -58,24 +55,13 @@ export class AuthService {
     });
 
     // Update operator data if changed
-    const updatedOperatorData: Prisma.OperatorUpdateInput = {};
-
-    if (name !== operator.name) {
-      updatedOperatorData.name = name;
-    }
-    if (surname !== operator.surname) {
-      updatedOperatorData.surname = surname;
-    }
-    if (email !== operator.email) {
-      updatedOperatorData.email = email;
-    }
+    const [updatedOperatorData, operatorChangedData] = getUpdatedOperatorData(operator, modifiableData);
 
     // Check if any operator data needs updating. If not, return operator, else update operator properties.
     if (Object.keys(updatedOperatorData).length == 0) {
       return operator;
     }
 
-    const operatorChangedData = getOperatorChangedDataStr(operator, updatedOperatorData);
     this.logger.warn(`Operator '${operator.username}' data changed: ${operatorChangedData}!`);
     return this.prisma.operator.update({
       where: {

@@ -20,12 +20,7 @@ export class OperatorResolver {
   @SkipOidcAuth()
   @Query(() => OperatorEntity)
   async authenticateOperator(@Args() authenticateOperatorArgs: AuthenticateOperatorArgs) {
-    return this.authService.authenticate(
-      authenticateOperatorArgs.name,
-      authenticateOperatorArgs.surname,
-      authenticateOperatorArgs.username,
-      authenticateOperatorArgs.email
-    );
+    return this.authService.authenticate(authenticateOperatorArgs.username, { ...authenticateOperatorArgs });
   }
 
   // @Mutation(() => OperatorEntity)
