@@ -1,20 +1,19 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import type { AnyObjectSchema } from "yup";
-import { loadEmptyDefaultValues } from "@app/components/form/util/loaders";
 import type { FormPropType } from "@app/model/form";
 import { PageContainer } from "@app/pages/PageContainer";
 
 type FormPageContainerProps = {
   FormPage: () => JSX.Element;
+  loadDefaultValues: () => FormPropType;
   validationSchema: AnyObjectSchema;
-  loadDefaultValues?: () => FormPropType;
 };
 
-export const FormPageContainer = ({ FormPage, validationSchema, loadDefaultValues }: FormPageContainerProps) => {
+export const FormPageContainer = ({ FormPage, loadDefaultValues, validationSchema }: FormPageContainerProps) => {
   const formMethods = useForm({
     mode: "onChange",
-    defaultValues: loadDefaultValues === undefined ? loadEmptyDefaultValues() : loadDefaultValues(),
+    defaultValues: loadDefaultValues(),
     resolver: yupResolver(validationSchema),
   });
 

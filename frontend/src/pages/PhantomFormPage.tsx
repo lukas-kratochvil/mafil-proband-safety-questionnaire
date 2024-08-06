@@ -6,8 +6,8 @@ import { loadPhantomFormDefaultValues } from "@app/components/form/util/loaders"
 const PhantomFormPage = () => (
   <FormPageContainer
     FormPage={PhantomForm}
-    validationSchema={operatorFinalizationFormSchema}
     loadDefaultValues={loadPhantomFormDefaultValues}
+    validationSchema={operatorFinalizationFormSchema}
   />
 );
 
