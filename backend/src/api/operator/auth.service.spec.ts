@@ -58,11 +58,7 @@ describe("AuthService", () => {
     prisma.operator.update.mockResolvedValueOnce({ ...operator, lastLoggedAt });
 
     // ACT
-    const foundOperator = authService.authenticate(operator.username, {
-      name: operator.name,
-      surname: operator.surname,
-      email: operator.email,
-    });
+    const foundOperator = authService.authenticate(operator.username, { ...operator });
 
     // ASSERT
     expect(foundOperator).resolves.toStrictEqual({ ...operator, lastLoggedAt });
@@ -73,11 +69,7 @@ describe("AuthService", () => {
     jest.spyOn(authService, "verify").mockResolvedValueOnce(operator);
 
     // ACT
-    const foundOperator = authService.authenticate(operator.username, {
-      name: operator.name,
-      surname: operator.surname,
-      email: operator.email,
-    });
+    const foundOperator = authService.authenticate(operator.username, { ...operator });
 
     // ASSERT
     expect(foundOperator).rejects.toThrow(Error);
@@ -92,11 +84,7 @@ describe("AuthService", () => {
     jest.spyOn(authService, "verify").mockResolvedValueOnce(invalidOperator);
 
     // ACT
-    const foundOperator = authService.authenticate(operator.username, {
-      name: operator.name,
-      surname: operator.surname,
-      email: operator.email,
-    });
+    const foundOperator = authService.authenticate(operator.username, { ...operator });
 
     // ASSERT
     expect(foundOperator).rejects.toThrow(UnauthorizedException);

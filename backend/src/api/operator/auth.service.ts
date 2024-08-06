@@ -5,23 +5,6 @@ import { AUTH_PRISMA_SERVICE } from "./constants";
 
 type ModifiableOperatorData = Pick<Operator, "name" | "surname" | "email">;
 
-const getUpdatedOperatorData = (
-  operator: Operator,
-  modifiableData: ModifiableOperatorData
-): [Prisma.OperatorUpdateInput, string] => {
-  const updatedOperatorData: Prisma.OperatorUpdateInput = {};
-  const changedData: string[] = [];
-
-  (Object.entries(modifiableData) as [keyof typeof modifiableData, string][]).forEach(([key, value]) => {
-    if (value !== operator[key]) {
-      updatedOperatorData[key] = value;
-      changedData.push(`${key} ('${operator[key]}' -> '${updatedOperatorData[key]}')`);
-    }
-  });
-
-  return [updatedOperatorData, changedData.join(", ")];
-};
-
 @Injectable()
 // eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
 export class AuthService {
@@ -29,7 +12,31 @@ export class AuthService {
 
   private readonly logger = new Logger(AuthService.name);
 
-  async authenticate(username: string, modifiableData: ModifiableOperatorData): Promise<Operator | never> {
+  private getChangedOperatorData(
+    operator: Operator,
+    modifiableData: ModifiableOperatorData
+  ): [Prisma.OperatorUpdateInput, string] {
+    const updatedOperatorData: Prisma.OperatorUpdateInput = {};
+    const changedData: string[] = [];
+
+    (Object.entries(modifiableData) as [keyof typeof modifiableData, string][]).forEach(([key, value]) => {
+      if (value !== operator[key]) {
+        updatedOperatorData[key] = value;
+        changedData.push(`${key} ('${operator[key]}' -> '${updatedOperatorData[key]}')`);
+      }
+    });
+
+    return [updatedOperatorData, changedData.join(", ")];
+  }
+
+  async authenticate(username: string, operatorInput: ModifiableOperatorData): Promise<Operator | never> {
+    // get only those properties which can be changed
+    //  - when the spread operator is used to pass 'operatorInput' in the authenticate() function it actually copies all the object properties and not only those in the ModifiableOperatorData type and so the getChangedOperatorData() function won't work as expected and will return changed operator attributes not present in the ModifiableOperatorData type
+    const modifiableData: ModifiableOperatorData = {
+      name: operatorInput.name,
+      surname: operatorInput.surname,
+      email: operatorInput.email,
+    };
     let operator: Operator;
 
     try {
@@ -54,20 +61,20 @@ export class AuthService {
       },
     });
 
-    // Update operator data if changed
-    const [updatedOperatorData, operatorChangedData] = getUpdatedOperatorData(operator, modifiableData);
+    // Get changed operator data
+    const [changedOperatorData, changedOperatorDataStr] = this.getChangedOperatorData(operator, modifiableData);
 
     // Check if any operator data needs updating. If not, return operator, else update operator properties.
-    if (Object.keys(updatedOperatorData).length == 0) {
+    if (Object.keys(changedOperatorData).length == 0) {
       return operator;
     }
 
-    this.logger.warn(`Operator '${operator.username}' data changed: ${operatorChangedData}!`);
+    this.logger.warn(`Operator '${operator.username}' data changed: ${changedOperatorDataStr}!`);
     return this.prisma.operator.update({
       where: {
         username,
       },
-      data: updatedOperatorData,
+      data: changedOperatorData,
     });
   }
 
