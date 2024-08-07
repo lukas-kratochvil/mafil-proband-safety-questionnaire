@@ -1,6 +1,6 @@
-import { devicesTest } from "@app/__tests__/data/devices";
-import { projectsTest } from "@app/__tests__/data/projects";
-import { subjectsTest } from "@app/__tests__/data/subjects";
+import { devicesTest } from "@app/tests/data/devices";
+import { projectsTest } from "@app/tests/data/projects";
+import { subjectsTest } from "@app/tests/data/subjects";
 import type { Visit } from "@app/model/visit";
 import {
   MDB_ApprovalState,

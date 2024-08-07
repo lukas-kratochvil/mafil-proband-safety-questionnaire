@@ -1,6 +1,6 @@
-import { operatorMRTest } from "@app/__tests__/data/operators";
+import { operatorMRTest } from "@app/tests/data/operators";
 import type { OperatorDTO } from "@app/util/server_API/dto";
-import { render, screen } from "@test-utils";
+import { render, screen } from "@app/tests/utils";
 import { FormProjectInfo } from "../FormProjectInfo";
 
 //----------------------------------------------------------------------

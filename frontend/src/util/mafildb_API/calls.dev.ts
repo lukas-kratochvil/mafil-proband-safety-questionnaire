@@ -1,7 +1,7 @@
-import { devicesTest } from "@app/__tests__/data/devices";
-import { nativeLanguagesTest } from "@app/__tests__/data/languages";
-import { projectsTest } from "@app/__tests__/data/projects";
-import { subjectsTest } from "@app/__tests__/data/subjects";
+import { devicesTest } from "@app/tests/data/devices";
+import { nativeLanguagesTest } from "@app/tests/data/languages";
+import { projectsTest } from "@app/tests/data/projects";
+import { subjectsTest } from "@app/tests/data/subjects";
 import type { Device } from "@app/model/device";
 import type { ValidatedOperatorFormData } from "@app/model/form";
 import type { Language } from "@app/model/language";

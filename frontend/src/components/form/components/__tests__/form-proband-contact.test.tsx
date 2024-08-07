@@ -1,4 +1,4 @@
-import { render, screen } from "@test-utils";
+import { render, screen } from "@app/tests/utils";
 import { FormProbandContact } from "../FormProbandContact";
 
 //----------------------------------------------------------------------

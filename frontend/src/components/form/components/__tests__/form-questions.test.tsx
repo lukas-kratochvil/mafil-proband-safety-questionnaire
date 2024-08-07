@@ -1,4 +1,4 @@
-import { render } from "@test-utils";
+import { render } from "@app/tests/utils";
 import { FormQuestions } from "../FormQuestions";
 
 //----------------------------------------------------------------------

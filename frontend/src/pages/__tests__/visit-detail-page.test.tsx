@@ -1,12 +1,12 @@
 import { userEvent } from "@testing-library/user-event";
-import { operatorMRTest } from "@app/__tests__/data/operators";
+import { operatorMRTest } from "@app/tests/data/operators";
 import type { VisitDetail } from "@app/model/visit";
 import VisitDetailPage from "@app/pages/VisitDetailPage";
 import * as mafildbCalls from "@app/util/mafildb_API/calls";
 import { PDF_CONTENT } from "@app/util/mafildb_API/data.dev";
 import { MDB_ApprovalState, MDB_SignatureState } from "@app/util/mafildb_API/dto";
 import type { OperatorDTO } from "@app/util/server_API/dto";
-import { render, screen } from "@test-utils";
+import { render, screen } from "@app/tests/utils";
 
 //----------------------------------------------------------------------
 // Test data

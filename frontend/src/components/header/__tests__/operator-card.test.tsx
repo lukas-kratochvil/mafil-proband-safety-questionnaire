@@ -1,5 +1,5 @@
 import type { OperatorDTO } from "@app/util/server_API/dto";
-import { render, screen } from "@test-utils";
+import { render, screen } from "@app/tests/utils";
 import { OperatorCard } from "../OperatorCard";
 
 //----------------------------------------------------------------------
