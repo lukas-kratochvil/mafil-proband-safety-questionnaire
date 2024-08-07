@@ -1,9 +1,9 @@
 import { AxiosError } from "axios";
+import type { TFunction } from "i18next";
 import isBase64 from "is-base64";
 import toast from "react-hot-toast";
-import type { TFunction } from "react-i18next";
 import type { NavigateFunction } from "react-router-dom";
-import { convertStringToLocalizationKey } from "@app/i18n/i18n";
+import { convertStringToLocalizationKey, type defaultNS } from "@app/i18n/i18n";
 import { LocalizedError } from "./error-handling/LocalizedError";
 import { ServerApiValidationError } from "./error-handling/ServerApiValidationError";
 
@@ -20,7 +20,7 @@ export const getBackButtonProps = (navigate: NavigateFunction, customTitleLocali
   onClick: async () => navigate(-1),
 });
 
-export const handleErrorsWithToast = (e: unknown, t: TFunction<"translation">): void => {
+export const handleErrorsWithToast = (e: unknown, t: TFunction<typeof defaultNS>): void => {
   let errorMessage: string;
 
   if (e instanceof ServerApiValidationError) {
