@@ -54,19 +54,16 @@ export const probandFormSchema = object().shape(
       .typeError("form.validation.notValid")
       .when("visualCorrection", {
         is: getAutocompleteOption(visualCorrectionOptions, "yes"),
-        then: number()
-          .typeError("form.validation.notValid")
-          .notOneOf([0], "form.validation.visualCorrectionDioptreNotZero"),
+        then: (schema) =>
+          schema.typeError("form.validation.notValid").notOneOf([0], "form.validation.visualCorrectionDioptreNotZero"),
       })
       .required("form.validation.required"),
     answers: array().of(answersSchema).required("form.validation.required"),
     email: string()
       .removeWhitespace()
-      .when("phone", {
-        is: "",
-        then: string().customEmail(),
-        otherwise: string().customEmail().required("form.validation.probandContacts"),
-      }),
+      .when("phone", ([phone], schema) =>
+        phone === "" ? schema.customEmail() : schema.customEmail().required("form.validation.probandContacts")
+      ),
     phone: string()
       .transform((_value, originalValue: string) => {
         const phoneNumber = originalValue
@@ -79,11 +76,11 @@ export const probandFormSchema = object().shape(
           ? phoneNumber
           : `${CZECH_PHONE_NUMBER_CODE}${phoneNumber}`;
       })
-      .when("email", {
-        is: "",
-        then: string().customPhoneNumber(),
-        otherwise: string().customPhoneNumber().required("form.validation.probandContacts"),
-      }),
+      .when("email", ([email], schema) =>
+        email === ""
+          ? schema.customPhoneNumber()
+          : schema.customPhoneNumber().required("form.validation.probandContacts")
+      ),
   },
   [["email", "phone"]]
 );

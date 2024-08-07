@@ -8,7 +8,7 @@ const operatorAnswersSchema = answersSchema.shape({
     .default("")
     .when("answer", {
       is: "YES",
-      then: string().normalizeWhitespace().required("form.validation.required"),
+      then: (schema) => schema.normalizeWhitespace().required("form.validation.required"),
     }),
 });
 
