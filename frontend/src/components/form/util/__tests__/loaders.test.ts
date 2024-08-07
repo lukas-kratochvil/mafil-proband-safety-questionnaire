@@ -113,7 +113,7 @@ describe("form loaders", () => {
   test("phantom form default values", () => {
     // ARRANGE
     const currentDate = new Date();
-    const mockedDate = vi.spyOn(global, "Date").mockImplementation(() => currentDate as unknown as string);
+    const mockedDate = vi.spyOn(global, "Date").mockImplementation(() => currentDate);
 
     // ACT
     const phantomFormDefaultValues = loadPhantomFormDefaultValues();
@@ -202,7 +202,7 @@ describe("form loaders", () => {
   test("duplicated visit form default values", () => {
     // ARRANGE
     const currentDate = new Date();
-    vi.spyOn(global, "Date").mockImplementationOnce(() => currentDate as unknown as string);
+    vi.spyOn(global, "Date").mockImplementationOnce(() => currentDate);
 
     // ACT
     const formDefaultValuesVisitDuplication = loadFormDefaultValuesVisitDuplication(duplicatedVisit);
