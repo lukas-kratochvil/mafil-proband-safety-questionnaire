@@ -13,6 +13,7 @@ Web application for ensuring the registration and safety of MR measurements in t
   - [Installation](#installation-1)
   - [Populating the database with initial data](#populating-the-database-with-initial-data-1)
   - [Changing the database schema and applying database migrations](#changing-the-database-schema-and-applying-database-migrations)
+  - [Updating i18n translations](#updating-i18n-translations)
   - [Useful tools](#useful-tools)
 - [Used MAFILDB API endpoints](#used-mafildb-api-endpoints)
 - [Possible issues](#possible-issues)
