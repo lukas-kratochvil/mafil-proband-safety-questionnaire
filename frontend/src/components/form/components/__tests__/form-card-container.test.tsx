@@ -28,7 +28,7 @@ describe("form card container", () => {
   test("has element content", () => {
     // ARRANGE
     const childrenTestId = "children";
-    const content = <div data-testid={childrenTestId}>Content</div>;
+    const content = <div data-testid={childrenTestId} />;
 
     // ACT
     setup(content);

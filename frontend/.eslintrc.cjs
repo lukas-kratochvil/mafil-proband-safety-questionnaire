@@ -5,6 +5,7 @@ module.exports = {
   },
   extends: [
     "airbnb",
+    "plugin:i18next/recommended",
     "plugin:react/recommended",
     "plugin:testing-library/react",
     "../.eslintrc.js", // this has to be the last extension!!
@@ -22,7 +23,7 @@ module.exports = {
     project: "tsconfig.json",
     tsconfigRootDir: __dirname,
   },
-  plugins: ["@tanstack/query", "react", "react-hooks", "react-hooks-addons", "testing-library"],
+  plugins: ["i18next", "react", "react-hooks", "react-hooks-addons", "@tanstack/query", "testing-library"],
   rules: {
     camelcase: "off",
     "react/function-component-definition": [2, { namedComponents: "arrow-function" }],
