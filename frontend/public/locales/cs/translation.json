@@ -1,0 +1,212 @@
+{
+  "common": {
+    "logOutButton": "Odhlásit se",
+    "backButton": "Zpět",
+    "navigation": {
+      "waitingRoom": "Čekárna",
+      "approvalRoom": "Ke schválení",
+      "recentVisits": "Poslední visity",
+      "createNewPhantomForm": "Založit měření na Fantomu",
+      "openNewProbandForm": "Otevřít formulář probanda"
+    },
+    "errors": {
+      "missingOidcClaims": "Chybí některé požadované nároky OIDC!",
+      "missingMFA": "Ověření se nezdařilo kvůli chybějícímu vícefázovému ověření (MFA)!",
+      "contactAdmin": "Nastala chyba! Kontaktujte prosím správce systému.",
+      "tryAgainLater": "Nastala chyba! Opakujte prosím akci později nebo kontaktujte správce systému.",
+      "serverValidationError": "Nastala chyba při validaci vstupu! Následující pole jsou chybná",
+      "serverCommunicationError": "Nastala interní chyba serveru! Kontaktujte prosím správce systému.",
+      "cannotDuplicateVisitDueToDifferentSafetyQuestions": "Bezpečnostní otázky visity se liší od aktuálních bezpečnostních otázek! Visitu nelze duplikovat."
+    }
+  },
+  "form": {
+    "common": {
+      "optional": "nepovinné",
+      "loading": "Načítá se",
+      "noOptions": "Žádné možnosti",
+      "buttons": {
+        "agree": "Souhlasím",
+        "complete": "Dokončit",
+        "finalize": "Finalizovat",
+        "approve": "Schválit",
+        "disapprove": "Neschválit",
+        "confirmDisapproval": "Potvrdit neschválení",
+        "edit": "Editovat",
+        "cancel": "Zrušit",
+        "saveChanges": "Uložit změny"
+      }
+    },
+    "options": {
+      "visualCorrection": {
+        "yes": "Ano",
+        "no": "Ne"
+      }
+    },
+    "disapprovalReason": {
+      "title": "Neschválení",
+      "reason": "Důvod"
+    },
+    "finalizeDialog": {
+      "title": "Schválení formuláře visity",
+      "text": "Formulář visity bude odeslán ke schválení MR operátorem s vyšším oprávněním.",
+      "buttons": {
+        "continue": "Pokračovat",
+        "cancel": "Zrušit"
+      }
+    },
+    "probandContact": {
+      "title": "Kontaktní údaje",
+      "email": "Email",
+      "phone": "Telefonní číslo"
+    },
+    "probandContactCheckbox": {
+      "title": "Předání naměřených dat",
+      "label": "Žádám o předání mých naměřených dat elektronickou cestou."
+    },
+    "probandContactRequest": {
+      "email": "Email",
+      "phone": "Telefonní číslo",
+      "emailNote": "Na email bude zaslán odkaz pro stažení dat.",
+      "phoneNote": "Na telefonní číslo bude zaslán bezpečnostní kód pro přihlášení."
+    },
+    "probandInfo": {
+      "title": "Osobní údaje",
+      "name": "Jméno",
+      "surname": "Příjmení",
+      "personalId": "Rodné číslo",
+      "personalIdHint": "V případě, že nemáte české nebo slovenské rodné číslo, zadejte, prosím, číslo pojištěnce.",
+      "birthdate": "Datum narození",
+      "gender": "Pohlaví",
+      "nativeLanguage": "Mateřský jazyk",
+      "height": "Výška",
+      "weight": "Váha",
+      "visualCorrection": "Zraková korekce",
+      "visualCorrectionDioptre": "Hodnota zrakové korekce",
+      "visualCorrectionDioptreHint": "Kladné dioptrie značí dalekozrakost, což znamená, že vidíte hůře na blízko. Naopak záporné dioptrie značí krátkozrakost, tedy vidíte hůře na dálku.",
+      "handedness": "Stranová dominance"
+    },
+    "projectInfo": {
+      "title": "Informace o projektu",
+      "project": "Projekt",
+      "device": "Přístroj",
+      "measuredAt": "Datum měření",
+      "phantomInfoStripe": "Fantom"
+    },
+    "safetyQuestions": {
+      "title": "Bezpečnostní otázky",
+      "titlePart1": "Bezpečnostní otázky - část 1",
+      "titlePart2": "Bezpečnostní otázky - část 2",
+      "yes": "Ano",
+      "no": "Ne",
+      "comment": "Komentář"
+    },
+    "validation": {
+      "required": "Povinné pole.",
+      "notValid": "Hodnota není validní.",
+      "integer": "Hodnota musí být celé číslo.",
+      "positive": "Hodnota musí být kladné číslo.",
+      "birthdateMaxDate": "Maximální povolená hodnota pro datum narození je dnes.",
+      "birthdateNotCorrespondToPersonalId": "Datum narození není shodné s hodnotou získanou z poskytnutého českého nebo slovenského rodného čísla.",
+      "genderNotCorrespondToPersonalId": "Pohlaví není shodné s hodnotou získanou z poskytnutého českého nebo slovenského rodného čísla.",
+      "visualCorrectionDioptreNotZero": "Hodnota se nesmí rovnat nule.",
+      "safetyQuestionsRequired": "Všechny bezpečnostní otázky musí být zodpovězeny.",
+      "probandContacts": "Pokud jste se rozhodli vyplnit kontaktní údaje, vyplňte prosím všechny možné."
+    }
+  },
+  "homePage": {
+    "title": "Váš formulář byl úspěšně odeslán. Vyčkejte, prosím, na další pokyny operátora.",
+    "openNewFormButton": "Otevřít nový formulář"
+  },
+  "loginPage": {
+    "title": "Bezpečnostní dotazník probanda",
+    "loginText": "Přihlásit se přes:",
+    "alert": "Přihlášení se nezdařilo!"
+  },
+  "oidcAuthCallbackPage": {
+    "processing": "Zpracovává se přihlášení..."
+  },
+  "logoutPage": {
+    "processing": "Probíhá odhlášení..."
+  },
+  "visitDetailPage": {
+    "title": "Detail visity",
+    "buttons": {
+      "downloadPDFAndPhysicallySign": "Stáhnout PDF a fyzicky podepsat",
+      "signElectronically": "Podepsat elektronicky",
+      "confirmSignature": "Potvrdit podpis",
+      "downloadPDF": "Stáhnout PDF"
+    },
+    "infoStripes": {
+      "signatureChoice": "Výběr způsobu podepsání visity",
+      "disapproved": "Neschváleno",
+      "waitingForSignatureConfirmation": "Čeká se na potvrzení podpisu",
+      "completed": "Dokončeno",
+      "signed": "Podepsáno"
+    }
+  },
+  "waitingRoomTablePage": {
+    "title": "Čekárna",
+    "actions": {
+      "processButton": "Zpracovat",
+      "clearIconDialogTitle": "Odstranění formuláře z Čekárny",
+      "clearIconDialogContent": "Opravdu si přejete odstranit tento formulář z Čekárny?",
+      "clearIconDialogDelete": "Odstranit",
+      "clearIconDialogCancel": "Zrušit"
+    },
+    "header": {
+      "registrationDate": "Datum registrace",
+      "proband": "Proband",
+      "personalId": "Rodné číslo",
+      "birthdate": "Datum narození",
+      "gender": "Pohlaví",
+      "nativeLanguage": "Mateřský jazyk",
+      "actions": "Akce"
+    }
+  },
+  "approvalRoomTablePage": {
+    "title": "Ke schválení",
+    "actions": {
+      "showButton": "Zobrazit"
+    },
+    "header": {
+      "registrationDate": "Datum registrace",
+      "project": "Projekt",
+      "proband": "Proband",
+      "personalId": "Rodné číslo",
+      "birthdate": "Datum narození",
+      "gender": "Pohlaví",
+      "nativeLanguage": "Mateřský jazyk",
+      "actions": "Akce"
+    }
+  },
+  "recentVisitsTablePage": {
+    "title": "Poslední visity",
+    "visitState": {
+      "phantomDone": "Dokončeno",
+      "disapproved": "Neschváleno",
+      "approved": "Schváleno",
+      "forSignaturePhysically": "K fyzickému podpisu",
+      "forSignatureElectronically": "K elektronickému podpisu",
+      "signedPhysically": "Podepsáno fyzicky",
+      "signedElectronically": "Podepsáno elektronicky"
+    },
+    "actions": {
+      "showDetailButton": "Zobrazit detail",
+      "duplicateButton": "Duplikovat",
+      "incompleteVisit": "Neúplná data"
+    },
+    "header": {
+      "proband": "Proband",
+      "project": "Projekt",
+      "device": "Přístroj",
+      "created": "Vytvořeno",
+      "visitDate": "Datum návštěvy",
+      "processedBy": "Zpracoval",
+      "state": "Stav",
+      "actions": "Akce"
+    }
+  },
+  "notFoundPage": {
+    "text": "Stránka nebyla nalezena."
+  }
+}

@@ -25,7 +25,7 @@ export const FormAutocompleteOptions = <T,>({
       options={options}
       isLoading={isLoading}
       disabled={disabled}
-      getOptionLabel={(option) => t(option.localizationKey)}
+      getOptionLabel={(option) => t(option.localizationKey) as unknown as string}
       isOptionEqualToValue={(option, value) => option.value === value.value}
     />
   );
