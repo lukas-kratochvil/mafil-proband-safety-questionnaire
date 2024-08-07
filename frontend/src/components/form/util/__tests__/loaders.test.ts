@@ -1,10 +1,10 @@
+import type { DuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import { gendersTest } from "@app/tests/data/genders";
 import { handednessesTest } from "@app/tests/data/handednesses";
 import { nativeLanguagesTest } from "@app/tests/data/languages";
 import { operatorMRTest } from "@app/tests/data/operators";
 import { projectsTest } from "@app/tests/data/projects";
 import { subjectsTest } from "@app/tests/data/subjects";
-import type { DuplicatedVisitIncludingQuestions } from "@app/model/visit";
 import type {
   ApprovalRoomVisitFormIncludingQuestionsDTO,
   VisitFormAnswerIncludingQuestion,

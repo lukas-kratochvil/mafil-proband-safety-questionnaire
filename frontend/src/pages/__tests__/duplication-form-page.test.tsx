@@ -1,4 +1,9 @@
 import { format } from "date-fns";
+import type { Device } from "@app/model/device";
+import type { NativeLanguage } from "@app/model/language";
+import type { Project } from "@app/model/project";
+import type { DuplicatedVisitIncludingQuestions } from "@app/model/visit";
+import DuplicationFormPage from "@app/pages/DuplicationFormPage";
 import { devicesTest } from "@app/tests/data/devices";
 import { gendersTest } from "@app/tests/data/genders";
 import { handednessesTest } from "@app/tests/data/handednesses";
@@ -8,13 +13,8 @@ import { pdfTest } from "@app/tests/data/pdf";
 import { projectsTest } from "@app/tests/data/projects";
 import { questionsTest } from "@app/tests/data/questions";
 import { subjectsTest } from "@app/tests/data/subjects";
-import type { Device } from "@app/model/device";
-import type { NativeLanguage } from "@app/model/language";
-import type { Project } from "@app/model/project";
-import type { DuplicatedVisitIncludingQuestions } from "@app/model/visit";
-import DuplicationFormPage from "@app/pages/DuplicationFormPage";
-import type { GenderDTO, HandednessDTO, PdfDTO, QuestionDTO } from "@app/util/server_API/dto";
 import { render, screen, waitFor, within } from "@app/tests/utils";
+import type { GenderDTO, HandednessDTO, PdfDTO, QuestionDTO } from "@app/util/server_API/dto";
 
 //----------------------------------------------------------------------
 // Test data

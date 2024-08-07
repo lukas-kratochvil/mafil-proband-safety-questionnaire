@@ -1,8 +1,8 @@
 import ScienceIcon from "@mui/icons-material/Science";
-import { operatorMRTest } from "@app/tests/data/operators";
 import { RoutingPath } from "@app/routing-paths";
-import type { OperatorDTO } from "@app/util/server_API/dto";
+import { operatorMRTest } from "@app/tests/data/operators";
 import { render, screen } from "@app/tests/utils";
+import type { OperatorDTO } from "@app/util/server_API/dto";
 import { Header } from "../Header";
 import type { TabProps } from "../navigation/tabs";
 

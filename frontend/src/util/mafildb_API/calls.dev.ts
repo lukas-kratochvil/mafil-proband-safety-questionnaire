@@ -1,7 +1,3 @@
-import { devicesTest } from "@app/tests/data/devices";
-import { nativeLanguagesTest } from "@app/tests/data/languages";
-import { projectsTest } from "@app/tests/data/projects";
-import { subjectsTest } from "@app/tests/data/subjects";
 import type { Device } from "@app/model/device";
 import type { ValidatedOperatorFormData } from "@app/model/form";
 import type { Language } from "@app/model/language";
@@ -14,6 +10,10 @@ import type {
   VisitDetail,
 } from "@app/model/visit";
 import type { VisitPDF } from "@app/model/visitPdf";
+import { devicesTest } from "@app/tests/data/devices";
+import { nativeLanguagesTest } from "@app/tests/data/languages";
+import { projectsTest } from "@app/tests/data/projects";
+import { subjectsTest } from "@app/tests/data/subjects";
 import { dummyVisits, generateVisitId, PDF_CONTENT } from "@app/util/mafildb_API/data.dev";
 import { fetchCurrentQuestions, fetchGender, fetchHandedness, fetchOperator, fetchQuestion } from "../server_API/calls";
 import type { PdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";

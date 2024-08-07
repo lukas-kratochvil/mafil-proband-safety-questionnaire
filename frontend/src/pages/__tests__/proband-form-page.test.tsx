@@ -1,14 +1,14 @@
 import { userEvent } from "@testing-library/user-event";
+import type { NativeLanguage } from "@app/model/language";
+import ProbandFormPage from "@app/pages/ProbandFormPage";
+import { RoutingPath } from "@app/routing-paths";
 import { gendersTest } from "@app/tests/data/genders";
 import { handednessesTest } from "@app/tests/data/handednesses";
 import { nativeLanguagesTest } from "@app/tests/data/languages";
 import { questionsTest } from "@app/tests/data/questions";
-import type { NativeLanguage } from "@app/model/language";
-import ProbandFormPage from "@app/pages/ProbandFormPage";
-import { RoutingPath } from "@app/routing-paths";
+import { render, screen, within } from "@app/tests/utils";
 import * as serverCalls from "@app/util/server_API/calls";
 import type { GenderDTO, HandednessDTO, HTMLCardDTO, QuestionDTO } from "@app/util/server_API/dto";
-import { render, screen, within } from "@app/tests/utils";
 
 //----------------------------------------------------------------------
 // Mocking react-router-dom hooks
