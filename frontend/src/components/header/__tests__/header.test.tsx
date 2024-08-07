@@ -44,6 +44,7 @@ const tabs: TabProps[] = [
 vi.mock("@app/components/header/navigation/tabs", async () => ({
   getTabs: () => tabs,
   getCommonTabSx: () => ({}),
+  TAB_DEFAULT_COLOR: "orange",
 }));
 
 //----------------------------------------------------------------------
