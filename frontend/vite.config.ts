@@ -21,10 +21,7 @@ export default defineConfig({
     },
   },
   plugins: [
-    react({
-      // must set this to false because of the error occurring while testing: "@vitejs/plugin-react can't detect preamble. Something is wrong. See https://github.com/vitejs/vite-plugin-react/pull/11#discussion_r430879201"
-      fastRefresh: false,
-    }),
+    react(), // React components fast-refresh
     tsconfigPaths(), // gives Vite the ability to resolve imports using TypeScript's path mapping from tsconfig (https://vitest.dev/guide/common-errors)
   ],
   // 'server' setup is only for a local development
