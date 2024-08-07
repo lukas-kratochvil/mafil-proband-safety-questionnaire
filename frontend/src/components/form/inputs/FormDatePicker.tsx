@@ -1,8 +1,7 @@
 import { useMediaQuery, type Theme } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import csLocale from "date-fns/locale/cs";
-import enLocale from "date-fns/locale/en-US";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import { cs, enUS, type Locale } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -19,7 +18,7 @@ export const FormDatePicker = ({ name, label, isOptional, disabled, maxDate }: F
   const [locale, setLocale] = useState<Locale>();
 
   useEffect(() => {
-    setLocale(i18n.language === "cs" ? csLocale : enLocale);
+    setLocale(i18n.language === "cs" ? cs : enUS);
   }, [i18n.language]);
 
   return (
