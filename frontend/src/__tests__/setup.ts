@@ -4,11 +4,9 @@ import i18n from "@app/i18n/i18n";
 import { NEUTRAL_LANGUAGE_CODE } from "./neutral-language-code";
 
 // Extends Vitest's expect() method with methods from react-testing-library
-declare global {
-  namespace Vi {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    interface JestAssertion<T = any> extends jest.Matchers<void, T>, TestingLibraryMatchers<T, void> {}
-  }
+declare module "vitest" {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  interface JestAssertion<T = any> extends jest.Matchers<void, T>, TestingLibraryMatchers<T, void> {}
 }
 expect.extend(matchers);
 
