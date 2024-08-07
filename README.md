@@ -151,6 +151,9 @@ The new Prisma client code is generated only in the `server` container because l
 npx prisma generate
 ```
 
+### Updating i18n translations
+After you change the `/public/locales` translations structure, you need to run the `npm run i18n:generate` script to get the required TypeScript support for the i18n translation keys. For example in functions like `useTranslation()`, `t()` etc.
+
 ### Useful tools
 * GraphQL playground to test the server GraphQL API: use `server` URL with the path `/graphql`
 
