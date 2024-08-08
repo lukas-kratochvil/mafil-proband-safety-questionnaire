@@ -78,8 +78,8 @@ const downloadPdf = (pdf: VisitDetailPDF): void => {
 
 const getButtons = (
   visitDetail: VisitDetail,
-  refetchVisitDetail: <TPageData>(
-    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
+  refetchVisitDetail: (
+    options?: (RefetchOptions & RefetchQueryFilters) | undefined
   ) => Promise<QueryObserverResult<VisitDetail, unknown>>
 ): VisitDetailButtonProps[] => {
   if (visitDetail.isPhantom) {
@@ -188,7 +188,7 @@ const VisitDetailPage = () => {
     );
   }
 
-  if (isLoading) {
+  if (isLoading || visitDetail === undefined) {
     return (
       <PageContainer>
         <Skeleton

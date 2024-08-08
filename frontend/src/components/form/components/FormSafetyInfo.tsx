@@ -11,7 +11,7 @@ export const FormSafetyInfo = () => {
     queryKey: ["safetyInfo", i18n.language],
     queryFn: () => fetchSafetyInfo(i18n.language as LanguageCode),
     staleTime: Infinity,
-    cacheTime: Infinity,
+    gcTime: Infinity,
   });
 
   if (data === undefined) {

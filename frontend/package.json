@@ -24,8 +24,8 @@
     "@mui/icons-material": "^5.16.6",
     "@mui/material": "^5.16.6",
     "@mui/x-date-pickers": "^7.12.0",
-    "@tanstack/react-query": "^4.24.10",
-    "@tanstack/react-query-devtools": "^4.24.12",
+    "@tanstack/react-query": "^5.51.23",
+    "@tanstack/react-query-devtools": "^5.51.23",
     "axios": "^1.7.3",
     "date-fns": "^3.6.0",
     "deep-object-diff": "^1.1.9",
@@ -46,7 +46,7 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
-    "@tanstack/eslint-plugin-query": "^4.27.0",
+    "@tanstack/eslint-plugin-query": "^5.51.15",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",

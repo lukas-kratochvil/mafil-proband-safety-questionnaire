@@ -11,7 +11,7 @@ export const FormBeforeExamination = () => {
     queryKey: ["beforeExamination", i18n.language],
     queryFn: () => fetchBeforeExamination(i18n.language as LanguageCode),
     staleTime: Infinity,
-    cacheTime: Infinity,
+    gcTime: Infinity,
   });
 
   if (data === undefined) {

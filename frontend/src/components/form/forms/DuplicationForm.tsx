@@ -39,7 +39,7 @@ export const DuplicationForm = () => {
     queryKey: ["visit", id],
     queryFn: () => fetchDuplicatedVisit(id),
     staleTime: Infinity,
-    cacheTime: Infinity,
+    gcTime: Infinity,
   });
   const navigate = useNavigate();
   const { operator } = useAuth();

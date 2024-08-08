@@ -11,7 +11,7 @@ export const FormExaminationConsent = () => {
     queryKey: ["examinationConsent", i18n.language],
     queryFn: () => fetchExaminationConsent(i18n.language as LanguageCode),
     staleTime: Infinity,
-    cacheTime: Infinity,
+    gcTime: Infinity,
   });
 
   if (data === undefined) {

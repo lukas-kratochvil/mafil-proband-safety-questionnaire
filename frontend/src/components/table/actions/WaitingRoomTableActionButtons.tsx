@@ -22,8 +22,8 @@ import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
 type WaitingRoomTableActionButtonsProps = {
   visitFormId: string;
-  refetchWaitingRoomTable: <TPageData>(
-    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
+  refetchWaitingRoomTable: (
+    options?: (RefetchOptions & RefetchQueryFilters) | undefined
   ) => Promise<QueryObserverResult<WaitingRoomTableVisitForm[], unknown>>;
 };
 

@@ -11,7 +11,7 @@ export const FormProbandContactConsent = () => {
     queryKey: ["probandContactConsent", i18n.language],
     queryFn: () => fetchProbandContactConsent(i18n.language as LanguageCode),
     staleTime: Infinity,
-    cacheTime: Infinity,
+    gcTime: Infinity,
   });
 
   if (data === undefined) {
