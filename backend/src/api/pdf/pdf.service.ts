@@ -24,7 +24,10 @@ export class PDFService {
   // TODO: delete - only for a development purpose
   private isDevelopment: boolean;
 
-  constructor(config: ConfigService<EnvironmentVariables, true>, private readonly prisma: PrismaService) {
+  constructor(
+    config: ConfigService<EnvironmentVariables, true>,
+    private readonly prisma: PrismaService
+  ) {
     this.operatorLanguageCode = config.get("PDF_OPERATOR_LANGUAGE_CODE", { infer: true });
     this.isDevelopment = config.get("NODE_ENV", { infer: true }) === "development";
   }

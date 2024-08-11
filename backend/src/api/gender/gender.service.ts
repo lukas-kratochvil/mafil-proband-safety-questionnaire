@@ -10,7 +10,10 @@ const genderInclude = { translations: translationsSelect } satisfies Prisma.Gend
 
 @Injectable()
 export class GenderService {
-  constructor(private readonly prisma: PrismaService, private readonly languageService: LanguageService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly languageService: LanguageService
+  ) {}
 
   async create(createGenderInput: CreateGenderInput) {
     const languages = await this.languageService.findAll();

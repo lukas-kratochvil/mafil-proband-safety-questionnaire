@@ -14,7 +14,10 @@ const questionInclude = {
 
 @Injectable()
 export class QuestionService {
-  constructor(private readonly prisma: PrismaService, private readonly languageService: LanguageService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly languageService: LanguageService
+  ) {}
 
   async create(createQuestionInput: CreateQuestionInput) {
     const languages = await this.languageService.findAll();

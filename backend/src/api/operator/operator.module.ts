@@ -28,7 +28,11 @@ import { OperatorService } from "./operator.service";
     {
       provide: APP_GUARD,
       inject: [AUTH_SERVICE, ConfigService, Reflector],
-      useFactory: (authService: AuthService, config: ConfigService<EnvironmentVariables, true>, reflector: Reflector) =>
+      useFactory: (
+        authService: AuthService,
+        config: ConfigService<EnvironmentVariables, true>,
+        reflector: Reflector
+      ) =>
         config.get("NODE_ENV", { infer: true }) === "production"
           ? new AuthGuard(authService, reflector, config)
           : new AuthGuardDev(),

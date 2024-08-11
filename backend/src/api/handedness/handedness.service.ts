@@ -10,7 +10,10 @@ const handednessInclude = { translations: translationsSelect } satisfies Prisma.
 
 @Injectable()
 export class HandednessService {
-  constructor(private readonly prisma: PrismaService, private readonly languageService: LanguageService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly languageService: LanguageService
+  ) {}
 
   async create(createHandednessInput: CreateHandednessInput) {
     const languages = await this.languageService.findAll();
