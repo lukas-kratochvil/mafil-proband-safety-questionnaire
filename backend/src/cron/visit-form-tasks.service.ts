@@ -1,9 +1,10 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { Cron, CronExpression } from "@nestjs/schedule";
 import { VisitFormState } from "@prisma/client";
+import { millisecondsInSecond, secondsInDay } from "date-fns/constants";
 import { PrismaService } from "@app/prisma/prisma.service";
 
-const MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000;
+const MILLISECONDS_IN_DAY = millisecondsInSecond * secondsInDay;
 
 @Injectable()
 export class VisitFormTasksService {
