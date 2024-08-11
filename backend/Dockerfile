@@ -1,7 +1,7 @@
 #-------------------------------------------
 # BUILD FOR DEVELOPMENT
 #-------------------------------------------
-FROM node:18-alpine AS development
+FROM node:20-alpine AS development
 
 WORKDIR /usr/src/app/backend
 
@@ -30,7 +30,7 @@ RUN npm run build && \
 #-------------------------------------------
 # PRODUCTION
 #-------------------------------------------
-FROM node:18-alpine AS production
+FROM node:20-alpine AS production
 
 WORKDIR /usr/src/app
 

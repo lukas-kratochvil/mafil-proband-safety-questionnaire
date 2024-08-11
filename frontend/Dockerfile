@@ -1,7 +1,7 @@
 #-------------------------------------------
 # BUILD FOR DEVELOPMENT
 #-------------------------------------------
-FROM node:18-alpine AS development
+FROM node:20-alpine AS development
 
 WORKDIR /usr/src/app/frontend
 
