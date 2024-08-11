@@ -46,7 +46,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "token-introspection": "^3.3.0",
-    "winston": "^3.8.2"
+    "winston": "^3.14.1"
   },
   "devDependencies": {
     "@darraghor/eslint-plugin-nestjs-typed": "^3.16.0",
