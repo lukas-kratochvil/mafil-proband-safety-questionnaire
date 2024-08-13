@@ -31,7 +31,7 @@
     "@nestjs/graphql": "^11.0.4",
     "@nestjs/platform-express": "^9.3.12",
     "@nestjs/schedule": "^2.2.0",
-    "@nestjs/throttler": "^4.0.0",
+    "@nestjs/throttler": "^6.1.1",
     "@prisma/client": "^5.18.0",
     "base64-stream": "^1.0.0",
     "class-transformer": "^0.5.1",
