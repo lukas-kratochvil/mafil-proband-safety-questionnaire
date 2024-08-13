@@ -60,7 +60,7 @@ const INPUT_ROWS_GAP = 4;
 const GAP_AFTER_CHAPTER_TITLE = INPUT_ROWS_GAP + 4;
 const GAP_AROUND_SIGNATURE_BLOCKS = 25;
 
-// Indents
+// Text indents
 const PARAGRAPH_INDENT = 20;
 
 // Date format
@@ -546,13 +546,13 @@ const addProbandContactConsent = (
     .text(texts.text3, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: TEXT_PARAGRAPHS_GAP });
   doc.text(texts.text4, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: TEXT_PARAGRAPHS_GAP });
   doc.text(texts.list, { align: "justify", lineGap: LINE_GAP_INSIDE_PARAGRAPH, paragraphGap: 4 });
-  // List bullet indentation doesn't work
   doc.list(
     [
       `${texts.listItem1} ${commonTexts.mafilEmail},`,
       `${texts.listItem2},`,
       `${texts.listItem3},`,
       `${texts.listItem4},`,
+      `${texts.listItem5Part1} ${texts.listItem5UoouSite}, ${texts.listItem5Part2} ${commonTexts.uoouEmail}.`,
     ],
     {
       listType: "bullet",
@@ -562,18 +562,8 @@ const addProbandContactConsent = (
       lineGap: LINE_GAP_INSIDE_PARAGRAPH,
     }
   );
-  // Workaround: the last list item must be added separately to create gap under the list
-  doc.list([`${texts.listItem5Part1} ${texts.listItem5UoouSite}, ${texts.listItem5Part2} ${commonTexts.uoouEmail}.`], {
-    listType: "bullet",
-    bulletRadius: LIST_BULLET_RADIUS,
-    align: "justify",
-    baseline: LIST_BASELINE,
-    lineGap: LINE_GAP_INSIDE_PARAGRAPH,
-    paragraphGap: TEXT_PARAGRAPHS_GAP,
-  });
-
   doc
-    .text(`${texts.text5Part1} ${commonTexts.trusteeEmail}.`, {
+    .text(`${texts.text5Part1} ${commonTexts.trusteeEmail}.`, doc.x, doc.y + TEXT_PARAGRAPHS_GAP, {
       align: "justify",
       lineGap: LINE_GAP_INSIDE_PARAGRAPH,
     })
@@ -652,13 +642,13 @@ export const generateBase64PDF = async (
   // Add MAFIL logo
   const imageWidth = 90;
   doc.image(getImagePath("mafil_brain_logo.png"), { width: imageWidth });
-  const onMafilLogoRightContentX = imageWidth + 110;
+  const mafilLogoRightContentX = imageWidth + 110;
   const linePositionUnderImage = doc.y;
 
   // Add MAFIL info
   doc
     .font(MEDIUM_FONT, CHAPTER_FONT_SIZE)
-    .text(commonTexts.mafil.ceitec, onMafilLogoRightContentX, doc.page.margins.top + 30, {
+    .text(commonTexts.mafil.ceitec, mafilLogoRightContentX, doc.page.margins.top + 30, {
       lineGap: LINE_GAP_INSIDE_PARAGRAPH,
     })
     .text(texts.pdf.mafil.name, { lineGap: LINE_GAP_INSIDE_PARAGRAPH })
