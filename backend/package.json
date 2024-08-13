@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@darraghor/eslint-plugin-nestjs-typed": "^3.16.0",
-    "@nestjs/cli": "^9.3.0",
+    "@nestjs/cli": "^10.4.4",
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^9.3.12",
     "@types/base64-stream": "^1.0.5",
