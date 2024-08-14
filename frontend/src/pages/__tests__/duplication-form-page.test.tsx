@@ -13,7 +13,7 @@ import { pdfTest } from "@app/tests/data/pdf";
 import { projectsTest } from "@app/tests/data/projects";
 import { questionsTest } from "@app/tests/data/questions";
 import { subjectsTest } from "@app/tests/data/subjects";
-import { render, screen, waitFor, within } from "@app/tests/utils";
+import { render, screen, within } from "@app/tests/utils";
 import type { GenderDTO, HandednessDTO, PdfDTO, QuestionDTO } from "@app/util/server_API/dto";
 
 //----------------------------------------------------------------------
@@ -156,7 +156,7 @@ describe("duplication form page", () => {
     const questionsRadios = await screen.findAllByRole("radiogroup");
 
     // ASSERT
-    await waitFor(() => expect(form).toHaveFormValues(expectedFormValues));
+    expect(form).toHaveFormValues(expectedFormValues);
     expect(questionsRadios.length).toEqual(questionsTest.length);
     questionsRadios.forEach((questionInput, i) => {
       const yesRadio = within(questionInput).getByRole("radio", { name: "form.safetyQuestions.yes" });
