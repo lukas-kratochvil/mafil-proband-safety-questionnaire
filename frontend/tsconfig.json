@@ -27,11 +27,11 @@
     /* Custom imports mapping */
     "baseUrl": "./",
     "paths": {
+      "@test/*": [
+        "src/test/*",
+      ],
       "@app/*": [
         "src/*",
-      ],
-      "@test-utils": [
-        "src/tests/utils.ts",
       ],
     },
   },

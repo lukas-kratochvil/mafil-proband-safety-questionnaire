@@ -1,5 +1,5 @@
-import { render, screen } from "@app/tests/utils";
 import type { ButtonProps } from "@app/util/utils";
+import { render, screen } from "@test/utils";
 import { FormButtons } from "../FormButtons";
 
 //----------------------------------------------------------------------

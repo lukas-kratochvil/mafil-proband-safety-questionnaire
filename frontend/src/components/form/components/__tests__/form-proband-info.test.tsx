@@ -1,9 +1,9 @@
 import type { NativeLanguage } from "@app/model/language";
-import { gendersTest } from "@app/tests/data/genders";
-import { handednessesTest } from "@app/tests/data/handednesses";
-import { nativeLanguagesTest } from "@app/tests/data/languages";
-import { render, screen } from "@app/tests/utils";
 import type { GenderDTO, HandednessDTO } from "@app/util/server_API/dto";
+import { gendersTest } from "@test/data/genders";
+import { handednessesTest } from "@test/data/handednesses";
+import { nativeLanguagesTest } from "@test/data/languages";
+import { render, screen } from "@test/utils";
 import { FormProbandInfo } from "../FormProbandInfo";
 
 //----------------------------------------------------------------------

@@ -10,11 +10,11 @@ import type {
   VisitDetail,
 } from "@app/model/visit";
 import type { VisitPDF } from "@app/model/visitPdf";
-import { devicesTest } from "@app/tests/data/devices";
-import { nativeLanguagesTest } from "@app/tests/data/languages";
-import { projectsTest } from "@app/tests/data/projects";
-import { subjectsTest } from "@app/tests/data/subjects";
 import { dummyVisits, generateVisitId, PDF_CONTENT } from "@app/util/mafildb_API/data.dev";
+import { devicesTest } from "@test/data/devices";
+import { nativeLanguagesTest } from "@test/data/languages";
+import { projectsTest } from "@test/data/projects";
+import { subjectsTest } from "@test/data/subjects";
 import { fetchCurrentQuestions, fetchGender, fetchHandedness, fetchOperator, fetchQuestion } from "../server_API/calls";
 import type { PdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import { MDB_SignatureState, type MDB_CreateVisitInput, type MDB_UpdateVisitSignatureStateInput } from "./dto";

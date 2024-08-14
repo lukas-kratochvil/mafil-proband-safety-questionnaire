@@ -6,17 +6,17 @@ import type { NativeLanguage } from "@app/model/language";
 import type { Project } from "@app/model/project";
 import PhantomFormPage from "@app/pages/PhantomFormPage";
 import { RoutingPath } from "@app/routing-paths";
-import { devicesTest } from "@app/tests/data/devices";
-import { gendersTest } from "@app/tests/data/genders";
-import { handednessesTest } from "@app/tests/data/handednesses";
-import { nativeLanguagesTest } from "@app/tests/data/languages";
-import { operatorMRTest } from "@app/tests/data/operators";
-import { pdfTest } from "@app/tests/data/pdf";
-import { projectsTest } from "@app/tests/data/projects";
-import { render, screen } from "@app/tests/utils";
 import * as mafildbCalls from "@app/util/mafildb_API/calls";
 import * as serverCalls from "@app/util/server_API/calls";
 import type { GenderDTO, HandednessDTO, PdfDTO } from "@app/util/server_API/dto";
+import { devicesTest } from "@test/data/devices";
+import { gendersTest } from "@test/data/genders";
+import { handednessesTest } from "@test/data/handednesses";
+import { nativeLanguagesTest } from "@test/data/languages";
+import { operatorMRTest } from "@test/data/operators";
+import { pdfTest } from "@test/data/pdf";
+import { projectsTest } from "@test/data/projects";
+import { render, screen } from "@test/utils";
 
 //----------------------------------------------------------------------
 // Mocking react-router-dom hooks

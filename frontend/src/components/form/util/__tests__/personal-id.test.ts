@@ -1,4 +1,4 @@
-import { gendersTest } from "@app/tests/data/genders";
+import { gendersTest } from "@test/data/genders";
 import { CzechSlovakPersonalId, getPersonalIdPart } from "../personal-id";
 
 //----------------------------------------------------------------------

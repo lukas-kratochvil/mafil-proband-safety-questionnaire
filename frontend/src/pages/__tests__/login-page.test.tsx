@@ -1,7 +1,7 @@
 import { userEvent } from "@testing-library/user-event";
 import * as auth from "@app/hooks/auth/auth";
 import LoginPage from "@app/pages/LoginPage";
-import { render, screen } from "@app/tests/utils";
+import { render, screen } from "@test/utils";
 
 //----------------------------------------------------------------------
 // Mocking LanguageMenu due to undefined i18n instance that is used inside this component

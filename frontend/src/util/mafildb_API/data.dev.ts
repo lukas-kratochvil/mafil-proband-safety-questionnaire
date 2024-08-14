@@ -1,13 +1,13 @@
 import type { Visit } from "@app/model/visit";
-import { devicesTest } from "@app/tests/data/devices";
-import { projectsTest } from "@app/tests/data/projects";
-import { subjectsTest } from "@app/tests/data/subjects";
 import {
   MDB_ApprovalState,
   MDB_SignatureState,
   type MDB_CreateVisitInput,
   type MDB_UpdateVisitSignatureStateInput,
 } from "@app/util/mafildb_API/dto";
+import { devicesTest } from "@test/data/devices";
+import { projectsTest } from "@test/data/projects";
+import { subjectsTest } from "@test/data/subjects";
 import type { OperatorDTO } from "../server_API/dto";
 
 const operatorFinalizer: OperatorDTO = {

@@ -1,5 +1,5 @@
 import { userEvent } from "@testing-library/user-event";
-import { render, screen } from "@app/tests/utils";
+import { render, screen } from "@test/utils";
 import { LogOutButton } from "../LogOutButton";
 
 //----------------------------------------------------------------------

@@ -1,5 +1,5 @@
 import type { FormQac } from "@app/model/form";
-import { render, screen } from "@app/tests/utils";
+import { render, screen } from "@test/utils";
 import { FormQuestions } from "../FormQuestions";
 
 //----------------------------------------------------------------------
