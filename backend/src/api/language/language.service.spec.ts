@@ -1,6 +1,6 @@
 import { Test } from "@nestjs/testing";
 import { PrismaClient, type Language } from "@prisma/client";
-import { DeepMockProxy, mockDeep } from "jest-mock-extended";
+import { DeepMockProxy, mockDeep } from "vitest-mock-extended";
 import { PrismaService } from "@app/prisma/prisma.service";
 import type { CreateLanguageInput } from "./dto/create-language.input";
 import type { UpdateLanguageInput } from "./dto/update-language.input";

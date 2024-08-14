@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/swcrc",
+  "module": {
+    "type": "commonjs"
+  },
+  "jsc": {
+    "baseUrl": "./src",
+    "target": "es2022",
+    "keepClassNames": true,
+    "parser": {
+      "syntax": "typescript",
+      "decorators": true,
+      "dynamicImport": true
+    },
+    "transform": {
+      "legacyDecorator": true,
+      "decoratorMetadata": true
+    }
+  },
+  "sourceMaps": true,
+  "minify": false,
+  "exclude": [
+    "^.+\\.spec\\.(j|t)s$",
+    "^.+\\.test\\.(j|t)s$"
+  ]
+}

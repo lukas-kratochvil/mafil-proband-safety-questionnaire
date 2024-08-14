@@ -1,6 +1,6 @@
 import { Test } from "@nestjs/testing";
 import type { GenderTranslation } from "@prisma/client";
-import { DeepMockProxy, mockDeep } from "jest-mock-extended";
+import { DeepMockProxy, mockDeep } from "vitest-mock-extended";
 import type { CreateGenderTranslationInput } from "./dto/create-gender-translation.input";
 import type { UpdateGenderTranslationInput } from "./dto/update-gender-translation.input";
 import { GenderTranslationResolver } from "./gender-translation.resolver";

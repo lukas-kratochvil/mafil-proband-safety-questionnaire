@@ -1,6 +1,6 @@
 import { Test } from "@nestjs/testing";
 import { Language, Operator, VisitFormState } from "@prisma/client";
-import { DeepMockProxy, mockDeep } from "jest-mock-extended";
+import { DeepMockProxy, mockDeep } from "vitest-mock-extended";
 import type { CreateVisitFormInput } from "./dto/create-visit-form.input";
 import type { UpdateVisitFormInput } from "./dto/update-visit-form.input";
 import { VisitFormResolver } from "./visit-form.resolver";

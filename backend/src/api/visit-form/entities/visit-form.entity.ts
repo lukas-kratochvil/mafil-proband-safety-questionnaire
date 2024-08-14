@@ -21,6 +21,7 @@ import { GenderEntity } from "@app/api/gender/entities/gender.entity";
 import { HandednessEntity } from "@app/api/handedness/entities/handedness.entity";
 import { LanguageEntity } from "@app/api/language/entities/language.entity";
 import { BaseEntity } from "@app/api/utils/entities/base.entity";
+import type { Wrapper } from "@app/types";
 import { AdditionalVisitFormInfoEntity } from "./additional-visit-form-info.entity";
 import { AnswerEntity } from "./answer.entity";
 
@@ -42,7 +43,7 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   @IsOptional()
   @IsObject()
   @Field(() => AdditionalVisitFormInfoEntity, { nullable: true })
-  additionalInfo?: AdditionalVisitFormInfoEntity;
+  additionalInfo?: Wrapper<AdditionalVisitFormInfoEntity>;
 
   @IsArray()
   @ArrayNotEmpty()

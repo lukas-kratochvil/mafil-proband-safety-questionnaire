@@ -2,7 +2,7 @@ import { BadRequestException } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { Test } from "@nestjs/testing";
 import { PrismaClient, type Operator } from "@prisma/client";
-import { DeepMockProxy, mockDeep } from "jest-mock-extended";
+import { DeepMockProxy, mockDeep } from "vitest-mock-extended";
 import { PrismaService } from "@app/prisma/prisma.service";
 import type { GeneratePDFArgs } from "./dto/generate-pdf.args";
 import { PDFEntity } from "./entities/pdf.entity";
@@ -62,7 +62,7 @@ const generatePDFInputProbandEverythingFilled: GeneratePDFArgs = {
 // Mocking PDF generation
 //----------------------------------------------------------------------
 const pdfContent = "base64PDF";
-jest.mock("@app/pdf/generate", () => ({
+vi.mock("@app/pdf/generate", () => ({
   generateBase64PDF: () => pdfContent,
 }));
 
@@ -111,7 +111,7 @@ describe("PDFService", () => {
       createdAt: new Date(),
       updatedAt: new Date(),
       deletedAt: null,
-      translations: jest.fn().mockResolvedValueOnce([{ code: "en", text: "Other" }]),
+      translations: vi.fn().mockResolvedValueOnce([{ code: "en", text: "Other" }]),
     });
     prisma.handedness.findFirstOrThrow.mockResolvedValueOnce({
       id: "1",
@@ -120,7 +120,7 @@ describe("PDFService", () => {
       createdAt: new Date(),
       updatedAt: new Date(),
       deletedAt: null,
-      translations: jest.fn().mockResolvedValueOnce([{ code: "en", text: "Undetermined" }]),
+      translations: vi.fn().mockResolvedValueOnce([{ code: "en", text: "Undetermined" }]),
     });
 
     // ACT
@@ -174,7 +174,7 @@ describe("PDFService", () => {
       createdAt: new Date(),
       updatedAt: new Date(),
       deletedAt: null,
-      translations: jest.fn().mockResolvedValueOnce([{ code: "en", text: "Male" }]),
+      translations: vi.fn().mockResolvedValueOnce([{ code: "en", text: "Male" }]),
     });
     prisma.handedness.findFirstOrThrow.mockResolvedValueOnce({
       id: "1",
@@ -183,7 +183,7 @@ describe("PDFService", () => {
       createdAt: new Date(),
       updatedAt: new Date(),
       deletedAt: null,
-      translations: jest.fn().mockResolvedValueOnce([{ code: "en", text: "Right-handed" }]),
+      translations: vi.fn().mockResolvedValueOnce([{ code: "en", text: "Right-handed" }]),
     });
     prisma.question.findFirstOrThrow.mockResolvedValueOnce({
       id: questionId,
@@ -197,7 +197,7 @@ describe("PDFService", () => {
       deletedAt: null,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       hiddenByGenders: [] as any,
-      translations: jest.fn().mockResolvedValueOnce([{ code: "en", text: "Question 1" }]),
+      translations: vi.fn().mockResolvedValueOnce([{ code: "en", text: "Question 1" }]),
     });
 
     // ACT

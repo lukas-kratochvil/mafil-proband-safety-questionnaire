@@ -1,7 +1,7 @@
 import { BadRequestException } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 import { PrismaClient, type Language, type Question } from "@prisma/client";
-import { DeepMockProxy, mockDeep } from "jest-mock-extended";
+import { DeepMockProxy, mockDeep } from "vitest-mock-extended";
 import { LanguageService } from "@app/api/language/language.service";
 import { PrismaService } from "@app/prisma/prisma.service";
 import type { CreateQuestionInput } from "./dto/create-question.input";
@@ -172,7 +172,7 @@ describe("QuestionService", () => {
     prisma.question.update.mockResolvedValueOnce({
       ...question,
       isValid: false,
-      hiddenByGenders: jest.fn().mockResolvedValueOnce([]),
+      hiddenByGenders: vi.fn().mockResolvedValueOnce([]),
     });
     prisma.question.create.mockResolvedValueOnce(question);
     prisma.$transaction.mockImplementation((callback) => callback(prisma));

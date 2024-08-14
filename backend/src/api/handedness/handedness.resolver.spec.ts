@@ -1,5 +1,5 @@
 import { Test } from "@nestjs/testing";
-import { DeepMockProxy, mockDeep } from "jest-mock-extended";
+import { DeepMockProxy, mockDeep } from "vitest-mock-extended";
 import type { CreateHandednessInput } from "./dto/create-handedness.input";
 import type { UpdateHandednessInput } from "./dto/update-handedness.input";
 import { HandednessResolver } from "./handedness.resolver";

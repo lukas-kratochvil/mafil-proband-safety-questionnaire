@@ -1,5 +1,5 @@
 import { Test } from "@nestjs/testing";
-import { DeepMockProxy, mockDeep } from "jest-mock-extended";
+import { DeepMockProxy, mockDeep } from "vitest-mock-extended";
 import type { GeneratePDFArgs } from "./dto/generate-pdf.args";
 import type { PDFEntity } from "./entities/pdf.entity";
 import { PDFResolver } from "./pdf.resolver";

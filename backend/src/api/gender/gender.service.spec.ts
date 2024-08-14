@@ -1,7 +1,7 @@
 import { BadRequestException } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 import { PrismaClient, type Gender, type Language } from "@prisma/client";
-import { DeepMockProxy, mockDeep } from "jest-mock-extended";
+import { DeepMockProxy, mockDeep } from "vitest-mock-extended";
 import { LanguageService } from "@app/api/language/language.service";
 import { PrismaService } from "@app/prisma/prisma.service";
 import type { CreateGenderInput } from "./dto/create-gender.input";

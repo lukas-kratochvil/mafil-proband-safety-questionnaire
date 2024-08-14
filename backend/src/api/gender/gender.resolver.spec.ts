@@ -1,5 +1,5 @@
 import { Test } from "@nestjs/testing";
-import { DeepMockProxy, mockDeep } from "jest-mock-extended";
+import { DeepMockProxy, mockDeep } from "vitest-mock-extended";
 import type { CreateGenderInput } from "./dto/create-gender.input";
 import type { UpdateGenderInput } from "./dto/update-gender.input";
 import { GenderResolver } from "./gender.resolver";

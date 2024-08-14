@@ -1,7 +1,7 @@
 import { UnauthorizedException } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
 import { OperatorRole, type Operator, type PrismaClient } from "@prisma/client";
-import { mockDeep, type DeepMockProxy } from "jest-mock-extended";
+import { mockDeep, type DeepMockProxy } from "vitest-mock-extended";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { AuthService } from "./auth.service";
 import { AUTH_PRISMA_SERVICE } from "./constants";
@@ -54,7 +54,7 @@ describe("AuthService", () => {
   it("authenticate operator", () => {
     // ARRANGE
     const lastLoggedAt = new Date();
-    jest.spyOn(authService, "verify").mockResolvedValueOnce(operator);
+    vi.spyOn(authService, "verify").mockResolvedValueOnce(operator);
     prisma.operator.update.mockResolvedValueOnce({ ...operator, lastLoggedAt });
 
     // ACT
@@ -66,7 +66,7 @@ describe("AuthService", () => {
 
   it("authenticate operator - operator not found", () => {
     // ARRANGE
-    jest.spyOn(authService, "verify").mockResolvedValueOnce(operator);
+    vi.spyOn(authService, "verify").mockResolvedValueOnce(operator);
 
     // ACT
     const foundOperator = authService.authenticate(operator.username, { ...operator });
@@ -81,7 +81,7 @@ describe("AuthService", () => {
       ...operator,
       isValid: false,
     };
-    jest.spyOn(authService, "verify").mockResolvedValueOnce(invalidOperator);
+    vi.spyOn(authService, "verify").mockResolvedValueOnce(invalidOperator);
 
     // ACT
     const foundOperator = authService.authenticate(operator.username, { ...operator });

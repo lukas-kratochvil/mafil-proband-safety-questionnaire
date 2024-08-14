@@ -1,6 +1,6 @@
 import { Test } from "@nestjs/testing";
 import type { HandednessTranslation } from "@prisma/client";
-import { DeepMockProxy, mockDeep } from "jest-mock-extended";
+import { DeepMockProxy, mockDeep } from "vitest-mock-extended";
 import type { CreateHandednessTranslationInput } from "./dto/create-handedness-translation.input";
 import type { UpdateHandednessTranslationInput } from "./dto/update-handedness-translation.input";
 import { HandednessTranslationResolver } from "./handedness-translation.resolver";

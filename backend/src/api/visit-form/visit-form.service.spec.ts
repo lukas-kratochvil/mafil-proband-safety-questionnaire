@@ -1,7 +1,7 @@
 import { BadRequestException } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 import { PrismaClient, VisitFormState, type VisitForm } from "@prisma/client";
-import { DeepMockProxy, mockDeep } from "jest-mock-extended";
+import { DeepMockProxy, mockDeep } from "vitest-mock-extended";
 import { PrismaService } from "@app/prisma/prisma.service";
 import type { CreateVisitFormInput } from "./dto/create-visit-form.input";
 import type { UpdateVisitFormInput } from "./dto/update-visit-form.input";

@@ -1,6 +1,6 @@
 import { Test } from "@nestjs/testing";
 import { PrismaClient } from "@prisma/client";
-import { DeepMockProxy, mockDeep } from "jest-mock-extended";
+import { DeepMockProxy, mockDeep } from "vitest-mock-extended";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { HTMLCardService } from "./html-card.service";
 

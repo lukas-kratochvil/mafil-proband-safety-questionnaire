@@ -1,7 +1,6 @@
 module.exports = {
   env: {
     node: true,
-    jest: true,
   },
   extends: [
     "plugin:@darraghor/nestjs-typed/recommended",

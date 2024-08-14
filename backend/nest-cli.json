@@ -6,6 +6,8 @@
   "compilerOptions": {
     "assets": [
       "assets/**/*"
-    ]
+    ],
+    "builder": "swc",
+    "typeCheck": true
   }
 }

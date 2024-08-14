@@ -1,6 +1,6 @@
 import { Test } from "@nestjs/testing";
 import { OperatorRole, PrismaClient, type Operator } from "@prisma/client";
-import { DeepMockProxy, mockDeep } from "jest-mock-extended";
+import { DeepMockProxy, mockDeep } from "vitest-mock-extended";
 import { PrismaService } from "@app/prisma/prisma.service";
 import type { CreateOperatorInput } from "./dto/create-operator.input";
 import type { UpdateOperatorInput } from "./dto/update-operator.input";

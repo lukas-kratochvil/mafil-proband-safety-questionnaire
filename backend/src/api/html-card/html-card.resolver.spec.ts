@@ -1,5 +1,5 @@
 import { Test } from "@nestjs/testing";
-import { DeepMockProxy, mockDeep } from "jest-mock-extended";
+import { DeepMockProxy, mockDeep } from "vitest-mock-extended";
 import type { ProbandContactRequestArgs } from "./dto/proband-contact-request.args";
 import type { HTMLCardEntity } from "./entities/html-card.entity";
 import { HTMLCardResolver } from "./html-card.resolver";
