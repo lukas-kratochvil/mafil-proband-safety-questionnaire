@@ -23,30 +23,30 @@ export class GraphQLConfigService implements GqlOptionsFactory {
       context: ({ req, res }: { req: Request; res: Response }) => ({ req, res }),
       // error formatting inspired by: https://github.com/nestjs/graphql/issues/1053#issuecomment-786972617
       formatError: (error: GraphQLFormattedError) => {
-        if (error.message === VALIDATION_ERROR) {
-          const validationErrorExtensions = error.extensions as ValidationErrorExtensions;
-          const validationFieldErrors: ValidationFieldErrors[] = [];
-
-          validationErrorExtensions.validationErrors.forEach((validationError) => {
-            if (validationError.constraints !== undefined) {
-              validationFieldErrors.push({
-                field: validationError.property,
-                errors: Object.values(validationError.constraints),
-              });
-            }
-          });
-
-          const graphQLFormattedError: GraphQLFormattedError = {
-            message: "Validation error",
-            extensions: {
-              code: VALIDATION_ERROR,
-              errors: validationFieldErrors,
-            },
-          };
-          return graphQLFormattedError;
+        if (error.message !== VALIDATION_ERROR) {
+          return error;
         }
 
-        return error;
+        const validationErrorExtensions = error.extensions as ValidationErrorExtensions;
+        const validationFieldErrors: ValidationFieldErrors[] = [];
+
+        validationErrorExtensions.validationErrors.forEach((validationError) => {
+          if (validationError.constraints !== undefined) {
+            validationFieldErrors.push({
+              field: validationError.property,
+              errors: Object.values(validationError.constraints),
+            });
+          }
+        });
+
+        const graphQLFormattedError: GraphQLFormattedError = {
+          message: "Validation error",
+          extensions: {
+            code: VALIDATION_ERROR,
+            errors: validationFieldErrors,
+          },
+        };
+        return graphQLFormattedError;
       },
       resolvers: {
         UUID: UUID,
