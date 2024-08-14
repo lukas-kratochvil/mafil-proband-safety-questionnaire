@@ -8,12 +8,13 @@ module.exports = {
     "plugin:i18next/recommended",
     "plugin:react/recommended",
     "plugin:testing-library/react",
+    "plugin:jest-dom/recommended",
     "../.eslintrc.js", // this has to be the last extension!!
   ],
   overrides: [
     {
       files: ["**/__tests__/**/*.ts?(x)", "**/?(*.)+(spec|test).ts?(x)"],
-      extends: ["plugin:testing-library/react"],
+      extends: ["plugin:testing-library/react", "plugin:jest-dom/recommended"],
     },
   ],
   parserOptions: {
