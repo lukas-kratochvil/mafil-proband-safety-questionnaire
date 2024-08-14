@@ -17,12 +17,10 @@ describe("form card container", () => {
 
     // ACT
     setup(content);
-    const titleElem = screen.getByText(title);
-    const childrenElem = screen.getByText(content);
 
     // ASSERT
-    expect(titleElem).toBeInTheDocument();
-    expect(childrenElem).toBeInTheDocument();
+    expect(screen.getByText(title)).toBeInTheDocument();
+    expect(screen.getByText(content)).toBeInTheDocument();
   });
 
   test("has element content", () => {
@@ -32,11 +30,9 @@ describe("form card container", () => {
 
     // ACT
     setup(content);
-    const titleElem = screen.getByText(title);
-    const childrenElem = screen.getByTestId(childrenTestId);
 
     // ASSERT
-    expect(titleElem).toBeInTheDocument();
-    expect(childrenElem).toBeInTheDocument();
+    expect(screen.getByText(title)).toBeInTheDocument();
+    expect(screen.getByTestId(childrenTestId)).toBeInTheDocument();
   });
 });

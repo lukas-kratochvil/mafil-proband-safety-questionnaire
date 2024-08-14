@@ -61,14 +61,11 @@ describe("header", () => {
 
     // ACT
     setup();
-    const ceitecMafilLogo = screen.getByAltText("CEITEC-MAFIL logo");
-    const languageMenu = screen.getByTestId("language-menu");
-    const headerTabs = screen.queryAllByRole("tab");
 
     // ASSERT
-    expect(ceitecMafilLogo).toBeInTheDocument();
-    expect(languageMenu).toBeInTheDocument();
-    expect(headerTabs.length).toBe(0);
+    expect(screen.getByAltText("CEITEC-MAFIL logo")).toBeInTheDocument();
+    expect(screen.getByTestId("language-menu")).toBeInTheDocument();
+    expect(screen.queryAllByRole("tab").length).toBe(0);
   });
 
   test("user is logged in", async () => {
@@ -77,14 +74,11 @@ describe("header", () => {
 
     // ACT
     setup();
-    const ceitecMafilLogo = await screen.findByAltText("CEITEC-MAFIL logo");
-    const languageMenu = screen.getByTestId("language-menu");
-    const headerTabs = screen.getAllByRole("tab");
 
     // ASSERT
     expect(`${operatorMRTest.name} ${operatorMRTest.surname}`).toBeDefined();
-    expect(ceitecMafilLogo).toBeInTheDocument();
-    expect(languageMenu).toBeInTheDocument();
-    expect(headerTabs.length).toBe(tabs.length);
+    expect(await screen.findByAltText("CEITEC-MAFIL logo")).toBeInTheDocument();
+    expect(screen.getByTestId("language-menu")).toBeInTheDocument();
+    expect(screen.getAllByRole("tab").length).toBe(tabs.length);
   });
 });

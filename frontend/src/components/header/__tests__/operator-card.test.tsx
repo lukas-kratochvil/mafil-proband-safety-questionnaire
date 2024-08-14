@@ -34,9 +34,8 @@ describe("operator card", () => {
   test("shows operator fullname", () => {
     // ACT
     setup();
-    const operatorFullnameElem = screen.getByText(`${operator.name} ${operator.surname}`);
 
     // ASSERT
-    expect(operatorFullnameElem).toBeInTheDocument();
+    expect(screen.getByText(`${operator.name} ${operator.surname}`)).toBeInTheDocument();
   });
 });

@@ -32,17 +32,19 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 // Tests
 //----------------------------------------------------------------------
 describe("form project info", () => {
-  const setup = () => render(<FormProjectInfo />);
+  const setup = () => {
+    render(<FormProjectInfo />);
+  };
 
   test("contains translations", () => {
     // ACT
-    const { container } = setup();
+    setup();
 
     // ASSERT
-    expect(container).toHaveTextContent(/form.projectInfo.title/);
-    expect(container).toHaveTextContent(/form.projectInfo.project/);
-    expect(container).toHaveTextContent(/form.projectInfo.device/);
-    expect(container).toHaveTextContent(/form.projectInfo.measuredAt/);
+    expect(screen.getByText("form.projectInfo.title")).toBeInTheDocument();
+    expect(screen.getByText("form.projectInfo.project")).toBeInTheDocument();
+    expect(screen.getByText("form.projectInfo.device")).toBeInTheDocument();
+    expect(screen.getByText("form.projectInfo.measuredAt")).toBeInTheDocument();
   });
 
   test("has all input fields", () => {

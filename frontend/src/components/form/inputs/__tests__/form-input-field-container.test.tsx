@@ -1,4 +1,4 @@
-import { render } from "@app/tests/utils";
+import { render, screen } from "@app/tests/utils";
 import { FormInputFieldContainer } from "../FormInputFieldContainer";
 
 //----------------------------------------------------------------------
@@ -12,20 +12,25 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 // Tests
 //----------------------------------------------------------------------
 describe("form input field container", () => {
+  const setup = (label: string, isOptional?: boolean) => {
+    render(
+      <FormInputFieldContainer
+        label={label}
+        name=""
+        isOptional={isOptional}
+      />
+    );
+  };
+
   test("required field contains only label", () => {
     // Arrange
     const label = "Label";
 
     // Act
-    const { container } = render(
-      <FormInputFieldContainer
-        label={label}
-        name=""
-      />
-    );
+    setup(label);
 
     // Assert
-    expect(container).toHaveTextContent(label);
+    expect(screen.getByText(label)).toBeInTheDocument();
   });
 
   test("optional field contains label with 'optional' text", () => {
@@ -33,16 +38,10 @@ describe("form input field container", () => {
     const label = "Label";
 
     // Act
-    const { container } = render(
-      <FormInputFieldContainer
-        label={label}
-        name=""
-        isOptional
-      />
-    );
+    setup(label, true);
 
     // Assert
-    expect(container).toHaveTextContent(label);
-    expect(container).toHaveTextContent(/\(form.common.optional\)$/);
+    expect(screen.getByText(label)).toBeInTheDocument();
+    expect(screen.getByText("(form.common.optional)")).toBeInTheDocument();
   });
 });

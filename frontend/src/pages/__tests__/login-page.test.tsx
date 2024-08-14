@@ -30,12 +30,10 @@ describe("login page", () => {
   test("contains translations", () => {
     // ACT
     setup();
-    const title = screen.getByText(/loginPage.title/);
-    const text = screen.getByText(/loginPage.loginText/);
 
     // ASSERT
-    expect(title).toBeInTheDocument();
-    expect(text).toBeInTheDocument();
+    expect(screen.getByText("loginPage.title")).toBeInTheDocument();
+    expect(screen.getByText("loginPage.loginText")).toBeInTheDocument();
   });
 
   describe("login with provider", () => {
@@ -51,11 +49,10 @@ describe("login page", () => {
 
       // ACT
       setup();
-      const muniLogo = screen.getByAltText("MUNI logo");
       const muniLogInButton = screen.getByText("MUNI", { selector: "button" });
 
       // ASSERT
-      expect(muniLogo).toBeInTheDocument();
+      expect(screen.getByAltText("MUNI logo")).toBeInTheDocument();
       expect(muniLogInButton).toBeInTheDocument();
 
       await user.click(muniLogInButton);

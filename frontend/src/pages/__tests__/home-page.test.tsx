@@ -39,12 +39,10 @@ describe("home page", () => {
   test("contains translations", () => {
     // ACT
     setup();
-    const title = screen.getByText(/homePage.title/);
-    const openNewFormButton = screen.getByRole("button", { name: "homePage.openNewFormButton" });
 
     // ASSERT
-    expect(title).toBeInTheDocument();
-    expect(openNewFormButton).toBeInTheDocument();
+    expect(screen.getByText("homePage.title")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "homePage.openNewFormButton" })).toBeInTheDocument();
   });
 
   test("clicks open new form button", async () => {

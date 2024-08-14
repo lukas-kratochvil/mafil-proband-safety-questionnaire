@@ -63,25 +63,27 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 // Tests
 //----------------------------------------------------------------------
 describe("form proband info", () => {
-  const setup = () => render(<FormProbandInfo />);
+  const setup = () => {
+    render(<FormProbandInfo />);
+  };
 
   test("contains translations", () => {
     // ACT
-    const { container } = setup();
+    setup();
 
     // ASSERT
-    expect(container).toHaveTextContent(/form.probandInfo.title/);
-    expect(container).toHaveTextContent(/form.probandInfo.name/);
-    expect(container).toHaveTextContent(/form.probandInfo.surname/);
-    expect(container).toHaveTextContent(/form.probandInfo.personalId/);
-    expect(container).toHaveTextContent(/form.probandInfo.birthdate/);
-    expect(container).toHaveTextContent(/form.probandInfo.gender/);
-    expect(container).toHaveTextContent(/form.probandInfo.nativeLanguage/);
-    expect(container).toHaveTextContent(/form.probandInfo.height/);
-    expect(container).toHaveTextContent(/form.probandInfo.weight/);
-    expect(container).toHaveTextContent(/form.probandInfo.visualCorrection/);
-    expect(container).toHaveTextContent(/form.probandInfo.visualCorrectionDioptre/);
-    expect(container).toHaveTextContent(/form.probandInfo.handedness/);
+    expect(screen.getByText("form.probandInfo.title")).toBeInTheDocument();
+    expect(screen.getByText("form.probandInfo.name")).toBeInTheDocument();
+    expect(screen.getByText("form.probandInfo.surname")).toBeInTheDocument();
+    expect(screen.getByText("form.probandInfo.personalId")).toBeInTheDocument();
+    expect(screen.getByText("form.probandInfo.birthdate")).toBeInTheDocument();
+    expect(screen.getByText("form.probandInfo.gender")).toBeInTheDocument();
+    expect(screen.getByText("form.probandInfo.nativeLanguage")).toBeInTheDocument();
+    expect(screen.getByText("form.probandInfo.height")).toBeInTheDocument();
+    expect(screen.getByText("form.probandInfo.weight")).toBeInTheDocument();
+    expect(screen.getByText("form.probandInfo.visualCorrection")).toBeInTheDocument();
+    expect(screen.getByText("form.probandInfo.visualCorrectionDioptre")).toBeInTheDocument();
+    expect(screen.getByText("form.probandInfo.handedness")).toBeInTheDocument();
   });
 
   test("has all input fields", () => {

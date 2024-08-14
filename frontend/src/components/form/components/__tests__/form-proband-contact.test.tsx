@@ -20,16 +20,18 @@ vi.mock("@app/components/form/inputs/ErrorMessage", () => ({
 // Tests
 //----------------------------------------------------------------------
 describe("form proband contact", () => {
-  const setup = () => render(<FormProbandContact />);
+  const setup = () => {
+    render(<FormProbandContact />);
+  };
 
   test("contains translations", () => {
     // ACT
-    const { container } = setup();
+    setup();
 
     // ASSERT
-    expect(container).toHaveTextContent(/form.probandContact.title/);
-    expect(container).toHaveTextContent(/form.probandContact.email/);
-    expect(container).toHaveTextContent(/form.probandContact.phone/);
+    expect(screen.getByText("form.probandContact.title")).toBeInTheDocument();
+    expect(screen.getByText("form.probandContact.email")).toBeInTheDocument();
+    expect(screen.getByText("form.probandContact.phone")).toBeInTheDocument();
   });
 
   test("has all input fields", () => {

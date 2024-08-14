@@ -83,9 +83,9 @@ describe("visit detail page", () => {
     // ACT
     setup();
     const visitTitle = await screen.findByText(`visitDetailPage.title: ${disapprovedVisit.visitId}`);
-    const infoStripe = await screen.findByText(/visitDetailPage.infoStripes.disapproved/);
+    const infoStripe = await screen.findByText("visitDetailPage.infoStripes.disapproved");
     const iframe = screen.getByTitle("Visit detail");
-    const backButton = screen.getByText(/common.backButton/);
+    const backButton = screen.getByText("common.backButton");
 
     // ASSERT
     expect(visitTitle).toBeInTheDocument();
@@ -107,11 +107,11 @@ describe("visit detail page", () => {
     // ACT
     setup();
     const visitTitle = await screen.findByText(`visitDetailPage.title: ${approvedVisit.visitId}`);
-    const infoStripe = await screen.findByText(/visitDetailPage.infoStripes.signatureChoice/);
+    const infoStripe = await screen.findByText("visitDetailPage.infoStripes.signatureChoice");
     const iframe = screen.getByTitle("Visit detail");
-    const downloadPDFAndPhysicallySignButton = screen.getByText(/visitDetailPage.buttons.downloadPDFAndPhysicallySign/);
-    const signElectronicallyButton = screen.getByText(/visitDetailPage.buttons.signElectronically/);
-    const backButton = screen.getByText(/common.backButton/);
+    const downloadPDFAndPhysicallySignButton = screen.getByText("visitDetailPage.buttons.downloadPDFAndPhysicallySign");
+    const signElectronicallyButton = screen.getByText("visitDetailPage.buttons.signElectronically");
+    const backButton = screen.getByText("common.backButton");
 
     // ASSERT
     expect(visitTitle).toBeInTheDocument();
@@ -144,10 +144,10 @@ describe("visit detail page", () => {
     // ACT
     setup();
     const visitTitle = await screen.findByText(`visitDetailPage.title: ${forSignatureVisit.visitId}`);
-    const infoStripe = await screen.findByText(/visitDetailPage.infoStripes.waitingForSignatureConfirmation/);
+    const infoStripe = await screen.findByText("visitDetailPage.infoStripes.waitingForSignatureConfirmation");
     const iframe = screen.getByTitle("Visit detail");
-    const confirmSignatureButton = screen.getByText(/visitDetailPage.buttons.confirmSignature/);
-    const backButton = screen.getByText(/common.backButton/);
+    const confirmSignatureButton = screen.getByText("visitDetailPage.buttons.confirmSignature");
+    const backButton = screen.getByText("common.backButton");
 
     // ASSERT
     expect(visitTitle).toBeInTheDocument();
@@ -174,10 +174,10 @@ describe("visit detail page", () => {
     // ACT
     setup();
     const visitTitle = await screen.findByText(`visitDetailPage.title: ${forSignatureVisit.visitId}`);
-    const infoStripe = await screen.findByText(/visitDetailPage.infoStripes.waitingForSignatureConfirmation/);
+    const infoStripe = await screen.findByText("visitDetailPage.infoStripes.waitingForSignatureConfirmation");
     const iframe = screen.getByTitle("Visit detail");
-    const confirmSignatureButton = screen.getByText(/visitDetailPage.buttons.confirmSignature/);
-    const backButton = screen.getByText(/common.backButton/);
+    const confirmSignatureButton = screen.getByText("visitDetailPage.buttons.confirmSignature");
+    const backButton = screen.getByText("common.backButton");
 
     // ASSERT
     expect(visitTitle).toBeInTheDocument();
@@ -198,10 +198,10 @@ describe("visit detail page", () => {
     // ACT
     setup();
     const visitTitle = await screen.findByText(`visitDetailPage.title: ${signedVisit.visitId}`);
-    const infoStripe = await screen.findByText(/visitDetailPage.infoStripes.signed/);
+    const infoStripe = await screen.findByText("visitDetailPage.infoStripes.signed");
     const iframe = screen.getByTitle("Visit detail");
-    const downloadPDFButton = screen.getByText(/visitDetailPage.buttons.downloadPDF/);
-    const backButton = screen.getByText(/common.backButton/);
+    const downloadPDFButton = screen.getByText("visitDetailPage.buttons.downloadPDF");
+    const backButton = screen.getByText("common.backButton");
 
     // ASSERT
     expect(visitTitle).toBeInTheDocument();
@@ -222,10 +222,10 @@ describe("visit detail page", () => {
     // ACT
     setup();
     const visitTitle = await screen.findByText(`visitDetailPage.title: ${signedVisit.visitId}`);
-    const infoStripe = await screen.findByText(/visitDetailPage.infoStripes.signed/);
+    const infoStripe = await screen.findByText("visitDetailPage.infoStripes.signed");
     const iframe = screen.getByTitle("Visit detail");
-    const downloadPDFButton = screen.getByText(/visitDetailPage.buttons.downloadPDF/);
-    const backButton = screen.getByText(/common.backButton/);
+    const downloadPDFButton = screen.getByText("visitDetailPage.buttons.downloadPDF");
+    const backButton = screen.getByText("common.backButton");
 
     // ASSERT
     expect(visitTitle).toBeInTheDocument();
@@ -246,10 +246,10 @@ describe("visit detail page", () => {
     // ACT
     setup();
     const visitTitle = await screen.findByText(`visitDetailPage.title: ${signedPhantomVisit.visitId}`);
-    const infoStripe = await screen.findByText(/visitDetailPage.infoStripes.completed/);
+    const infoStripe = await screen.findByText("visitDetailPage.infoStripes.completed");
     const iframe = screen.getByTitle("Visit detail");
-    const downloadPDFButton = screen.getByText(/visitDetailPage.buttons.downloadPDF/);
-    const backButton = screen.getByText(/common.backButton/);
+    const downloadPDFButton = screen.getByText("visitDetailPage.buttons.downloadPDF");
+    const backButton = screen.getByText("common.backButton");
 
     // ASSERT
     expect(visitTitle).toBeInTheDocument();

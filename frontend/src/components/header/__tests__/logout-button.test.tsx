@@ -27,7 +27,7 @@ describe("logout button", () => {
     const logOutButton = screen.getByRole("button");
 
     // ASSERT
-    expect(logOutButton).toHaveTextContent(/^common.logOutButton$/);
+    expect(logOutButton).toHaveTextContent("common.logOutButton");
   });
 
   test("log out if is clicked", async () => {

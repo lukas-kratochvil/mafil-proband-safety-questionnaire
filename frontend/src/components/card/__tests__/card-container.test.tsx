@@ -17,12 +17,10 @@ describe("card container", () => {
 
     // ACT
     setup(contentText);
-    const titleElem = screen.getByText(title);
-    const childrenElem = screen.getByText(contentText);
 
     // ASSERT
-    expect(titleElem).toBeInTheDocument();
-    expect(childrenElem).toBeInTheDocument();
+    expect(screen.getByText(title)).toBeInTheDocument();
+    expect(screen.getByText(contentText)).toBeInTheDocument();
   });
 
   test("has HTML element content", () => {
@@ -33,11 +31,10 @@ describe("card container", () => {
 
     // ACT
     setup(content);
-    const titleElem = screen.getByText(title);
     const childrenElem = screen.getByTestId(childrenTestId);
 
     // ASSERT
-    expect(titleElem).toBeInTheDocument();
+    expect(screen.getByText(title)).toBeInTheDocument();
     expect(childrenElem).toBeInTheDocument();
     expect(childrenElem).toHaveTextContent(contentText);
   });

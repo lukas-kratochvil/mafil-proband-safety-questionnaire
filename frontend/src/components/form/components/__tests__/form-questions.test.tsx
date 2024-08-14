@@ -1,4 +1,5 @@
-import { render } from "@app/tests/utils";
+import type { FormQac } from "@app/model/form";
+import { render, screen } from "@app/tests/utils";
 import { FormQuestions } from "../FormQuestions";
 
 //----------------------------------------------------------------------
@@ -16,21 +17,22 @@ vi.mock("react-hook-form", () => ({
 // Tests
 //----------------------------------------------------------------------
 describe("form questions", () => {
-  const title = "title";
-
-  const setup = () =>
+  const setup = (title: string, qacs: FormQac[]) => {
     render(
       <FormQuestions
         titleLocalizationKey={title}
-        qacs={[]}
+        qacs={qacs}
       />
     );
+  };
 
   test("contains translated title", async () => {
+    const title = "title";
+
     // ACT
-    const { container } = setup();
+    setup(title, []);
 
     // ASSERT
-    expect(container).toHaveTextContent(`form.safetyQuestions.${title}`);
+    expect(screen.getByText(`form.safetyQuestions.${title}`)).toBeInTheDocument();
   });
 });
