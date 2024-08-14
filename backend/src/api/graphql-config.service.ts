@@ -1,6 +1,6 @@
 import * as path from "path";
 import { ApolloDriverConfig } from "@nestjs/apollo";
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { GqlOptionsFactory } from "@nestjs/graphql";
 import { Request, Response } from "express";
@@ -14,6 +14,8 @@ import { Void } from "./utils/scalars/void-scalar";
 @Injectable()
 // eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
 export class GraphQLConfigService implements GqlOptionsFactory {
+  private readonly logger = new Logger("GraphQL");
+
   constructor(private readonly config: ConfigService<EnvironmentVariables, true>) {}
 
   createGqlOptions(): ApolloDriverConfig {
@@ -24,6 +26,7 @@ export class GraphQLConfigService implements GqlOptionsFactory {
       // error formatting inspired by: https://github.com/nestjs/graphql/issues/1053#issuecomment-786972617
       formatError: (error: GraphQLFormattedError) => {
         if (error.message !== VALIDATION_ERROR) {
+          this.logger.error(error);
           return error;
         }
 
@@ -46,6 +49,7 @@ export class GraphQLConfigService implements GqlOptionsFactory {
             errors: validationFieldErrors,
           },
         };
+        this.logger.error(graphQLFormattedError);
         return graphQLFormattedError;
       },
       resolvers: {

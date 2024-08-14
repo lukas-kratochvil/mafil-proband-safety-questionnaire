@@ -55,6 +55,7 @@ async function bootstrap() {
       transform: true,
       exceptionFactory: createUserInputError,
       forbidUnknownValues: true,
+      enableDebugMessages: nodeEnv === "development",
     })
   );
 
