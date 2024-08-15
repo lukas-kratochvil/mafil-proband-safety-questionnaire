@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { APP_GUARD, Reflector } from "@nestjs/core";
-import type { EnvironmentVariables } from "@app/config";
+import type { EnvironmentVariables } from "@app/config/validation";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { AuthGuard } from "./auth.guard";
 import { AuthGuardDev } from "./auth.guard.dev";

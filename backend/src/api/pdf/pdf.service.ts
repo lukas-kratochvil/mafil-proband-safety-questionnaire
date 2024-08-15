@@ -2,7 +2,7 @@ import fs from "fs";
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { AnswerOption, Prisma } from "@prisma/client";
-import { EnvironmentVariables } from "@app/config";
+import { EnvironmentVariables } from "@app/config/validation";
 import { generateBase64PDF } from "@app/pdf/generate";
 import { PDFData, PDFEntityTexts, PDFOperator, PDFQuestionAnswer } from "@app/pdf/types";
 import { PrismaService } from "@app/prisma/prisma.service";

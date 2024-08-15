@@ -1,11 +1,11 @@
-import * as path from "path";
+import path from "path";
 import { ApolloDriverConfig } from "@nestjs/apollo";
 import { Injectable, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { GqlOptionsFactory } from "@nestjs/graphql";
 import { Request, Response } from "express";
 import { GraphQLFormattedError } from "graphql";
-import { EnvironmentVariables } from "@app/config";
+import { EnvironmentVariables } from "@app/config/validation";
 import { ValidationErrorExtensions, ValidationFieldErrors, VALIDATION_ERROR } from "@app/exception/exception-handling";
 import { GENERATED_DIR_PATH } from "@app/utils/paths";
 import { UUID } from "./utils/scalars/uuid-scalar";

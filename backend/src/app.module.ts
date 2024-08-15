@@ -4,7 +4,7 @@ import { APP_GUARD } from "@nestjs/core";
 import { ScheduleModule } from "@nestjs/schedule";
 import { seconds, ThrottlerModule } from "@nestjs/throttler";
 import { GraphQLApiModule } from "./api/graphql-api.module";
-import { EnvironmentVariables, envVarsValidationSchema } from "./config";
+import { EnvironmentVariables, envVarsValidationSchema } from "./config/validation";
 import { CronModule } from "./cron/cron.module";
 import { LoggerMiddleware } from "./log/logger.middleware";
 import { ThrottlerGuard } from "./throttling/throttler.guard";

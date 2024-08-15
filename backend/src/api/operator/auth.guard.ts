@@ -5,7 +5,7 @@ import { GqlExecutionContext } from "@nestjs/graphql";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import type { Request } from "express";
 import tokenIntrospect, { errors } from "token-introspection";
-import { EnvironmentVariables } from "@app/config";
+import { EnvironmentVariables } from "@app/config/validation";
 import { AuthGuardDev } from "./auth.guard.dev";
 import type { AuthService } from "./auth.service";
 import { AUTH_SERVICE } from "./constants";
