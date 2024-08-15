@@ -10,12 +10,16 @@ const load = () => {
     port: process.env.PORT,
     databaseUrl: process.env.DATABASE_URL,
   };
-  envVarsValidationSchema.validate(config, {
-    allowUnknown: true,
-    stripUnknown: true,
+  const validationResult = envVarsValidationSchema.validate(config, {
+    allowUnknown: false,
     abortEarly: false,
     debug: process.env.NODE_ENV === "development",
   });
+
+  if (validationResult.error) {
+    throw Error(`Config validation error: ${validationResult.error.message}`);
+  }
+
   return config;
 };
 
