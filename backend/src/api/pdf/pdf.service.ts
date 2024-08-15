@@ -28,7 +28,7 @@ export class PDFService {
     config: ConfigService<EnvironmentVariables, true>,
     private readonly prisma: PrismaService
   ) {
-    this.operatorLanguageCode = config.get("PDF_OPERATOR_LANGUAGE_CODE", { infer: true });
+    this.operatorLanguageCode = config.get("pdfOperatorLanguageCode", { infer: true });
     this.isDevelopment = config.get("NODE_ENV", { infer: true }) === "development";
   }
 

@@ -1,0 +1,19 @@
+# Time-to-live (TTL) in seconds
+throttleTtl:
+
+# Amount of requests client can make in given TTL
+throttleLimit:
+
+# Default operator PDF language - options: 'cs', 'en'
+pdfOperatorLanguageCode:
+
+# Enable CORS for our web app URL
+webUrl:
+
+# OIDC authentication
+oidc:
+  # JPM (Jednotné přihlášení MUNI) - find app here: https://spreg.aai.muni.cz/auth/facilities/myServices
+  jpm:
+    clientId:
+    clientSecret:
+    introspectionEndpoint:

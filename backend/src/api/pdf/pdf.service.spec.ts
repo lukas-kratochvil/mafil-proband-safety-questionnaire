@@ -77,7 +77,7 @@ describe("PDFService", () => {
     const module = await Test.createTestingModule({
       imports: [
         ConfigModule.forFeature(async () => ({
-          PDF_OPERATOR_LANGUAGE_CODE: configOperatorLanguageCode,
+          pdfOperatorLanguageCode: configOperatorLanguageCode,
           NODE_ENV: "production",
         })),
       ],

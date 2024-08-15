@@ -64,16 +64,10 @@ services:
       - backend-network
     environment:
       - NODE_ENV=production
-      - DATABASE_URL=${REG_DATABASE_URL}
       - PORT=${REG_SERVER_PORT}
-      - THROTTLE_TTL=${REG_THROTTLE_TTL}
-      - THROTTLE_LIMIT=${REG_THROTTLE_LIMIT}
-      - PDF_OPERATOR_LANGUAGE_CODE=${REG_PDF_OPERATOR_LANGUAGE_CODE}
-      - WEB_URL=${REG_WEB_URL}
-      - JPM_CLIENT_ID=${REG_JPM_CLIENT_ID_BACKEND}
-      - JPM_CLIENT_SECRET=${REG_JPM_CLIENT_SECRET_BACKEND}
-      - JPM_INTROSPECTION_ENDPOINT=${REG_JPM_INTROSPECTION_ENDPOINT}
+      - DATABASE_URL=${REG_DATABASE_URL}
     volumes:
+      - ./server-config.yaml:/usr/src/app/backend/config.yaml:ro
       - ./logs/server:/usr/src/app/logs
     restart: unless-stopped
     depends_on:

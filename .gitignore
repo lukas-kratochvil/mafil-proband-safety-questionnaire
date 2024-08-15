@@ -5,6 +5,11 @@ node_modules/
 # Configs
 .env*
 !.env.*.example
+
+server-config*.yaml
+!server-config*.yaml.example
+backend/config.yaml
+
 web-config*.json
 !web-config*.json.example
 frontend/public/config.json

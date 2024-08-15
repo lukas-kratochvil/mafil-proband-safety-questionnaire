@@ -62,7 +62,7 @@ async function bootstrap() {
   );
 
   // CORS
-  const webUrl = config.get("WEB_URL", { infer: true });
+  const webUrl = config.get("webUrl", { infer: true });
   app.enableCors({ origin: webUrl });
 
   // Starts listening for shutdown hooks

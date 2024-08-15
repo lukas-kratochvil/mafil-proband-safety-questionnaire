@@ -12,10 +12,10 @@ export type EnvironmentVariables = {
   NODE_ENV: NodeEnv;
   PORT: number;
   DATABASE_URL: string;
-  THROTTLE_TTL: number;
-  THROTTLE_LIMIT: number;
-  PDF_OPERATOR_LANGUAGE_CODE: PdfLanguageCode;
-  WEB_URL: string;
+  throttleTtl: number;
+  throttleLimit: number;
+  pdfOperatorLanguageCode: PdfLanguageCode;
+  webUrl: string;
   JPM_CLIENT_ID: string;
   JPM_CLIENT_SECRET: string;
   JPM_INTROSPECTION_ENDPOINT: string;
@@ -28,13 +28,13 @@ export const envVarsValidationSchema = Joi.object<EnvironmentVariables>({
     .required(),
   PORT: Joi.number().integer().required(),
   DATABASE_URL: Joi.string().trim().required(),
-  PDF_OPERATOR_LANGUAGE_CODE: Joi.string()
+  pdfOperatorLanguageCode: Joi.string()
     .trim()
     .valid(...ALLOWED_PDF_LANGUAGE_CODES)
     .required(),
-  THROTTLE_TTL: Joi.number().integer().required(),
-  THROTTLE_LIMIT: Joi.number().integer().required(),
-  WEB_URL: Joi.string()
+  throttleTtl: Joi.number().integer().required(),
+  throttleLimit: Joi.number().integer().required(),
+  webUrl: Joi.string()
     .uri({ scheme: ["http", "https"] })
     .required(),
   JPM_CLIENT_ID: Joi.alternatives().conditional("NODE_ENV", { is: "production", then: Joi.string().trim().required() }),

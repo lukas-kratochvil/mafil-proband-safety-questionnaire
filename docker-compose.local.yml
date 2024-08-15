@@ -36,6 +36,7 @@ services:
       target: development
     command: npm run start:migrate:dev
     volumes:
+      - ./server-config.yaml:/usr/src/app/backend/config.yaml:ro
       # Changes in host's ./backend directory will be propagated to the container
       # This will also let us add packages during development without rebuilding the image
       # - We then need to install added packages (run 'npm i') inside the container in the folder '/usr/src/app/backend'
@@ -51,10 +52,6 @@ services:
       - NODE_ENV=development
       - PORT=${SERVER_PORT}
       - DATABASE_URL=${DATABASE_URL}
-      - THROTTLE_TTL=${THROTTLE_TTL}
-      - THROTTLE_LIMIT=${THROTTLE_LIMIT}
-      - PDF_OPERATOR_LANGUAGE_CODE=${PDF_OPERATOR_LANGUAGE_CODE}
-      - WEB_URL=http://localhost:${WEB_PORT}
     restart: unless-stopped
     depends_on:
       - postgres
