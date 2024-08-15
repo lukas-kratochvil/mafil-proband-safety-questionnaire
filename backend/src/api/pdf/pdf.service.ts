@@ -29,7 +29,7 @@ export class PDFService {
     private readonly prisma: PrismaService
   ) {
     this.operatorLanguageCode = config.get("pdfOperatorLanguageCode", { infer: true });
-    this.isDevelopment = config.get("NODE_ENV", { infer: true }) === "development";
+    this.isDevelopment = config.get("nodeEnv", { infer: true }) === "development";
   }
 
   private createPDFName(generatePDFInput: GeneratePDFArgs): string {

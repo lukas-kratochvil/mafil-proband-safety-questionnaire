@@ -57,7 +57,7 @@ export class GraphQLConfigService implements GqlOptionsFactory {
         Void: Void,
       },
       // GraphQL playground can be found here: http://localhost:4000/graphql
-      playground: this.config.get("NODE_ENV", { infer: true }) === "development",
+      playground: this.config.get("nodeEnv", { infer: true }) === "development",
     };
   }
 }

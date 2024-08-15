@@ -31,7 +31,7 @@ const devHelmetOptions: HelmetOptions = {
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = app.get(ConfigService<EnvironmentVariables, true>);
-  const nodeEnv = config.get("NODE_ENV", { infer: true });
+  const nodeEnv = config.get("nodeEnv", { infer: true });
 
   // Setup logger
   const logger = createWinstonLogger();
@@ -69,7 +69,7 @@ async function bootstrap() {
   app.enableShutdownHooks();
 
   // Starting the app
-  const port = config.get("PORT", { infer: true });
+  const port = config.get("port", { infer: true });
   logger.log(`MAFIL-PSQ server is listening on: http://localhost:${port}`);
   await app.listen(port);
 }

@@ -6,9 +6,9 @@ const load = () => {
   const configYaml = loadYaml(readFileSync("config.yaml", "utf8")) as Record<string, unknown>;
   const config = {
     ...configYaml,
-    NODE_ENV: process.env.NODE_ENV,
-    PORT: process.env.PORT,
-    DATABASE_URL: process.env.DATABASE_URL,
+    nodeEnv: process.env.NODE_ENV,
+    port: process.env.PORT,
+    databaseUrl: process.env.DATABASE_URL,
   };
   envVarsValidationSchema.validate(config, {
     allowUnknown: true,

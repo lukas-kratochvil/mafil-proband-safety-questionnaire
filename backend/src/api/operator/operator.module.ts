@@ -33,7 +33,7 @@ import { OperatorService } from "./operator.service";
         config: ConfigService<EnvironmentVariables, true>,
         reflector: Reflector
       ) =>
-        config.get("NODE_ENV", { infer: true }) === "production"
+        config.get("nodeEnv", { infer: true }) === "production"
           ? new AuthGuard(authService, reflector, config)
           : new AuthGuardDev(),
     },

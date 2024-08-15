@@ -28,9 +28,9 @@ export class AuthGuard extends AuthGuardDev {
   ) {
     super();
     this.introspectToken = tokenIntrospect({
-      client_id: config.get("JPM_CLIENT_ID", { infer: true }),
-      client_secret: config.get("JPM_CLIENT_SECRET", { infer: true }),
-      endpoint: config.get("JPM_INTROSPECTION_ENDPOINT", { infer: true }),
+      client_id: config.get("jpmClientId", { infer: true }),
+      client_secret: config.get("jpmClientSecret", { infer: true }),
+      endpoint: config.get("jpmIntrospectionEndpoint", { infer: true }),
     });
   }
 

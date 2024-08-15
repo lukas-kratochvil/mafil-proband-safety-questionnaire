@@ -78,7 +78,7 @@ describe("PDFService", () => {
       imports: [
         ConfigModule.forFeature(async () => ({
           pdfOperatorLanguageCode: configOperatorLanguageCode,
-          NODE_ENV: "production",
+          nodeEnv: "production",
         })),
       ],
       providers: [PDFService, PrismaService],
