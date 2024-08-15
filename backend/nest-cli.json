@@ -4,9 +4,6 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "assets": [
-      "assets/**/*"
-    ],
     "builder": "swc",
     "typeCheck": true
   }

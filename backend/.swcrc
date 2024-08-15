@@ -4,22 +4,34 @@
     "type": "commonjs"
   },
   "jsc": {
-    "baseUrl": "./src",
     "target": "es2022",
     "keepClassNames": true,
     "parser": {
       "syntax": "typescript",
+      /* For NestJS app */
       "decorators": true,
       "dynamicImport": true
     },
+    /* For NestJS app */
     "transform": {
       "legacyDecorator": true,
       "decoratorMetadata": true
+    },
+    /* Custom imports mapping */
+    "baseUrl": "./",
+    "paths": {
+      "@app/*": [
+        "src/*"
+      ],
+      "@assets/*": [
+        "assets/*"
+      ]
     }
   },
-  "sourceMaps": true,
+  "sourceMaps": true, // go to the original TypeScript definition from the generated JS file
   "minify": false,
   "exclude": [
+    "test",
     "^.+\\.spec\\.(j|t)s$",
     "^.+\\.test\\.(j|t)s$"
   ]
