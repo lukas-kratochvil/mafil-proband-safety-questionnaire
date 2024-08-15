@@ -51,6 +51,7 @@ async function bootstrap() {
 
   // Enabling input data validation
   app.useGlobalPipes(
+    // eslint-disable-next-line @darraghor/nestjs-typed/should-specify-forbid-unknown-values
     new ValidationPipe({
       transform: true,
       exceptionFactory: createUserInputError,
