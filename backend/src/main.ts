@@ -54,7 +54,8 @@ async function bootstrap() {
     new ValidationPipe({
       transform: true,
       exceptionFactory: createUserInputError,
-      forbidUnknownValues: true,
+      // FIXME: `forbidUnknownValues` should be `true`, but there is a bug in `class-validator` (https://github.com/typestack/class-validator/issues/1873#)
+      forbidUnknownValues: false,
       enableDebugMessages: nodeEnv === "development",
     })
   );
