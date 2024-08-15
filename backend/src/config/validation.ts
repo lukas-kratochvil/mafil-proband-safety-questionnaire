@@ -21,7 +21,7 @@ export type EnvironmentVariables = {
   jpmIntrospectionEndpoint: string;
 };
 
-export const envVarsValidationSchema = Joi.object<EnvironmentVariables>({
+export const configSchema = Joi.object<EnvironmentVariables>({
   nodeEnv: Joi.string()
     .trim()
     .valid(...ALLOWED_NODE_ENVS)
