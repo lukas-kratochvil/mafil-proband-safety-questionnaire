@@ -10,14 +10,14 @@ const load = () => {
     port: process.env.PORT,
     databaseUrl: process.env.DATABASE_URL,
   };
-  const validationResult = configSchema.validate(config, {
+  const { error } = configSchema.validate(config, {
     allowUnknown: false,
     abortEarly: false,
     debug: process.env.NODE_ENV === "development",
   });
 
-  if (validationResult.error) {
-    throw Error(`Config validation error: ${validationResult.error.message}`);
+  if (error) {
+    throw Error(`Config validation error: ${error.message}`);
   }
 
   return config;

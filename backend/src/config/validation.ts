@@ -1,6 +1,5 @@
 import Joi from "joi";
-
-type StringArrayToUnion<T extends ReadonlyArray<string>> = T[number];
+import type { StringArrayToUnion } from "@app/types";
 
 const ALLOWED_NODE_ENVS = ["development", "production"] as const;
 type NodeEnv = StringArrayToUnion<typeof ALLOWED_NODE_ENVS>;
