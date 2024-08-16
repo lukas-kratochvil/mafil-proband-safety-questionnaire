@@ -70,7 +70,7 @@ export const RecentVisitsTableActionButtons = ({ visit }: RecentVisitsTableActio
       <Button
         size="small"
         variant="contained"
-        onClick={() => navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.uuid}`)}
+        href={`${RoutingPath.RECENT_VISITS_VISIT}/${visit.uuid}`}
       >
         {t("recentVisitsTablePage.actions.showDetailButton")}
       </Button>

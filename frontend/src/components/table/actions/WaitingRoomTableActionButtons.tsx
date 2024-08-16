@@ -13,7 +13,6 @@ import {
 import type { QueryObserverResult, RefetchOptions, RefetchQueryFilters } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import type { WaitingRoomTableVisitForm } from "@app/model/visitForm";
 import { RoutingPath } from "@app/routing-paths";
 import { deleteVisitForm } from "@app/util/server_API/calls";
@@ -33,7 +32,6 @@ export const WaitingRoomTableActionButtons = ({
 }: WaitingRoomTableActionButtonsProps) => {
   const { t } = useTranslation("translation", { keyPrefix: "waitingRoomTablePage.actions" });
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
-  const navigate = useNavigate();
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
 
   const onDelete = async () => {
@@ -52,7 +50,7 @@ export const WaitingRoomTableActionButtons = ({
       <Button
         size="small"
         variant="contained"
-        onClick={() => navigate(`${RoutingPath.WAITING_ROOM_FORM}/${visitFormId}`)}
+        href={`${RoutingPath.WAITING_ROOM_FORM}/${visitFormId}`}
       >
         {t("processButton")}
       </Button>
