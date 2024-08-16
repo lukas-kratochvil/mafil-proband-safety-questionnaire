@@ -1,8 +1,9 @@
-# Time-to-live (TTL) in seconds
-throttleTtl:
-
-# Amount of requests client can make in given TTL
-throttleLimit:
+# Rate limiting
+throttle:
+  # Time-to-live (TTL) in seconds
+  ttl:
+  # Amount of requests client can make in given TTL
+  limit:
 
 # Default operator PDF language - options: 'cs', 'en'
 pdfOperatorLanguageCode:

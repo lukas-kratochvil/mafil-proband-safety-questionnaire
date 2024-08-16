@@ -12,8 +12,10 @@ export type EnvironmentVariables = {
   nodeEnv: NodeEnv;
   port: number;
   databaseUrl: string;
-  throttleTtl: number;
-  throttleLimit: number;
+  throttle: {
+    ttl: number;
+    limit: number;
+  };
   pdfOperatorLanguageCode: PdfLanguageCode;
   webUrl: string;
   jpmClientId: string;
@@ -32,8 +34,10 @@ export const configSchema = Joi.object<EnvironmentVariables>({
     .trim()
     .valid(...ALLOWED_PDF_LANGUAGE_CODES)
     .required(),
-  throttleTtl: Joi.number().integer().required(),
-  throttleLimit: Joi.number().integer().required(),
+  throttle: Joi.object({
+    ttl: Joi.number().integer().required(),
+    limit: Joi.number().integer().required(),
+  }).required(),
   webUrl: Joi.string()
     .uri({ scheme: ["http", "https"] })
     .required(),

@@ -21,8 +21,8 @@ import { ThrottlerGuard } from "./throttling/throttler.guard";
       inject: [ConfigService],
       useFactory: (config: ConfigService<EnvironmentVariables, true>) => [
         {
-          ttl: seconds(config.get("throttleTtl", { infer: true })),
-          limit: config.get("throttleLimit", { infer: true }),
+          ttl: seconds(config.get("throttle.ttl", { infer: true })),
+          limit: config.get("throttle.limit", { infer: true }),
         },
       ],
     }),
