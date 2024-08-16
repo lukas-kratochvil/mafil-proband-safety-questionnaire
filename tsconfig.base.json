@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "outDir": "${configDir}/dist",
+
     /* Strictness */
     "strict": true,
     "allowUnusedLabels": false, // raises compiler errors about unused labels (label ~ attempt to write an object literal)

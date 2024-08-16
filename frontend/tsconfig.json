@@ -6,7 +6,6 @@
     /* If transpiling with TypeScript (tsc) */
     "module": "ESNext",
     "moduleResolution": "Node", // don't set 'moduleResolution' to 'Bundler' as it is intended for compilation with bundlers
-    "outDir": "./dist",
     "noEmit": true,
     /* Type checking */
     // TODO: 'verbatimModuleSyntax' set to 'true' does collide with ESLint - ESLint will crash

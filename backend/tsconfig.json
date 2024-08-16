@@ -3,11 +3,10 @@
   "compilerOptions": {
     /* Base options */
     "target": "ES2022",
-    /* If transpiling with TypeScript (tsc) - NestJS does */
+    /* If transpiling with TypeScript (tsc) */
     "module": "NodeNext",
     "moduleResolution": "NodeNext", // ensures that the code we produce can be consumed by Node (https://www.totaltypescript.com/relative-import-paths-need-explicit-file-extensions-in-ecmascript-imports)
     "esModuleInterop": true,
-    "outDir": "./dist",
     "sourceMap": true, // go to the original TypeScript definition from the generated JS file
     /* If code doesn't run in the DOM */
     "lib": [
@@ -17,6 +16,10 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
+    /* For Vitest */
+    "types": [
+      "vitest/globals", // enable using Vitest globals without importing them (https://vitest.dev/config/#globals)
+    ],
     /* Custom imports mapping */
     "baseUrl": "./",
     "paths": {
@@ -27,7 +30,6 @@
         "assets/*",
       ],
     },
-    "types": ["vitest/globals"],
   },
   "include": [
     "src",

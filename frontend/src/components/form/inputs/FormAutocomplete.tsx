@@ -12,7 +12,7 @@ const getOptions = <T,>(
   if (options === undefined) {
     return [];
   }
-  return sortComparator === undefined ? options : options.sort(sortComparator);
+  return sortComparator === undefined ? options : options.toSorted(sortComparator);
 };
 
 type FormAutocompleteProps<T> = FormAsyncAutocompleteProps<T> & {

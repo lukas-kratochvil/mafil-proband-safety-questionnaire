@@ -25,8 +25,8 @@ export const getModifiedFieldsOnly = (
   const { answers: submittedAnswers, ...submittedDataRest } = submittedData;
 
   let diffAnswers: ValidatedFormAnswer[] | undefined;
-  const sortedInitialAnswers = initialAnswers.sort();
-  const sortedSubmittedAnswers = submittedAnswers.sort();
+  const sortedInitialAnswers = initialAnswers.toSorted();
+  const sortedSubmittedAnswers = submittedAnswers.toSorted();
 
   if (
     sortedInitialAnswers.length === sortedSubmittedAnswers.length
