@@ -14,7 +14,7 @@ export type ButtonProps = {
 
 export const getBackButtonProps = (customTitleLocalizationKey?: string): ButtonProps => ({
   titleLocalizationKey: customTitleLocalizationKey ?? "common.backButton",
-  href: document.referrer,
+  onClick: async () => window.history.back(),
 });
 
 export const handleErrorsWithToast = (e: unknown, t: TFunction<typeof defaultNS>): void => {
