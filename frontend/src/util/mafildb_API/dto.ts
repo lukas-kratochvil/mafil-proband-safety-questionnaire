@@ -1,6 +1,6 @@
 import type { LanguageCode } from "@app/i18n/i18n";
 import type { AnswerOption } from "@app/model/form";
-import type { ObjectValues } from "../utils";
+import type { ObjectValuesUnion } from "@app/types";
 
 export type MDB_LanguageDTO = {
   code: string;
@@ -51,7 +51,7 @@ export const MDB_ApprovalState = {
   DISAPPROVED: "rd",
 } as const;
 
-type MDB_ApprovalState = ObjectValues<typeof MDB_ApprovalState>;
+type MDB_ApprovalState = ObjectValuesUnion<typeof MDB_ApprovalState>;
 
 export type MDB_AnswerDTO = {
   question_id: string;
@@ -90,7 +90,7 @@ export const MDB_SignatureState = {
   SIGNED_ELECTRONICALLY: "se",
 } as const;
 
-type MDB_SignatureState = ObjectValues<typeof MDB_SignatureState>;
+type MDB_SignatureState = ObjectValuesUnion<typeof MDB_SignatureState>;
 
 export type MDB_VisitDTO = Omit<
   MDB_CreateVisitInput,

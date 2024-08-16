@@ -1,5 +1,5 @@
 import { convertStringToLocalizationKey } from "@app/i18n/i18n";
-import type { ObjectValues } from "@app/util/utils";
+import type { ObjectValuesUnion } from "@app/types";
 
 export type AutocompleteOption<T> = {
   value: T;
@@ -36,6 +36,6 @@ const visualCorrectionOptionsObject = {
   no: "no",
 } as const;
 
-export type VisualCorrection = ObjectValues<typeof visualCorrectionOptionsObject>;
+export type VisualCorrection = ObjectValuesUnion<typeof visualCorrectionOptionsObject>;
 
 export const visualCorrectionOptions = createAutocompleteOptions(visualCorrectionOptionsObject, "visualCorrection");

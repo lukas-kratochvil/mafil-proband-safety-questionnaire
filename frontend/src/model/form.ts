@@ -1,5 +1,5 @@
 import type { AutocompleteOption, VisualCorrection } from "@app/components/form/util/options";
-import type { ObjectValues } from "@app/util/utils";
+import type { ObjectValuesUnion } from "@app/types";
 import type { GenderDTO, HandednessDTO, QuestionHiddenByGendersWithoutId } from "../util/server_API/dto";
 import type { Device } from "./device";
 import type { NativeLanguage } from "./language";
@@ -13,7 +13,7 @@ export const answerOptions = {
   no: "NO",
 } as const;
 
-export type AnswerOption = ObjectValues<typeof answerOptions>;
+export type AnswerOption = ObjectValuesUnion<typeof answerOptions>;
 
 export type FormAnswer = {
   questionId: string;

@@ -2,6 +2,7 @@ import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-http-backend";
 import { initReactI18next } from "react-i18next";
+import type { StringArrayToUnion } from "@app/types";
 
 export const convertStringToLocalizationKey = (str: string): TemplateStringsArray =>
   str as unknown as TemplateStringsArray;
@@ -13,7 +14,7 @@ const supportedLanguages = ["cs", "en"] as const;
 /**
  * Localization supported for these ISO 639-1 language codes.
  */
-export type LanguageCode = (typeof supportedLanguages)[number];
+export type LanguageCode = StringArrayToUnion<typeof supportedLanguages>;
 
 export const defaultNS = "translation";
 

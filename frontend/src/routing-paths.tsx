@@ -1,4 +1,4 @@
-import type { ObjectValues } from "./util/utils";
+import type { ObjectValuesUnion } from "./types";
 
 export const RoutingPath = {
   PROBAND_HOME: "/home",
@@ -17,4 +17,4 @@ export const RoutingPath = {
   RECENT_VISITS_VISIT: "/auth/recent-visits/visit",
 } as const;
 
-export type RoutingPath = ObjectValues<typeof RoutingPath>;
+export type RoutingPath = ObjectValuesUnion<typeof RoutingPath>;
