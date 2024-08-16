@@ -5,10 +5,16 @@ on:
     branches: [ "devel", "main" ]
     paths:
       - '.github/workflows/ci-frontend.yml'
+      - 'package.json'
+      - 'tsconfig.base.json'
+      - '.eslintrc.js'
       - 'frontend/**'
   pull_request:
     branches: [ "devel", "main" ]
     paths:
+      - 'package.json'
+      - 'tsconfig.base.json'
+      - '.eslintrc.js'
       - 'frontend/**'
   # Allowing to trigger this workflow manually
   workflow_dispatch:

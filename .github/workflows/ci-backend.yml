@@ -5,10 +5,16 @@ on:
     branches: [ "devel", "main" ]
     paths:
       - '.github/workflows/ci-backend.yml'
+      - 'package.json'
+      - 'tsconfig.base.json'
+      - '.eslintrc.js'
       - 'backend/**'
   pull_request:
     branches: [ "devel", "main" ]
     paths:
+      - 'package.json'
+      - 'tsconfig.base.json'
+      - '.eslintrc.js'
       - 'backend/**'
   # Allowing to trigger this workflow manually
   workflow_dispatch:
