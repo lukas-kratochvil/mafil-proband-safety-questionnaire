@@ -37,6 +37,7 @@ This repository contains the following most important directories and files:
 - *download.sh* - script to download files for deployment
 - *LICENSE* - system license
 - *README.md* - this README
+- *server-config.yaml.example* - example of the server service configuration
 - *web-config.json.example* - example of the web service configuration
 
 ## Base URL paths
@@ -50,6 +51,7 @@ Firstly, install Docker and docker-compose ([see the official Docker docs](https
 After that use the `download.sh` script (located in the project root directory) to download files essential to run the app.
 - docker-compose.yml
 - .env
+- server-config.yaml
 - web-config.json
 
 ```bash
@@ -94,6 +96,7 @@ Then users that are eligible to access the authenticated part of the app must be
 It may be necessary to update configurations before running the commands below:
 - `docker-compose.yml`
 - `.env` variables according to `.env.example`
+- `server-config.yaml` variables according to `server-config.yaml.example`
 - `web-config.json` variables according to `web-config.json.example`
 
 To update services run these commands in the root directory:
@@ -107,9 +110,10 @@ docker image prune -f
 ### Installation
 In the root directory create the following files:
 - `.env` configuration file inspired by the `.env.local.example`
+- `server-config.yaml` configuration file inspired by the `server-config.local.yaml.example`
 - `web-config.json` configuration file inspired by the `web-config.local.json.example`
 
-Edit `.env` and `web-config.json` configuration variables with your values.
+Edit `.env`, `server-config.yaml` and `web-config.json` configuration variables with your values.
 
 The docker-compose configuration file to use for the development is called `docker-compose.local.yml`.
 Start all the services with the command below:

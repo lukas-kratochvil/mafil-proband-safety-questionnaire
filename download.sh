@@ -33,7 +33,7 @@ success () {
 Successfully completed!
 
 Next steps:
-  1. Change .env and web-config.json variable values to satisfy your needs
+  1. Change .env, server-config.yaml and web-config.json variable values to satisfy your needs
   2. Copy these files to your server
   3. Install or update the app on your server
 "
@@ -56,11 +56,9 @@ while getopts ":d:e:h" opt; do
         e)
           case $OPTARG in
             devel)
-              ENVIRONMENT=$OPTARG
               GIT_BRANCH=devel
               ;;
             prod)
-              ENVIRONMENT=$OPTARG
               GIT_BRANCH=main
               ;;
             *)
@@ -68,6 +66,7 @@ while getopts ":d:e:h" opt; do
               exit 1
               ;;
           esac
+          ENVIRONMENT=$OPTARG
           ;;
         h)
           help
@@ -106,6 +105,10 @@ download "$DEST_DIR_PATH/$DOCKER_COMPOSE_FILE" "$GITHUB_FILE_URL/$DOCKER_COMPOSE
 ENV_FILE=".env"
 echo "Downloading latest '$ENV_FILE' from the '$GIT_BRANCH' branch of the GitHub repo…"
 download "$DEST_DIR_PATH/$ENV_FILE" "$GITHUB_FILE_URL/$ENV_FILE.example"
+
+SERVER_CONFIG_FILE="server-config.yaml"
+echo "Downloading latest '$SERVER_CONFIG_FILE' from the '$GIT_BRANCH' branch of the GitHub repo…"
+download "$DEST_DIR_PATH/$SERVER_CONFIG_FILE" "$GITHUB_FILE_URL/$SERVER_CONFIG_FILE.example"
 
 WEB_CONFIG_FILE="web-config.json"
 echo "Downloading latest '$WEB_CONFIG_FILE' from the '$GIT_BRANCH' branch of the GitHub repo…"
