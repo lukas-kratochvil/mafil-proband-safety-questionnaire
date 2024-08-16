@@ -38,7 +38,7 @@ const Navigation = () => {
       >
         {getTabs(navigate).map((tab) => (
           <NavigationTab
-            key={tab.urlPrefix}
+            key={tab.urlPath}
             {...tab}
           />
         ))}

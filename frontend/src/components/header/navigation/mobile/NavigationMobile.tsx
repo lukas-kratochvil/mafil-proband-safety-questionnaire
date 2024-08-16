@@ -82,7 +82,7 @@ export const NavigationMobile = () => {
           >
             {getTabs(navigate).map((tab) => (
               <NavigationMobileTab
-                key={tab.urlPrefix}
+                key={tab.urlPath}
                 {...tab}
               />
             ))}

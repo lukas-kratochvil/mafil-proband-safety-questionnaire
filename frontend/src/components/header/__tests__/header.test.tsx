@@ -23,19 +23,19 @@ vi.mock("@app/hooks/auth/auth", () => ({
 const tabs: TabProps[] = [
   {
     localizationKey: "1",
-    urlPrefix: RoutingPath.WAITING_ROOM,
+    urlPath: RoutingPath.WAITING_ROOM,
     onClick: () => ({}),
     Icon: ScienceIcon,
   },
   {
     localizationKey: "2",
-    urlPrefix: RoutingPath.APPROVAL_ROOM,
+    urlPath: RoutingPath.APPROVAL_ROOM,
     onClick: () => ({}),
     Icon: ScienceIcon,
   },
   {
     localizationKey: "3",
-    urlPrefix: RoutingPath.RECENT_VISITS,
+    urlPath: RoutingPath.RECENT_VISITS,
     onClick: () => ({}),
     Icon: ScienceIcon,
   },

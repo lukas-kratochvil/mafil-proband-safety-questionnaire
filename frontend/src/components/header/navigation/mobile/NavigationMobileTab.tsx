@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { convertStringToLocalizationKey } from "@app/i18n/i18n";
 import { getCommonTabSx, type TabProps } from "../tabs";
 
-export const NavigationMobileTab = ({ localizationKey, urlPrefix, onClick, Icon }: TabProps) => {
+export const NavigationMobileTab = ({ localizationKey, urlPath, onClick, Icon }: TabProps) => {
   const { t } = useTranslation("translation", { keyPrefix: "common.navigation" });
   const location = useLocation();
 
@@ -14,7 +14,7 @@ export const NavigationMobileTab = ({ localizationKey, urlPrefix, onClick, Icon 
         onClick={onClick}
         sx={{
           paddingY: "1rem",
-          ...getCommonTabSx(location, urlPrefix),
+          ...getCommonTabSx(location, urlPath),
         }}
       >
         <Grid

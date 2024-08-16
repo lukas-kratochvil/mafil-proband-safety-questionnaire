@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { convertStringToLocalizationKey } from "@app/i18n/i18n";
 import { getCommonTabSx, type TabProps } from "./tabs";
 
-export const NavigationTab = ({ localizationKey, urlPrefix, onClick }: TabProps) => {
+export const NavigationTab = ({ localizationKey, urlPath, onClick }: TabProps) => {
   const { t } = useTranslation("translation", { keyPrefix: "common.navigation" });
   const location = useLocation();
 
@@ -12,7 +12,7 @@ export const NavigationTab = ({ localizationKey, urlPrefix, onClick }: TabProps)
     <Tab
       label={t(convertStringToLocalizationKey(localizationKey))}
       onClick={onClick}
-      sx={{ ...getCommonTabSx(location, urlPrefix) }}
+      sx={{ ...getCommonTabSx(location, urlPath) }}
     />
   );
 };
