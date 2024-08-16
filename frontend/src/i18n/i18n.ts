@@ -30,7 +30,7 @@ void i18n
     backend: {
       loadPath: "/locales/{{lng}}/{{ns}}.json",
     },
-    debug: import.meta.env.DEV,
+    debug: import.meta.env.DEV && import.meta.env.MODE !== "test",
     defaultNS,
     supportedLngs: supportedLanguages,
     fallbackLng: supportedLanguages[0],
