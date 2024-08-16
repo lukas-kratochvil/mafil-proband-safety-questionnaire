@@ -1,13 +1,11 @@
 import { Button, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import { CardContainer } from "@app/components/card/CardContainer";
 import { RoutingPath } from "@app/routing-paths";
 import { PageContainer } from "./PageContainer";
 
 const HomePage = () => {
   const { t } = useTranslation("translation", { keyPrefix: "homePage" });
-  const navigate = useNavigate();
 
   return (
     <PageContainer center>
@@ -20,7 +18,7 @@ const HomePage = () => {
         >
           <Button
             variant="contained"
-            onClick={() => navigate(RoutingPath.PROBAND_FORM)}
+            href={RoutingPath.PROBAND_FORM}
           >
             {t("openNewFormButton")}
           </Button>

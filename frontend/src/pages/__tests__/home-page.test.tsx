@@ -1,4 +1,3 @@
-import { userEvent } from "@testing-library/user-event";
 import HomePage from "@app/pages/HomePage";
 import { RoutingPath } from "@app/routing-paths";
 import { render, screen } from "@test/utils";
@@ -8,15 +7,6 @@ import { render, screen } from "@test/utils";
 //----------------------------------------------------------------------
 vi.mock("@app/components/header/LanguageMenu", () => ({
   LanguageMenu: () => <div />,
-}));
-
-//----------------------------------------------------------------------
-// Mocking react-router-dom hooks
-//----------------------------------------------------------------------
-const mockedUseNavigate = vi.fn();
-vi.mock("react-router-dom", async () => ({
-  ...((await vi.importActual("react-router-dom")) as Record<string, unknown>),
-  useNavigate: () => mockedUseNavigate,
 }));
 
 //----------------------------------------------------------------------
@@ -42,19 +32,17 @@ describe("home page", () => {
 
     // ASSERT
     expect(screen.getByText("homePage.title")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "homePage.openNewFormButton" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "homePage.openNewFormButton" })).toBeInTheDocument();
   });
 
-  test("clicks open new form button", async () => {
-    // ARRANGE
-    const user = userEvent.setup();
-
+  test("contains correct links", () => {
     // ACT
     setup();
-    const openNewForButton = screen.getByRole("button");
-    await user.click(openNewForButton);
 
     // ASSERT
-    expect(mockedUseNavigate).toHaveBeenCalledWith(RoutingPath.PROBAND_FORM);
+    expect(screen.getByRole("link", { name: "homePage.openNewFormButton" })).toHaveAttribute(
+      "href",
+      RoutingPath.PROBAND_FORM
+    );
   });
 });
