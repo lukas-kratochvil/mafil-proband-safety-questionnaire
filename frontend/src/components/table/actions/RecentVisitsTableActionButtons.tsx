@@ -32,8 +32,9 @@ export const RecentVisitsTableActionButtons = ({ visit }: RecentVisitsTableActio
     try {
       if (!visit.isPhantom) {
         // MAFILDB visit contains even those questions that are hidden in the form by the subject gender
-        const currentQuestions = (await fetchCurrentQuestions()).sort(currentQuestionsIdComparator);
+        const currentQuestionsPromise = fetchCurrentQuestions();
         const visitQuestionIds = visit.answers.map((answer) => answer.questionId).sort();
+        const currentQuestions = (await currentQuestionsPromise).sort(currentQuestionsIdComparator);
 
         // Check that current questions weren't modified after this visit was finalized
         if (
