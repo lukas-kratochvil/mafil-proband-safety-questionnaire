@@ -18,9 +18,13 @@ export type EnvironmentVariables = {
   };
   pdfOperatorLanguageCode: PdfLanguageCode;
   webUrl: string;
-  jpmClientId: string;
-  jpmClientSecret: string;
-  jpmIntrospectionEndpoint: string;
+  oidc: {
+    jpm: {
+      clientId: string;
+      clientSecret: string;
+      introspectionEndpoint: string;
+    };
+  };
 };
 
 export const configSchema = Joi.object<EnvironmentVariables>({
@@ -41,15 +45,16 @@ export const configSchema = Joi.object<EnvironmentVariables>({
   webUrl: Joi.string()
     .uri({ scheme: ["http", "https"] })
     .required(),
-  jpmClientId: Joi.alternatives().conditional("nodeEnv", { is: "production", then: Joi.string().trim().required() }),
-  jpmClientSecret: Joi.alternatives().conditional("nodeEnv", {
+  oidc: Joi.alternatives().conditional("nodeEnv", {
     is: "production",
-    then: Joi.string().trim().required(),
-  }),
-  jpmIntrospectionEndpoint: Joi.alternatives().conditional("nodeEnv", {
-    is: "production",
-    then: Joi.string()
-      .uri({ scheme: ["http", "https"] })
-      .required(),
+    then: Joi.object({
+      jpm: Joi.object({
+        clientId: Joi.string().trim().required(),
+        clientSecret: Joi.string().trim().required(),
+        introspectionEndpoint: Joi.string()
+          .uri({ scheme: ["http", "https"] })
+          .required(),
+      }).required(),
+    }).required(),
   }),
 }).required();
