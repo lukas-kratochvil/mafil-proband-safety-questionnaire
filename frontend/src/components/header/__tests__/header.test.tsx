@@ -24,19 +24,16 @@ const tabs: TabProps[] = [
   {
     localizationKey: "1",
     urlPath: RoutingPath.WAITING_ROOM,
-    onClick: () => ({}),
     Icon: ScienceIcon,
   },
   {
     localizationKey: "2",
     urlPath: RoutingPath.APPROVAL_ROOM,
-    onClick: () => ({}),
     Icon: ScienceIcon,
   },
   {
     localizationKey: "3",
     urlPath: RoutingPath.RECENT_VISITS,
-    onClick: () => ({}),
     Icon: ScienceIcon,
   },
 ];
@@ -55,30 +52,49 @@ describe("header", () => {
     render(<Header />);
   };
 
-  test("user is not logged in", () => {
-    // ARRANGE
-    mockOperator = undefined;
+  describe("user is not logged in", () => {
+    beforeEach(() => {
+      mockOperator = undefined;
+    });
 
-    // ACT
-    setup();
+    test("contains all elements", () => {
+      // ACT
+      setup();
 
-    // ASSERT
-    expect(screen.getByAltText("CEITEC-MAFIL logo")).toBeInTheDocument();
-    expect(screen.getByTestId("language-menu")).toBeInTheDocument();
-    expect(screen.queryAllByRole("tab").length).toBe(0);
+      // ASSERT
+      expect(screen.getByAltText("CEITEC-MAFIL logo")).toBeInTheDocument();
+      expect(screen.getByTestId("language-menu")).toBeInTheDocument();
+      expect(screen.queryAllByRole("tab").length).toBe(0);
+    });
   });
 
-  test("user is logged in", async () => {
-    // ARRANGE
-    mockOperator = operatorMRTest;
+  describe("user is logged in", () => {
+    beforeEach(() => {
+      mockOperator = operatorMRTest;
+    });
 
-    // ACT
-    setup();
+    test("contains all elements", async () => {
+      // ACT
+      setup();
 
-    // ASSERT
-    expect(`${operatorMRTest.name} ${operatorMRTest.surname}`).toBeDefined();
-    expect(await screen.findByAltText("CEITEC-MAFIL logo")).toBeInTheDocument();
-    expect(screen.getByTestId("language-menu")).toBeInTheDocument();
-    expect(screen.getAllByRole("tab").length).toBe(tabs.length);
+      // ASSERT
+      expect(`${operatorMRTest.name} ${operatorMRTest.surname}`).toBeDefined();
+      expect(await screen.findByAltText("CEITEC-MAFIL logo")).toBeInTheDocument();
+      expect(screen.getByTestId("language-menu")).toBeInTheDocument();
+      expect(screen.getAllByRole("tab").length).toBe(tabs.length);
+    });
+
+    test("contains correct links", () => {
+      // ACT
+      setup();
+
+      // ASSERT
+      tabs.forEach((tab) => {
+        expect(screen.getByRole("tab", { name: `common.navigation.${tab.localizationKey}` })).toHaveAttribute(
+          "href",
+          tab.urlPath
+        );
+      });
+    });
   });
 });

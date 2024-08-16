@@ -1,11 +1,9 @@
 import { Box, Tabs } from "@mui/material";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { NavigationTab } from "./NavigationTab";
 import { getTabs, TAB_DEFAULT_COLOR } from "./tabs";
 
 const Navigation = () => {
-  const navigate = useNavigate();
   const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
 
   const handleChange = (_event: React.SyntheticEvent, value: number) => setCurrentTabIndex(value);
@@ -36,7 +34,7 @@ const Navigation = () => {
           },
         }}
       >
-        {getTabs(navigate).map((tab) => (
+        {getTabs().map((tab) => (
           <NavigationTab
             key={tab.urlPath}
             {...tab}

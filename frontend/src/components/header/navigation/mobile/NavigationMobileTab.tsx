@@ -4,14 +4,16 @@ import { useLocation } from "react-router-dom";
 import { convertStringToLocalizationKey } from "@app/i18n/i18n";
 import { getCommonTabSx, type TabProps } from "../tabs";
 
-export const NavigationMobileTab = ({ localizationKey, urlPath, onClick, Icon }: TabProps) => {
+export const NavigationMobileTab = ({ localizationKey, urlPath, Icon, openInNewWindow }: TabProps) => {
   const { t } = useTranslation("translation", { keyPrefix: "common.navigation" });
   const location = useLocation();
 
   return (
     <ListItem disablePadding>
       <ListItemButton
-        onClick={onClick}
+        href={urlPath}
+        target={openInNewWindow ? "_blank" : undefined}
+        rel={openInNewWindow ? "noopener noreferrer" : undefined}
         sx={{
           paddingY: "1rem",
           ...getCommonTabSx(location, urlPath),

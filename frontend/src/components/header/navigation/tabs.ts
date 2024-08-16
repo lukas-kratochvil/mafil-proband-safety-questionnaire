@@ -6,7 +6,7 @@ import RecentActorsIcon from "@mui/icons-material/RecentActors";
 import ScienceIcon from "@mui/icons-material/Science";
 import type { SxProps, Theme } from "@mui/material";
 import { amber } from "@mui/material/colors";
-import type { Location, NavigateFunction } from "react-router-dom";
+import type { Location } from "react-router-dom";
 import { RoutingPath } from "@app/routing-paths";
 
 export const TAB_DEFAULT_COLOR = amber[700];
@@ -15,8 +15,8 @@ const TAB_HIGHLIGHT_COLOR = amber[600];
 export type TabProps = {
   localizationKey: string;
   urlPath: RoutingPath;
-  onClick: () => void;
   Icon: SvgIconComponent;
+  openInNewWindow?: boolean;
 };
 
 export const getCommonTabSx = (location: Location, urlPath: TabProps["urlPath"]): SxProps<Theme> => {
@@ -37,35 +37,31 @@ export const getCommonTabSx = (location: Location, urlPath: TabProps["urlPath"])
   };
 };
 
-export const getTabs = (navigate: NavigateFunction): TabProps[] => [
+export const getTabs = (): TabProps[] => [
   {
     localizationKey: "waitingRoom",
     urlPath: RoutingPath.WAITING_ROOM,
-    onClick: () => navigate(RoutingPath.WAITING_ROOM),
     Icon: PendingActionsIcon,
   },
   {
     localizationKey: "approvalRoom",
     urlPath: RoutingPath.APPROVAL_ROOM,
-    onClick: () => navigate(RoutingPath.APPROVAL_ROOM),
     Icon: ApprovalIcon,
   },
   {
     localizationKey: "recentVisits",
     urlPath: RoutingPath.RECENT_VISITS,
-    onClick: () => navigate(RoutingPath.RECENT_VISITS),
     Icon: RecentActorsIcon,
   },
   {
     localizationKey: "createNewPhantomForm",
     urlPath: RoutingPath.PHANTOM_FORM,
-    onClick: () => navigate(RoutingPath.PHANTOM_FORM),
     Icon: ScienceIcon,
   },
   {
     localizationKey: "openNewProbandForm",
     urlPath: RoutingPath.PROBAND_FORM,
-    onClick: () => window.open(RoutingPath.PROBAND_FORM, "_blank", "noopener,noreferrer"),
     Icon: PersonAddAlt1Icon,
+    openInNewWindow: true,
   },
 ];
