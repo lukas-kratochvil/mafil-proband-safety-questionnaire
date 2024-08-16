@@ -39,13 +39,18 @@ export const FormButtons = <T,>({ submitButtonProps, buttonsProps }: FormButtons
           key={buttonProps.titleLocalizationKey}
           variant="contained"
           color={buttonProps.showErrorColor ? "error" : undefined}
-          onClick={async () => {
-            try {
-              await buttonProps.onClick();
-            } catch (error) {
-              handleErrorsWithToast(error, t);
-            }
-          }}
+          href={buttonProps.href}
+          onClick={
+            buttonProps.onClick
+              ? async () => {
+                  try {
+                    await buttonProps.onClick();
+                  } catch (error) {
+                    handleErrorsWithToast(error, t);
+                  }
+                }
+              : undefined
+          }
         >
           {t(convertStringToLocalizationKey(buttonProps.titleLocalizationKey))}
         </Button>

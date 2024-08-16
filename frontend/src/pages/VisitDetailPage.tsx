@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { CardContainer } from "@app/components/card/CardContainer";
 import { ColoredInfoStripe, type ColoredInfoStripeProps } from "@app/components/informative/ColoredInfoStripe";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
@@ -159,7 +159,6 @@ const VisitDetailPage = () => {
     isError,
     refetch,
   } = useQuery({ queryKey: ["visit", id], queryFn: () => fetchVisitDetail(id) });
-  const navigate = useNavigate();
 
   const [coloredInfoStripe, setColoredInfoStripe] = useState<ColoredInfoStripeProps>();
   const [buttons, setButtons] = useState<VisitDetailButtonProps[]>();
@@ -175,10 +174,10 @@ const VisitDetailPage = () => {
     // can't use back button because when a visit is submitted from a form and then the visit detail is displayed and then the user clicks the back button it redirects back to that form
     stateButtons.push({
       titleLocalizationKey: "common.backButton",
-      onClick: async () => navigate(RoutingPath.RECENT_VISITS),
+      href: RoutingPath.RECENT_VISITS,
     });
     setButtons(stateButtons);
-  }, [navigate, refetch, visitDetail]);
+  }, [refetch, visitDetail]);
 
   if (isError) {
     return (
@@ -228,13 +227,18 @@ const VisitDetailPage = () => {
                 <Button
                   key={button.titleLocalizationKey}
                   variant="contained"
-                  onClick={async () => {
-                    try {
-                      await button.onClick();
-                    } catch (error) {
-                      handleErrorsWithToast(error, t);
-                    }
-                  }}
+                  href={button.href}
+                  onClick={
+                    button.onClick
+                      ? async () => {
+                          try {
+                            await button.onClick();
+                          } catch (error) {
+                            handleErrorsWithToast(error, t);
+                          }
+                        }
+                      : undefined
+                  }
                   disabled={button.disabled}
                 >
                   {t(convertStringToLocalizationKey(button.titleLocalizationKey))}

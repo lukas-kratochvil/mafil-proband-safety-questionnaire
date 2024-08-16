@@ -94,7 +94,7 @@ export const DuplicationForm = () => {
             navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.uuid}`);
           },
         },
-        buttonsProps: [getBackButtonProps(navigate, "form.common.buttons.cancel")],
+        buttonsProps: [getBackButtonProps("form.common.buttons.cancel")],
       });
     } else if (isEditing) {
       setFormButtons({
@@ -191,7 +191,7 @@ export const DuplicationForm = () => {
               setIsEditing(true);
             },
           },
-          getBackButtonProps(navigate, "form.common.buttons.cancel"),
+          getBackButtonProps("form.common.buttons.cancel"),
         ],
       });
     }

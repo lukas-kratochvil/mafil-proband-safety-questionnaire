@@ -25,7 +25,7 @@ export const PhantomForm = () => {
         navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.uuid}`);
       },
     },
-    buttonsProps: [getBackButtonProps(navigate, "form.common.buttons.cancel")],
+    buttonsProps: [getBackButtonProps("form.common.buttons.cancel")],
   };
 
   return (

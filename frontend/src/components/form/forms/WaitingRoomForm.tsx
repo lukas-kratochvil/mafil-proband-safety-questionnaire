@@ -189,7 +189,7 @@ export const WaitingRoomForm = () => {
               setIsEditing(true);
             },
           },
-          getBackButtonProps(navigate, "form.common.buttons.cancel"),
+          getBackButtonProps("form.common.buttons.cancel"),
         ],
       });
     }
