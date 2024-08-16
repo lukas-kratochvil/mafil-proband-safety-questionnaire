@@ -7,7 +7,7 @@ import { ThrottlerGuard as NestThrottlerGuard } from "@nestjs/throttler";
 export class ThrottlerGuard extends NestThrottlerGuard {
   private readonly logger = new Logger(ThrottlerGuard.name);
 
-  getRequestResponse(exContext: ExecutionContext) {
+  override getRequestResponse(exContext: ExecutionContext) {
     const reqType = exContext.getType<GqlContextType>();
 
     if (reqType === "graphql") {

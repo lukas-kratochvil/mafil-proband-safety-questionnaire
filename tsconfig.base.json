@@ -1,8 +1,16 @@
 {
   "compilerOptions": {
     /* Strictness */
-    "strict": true, // is a must! - every library counts with this option set to true
-    "noUncheckedIndexedAccess": true, // insures no unsafe indexing on records and arrays
+    "strict": true,
+    "allowUnusedLabels": false, // raises compiler errors about unused labels (label ~ attempt to write an object literal)
+    "allowUnreachableCode": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true, // ensure that the sub-classes never go out of sync, by ensuring that functions which override include the keyword `override`
+    "noImplicitReturns": true, // ensures all code paths in a function return a value
+    "noPropertyAccessFromIndexSignature": true, // warns when accessing unknown object keys
+    "noUncheckedIndexedAccess": true, // ensures no unsafe indexing on records and arrays
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
 
     /* Other options */
     "skipLibCheck": true, // compiler won't throw compile-time errors on third-party libraries code

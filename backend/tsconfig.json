@@ -5,7 +5,7 @@
     "target": "ES2022",
     /* If transpiling with TypeScript (tsc) - NestJS does */
     "module": "NodeNext",
-    "moduleResolution": "NodeNext", // insure that the code we produce can be consumed by Node (https://www.totaltypescript.com/relative-import-paths-need-explicit-file-extensions-in-ecmascript-imports)
+    "moduleResolution": "NodeNext", // ensures that the code we produce can be consumed by Node (https://www.totaltypescript.com/relative-import-paths-need-explicit-file-extensions-in-ecmascript-imports)
     "esModuleInterop": true,
     "outDir": "./dist",
     "sourceMap": true, // go to the original TypeScript definition from the generated JS file

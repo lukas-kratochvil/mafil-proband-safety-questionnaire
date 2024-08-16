@@ -39,7 +39,7 @@ export class AuthGuard extends AuthGuardDev {
     return type === "Bearer" ? accessToken : undefined;
   }
 
-  async canActivate(exContext: ExecutionContext) {
+  override async canActivate(exContext: ExecutionContext) {
     if (!(await super.canActivate(exContext))) {
       return false;
     }
