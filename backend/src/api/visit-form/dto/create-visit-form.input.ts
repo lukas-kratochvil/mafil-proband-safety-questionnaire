@@ -17,7 +17,7 @@ export class CreateVisitFormInput extends IntersectionType(
     "weightKg",
     "visualCorrectionDioptre",
   ] as const),
-  // state is IN_APPROVAL for a duplicated visit that is going to be approved
+  // state is `IN_APPROVAL` for a duplicated visit that is going to be approved
   PartialType(PickType(VisitFormEntity, ["state", "email", "phone"] as const)),
   InputType
 ) {

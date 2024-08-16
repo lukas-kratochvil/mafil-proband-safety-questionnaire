@@ -4,6 +4,6 @@
 export type Wrapper<T> = T;
 
 /**
- * Converts an array of strings to a union type.
+ * Converts an array of strings to the union of its strings.
  */
 export type StringArrayToUnion<T extends ReadonlyArray<string>> = T[number];

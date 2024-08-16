@@ -4,7 +4,7 @@ import { AnswerEntity } from "@app/api/visit-form/entities/answer.entity";
 @InputType()
 export class CreateAnswerInput extends IntersectionType(
   PickType(AnswerEntity, ["questionId", "answer"] as const),
-  // comment field is used when duplicating existing visit form that is going for approval
+  // the `comment` field is used when duplicating an existing visit form
   PartialType(PickType(AnswerEntity, ["comment"] as const)),
   InputType
 ) {}
