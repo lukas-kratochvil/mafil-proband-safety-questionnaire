@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getConfigDev } from "@app/config/config.dev";
-import { transformResponseDateStringToDate } from "./transformers/dates-transformers";
+import { setAuthorizationHeader } from "./interceptors/request/set-authorization";
+import { transformDateStringsToDate } from "./interceptors/response/transform-dates";
 
 /**
  * SERVER instance
@@ -14,19 +15,6 @@ export const serverApi = axios.create({
   },
 });
 
-// Add OIDC Access token to a request
-serverApi.interceptors.request.use(async (axiosConfig) => {
-  if (import.meta.env.PROD) {
-    const authService = (await import("@app/hooks/auth/auth-service")).AuthService.getInstance();
-    const authUser = await authService.getAuthUser();
-    if (authUser) {
-      // set user's OIDC access_token in the Authorization header, so that a request to our backend API will proceed
-      axiosConfig.headers.Authorization = `Bearer ${authUser.access_token}`; // eslint-disable-line no-param-reassign
-    }
-  }
+serverApi.interceptors.request.use(setAuthorizationHeader);
 
-  return axiosConfig;
-});
-
-// Transform all date-strings in the response into Date objects
-serverApi.interceptors.response.use(transformResponseDateStringToDate);
+serverApi.interceptors.response.use(transformDateStringsToDate);

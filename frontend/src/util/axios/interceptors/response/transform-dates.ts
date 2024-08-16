@@ -37,8 +37,11 @@ const handleDates = (body: any, transform: (value: string) => Date): any => {
   return body;
 };
 
+/**
+ * Transform all date-strings in the response into Date objects.
+ */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const transformResponseDateStringToDate = (response: AxiosResponse<any, any>): AxiosResponse<any, any> => {
+export const transformDateStringsToDate = (response: AxiosResponse<any, any>): AxiosResponse<any, any> => {
   handleDates(response.data, parseISO);
   return response;
 };

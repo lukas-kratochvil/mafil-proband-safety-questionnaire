@@ -1,5 +1,5 @@
 import { AxiosHeaders, type AxiosResponse } from "axios";
-import { transformResponseDateStringToDate } from "../dates-transformers";
+import { transformDateStringsToDate } from "../transform-dates";
 
 //----------------------------------------------------------------------
 // Tests
@@ -27,7 +27,7 @@ describe("ISO 8601 dates transformers", () => {
         statusText: "Ok",
       };
 
-      const transformedResponse = transformResponseDateStringToDate(response);
+      const transformedResponse = transformDateStringsToDate(response);
       const expectedResponseData = {
         ...data,
         date: resDate,
