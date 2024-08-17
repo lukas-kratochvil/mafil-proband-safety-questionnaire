@@ -1,8 +1,8 @@
-import { lazy, Suspense } from "react";
+import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { PrivateLayout } from "./pages/PrivateLayout";
-import { SuspensePage } from "./pages/SuspensePage";
+import { PrivateLayout } from "./layouts/PrivateLayout";
 import { RoutingPath } from "./routing-paths";
+import { Layout } from "./layouts/Layout";
 
 const HomePage = lazy(() => import("@app/pages/HomePage"));
 const LoginPage = lazy(() => import("@app/pages/LoginPage"));
@@ -19,8 +19,8 @@ const VisitDetailPage = lazy(() => import("@app/pages/VisitDetailPage"));
 const NotFoundPage = lazy(() => import("@app/pages/NotFoundPage"));
 
 const App = () => (
-  <Suspense fallback={<SuspensePage />}>
-    <Routes>
+  <Routes>
+    <Route element={<Layout />}>
       <Route
         path="/"
         element={
@@ -96,8 +96,8 @@ const App = () => (
         path="*"
         element={<NotFoundPage />}
       />
-    </Routes>
-  </Suspense>
+    </Route>
+  </Routes>
 );
 
 export default App;
