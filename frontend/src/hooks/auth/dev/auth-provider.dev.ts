@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { getConfigDev } from "@app/config/config.dev";
 import { RoutingPath } from "@app/routing-paths";
 import { authenticateOperator } from "@app/util/server_API/calls";
@@ -10,7 +9,6 @@ const SESSION_STORAGE_OPERATOR_KEY = "operator";
 const DEV_OPERATOR: OperatorAuthInput = { ...getConfigDev().operator };
 
 export const useAuthProviderDev = (): Auth => {
-  const navigate = useNavigate();
   const [operator, setOperator] = useState<Auth["operator"]>(() => {
     const storedOperator = window.sessionStorage.getItem(SESSION_STORAGE_OPERATOR_KEY);
     return storedOperator === null ? undefined : JSON.parse(storedOperator);
@@ -21,7 +19,7 @@ export const useAuthProviderDev = (): Auth => {
       const validOperator = await authenticateOperator(DEV_OPERATOR);
       setOperator(validOperator);
       window.sessionStorage.setItem(SESSION_STORAGE_OPERATOR_KEY, JSON.stringify(validOperator));
-      navigate(RoutingPath.WAITING_ROOM);
+      window.location.assign(RoutingPath.WAITING_ROOM);
     } catch {
       setOperator(undefined);
     }
@@ -32,7 +30,7 @@ export const useAuthProviderDev = (): Auth => {
   const logOut = async (): Promise<void> => {
     setOperator(undefined);
     window.sessionStorage.removeItem(SESSION_STORAGE_OPERATOR_KEY);
-    navigate(RoutingPath.LOGOUT);
+    window.location.assign(RoutingPath.LOGOUT);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
