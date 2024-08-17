@@ -32,7 +32,7 @@ export const useAuthProviderDev = (): Auth => {
   const logOut = async (): Promise<void> => {
     setOperator(undefined);
     window.sessionStorage.removeItem(SESSION_STORAGE_OPERATOR_KEY);
-    navigate(RoutingPath.LOGIN);
+    navigate(RoutingPath.LOGOUT);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function

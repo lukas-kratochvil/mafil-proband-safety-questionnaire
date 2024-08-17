@@ -7,6 +7,10 @@ import { RoutingPath } from "@app/routing-paths";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { PageContainer } from "./PageContainer";
 
+/**
+ * The OIDC provider redirects to this page after the user has attempted to log in.
+ * We get the OIDC login result from the `logInCallback` hook and then redirect the user accordingly.
+ */
 const OidcAuthCallbackPage = () => {
   const { t } = useTranslation();
   const { logInCallback } = useAuth();

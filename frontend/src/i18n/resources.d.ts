@@ -126,9 +126,6 @@ interface Resources {
     oidcAuthCallbackPage: {
       processing: "Processing log in...";
     };
-    logoutPage: {
-      processing: "Logging out...";
-    };
     visitDetailPage: {
       title: "Detail of visit";
       buttons: {
