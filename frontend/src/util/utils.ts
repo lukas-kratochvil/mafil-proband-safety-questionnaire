@@ -10,7 +10,7 @@ import { ServerApiValidationError } from "./error-handling/ServerApiValidationEr
 export type ButtonProps = {
   titleLocalizationKey: string;
   showErrorColor?: boolean;
-} & Either<{ href: string }, { onClick: () => Promise<void> }>;
+} & Either<{ urlPath: string }, { onClick: () => Promise<void> }>;
 
 export const getBackButtonProps = (customTitleLocalizationKey?: string): ButtonProps => ({
   titleLocalizationKey: customTitleLocalizationKey ?? "common.backButton",

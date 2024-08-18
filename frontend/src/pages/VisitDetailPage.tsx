@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { CardContainer } from "@app/components/card/CardContainer";
 import { ColoredInfoStripe, type ColoredInfoStripeProps } from "@app/components/informative/ColoredInfoStripe";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
@@ -161,7 +161,7 @@ const VisitDetailPage = () => {
   } = useQuery({ queryKey: ["visit", id], queryFn: () => fetchVisitDetail(id) });
 
   const [coloredInfoStripe, setColoredInfoStripe] = useState<ColoredInfoStripeProps>();
-  const [buttons, setButtons] = useState<VisitDetailButtonProps[]>();
+  const [buttonsProps, setButtonsProps] = useState<VisitDetailButtonProps[]>();
 
   useEffect(() => {
     const stateButtons: VisitDetailButtonProps[] = [];
@@ -174,9 +174,9 @@ const VisitDetailPage = () => {
     // can't use back button because when a visit is submitted from a form and then the visit detail is displayed and then the user clicks the back button it redirects back to that form
     stateButtons.push({
       titleLocalizationKey: "common.backButton",
-      href: RoutingPath.RECENT_VISITS,
+      urlPath: RoutingPath.RECENT_VISITS,
     });
-    setButtons(stateButtons);
+    setButtonsProps(stateButtons);
   }, [refetch, visitDetail]);
 
   if (isError) {
@@ -216,32 +216,31 @@ const VisitDetailPage = () => {
             height="770px"
             width="100%"
           />
-          {buttons && (
+          {buttonsProps && (
             <Grid
               container
               direction="row"
               justifyContent="center"
               gap="1.5rem"
             >
-              {buttons.map((button) => (
+              {buttonsProps.map((buttonProps) => (
                 <Button
-                  key={button.titleLocalizationKey}
+                  key={buttonProps.titleLocalizationKey}
                   variant="contained"
-                  href={button.href}
-                  onClick={
-                    button.onClick
-                      ? async () => {
+                  disabled={buttonProps.disabled}
+                  {...(buttonProps.onClick
+                    ? {
+                        onClick: async () => {
                           try {
-                            await button.onClick();
+                            await buttonProps.onClick();
                           } catch (error) {
                             handleErrorsWithToast(error, t);
                           }
-                        }
-                      : undefined
-                  }
-                  disabled={button.disabled}
+                        },
+                      }
+                    : { component: Link, to: buttonProps.urlPath })}
                 >
-                  {t(convertStringToLocalizationKey(button.titleLocalizationKey))}
+                  {t(convertStringToLocalizationKey(buttonProps.titleLocalizationKey))}
                 </Button>
               ))}
             </Grid>

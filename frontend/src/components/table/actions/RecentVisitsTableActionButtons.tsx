@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { compareAsc } from "date-fns";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { RecentVisitsTableVisit } from "@app/model/visit";
 import { RoutingPath } from "@app/routing-paths";
 import { LocalizedError } from "@app/util/error-handling/LocalizedError";
@@ -70,7 +70,8 @@ export const RecentVisitsTableActionButtons = ({ visit }: RecentVisitsTableActio
       <Button
         size="small"
         variant="contained"
-        href={`${RoutingPath.RECENT_VISITS_VISIT}/${visit.uuid}`}
+        component={Link}
+        to={`${RoutingPath.RECENT_VISITS_VISIT}/${visit.uuid}`}
       >
         {t("recentVisitsTablePage.actions.showDetailButton")}
       </Button>

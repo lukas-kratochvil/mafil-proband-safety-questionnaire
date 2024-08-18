@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { RoutingPath } from "@app/routing-paths";
 import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
@@ -15,7 +16,8 @@ export const ApprovalRoomTableActionButtons = ({ visitFormId }: ApprovalRoomTabl
       <Button
         size="small"
         variant="contained"
-        href={`${RoutingPath.APPROVAL_ROOM_FORM}/${visitFormId}`}
+        component={Link}
+        to={`${RoutingPath.APPROVAL_ROOM_FORM}/${visitFormId}`}
       >
         {t("showButton")}
       </Button>

@@ -1,5 +1,6 @@
 import { Button, Grid, useMediaQuery, type Theme } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { convertStringToLocalizationKey } from "@app/i18n/i18n";
 import { handleErrorsWithToast, type ButtonProps } from "@app/util/utils";
 
@@ -43,18 +44,17 @@ export const FormButtons = <TValidatedData extends object>({
           key={buttonProps.titleLocalizationKey}
           variant="contained"
           color={buttonProps.showErrorColor ? "error" : undefined}
-          href={buttonProps.href}
-          onClick={
-            buttonProps.onClick
-              ? async () => {
+          {...(buttonProps.onClick
+            ? {
+                onClick: async () => {
                   try {
                     await buttonProps.onClick();
                   } catch (error) {
                     handleErrorsWithToast(error, t);
                   }
-                }
-              : undefined
-          }
+                },
+              }
+            : { component: Link, to: buttonProps.urlPath })}
         >
           {t(convertStringToLocalizationKey(buttonProps.titleLocalizationKey))}
         </Button>

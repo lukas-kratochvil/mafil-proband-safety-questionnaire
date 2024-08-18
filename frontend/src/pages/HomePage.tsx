@@ -1,5 +1,6 @@
 import { Button, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { CardContainer } from "@app/components/card/CardContainer";
 import { RoutingPath } from "@app/routing-paths";
 import { PageContainer } from "./PageContainer";
@@ -18,7 +19,8 @@ const HomePage = () => {
         >
           <Button
             variant="contained"
-            href={RoutingPath.PROBAND_FORM}
+            component={Link}
+            to={RoutingPath.PROBAND_FORM}
           >
             {t("openNewFormButton")}
           </Button>

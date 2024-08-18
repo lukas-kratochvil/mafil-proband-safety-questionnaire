@@ -13,6 +13,7 @@ import {
 import type { QueryObserverResult, RefetchOptions, RefetchQueryFilters } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import type { WaitingRoomTableVisitForm } from "@app/model/visitForm";
 import { RoutingPath } from "@app/routing-paths";
 import { deleteVisitForm } from "@app/util/server_API/calls";
@@ -50,7 +51,8 @@ export const WaitingRoomTableActionButtons = ({
       <Button
         size="small"
         variant="contained"
-        href={`${RoutingPath.WAITING_ROOM_FORM}/${visitFormId}`}
+        component={Link}
+        to={`${RoutingPath.WAITING_ROOM_FORM}/${visitFormId}`}
       >
         {t("processButton")}
       </Button>
