@@ -179,7 +179,7 @@ export const ApprovalRoomForm = () => {
                 setIsEditing(true);
               },
             },
-            getBackButtonProps(),
+            getBackButtonProps(navigate),
           ],
         });
       }
@@ -187,7 +187,7 @@ export const ApprovalRoomForm = () => {
       setFormButtons({
         submitButtonProps: undefined,
         // Even though the 'Back button' is the only button in the form, it doesn't have 'submit' type because MUI uses HTML span element for buttons
-        buttonsProps: [getBackButtonProps()],
+        buttonsProps: [getBackButtonProps(navigate)],
       });
     }
   }, [getValues, id, isDisapproved, isEditing, navigate, operator, setValue, trigger, valuesBeforeEditing, visitForm]);
