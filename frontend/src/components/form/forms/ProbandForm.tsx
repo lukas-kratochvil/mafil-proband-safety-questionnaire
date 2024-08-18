@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FormBeforeExamination } from "@app/components/form/components/FormBeforeExamination";
 import type { FormButtonsProps } from "@app/components/form/components/FormButtons";
 import { FormEntryInfo } from "@app/components/form/components/FormEntryInfo";
@@ -11,8 +11,7 @@ import type { FormQac, ValidatedProbandFormData } from "@app/model/form";
 import { fetchCurrentQuestions } from "@app/util/server_API/calls";
 import { getValidatedProbandFormData } from "../util/utils";
 import { FormContainer } from "./FormContainer";
-
-const ProbandFormContacts = lazy(() => import("./ProbandFormContacts"));
+import { ProbandFormContacts } from "./ProbandFormContacts";
 
 type ProbandFormStep = "examination" | "contacts";
 
@@ -86,11 +85,7 @@ export const ProbandForm = () => {
           <FormExaminationConsent />
         </>
       )}
-      {step === "contacts" && (
-        <Suspense>
-          <ProbandFormContacts setFormButtons={setFormButtons} />
-        </Suspense>
-      )}
+      {step === "contacts" && <ProbandFormContacts setFormButtons={setFormButtons} />}
     </FormContainer>
   );
 };

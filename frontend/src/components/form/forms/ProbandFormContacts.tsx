@@ -13,7 +13,7 @@ type ProbandFormContactsProps = {
   setFormButtons: Dispatch<SetStateAction<FormButtonsProps<ValidatedProbandFormData> | undefined>>;
 };
 
-const ProbandFormContacts = ({ setFormButtons }: ProbandFormContactsProps) => {
+export const ProbandFormContacts = ({ setFormButtons }: ProbandFormContactsProps) => {
   const navigate = useNavigate();
   const { setError } = useFormContext<FormPropType>();
 
@@ -71,5 +71,3 @@ const ProbandFormContacts = ({ setFormButtons }: ProbandFormContactsProps) => {
     </>
   );
 };
-
-export default ProbandFormContacts;
