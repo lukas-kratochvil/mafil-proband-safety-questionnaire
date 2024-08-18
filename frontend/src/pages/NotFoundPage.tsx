@@ -1,6 +1,6 @@
-import { useAuth } from "@app/hooks/auth/auth";
 import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@app/hooks/auth/auth";
 
 const NotFoundPage = () => {
   const { operator } = useAuth();

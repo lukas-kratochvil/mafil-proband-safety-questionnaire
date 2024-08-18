@@ -8,14 +8,14 @@ import type { FormPropType } from "@app/model/form";
 import { handleErrorsWithToast } from "@app/util/utils";
 import { FormSkeleton } from "./FormSkeleton";
 
-type FormContainerProps<TValidatedData> = {
+type FormContainerProps<TValidatedData extends object> = {
   isLoading: boolean;
   isError: boolean;
   buttons: FormButtonsProps<TValidatedData> | undefined;
   getFormData: (data: FormPropType) => TValidatedData;
 };
 
-export const FormContainer = <TValidatedData,>({
+export const FormContainer = <TValidatedData extends object>({
   children,
   isLoading,
   isError,

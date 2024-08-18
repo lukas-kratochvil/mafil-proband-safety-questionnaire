@@ -1,8 +1,8 @@
 import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { Layout } from "./layouts/Layout";
 import { PrivateLayout } from "./layouts/PrivateLayout";
 import { RoutingPath } from "./routing-paths";
-import { Layout } from "./layouts/Layout";
 
 const HomePage = lazy(() => import("@app/pages/HomePage"));
 const LoginPage = lazy(() => import("@app/pages/LoginPage"));

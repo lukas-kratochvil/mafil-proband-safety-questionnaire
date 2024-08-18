@@ -3,16 +3,20 @@ import { useTranslation } from "react-i18next";
 import { convertStringToLocalizationKey } from "@app/i18n/i18n";
 import { handleErrorsWithToast, type ButtonProps } from "@app/util/utils";
 
-type FormSubmitButtonProps<TValidatedData> = Omit<ButtonProps, "onClick"> & {
+type FormSubmitButtonProps<TValidatedData extends object> = Omit<ButtonProps, "onClick"> & {
   onClick: (data: TValidatedData) => Promise<void>;
 };
 
-export type FormButtonsProps<TValidatedData> = {
+export type FormButtonsProps<TValidatedData extends object> = {
   submitButtonProps: FormSubmitButtonProps<TValidatedData> | undefined;
   buttonsProps: ButtonProps[];
 };
 
-export const FormButtons = <T,>({ submitButtonProps, buttonsProps }: FormButtonsProps<T>) => {
+// TODO: I don't need to pass `onCLick` in the `submitButtonProps` because this method is used by `<form onSubmit={}>` in the `FormContainer`
+export const FormButtons = <TValidatedData extends object>({
+  submitButtonProps,
+  buttonsProps,
+}: FormButtonsProps<TValidatedData>) => {
   const { t } = useTranslation();
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
