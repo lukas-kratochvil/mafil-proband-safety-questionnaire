@@ -29,5 +29,10 @@ export const useAuthProvider = (): Auth => {
     setOperator(undefined);
   };
 
-  return { logIn, logInCallback, logOut, logOutCallback, operator };
+  const clearAuth = async (): Promise<void> => {
+    await authService.clearAuthData();
+    setOperator(undefined);
+  };
+
+  return { logIn, logInCallback, logOut, logOutCallback, operator, clearAuth };
 };

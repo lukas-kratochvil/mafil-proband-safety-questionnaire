@@ -17,8 +17,8 @@ export const useAuthProviderDev = (): Auth => {
   const logIn = async (): Promise<void> => {
     try {
       const validOperator = await authenticateOperator(DEV_OPERATOR);
-      setOperator(validOperator);
       window.sessionStorage.setItem(SESSION_STORAGE_OPERATOR_KEY, JSON.stringify(validOperator));
+      setOperator(validOperator);
       window.location.assign(RoutingPath.WAITING_ROOM);
     } catch {
       setOperator(undefined);
@@ -28,13 +28,18 @@ export const useAuthProviderDev = (): Auth => {
   const logInCallback = async (): Promise<boolean> => true;
 
   const logOut = async (): Promise<void> => {
-    setOperator(undefined);
     window.sessionStorage.removeItem(SESSION_STORAGE_OPERATOR_KEY);
+    setOperator(undefined);
     window.location.assign(RoutingPath.LOGOUT);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const logOutCallback = async (): Promise<void> => {};
 
-  return { logIn, logInCallback, logOut, logOutCallback, operator };
+  const clearAuth = async (): Promise<void> => {
+    window.sessionStorage.removeItem(SESSION_STORAGE_OPERATOR_KEY);
+    setOperator(undefined);
+  };
+
+  return { logIn, logInCallback, logOut, logOutCallback, operator, clearAuth };
 };
