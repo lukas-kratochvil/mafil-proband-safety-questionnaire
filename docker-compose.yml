@@ -67,7 +67,7 @@ services:
       - PORT=${REG_SERVER_PORT}
       - DATABASE_URL=${REG_DATABASE_URL}
     volumes:
-      - ./server-config.yaml:/usr/src/app/backend/config.yaml:ro
+      - ./server-config.yaml:/usr/src/app/config.yaml:ro
       - ./logs/server:/usr/src/app/logs
     restart: unless-stopped
     depends_on:
