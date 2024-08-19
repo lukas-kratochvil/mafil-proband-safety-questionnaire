@@ -1,7 +1,6 @@
 import { Inject } from "@nestjs/common";
 import { Args, Query, Resolver } from "@nestjs/graphql";
 import { UUID } from "@app/api/utils/scalars/uuid-scalar";
-import { SkipOidcAuth } from "./auth.guard";
 import type { AuthService } from "./auth.service";
 import { AUTH_SERVICE } from "./constants";
 import { AuthenticateOperatorArgs } from "./dto/authenticate-operator.args";
@@ -17,7 +16,6 @@ export class OperatorResolver {
     @Inject(AUTH_SERVICE) private readonly authService: AuthService
   ) {}
 
-  @SkipOidcAuth()
   @Query(() => OperatorEntity)
   async authenticateOperator(@Args() authenticateOperatorArgs: AuthenticateOperatorArgs) {
     return this.authService.authenticate(authenticateOperatorArgs.username, { ...authenticateOperatorArgs });
