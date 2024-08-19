@@ -39,7 +39,7 @@ export const WaitingRoomForm = () => {
     isError,
   } = useQuery({
     queryKey: ["visitForm", id],
-    queryFn: () => fetchWaitingRoomVisitForm(id),
+    queryFn: () => (id === undefined ? undefined : fetchWaitingRoomVisitForm(id)),
     staleTime: Infinity,
     gcTime: Infinity,
   });
@@ -86,131 +86,135 @@ export const WaitingRoomForm = () => {
 
   // Setting form buttons
   useEffect(() => {
-    if (isEditing) {
-      setFormButtons({
-        submitButtonProps: {
-          titleLocalizationKey: "form.common.buttons.saveChanges",
-          onClick: async (_data) => setIsEditing(false),
-        },
-        buttonsProps: [
-          {
-            titleLocalizationKey: "form.common.buttons.cancel",
-            onClick: async () => {
-              if (valuesBeforeEditing !== undefined) {
-                type ValuesBeforeEditingType = keyof typeof valuesBeforeEditing;
-                Object.keys(valuesBeforeEditing).forEach((propertyName) => {
-                  setValue(
-                    propertyName as ValuesBeforeEditingType,
-                    valuesBeforeEditing[propertyName as ValuesBeforeEditingType]
-                  );
-                });
-                setIsEditing(false);
-              }
+    if (visitForm !== undefined && operator !== undefined) {
+      if (isEditing) {
+        setFormButtons({
+          submitButtonProps: {
+            titleLocalizationKey: "form.common.buttons.saveChanges",
+            onClick: async (_data) => setIsEditing(false),
+          },
+          buttonsProps: [
+            {
+              titleLocalizationKey: "form.common.buttons.cancel",
+              onClick: async () => {
+                if (valuesBeforeEditing !== undefined) {
+                  type ValuesBeforeEditingType = keyof typeof valuesBeforeEditing;
+                  Object.keys(valuesBeforeEditing).forEach((propertyName) => {
+                    setValue(
+                      propertyName as ValuesBeforeEditingType,
+                      valuesBeforeEditing[propertyName as ValuesBeforeEditingType]
+                    );
+                  });
+                  setIsEditing(false);
+                }
+              },
             },
-          },
-        ],
-      });
-    } else if (isDisapproved) {
-      setFormButtons({
-        submitButtonProps: {
-          titleLocalizationKey: "form.common.buttons.confirmDisapproval",
-          onClick: async (data) => {
-            await createFinalizedVisit(
-              data,
-              MDB_ApprovalState.DISAPPROVED,
-              operator?.username,
-              new Date(),
-              visitForm?.probandLanguageCode
-            );
-            // TODO: mark visitForm as DELETED / DISAPPROVED?
-            navigate(RoutingPath.WAITING_ROOM);
-          },
-          showErrorColor: true,
-        },
-        buttonsProps: [
-          {
-            titleLocalizationKey: "form.common.buttons.cancel",
-            onClick: async () => {
-              setValue("disapprovalReason", null);
-              setIsDisapproved(false);
-            },
-          },
-        ],
-      });
-    } else {
-      setFormButtons({
-        submitButtonProps: {
-          titleLocalizationKey: "form.common.buttons.finalize",
-          onClick: async (data) => {
-            if (isVisitFormForApproval(operator, data)) {
-              // open warning dialog that the visit form has to be approved by an operator with higher permissions
-              setOpenFinalizeDialog(true);
-            } else {
-              const visit = await createFinalizedVisit(
+          ],
+        });
+      } else if (isDisapproved) {
+        setFormButtons({
+          submitButtonProps: {
+            titleLocalizationKey: "form.common.buttons.confirmDisapproval",
+            onClick: async (data) => {
+              await createFinalizedVisit(
                 data,
-                MDB_ApprovalState.APPROVED,
-                operator?.username,
+                MDB_ApprovalState.DISAPPROVED,
+                operator.username,
                 new Date(),
-                visitForm?.probandLanguageCode
+                visitForm.probandLanguageCode
               );
-
-              // if something went wrong in the previous finalization, we don't want error to be thrown here if we try to update the already updated state
-              if (visitForm?.state !== "SENT_TO_MAFILDB") {
-                await markVisitFormAsSentToMafilDb(id);
-              }
-
-              const pdf = await generateProbandPdf(
-                visit.visitId,
-                data,
-                operator?.username,
-                visitForm?.probandLanguageCode
-              );
-              await addPdfToVisit(visit.uuid, pdf);
-              await markVisitFormAsPdfGenerated(id);
-              navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.uuid}`);
-            }
-          },
-        },
-        buttonsProps: [
-          {
-            titleLocalizationKey: "form.common.buttons.disapprove",
-            onClick: async () => {
-              if (await trigger(undefined, { shouldFocus: true })) {
-                setValue("disapprovalReason", "");
-                setIsDisapproved(true);
-              }
+              // TODO: mark visitForm as DELETED / DISAPPROVED?
+              navigate(RoutingPath.WAITING_ROOM);
             },
             showErrorColor: true,
           },
-          {
-            titleLocalizationKey: "form.common.buttons.edit",
-            onClick: async () => {
-              setValuesBeforeEditing(getValues());
-              setIsEditing(true);
+          buttonsProps: [
+            {
+              titleLocalizationKey: "form.common.buttons.cancel",
+              onClick: async () => {
+                setValue("disapprovalReason", null);
+                setIsDisapproved(false);
+              },
+            },
+          ],
+        });
+      } else {
+        setFormButtons({
+          submitButtonProps: {
+            titleLocalizationKey: "form.common.buttons.finalize",
+            onClick: async (data) => {
+              if (isVisitFormForApproval(operator, data)) {
+                // open warning dialog that the visit form has to be approved by an operator with higher permissions
+                setOpenFinalizeDialog(true);
+              } else {
+                const visit = await createFinalizedVisit(
+                  data,
+                  MDB_ApprovalState.APPROVED,
+                  operator.username,
+                  new Date(),
+                  visitForm.probandLanguageCode
+                );
+
+                // if something went wrong in the previous finalization, we don't want error to be thrown here if we try to update the already updated state
+                if (visitForm.state !== "SENT_TO_MAFILDB") {
+                  await markVisitFormAsSentToMafilDb(visitForm.id);
+                }
+
+                const pdf = await generateProbandPdf(
+                  visit.visitId,
+                  data,
+                  operator.username,
+                  visitForm.probandLanguageCode
+                );
+                await addPdfToVisit(visit.uuid, pdf);
+                await markVisitFormAsPdfGenerated(visitForm.id);
+                navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.uuid}`);
+              }
             },
           },
-          getBackButtonProps(navigate, "form.common.buttons.cancel"),
-        ],
-      });
+          buttonsProps: [
+            {
+              titleLocalizationKey: "form.common.buttons.disapprove",
+              onClick: async () => {
+                if (await trigger(undefined, { shouldFocus: true })) {
+                  setValue("disapprovalReason", "");
+                  setIsDisapproved(true);
+                }
+              },
+              showErrorColor: true,
+            },
+            {
+              titleLocalizationKey: "form.common.buttons.edit",
+              onClick: async () => {
+                setValuesBeforeEditing(getValues());
+                setIsEditing(true);
+              },
+            },
+            getBackButtonProps(navigate, "form.common.buttons.cancel"),
+          ],
+        });
+      }
     }
-  }, [getValues, id, isDisapproved, isEditing, navigate, operator, setValue, trigger, valuesBeforeEditing, visitForm]);
+  }, [getValues, isDisapproved, isEditing, navigate, operator, setValue, trigger, valuesBeforeEditing, visitForm]);
 
   const moveVisitFormToApprovalRoom = async (data: ValidatedOperatorFormData) => {
-    const modifiedFields: ValidatedOperatorModifiedFormData = {
-      ...(getModifiedFieldsOnly(initialFormData, data) ?? {}),
-      device: data.device,
-      project: data.project,
-      measuredAt: data.measuredAt,
-      disapprovalReason: data.disapprovalReason,
-    };
-    await sendVisitFormForApproval(id ?? "", modifiedFields, operator?.id ?? "");
-    void queryClient.invalidateQueries({ queryKey: ["waitingRoomVisitForms"], exact: true });
-    setOpenFinalizeDialog(false);
-    navigate(RoutingPath.WAITING_ROOM);
+    if (visitForm !== undefined && operator !== undefined) {
+      const modifiedFields: ValidatedOperatorModifiedFormData = {
+        ...(getModifiedFieldsOnly(initialFormData, data) ?? {}),
+        device: data.device,
+        project: data.project,
+        measuredAt: data.measuredAt,
+        disapprovalReason: data.disapprovalReason,
+      };
+      await sendVisitFormForApproval(visitForm.id, modifiedFields, operator.id);
+      void queryClient.invalidateQueries({ queryKey: ["waitingRoomVisitForms"], exact: true });
+      setOpenFinalizeDialog(false);
+      navigate(RoutingPath.WAITING_ROOM);
+    }
   };
 
   return (
-    <FormContainer<ValidatedOperatorFormData>
+    <FormContainer
       isLoading={isLoading || !areDefaultValuesLoaded}
       isError={isError}
       buttons={formButtons}

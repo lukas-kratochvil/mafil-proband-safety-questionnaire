@@ -37,7 +37,7 @@ export const DuplicationForm = () => {
     isError,
   } = useQuery({
     queryKey: ["visit", id],
-    queryFn: () => fetchDuplicatedVisit(id),
+    queryFn: () => (id === undefined ? undefined : fetchDuplicatedVisit(id)),
     staleTime: Infinity,
     gcTime: Infinity,
   });
@@ -83,117 +83,119 @@ export const DuplicationForm = () => {
 
   // Setting form buttons
   useEffect(() => {
-    if (isPhantom) {
-      setFormButtons({
-        submitButtonProps: {
-          titleLocalizationKey: "form.common.buttons.finalize",
-          onClick: async (data) => {
-            const visit = await createPhantomVisit(data, operator?.username, new Date());
-            const pdf = await generatePhantomPdf(visit.visitId, data, operator?.username);
-            await addPdfToVisit(visit.uuid, pdf);
-            navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.uuid}`);
-          },
-        },
-        buttonsProps: [getBackButtonProps(navigate, "form.common.buttons.cancel")],
-      });
-    } else if (isEditing) {
-      setFormButtons({
-        submitButtonProps: {
-          titleLocalizationKey: "form.common.buttons.saveChanges",
-          onClick: async (_data) => setIsEditing(false),
-        },
-        buttonsProps: [
-          {
-            titleLocalizationKey: "form.common.buttons.cancel",
-            onClick: async () => {
-              if (valuesBeforeEditing !== undefined) {
-                type ValuesBeforeEditingType = keyof typeof valuesBeforeEditing;
-                Object.keys(valuesBeforeEditing).forEach((propertyName) => {
-                  setValue(
-                    propertyName as ValuesBeforeEditingType,
-                    valuesBeforeEditing[propertyName as ValuesBeforeEditingType]
-                  );
-                });
-                setIsEditing(false);
-              }
-            },
-          },
-        ],
-      });
-    } else if (isDisapproved) {
-      setFormButtons({
-        submitButtonProps: {
-          titleLocalizationKey: "form.common.buttons.confirmDisapproval",
-          onClick: async (data) => {
-            await createFinalizedVisit(
-              data,
-              MDB_ApprovalState.DISAPPROVED,
-              operator?.username,
-              new Date(),
-              duplicatedVisit?.subject.preferredLanguageCode
-            );
-            navigate(RoutingPath.RECENT_VISITS);
-          },
-          showErrorColor: true,
-        },
-        buttonsProps: [
-          {
-            titleLocalizationKey: "form.common.buttons.cancel",
-            onClick: async () => {
-              setValue("disapprovalReason", null);
-              setIsDisapproved(false);
-            },
-          },
-        ],
-      });
-    } else {
-      setFormButtons({
-        submitButtonProps: {
-          titleLocalizationKey: "form.common.buttons.finalize",
-          onClick: async (data) => {
-            if (isVisitFormForApproval(operator, data)) {
-              // open warning dialog that the visit form has to be approved by an operator with higher permissions
-              setOpenFinalizeDialog(true);
-            } else {
-              const visit = await createFinalizedVisit(
-                data,
-                MDB_ApprovalState.APPROVED,
-                operator?.username,
-                new Date(),
-                duplicatedVisit?.subject.preferredLanguageCode
-              );
-              const pdf = await generateProbandPdf(
-                visit.visitId,
-                data,
-                operator?.username,
-                duplicatedVisit?.subject.preferredLanguageCode ?? undefined
-              );
+    if (duplicatedVisit !== undefined && operator !== undefined) {
+      if (isPhantom) {
+        setFormButtons({
+          submitButtonProps: {
+            titleLocalizationKey: "form.common.buttons.finalize",
+            onClick: async (data) => {
+              const visit = await createPhantomVisit(data, operator.username, new Date());
+              const pdf = await generatePhantomPdf(visit.visitId, data, operator.username);
               await addPdfToVisit(visit.uuid, pdf);
               navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.uuid}`);
-            }
+            },
           },
-        },
-        buttonsProps: [
-          {
-            titleLocalizationKey: "form.common.buttons.disapprove",
-            onClick: async () => {
-              if (await trigger(undefined, { shouldFocus: true })) {
-                setValue("disapprovalReason", "");
-                setIsDisapproved(true);
-              }
+          buttonsProps: [getBackButtonProps(navigate, "form.common.buttons.cancel")],
+        });
+      } else if (isEditing) {
+        setFormButtons({
+          submitButtonProps: {
+            titleLocalizationKey: "form.common.buttons.saveChanges",
+            onClick: async (_data) => setIsEditing(false),
+          },
+          buttonsProps: [
+            {
+              titleLocalizationKey: "form.common.buttons.cancel",
+              onClick: async () => {
+                if (valuesBeforeEditing !== undefined) {
+                  type ValuesBeforeEditingType = keyof typeof valuesBeforeEditing;
+                  Object.keys(valuesBeforeEditing).forEach((propertyName) => {
+                    setValue(
+                      propertyName as ValuesBeforeEditingType,
+                      valuesBeforeEditing[propertyName as ValuesBeforeEditingType]
+                    );
+                  });
+                  setIsEditing(false);
+                }
+              },
+            },
+          ],
+        });
+      } else if (isDisapproved) {
+        setFormButtons({
+          submitButtonProps: {
+            titleLocalizationKey: "form.common.buttons.confirmDisapproval",
+            onClick: async (data) => {
+              await createFinalizedVisit(
+                data,
+                MDB_ApprovalState.DISAPPROVED,
+                operator.username,
+                new Date(),
+                duplicatedVisit.subject.preferredLanguageCode
+              );
+              navigate(RoutingPath.RECENT_VISITS);
             },
             showErrorColor: true,
           },
-          {
-            titleLocalizationKey: "form.common.buttons.edit",
-            onClick: async () => {
-              setValuesBeforeEditing(getValues());
-              setIsEditing(true);
+          buttonsProps: [
+            {
+              titleLocalizationKey: "form.common.buttons.cancel",
+              onClick: async () => {
+                setValue("disapprovalReason", null);
+                setIsDisapproved(false);
+              },
+            },
+          ],
+        });
+      } else {
+        setFormButtons({
+          submitButtonProps: {
+            titleLocalizationKey: "form.common.buttons.finalize",
+            onClick: async (data) => {
+              if (isVisitFormForApproval(operator, data)) {
+                // open warning dialog that the visit form has to be approved by an operator with higher permissions
+                setOpenFinalizeDialog(true);
+              } else {
+                const visit = await createFinalizedVisit(
+                  data,
+                  MDB_ApprovalState.APPROVED,
+                  operator.username,
+                  new Date(),
+                  duplicatedVisit.subject.preferredLanguageCode
+                );
+                const pdf = await generateProbandPdf(
+                  visit.visitId,
+                  data,
+                  operator.username,
+                  duplicatedVisit.subject.preferredLanguageCode ?? undefined
+                );
+                await addPdfToVisit(visit.uuid, pdf);
+                navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.uuid}`);
+              }
             },
           },
-          getBackButtonProps(navigate, "form.common.buttons.cancel"),
-        ],
-      });
+          buttonsProps: [
+            {
+              titleLocalizationKey: "form.common.buttons.disapprove",
+              onClick: async () => {
+                if (await trigger(undefined, { shouldFocus: true })) {
+                  setValue("disapprovalReason", "");
+                  setIsDisapproved(true);
+                }
+              },
+              showErrorColor: true,
+            },
+            {
+              titleLocalizationKey: "form.common.buttons.edit",
+              onClick: async () => {
+                setValuesBeforeEditing(getValues());
+                setIsEditing(true);
+              },
+            },
+            getBackButtonProps(navigate, "form.common.buttons.cancel"),
+          ],
+        });
+      }
     }
   }, [
     duplicatedVisit,
@@ -209,13 +211,15 @@ export const DuplicationForm = () => {
   ]);
 
   const createVisitFormInApprovalRoom = async (data: ValidatedOperatorFormData) => {
-    await createDuplicatedVisitFormForApproval(data, operator?.id);
-    setOpenFinalizeDialog(false);
-    navigate(RoutingPath.RECENT_VISITS);
+    if (operator !== undefined) {
+      await createDuplicatedVisitFormForApproval(data, operator.id);
+      setOpenFinalizeDialog(false);
+      navigate(RoutingPath.RECENT_VISITS);
+    }
   };
 
   return (
-    <FormContainer<ValidatedOperatorFormData>
+    <FormContainer
       isLoading={isLoading || !areDefaultValuesLoaded}
       isError={isError}
       buttons={formButtons}

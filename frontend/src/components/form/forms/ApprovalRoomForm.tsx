@@ -32,7 +32,7 @@ export const ApprovalRoomForm = () => {
     isError,
   } = useQuery({
     queryKey: ["visitForm", id],
-    queryFn: () => fetchApprovalRoomVisitForm(id),
+    queryFn: () => (id === undefined ? undefined : fetchApprovalRoomVisitForm(id)),
     staleTime: Infinity,
     gcTime: Infinity,
   });
@@ -75,7 +75,7 @@ export const ApprovalRoomForm = () => {
 
   // Setting form buttons
   useEffect(() => {
-    if (operator?.role === "MR_HIGH_PERM") {
+    if (visitForm !== undefined && operator !== undefined && operator.role === "MR_HIGH_PERM") {
       if (isEditing) {
         setFormButtons({
           submitButtonProps: {
@@ -108,10 +108,10 @@ export const ApprovalRoomForm = () => {
               await createVisitFromApproval(
                 data,
                 MDB_ApprovalState.DISAPPROVED,
-                visitForm?.additionalInfo.finalizer.username,
-                visitForm?.additionalInfo.finalizedAt,
-                visitForm?.probandLanguageCode,
-                operator?.username,
+                visitForm.additionalInfo.finalizer.username,
+                visitForm.additionalInfo.finalizedAt,
+                visitForm.probandLanguageCode,
+                operator.username,
                 new Date()
               );
               // TODO: mark visitForm as DELETED / DISAPPROVED?
@@ -137,27 +137,27 @@ export const ApprovalRoomForm = () => {
               const visit = await createVisitFromApproval(
                 data,
                 MDB_ApprovalState.APPROVED,
-                visitForm?.additionalInfo.finalizer.username,
-                visitForm?.additionalInfo.finalizedAt,
-                visitForm?.probandLanguageCode,
+                visitForm.additionalInfo.finalizer.username,
+                visitForm.additionalInfo.finalizedAt,
+                visitForm.probandLanguageCode,
                 operator.username,
                 new Date()
               );
 
               // if something went wrong in the previous finalization, we don't want error to be thrown here if we try to update the already updated state
-              if (visitForm?.state !== "SENT_TO_MAFILDB") {
-                await markVisitFormAsSentToMafilDb(id);
+              if (visitForm.state !== "SENT_TO_MAFILDB") {
+                await markVisitFormAsSentToMafilDb(visitForm.id);
               }
 
               const pdf = await generateProbandPdf(
                 visit.visitId,
                 data,
-                visitForm?.additionalInfo.finalizer.username,
-                visitForm?.probandLanguageCode,
+                visitForm.additionalInfo.finalizer.username,
+                visitForm.probandLanguageCode,
                 operator.username
               );
               await addPdfToVisit(visit.uuid, pdf);
-              await markVisitFormAsPdfGenerated(id);
+              await markVisitFormAsPdfGenerated(visitForm.id);
               navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.uuid}`);
             },
           },
@@ -190,10 +190,10 @@ export const ApprovalRoomForm = () => {
         buttonsProps: [getBackButtonProps(navigate)],
       });
     }
-  }, [getValues, id, isDisapproved, isEditing, navigate, operator, setValue, trigger, valuesBeforeEditing, visitForm]);
+  }, [getValues, isDisapproved, isEditing, navigate, operator, setValue, trigger, valuesBeforeEditing, visitForm]);
 
   return (
-    <FormContainer<ValidatedOperatorFormData>
+    <FormContainer
       isLoading={isLoading || !areDefaultValuesLoaded}
       isError={isError}
       buttons={formButtons}

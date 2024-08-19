@@ -80,7 +80,7 @@ const getButtons = (
   visitDetail: VisitDetail,
   refetchVisitDetail: (
     options?: (RefetchOptions & RefetchQueryFilters) | undefined
-  ) => Promise<QueryObserverResult<VisitDetail, unknown>>
+  ) => Promise<QueryObserverResult<VisitDetail | undefined, unknown>>
 ): VisitDetailButtonProps[] => {
   if (visitDetail.isPhantom) {
     return [
@@ -158,7 +158,7 @@ const VisitDetailPage = () => {
     isLoading,
     isError,
     refetch,
-  } = useQuery({ queryKey: ["visit", id], queryFn: () => fetchVisitDetail(id) });
+  } = useQuery({ queryKey: ["visit", id], queryFn: () => (id === undefined ? undefined : fetchVisitDetail(id)) });
 
   const [coloredInfoStripe, setColoredInfoStripe] = useState<ColoredInfoStripeProps>();
   const [buttonsProps, setButtonsProps] = useState<VisitDetailButtonProps[]>();

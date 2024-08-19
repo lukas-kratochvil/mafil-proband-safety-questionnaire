@@ -84,7 +84,7 @@ const serverApiCall = async <TData, TVariables = Record<string, unknown>>(
 ): Promise<TData> => {
   const { data } = await serverApi.post<
     ResponseData<TData>,
-    AxiosResponse<ResponseData<TData>>,
+    AxiosResponse<ResponseData<TData>, RequestData<TVariables>>,
     RequestData<TVariables>
   >("", {
     query,
@@ -202,13 +202,7 @@ export const fetchWaitingRoomTableVisitForms = async (): Promise<WaitingRoomTabl
   );
 };
 
-export const fetchWaitingRoomVisitForm = async (
-  id: string | undefined
-): Promise<WaitingRoomVisitFormIncludingQuestions> => {
-  if (id === undefined) {
-    throw new Error("Missing visit form ID!");
-  }
-
+export const fetchWaitingRoomVisitForm = async (id: string): Promise<WaitingRoomVisitFormIncludingQuestions> => {
   const variables = { id };
   const data = await serverApiCall<WaitingRoomVisitFormResponse>(queries.GET_WAITING_ROOM_VISIT_FORM, variables);
   const answersIncludingQuestions = await Promise.all(
@@ -249,13 +243,7 @@ export const fetchApprovalRoomTableVisitForms = async (): Promise<ApprovalRoomTa
   );
 };
 
-export const fetchApprovalRoomVisitForm = async (
-  id: string | undefined
-): Promise<ApprovalRoomVisitFormIncludingQuestionsDTO> => {
-  if (id === undefined) {
-    throw new Error("Missing visit ID!");
-  }
-
+export const fetchApprovalRoomVisitForm = async (id: string): Promise<ApprovalRoomVisitFormIncludingQuestionsDTO> => {
   const variables = { id };
   const data = await serverApiCall<ApprovalRoomVisitFormResponse>(queries.GET_APPROVAL_ROOM_VISIT_FORM, variables);
   const answersIncludingQuestions = await Promise.all(
@@ -305,12 +293,8 @@ export const createProbandVisitForm = async (visitFormData: ValidatedProbandForm
 
 export const createDuplicatedVisitFormForApproval = async (
   visitFormData: ValidatedOperatorFormData,
-  finalizerId: string | undefined
+  finalizerId: string
 ): Promise<string> => {
-  if (finalizerId === undefined) {
-    throw new Error("Missing ID of the operator who finalized the visit!");
-  }
-
   const variables: CreateDuplicatedVisitFormForApprovalInput = {
     createVisitFormInput: {
       state: "IN_APPROVAL",
@@ -384,14 +368,7 @@ export const sendVisitFormForApproval = async (
   return data.updateVisitForm.id;
 };
 
-const updateVisitFormState = async (
-  visitFormId: string | undefined,
-  state: VisitFormState
-): Promise<UpdateVisitFormDTO> => {
-  if (visitFormId === undefined) {
-    throw new Error("Visit form id is undefined!");
-  }
-
+const updateVisitFormState = async (visitFormId: string, state: VisitFormState): Promise<UpdateVisitFormDTO> => {
   const variables: UpdateVisitFormStateInput = {
     updateVisitFormInput: {
       id: visitFormId,
@@ -403,10 +380,10 @@ const updateVisitFormState = async (
   return data.updateVisitForm;
 };
 
-export const markVisitFormAsSentToMafilDb = async (visitFormId: string | undefined): Promise<UpdateVisitFormDTO> =>
+export const markVisitFormAsSentToMafilDb = async (visitFormId: string): Promise<UpdateVisitFormDTO> =>
   updateVisitFormState(visitFormId, "SENT_TO_MAFILDB");
 
-export const markVisitFormAsPdfGenerated = async (visitFormId: string | undefined): Promise<UpdateVisitFormDTO> =>
+export const markVisitFormAsPdfGenerated = async (visitFormId: string): Promise<UpdateVisitFormDTO> =>
   updateVisitFormState(visitFormId, "PDF_GENERATED");
 
 export const deleteVisitForm = async (visitFormId: string): Promise<null> => {
@@ -419,14 +396,10 @@ const generatePdf = async (
   isPhantom: boolean,
   visitId: string,
   visitFormData: ValidatedOperatorFormData,
-  finalizerUsername: string | undefined,
+  finalizerUsername: string,
   probandLanguageCode?: LanguageCode,
   approverUsername?: string
 ): Promise<PdfDTO> => {
-  if (finalizerUsername === undefined) {
-    throw new Error("Missing username of the operator who finalized the visit!");
-  }
-
   const variables: GeneratePdfInput = {
     isPhantom,
     visitId,
@@ -468,19 +441,14 @@ const generatePdf = async (
 export const generateProbandPdf = async (
   visitId: string,
   visitFormData: ValidatedOperatorFormData,
-  finalizerUsername: string | undefined,
+  finalizerUsername: string,
   probandLanguageCode: LanguageCode | undefined,
   approverUsername?: string
-): Promise<PdfDTO> => {
-  if (probandLanguageCode === undefined) {
-    throw new Error("Proband language code is undefined!");
-  }
-
-  return generatePdf(false, visitId, visitFormData, finalizerUsername, probandLanguageCode, approverUsername);
-};
+): Promise<PdfDTO> =>
+  generatePdf(false, visitId, visitFormData, finalizerUsername, probandLanguageCode, approverUsername);
 
 export const generatePhantomPdf = async (
   visitId: string,
   visitFormData: ValidatedOperatorFormData,
-  finalizerUsername: string | undefined
+  finalizerUsername: string
 ): Promise<PdfDTO> => generatePdf(true, visitId, visitFormData, finalizerUsername);

@@ -65,7 +65,7 @@ export const ProbandForm = () => {
   }, [step]);
 
   return (
-    <FormContainer<ValidatedProbandFormData>
+    <FormContainer
       isLoading={isLoading}
       isError={isError}
       buttons={formButtons}

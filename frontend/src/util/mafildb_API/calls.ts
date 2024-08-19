@@ -181,22 +181,14 @@ const createVisit = async (
   visitFormData: ValidatedOperatorFormData,
   approvalState: MDB_CreateVisitInput["checked"],
   isPhantom: boolean,
-  finalizerUsername: string | undefined,
-  finalizedAt: Date | undefined,
-  probandLanguageCode: MDB_PreferredLanguageCode | undefined,
+  finalizerUsername: string,
+  finalizedAt: Date,
+  probandLanguageCode: MDB_PreferredLanguageCode,
   approverUsername?: string,
   approvedAt?: Date
 ): Promise<CreatedVisitData | never> => {
-  if (probandLanguageCode === undefined || (!isPhantom && probandLanguageCode === null)) {
+  if (!isPhantom && probandLanguageCode === null) {
     throw new Error("Missing proband language code!");
-  }
-
-  if (finalizerUsername === undefined) {
-    throw new Error("Missing username of the operator who finalized the visit!");
-  }
-
-  if (finalizedAt === undefined) {
-    throw new Error("Missing visit finalization date!");
   }
 
   if (approvalState === MDB_ApprovalState.DISAPPROVED && visitFormData.disapprovalReason?.length === 0) {
@@ -252,30 +244,22 @@ const createVisit = async (
 export const createFinalizedVisit = async (
   visitFormData: ValidatedOperatorFormData,
   approvalState: MDB_CreateVisitInput["checked"],
-  finalizerUsername: string | undefined,
-  finalizedAt: Date | undefined,
-  probandLanguageCode: MDB_PreferredLanguageCode | undefined
+  finalizerUsername: string,
+  finalizedAt: Date,
+  probandLanguageCode: MDB_PreferredLanguageCode
 ): Promise<CreatedVisitData | never> =>
   createVisit(visitFormData, approvalState, false, finalizerUsername, finalizedAt, probandLanguageCode);
 
 export const createVisitFromApproval = async (
   visitFormData: ValidatedOperatorFormData,
   state: MDB_CreateVisitInput["checked"],
-  finalizerUsername: string | undefined,
-  finalizedAt: Date | undefined,
-  probandLanguageCode: MDB_PreferredLanguageCode | undefined,
-  approverUsername: string | undefined,
-  approvedAt: Date | undefined
-): Promise<CreatedVisitData | never> => {
-  if (approverUsername === undefined) {
-    throw new Error("Missing visit approver username!");
-  }
-
-  if (approvedAt === undefined) {
-    throw new Error("Missing visit approval date!");
-  }
-
-  return createVisit(
+  finalizerUsername: string,
+  finalizedAt: Date,
+  probandLanguageCode: MDB_PreferredLanguageCode,
+  approverUsername: string,
+  approvedAt: Date
+): Promise<CreatedVisitData | never> =>
+  createVisit(
     visitFormData,
     state,
     false,
@@ -285,12 +269,11 @@ export const createVisitFromApproval = async (
     approverUsername,
     approvedAt
   );
-};
 
 export const createPhantomVisit = async (
   visitFormData: ValidatedOperatorFormData,
-  finalizerUsername: string | undefined,
-  finalizedAt: Date | undefined
+  finalizerUsername: string,
+  finalizedAt: Date
 ): Promise<CreatedVisitData | never> =>
   createVisit(visitFormData, MDB_ApprovalState.APPROVED, true, finalizerUsername, finalizedAt, null);
 
@@ -415,13 +398,7 @@ const fetchVisit = async (uuid: string): Promise<MDB_VisitDTO | never> => {
   return data;
 };
 
-export const fetchDuplicatedVisit = async (
-  visitUuid: string | undefined
-): Promise<DuplicatedVisitIncludingQuestions | never> => {
-  if (visitUuid === undefined) {
-    throw new Error("Missing visit ID!");
-  }
-
+export const fetchDuplicatedVisit = async (visitUuid: string): Promise<DuplicatedVisitIncludingQuestions | never> => {
   if (import.meta.env.DEV) {
     return (await import("./calls.dev")).fetchDuplicatedVisitDev(visitUuid);
   }
@@ -507,11 +484,7 @@ const fetchVisitPDF = async (visitUuid: string): Promise<MDB_VisitFileDTO> => {
   return visitFile;
 };
 
-export const fetchVisitDetail = async (visitUuid: string | undefined): Promise<VisitDetail | never> => {
-  if (visitUuid === undefined) {
-    throw new Error("Missing visit ID!");
-  }
-
+export const fetchVisitDetail = async (visitUuid: string): Promise<VisitDetail | never> => {
   if (import.meta.env.DEV) {
     return (await import("./calls.dev")).fetchVisitDetailDev(visitUuid);
   }

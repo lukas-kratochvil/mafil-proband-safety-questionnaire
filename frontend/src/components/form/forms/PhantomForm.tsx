@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { FormButtonsProps } from "@app/components/form/components/FormButtons";
 import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo";
@@ -14,22 +15,27 @@ import { FormContainer } from "./FormContainer";
 export const PhantomForm = () => {
   const navigate = useNavigate();
   const { operator } = useAuth();
+  const [formButtons, setFormButtons] = useState<FormButtonsProps<ValidatedOperatorFormData>>();
 
-  const formButtons: FormButtonsProps<ValidatedOperatorFormData> = {
-    submitButtonProps: {
-      titleLocalizationKey: "form.common.buttons.finalize",
-      onClick: async (data) => {
-        const visit = await createPhantomVisit(data, operator?.username, new Date());
-        const pdf = await generatePhantomPdf(visit.visitId, data, operator?.username);
-        await addPdfToVisit(visit.uuid, pdf);
-        navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.uuid}`);
-      },
-    },
-    buttonsProps: [getBackButtonProps(navigate, "form.common.buttons.cancel")],
-  };
+  useEffect(() => {
+    if (operator !== undefined) {
+      setFormButtons({
+        submitButtonProps: {
+          titleLocalizationKey: "form.common.buttons.finalize",
+          onClick: async (data) => {
+            const visit = await createPhantomVisit(data, operator.username, new Date());
+            const pdf = await generatePhantomPdf(visit.visitId, data, operator.username);
+            await addPdfToVisit(visit.uuid, pdf);
+            navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.uuid}`);
+          },
+        },
+        buttonsProps: [getBackButtonProps(navigate, "form.common.buttons.cancel")],
+      });
+    }
+  }, [navigate, operator]);
 
   return (
-    <FormContainer<ValidatedOperatorFormData>
+    <FormContainer
       isLoading={false}
       isError={false}
       buttons={formButtons}
