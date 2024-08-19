@@ -22,6 +22,7 @@ import type {
   PdfDTO,
   QuestionDTO,
   SendVisitFormFromWaitingRoomForApprovalInput,
+  UpdateVisitFormDTO,
   UpdateVisitFormStateInput,
   VisitFormAnswerIncludingQuestion,
   VisitFormState,
@@ -383,7 +384,10 @@ export const sendVisitFormForApproval = async (
   return data.updateVisitForm.id;
 };
 
-const updateVisitFormState = async (visitFormId: string | undefined, state: VisitFormState): Promise<void> => {
+const updateVisitFormState = async (
+  visitFormId: string | undefined,
+  state: VisitFormState
+): Promise<UpdateVisitFormDTO> => {
   if (visitFormId === undefined) {
     throw new Error("Visit form id is undefined!");
   }
@@ -394,18 +398,21 @@ const updateVisitFormState = async (visitFormId: string | undefined, state: Visi
       state,
     },
   };
-  void serverApiCall<UpdateVisitFormResponse>(mutations.UPDATE_VISIT_FORM, variables);
+
+  const data = await serverApiCall<UpdateVisitFormResponse>(mutations.UPDATE_VISIT_FORM, variables);
+  return data.updateVisitForm;
 };
 
-export const markVisitFormAsSentToMafilDb = async (visitFormId: string | undefined): Promise<void> =>
+export const markVisitFormAsSentToMafilDb = async (visitFormId: string | undefined): Promise<UpdateVisitFormDTO> =>
   updateVisitFormState(visitFormId, "SENT_TO_MAFILDB");
 
-export const markVisitFormAsPdfGenerated = async (visitFormId: string | undefined): Promise<void> =>
+export const markVisitFormAsPdfGenerated = async (visitFormId: string | undefined): Promise<UpdateVisitFormDTO> =>
   updateVisitFormState(visitFormId, "PDF_GENERATED");
 
-export const deleteVisitForm = async (visitFormId: string): Promise<void> => {
+export const deleteVisitForm = async (visitFormId: string): Promise<null> => {
   const variables = { id: visitFormId };
-  void serverApiCall<RemoveVisitFormResponse>(mutations.REMOVE_VISIT_FORM, variables);
+  const data = await serverApiCall<RemoveVisitFormResponse>(mutations.REMOVE_VISIT_FORM, variables);
+  return data.removeVisitForm;
 };
 
 const generatePdf = async (

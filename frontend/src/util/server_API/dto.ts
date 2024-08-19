@@ -69,6 +69,12 @@ type OperatorAnswerDTO = ProbandAnswerDTO & {
   comment: string;
 };
 
+export type CreateVisitFormDTO = {
+  id: string;
+};
+
+export type UpdateVisitFormDTO = CreateVisitFormDTO;
+
 export type VisitFormState = "NEW" | "IN_APPROVAL" | "SENT_TO_MAFILDB" | "PDF_GENERATED";
 
 export type WaitingRoomTableVisitFormDTO = {

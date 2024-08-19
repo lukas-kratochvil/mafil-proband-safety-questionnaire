@@ -1,12 +1,14 @@
 import type {
   ApprovalRoomTableVisitFormDTO,
   ApprovalRoomVisitFormDTO,
+  CreateVisitFormDTO,
   GenderDTO,
   HandednessDTO,
   HTMLCardDTO,
   OperatorDTO,
   PdfDTO,
   QuestionDTO,
+  UpdateVisitFormDTO,
   WaitingRoomTableVisitFormDTO,
   WaitingRoomVisitFormDTO,
 } from "./dto";
@@ -47,17 +49,9 @@ export type ApprovalRoomTableVisitFormsResponse = { visitForms: ApprovalRoomTabl
 
 export type ApprovalRoomVisitFormResponse = { visitForm: ApprovalRoomVisitFormDTO };
 
-export type CreateVisitFormResponse = {
-  createVisitForm: {
-    id: string;
-  };
-};
+export type CreateVisitFormResponse = { createVisitForm: CreateVisitFormDTO };
 
-export type UpdateVisitFormResponse = {
-  updateVisitForm: {
-    id: string;
-  };
-};
+export type UpdateVisitFormResponse = { updateVisitForm: UpdateVisitFormDTO };
 
 export type RemoveVisitFormResponse = { removeVisitForm: null };
 
