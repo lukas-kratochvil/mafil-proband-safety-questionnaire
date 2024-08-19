@@ -42,7 +42,7 @@ export const WaitingRoomTableActionButtons = ({
       handleErrorsWithToast(error, t);
     }
 
-    void refetchWaitingRoomTable();
+    await refetchWaitingRoomTable();
     setOpenDeleteDialog(false);
   };
 
