@@ -330,13 +330,13 @@ export const createDuplicatedVisitFormForApproval = async (
 };
 
 export const sendVisitFormForApproval = async (
-  visitFormId: string,
+  id: string,
   visitFormData: ValidatedOperatorModifiedFormData,
   finalizerId: string
 ): Promise<string> => {
   const variables: SendVisitFormFromWaitingRoomForApprovalInput = {
     updateVisitFormInput: {
-      id: visitFormId,
+      id,
       state: "IN_APPROVAL",
       name: visitFormData.name === "" ? undefined : visitFormData.name,
       surname: visitFormData.surname === "" ? undefined : visitFormData.surname,
@@ -368,10 +368,10 @@ export const sendVisitFormForApproval = async (
   return data.updateVisitForm.id;
 };
 
-const updateVisitFormState = async (visitFormId: string, state: VisitFormState): Promise<UpdateVisitFormDTO> => {
+const updateVisitFormState = async (id: string, state: VisitFormState): Promise<UpdateVisitFormDTO> => {
   const variables: UpdateVisitFormStateInput = {
     updateVisitFormInput: {
-      id: visitFormId,
+      id,
       state,
     },
   };
@@ -380,14 +380,14 @@ const updateVisitFormState = async (visitFormId: string, state: VisitFormState):
   return data.updateVisitForm;
 };
 
-export const markVisitFormAsSentToMafilDb = async (visitFormId: string): Promise<UpdateVisitFormDTO> =>
-  updateVisitFormState(visitFormId, "SENT_TO_MAFILDB");
+export const markVisitFormAsSentToMafilDb = async (id: string): Promise<UpdateVisitFormDTO> =>
+  updateVisitFormState(id, "SENT_TO_MAFILDB");
 
-export const markVisitFormAsPdfGenerated = async (visitFormId: string): Promise<UpdateVisitFormDTO> =>
-  updateVisitFormState(visitFormId, "PDF_GENERATED");
+export const markVisitFormAsPdfGenerated = async (id: string): Promise<UpdateVisitFormDTO> =>
+  updateVisitFormState(id, "PDF_GENERATED");
 
-export const deleteVisitForm = async (visitFormId: string): Promise<null> => {
-  const variables = { id: visitFormId };
+export const deleteVisitForm = async (id: string): Promise<null> => {
+  const variables = { id };
   const data = await serverApiCall<RemoveVisitFormResponse>(mutations.REMOVE_VISIT_FORM, variables);
   return data.removeVisitForm;
 };

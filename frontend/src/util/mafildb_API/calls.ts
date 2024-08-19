@@ -398,12 +398,12 @@ const fetchVisit = async (uuid: string): Promise<MDB_VisitDTO | never> => {
   return data;
 };
 
-export const fetchDuplicatedVisit = async (visitUuid: string): Promise<DuplicatedVisitIncludingQuestions | never> => {
+export const fetchDuplicatedVisit = async (uuid: string): Promise<DuplicatedVisitIncludingQuestions | never> => {
   if (import.meta.env.DEV) {
-    return (await import("./calls.dev")).fetchDuplicatedVisitDev(visitUuid);
+    return (await import("./calls.dev")).fetchDuplicatedVisitDev(uuid);
   }
 
-  const visit = await fetchVisit(visitUuid);
+  const visit = await fetchVisit(uuid);
 
   if (!visit.is_phantom && visit.subject.preferred_language === null) {
     throw new Error("Visit subject preferred language is null!");
@@ -504,17 +504,17 @@ export const fetchVisitDetail = async (visitUuid: string): Promise<VisitDetail |
 };
 
 export const updateVisitSignatureState = async (
-  visitUuid: string,
+  uuid: string,
   signatureState: MDB_UpdateVisitSignatureStateInput["registration_signature_status"]
 ): Promise<string | never> => {
   if (import.meta.env.DEV) {
-    return (await import("./calls.dev")).updateVisitSignatureStateDev(visitUuid, signatureState);
+    return (await import("./calls.dev")).updateVisitSignatureStateDev(uuid, signatureState);
   }
 
   const updateData: MDB_UpdateVisitSignatureStateInput = {
     registration_signature_status: signatureState,
   };
-  const { data } = await mafildbApi.patch<MDB_UpdateVisitSignatureStateResponse>(`visits/${visitUuid}`, updateData);
+  const { data } = await mafildbApi.patch<MDB_UpdateVisitSignatureStateResponse>(`visits/${uuid}`, updateData);
 
   if (MDB_RESPONSE_ERROR_ATTR in data) {
     throw new Error(data.detail);
