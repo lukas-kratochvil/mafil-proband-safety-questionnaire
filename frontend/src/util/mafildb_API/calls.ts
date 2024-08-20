@@ -52,7 +52,7 @@ import {
 
 const fetchLanguages = async (): Promise<Language[]> => {
   if (import.meta.env.DEV) {
-    return (await import("./calls.dev")).fetchLanguagesDev();
+    return (await import("./dev/calls.dev")).fetchLanguagesDev();
   }
 
   const { data } = await mafildbApi.get<MDB_GetLanguagesResponse>("languages");
@@ -71,7 +71,7 @@ const fetchLanguages = async (): Promise<Language[]> => {
 
 const fetchLanguage = async (code: string): Promise<Language> => {
   if (import.meta.env.DEV) {
-    return (await import("./calls.dev")).fetchLanguageDev(code);
+    return (await import("./dev/calls.dev")).fetchLanguageDev(code);
   }
 
   const { data } = await mafildbApi.get<MDB_GetLanguageResponse>(`languages/${code}`);
@@ -94,7 +94,7 @@ export const fetchNativeLanguage = async (code: string): Promise<NativeLanguage>
 
 export const fetchProjects = async (): Promise<Project[]> => {
   if (import.meta.env.DEV) {
-    return (await import("./calls.dev")).fetchProjectsDev();
+    return (await import("./dev/calls.dev")).fetchProjectsDev();
   }
 
   const { data } = await mafildbApi.get<MDB_GetProjectsResponse>("projects");
@@ -108,7 +108,7 @@ export const fetchProjects = async (): Promise<Project[]> => {
 
 export const fetchProject = async (uuid: string): Promise<Project> => {
   if (import.meta.env.DEV) {
-    return (await import("./calls.dev")).fetchProjectDev(uuid);
+    return (await import("./dev/calls.dev")).fetchProjectDev(uuid);
   }
 
   const { data } = await mafildbApi.get<MDB_GetProjectResponse>(`projects/${uuid}`);
@@ -122,7 +122,7 @@ export const fetchProject = async (uuid: string): Promise<Project> => {
 
 export const fetchDevices = async (): Promise<Device[]> => {
   if (import.meta.env.DEV) {
-    return (await import("./calls.dev")).fetchDevicesDev();
+    return (await import("./dev/calls.dev")).fetchDevicesDev();
   }
 
   // Only MR devices are relevant for this app
@@ -138,7 +138,7 @@ export const fetchDevices = async (): Promise<Device[]> => {
 
 const fetchDevice = async (id: number): Promise<Device> => {
   if (import.meta.env.DEV) {
-    return (await import("./calls.dev")).fetchDeviceDev(id);
+    return (await import("./dev/calls.dev")).fetchDeviceDev(id);
   }
 
   // Only MR devices are relevant for this app
@@ -196,7 +196,7 @@ const createVisit = async (
   }
 
   if (import.meta.env.DEV) {
-    return (await import("./calls.dev")).createVisitDev(
+    return (await import("./dev/calls.dev")).createVisitDev(
       visitFormData,
       approvalState,
       isPhantom,
@@ -279,7 +279,7 @@ export const createPhantomVisit = async (
 
 export const addPdfToVisit = async (visitUuid: string, pdf: PdfDTO): Promise<VisitPDF> => {
   if (import.meta.env.DEV) {
-    return (await import("./calls.dev")).addPdfToVisitDev(pdf);
+    return (await import("./dev/calls.dev")).addPdfToVisitDev(pdf);
   }
 
   const addPdfToVisitData: MDB_AddPdfToVisitInput = {
@@ -304,7 +304,7 @@ export const addPdfToVisit = async (visitUuid: string, pdf: PdfDTO): Promise<Vis
 
 export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => {
   if (import.meta.env.DEV) {
-    return (await import("./calls.dev")).fetchRecentVisitsDev();
+    return (await import("./dev/calls.dev")).fetchRecentVisitsDev();
   }
 
   // Set limitation to fetch only visits created X days ago and newer where max X is given by the MAFILDB_VISITS_MAX_DAYS_OLD env var.
@@ -400,7 +400,7 @@ const fetchVisit = async (uuid: string): Promise<MDB_VisitDTO | never> => {
 
 export const fetchDuplicatedVisit = async (uuid: string): Promise<DuplicatedVisitIncludingQuestions | never> => {
   if (import.meta.env.DEV) {
-    return (await import("./calls.dev")).fetchDuplicatedVisitDev(uuid);
+    return (await import("./dev/calls.dev")).fetchDuplicatedVisitDev(uuid);
   }
 
   const visit = await fetchVisit(uuid);
@@ -486,7 +486,7 @@ const fetchVisitPDF = async (visitUuid: string): Promise<MDB_VisitFileDTO> => {
 
 export const fetchVisitDetail = async (visitUuid: string): Promise<VisitDetail | never> => {
   if (import.meta.env.DEV) {
-    return (await import("./calls.dev")).fetchVisitDetailDev(visitUuid);
+    return (await import("./dev/calls.dev")).fetchVisitDetailDev(visitUuid);
   }
 
   const [visit, visitPDF] = await Promise.all([fetchVisit(visitUuid), fetchVisitPDF(visitUuid)]);
@@ -508,7 +508,7 @@ export const updateVisitSignatureState = async (
   signatureState: MDB_UpdateVisitSignatureStateInput["registration_signature_status"]
 ): Promise<string | never> => {
   if (import.meta.env.DEV) {
-    return (await import("./calls.dev")).updateVisitSignatureStateDev(uuid, signatureState);
+    return (await import("./dev/calls.dev")).updateVisitSignatureStateDev(uuid, signatureState);
   }
 
   const updateData: MDB_UpdateVisitSignatureStateInput = {

@@ -8,7 +8,7 @@ import {
 import { devicesTest } from "@test/data/devices";
 import { projectsTest } from "@test/data/projects";
 import { subjectsTest } from "@test/data/subjects";
-import type { OperatorDTO } from "../server_API/dto";
+import type { OperatorDTO } from "../../server_API/dto";
 
 const operatorFinalizer: OperatorDTO = {
   id: "1",
