@@ -18,7 +18,7 @@ export const Layout = () => {
       () => {
         if (operator && !location.pathname.startsWith(RoutingPath.AUTH)) {
           void clearAuth();
-          navigate(RoutingPath.LOGIN);
+          navigate(location.pathname);
           return;
         }
 
