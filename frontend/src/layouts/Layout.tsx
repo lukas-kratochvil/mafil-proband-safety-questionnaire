@@ -12,15 +12,13 @@ export const Layout = () => {
   const { operator, clearAuth } = useAuth();
   const [isAuthSolved, setIsAuthSolved] = useState<boolean>(false);
 
-  /**
-   * An authenticated user will not be logged out after clicking (multiple times) on the browser's back button and will remain in the authenticated part of the application.
-   * When an authenticated user is on an authenticated page and enters a public URL in the address bar and redirects, user's authentication data will be cleared before the redirection.
-   */
+  // when an authenticated user is on an authenticated page and enters a public URL in the address bar and redirects, user's authentication data will be cleared before the redirection
   useEffect(() => {
     if (
       operator
+      // user is already authenticated so he/she will be redirected back to the authenticated part of the app (check App.tsx)
       && !location.pathname.startsWith(RoutingPath.AUTH)
-      // '/oidc-login' calls `logInCallback()` which obtains user data from the OIDC provider after successful authentication
+      && !location.pathname.startsWith(RoutingPath.LOGIN)
       && !location.pathname.startsWith(RoutingPath.OIDC_LOGIN)
     ) {
       void clearAuth();

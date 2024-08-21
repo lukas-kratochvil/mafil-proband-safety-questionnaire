@@ -19,7 +19,7 @@ const OidcAuthCallbackPage = () => {
   useEffect(() => {
     const callLogInCallback = async (): Promise<void> => {
       try {
-        navigate((await logInCallback()) ? RoutingPath.WAITING_ROOM : RoutingPath.LOGIN);
+        navigate((await logInCallback()) ? RoutingPath.AUTH_HOME : RoutingPath.LOGIN, { replace: true });
       } catch (error) {
         handleErrorsWithToast(error, t);
         navigate(RoutingPath.LOGIN);
@@ -31,6 +31,7 @@ const OidcAuthCallbackPage = () => {
 
   return (
     <PageContainer center>
+      {/* TODO" create better waiting screen - some icon or gif or something */}
       <Typography>{t("oidcAuthCallbackPage.processing")}</Typography>
     </PageContainer>
   );

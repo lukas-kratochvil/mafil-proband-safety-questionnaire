@@ -1,6 +1,6 @@
 import type { ObjectValuesUnion } from "./types";
 
-export const RoutingPath = {
+const RoutingPathBase = {
   PROBAND_HOME: "/home",
   PROBAND_FORM: "/form",
   LOGIN: "/login",
@@ -15,6 +15,14 @@ export const RoutingPath = {
   RECENT_VISITS: "/auth/recent-visits",
   RECENT_VISITS_DUPLICATE: "/auth/recent-visits/duplicate",
   RECENT_VISITS_VISIT: "/auth/recent-visits/visit",
+} as const;
+
+/**
+ * Logical routing paths.
+ */
+export const RoutingPath = {
+  ...RoutingPathBase,
+  AUTH_HOME: RoutingPathBase.WAITING_ROOM,
 } as const;
 
 export type RoutingPath = ObjectValuesUnion<typeof RoutingPath>;
