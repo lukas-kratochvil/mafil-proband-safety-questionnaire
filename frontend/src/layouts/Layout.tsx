@@ -12,25 +12,24 @@ export const Layout = () => {
   const { operator, clearAuth } = useAuth();
   const [isAuthSolved, setIsAuthSolved] = useState<boolean>(false);
 
-  useEffect(
-    () =>
-      // when the user clicks the back button directly after login, he will be redirected on the public (unauthenticated) page so we need to clear the authentication data when unmounting the `PrivateLayout`
-      () => {
-        if (
-          operator
-          && !location.pathname.startsWith(RoutingPath.AUTH)
-          // '/oidc-login' calls `logInCallback()` which obtains user data from the OIDC provider after successful authentication
-          && !location.pathname.startsWith(RoutingPath.OIDC_LOGIN)
-        ) {
-          void clearAuth();
-          navigate(location.pathname);
-          return;
-        }
+  /**
+   * An authenticated user will not be logged out after clicking (multiple times) on the browser's back button and will remain in the authenticated part of the application.
+   * When an authenticated user is on an authenticated page and enters a public URL in the address bar and redirects, user's authentication data will be cleared before the redirection.
+   */
+  useEffect(() => {
+    if (
+      operator
+      && !location.pathname.startsWith(RoutingPath.AUTH)
+      // '/oidc-login' calls `logInCallback()` which obtains user data from the OIDC provider after successful authentication
+      && !location.pathname.startsWith(RoutingPath.OIDC_LOGIN)
+    ) {
+      void clearAuth();
+      navigate(location.pathname);
+      return;
+    }
 
-        setIsAuthSolved(true);
-      },
-    [clearAuth, location, navigate, operator]
-  );
+    setIsAuthSolved(true);
+  }, [clearAuth, location, navigate, operator]);
 
   if (!isAuthSolved) {
     return <SuspensePage />;
