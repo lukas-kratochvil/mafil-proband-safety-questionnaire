@@ -7,6 +7,7 @@ export type Auth = {
   logOut: () => Promise<void>;
   logOutCallback: () => Promise<void>;
   operator: OperatorDTO | undefined;
+  clearAuth: () => Promise<void>;
 };
 
 // defaultValue argument is only used when a component does not have a matching Provider above it in the tree – helpful for testing components in isolation

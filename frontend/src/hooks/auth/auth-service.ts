@@ -4,6 +4,9 @@ import { LocalizedError } from "@app/util/error-handling/LocalizedError";
 import { authenticateOperator } from "@app/util/server_API/calls";
 import type { OperatorDTO } from "@app/util/server_API/dto";
 
+// This option will revoke the access and the refresh token to avoid accessing secured APIs using these tokens
+const revokeTokenTypes = ["access_token", "refresh_token"] satisfies Required<UserManagerSettings["revokeTokenTypes"]>;
+
 // Using OIDC Authorization Code Flow
 // Using "Jednotné přihlášení MUNI" OIDC provider
 const oidcConfig: UserManagerSettings = {
@@ -24,7 +27,7 @@ const oidcConfig: UserManagerSettings = {
   automaticSilentRenew: true,
   // Revoke access token and refresh token on signout to avoid accessing secured APIs using these tokens
   revokeTokensOnSignout: true,
-  revokeTokenTypes: ["access_token", "refresh_token"],
+  revokeTokenTypes,
 };
 
 export class AuthService {
@@ -78,5 +81,10 @@ export class AuthService {
 
   public async getAuthUser(): Promise<User | null> {
     return this.userManager.getUser();
+  }
+
+  public async clearAuthData(): Promise<void> {
+    await this.userManager.removeUser();
+    return this.userManager.revokeTokens(revokeTokenTypes);
   }
 }
