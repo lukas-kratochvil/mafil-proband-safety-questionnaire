@@ -7,7 +7,7 @@ const NotFoundPage = () => {
   const { operator } = useAuth();
   const { t } = useTranslation("translation", { keyPrefix: "notFoundPage" });
 
-  if (operator !== undefined) {
+  if (operator) {
     return null;
   }
 

@@ -49,7 +49,7 @@ export const ApprovalRoomForm = () => {
 
   // Setting default values
   useEffect(() => {
-    if (visitForm !== undefined) {
+    if (visitForm) {
       setQacs(
         visitForm.answersIncludingQuestions.map((answer, index) => ({
           index,
@@ -75,7 +75,7 @@ export const ApprovalRoomForm = () => {
 
   // Setting form buttons
   useEffect(() => {
-    if (visitForm !== undefined && operator !== undefined && operator.role === "MR_HIGH_PERM") {
+    if (visitForm && operator && operator.role === "MR_HIGH_PERM") {
       if (isEditing) {
         setFormButtons({
           submitButtonProps: {
@@ -86,7 +86,7 @@ export const ApprovalRoomForm = () => {
             {
               titleLocalizationKey: "form.common.buttons.cancel",
               onClick: async () => {
-                if (valuesBeforeEditing !== undefined) {
+                if (valuesBeforeEditing) {
                   type ValuesBeforeEditingType = keyof typeof valuesBeforeEditing;
                   Object.keys(valuesBeforeEditing).forEach((propertyName) => {
                     setValue(

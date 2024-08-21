@@ -36,7 +36,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestio
 
   // Hide question when specified genders are selected
   useEffect(() => {
-    if (selectedGender !== null && qac.hiddenByGenders.map((hbg) => hbg.genderCode).includes(selectedGender.code)) {
+    if (selectedGender && qac.hiddenByGenders.map((hbg) => hbg.genderCode).includes(selectedGender.code)) {
       setHideQuestion(true);
       setValue(`answers.${qac.index}.answer`, "NO");
     } else {
@@ -99,7 +99,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestio
           sx={{ justifyContent: matchesUpSmBreakpoint ? "flex-end" : "flex-start" }}
         />
       </Grid>
-      {operator !== undefined && questionAnswer === "YES" && (
+      {operator && questionAnswer === "YES" && (
         <Grid
           item
           xs={1}

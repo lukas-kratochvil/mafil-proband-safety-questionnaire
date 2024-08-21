@@ -35,7 +35,7 @@ export const PhantomForm = () => {
   const [formButtons, setFormButtons] = useState<FormButtonsProps<ValidatedOperatorFormData>>();
 
   useEffect(() => {
-    if (operator !== undefined) {
+    if (operator) {
       setFormButtons(getPhantomFormButtons(navigate, operator));
     }
   }, [navigate, operator]);

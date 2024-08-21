@@ -54,7 +54,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
 
   // Setting selected gender
   useEffect(() => {
-    if (genders.data !== undefined) {
+    if (genders.data) {
       if (isPhantom) {
         // Setting gender to 'Other' in the phantom visit
         const genderOther = genders.data.find((gender) => gender.code === "O") ?? null;
@@ -63,7 +63,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
         // Setting selected gender
         const genderId = getValues("gender.id");
 
-        if (genderId !== null) {
+        if (genderId) {
           const selectedGender = genders.data.find((gender) => gender.id === genderId) ?? null;
           setValue("gender", selectedGender, { shouldTouch: true });
         }
@@ -73,7 +73,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
 
   // Setting selected native language
   useEffect(() => {
-    if (nativeLanguages.data !== undefined) {
+    if (nativeLanguages.data) {
       if (isPhantom) {
         // Setting native language to 'Other' in the phantom visit
         const nativeLanguageOther = nativeLanguages.data.find((nativeLanguage) => nativeLanguage.code === "ot") ?? null;
@@ -81,7 +81,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
       } else {
         const nativeLanguageCode = getValues("nativeLanguage.code");
 
-        if (nativeLanguageCode !== null) {
+        if (nativeLanguageCode) {
           const selectedNativeLanguage
             = nativeLanguages.data.find((nativeLanguage) => nativeLanguage.code === nativeLanguageCode) ?? null;
           setValue("nativeLanguage", selectedNativeLanguage, { shouldTouch: true });
@@ -92,7 +92,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
 
   // Setting selected handedness
   useEffect(() => {
-    if (handednesses.data !== undefined) {
+    if (handednesses.data) {
       if (isPhantom) {
         // Setting handedness to 'Undetermined' in the phantom visit
         const handednessUndetermined = handednesses.data.find((handedness) => handedness.code === "UN") ?? null;
@@ -100,7 +100,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
       } else {
         const handednessId = getValues("handedness.id");
 
-        if (handednessId !== null) {
+        if (handednessId) {
           const selectedHandedness = handednesses.data.find((handedness) => handedness.id === handednessId) ?? null;
           setValue("handedness", selectedHandedness, { shouldTouch: true });
         }
@@ -126,7 +126,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
     setValue("birthdate", personalId.getBirthdate(), { shouldTouch: true });
 
     // Phantom visit has strictly gender 'Other' - we do not change it here
-    if (!isPhantom && genders.data !== undefined) {
+    if (!isPhantom && genders.data) {
       let code: string | undefined;
 
       if (personalId.isMale()) {
@@ -152,10 +152,10 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
 
     if (
       personalIdValue === ""
-      && birthdateValue !== null
+      && birthdateValue
       && isValid(birthdateValue)
       && Math.abs(differenceInCalendarYears(birthdateValue, Date.now())) < 200
-      && genderEntity !== null
+      && genderEntity
     ) {
       const personalIdPart = getPersonalIdPart(birthdateValue, genderEntity);
       setValue("personalId", personalIdPart, { shouldTouch: true });

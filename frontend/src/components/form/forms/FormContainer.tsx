@@ -54,7 +54,7 @@ export const FormContainer = <TValidatedData extends object>({
         alignItems="stretch"
       >
         {children}
-        {buttons !== undefined && <FormButtons {...buttons} />}
+        {buttons && <FormButtons {...buttons} />}
       </Stack>
     </form>
   );

@@ -24,7 +24,7 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
 
   // Setting selected project
   useEffect(() => {
-    if (projects.data !== undefined) {
+    if (projects.data) {
       const projectUuid = getValues("project.uuid");
       const selectedProject = projects.data.find((project) => project.uuid === projectUuid) ?? null;
       setValue("project", selectedProject, { shouldTouch: true });
@@ -33,7 +33,7 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
 
   // Setting selected device
   useEffect(() => {
-    if (devices.data !== undefined) {
+    if (devices.data) {
       const deviceId = getValues("device.id");
       const selectedDevice = devices.data.find((device) => device.id === deviceId) ?? null;
       setValue("device", selectedDevice, { shouldTouch: true });

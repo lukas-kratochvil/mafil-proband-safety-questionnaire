@@ -59,7 +59,7 @@ export const Header = () => {
           </Grid>
         </Grid>
       </Toolbar>
-      {!matchesDownMdBreakpoint && operator !== undefined && <Navigation />}
+      {!matchesDownMdBreakpoint && operator && <Navigation />}
     </AppBar>
   );
 };

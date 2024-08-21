@@ -33,7 +33,7 @@ export const ProbandForm = () => {
 
   // Setting questions
   useEffect(() => {
-    if (questions !== undefined && step === "examination") {
+    if (questions && step === "examination") {
       setQacs(
         questions.map((question, index) => ({
           index,

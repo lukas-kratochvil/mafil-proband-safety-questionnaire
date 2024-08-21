@@ -34,7 +34,7 @@ export const PhantomDuplicationForm = () => {
 
   // Setting default values
   useEffect(() => {
-    if (duplicatedVisit !== undefined) {
+    if (duplicatedVisit) {
       const defaultValues = loadFormDefaultValuesVisitDuplication(duplicatedVisit);
       type DefaultValuesPropertyType = keyof typeof defaultValues;
       Object.keys(defaultValues).forEach((propertyName) => {
@@ -46,7 +46,7 @@ export const PhantomDuplicationForm = () => {
 
   // Setting form buttons
   useEffect(() => {
-    if (operator !== undefined) {
+    if (operator) {
       setFormButtons(getPhantomFormButtons(navigate, operator));
     }
   }, [navigate, operator]);

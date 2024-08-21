@@ -59,7 +59,7 @@ export const WaitingRoomForm = () => {
 
   // Setting default values
   useEffect(() => {
-    if (visitForm !== undefined) {
+    if (visitForm) {
       setQacs(
         visitForm.answersIncludingQuestions.map((answer, index) => ({
           index,
@@ -86,7 +86,7 @@ export const WaitingRoomForm = () => {
 
   // Setting form buttons
   useEffect(() => {
-    if (visitForm !== undefined && operator !== undefined) {
+    if (visitForm && operator) {
       if (isEditing) {
         setFormButtons({
           submitButtonProps: {
@@ -97,7 +97,7 @@ export const WaitingRoomForm = () => {
             {
               titleLocalizationKey: "form.common.buttons.cancel",
               onClick: async () => {
-                if (valuesBeforeEditing !== undefined) {
+                if (valuesBeforeEditing) {
                   type ValuesBeforeEditingType = keyof typeof valuesBeforeEditing;
                   Object.keys(valuesBeforeEditing).forEach((propertyName) => {
                     setValue(
@@ -198,7 +198,7 @@ export const WaitingRoomForm = () => {
   }, [getValues, isDisapproved, isEditing, navigate, operator, setValue, trigger, valuesBeforeEditing, visitForm]);
 
   const moveVisitFormToApprovalRoom = async (data: ValidatedOperatorFormData) => {
-    if (visitForm !== undefined && operator !== undefined) {
+    if (visitForm && operator) {
       const modifiedFields: ValidatedOperatorModifiedFormData = {
         ...(getModifiedFieldsOnly(initialFormData, data) ?? {}),
         device: data.device,

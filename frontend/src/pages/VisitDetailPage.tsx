@@ -166,7 +166,7 @@ const VisitDetailPage = () => {
   useEffect(() => {
     const stateButtons: VisitDetailButtonProps[] = [];
 
-    if (visitDetail !== undefined) {
+    if (visitDetail) {
       setColoredInfoStripe(getColoredInfoStripe(visitDetail));
       stateButtons.push(...getButtons(visitDetail, refetch));
     }

@@ -46,7 +46,7 @@ export const ProbandDuplicationForm = () => {
 
   // Setting default values
   useEffect(() => {
-    if (duplicatedVisit !== undefined) {
+    if (duplicatedVisit) {
       setQacs(
         duplicatedVisit.answersIncludingQuestions.map((answer, index) => ({
           index,
@@ -72,7 +72,7 @@ export const ProbandDuplicationForm = () => {
 
   // Setting form buttons
   useEffect(() => {
-    if (duplicatedVisit !== undefined && operator !== undefined) {
+    if (duplicatedVisit && operator) {
       // set proband form buttons
       if (isEditing) {
         setFormButtons({
@@ -84,7 +84,7 @@ export const ProbandDuplicationForm = () => {
             {
               titleLocalizationKey: "form.common.buttons.cancel",
               onClick: async () => {
-                if (valuesBeforeEditing !== undefined) {
+                if (valuesBeforeEditing) {
                   type ValuesBeforeEditingType = keyof typeof valuesBeforeEditing;
                   Object.keys(valuesBeforeEditing).forEach((propertyName) => {
                     setValue(
@@ -187,7 +187,7 @@ export const ProbandDuplicationForm = () => {
   ]);
 
   const createVisitFormInApprovalRoom = async (data: ValidatedOperatorFormData) => {
-    if (operator !== undefined) {
+    if (operator) {
       await createDuplicatedVisitFormForApproval(data, operator.id);
       setOpenFinalizeDialog(false);
       navigate(RoutingPath.RECENT_VISITS);
