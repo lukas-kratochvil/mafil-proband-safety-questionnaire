@@ -7,7 +7,7 @@ import { RoutingPath } from "@app/routing-paths";
 import { LocalizedError } from "@app/util/error-handling/LocalizedError";
 import { fetchCurrentQuestions } from "@app/util/server_API/calls";
 import type { QuestionDTO } from "@app/util/server_API/dto";
-import { handleErrorsWithToast } from "@app/util/utils";
+import { handleErrorsWithToast, type DuplicationFormPageLocationState } from "@app/util/utils";
 import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
 const currentQuestionsIdComparator = (a: QuestionDTO, b: QuestionDTO) => {
@@ -48,7 +48,8 @@ export const RecentVisitsTableActionButtons = ({ visit }: RecentVisitsTableActio
         }
       }
 
-      navigate(`${RoutingPath.RECENT_VISITS_DUPLICATE}/${visit.uuid}`, { state: { isPhantom: visit.isPhantom } });
+      const state: DuplicationFormPageLocationState = { isPhantom: visit.isPhantom };
+      navigate(`${RoutingPath.RECENT_VISITS_DUPLICATE}/${visit.uuid}`, { state });
     } catch (error) {
       handleErrorsWithToast(error, t);
     }

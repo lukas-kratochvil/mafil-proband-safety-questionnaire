@@ -8,6 +8,10 @@ import type { Either } from "@app/types";
 import { LocalizedError } from "./error-handling/LocalizedError";
 import { ServerApiValidationError } from "./error-handling/ServerApiValidationError";
 
+export type DuplicationFormPageLocationState = {
+  isPhantom: boolean;
+};
+
 export type ButtonProps = {
   titleLocalizationKey: string;
   showErrorColor?: boolean;

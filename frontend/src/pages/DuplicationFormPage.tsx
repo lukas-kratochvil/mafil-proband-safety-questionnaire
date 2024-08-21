@@ -4,13 +4,10 @@ import { PhantomDuplicationForm } from "@app/components/form/forms/PhantomDuplic
 import { ProbandDuplicationForm } from "@app/components/form/forms/ProbandDuplicationForm";
 import { operatorApprovalFormSchema } from "@app/components/form/schemas/operator-approval-form-schema";
 import { loadEmptyDefaultValues } from "@app/components/form/util/loaders";
-
-type DuplicationLocationState = {
-  isPhantom: boolean;
-};
+import type { DuplicationFormPageLocationState } from "@app/util/utils";
 
 const DuplicationFormPage = () => {
-  const location = useLocation() as Location<DuplicationLocationState>;
+  const location = useLocation() as Location<DuplicationFormPageLocationState>;
 
   if (location.state.isPhantom) {
     return (
