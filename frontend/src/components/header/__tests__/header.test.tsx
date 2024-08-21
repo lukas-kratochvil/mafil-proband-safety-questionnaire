@@ -1,15 +1,15 @@
 import ScienceIcon from "@mui/icons-material/Science";
+import type { Auth } from "@app/hooks/auth/auth";
 import { RoutingPath } from "@app/routing-paths";
 import { operatorMRTest } from "@test/data/operators";
 import { render, screen } from "@test/utils";
 import { Header } from "../Header";
 import type { TabProps } from "../navigation/tabs";
-import type { Auth } from "@app/hooks/auth/auth";
 
 //----------------------------------------------------------------------
 // Mocking custom authentication
 //----------------------------------------------------------------------
-let mockOperator = vi.fn<() => Auth["operator"]>();
+const mockOperator = vi.fn<() => Auth["operator"]>();
 
 vi.mock("@app/hooks/auth/auth", () => ({
   useAuth: () => ({

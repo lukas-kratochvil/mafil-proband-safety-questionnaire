@@ -4,6 +4,7 @@ import type { NativeLanguage } from "@app/model/language";
 import type { Project } from "@app/model/project";
 import type { DuplicatedPhantomVisit, DuplicatedProbandVisit } from "@app/model/visit";
 import type { GenderDTO, HandednessDTO, PdfDTO, QuestionDTO } from "@app/util/server_API/dto";
+import type { DuplicationFormPageLocationState } from "@app/util/utils";
 import { devicesTest } from "@test/data/devices";
 import { gendersTest } from "@test/data/genders";
 import { handednessesTest } from "@test/data/handednesses";
@@ -56,14 +57,13 @@ const phantomVisit: DuplicatedPhantomVisit = {
   subject: {
     ...probandVisit.subject,
     preferredLanguageCode: null,
-  }
-}
+  },
+};
 
 //----------------------------------------------------------------------
 // Mocking react-router-dom hooks
 //----------------------------------------------------------------------
-let mockedIsPhantom = vi.fn();
-const mockedUseNavigate = vi.fn();
+const mockedIsPhantom = vi.fn<() => DuplicationFormPageLocationState["isPhantom"]>();
 
 vi.mock("react-router-dom", async () => ({
   ...((await vi.importActual("react-router-dom")) as Record<string, unknown>),
@@ -71,7 +71,7 @@ vi.mock("react-router-dom", async () => ({
     ...vi.fn(),
     state: { isPhantom: mockedIsPhantom() },
   }),
-  useNavigate: () => mockedUseNavigate,
+  useNavigate: () => vi.fn(),
   useParams: () => ({
     id,
   }),
@@ -197,7 +197,7 @@ describe("duplication form page", () => {
         }
       });
     });
-  })
+  });
 
   describe("phantom visit", () => {
     beforeEach(() => {
@@ -206,10 +206,7 @@ describe("duplication form page", () => {
 
     test("contains correct form buttons", async () => {
       // ARRANGE
-      const buttonNames: string[] = [
-        "form.common.buttons.finalize",
-        "form.common.buttons.cancel",
-      ];
+      const buttonNames: string[] = ["form.common.buttons.finalize", "form.common.buttons.cancel"];
 
       // ACT
       setup();
@@ -248,5 +245,5 @@ describe("duplication form page", () => {
       expect(form).toHaveFormValues(expectedFormValues);
       expect(questionsRadios.length).toEqual(0);
     });
-  })
+  });
 });
