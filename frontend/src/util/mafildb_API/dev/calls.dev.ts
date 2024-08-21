@@ -2,10 +2,11 @@ import type { Device } from "@app/model/device";
 import type { ValidatedOperatorFormData } from "@app/model/form";
 import type { Language } from "@app/model/language";
 import type { Project } from "@app/model/project";
-import type { Subject } from "@app/model/subject";
+import type { DuplicatedProbandVisitSubject, Subject } from "@app/model/subject";
 import type {
   CreatedVisitData,
-  DuplicatedVisitIncludingQuestions,
+  DuplicatedPhantomVisit,
+  DuplicatedProbandVisit,
   RecentVisitsTableVisit,
   VisitDetail,
 } from "@app/model/visit";
@@ -110,9 +111,7 @@ export const fetchRecentVisitsDev = async (): Promise<RecentVisitsTableVisit[]> 
     }));
 };
 
-export const fetchDuplicatedVisitDev = async (
-  visitUuid: string
-): Promise<DuplicatedVisitIncludingQuestions | never> => {
+export const fetchDuplicatedProbandVisitDev = async (visitUuid: string): Promise<DuplicatedProbandVisit | never> => {
   const visit = dummyVisits.find((dummyVisit) => dummyVisit.uuid === visitUuid);
 
   if (visit === undefined) {
@@ -129,11 +128,27 @@ export const fetchDuplicatedVisitDev = async (
       })
     ),
   ]);
+  const subject: DuplicatedProbandVisitSubject = {
+    ...visit.subject,
+    preferredLanguageCode: "en",
+  };
   return {
     ...visit,
+    subject,
     gender,
     handedness,
     answersIncludingQuestions,
+  };
+};
+
+export const fetchDuplicatedPhantomVisitDev = async (visitUuid: string): Promise<DuplicatedPhantomVisit | never> => {
+  const visit = await fetchDuplicatedProbandVisitDev(visitUuid);
+  return {
+    ...visit,
+    subject: {
+      ...visit.subject,
+      preferredLanguageCode: null,
+    },
   };
 };
 

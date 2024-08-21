@@ -17,3 +17,11 @@ export type RecentVisitSubject = {
 };
 
 export type Subject = Omit<RecentVisitSubject, "nativeLanguage"> & { nativeLanguage: NativeLanguage };
+
+export type DuplicatedProbandVisitSubject = Omit<Subject, "preferredLanguageCode"> & {
+  preferredLanguageCode: NonNullable<Subject["preferredLanguageCode"]>;
+};
+
+export type DuplicatedPhantomVisitSubject = Omit<Subject, "preferredLanguageCode"> & {
+  preferredLanguageCode: Extract<Subject["preferredLanguageCode"], null>;
+};

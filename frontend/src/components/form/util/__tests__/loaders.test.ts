@@ -1,4 +1,4 @@
-import type { DuplicatedVisitIncludingQuestions } from "@app/model/visit";
+import type { DuplicatedPhantomVisit, DuplicatedProbandVisit } from "@app/model/visit";
 import type {
   ApprovalRoomVisitFormIncludingQuestionsDTO,
   VisitFormAnswerIncludingQuestion,
@@ -66,12 +66,15 @@ const approvalRoomVisitForm: ApprovalRoomVisitFormIncludingQuestionsDTO = {
   },
 };
 
-const duplicatedVisit: DuplicatedVisitIncludingQuestions = {
+const duplicatedProbandVisit: DuplicatedProbandVisit = {
   uuid: "1",
   visitId: "1",
   isPhantom: false,
   measurementDate: new Date(),
-  subject: subjectsTest[0]!,
+  subject: {
+    ...subjectsTest[0]!,
+    preferredLanguageCode: subjectsTest[0]!.preferredLanguageCode!,
+  },
   project: projectsTest[0]!,
   deviceId: 1,
   gender: gendersTest[0]!,
@@ -81,6 +84,16 @@ const duplicatedVisit: DuplicatedVisitIncludingQuestions = {
   handedness: handednessesTest[3]!,
   answersIncludingQuestions: [answerIncludingQuestion],
 };
+
+const duplicatedPhantomVisit: DuplicatedPhantomVisit = {
+  ...duplicatedProbandVisit,
+  subject: {
+    ...duplicatedProbandVisit.subject,
+    preferredLanguageCode: null,
+  },
+  // TODO: remove `answersIncludingQuestions` after the DuplicatedPhantomVisit type is corrected
+  answersIncludingQuestions: [],
+}
 
 //----------------------------------------------------------------------
 // Tests
@@ -199,39 +212,73 @@ describe("form loaders", () => {
     });
   });
 
-  test("duplicated visit form default values", () => {
+  test("duplicated proband visit form default values", () => {
     // ARRANGE
     const currentDate = new Date();
     vi.spyOn(global, "Date").mockImplementationOnce(() => currentDate);
 
     // ACT
-    const formDefaultValuesVisitDuplication = loadFormDefaultValuesVisitDuplication(duplicatedVisit);
+    const formDefaultValuesVisitDuplication = loadFormDefaultValuesVisitDuplication(duplicatedProbandVisit);
 
     // ASSERT
     expect(formDefaultValuesVisitDuplication.project).toBeNull();
     expect(formDefaultValuesVisitDuplication.device).toBeNull();
     expect(formDefaultValuesVisitDuplication.measuredAt).toEqual(currentDate);
-    expect(formDefaultValuesVisitDuplication.name).toEqual(duplicatedVisit.subject.name);
-    expect(formDefaultValuesVisitDuplication.surname).toEqual(duplicatedVisit.subject.surname);
-    expect(formDefaultValuesVisitDuplication.personalId).toEqual(duplicatedVisit.subject.personalId);
-    expect(formDefaultValuesVisitDuplication.birthdate).toEqual(duplicatedVisit.subject.birthdate);
-    expect(formDefaultValuesVisitDuplication.gender?.id).toEqual(duplicatedVisit.gender.id);
-    expect(formDefaultValuesVisitDuplication.nativeLanguage).toEqual(duplicatedVisit.subject.nativeLanguage);
-    expect(formDefaultValuesVisitDuplication.heightCm).toEqual(duplicatedVisit.heightCm);
-    expect(formDefaultValuesVisitDuplication.weightKg).toEqual(duplicatedVisit.weightKg);
-    expect(formDefaultValuesVisitDuplication.handedness?.id).toEqual(duplicatedVisit.handedness.id);
+    expect(formDefaultValuesVisitDuplication.name).toEqual(duplicatedProbandVisit.subject.name);
+    expect(formDefaultValuesVisitDuplication.surname).toEqual(duplicatedProbandVisit.subject.surname);
+    expect(formDefaultValuesVisitDuplication.personalId).toEqual(duplicatedProbandVisit.subject.personalId);
+    expect(formDefaultValuesVisitDuplication.birthdate).toEqual(duplicatedProbandVisit.subject.birthdate);
+    expect(formDefaultValuesVisitDuplication.gender?.id).toEqual(duplicatedProbandVisit.gender.id);
+    expect(formDefaultValuesVisitDuplication.nativeLanguage).toEqual(duplicatedProbandVisit.subject.nativeLanguage);
+    expect(formDefaultValuesVisitDuplication.heightCm).toEqual(duplicatedProbandVisit.heightCm);
+    expect(formDefaultValuesVisitDuplication.weightKg).toEqual(duplicatedProbandVisit.weightKg);
+    expect(formDefaultValuesVisitDuplication.handedness?.id).toEqual(duplicatedProbandVisit.handedness.id);
     expect(formDefaultValuesVisitDuplication.visualCorrection?.value).toEqual(
-      duplicatedVisit.visualCorrectionDioptre === 0 ? "no" : "yes"
+      duplicatedProbandVisit.visualCorrectionDioptre === 0 ? "no" : "yes"
     );
-    expect(formDefaultValuesVisitDuplication.visualCorrectionDioptre).toEqual(duplicatedVisit.visualCorrectionDioptre);
-    expect(formDefaultValuesVisitDuplication.email).toEqual(duplicatedVisit.subject.email);
-    expect(formDefaultValuesVisitDuplication.phone).toEqual(duplicatedVisit.subject.phone);
+    expect(formDefaultValuesVisitDuplication.visualCorrectionDioptre).toEqual(
+      duplicatedProbandVisit.visualCorrectionDioptre
+    );
+    expect(formDefaultValuesVisitDuplication.email).toEqual(duplicatedProbandVisit.subject.email);
+    expect(formDefaultValuesVisitDuplication.phone).toEqual(duplicatedProbandVisit.subject.phone);
 
     formDefaultValuesVisitDuplication.answers.forEach((answer, i) => {
-      expect(answer.questionId).toEqual(duplicatedVisit.answersIncludingQuestions[i]?.questionId);
-      expect(answer.mustBeApproved).toEqual(duplicatedVisit.answersIncludingQuestions[i]?.mustBeApproved);
-      expect(answer.answer).toEqual(duplicatedVisit.answersIncludingQuestions[i]?.answer);
-      expect(answer.comment).toEqual(duplicatedVisit.answersIncludingQuestions[i]?.comment);
+      expect(answer.questionId).toEqual(duplicatedProbandVisit.answersIncludingQuestions[i]?.questionId);
+      expect(answer.mustBeApproved).toEqual(duplicatedProbandVisit.answersIncludingQuestions[i]?.mustBeApproved);
+      expect(answer.answer).toEqual(duplicatedProbandVisit.answersIncludingQuestions[i]?.answer);
+      expect(answer.comment).toEqual(duplicatedProbandVisit.answersIncludingQuestions[i]?.comment);
     });
+  });
+
+  test("duplicated phantom visit form default values", () => {
+    // ARRANGE
+    const currentDate = new Date();
+    vi.spyOn(global, "Date").mockImplementationOnce(() => currentDate);
+
+    // ACT
+    const formDefaultValuesVisitDuplication = loadFormDefaultValuesVisitDuplication(duplicatedPhantomVisit);
+
+    // ASSERT
+    expect(formDefaultValuesVisitDuplication.project).toBeNull();
+    expect(formDefaultValuesVisitDuplication.device).toBeNull();
+    expect(formDefaultValuesVisitDuplication.measuredAt).toEqual(currentDate);
+    expect(formDefaultValuesVisitDuplication.name).toEqual(duplicatedPhantomVisit.subject.name);
+    expect(formDefaultValuesVisitDuplication.surname).toEqual(duplicatedPhantomVisit.subject.surname);
+    expect(formDefaultValuesVisitDuplication.personalId).toEqual(duplicatedPhantomVisit.subject.personalId);
+    expect(formDefaultValuesVisitDuplication.birthdate).toEqual(duplicatedPhantomVisit.subject.birthdate);
+    expect(formDefaultValuesVisitDuplication.gender?.id).toEqual(duplicatedPhantomVisit.gender.id);
+    expect(formDefaultValuesVisitDuplication.nativeLanguage).toEqual(duplicatedPhantomVisit.subject.nativeLanguage);
+    expect(formDefaultValuesVisitDuplication.heightCm).toEqual(duplicatedPhantomVisit.heightCm);
+    expect(formDefaultValuesVisitDuplication.weightKg).toEqual(duplicatedPhantomVisit.weightKg);
+    expect(formDefaultValuesVisitDuplication.handedness?.id).toEqual(duplicatedPhantomVisit.handedness.id);
+    expect(formDefaultValuesVisitDuplication.visualCorrection?.value).toEqual(
+      duplicatedPhantomVisit.visualCorrectionDioptre === 0 ? "no" : "yes"
+    );
+    expect(formDefaultValuesVisitDuplication.visualCorrectionDioptre).toEqual(
+      duplicatedPhantomVisit.visualCorrectionDioptre
+    );
+    expect(formDefaultValuesVisitDuplication.email).toEqual(duplicatedPhantomVisit.subject.email);
+    expect(formDefaultValuesVisitDuplication.phone).toEqual(duplicatedPhantomVisit.subject.phone);
+    expect(formDefaultValuesVisitDuplication.answers).toEqual([]);
   });
 });

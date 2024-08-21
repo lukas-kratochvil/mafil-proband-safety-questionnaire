@@ -1,5 +1,5 @@
 import type { FormAnswer, FormPropType } from "@app/model/form";
-import type { DuplicatedVisitIncludingQuestions } from "@app/model/visit";
+import type { DuplicatedPhantomVisit, DuplicatedProbandVisit } from "@app/model/visit";
 import type {
   ApprovalRoomVisitFormIncludingQuestionsDTO,
   VisitFormAnswerIncludingQuestion,
@@ -61,7 +61,11 @@ export const loadFormDefaultValuesFromWaitingRoomVisitForm = (
   device: null,
   measuredAt: new Date(),
   disapprovalReason: null,
-  ...visitForm,
+  name: visitForm.name,
+  surname: visitForm.surname,
+  personalId: visitForm.personalId,
+  birthdate: visitForm.birthdate,
+  gender: visitForm.gender,
   nativeLanguage: {
     code: visitForm.nativeLanguageCode,
     nativeName: "",
@@ -69,11 +73,17 @@ export const loadFormDefaultValuesFromWaitingRoomVisitForm = (
     nameEn: "",
     priority: null,
   },
+  heightCm: visitForm.heightCm,
+  weightKg: visitForm.weightKg,
   visualCorrection: getAutocompleteOption(
     visualCorrectionOptions,
     visitForm.visualCorrectionDioptre === 0 ? "no" : "yes"
   ),
+  visualCorrectionDioptre: visitForm.visualCorrectionDioptre,
+  handedness: visitForm.handedness,
   answers: loadAnswers(visitForm.answersIncludingQuestions, ""),
+  email: visitForm.email,
+  phone: visitForm.phone,
 });
 
 // Autocomplete component default value must be one of the options provided or null
@@ -97,8 +107,9 @@ export const loadFormDefaultValuesFromApprovalRoomVisitForm = (
 });
 
 // Autocomplete component default value must be one of the options provided or null
-export const loadFormDefaultValuesVisitDuplication = (visit: DuplicatedVisitIncludingQuestions): FormPropType => ({
-  ...visit,
+export const loadFormDefaultValuesVisitDuplication = (
+  visit: DuplicatedProbandVisit | DuplicatedPhantomVisit
+): FormPropType => ({
   // project and device must be selected by the operator
   project: null,
   device: null,
@@ -108,7 +119,12 @@ export const loadFormDefaultValuesVisitDuplication = (visit: DuplicatedVisitIncl
   surname: visit.subject.surname,
   birthdate: visit.subject.birthdate,
   personalId: visit.subject.personalId,
+  gender: visit.gender,
   nativeLanguage: visit.subject.nativeLanguage,
+  heightCm: visit.heightCm,
+  weightKg: visit.weightKg,
+  visualCorrectionDioptre: visit.visualCorrectionDioptre,
+  handedness: visit.handedness,
   email: visit.subject.email,
   phone: visit.subject.phone,
   visualCorrection: getAutocompleteOption(visualCorrectionOptions, visit.visualCorrectionDioptre === 0 ? "no" : "yes"),

@@ -2,8 +2,7 @@ import { format } from "date-fns";
 import type { Device } from "@app/model/device";
 import type { NativeLanguage } from "@app/model/language";
 import type { Project } from "@app/model/project";
-import type { DuplicatedVisitIncludingQuestions } from "@app/model/visit";
-import DuplicationFormPage from "@app/pages/DuplicationFormPage";
+import type { DuplicatedPhantomVisit, DuplicatedProbandVisit } from "@app/model/visit";
 import type { GenderDTO, HandednessDTO, PdfDTO, QuestionDTO } from "@app/util/server_API/dto";
 import { devicesTest } from "@test/data/devices";
 import { gendersTest } from "@test/data/genders";
@@ -15,6 +14,7 @@ import { projectsTest } from "@test/data/projects";
 import { questionsTest } from "@test/data/questions";
 import { subjectsTest } from "@test/data/subjects";
 import { render, screen, within } from "@test/utils";
+import DuplicationFormPage from "../DuplicationFormPage";
 
 //----------------------------------------------------------------------
 // Test data
@@ -22,12 +22,15 @@ import { render, screen, within } from "@test/utils";
 const id = "ID1";
 const commentText = "Comment";
 
-const visit: DuplicatedVisitIncludingQuestions = {
+const probandVisit: DuplicatedProbandVisit = {
   uuid: "1",
   visitId: "VisitId1",
   isPhantom: false,
   measurementDate: new Date(),
-  subject: subjectsTest[0]!,
+  subject: {
+    ...subjectsTest[0]!,
+    preferredLanguageCode: "cs",
+  },
   project: projectsTest[0]!,
   deviceId: 1,
   gender: gendersTest[0]!,
@@ -48,12 +51,26 @@ const visit: DuplicatedVisitIncludingQuestions = {
   })),
 };
 
+const phantomVisit: DuplicatedPhantomVisit = {
+  ...probandVisit,
+  subject: {
+    ...probandVisit.subject,
+    preferredLanguageCode: null,
+  }
+}
+
 //----------------------------------------------------------------------
 // Mocking react-router-dom hooks
 //----------------------------------------------------------------------
+let mockedIsPhantom = vi.fn();
 const mockedUseNavigate = vi.fn();
+
 vi.mock("react-router-dom", async () => ({
   ...((await vi.importActual("react-router-dom")) as Record<string, unknown>),
+  useLocation: () => ({
+    ...vi.fn(),
+    state: { isPhantom: mockedIsPhantom() },
+  }),
   useNavigate: () => mockedUseNavigate,
   useParams: () => ({
     id,
@@ -97,7 +114,8 @@ vi.mock("@app/util/mafildb_API/calls", async () => ({
   fetchNativeLanguages: async (): Promise<NativeLanguage[]> => nativeLanguagesTest,
   fetchProjects: async (): Promise<Project[]> => projectsTest,
   fetchDevices: async (): Promise<Device[]> => devicesTest,
-  fetchDuplicatedVisit: async (): Promise<DuplicatedVisitIncludingQuestions> => visit,
+  fetchDuplicatedProbandVisit: async (): Promise<DuplicatedProbandVisit> => probandVisit,
+  fetchDuplicatedPhantomVisit: async (): Promise<DuplicatedPhantomVisit> => phantomVisit,
   createFinalizedVisit: async (): Promise<string> => "visitId",
   createPhantomVisit: async (): Promise<string> => "visitId",
   addPdfToVisit: async (): Promise<string> => "fileId",
@@ -111,67 +129,124 @@ describe("duplication form page", () => {
     render(<DuplicationFormPage />);
   };
 
-  test("contains correct form buttons", async () => {
-    // ARRANGE
-    const buttonNames: string[] = [
-      "form.common.buttons.finalize",
-      "form.common.buttons.disapprove",
-      "form.common.buttons.edit",
-      "form.common.buttons.cancel",
-    ];
-
-    // ACT
-    setup();
-    const buttons = await screen.findAllByRole("button", { name: /^form\.common\.buttons/ });
-
-    // ASSERT
-    expect(buttons.length).toBe(buttonNames.length);
-    buttonNames.forEach(async (buttonName, index) => expect(buttons[index]?.textContent).toBe(buttonName));
-  });
-
-  test("renders values from the visit being duplicated", async () => {
-    // ARRANGE
-    const expectedFormValues = {
-      project: "",
-      device: "",
-      measuredAt: format(new Date(), "dd.MM.yyyy"),
-      name: visit.subject.name,
-      surname: visit.subject.surname,
-      personalId: visit.subject.personalId,
-      birthdate: format(visit.subject.birthdate, "dd.MM.yyyy"),
-      gender: visit.gender.translations[0]?.text,
-      nativeLanguage: visit.subject.nativeLanguage.nativeName,
-      heightCm: visit.heightCm.toString(),
-      weightKg: visit.weightKg.toString(),
-      visualCorrection: "form.options.visualCorrection.no",
-      visualCorrectionDioptre: visit.visualCorrectionDioptre.toString(),
-      handedness: visit.handedness.translations[0]?.text,
-      email: visit.subject.email,
-      phone: visit.subject.phone,
-    };
-
-    // ACT
-    setup();
-    const form = await screen.findByRole("form");
-    const questionsRadios = await screen.findAllByRole("radiogroup");
-
-    // ASSERT
-    expect(form).toHaveFormValues(expectedFormValues);
-    expect(questionsRadios.length).toEqual(questionsTest.length);
-    questionsRadios.forEach((questionInput, i) => {
-      const yesRadio = within(questionInput).getByRole("radio", { name: "form.safetyQuestions.yes" });
-      const noRadio = within(questionInput).getByRole("radio", { name: "form.safetyQuestions.no" });
-      const commentField = screen.queryByRole("textbox", { name: `answers.${i}.comment` });
-
-      if (i % 2 === 0) {
-        expect(yesRadio).toBeChecked();
-        expect(noRadio).not.toBeChecked();
-        expect(commentField).toHaveTextContent(commentText);
-      } else {
-        expect(yesRadio).not.toBeChecked();
-        expect(noRadio).toBeChecked();
-        expect(commentField).toBeNull();
-      }
+  describe("proband visit", () => {
+    beforeEach(() => {
+      mockedIsPhantom.mockReturnValue(false);
     });
-  });
+
+    test("contains correct form buttons", async () => {
+      // ARRANGE
+      const buttonNames: string[] = [
+        "form.common.buttons.finalize",
+        "form.common.buttons.disapprove",
+        "form.common.buttons.edit",
+        "form.common.buttons.cancel",
+      ];
+
+      // ACT
+      setup();
+      const buttons = await screen.findAllByRole("button", { name: /^form\.common\.buttons/ });
+
+      // ASSERT
+      expect(buttons.length).toBe(buttonNames.length);
+      buttonNames.forEach(async (buttonName, index) => expect(buttons[index]?.textContent).toBe(buttonName));
+    });
+
+    test("renders values from the visit being duplicated", async () => {
+      // ARRANGE
+      const expectedFormValues = {
+        project: "",
+        device: "",
+        measuredAt: format(new Date(), "dd.MM.yyyy"),
+        name: probandVisit.subject.name,
+        surname: probandVisit.subject.surname,
+        personalId: probandVisit.subject.personalId,
+        birthdate: format(probandVisit.subject.birthdate, "dd.MM.yyyy"),
+        gender: probandVisit.gender.translations[0]?.text,
+        nativeLanguage: probandVisit.subject.nativeLanguage.nativeName,
+        heightCm: probandVisit.heightCm.toString(),
+        weightKg: probandVisit.weightKg.toString(),
+        visualCorrection: "form.options.visualCorrection.no",
+        visualCorrectionDioptre: probandVisit.visualCorrectionDioptre.toString(),
+        handedness: probandVisit.handedness.translations[0]?.text,
+        email: probandVisit.subject.email,
+        phone: probandVisit.subject.phone,
+      };
+
+      // ACT
+      setup();
+      const form = await screen.findByRole("form");
+      const questionsRadios = await screen.findAllByRole("radiogroup");
+
+      // ASSERT
+      expect(form).toHaveFormValues(expectedFormValues);
+      expect(questionsRadios.length).toEqual(questionsTest.length);
+      questionsRadios.forEach((questionInput, i) => {
+        const yesRadio = within(questionInput).getByRole("radio", { name: "form.safetyQuestions.yes" });
+        const noRadio = within(questionInput).getByRole("radio", { name: "form.safetyQuestions.no" });
+        const commentField = screen.queryByRole("textbox", { name: `answers.${i}.comment` });
+
+        if (i % 2 === 0) {
+          expect(yesRadio).toBeChecked();
+          expect(noRadio).not.toBeChecked();
+          expect(commentField).toHaveTextContent(commentText);
+        } else {
+          expect(yesRadio).not.toBeChecked();
+          expect(noRadio).toBeChecked();
+          expect(commentField).toBeNull();
+        }
+      });
+    });
+  })
+
+  describe("phantom visit", () => {
+    beforeEach(() => {
+      mockedIsPhantom.mockReturnValue(true);
+    });
+
+    test("contains correct form buttons", async () => {
+      // ARRANGE
+      const buttonNames: string[] = [
+        "form.common.buttons.finalize",
+        "form.common.buttons.cancel",
+      ];
+
+      // ACT
+      setup();
+      const buttons = await screen.findAllByRole("button", { name: /^form\.common\.buttons/ });
+
+      // ASSERT
+      expect(buttons.length).toBe(buttonNames.length);
+      buttonNames.forEach(async (buttonName, index) => expect(buttons[index]?.textContent).toBe(buttonName));
+    });
+
+    test("renders values from the visit being duplicated", async () => {
+      // ARRANGE
+      const expectedFormValues = {
+        project: "",
+        device: "",
+        measuredAt: format(new Date(), "dd.MM.yyyy"),
+        name: phantomVisit.subject.name,
+        surname: phantomVisit.subject.surname,
+        personalId: phantomVisit.subject.personalId,
+        birthdate: format(phantomVisit.subject.birthdate, "dd.MM.yyyy"),
+        gender: phantomVisit.gender.translations[0]?.text,
+        nativeLanguage: phantomVisit.subject.nativeLanguage.nativeName,
+        heightCm: phantomVisit.heightCm.toString(),
+        weightKg: phantomVisit.weightKg.toString(),
+        visualCorrection: "form.options.visualCorrection.no",
+        visualCorrectionDioptre: phantomVisit.visualCorrectionDioptre.toString(),
+        handedness: phantomVisit.handedness.translations[0]?.text,
+      };
+
+      // ACT
+      setup();
+      const form = await screen.findByRole("form");
+      const questionsRadios = screen.queryAllByRole("radiogroup");
+
+      // ASSERT
+      expect(form).toHaveFormValues(expectedFormValues);
+      expect(questionsRadios.length).toEqual(0);
+    });
+  })
 });

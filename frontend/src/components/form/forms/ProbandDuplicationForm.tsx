@@ -11,25 +11,16 @@ import { loadFormDefaultValuesVisitDuplication } from "@app/components/form/util
 import { useAuth } from "@app/hooks/auth/auth";
 import type { FormPropType, FormQac, ValidatedOperatorFormData } from "@app/model/form";
 import { RoutingPath } from "@app/routing-paths";
-import {
-  addPdfToVisit,
-  createFinalizedVisit,
-  createPhantomVisit,
-  fetchDuplicatedVisit,
-} from "@app/util/mafildb_API/calls";
+import { addPdfToVisit, createFinalizedVisit, fetchDuplicatedProbandVisit } from "@app/util/mafildb_API/calls";
 import { MDB_ApprovalState } from "@app/util/mafildb_API/dto";
-import {
-  createDuplicatedVisitFormForApproval,
-  generatePhantomPdf,
-  generateProbandPdf,
-} from "@app/util/server_API/calls";
+import { createDuplicatedVisitFormForApproval, generateProbandPdf } from "@app/util/server_API/calls";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormFinalizeDialog } from "../components/FormFinalizeDialog";
 import { getValidatedOperatorFormData, isVisitFormForApproval } from "../util/utils";
 import { FormContainer } from "./FormContainer";
 
-export const DuplicationForm = () => {
+export const ProbandDuplicationForm = () => {
   const { id } = useParams();
   const {
     data: duplicatedVisit,
@@ -37,7 +28,7 @@ export const DuplicationForm = () => {
     isError,
   } = useQuery({
     queryKey: ["visit", id],
-    queryFn: () => (id === undefined ? undefined : fetchDuplicatedVisit(id)),
+    queryFn: () => (id === undefined ? undefined : fetchDuplicatedProbandVisit(id)),
     staleTime: Infinity,
     gcTime: Infinity,
   });
@@ -46,7 +37,6 @@ export const DuplicationForm = () => {
   const { getValues, setValue, trigger } = useFormContext<FormPropType>();
 
   const [areDefaultValuesLoaded, setAreDefaultValuesLoaded] = useState<boolean>(false);
-  const [isPhantom, setIsPhantom] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [valuesBeforeEditing, setValuesBeforeEditing] = useState<FormPropType>();
   const [isDisapproved, setIsDisapproved] = useState<boolean>(false);
@@ -76,7 +66,6 @@ export const DuplicationForm = () => {
       Object.keys(defaultValues).forEach((propertyName) => {
         setValue(propertyName as DefaultValuesPropertyType, defaultValues[propertyName as DefaultValuesPropertyType]);
       });
-      setIsPhantom(duplicatedVisit.isPhantom);
       setAreDefaultValuesLoaded(true);
     }
   }, [duplicatedVisit, setValue]);
@@ -84,20 +73,8 @@ export const DuplicationForm = () => {
   // Setting form buttons
   useEffect(() => {
     if (duplicatedVisit !== undefined && operator !== undefined) {
-      if (isPhantom) {
-        setFormButtons({
-          submitButtonProps: {
-            titleLocalizationKey: "form.common.buttons.finalize",
-            onClick: async (data) => {
-              const visit = await createPhantomVisit(data, operator.username, new Date());
-              const pdf = await generatePhantomPdf(visit.visitId, data, operator.username);
-              await addPdfToVisit(visit.uuid, pdf);
-              navigate(`${RoutingPath.RECENT_VISITS_VISIT}/${visit.uuid}`);
-            },
-          },
-          buttonsProps: [getBackButtonProps(navigate, "form.common.buttons.cancel")],
-        });
-      } else if (isEditing) {
+      // set proband form buttons
+      if (isEditing) {
         setFormButtons({
           submitButtonProps: {
             titleLocalizationKey: "form.common.buttons.saveChanges",
@@ -202,7 +179,6 @@ export const DuplicationForm = () => {
     getValues,
     isDisapproved,
     isEditing,
-    isPhantom,
     navigate,
     operator,
     setValue,
@@ -225,32 +201,25 @@ export const DuplicationForm = () => {
       buttons={formButtons}
       getFormData={getValidatedOperatorFormData}
     >
-      <FormProjectInfo isPhantom={isPhantom} />
-      <FormProbandInfo
-        isPhantom={isPhantom}
+      <FormProjectInfo />
+      <FormProbandInfo disableInputs={!isEditing} />
+      <FormProbandContact disableInputs={!isEditing} />
+      <FormQuestions
+        titleLocalizationKey="titlePart1"
+        qacs={qacs.filter((qac) => qac.partNumber === 1)}
         disableInputs={!isEditing}
       />
-      {!isPhantom && (
-        <>
-          <FormProbandContact disableInputs={!isEditing} />
-          <FormQuestions
-            titleLocalizationKey="titlePart1"
-            qacs={qacs.filter((qac) => qac.partNumber === 1)}
-            disableInputs={!isEditing}
-          />
-          <FormQuestions
-            titleLocalizationKey="titlePart2"
-            qacs={qacs.filter((qac) => qac.partNumber === 2)}
-            disableInputs={!isEditing}
-          />
-          {isDisapproved && <FormDisapprovalReason />}
-          <FormFinalizeDialog
-            isOpen={openFinalizeDialog}
-            setIsOpen={setOpenFinalizeDialog}
-            onContinue={createVisitFormInApprovalRoom}
-          />
-        </>
-      )}
+      <FormQuestions
+        titleLocalizationKey="titlePart2"
+        qacs={qacs.filter((qac) => qac.partNumber === 2)}
+        disableInputs={!isEditing}
+      />
+      {isDisapproved && <FormDisapprovalReason />}
+      <FormFinalizeDialog
+        isOpen={openFinalizeDialog}
+        setIsOpen={setOpenFinalizeDialog}
+        onContinue={createVisitFormInApprovalRoom}
+      />
     </FormContainer>
   );
 };

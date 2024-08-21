@@ -48,7 +48,7 @@ export const RecentVisitsTableActionButtons = ({ visit }: RecentVisitsTableActio
         }
       }
 
-      navigate(`${RoutingPath.RECENT_VISITS_DUPLICATE}/${visit.uuid}`);
+      navigate(`${RoutingPath.RECENT_VISITS_DUPLICATE}/${visit.uuid}`, { state: { isPhantom: visit.isPhantom } });
     } catch (error) {
       handleErrorsWithToast(error, t);
     }

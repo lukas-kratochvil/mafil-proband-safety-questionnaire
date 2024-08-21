@@ -2,7 +2,12 @@ import type { MDB_AnswerDTO, MDB_VisitDTO } from "@app/util/mafildb_API/dto";
 import type { GenderDTO, HandednessDTO, OperatorDTO, VisitFormAnswerIncludingQuestion } from "@app/util/server_API/dto";
 import type { Device } from "./device";
 import type { Project } from "./project";
-import type { RecentVisitSubject, Subject } from "./subject";
+import type {
+  DuplicatedPhantomVisitSubject,
+  DuplicatedProbandVisitSubject,
+  RecentVisitSubject,
+  Subject,
+} from "./subject";
 import type { VisitPDF } from "./visitPdf";
 
 type Answer = {
@@ -41,11 +46,12 @@ export type RecentVisitsTableVisit = Omit<Visit, "deviceId" | "finalizer" | "sub
   subject: RecentVisitSubject;
 };
 
-export type DuplicatedVisitIncludingQuestions = Omit<
+type DuplicatedVisitBase = Omit<
   Visit,
   | "created"
   | "approvalState"
   | "signatureState"
+  | "subject"
   | "answers"
   | "finalizer"
   | "finalizationDate"
@@ -55,7 +61,17 @@ export type DuplicatedVisitIncludingQuestions = Omit<
 > & {
   gender: GenderDTO;
   handedness: HandednessDTO;
+  subject: Subject;
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
+};
+
+export type DuplicatedProbandVisit = Omit<DuplicatedVisitBase, "subject"> & {
+  subject: DuplicatedProbandVisitSubject;
+};
+
+// TODO: DuplicatedPhantomVisit shouldn't have `answersIncludingQuestions` attribute
+export type DuplicatedPhantomVisit = Omit<DuplicatedVisitBase, "subject"> & {
+  subject: DuplicatedPhantomVisitSubject;
 };
 
 export type VisitDetailPDF = Pick<VisitPDF, "name" | "content">;

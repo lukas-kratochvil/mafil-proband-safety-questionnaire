@@ -6,7 +6,8 @@ import type { Language, NativeLanguage } from "@app/model/language";
 import type { Project } from "@app/model/project";
 import type {
   CreatedVisitData,
-  DuplicatedVisitIncludingQuestions,
+  DuplicatedPhantomVisit,
+  DuplicatedProbandVisit,
   RecentVisitsTableVisit,
   VisitDetail,
 } from "@app/model/visit";
@@ -177,20 +178,19 @@ const createVisitSubject = async (
   return data.uuid;
 };
 
-const createVisit = async (
+const createVisit = async <
+  TPhantom extends boolean,
+  TProbandLanguageCode extends TPhantom extends true ? null : NonNullable<MDB_PreferredLanguageCode>,
+>(
   visitFormData: ValidatedOperatorFormData,
   approvalState: MDB_CreateVisitInput["checked"],
-  isPhantom: boolean,
+  isPhantom: TPhantom,
   finalizerUsername: string,
   finalizedAt: Date,
-  probandLanguageCode: MDB_PreferredLanguageCode,
+  probandLanguageCode: TProbandLanguageCode,
   approverUsername?: string,
   approvedAt?: Date
 ): Promise<CreatedVisitData | never> => {
-  if (!isPhantom && probandLanguageCode === null) {
-    throw new Error("Missing proband language code!");
-  }
-
   if (approvalState === MDB_ApprovalState.DISAPPROVED && visitFormData.disapprovalReason?.length === 0) {
     throw new Error("Disapproval reason must be properly filled!");
   }
@@ -246,7 +246,7 @@ export const createFinalizedVisit = async (
   approvalState: MDB_CreateVisitInput["checked"],
   finalizerUsername: string,
   finalizedAt: Date,
-  probandLanguageCode: MDB_PreferredLanguageCode
+  probandLanguageCode: NonNullable<MDB_PreferredLanguageCode>
 ): Promise<CreatedVisitData | never> =>
   createVisit(visitFormData, approvalState, false, finalizerUsername, finalizedAt, probandLanguageCode);
 
@@ -255,7 +255,7 @@ export const createVisitFromApproval = async (
   state: MDB_CreateVisitInput["checked"],
   finalizerUsername: string,
   finalizedAt: Date,
-  probandLanguageCode: MDB_PreferredLanguageCode,
+  probandLanguageCode: NonNullable<MDB_PreferredLanguageCode>,
   approverUsername: string,
   approvedAt: Date
 ): Promise<CreatedVisitData | never> =>
@@ -398,19 +398,23 @@ const fetchVisit = async (uuid: string): Promise<MDB_VisitDTO | never> => {
   return data;
 };
 
-export const fetchDuplicatedVisit = async (uuid: string): Promise<DuplicatedVisitIncludingQuestions | never> => {
+export const fetchDuplicatedProbandVisit = async (uuid: string): Promise<DuplicatedProbandVisit | never> => {
   if (import.meta.env.DEV) {
-    return (await import("./dev/calls.dev")).fetchDuplicatedVisitDev(uuid);
+    return (await import("./dev/calls.dev")).fetchDuplicatedProbandVisitDev(uuid);
   }
 
   const visit = await fetchVisit(uuid);
 
-  if (!visit.is_phantom && visit.subject.preferred_language === null) {
-    throw new Error("Visit subject preferred language is null!");
+  if (visit.is_phantom) {
+    throw new Error("Not a proband visit!");
+  }
+
+  if (visit.subject.preferred_language === null) {
+    throw new Error("Proband visit subject preferred language is null!");
   }
 
   if (visit.subject.native_language === null) {
-    throw new Error("Visit subject native language is null!");
+    throw new Error("Proband visit subject native language is null!");
   }
 
   const [gender, nativeLanguage, handedness, answersIncludingQuestions] = await Promise.all([
@@ -457,6 +461,52 @@ export const fetchDuplicatedVisit = async (uuid: string): Promise<DuplicatedVisi
       nativeLanguage,
       handednessCode: transformMDBHandednessCode(visit.subject.handedness),
     },
+  };
+};
+
+export const fetchDuplicatedPhantomVisit = async (uuid: string): Promise<DuplicatedPhantomVisit | never> => {
+  if (import.meta.env.DEV) {
+    return (await import("./dev/calls.dev")).fetchDuplicatedPhantomVisitDev(uuid);
+  }
+
+  const visit = await fetchVisit(uuid);
+
+  if (!visit.is_phantom) {
+    throw new Error("Not a phantom visit!");
+  }
+
+  if (visit.subject.native_language === null) {
+    throw new Error("Phantom visit subject native language is null!");
+  }
+
+  const [gender, nativeLanguage, handedness] = await Promise.all([
+    fetchGender(transformMDBGenderCode(visit.subject.gender)),
+    fetchNativeLanguage(visit.subject.native_language),
+    fetchHandedness(transformMDBHandednessCode(visit.subject.handedness)),
+  ]);
+  return {
+    ...visit,
+    visitId: visit.visit_name,
+    isPhantom: visit.is_phantom,
+    deviceId: visit.registration_device,
+    measurementDate: visit.date,
+    gender,
+    heightCm: visit.height,
+    weightKg: visit.weight,
+    visualCorrectionDioptre: visit.visual_correction_dioptre,
+    handedness,
+    subject: {
+      ...visit.subject,
+      preferredLanguageCode: null,
+      name: visit.subject.first_name,
+      surname: visit.subject.last_name,
+      birthdate: visit.subject.birth_date,
+      personalId: visit.subject.personal_ID,
+      genderCode: transformMDBGenderCode(visit.subject.gender),
+      nativeLanguage,
+      handednessCode: transformMDBHandednessCode(visit.subject.handedness),
+    },
+    answersIncludingQuestions: [],
   };
 };
 
