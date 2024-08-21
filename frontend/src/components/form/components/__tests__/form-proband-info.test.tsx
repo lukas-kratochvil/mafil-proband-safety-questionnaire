@@ -34,7 +34,7 @@ vi.mock("@app/util/mafildb_API/calls", async () => ({
 // Mocking react
 //----------------------------------------------------------------------
 vi.mock("react", async () => ({
-  ...(await import("react")),
+  ...(await vi.importActual("react")),
   useEffect: () => vi.fn(),
 }));
 

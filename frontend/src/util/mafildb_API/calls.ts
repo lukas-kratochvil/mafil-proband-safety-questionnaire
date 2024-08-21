@@ -515,6 +515,7 @@ const fetchVisitPDF = async (visitUuid: string): Promise<MDB_VisitFileDTO> => {
     file_type: MDB_VisitFileType;
   };
   const params: VisitFilesParams = { file_type: "reg_form" };
+  // TODO: there will be new MAFILDB endpoint to download visit registration PDF content - this endpoint should be used to fetch only the PDF metadata
   const { data } = await mafildbApi.get<MDB_GetVisitFilesResponse>(`visits/${visitUuid}/files`, { params });
 
   if (MDB_RESPONSE_ERROR_ATTR in data) {

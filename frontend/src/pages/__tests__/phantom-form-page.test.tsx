@@ -23,7 +23,7 @@ import { render, screen } from "@test/utils";
 //----------------------------------------------------------------------
 const mockedUseNavigate = vi.fn();
 vi.mock("react-router-dom", async () => ({
-  ...((await vi.importActual("react-router-dom")) as Record<string, unknown>),
+  ...(await vi.importActual("react-router-dom")),
   useNavigate: () => mockedUseNavigate,
 }));
 
@@ -56,7 +56,7 @@ vi.mock("@app/util/server_API/calls", async () => ({
 // Mocking MAFILDB API calls
 //----------------------------------------------------------------------
 vi.mock("@app/util/mafildb_API/calls", async () => ({
-  ...(await import("@app/util/mafildb_API/calls")),
+  ...(await vi.importActual("@app/util/mafildb_API/calls")),
   fetchNativeLanguages: async (): Promise<NativeLanguage[]> => nativeLanguagesTest,
   fetchProjects: async (): Promise<Project[]> => projectsTest,
   fetchDevices: async (): Promise<Device[]> => devicesTest,

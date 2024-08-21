@@ -1,19 +1,19 @@
 import ScienceIcon from "@mui/icons-material/Science";
 import { RoutingPath } from "@app/routing-paths";
-import type { OperatorDTO } from "@app/util/server_API/dto";
 import { operatorMRTest } from "@test/data/operators";
 import { render, screen } from "@test/utils";
 import { Header } from "../Header";
 import type { TabProps } from "../navigation/tabs";
+import type { Auth } from "@app/hooks/auth/auth";
 
 //----------------------------------------------------------------------
 // Mocking custom authentication
 //----------------------------------------------------------------------
-let mockOperator: OperatorDTO | undefined;
+let mockOperator = vi.fn<() => Auth["operator"]>();
 
 vi.mock("@app/hooks/auth/auth", () => ({
   useAuth: () => ({
-    operator: mockOperator,
+    operator: mockOperator(),
   }),
 }));
 
@@ -54,7 +54,7 @@ describe("header", () => {
 
   describe("user is not logged in", () => {
     beforeEach(() => {
-      mockOperator = undefined;
+      mockOperator.mockReturnValue(undefined);
     });
 
     test("contains all elements", () => {
@@ -70,7 +70,7 @@ describe("header", () => {
 
   describe("user is logged in", () => {
     beforeEach(() => {
-      mockOperator = operatorMRTest;
+      mockOperator.mockReturnValue(operatorMRTest);
     });
 
     test("contains all elements", async () => {

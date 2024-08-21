@@ -93,7 +93,7 @@ const duplicatedPhantomVisit: DuplicatedPhantomVisit = {
   },
   // TODO: remove `answersIncludingQuestions` after the DuplicatedPhantomVisit type is corrected
   answersIncludingQuestions: [],
-}
+};
 
 //----------------------------------------------------------------------
 // Tests

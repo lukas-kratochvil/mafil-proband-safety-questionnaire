@@ -27,11 +27,9 @@ const defaultVisit: VisitDetail = {
 //----------------------------------------------------------------------
 // Mocking react-router-dom hooks
 //----------------------------------------------------------------------
-const mockedUseNavigate = vi.fn();
-
 vi.mock("react-router-dom", async () => ({
-  ...((await vi.importActual("react-router-dom")) as Record<string, unknown>),
-  useNavigate: () => mockedUseNavigate,
+  ...(await vi.importActual("react-router-dom")),
+  useNavigate: () => vi.fn(),
   useParams: () => ({
     id,
   }),
