@@ -64,6 +64,7 @@ const phantomVisit: DuplicatedPhantomVisit = {
 // Mocking react-router-dom hooks
 //----------------------------------------------------------------------
 const mockedIsPhantom = vi.fn<() => DuplicationFormPageLocationState["isPhantom"]>();
+const mockedUseNavigate = vi.fn(); // cannot do `useNavigate: () => vi.fn()` otherwise tests crash and will throw 'JavaScript heap out of memory' error
 
 vi.mock("react-router-dom", async () => ({
   ...((await vi.importActual("react-router-dom")) as Record<string, unknown>),
@@ -71,7 +72,7 @@ vi.mock("react-router-dom", async () => ({
     ...vi.fn(),
     state: { isPhantom: mockedIsPhantom() },
   }),
-  useNavigate: () => vi.fn(),
+  useNavigate: () => mockedUseNavigate,
   useParams: () => ({
     id,
   }),
