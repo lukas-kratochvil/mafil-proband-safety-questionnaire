@@ -14,18 +14,14 @@ export const useAuthProviderDev = (): Auth => {
     return storedOperator === null ? undefined : JSON.parse(storedOperator);
   });
 
-  const logIn = async (): Promise<void> => {
-    try {
-      const validOperator = await authenticateOperator(DEV_OPERATOR);
-      window.sessionStorage.setItem(SESSION_STORAGE_OPERATOR_KEY, JSON.stringify(validOperator));
-      setOperator(validOperator);
-      window.location.assign(RoutingPath.WAITING_ROOM);
-    } catch {
-      setOperator(undefined);
-    }
-  };
+  const logIn = async (): Promise<void> => window.location.assign(RoutingPath.OIDC_LOGIN);
 
-  const logInCallback = async (): Promise<boolean> => true;
+  const logInCallback = async (): Promise<boolean> => {
+    const validOperator = await authenticateOperator(DEV_OPERATOR);
+    window.sessionStorage.setItem(SESSION_STORAGE_OPERATOR_KEY, JSON.stringify(validOperator));
+    setOperator(validOperator);
+    return true;
+  };
 
   const logOut = async (): Promise<void> => {
     window.sessionStorage.removeItem(SESSION_STORAGE_OPERATOR_KEY);
