@@ -5,10 +5,11 @@ import { loadEmptyDefaultValues } from "@app/components/form/util/loaders";
 
 const ProbandFormPage = () => (
   <FormPageContainer
-    FormPage={ProbandForm}
     loadDefaultValues={loadEmptyDefaultValues}
     validationSchema={probandFormSchema}
-  />
+  >
+    <ProbandForm />
+  </FormPageContainer>
 );
 
 export default ProbandFormPage;

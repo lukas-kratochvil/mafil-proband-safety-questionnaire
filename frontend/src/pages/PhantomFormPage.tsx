@@ -5,10 +5,11 @@ import { loadPhantomFormDefaultValues } from "@app/components/form/util/loaders"
 
 const PhantomFormPage = () => (
   <FormPageContainer
-    FormPage={PhantomForm}
     loadDefaultValues={loadPhantomFormDefaultValues}
     validationSchema={operatorFinalizationFormSchema}
-  />
+  >
+    <PhantomForm />
+  </FormPageContainer>
 );
 
 export default PhantomFormPage;

@@ -12,19 +12,21 @@ const DuplicationFormPage = () => {
   if (location.state.isPhantom) {
     return (
       <FormPageContainer
-        FormPage={PhantomDuplicationForm}
         loadDefaultValues={loadEmptyDefaultValues}
         validationSchema={operatorApprovalFormSchema}
-      />
+      >
+        <PhantomDuplicationForm />
+      </FormPageContainer>
     );
   }
 
   return (
     <FormPageContainer
-      FormPage={ProbandDuplicationForm}
       loadDefaultValues={loadEmptyDefaultValues}
       validationSchema={operatorApprovalFormSchema}
-    />
+    >
+      <ProbandDuplicationForm />
+    </FormPageContainer>
   );
 };
 

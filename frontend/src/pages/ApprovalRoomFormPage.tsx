@@ -5,10 +5,11 @@ import { loadEmptyDefaultValues } from "@app/components/form/util/loaders";
 
 const ApprovalRoomFormPage = () => (
   <FormPageContainer
-    FormPage={ApprovalRoomForm}
     loadDefaultValues={loadEmptyDefaultValues}
     validationSchema={operatorApprovalFormSchema}
-  />
+  >
+    <ApprovalRoomForm />
+  </FormPageContainer>
 );
 
 export default ApprovalRoomFormPage;

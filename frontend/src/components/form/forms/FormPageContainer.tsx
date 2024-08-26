@@ -1,16 +1,20 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import type { PropsWithChildren } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import type { AnyObjectSchema } from "yup";
 import type { FormPropType } from "@app/model/form";
 import { PageContainer } from "@app/pages/PageContainer";
 
 type FormPageContainerProps = {
-  FormPage: () => JSX.Element;
   loadDefaultValues: () => FormPropType;
   validationSchema: AnyObjectSchema;
 };
 
-export const FormPageContainer = ({ FormPage, loadDefaultValues, validationSchema }: FormPageContainerProps) => {
+export const FormPageContainer = ({
+  children,
+  loadDefaultValues,
+  validationSchema,
+}: PropsWithChildren<FormPageContainerProps>) => {
   const formMethods = useForm({
     mode: "onChange",
     defaultValues: loadDefaultValues(),
@@ -19,9 +23,7 @@ export const FormPageContainer = ({ FormPage, loadDefaultValues, validationSchem
 
   return (
     <PageContainer>
-      <FormProvider {...formMethods}>
-        <FormPage />
-      </FormProvider>
+      <FormProvider {...formMethods}>{children}</FormProvider>
     </PageContainer>
   );
 };
