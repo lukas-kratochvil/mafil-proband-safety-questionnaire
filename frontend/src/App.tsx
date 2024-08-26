@@ -54,12 +54,7 @@ const App = () => {
         />
         <Route
           path={RoutingPath.LOGOUT}
-          element={
-            <Navigate
-              to={RoutingPath.LOGIN}
-              replace
-            />
-          }
+          element={<Navigate to={RoutingPath.LOGIN} />}
         />
         <Route
           path={RoutingPath.AUTH}

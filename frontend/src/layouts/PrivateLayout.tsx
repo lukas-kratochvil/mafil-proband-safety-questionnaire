@@ -7,14 +7,7 @@ export const PrivateLayout = () => {
   const { operator } = useAuth();
 
   if (operator) {
-    return location.pathname === RoutingPath.AUTH ? (
-      <Navigate
-        to={RoutingPath.AUTH_HOME}
-        replace
-      />
-    ) : (
-      <Outlet />
-    );
+    return location.pathname === RoutingPath.AUTH ? <Navigate to={RoutingPath.AUTH_HOME} /> : <Outlet />;
   }
 
   return (

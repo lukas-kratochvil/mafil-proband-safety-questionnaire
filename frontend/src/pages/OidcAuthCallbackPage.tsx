@@ -19,7 +19,7 @@ const OidcAuthCallbackPage = () => {
   useEffect(() => {
     const callLogInCallback = async (): Promise<void> => {
       try {
-        navigate((await logInCallback()) ? RoutingPath.AUTH_HOME : RoutingPath.LOGIN, { replace: true });
+        navigate((await logInCallback()) ? RoutingPath.AUTH_HOME : RoutingPath.LOGIN);
       } catch (error) {
         handleErrorsWithToast(error, t);
         navigate(RoutingPath.LOGIN);
