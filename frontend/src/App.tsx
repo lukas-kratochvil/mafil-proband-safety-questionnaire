@@ -44,31 +44,13 @@ const App = () => {
         />
         <Route
           path={RoutingPath.LOGIN}
-          // an authenticated user will not be logged out when redirecting to '/login' (or after clicking (multiple times) on the browser's back button) and will remain in the authenticated part of the application
-          element={
-            operator ? (
-              <Navigate
-                to={RoutingPath.AUTH_HOME}
-                replace
-              />
-            ) : (
-              <LoginPage />
-            )
-          }
+          // an authenticated user will not be logged out when redirecting to '/login' and will remain in the authenticated part of the application
+          element={operator ? <Navigate to={RoutingPath.AUTH_HOME} /> : <LoginPage />}
         />
         <Route
           path={RoutingPath.OIDC_LOGIN}
           // an authenticated user will not be logged out when redirecting to '/oidc-login' and will remain in the authenticated part of the application
-          element={
-            operator ? (
-              <Navigate
-                to={RoutingPath.AUTH_HOME}
-                replace
-              />
-            ) : (
-              <OidcAuthCallbackPage />
-            )
-          }
+          element={operator ? <Navigate to={RoutingPath.AUTH_HOME} /> : <OidcAuthCallbackPage />}
         />
         <Route
           path={RoutingPath.LOGOUT}

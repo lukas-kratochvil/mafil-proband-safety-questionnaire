@@ -17,5 +17,10 @@ export const PrivateLayout = () => {
     );
   }
 
-  return <Navigate to={RoutingPath.LOGIN} />;
+  return (
+    <Navigate
+      to={RoutingPath.LOGIN}
+      replace
+    />
+  );
 };
