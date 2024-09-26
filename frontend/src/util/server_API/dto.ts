@@ -176,7 +176,7 @@ export type CreateDuplicatedVisitFormForApprovalInput = {
 
 type UpdateVisitFormInput = Partial<CreateProbandInfoInput> & {
   id: string;
-  state: Partial<Exclude<VisitFormState, "NEW">>;
+  state: Exclude<VisitFormState, "NEW">;
   additionalInfo: Partial<AdditionalInfo>;
   answers: Partial<OperatorAnswerDTO>[] | undefined;
 };

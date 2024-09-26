@@ -368,7 +368,7 @@ export const sendVisitFormForApproval = async (
   return data.updateVisitForm.id;
 };
 
-const updateVisitFormState = async (id: string, state: VisitFormState): Promise<UpdateVisitFormDTO> => {
+const updateVisitFormState = async (id: string, state: Exclude<VisitFormState, "NEW">): Promise<UpdateVisitFormDTO> => {
   const variables: UpdateVisitFormStateInput = {
     updateVisitFormInput: {
       id,
