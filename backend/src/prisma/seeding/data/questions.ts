@@ -1,3 +1,4 @@
+import type { StrictOmit } from "@app/types";
 import { GenderCode } from "./genders";
 
 type PartNumberType = 1 | 2;
@@ -10,7 +11,7 @@ type Question = {
   hiddenByGender?: GenderCode[];
 };
 
-const questions: Omit<Question, "order">[] = [
+const questions: StrictOmit<Question, "order">[] = [
   {
     partNumber: 1,
     csText: "Jste těhotná?",

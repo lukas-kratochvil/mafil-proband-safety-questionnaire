@@ -1,3 +1,5 @@
+import type { StrictOmit } from "@app/types";
+
 export type GenderCode = "F" | "M" | "O";
 
 type Gender = {
@@ -7,7 +9,7 @@ type Gender = {
   enText: string;
 };
 
-const genders: Omit<Gender, "order">[] = [
+const genders: StrictOmit<Gender, "order">[] = [
   {
     code: "M",
     csText: "Muž",

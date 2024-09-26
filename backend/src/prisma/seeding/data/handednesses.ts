@@ -1,3 +1,5 @@
+import type { StrictOmit } from "@app/types";
+
 type Handedness = {
   code: string;
   order: number;
@@ -5,7 +7,7 @@ type Handedness = {
   enText: string;
 };
 
-const handednesses: Omit<Handedness, "order">[] = [
+const handednesses: StrictOmit<Handedness, "order">[] = [
   {
     code: "RH",
     csText: "Pravák",

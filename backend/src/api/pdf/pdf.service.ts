@@ -6,11 +6,12 @@ import { EnvironmentVariables } from "@app/config/validation";
 import { generateBase64PDF } from "@app/pdf/generate";
 import { PDFData, PDFEntityTexts, PDFOperator, PDFQuestionAnswer } from "@app/pdf/types";
 import { PrismaService } from "@app/prisma/prisma.service";
+import type { StrictOmit } from "@app/types";
 import { GENERATED_PDF_DIR_PATH } from "@app/utils/paths";
 import { GeneratePDFArgs } from "./dto/generate-pdf.args";
 import { PDFEntity } from "./entities/pdf.entity";
 
-type GenerateProbandPDFArgs = Required<Omit<GeneratePDFArgs, "approverUsername">> &
+type GenerateProbandPDFArgs = Required<StrictOmit<GeneratePDFArgs, "approverUsername">> &
   Pick<GeneratePDFArgs, "approverUsername">;
 
 type EntityTranslations = {
