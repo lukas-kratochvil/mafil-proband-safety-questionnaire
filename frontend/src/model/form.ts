@@ -1,5 +1,5 @@
 import type { AutocompleteOption, VisualCorrection } from "@app/components/form/util/options";
-import type { ObjectValuesUnion } from "@app/types";
+import type { ObjectValuesUnion, StrictOmit } from "@app/types";
 import type { GenderDTO, HandednessDTO, QuestionHiddenByGendersWithoutId } from "../util/server_API/dto";
 import type { Device } from "./device";
 import type { NativeLanguage } from "./language";
@@ -24,7 +24,7 @@ export type FormAnswer = {
 
 // QAC entity is grouping Question, Answer and Comment together
 export type FormQac = FormAnswer &
-  Omit<QuestionHiddenByGendersWithoutId, "mustBeApproved"> & {
+  StrictOmit<QuestionHiddenByGendersWithoutId, "mustBeApproved"> & {
     index: number; // 'index' is important to index specific question in the react-hook-form values
   };
 

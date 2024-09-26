@@ -2,9 +2,10 @@ import { Button, Grid, useMediaQuery, type Theme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { convertStringToLocalizationKey } from "@app/i18n/i18n";
+import type { StrictOmit } from "@app/types";
 import { handleErrorsWithToast, type ButtonProps } from "@app/util/utils";
 
-type FormSubmitButtonProps<TValidatedData extends object> = Omit<ButtonProps, "onClick"> & {
+type FormSubmitButtonProps<TValidatedData extends object> = StrictOmit<ButtonProps, "onClick"> & {
   onClick: (data: TValidatedData) => Promise<void>;
 };
 

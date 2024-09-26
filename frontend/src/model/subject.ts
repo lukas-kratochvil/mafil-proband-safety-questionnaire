@@ -1,3 +1,4 @@
+import type { StrictOmit } from "@app/types";
 import type { MDB_SubjectDTO } from "@app/util/mafildb_API/dto";
 import type { GenderCode, HandednessCode } from "@app/util/server_API/dto";
 import type { NativeLanguage } from "./language";
@@ -16,12 +17,12 @@ export type RecentVisitSubject = {
   phone: MDB_SubjectDTO["phone"];
 };
 
-export type Subject = Omit<RecentVisitSubject, "nativeLanguage"> & { nativeLanguage: NativeLanguage };
+export type Subject = StrictOmit<RecentVisitSubject, "nativeLanguage"> & { nativeLanguage: NativeLanguage };
 
-export type DuplicatedProbandVisitSubject = Omit<Subject, "preferredLanguageCode"> & {
+export type DuplicatedProbandVisitSubject = StrictOmit<Subject, "preferredLanguageCode"> & {
   preferredLanguageCode: NonNullable<Subject["preferredLanguageCode"]>;
 };
 
-export type DuplicatedPhantomVisitSubject = Omit<Subject, "preferredLanguageCode"> & {
+export type DuplicatedPhantomVisitSubject = StrictOmit<Subject, "preferredLanguageCode"> & {
   preferredLanguageCode: Extract<Subject["preferredLanguageCode"], null>;
 };

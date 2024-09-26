@@ -1,5 +1,6 @@
 import type { LanguageCode } from "@app/i18n/i18n";
 import type { AnswerOption } from "@app/model/form";
+import type { StrictOmit } from "@app/types";
 import type { MDB_LanguageDTO } from "../mafildb_API/dto";
 
 export type OperatorRole = "MR" | "MR_HIGH_PERM";
@@ -102,7 +103,7 @@ export type WaitingRoomVisitFormDTO = WaitingRoomTableVisitFormDTO & {
   answers: ProbandAnswerDTO[];
 };
 
-export type QuestionHiddenByGendersWithoutId = Omit<QuestionDTO, "id">;
+export type QuestionHiddenByGendersWithoutId = StrictOmit<QuestionDTO, "id">;
 
 export type VisitFormAnswerIncludingQuestion = OperatorAnswerDTO & QuestionHiddenByGendersWithoutId;
 
@@ -164,7 +165,7 @@ type CreateVisitFormInput = CreateProbandInfoInput & {
 };
 
 export type CreateProbandVisitFormInput = {
-  createVisitFormInput: Omit<CreateVisitFormInput, "state" | "additionalInfo" | "answers"> & {
+  createVisitFormInput: StrictOmit<CreateVisitFormInput, "state" | "additionalInfo" | "answers"> & {
     answers: ProbandAnswerDTO[];
   };
 };
@@ -175,13 +176,13 @@ export type CreateDuplicatedVisitFormForApprovalInput = {
 
 type UpdateVisitFormInput = Partial<CreateProbandInfoInput> & {
   id: string;
-  state: Partial<Omit<VisitFormState, "NEW">>;
+  state: Partial<Exclude<VisitFormState, "NEW">>;
   additionalInfo: Partial<AdditionalInfo>;
   answers: Partial<OperatorAnswerDTO>[] | undefined;
 };
 
 export type SendVisitFormFromWaitingRoomForApprovalInput = {
-  updateVisitFormInput: Omit<UpdateVisitFormInput, "additionalInfo"> & {
+  updateVisitFormInput: StrictOmit<UpdateVisitFormInput, "additionalInfo"> & {
     additionalInfo: AdditionalInfo;
   };
 };

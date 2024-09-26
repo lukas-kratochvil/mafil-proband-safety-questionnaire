@@ -23,3 +23,8 @@ type Only<T, U> = {
  * All properties of the second type will be undefined.
  */
 export type Either<T, U> = Only<T, U> | Only<U, T>;
+
+/**
+ * Construct a type with the properties of `T` except for those in subtype `K` of type `T`.
+ */
+export type StrictOmit<T, K extends keyof T> = Omit<T, K>;

@@ -1,3 +1,4 @@
+import type { StrictOmit } from "@app/types";
 import type { MDB_AnswerDTO, MDB_VisitDTO } from "@app/util/mafildb_API/dto";
 import type { GenderDTO, HandednessDTO, OperatorDTO, VisitFormAnswerIncludingQuestion } from "@app/util/server_API/dto";
 import type { Device } from "./device";
@@ -40,13 +41,13 @@ export type Visit = {
 
 export type CreatedVisitData = Pick<Visit, "uuid" | "visitId">;
 
-export type RecentVisitsTableVisit = Omit<Visit, "deviceId" | "finalizer" | "subject"> & {
+export type RecentVisitsTableVisit = StrictOmit<Visit, "deviceId" | "finalizer" | "subject"> & {
   device: Device | null;
   finalizer: Visit["finalizer"] | null;
   subject: RecentVisitSubject;
 };
 
-type DuplicatedVisitBase = Omit<
+type DuplicatedVisitBase = StrictOmit<
   Visit,
   | "created"
   | "approvalState"
@@ -65,12 +66,12 @@ type DuplicatedVisitBase = Omit<
   answersIncludingQuestions: VisitFormAnswerIncludingQuestion[];
 };
 
-export type DuplicatedProbandVisit = Omit<DuplicatedVisitBase, "subject"> & {
+export type DuplicatedProbandVisit = StrictOmit<DuplicatedVisitBase, "subject"> & {
   subject: DuplicatedProbandVisitSubject;
 };
 
 // TODO: DuplicatedPhantomVisit shouldn't have `answersIncludingQuestions` attribute
-export type DuplicatedPhantomVisit = Omit<DuplicatedVisitBase, "subject"> & {
+export type DuplicatedPhantomVisit = StrictOmit<DuplicatedVisitBase, "subject"> & {
   subject: DuplicatedPhantomVisitSubject;
 };
 

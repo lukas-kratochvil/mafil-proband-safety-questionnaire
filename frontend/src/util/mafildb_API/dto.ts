@@ -1,6 +1,6 @@
 import type { LanguageCode } from "@app/i18n/i18n";
 import type { AnswerOption } from "@app/model/form";
-import type { ObjectValuesUnion } from "@app/types";
+import type { ObjectValuesUnion, StrictOmit } from "@app/types";
 
 export type MDB_LanguageDTO = {
   code: string;
@@ -39,7 +39,10 @@ export type MDB_CreateSubjectInput = {
   phone: string;
 };
 
-export type MDB_SubjectDTO = Omit<MDB_CreateSubjectInput, "birth_date" | "preferred_language" | "native_language"> & {
+export type MDB_SubjectDTO = StrictOmit<
+  MDB_CreateSubjectInput,
+  "birth_date" | "preferred_language" | "native_language"
+> & {
   uuid: string;
   birth_date: Date;
   preferred_language: MDB_CreateSubjectInput["preferred_language"] | null;
@@ -92,7 +95,7 @@ export const MDB_SignatureState = {
 
 type MDB_SignatureState = ObjectValuesUnion<typeof MDB_SignatureState>;
 
-export type MDB_VisitDTO = Omit<
+export type MDB_VisitDTO = StrictOmit<
   MDB_CreateVisitInput,
   | "date"
   | "subject_uuid"

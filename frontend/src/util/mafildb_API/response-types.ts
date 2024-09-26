@@ -1,3 +1,4 @@
+import type { StrictOmit } from "@app/types";
 import type {
   MDB_DeviceDTO,
   MDB_LanguageDTO,
@@ -49,6 +50,6 @@ export type MDB_GetVisitsResponse = MDB_GetResponseComplex<MDB_VisitDTO>;
 
 export type MDB_GetVisitResponse = MDB_GetResponse<MDB_VisitDTO>;
 
-export type MDB_AddPdfToVisitResponse = MDB_GetResponse<Omit<MDB_VisitFileDTO, "content">>;
+export type MDB_AddPdfToVisitResponse = MDB_GetResponse<StrictOmit<MDB_VisitFileDTO, "content">>;
 
 export type MDB_GetVisitFilesResponse = MDB_GetResponseComplex<MDB_VisitFileDTO>;
