@@ -27,6 +27,13 @@ export default defineConfig({
     host: true, // it's a must for Docker container port mapping to work
     strictPort: true,
     port: +process.env.PORT,
+    // `hmr.clientPort` and `watch.usePolling` are important for HMR to work in the Docker container
+    hmr: {
+      clientPort: +process.env.PORT,
+    },
+    watch: {
+      usePolling: true,
+    },
   },
   test: {
     clearMocks: true,
