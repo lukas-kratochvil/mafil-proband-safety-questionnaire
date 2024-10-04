@@ -51,71 +51,75 @@ describe("AuthService", () => {
     prisma = module.get<PrismaService, DeepMockProxy<PrismaClient>>(AUTH_PRISMA_SERVICE);
   });
 
-  it("authenticate operator", () => {
-    // ARRANGE
-    const lastLoggedAt = new Date();
-    vi.spyOn(authService, "verify").mockResolvedValueOnce(operator);
-    prisma.operator.update.mockResolvedValueOnce({ ...operator, lastLoggedAt });
+  describe("authentication", () => {
+    it("authenticate operator", () => {
+      // ARRANGE
+      const lastLoggedAt = new Date();
+      vi.spyOn(authService, "verify").mockResolvedValueOnce(operator);
+      prisma.operator.update.mockResolvedValueOnce({ ...operator, lastLoggedAt });
 
-    // ACT
-    const foundOperator = authService.authenticate(operator.username, { ...operator });
+      // ACT
+      const foundOperator = authService.authenticate(operator.username, { ...operator });
 
-    // ASSERT
-    expect(foundOperator).resolves.toStrictEqual({ ...operator, lastLoggedAt });
+      // ASSERT
+      expect(foundOperator).resolves.toStrictEqual({ ...operator, lastLoggedAt });
+    });
+
+    it("authenticate operator - operator not found", () => {
+      // ARRANGE
+      vi.spyOn(authService, "verify").mockResolvedValueOnce(operator);
+
+      // ACT
+      const foundOperator = authService.authenticate(operator.username, { ...operator });
+
+      // ASSERT
+      expect(foundOperator).rejects.toThrow(Error);
+    });
+
+    it("authenticate operator - operator not valid", () => {
+      // ARRANGE
+      const invalidOperator = {
+        ...operator,
+        isValid: false,
+      };
+      vi.spyOn(authService, "verify").mockResolvedValueOnce(invalidOperator);
+
+      // ACT
+      const foundOperator = authService.authenticate(operator.username, { ...operator });
+
+      // ASSERT
+      expect(foundOperator).rejects.toThrow(UnauthorizedException);
+    });
+
+    it("authenticate operator - changed operator data", () => {
+      // ARRANGE
+      const changedOperator = {
+        ...operator,
+        name: `${operator.name}_X`,
+        surname: `${operator.surname}_X`,
+        email: `${operator.email}_X`,
+      };
+      prisma.operator.findUniqueOrThrow.mockResolvedValueOnce(operator);
+      prisma.operator.update.mockResolvedValueOnce(changedOperator);
+
+      // ACT
+      const foundOperator = authService.authenticate(changedOperator.username, { ...changedOperator });
+
+      // ASSERT
+      expect(foundOperator).resolves.toStrictEqual(changedOperator);
+    });
   });
 
-  it("authenticate operator - operator not found", () => {
-    // ARRANGE
-    vi.spyOn(authService, "verify").mockResolvedValueOnce(operator);
+  describe("verification", () => {
+    it("verify operator", () => {
+      // ARRANGE
+      prisma.operator.findUniqueOrThrow.mockResolvedValueOnce(operator);
 
-    // ACT
-    const foundOperator = authService.authenticate(operator.username, { ...operator });
+      // ACT
+      const foundOperator = authService.verify(operator.username);
 
-    // ASSERT
-    expect(foundOperator).rejects.toThrow(Error);
-  });
-
-  it("authenticate operator - operator not valid", () => {
-    // ARRANGE
-    const invalidOperator = {
-      ...operator,
-      isValid: false,
-    };
-    vi.spyOn(authService, "verify").mockResolvedValueOnce(invalidOperator);
-
-    // ACT
-    const foundOperator = authService.authenticate(operator.username, { ...operator });
-
-    // ASSERT
-    expect(foundOperator).rejects.toThrow(UnauthorizedException);
-  });
-
-  it("authenticate operator - changed operator data", () => {
-    // ARRANGE
-    const changedOperator = {
-      ...operator,
-      name: `${operator.name}_X`,
-      surname: `${operator.surname}_X`,
-      email: `${operator.email}_X`,
-    };
-    prisma.operator.findUniqueOrThrow.mockResolvedValueOnce(operator);
-    prisma.operator.update.mockResolvedValueOnce(changedOperator);
-
-    // ACT
-    const foundOperator = authService.authenticate(changedOperator.username, { ...changedOperator });
-
-    // ASSERT
-    expect(foundOperator).resolves.toStrictEqual(changedOperator);
-  });
-
-  it("verify operator", () => {
-    // ARRANGE
-    prisma.operator.findUniqueOrThrow.mockResolvedValueOnce(operator);
-
-    // ACT
-    const foundOperator = authService.verify(operator.username);
-
-    // ASSERT
-    expect(foundOperator).resolves.toStrictEqual(operator);
+      // ASSERT
+      expect(foundOperator).resolves.toStrictEqual(operator);
+    });
   });
 });
