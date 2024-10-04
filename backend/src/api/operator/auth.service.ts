@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, UnauthorizedException } from "@nestjs/common";
+import { Inject, Injectable, Logger } from "@nestjs/common";
 import type { Operator, Prisma } from "@prisma/client";
 import type { PrismaService } from "@app/prisma/prisma.service";
 import { AUTH_PRISMA_SERVICE } from "./constants";
@@ -42,13 +42,8 @@ export class AuthService {
     try {
       operator = await this.verify(username);
     } catch (e) {
-      this.logger.error(`Operator '${username}' is unknown!`);
+      this.logger.error(`Operator '${username}' is unknown or invalid!`);
       throw e;
-    }
-
-    if (!operator.isValid) {
-      this.logger.error(`Operator '${operator.username}' is invalid!`);
-      throw new UnauthorizedException("Operator is invalid!");
     }
 
     this.logger.log(`Operator '${operator.username}' authenticated.`);
@@ -82,6 +77,7 @@ export class AuthService {
     return this.prisma.operator.findUniqueOrThrow({
       where: {
         username,
+        isValid: true,
       },
     });
   }
