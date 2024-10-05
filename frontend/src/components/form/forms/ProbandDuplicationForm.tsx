@@ -29,7 +29,6 @@ export const ProbandDuplicationForm = () => {
   } = useQuery({
     queryKey: ["visit", id],
     queryFn: () => (id === undefined ? undefined : fetchDuplicatedProbandVisit(id)),
-    staleTime: Infinity,
   });
   const navigate = useNavigate();
   const { operator } = useAuth();

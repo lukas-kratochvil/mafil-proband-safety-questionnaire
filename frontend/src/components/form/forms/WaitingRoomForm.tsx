@@ -40,7 +40,6 @@ export const WaitingRoomForm = () => {
   } = useQuery({
     queryKey: ["visitForm", id],
     queryFn: () => (id === undefined ? undefined : fetchWaitingRoomVisitForm(id)),
-    staleTime: Infinity,
   });
   const queryClient = useQueryClient();
   const navigate = useNavigate();

@@ -2,6 +2,7 @@ import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { secondsToMilliseconds } from "date-fns";
 import React, { lazy } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
@@ -12,7 +13,13 @@ const AuthProvider = lazy(() =>
 );
 const App = lazy(() => import("./App"));
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: secondsToMilliseconds(30), // set default for how long a piece of fetched data is considered fresh before it needs to be re-fetched
+    },
+  },
+});
 
 const renderApp = async () => {
   // load the configuration before rendering any React component or importing any of the application's modules

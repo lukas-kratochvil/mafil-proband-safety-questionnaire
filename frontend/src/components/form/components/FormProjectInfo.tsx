@@ -17,8 +17,8 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
 
   const [projects, devices] = useQueries({
     queries: [
-      { queryKey: ["projects"], queryFn: fetchProjects, staleTime: Infinity },
-      { queryKey: ["devices"], queryFn: fetchDevices, staleTime: Infinity },
+      { queryKey: ["projects"], queryFn: fetchProjects },
+      { queryKey: ["devices"], queryFn: fetchDevices },
     ],
   });
 

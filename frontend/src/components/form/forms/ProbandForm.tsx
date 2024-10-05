@@ -27,7 +27,6 @@ export const ProbandForm = () => {
   } = useQuery({
     queryKey: ["currentQuestions"],
     queryFn: fetchCurrentQuestions,
-    staleTime: Infinity,
   });
 
   // Setting questions
