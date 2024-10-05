@@ -34,7 +34,6 @@ export const ApprovalRoomForm = () => {
     queryKey: ["visitForm", id],
     queryFn: () => (id === undefined ? undefined : fetchApprovalRoomVisitForm(id)),
     staleTime: Infinity,
-    gcTime: Infinity,
   });
   const navigate = useNavigate();
   const { operator } = useAuth();

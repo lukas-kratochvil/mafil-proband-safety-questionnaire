@@ -24,7 +24,6 @@ export const FormProbandContactRequest = () => {
     queryFn: () =>
       fetchProbandContactRequest(i18n.language as LanguageCode, name, surname, birthdateStr, currentDateStr),
     staleTime: Infinity,
-    gcTime: Infinity,
   });
 
   if (data === undefined) {

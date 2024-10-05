@@ -46,9 +46,9 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
 
   const [genders, handednesses, nativeLanguages] = useQueries({
     queries: [
-      { queryKey: ["genders"], queryFn: fetchGenders, staleTime: Infinity, gcTime: Infinity },
-      { queryKey: ["handednesses"], queryFn: fetchHandednesses, staleTime: Infinity, gcTime: Infinity },
-      { queryKey: ["nativeLanguages"], queryFn: fetchNativeLanguages, staleTime: Infinity, gcTime: Infinity },
+      { queryKey: ["genders"], queryFn: fetchGenders, staleTime: Infinity },
+      { queryKey: ["handednesses"], queryFn: fetchHandednesses, staleTime: Infinity },
+      { queryKey: ["nativeLanguages"], queryFn: fetchNativeLanguages, staleTime: Infinity },
     ],
   });
 

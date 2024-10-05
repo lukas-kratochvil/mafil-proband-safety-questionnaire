@@ -23,7 +23,6 @@ export const PhantomDuplicationForm = () => {
     queryKey: ["visit", id],
     queryFn: () => (id === undefined ? undefined : fetchDuplicatedPhantomVisit(id)),
     staleTime: Infinity,
-    gcTime: Infinity,
   });
   const navigate = useNavigate();
   const { operator } = useAuth();
