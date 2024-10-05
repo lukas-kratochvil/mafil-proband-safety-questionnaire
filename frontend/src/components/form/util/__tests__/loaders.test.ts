@@ -99,6 +99,12 @@ const duplicatedPhantomVisit: DuplicatedPhantomVisit = {
 // Tests
 //----------------------------------------------------------------------
 describe("form loaders", () => {
+  const currentDate = new Date();
+
+  beforeAll(async () => {
+    vi.spyOn(global, "Date").mockImplementation(() => currentDate);
+  });
+
   test("empty form default values", () => {
     // ACT
     const emptyFormDefaultValues = loadEmptyDefaultValues();
@@ -124,10 +130,6 @@ describe("form loaders", () => {
   });
 
   test("phantom form default values", () => {
-    // ARRANGE
-    const currentDate = new Date();
-    const mockedDate = vi.spyOn(global, "Date").mockImplementation(() => currentDate);
-
     // ACT
     const phantomFormDefaultValues = loadPhantomFormDefaultValues();
 
@@ -149,8 +151,6 @@ describe("form loaders", () => {
     expect(phantomFormDefaultValues.email).toBe("");
     expect(phantomFormDefaultValues.phone).toBe("");
     expect(phantomFormDefaultValues.answers).toEqual([]);
-
-    mockedDate.mockRestore();
   });
 
   test("waiting room visit form default values", () => {
@@ -213,10 +213,6 @@ describe("form loaders", () => {
   });
 
   test("duplicated proband visit form default values", () => {
-    // ARRANGE
-    const currentDate = new Date();
-    vi.spyOn(global, "Date").mockImplementationOnce(() => currentDate);
-
     // ACT
     const formDefaultValuesVisitDuplication = loadFormDefaultValuesVisitDuplication(duplicatedProbandVisit);
 
@@ -251,10 +247,6 @@ describe("form loaders", () => {
   });
 
   test("duplicated phantom visit form default values", () => {
-    // ARRANGE
-    const currentDate = new Date();
-    vi.spyOn(global, "Date").mockImplementationOnce(() => currentDate);
-
     // ACT
     const formDefaultValuesVisitDuplication = loadFormDefaultValuesVisitDuplication(duplicatedPhantomVisit);
 
