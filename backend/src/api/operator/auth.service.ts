@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from "@nestjs/common";
+import { Inject, Injectable, Logger, UnauthorizedException } from "@nestjs/common";
 import type { Operator, Prisma } from "@prisma/client";
 import type { PrismaService } from "@app/prisma/prisma.service";
 import { AUTH_PRISMA_SERVICE } from "./constants";
@@ -74,11 +74,17 @@ export class AuthService {
   }
 
   async verify(username: string): Promise<Operator> {
-    return this.prisma.operator.findUniqueOrThrow({
+    const operator = await this.prisma.operator.findUnique({
       where: {
         username,
         isValid: true,
       },
     });
+
+    if (operator === null) {
+      throw new UnauthorizedException();
+    }
+
+    return operator;
   }
 }

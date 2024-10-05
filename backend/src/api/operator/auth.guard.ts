@@ -1,8 +1,7 @@
-import { ExecutionContext, Inject, Injectable, SetMetadata } from "@nestjs/common";
+import { ExecutionContext, Inject, Injectable, SetMetadata, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Reflector } from "@nestjs/core";
 import { GqlExecutionContext } from "@nestjs/graphql";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import type { Request } from "express";
 import tokenIntrospect, { errors } from "token-introspection";
 import { EnvironmentVariables } from "@app/config/validation";
@@ -74,7 +73,7 @@ export class AuthGuard extends AuthGuardDev {
         this.logger.error(
           `Request from origin '${request.headers.origin}' has invalid access token! Token introspection error: ${error.message}`
         );
-      } else if (error instanceof PrismaClientKnownRequestError) {
+      } else if (error instanceof UnauthorizedException) {
         this.logger.error(`Username '${username}' not verified: ${error.message}`);
       } else {
         this.logger.error(error);
