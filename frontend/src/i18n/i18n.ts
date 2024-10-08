@@ -16,6 +16,9 @@ const supportedLanguages = ["cs", "en"] as const;
  */
 export type LanguageCode = StringArrayToUnion<typeof supportedLanguages>;
 
+/**
+ * Default i18n translation namespace.
+ */
 export const defaultNS = "translation";
 
 void i18n

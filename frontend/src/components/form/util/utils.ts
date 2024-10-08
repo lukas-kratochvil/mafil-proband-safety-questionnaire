@@ -12,6 +12,9 @@ import type { NativeLanguage } from "@app/model/language";
 import type { Project } from "@app/model/project";
 import type { GenderDTO, HandednessDTO } from "@app/util/server_API/dto";
 
+/**
+ * Returns a partial object of modified fields only.
+ */
 export const getModifiedFieldsOnly = (
   initialData: FormPropType | undefined,
   submittedData: ValidatedOperatorFormData
@@ -42,6 +45,9 @@ export const getModifiedFieldsOnly = (
   return { ...diffRest, answers: diffAnswers };
 };
 
+/**
+ * Returns proband's form data in a correct format.
+ */
 export const getValidatedProbandFormData = (data: FormPropType): ValidatedProbandFormData => ({
   name: data.name,
   surname: data.surname,
@@ -64,6 +70,9 @@ export const getValidatedProbandFormData = (data: FormPropType): ValidatedProban
   phone: data.phone,
 });
 
+/**
+ * Returns operator's form data in a correct format.
+ */
 export const getValidatedOperatorFormData = (data: FormPropType): ValidatedOperatorFormData => ({
   ...getValidatedProbandFormData(data),
   project: data.project as Project,
@@ -72,6 +81,9 @@ export const getValidatedOperatorFormData = (data: FormPropType): ValidatedOpera
   disapprovalReason: data.disapprovalReason,
 });
 
+/**
+ * Decides whether the visit must be approved by an operator with higher permissions.
+ */
 export const isVisitFormForApproval = (operator: Auth["operator"], data: ValidatedOperatorFormData) =>
   operator === undefined
   || (operator.role !== "MR_HIGH_PERM" && data.answers.some((answer) => answer.mustBeApproved && answer.answer === "YES"));

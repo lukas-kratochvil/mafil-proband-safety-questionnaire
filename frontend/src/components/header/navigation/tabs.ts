@@ -12,6 +12,9 @@ import { RoutingPath } from "@app/routing-paths";
 export const TAB_DEFAULT_COLOR = amber[700];
 const TAB_HIGHLIGHT_COLOR = amber[600];
 
+/**
+ * Basic tab properties to be used in this app.
+ */
 export type TabProps = {
   localizationKey: string;
   urlPath: RoutingPath;
@@ -19,6 +22,9 @@ export type TabProps = {
   openInNewWindow?: boolean;
 };
 
+/**
+ * Returns common tab style for a MUI tab component.
+ */
 export const getCommonTabSx = (location: Location, urlPath: TabProps["urlPath"]): SxProps<Theme> => {
   const isSelected = location.pathname.startsWith(urlPath);
 
@@ -37,6 +43,9 @@ export const getCommonTabSx = (location: Location, urlPath: TabProps["urlPath"])
   };
 };
 
+/**
+ * Returns all tabs to be used in this app.
+ */
 export const getTabs = (): TabProps[] => [
   {
     localizationKey: "waitingRoom",

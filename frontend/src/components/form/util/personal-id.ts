@@ -120,6 +120,9 @@ export class CzechSlovakPersonalId {
   };
 }
 
+/**
+ * Computes the Czech personal ID part (without the last 4 digits) from the birthdate and gender.
+ */
 export const getPersonalIdPart = (birthdate: Date, gender: GenderDTO): string => {
   const year = getYear(birthdate) % 100;
   // month can be plus extra 20 when all the IDs are used up on the given day, but it's really a rare case
