@@ -66,10 +66,14 @@ type RequestData<TVariables> = {
 };
 
 // Generic server GraphQL API response format: https://graphql.org/learn/serving-over-http/#response
-type ResponseData<TData> = {
-  data?: TData | null;
-  errors?: GraphQlError[];
-};
+type ResponseData<TData> =
+  | {
+      data: TData;
+    }
+  | {
+      errors: GraphQlError[];
+      data?: TData | null;
+    };
 
 // Extract operation name from the query
 const extractGraphQLOperationName = (query: string): string | undefined => {
@@ -92,11 +96,11 @@ const serverApiCall = async <TData, TVariables = Record<string, unknown>>(
     variables,
   });
 
-  if (data.data) {
-    return data.data;
+  if ("errors" in data) {
+    throw createServerApiCallError(data.errors);
   }
 
-  throw createServerApiCallError(data.errors);
+  return data.data;
 };
 
 export const authenticateOperator = async (loggingOperator: OperatorAuthInput): Promise<OperatorDTO> => {
