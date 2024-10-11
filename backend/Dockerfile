@@ -39,6 +39,9 @@ WORKDIR /usr/src/app
 RUN corepack enable pnpm
 
 COPY --from=build ["/usr/src/app/backend/package.json", "/usr/src/app/backend/pnpm-lock.yaml", "./"]
-COPY --from=build /usr/src/app/backend/{node_modules,dist,assets,prisma} ./
+COPY --from=build /usr/src/app/backend/node_modules ./node_modules
+COPY --from=build /usr/src/app/backend/dist ./dist
+COPY --from=build /usr/src/app/backend/assets ./assets
+COPY --from=build /usr/src/app/backend/prisma ./prisma
 
 CMD [ "pnpm", "start:migrate:prod" ]
