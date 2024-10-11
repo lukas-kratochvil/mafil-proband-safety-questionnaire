@@ -19,7 +19,6 @@ export class AnswerEntity extends BaseEntity implements Answer {
   @Field(() => UUID)
   questionId: string;
 
-  // eslint-disable-next-line @darraghor/nestjs-typed/all-properties-have-explicit-defined
   @IsEnum(AnswerOption)
   @Field(() => AnswerOption)
   answer: AnswerOption;
