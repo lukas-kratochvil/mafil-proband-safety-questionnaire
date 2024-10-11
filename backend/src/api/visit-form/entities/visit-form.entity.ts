@@ -51,6 +51,7 @@ export class VisitFormEntity extends BaseEntity implements VisitForm {
   @Field(() => [AnswerEntity])
   answers: AnswerEntity[];
 
+  // eslint-disable-next-line @darraghor/nestjs-typed/all-properties-have-explicit-defined
   @IsEnum(VisitFormState)
   @Field(() => VisitFormState)
   state: VisitFormState;

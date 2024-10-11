@@ -84,13 +84,11 @@ export class GeneratePDFArgs extends IntersectionType(
   @Field({ nullable: true })
   approverUsername?: string;
 
-  // eslint-disable-next-line @darraghor/nestjs-typed/all-properties-have-explicit-defined
   @ValidateIf((object: GeneratePDFArgs) => !object.isPhantom)
   @MaxLength(5)
   @Field({ nullable: true })
   probandLanguageCode?: string;
 
-  // eslint-disable-next-line @darraghor/nestjs-typed/all-properties-have-explicit-defined
   @ValidateIf((object: GeneratePDFArgs) => !object.isPhantom)
   @IsArray()
   @ArrayNotEmpty()

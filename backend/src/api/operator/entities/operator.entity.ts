@@ -35,6 +35,7 @@ export class OperatorEntity extends BaseEntity implements Operator {
   @Field()
   email: string;
 
+  // eslint-disable-next-line @darraghor/nestjs-typed/all-properties-have-explicit-defined
   @IsEnum(OperatorRole)
   @Field(() => OperatorRole)
   role: OperatorRole;
