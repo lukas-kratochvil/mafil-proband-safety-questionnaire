@@ -5,8 +5,11 @@ FROM node:20-alpine AS development
 
 WORKDIR /usr/src/app/frontend
 
-COPY ["frontend/package.json", "frontend/package-lock.json", "./"]
-RUN npm ci
+# No need to install pnpm globally as Corepack will handle pnpm for us as long as our package.json has a `packageManager` field
+RUN corepack enable pnpm
+
+COPY ["frontend/package.json", "frontend/pnpm-lock.yaml", "./"]
+RUN pnpm i --frozen-lockfile
 
 # Copy shared tsconfig file between the projects inside the monorepo.. must be in the parental folder of the `frontend` project.
 COPY tsconfig.base.json ../.
@@ -19,10 +22,8 @@ COPY ./frontend .
 FROM development AS build
 
 # Build with devDependencies because we use TypeScript, Vite etc. in the build process and then we generate the production-ready 'node_modules'.
-RUN npm run build && \
-    npm ci --omit='dev' && \
-    npm cache clean --force
-
+RUN pnpm build && \
+    pnpm i --prod --frozen-lockfile
 
 #-------------------------------------------
 # PRODUCTION

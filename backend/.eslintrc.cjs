@@ -7,11 +7,19 @@ module.exports = {
     "plugin:@darraghor/nestjs-typed/no-swagger",
     "../.eslintrc.js", // this has to be the last extension!!
   ],
-  plugins: ["@darraghor/nestjs-typed"],
+  overrides: [
+    {
+      files: ["./**/*.spec.ts", "./**/*.test.ts"],
+      rules: {
+        "@typescript-eslint/no-floating-promises": "off"
+      }
+    }
+  ],
   parserOptions: {
     project: "tsconfig.json",
     tsconfigRootDir: __dirname,
   },
+  plugins: ["@darraghor/nestjs-typed"],
   rules: {
     "@darraghor/nestjs-typed/injectable-should-be-provided": [
       "warn",
@@ -26,13 +34,5 @@ module.exports = {
       // Field and HideField is used in GraphlQL DTOs to provide metadata about the property type
       { additionalTypeDecorators: ["Field", "HideField"] },
     ],
-  },
-  overrides: [
-    {
-      files: ["./**/*.spec.ts", "./**/*.test.ts"],
-      rules: {
-        "@typescript-eslint/no-floating-promises": "off"
-      }
-    }
-  ]
+  }
 };

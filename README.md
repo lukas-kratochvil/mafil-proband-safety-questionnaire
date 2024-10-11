@@ -87,7 +87,7 @@ These volumes will be created in the app root directory:
 ### Populating the database with initial data
 To populate the database with initial data (languages, genders, native languages, handednesses and safety questions), the command below must be run inside the `server` container.
 ```
-docker-compose exec server npm run seed
+docker-compose exec server pnpm seed
 ```
 
 Then users that are eligible to access the authenticated part of the app must be defined. Login to the Adminer at `/adminer` URL path and create accounts in the `Operator` table in the database.
@@ -108,6 +108,11 @@ docker image prune -f
 
 ## Local development
 ### Installation
+Firstly, install pnpm Node package manager:
+```
+npm install -g pnpm@^9
+```
+
 In the root directory create the following files:
 - `.env` configuration file inspired by the `.env.local.example`
 - `server-config.yaml` configuration file inspired by the `server-config.local.yaml.example`
@@ -125,9 +130,9 @@ The backend and frontend `package.json` and the source code directory are mapped
 
 Only `node_modules` are not mapped to Docker containers due to potential platform-specific code. So they must be installed and updated separately on a local machine and in the `server` and `web` Docker containers.
 
-To install or update Node packages run the command:
+To install all the Node packages run the command:
 ```
-npm i
+pnpm i
 ```
 * on a local machine in the `/`, `/backend` and `/frontend` directories.
 * in the `server` Docker container in the `/usr/src/app/backend` directory.
@@ -136,7 +141,7 @@ npm i
 ### Populating the database with initial data
 To populate the local database with initial data (languages, genders, native languages, handednesses and safety questions), the command below must be run inside the `server` container.
 ```
-npm run seed:local
+pnpm seed:local
 ```
 
 You also need to create the user you specified in the `web-config.json` in the database.
@@ -157,7 +162,7 @@ npx prisma generate
 ```
 
 ### Updating i18n translations
-After you change the `/public/locales` translations structure, you need to run the `npm run i18n:generate` script to get the required TypeScript support for the i18n translation keys. For example in functions like `useTranslation()`, `t()` etc.
+After you change the `/public/locales` translations structure, you need to run the `pnpm i18n:generate` script to get the required TypeScript support for the i18n translation keys. For example in functions like `useTranslation()`, `t()` etc.
 
 ### Useful tools
 * GraphQL playground to test the server GraphQL API: use `server` URL with the path `/graphql`

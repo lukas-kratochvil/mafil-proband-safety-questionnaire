@@ -34,15 +34,15 @@ services:
       context: .
       dockerfile: ./backend/Dockerfile
       target: development
-    command: npm run start:migrate:dev
+    command: pnpm start:migrate:dev
     volumes:
       - ./server-config.yaml:/usr/src/app/backend/config.yaml:ro
       # Changes in host's ./backend directory will be propagated to the container
       # This will also let us add packages during development without rebuilding the image
-      # - We then need to install added packages (run 'npm i') inside the container in the folder '/usr/src/app/backend'
+      # - We then need to install added packages (run 'pnpm add <pkg>') inside the container in the folder '/usr/src/app/backend'
       - ./backend:/usr/src/app/backend
       # This prevents our host files from overriding container's node_modules
-      # – Some packages may be platform specific so we always need to run 'npm i' in the container when new package is added
+      # – Some packages may be platform specific so we always need to run 'pnpm add <pkg>' in the container when new package is added
       - exclude-server:/usr/src/app/backend/node_modules/
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
@@ -62,15 +62,15 @@ services:
       context: .
       dockerfile: ./frontend/Dockerfile
       target: development
-    command: npm run dev
+    command: pnpm dev
     volumes:
       - ./web-config.json:/usr/src/app/frontend/public/config.json:ro
       # Changes in host's ./frontend directory will be propagated to the container
       # This will also let us add packages during development without rebuilding the image
-      # - We then need to install added packages (run 'npm i') inside the container in the folder '/usr/src/app/frontend'
+      # - We then need to install added packages (run 'pnpm add <pkg>') inside the container in the folder '/usr/src/app/frontend'
       - ./frontend:/usr/src/app/frontend
       # This prevents our host files from overriding container's node_modules
-      # – Some packages may be platform specific so we always need to run 'npm i' in the container when new package is added
+      # – Some packages may be platform specific so we always need to run 'pnpm add <pkg>' in the container when new package is added
       - exclude-web:/usr/src/app/frontend/node_modules/
     ports:
       - ${WEB_PORT}:${WEB_PORT}
