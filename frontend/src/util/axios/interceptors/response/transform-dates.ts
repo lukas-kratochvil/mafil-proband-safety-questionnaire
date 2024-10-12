@@ -22,7 +22,7 @@ const handleDates = (body: BodyObject, transform: (value: string) => Date): Body
     body.forEach((value, index) => {
       console.log("Body - array", typeof value, value);
 
-      if (typeof value === "object") {
+      if (value && typeof value === "object") {
         return handleDates(value as BodyObject, transform);
       }
 
@@ -37,7 +37,7 @@ const handleDates = (body: BodyObject, transform: (value: string) => Date): Body
     Object.entries(body).forEach(([key, value]) => {
       console.log("Body - object", typeof value, value);
 
-      if (typeof value === "object") {
+      if (value && typeof value === "object") {
         return handleDates(value as BodyObject, transform);
       }
 
@@ -59,7 +59,7 @@ const handleDates = (body: BodyObject, transform: (value: string) => Date): Body
 export const transformDateStringsToDate = (
   response: AxiosResponse<unknown, unknown>
 ): AxiosResponse<unknown, unknown> => {
-  if (typeof response.data === "object") {
+  if (response.data && typeof response.data === "object") {
     console.log("Before:");
     console.log(response.data);
     handleDates(response.data as BodyObject, parseISO);
