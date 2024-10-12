@@ -10,9 +10,9 @@ type ModifiableOperatorData = Pick<Operator, "name" | "surname" | "email">;
 export class AuthService {
   constructor(@Inject(AUTH_PRISMA_SERVICE) private readonly prisma: PrismaService) {}
 
-  private readonly logger = new Logger(AuthService.name);
+  readonly #logger = new Logger(AuthService.name);
 
-  private getChangedOperatorData(
+  #getChangedOperatorData(
     operator: Operator,
     modifiableData: ModifiableOperatorData
   ): [Prisma.OperatorUpdateInput, string] {
@@ -42,11 +42,11 @@ export class AuthService {
     try {
       operator = await this.verify(username);
     } catch (e) {
-      this.logger.error(`Operator '${username}' is unknown or invalid!`);
+      this.#logger.error(`Operator '${username}' is unknown or invalid!`);
       throw e;
     }
 
-    this.logger.log(`Operator '${operator.username}' authenticated.`);
+    this.#logger.log(`Operator '${operator.username}' authenticated.`);
     operator = await this.prisma.operator.update({
       where: {
         username,
@@ -57,14 +57,14 @@ export class AuthService {
     });
 
     // Get changed operator data
-    const [changedOperatorData, changedOperatorDataStr] = this.getChangedOperatorData(operator, modifiableData);
+    const [changedOperatorData, changedOperatorDataStr] = this.#getChangedOperatorData(operator, modifiableData);
 
     // Check if any operator data needs updating. If not, return operator, else update operator properties.
     if (Object.keys(changedOperatorData).length == 0) {
       return operator;
     }
 
-    this.logger.warn(`Operator '${operator.username}' data changed: ${changedOperatorDataStr}!`);
+    this.#logger.warn(`Operator '${operator.username}' data changed: ${changedOperatorDataStr}!`);
     return this.prisma.operator.update({
       where: {
         username,

@@ -21,19 +21,19 @@ type EntityTranslations = {
 @Injectable()
 export class PDFService {
   // Default language for all the operator text translations
-  private operatorLanguageCode: string;
+  #operatorLanguageCode: string;
   // TODO: delete - only for a development purpose
-  private isDevelopment: boolean;
+  #isDevelopment: boolean;
 
   constructor(
     config: ConfigService<EnvironmentVariables, true>,
     private readonly prisma: PrismaService
   ) {
-    this.operatorLanguageCode = config.get("pdfOperatorLanguageCode", { infer: true });
-    this.isDevelopment = config.get("nodeEnv", { infer: true }) === "development";
+    this.#operatorLanguageCode = config.get("pdfOperatorLanguageCode", { infer: true });
+    this.#isDevelopment = config.get("nodeEnv", { infer: true }) === "development";
   }
 
-  private createPDFName(generatePDFInput: GeneratePDFArgs): string {
+  #createPDFName(generatePDFInput: GeneratePDFArgs): string {
     const name = `${generatePDFInput.visitId}_${generatePDFInput.surname}_${generatePDFInput.name}`
       // normalize the string and remove diacritics
       .normalize("NFD")
@@ -47,7 +47,7 @@ export class PDFService {
     return `${name}.pdf`;
   }
 
-  private async getPhantomPDFData(generatePDFInput: GeneratePDFArgs, operatorFinalizer: PDFOperator): Promise<PDFData> {
+  async #getPhantomPDFData(generatePDFInput: GeneratePDFArgs, operatorFinalizer: PDFOperator): Promise<PDFData> {
     // Get gender translations
     const gender = await this.prisma.gender.findFirstOrThrow({
       where: {
@@ -57,7 +57,7 @@ export class PDFService {
         translations: {
           where: {
             language: {
-              code: this.operatorLanguageCode,
+              code: this.#operatorLanguageCode,
             },
           },
           select: {
@@ -76,7 +76,7 @@ export class PDFService {
         translations: {
           where: {
             language: {
-              code: this.operatorLanguageCode,
+              code: this.#operatorLanguageCode,
             },
           },
           select: {
@@ -106,7 +106,7 @@ export class PDFService {
     };
   }
 
-  private async getProbandPDFData(
+  async #getProbandPDFData(
     generatePDFInput: GenerateProbandPDFArgs,
     operatorFinalizer: PDFOperator,
     useSecondaryLanguage: boolean
@@ -115,10 +115,10 @@ export class PDFService {
     let languageCodeOrder: Prisma.SortOrder = "asc";
 
     if (useSecondaryLanguage) {
-      languageCodes.push(this.operatorLanguageCode);
+      languageCodes.push(this.#operatorLanguageCode);
 
       // Ensure that proband translations are always at index 0
-      if (generatePDFInput.probandLanguageCode > this.operatorLanguageCode) {
+      if (generatePDFInput.probandLanguageCode > this.#operatorLanguageCode) {
         languageCodeOrder = "desc";
       }
     }
@@ -260,9 +260,9 @@ export class PDFService {
     };
   }
 
-  private createPDF(name: string, base64Content: string): PDFEntity {
+  #createPDF(name: string, base64Content: string): PDFEntity {
     // TODO: delete - only for a development purpose to store generated PDF locally
-    if (this.isDevelopment) {
+    if (this.#isDevelopment) {
       const fileName = `${GENERATED_PDF_DIR_PATH}/${name}`;
       fs.writeFile(fileName, Buffer.from(base64Content, "base64"), (err) =>
         console.log(err ? err : `Development PDF '${fileName}' successfully created!`)
@@ -277,7 +277,7 @@ export class PDFService {
 
   async generate(generatePDFInput: GeneratePDFArgs): Promise<PDFEntity> {
     // Set PDF name
-    const pdfName = this.createPDFName(generatePDFInput);
+    const pdfName = this.#createPDFName(generatePDFInput);
 
     // Get operator who finalized the visit
     const operatorFinalizer: PDFOperator = await this.prisma.operator.findUniqueOrThrow({
@@ -292,10 +292,10 @@ export class PDFService {
 
     if (generatePDFInput.isPhantom) {
       // Prepare data for PDF generation
-      const phantomData = await this.getPhantomPDFData(generatePDFInput, operatorFinalizer);
+      const phantomData = await this.#getPhantomPDFData(generatePDFInput, operatorFinalizer);
       // Generate PDF
-      const base64Content = await generateBase64PDF(phantomData, this.operatorLanguageCode);
-      return this.createPDF(pdfName, base64Content);
+      const base64Content = await generateBase64PDF(phantomData, this.#operatorLanguageCode);
+      return this.#createPDF(pdfName, base64Content);
     }
 
     // Proband language code is required for proband PDF
@@ -308,9 +308,9 @@ export class PDFService {
       throw new BadRequestException("Answers are required!");
     }
 
-    const useSecondaryLanguage = generatePDFInput.probandLanguageCode !== this.operatorLanguageCode;
+    const useSecondaryLanguage = generatePDFInput.probandLanguageCode !== this.#operatorLanguageCode;
     // Prepare data for PDF generation
-    const data = await this.getProbandPDFData(
+    const data = await this.#getProbandPDFData(
       {
         ...generatePDFInput,
         probandLanguageCode: generatePDFInput.probandLanguageCode,
@@ -319,10 +319,10 @@ export class PDFService {
       operatorFinalizer,
       useSecondaryLanguage
     );
-    const secondaryLocale = useSecondaryLanguage ? this.operatorLanguageCode : undefined;
+    const secondaryLocale = useSecondaryLanguage ? this.#operatorLanguageCode : undefined;
 
     // Generate PDF
     const base64Content = await generateBase64PDF(data, generatePDFInput.probandLanguageCode, secondaryLocale);
-    return this.createPDF(pdfName, base64Content);
+    return this.#createPDF(pdfName, base64Content);
   }
 }

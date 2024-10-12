@@ -16,7 +16,7 @@ const INVALID_PERSONAL_ID = "";
  *    - https://www.skutocnost.sk/rubriky/financie/ako-zistit-rodne-cislo-format-a-z-coho-sa-sklada_1366.html
  */
 export class CzechSlovakPersonalId {
-  private readonly personalIdWithoutSlash: string = INVALID_PERSONAL_ID;
+  readonly #personalIdWithoutSlash: string = INVALID_PERSONAL_ID;
 
   constructor(personalId: string) {
     const personalIdTrimmed = personalId.trim();
@@ -30,17 +30,17 @@ export class CzechSlovakPersonalId {
         ? `${personalIdTrimmed.slice(0, 6)}${personalIdTrimmed.slice(7)}`
         : personalIdTrimmed;
 
-      if (CzechSlovakPersonalId.isValidPersonalId(personalIdWithoutSlash)) {
-        this.personalIdWithoutSlash = personalIdWithoutSlash;
+      if (CzechSlovakPersonalId.#isValidPersonalId(personalIdWithoutSlash)) {
+        this.#personalIdWithoutSlash = personalIdWithoutSlash;
       }
     }
   }
 
   // People born after the year 1953 have 10-digit personal ID with the 10th digit being the control digit. (People born until the year 1953 including have 9-digit personal ID.)
-  private static isNewPersonalId = (personalId: string): boolean => personalId.length === 10;
+  static #isNewPersonalId = (personalId: string): boolean => personalId.length === 10;
 
   // Get month index in range 0-11.
-  private static getMonthIndexFromPersonalId = (personalId: string): number => {
+  static #getMonthIndexFromPersonalId = (personalId: string): number => {
     const month = +personalId.substring(2, 4);
 
     // male
@@ -49,7 +49,7 @@ export class CzechSlovakPersonalId {
     }
     // male with special addition of 20 - if all valid 4-digit suffixes are used up on a given day (introduced in 2004)
     if (
-      CzechSlovakPersonalId.isNewPersonalId(personalId)
+      CzechSlovakPersonalId.#isNewPersonalId(personalId)
       && MALE_CONST_EXHAUSTED < month
       && month <= MALE_CONST_EXHAUSTED + MONTHS_IN_YEAR
     ) {
@@ -61,7 +61,7 @@ export class CzechSlovakPersonalId {
     }
     // female with special addition of 20 - if all valid 4-digit suffixes are used up on a given day (introduced in 2004)
     if (
-      CzechSlovakPersonalId.isNewPersonalId(personalId)
+      CzechSlovakPersonalId.#isNewPersonalId(personalId)
       && FEMALE_CONST_EXHAUSTED < month
       && month <= FEMALE_CONST_EXHAUSTED + MONTHS_IN_YEAR
     ) {
@@ -72,8 +72,8 @@ export class CzechSlovakPersonalId {
   };
 
   // Check if the personal ID date part is a valid date.
-  private static isValidPersonalIdDate = (personalId: string): boolean => {
-    const monthIndex = CzechSlovakPersonalId.getMonthIndexFromPersonalId(personalId);
+  static #isValidPersonalIdDate = (personalId: string): boolean => {
+    const monthIndex = CzechSlovakPersonalId.#getMonthIndexFromPersonalId(personalId);
     // 'isExists()' needs 'year' as a number - we have only last 2 digits of the year in the personal ID
     return Number.isNaN(monthIndex)
       ? false
@@ -81,37 +81,37 @@ export class CzechSlovakPersonalId {
   };
 
   // Check if the personal ID is valid.
-  private static isValidPersonalId = (personalId: string): boolean => {
+  static #isValidPersonalId = (personalId: string): boolean => {
     const year = +personalId.substring(0, 2);
     // the new personal ID should be equal to 0 modulo 11
     // or in special case personal ID has 10th digit equal to 0 if first 9 digits are equal to 0 modulo 11 (valid only 1954-1985)
     if (
-      CzechSlovakPersonalId.isNewPersonalId(personalId)
+      CzechSlovakPersonalId.#isNewPersonalId(personalId)
       && (+personalId % 11 !== 0
         || (year >= 54 && year <= 85 && !(+personalId.slice(0, 9) % 11 === 0 && personalId[9] === "0")))
     ) {
       return false;
     }
 
-    return CzechSlovakPersonalId.isValidPersonalIdDate(personalId);
+    return CzechSlovakPersonalId.#isValidPersonalIdDate(personalId);
   };
 
-  public isValid = (): boolean => this.personalIdWithoutSlash !== INVALID_PERSONAL_ID;
+  public isValid = (): boolean => this.#personalIdWithoutSlash !== INVALID_PERSONAL_ID;
 
   public isMale = (): boolean => !this.isFemale();
 
-  public isFemale = (): boolean => +this.personalIdWithoutSlash.substring(2, 4) > FEMALE_CONST;
+  public isFemale = (): boolean => +this.#personalIdWithoutSlash.substring(2, 4) > FEMALE_CONST;
 
   public getBirthdate = (): Date => {
-    const year = +this.personalIdWithoutSlash.substring(0, 2);
+    const year = +this.#personalIdWithoutSlash.substring(0, 2);
     const birthdateCentury19 = new Date(
       year,
-      CzechSlovakPersonalId.getMonthIndexFromPersonalId(this.personalIdWithoutSlash),
-      +this.personalIdWithoutSlash.substring(4, 6)
+      CzechSlovakPersonalId.#getMonthIndexFromPersonalId(this.#personalIdWithoutSlash),
+      +this.#personalIdWithoutSlash.substring(4, 6)
     );
 
     // 10-digit personal IDs are assigned after the year 1953
-    if (CzechSlovakPersonalId.isNewPersonalId(this.personalIdWithoutSlash)) {
+    if (CzechSlovakPersonalId.#isNewPersonalId(this.#personalIdWithoutSlash)) {
       return year < 53 ? addYears(birthdateCentury19, 100) : birthdateCentury19;
     }
 

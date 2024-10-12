@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
-  private readonly logger = new Logger("HTTP");
+  readonly #logger = new Logger("HTTP");
 
   use(request: Request, response: Response, next: NextFunction) {
     const { body, ip, method, originalUrl } = request;
@@ -12,7 +12,7 @@ export class LoggerMiddleware implements NestMiddleware {
     response.on("finish", () => {
       const { statusCode } = response;
       const contentLength = response.get("content-length");
-      this.logger.log(
+      this.#logger.log(
         `${method} ${originalUrl} ${body.operationName} ${statusCode} ${contentLength} - ${userAgent} ${ip}`
       );
     });

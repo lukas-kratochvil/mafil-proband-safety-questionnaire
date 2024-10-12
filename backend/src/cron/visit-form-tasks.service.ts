@@ -8,11 +8,11 @@ const MILLISECONDS_IN_DAY = millisecondsInSecond * secondsInDay;
 
 @Injectable()
 export class VisitFormTasksService {
-  private readonly logger = new Logger(VisitFormTasksService.name);
+  readonly #logger = new Logger(VisitFormTasksService.name);
 
   constructor(private readonly prisma: PrismaService) {}
 
-  private readonly deleteVisitForms = async (visitFormState: VisitFormState, deleteLowerThanDate: string) => {
+  readonly #deleteVisitForms = async (visitFormState: VisitFormState, deleteLowerThanDate: string) => {
     const { count } = await this.prisma.visitForm.deleteMany({
       where: {
         AND: [
@@ -33,7 +33,7 @@ export class VisitFormTasksService {
     }
 
     const isSingle = count === 1;
-    this.logger.log(
+    this.#logger.log(
       `Deleted ${count} visit form${isSingle ? "" : "s"} that ${
         isSingle ? "was" : "were"
       } marked as '${visitFormState}' before ${deleteLowerThanDate}.`
@@ -43,12 +43,12 @@ export class VisitFormTasksService {
   @Cron(CronExpression.EVERY_DAY_AT_3AM)
   async deleteDeletedVisitForms() {
     const sameTimeYesterday = new Date(Date.now() - MILLISECONDS_IN_DAY).toISOString();
-    await this.deleteVisitForms(VisitFormState.DELETED, sameTimeYesterday);
+    await this.#deleteVisitForms(VisitFormState.DELETED, sameTimeYesterday);
   }
 
   @Cron(CronExpression.EVERY_DAY_AT_3AM)
   async deletePdfGeneratedVisitForms() {
     const sameTimeYesterday = new Date(Date.now() - MILLISECONDS_IN_DAY).toISOString();
-    await this.deleteVisitForms(VisitFormState.PDF_GENERATED, sameTimeYesterday);
+    await this.#deleteVisitForms(VisitFormState.PDF_GENERATED, sameTimeYesterday);
   }
 }

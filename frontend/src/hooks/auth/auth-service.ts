@@ -31,26 +31,26 @@ const oidcConfig: UserManagerSettings = {
 };
 
 export class AuthService {
-  private static instance: AuthService;
+  static #instance: AuthService;
 
-  private readonly userManager = new UserManager(oidcConfig);
+  readonly #userManager = new UserManager(oidcConfig);
 
   /* eslint-disable-next-line no-useless-constructor, no-empty-function */
   private constructor() {}
 
   public static getInstance(): AuthService {
-    if (!this.instance) {
-      this.instance = new AuthService();
+    if (!this.#instance) {
+      this.#instance = new AuthService();
     }
-    return this.instance;
+    return this.#instance;
   }
 
   public async signIn(): Promise<void> {
-    return this.userManager.signinRedirect();
+    return this.#userManager.signinRedirect();
   }
 
   public async completeSignIn(): Promise<OperatorDTO | null> {
-    const user = await this.userManager.signinRedirectCallback();
+    const user = await this.#userManager.signinRedirectCallback();
 
     // Check the presence of required OIDC claims
     if (
@@ -72,19 +72,19 @@ export class AuthService {
   }
 
   public async signOut(): Promise<void> {
-    return this.userManager.signoutRedirect();
+    return this.#userManager.signoutRedirect();
   }
 
   public async completeSignOut(): Promise<void> {
-    await this.userManager.signoutRedirectCallback();
+    await this.#userManager.signoutRedirectCallback();
   }
 
   public async getAuthUser(): Promise<User | null> {
-    return this.userManager.getUser();
+    return this.#userManager.getUser();
   }
 
   public async clearAuthData(): Promise<void> {
-    await this.userManager.removeUser();
-    return this.userManager.revokeTokens(revokeTokenTypes);
+    await this.#userManager.removeUser();
+    return this.#userManager.revokeTokens(revokeTokenTypes);
   }
 }

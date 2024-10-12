@@ -18,7 +18,7 @@ export const SkipOidcAuth = () => SetMetadata(SKIP_OIDC_AUTH_METADATA_KEY, true)
 @Injectable()
 // eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
 export class AuthGuard extends AuthGuardDev {
-  private readonly introspectToken: tokenIntrospect.IntrospectionFunction;
+  readonly #introspectToken: tokenIntrospect.IntrospectionFunction;
 
   constructor(
     @Inject(AUTH_SERVICE) private readonly authService: AuthService,
@@ -26,14 +26,14 @@ export class AuthGuard extends AuthGuardDev {
     config: ConfigService<EnvironmentVariables, true>
   ) {
     super();
-    this.introspectToken = tokenIntrospect({
+    this.#introspectToken = tokenIntrospect({
       client_id: config.get("oidc.jpm.clientId", { infer: true }),
       client_secret: config.get("oidc.jpm.clientSecret", { infer: true }),
       endpoint: config.get("oidc.jpm.introspectionEndpoint", { infer: true }),
     });
   }
 
-  private extractAccessToken(request: Request) {
+  #extractAccessToken(request: Request) {
     const [type, accessToken] = request.headers.authorization?.split(" ") ?? [];
     return type === "Bearer" ? accessToken : undefined;
   }
@@ -57,7 +57,7 @@ export class AuthGuard extends AuthGuardDev {
       return true;
     }
 
-    const accessToken = this.extractAccessToken(request);
+    const accessToken = this.#extractAccessToken(request);
     if (accessToken === undefined) {
       this.logger.error(`Request from origin '${request.headers.origin}' does not contain OIDC access token!`);
       return false;
@@ -65,7 +65,7 @@ export class AuthGuard extends AuthGuardDev {
 
     let username = "";
     try {
-      const tokenInfo = await this.introspectToken(accessToken);
+      const tokenInfo = await this.#introspectToken(accessToken);
       username = tokenInfo.sub ?? "";
       await this.authService.verify(username);
     } catch (error) {

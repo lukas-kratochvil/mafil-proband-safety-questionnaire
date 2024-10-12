@@ -14,7 +14,7 @@ import { Void } from "./utils/scalars/void-scalar";
 @Injectable()
 // eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
 export class GraphQLConfigService implements GqlOptionsFactory {
-  private readonly logger = new Logger("GraphQL");
+  readonly #logger = new Logger("GraphQL");
 
   constructor(private readonly config: ConfigService<EnvironmentVariables, true>) {}
 
@@ -26,7 +26,7 @@ export class GraphQLConfigService implements GqlOptionsFactory {
       // error formatting inspired by: https://github.com/nestjs/graphql/issues/1053#issuecomment-786972617
       formatError: (error: GraphQLFormattedError) => {
         if (error.message !== VALIDATION_ERROR) {
-          this.logger.error(error);
+          this.#logger.error(error);
           return error;
         }
 
@@ -49,7 +49,7 @@ export class GraphQLConfigService implements GqlOptionsFactory {
             errors: validationFieldErrors,
           },
         };
-        this.logger.error(graphQLFormattedError);
+        this.#logger.error(graphQLFormattedError);
         return graphQLFormattedError;
       },
       resolvers: {

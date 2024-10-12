@@ -5,7 +5,7 @@ import { ThrottlerGuard as NestThrottlerGuard } from "@nestjs/throttler";
 @Injectable()
 // eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
 export class ThrottlerGuard extends NestThrottlerGuard {
-  private readonly logger = new Logger(ThrottlerGuard.name);
+  readonly #logger = new Logger(ThrottlerGuard.name);
 
   override getRequestResponse(exContext: ExecutionContext) {
     const reqType = exContext.getType<GqlContextType>();
@@ -17,7 +17,7 @@ export class ThrottlerGuard extends NestThrottlerGuard {
     }
 
     const errorMsg = `Invalid execution context type '${exContext.getType()}'!`;
-    this.logger.error(errorMsg);
+    this.#logger.error(errorMsg);
     throw new BadRequestException(errorMsg);
   }
 }
