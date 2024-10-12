@@ -20,6 +20,8 @@ type BodyObject = Record<PropertyKey, unknown> | Array<unknown>;
 const handleDates = (body: BodyObject, transform: (value: string) => Date): BodyObject => {
   if (Array.isArray(body)) {
     body.forEach((value, index) => {
+      console.log("Body - array", typeof value, value);
+
       if (typeof value === "object") {
         return handleDates(value as BodyObject, transform);
       }
@@ -33,6 +35,8 @@ const handleDates = (body: BodyObject, transform: (value: string) => Date): Body
     });
   } else {
     Object.entries(body).forEach(([key, value]) => {
+      console.log("Body - object", typeof value, value);
+
       if (typeof value === "object") {
         return handleDates(value as BodyObject, transform);
       }
@@ -55,10 +59,13 @@ const handleDates = (body: BodyObject, transform: (value: string) => Date): Body
 export const transformDateStringsToDate = (
   response: AxiosResponse<unknown, unknown>
 ): AxiosResponse<unknown, unknown> => {
-  if (response.data === null || response.data === undefined || typeof response.data !== "object") {
-    return response;
+  if (typeof response.data === "object") {
+    console.log("Before:");
+    console.log(response.data);
+    handleDates(response.data as BodyObject, parseISO);
+    console.log("After:");
+    console.log(response.data);
   }
 
-  handleDates(response.data as BodyObject, parseISO);
   return response;
 };
