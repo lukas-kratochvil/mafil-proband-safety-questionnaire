@@ -12,7 +12,7 @@ export class VisitFormTasksService {
 
   constructor(private readonly prisma: PrismaService) {}
 
-  readonly #deleteVisitForms = async (visitFormState: VisitFormState, deleteLowerThanDate: string) => {
+  async #deleteVisitForms (visitFormState: VisitFormState, deleteLowerThanDate: string) {
     const { count } = await this.prisma.visitForm.deleteMany({
       where: {
         AND: [

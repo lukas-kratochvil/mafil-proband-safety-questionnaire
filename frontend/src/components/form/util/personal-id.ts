@@ -37,10 +37,12 @@ export class CzechSlovakPersonalId {
   }
 
   // People born after the year 1953 have 10-digit personal ID with the 10th digit being the control digit. (People born until the year 1953 including have 9-digit personal ID.)
-  static #isNewPersonalId = (personalId: string): boolean => personalId.length === 10;
+  static #isNewPersonalId (personalId: string): boolean {
+    return personalId.length === 10;
+  }
 
   // Get month index in range 0-11.
-  static #getMonthIndexFromPersonalId = (personalId: string): number => {
+  static #getMonthIndexFromPersonalId (personalId: string): number {
     const month = +personalId.substring(2, 4);
 
     // male
@@ -72,7 +74,7 @@ export class CzechSlovakPersonalId {
   };
 
   // Check if the personal ID date part is a valid date.
-  static #isValidPersonalIdDate = (personalId: string): boolean => {
+  static #isValidPersonalIdDate (personalId: string): boolean {
     const monthIndex = CzechSlovakPersonalId.#getMonthIndexFromPersonalId(personalId);
     // 'isExists()' needs 'year' as a number - we have only last 2 digits of the year in the personal ID
     return Number.isNaN(monthIndex)
@@ -81,7 +83,7 @@ export class CzechSlovakPersonalId {
   };
 
   // Check if the personal ID is valid.
-  static #isValidPersonalId = (personalId: string): boolean => {
+  static #isValidPersonalId (personalId: string): boolean {
     const year = +personalId.substring(0, 2);
     // the new personal ID should be equal to 0 modulo 11
     // or in special case personal ID has 10th digit equal to 0 if first 9 digits are equal to 0 modulo 11 (valid only 1954-1985)
@@ -96,13 +98,19 @@ export class CzechSlovakPersonalId {
     return CzechSlovakPersonalId.#isValidPersonalIdDate(personalId);
   };
 
-  public isValid = (): boolean => this.#personalIdWithoutSlash !== INVALID_PERSONAL_ID;
+  public isValid(): boolean {
+    return this.#personalIdWithoutSlash !== INVALID_PERSONAL_ID;
+  }
 
-  public isMale = (): boolean => !this.isFemale();
+  public isMale(): boolean {
+    return !this.isFemale();
+  }
 
-  public isFemale = (): boolean => +this.#personalIdWithoutSlash.substring(2, 4) > FEMALE_CONST;
+  public isFemale(): boolean {
+    return +this.#personalIdWithoutSlash.substring(2, 4) > FEMALE_CONST;
+  }
 
-  public getBirthdate = (): Date => {
+  public getBirthdate(): Date {
     const year = +this.#personalIdWithoutSlash.substring(0, 2);
     const birthdateCentury19 = new Date(
       year,
