@@ -13,26 +13,38 @@ import { parseISO } from "date-fns";
  */
 const ISO_8601_DATE_FORMAT_REGEX = /^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.{0,1}\d*)(?:Z|(\+|-)([\d|:]*))?)?$/;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const isIso8601DateString = (value: any): boolean =>
-  value && typeof value === "string" && ISO_8601_DATE_FORMAT_REGEX.test(value);
+const isIso8601DateString = (value: string): boolean => ISO_8601_DATE_FORMAT_REGEX.test(value);
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const handleDates = (body: any, transform: (value: string) => Date): any => {
-  if (body === null || body === undefined || typeof body !== "object") {
-    return body;
+type BodyObject = Record<PropertyKey, unknown> | Array<unknown>;
+
+const handleDates = (body: BodyObject, transform: (value: string) => Date): BodyObject => {
+  if (Array.isArray(body)) {
+    body.forEach((value, index) => {
+      if (typeof value === "object") {
+        return handleDates(value as BodyObject, transform);
+      }
+
+      if (typeof value === "string" && isIso8601DateString(value)) {
+        // eslint-disable-next-line no-param-reassign
+        body[index] = transform(value);
+      }
+
+      return body;
+    });
+  } else {
+    Object.entries(body).forEach(([key, value]) => {
+      if (typeof value === "object") {
+        return handleDates(value as BodyObject, transform);
+      }
+
+      if (typeof value === "string" && isIso8601DateString(value)) {
+        // eslint-disable-next-line no-param-reassign
+        body[key] = transform(value);
+      }
+
+      return body;
+    });
   }
-
-  Object.entries(body).forEach(([key, value]) => {
-    if (isIso8601DateString(value)) {
-      // eslint-disable-next-line no-param-reassign
-      body[key] = transform(value as string);
-    } else if (typeof value === "object") {
-      return handleDates(value, transform);
-    }
-
-    return body;
-  });
 
   return body;
 };
@@ -40,8 +52,13 @@ const handleDates = (body: any, transform: (value: string) => Date): any => {
 /**
  * Transform all date-strings in the response into Date objects.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const transformDateStringsToDate = (response: AxiosResponse<any, any>): AxiosResponse<any, any> => {
-  handleDates(response.data, parseISO);
+export const transformDateStringsToDate = (
+  response: AxiosResponse<unknown, unknown>
+): AxiosResponse<unknown, unknown> => {
+  if (response.data === null || response.data === undefined || typeof response.data !== "object") {
+    return response;
+  }
+
+  handleDates(response.data as BodyObject, parseISO);
   return response;
 };
