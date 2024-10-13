@@ -10,7 +10,7 @@ import {
   useMediaQuery,
   type Theme,
 } from "@mui/material";
-import type { QueryObserverResult, RefetchOptions, RefetchQueryFilters } from "@tanstack/react-query";
+import type { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -22,9 +22,7 @@ import { TableActionButtonsContainer } from "./TableActionButtonsContainer";
 
 type WaitingRoomTableActionButtonsProps = {
   visitFormId: string;
-  refetchWaitingRoomTable: (
-    options?: (RefetchOptions & RefetchQueryFilters) | undefined
-  ) => Promise<QueryObserverResult<WaitingRoomTableVisitForm[], unknown>>;
+  refetchWaitingRoomTable: ReturnType<typeof useQuery<WaitingRoomTableVisitForm[]>>["refetch"];
 };
 
 export const WaitingRoomTableActionButtons = ({

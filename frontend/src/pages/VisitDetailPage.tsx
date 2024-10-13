@@ -1,10 +1,5 @@
 import { Button, Grid, Skeleton, Stack } from "@mui/material";
-import {
-  useQuery,
-  type QueryObserverResult,
-  type RefetchOptions,
-  type RefetchQueryFilters,
-} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
@@ -78,9 +73,7 @@ const downloadPdf = (pdf: VisitDetailPDF): void => {
 
 const getButtons = (
   visitDetail: VisitDetail,
-  refetchVisitDetail: (
-    options?: (RefetchOptions & RefetchQueryFilters) | undefined
-  ) => Promise<QueryObserverResult<VisitDetail | undefined, unknown>>
+  refetchVisitDetail: ReturnType<typeof useQuery<VisitDetail | undefined>>["refetch"]
 ): VisitDetailButtonProps[] => {
   if (visitDetail.isPhantom) {
     return [
