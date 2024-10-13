@@ -9,6 +9,7 @@ import type { FormPropType } from "@app/model/form";
 import type { NativeLanguage } from "@app/model/language";
 import { fetchNativeLanguages } from "@app/util/mafildb_API/calls";
 import { fetchGenders, fetchHandednesses } from "@app/util/server_API/calls";
+import type { GenderCode } from "@app/util/server_API/dto";
 import { FormAutocomplete } from "../inputs/FormAutocomplete";
 import { FormAutocompleteOptions } from "../inputs/FormAutocompleteOptions";
 import { FormDatePicker } from "../inputs/FormDatePicker";
@@ -127,15 +128,15 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
 
     // Phantom visit has strictly gender 'Other' - we do not change it here
     if (!isPhantom && genders.data) {
-      let code: string | undefined;
+      let genderCode: GenderCode | undefined;
 
       if (personalId.isMale()) {
-        code = "M";
+        genderCode = "M";
       } else if (personalId.isFemale()) {
-        code = "F";
+        genderCode = "F";
       }
 
-      const genderToBeSet = genders.data.find((gender) => gender.code === code) ?? null;
+      const genderToBeSet = genders.data.find((gender) => gender.code === genderCode) ?? null;
       setValue("gender", genderToBeSet, { shouldTouch: true });
     }
   }, [genders.data, getFieldState, isPhantom, personalIdValue, setValue]);
