@@ -10,7 +10,7 @@ import type {
 } from "@app/model/form";
 import type { NativeLanguage } from "@app/model/language";
 import type { Project } from "@app/model/project";
-import type { GenderDTO, HandednessDTO } from "@app/util/server_API/dto";
+import { OperatorRole, type GenderDTO, type HandednessDTO } from "@app/util/server_API/dto";
 
 /**
  * Returns a partial object of modified fields only.
@@ -86,4 +86,5 @@ export const getValidatedOperatorFormData = (data: FormPropType): ValidatedOpera
  */
 export const isVisitFormForApproval = (operator: Auth["operator"], data: ValidatedOperatorFormData) =>
   operator === undefined
-  || (operator.role !== "MR_HIGH_PERM" && data.answers.some((answer) => answer.mustBeApproved && answer.answer === "YES"));
+  || (operator.role !== OperatorRole.MR_HIGH_PERM
+    && data.answers.some((answer) => answer.mustBeApproved && answer.answer === "YES"));

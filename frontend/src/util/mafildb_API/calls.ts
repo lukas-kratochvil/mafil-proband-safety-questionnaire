@@ -14,7 +14,7 @@ import type {
 import type { VisitPDF } from "@app/model/visitPdf";
 import { mafildbApi } from "@app/util/axios/mafildbApi";
 import { fetchGender, fetchHandedness, fetchOperator, fetchQuestion } from "../server_API/calls";
-import type { OperatorDTO, PdfDTO, VisitFormAnswerIncludingQuestion } from "../server_API/dto";
+import { OperatorRole, type OperatorDTO, type PdfDTO, type VisitFormAnswerIncludingQuestion } from "../server_API/dto";
 import { isBase64PDFContent } from "../utils";
 import {
   MDB_ApprovalState,
@@ -127,7 +127,7 @@ export const fetchDevices = async (): Promise<Device[]> => {
   }
 
   // Only MR devices are relevant for this app
-  const params = { type: "MR" };
+  const params = { type: OperatorRole.MR };
   const { data } = await mafildbApi.get<MDB_GetDevicesResponse>("devices", { params });
 
   if (MDB_RESPONSE_ERROR_ATTR in data) {
@@ -143,7 +143,7 @@ const fetchDevice = async (id: number): Promise<Device> => {
   }
 
   // Only MR devices are relevant for this app
-  const params = { type: "MR" };
+  const params = { type: OperatorRole.MR };
   const { data } = await mafildbApi.get<MDB_GetDeviceResponse>(`devices/${id}`, { params });
 
   if (MDB_RESPONSE_ERROR_ATTR in data) {

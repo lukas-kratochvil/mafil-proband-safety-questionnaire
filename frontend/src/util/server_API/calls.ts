@@ -25,8 +25,9 @@ import type {
   UpdateVisitFormDTO,
   UpdateVisitFormStateInput,
   VisitFormAnswerIncludingQuestion,
-  VisitFormState,
-  WaitingRoomVisitFormIncludingQuestions,
+  WaitingRoomVisitFormIncludingQuestions} from "@app/util/server_API/dto";
+import {
+  VisitFormState
 } from "@app/util/server_API/dto";
 import { createServerApiCallError, type GraphQlError } from "../error-handling/server-utils";
 import { fetchNativeLanguage, fetchProject } from "../mafildb_API/calls";
@@ -190,7 +191,7 @@ export const fetchProbandContactConsent = async (locale: LanguageCode): Promise<
 };
 
 export const fetchWaitingRoomTableVisitForms = async (): Promise<WaitingRoomTableVisitForm[]> => {
-  const variables = { state: "NEW" };
+  const variables = { state: VisitFormState.NEW };
   const data = await serverApiCall<WaitingRoomTableVisitFormsResponse>(
     queries.GET_WAITING_ROOM_TABLE_VISIT_FORMS,
     variables
@@ -229,7 +230,7 @@ export const fetchWaitingRoomVisitForm = async (id: string): Promise<WaitingRoom
 };
 
 export const fetchApprovalRoomTableVisitForms = async (): Promise<ApprovalRoomTableVisitForm[]> => {
-  const variables = { state: "IN_APPROVAL" };
+  const variables = { state: VisitFormState.IN_APPROVAL };
   const data = await serverApiCall<ApprovalRoomTableVisitFormsResponse>(
     queries.GET_APPROVAL_ROOM_TABLE_VISIT_FORMS,
     variables
@@ -372,7 +373,10 @@ export const sendVisitFormForApproval = async (
   return data.updateVisitForm.id;
 };
 
-const updateVisitFormState = async (id: string, state: Exclude<VisitFormState, "NEW">): Promise<UpdateVisitFormDTO> => {
+const updateVisitFormState = async (
+  id: string,
+  state: UpdateVisitFormStateInput["updateVisitFormInput"]["state"]
+): Promise<UpdateVisitFormDTO> => {
   const variables: UpdateVisitFormStateInput = {
     updateVisitFormInput: {
       id,

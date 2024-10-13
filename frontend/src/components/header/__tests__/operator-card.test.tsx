@@ -1,4 +1,4 @@
-import type { OperatorDTO } from "@app/util/server_API/dto";
+import { OperatorRole, type OperatorDTO } from "@app/util/server_API/dto";
 import { render, screen } from "@test/utils";
 import { OperatorCard } from "../OperatorCard";
 
@@ -10,7 +10,7 @@ const operator: OperatorDTO = {
   name: "Name",
   surname: "Surname",
   email: "",
-  role: "MR",
+  role: OperatorRole.MR,
   username: "",
 };
 

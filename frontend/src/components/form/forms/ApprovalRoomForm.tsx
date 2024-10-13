@@ -19,6 +19,7 @@ import {
   markVisitFormAsPdfGenerated,
   markVisitFormAsSentToMafilDb,
 } from "@app/util/server_API/calls";
+import { OperatorRole } from "@app/util/server_API/dto";
 import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { getValidatedOperatorFormData } from "../util/utils";
@@ -73,7 +74,7 @@ export const ApprovalRoomForm = () => {
 
   // Setting form buttons
   useEffect(() => {
-    if (visitForm && operator && operator.role === "MR_HIGH_PERM") {
+    if (visitForm && operator && operator.role === OperatorRole.MR_HIGH_PERM) {
       if (isEditing) {
         setFormButtons({
           submitButtonProps: {
@@ -204,13 +205,13 @@ export const ApprovalRoomForm = () => {
         titleLocalizationKey="titlePart1"
         qacs={qacs.filter((qac) => qac.partNumber === 1)}
         disableInputs={!isEditing}
-        disableComment={operator?.role !== "MR_HIGH_PERM" || isDisapproved}
+        disableComment={operator?.role !== OperatorRole.MR_HIGH_PERM || isDisapproved}
       />
       <FormQuestions
         titleLocalizationKey="titlePart2"
         qacs={qacs.filter((qac) => qac.partNumber === 2)}
         disableInputs={!isEditing}
-        disableComment={operator?.role !== "MR_HIGH_PERM" || isDisapproved}
+        disableComment={operator?.role !== OperatorRole.MR_HIGH_PERM || isDisapproved}
       />
       {isDisapproved && <FormDisapprovalReason />}
     </FormContainer>

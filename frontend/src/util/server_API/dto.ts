@@ -1,9 +1,14 @@
 import type { LanguageCode } from "@app/i18n/i18n";
 import type { AnswerOption } from "@app/model/form";
-import type { StrictOmit } from "@app/types";
+import type { ObjectValuesUnion, StrictOmit } from "@app/types";
 import type { MDB_LanguageDTO } from "../mafildb_API/dto";
 
-export type OperatorRole = "MR" | "MR_HIGH_PERM";
+export const OperatorRole = {
+  MR: "MR",
+  MR_HIGH_PERM: "MR_HIGH_PERM",
+} as const;
+
+export type OperatorRole = ObjectValuesUnion<typeof OperatorRole>;
 
 export type OperatorDTO = {
   id: string;
@@ -76,7 +81,14 @@ export type CreateVisitFormDTO = {
 
 export type UpdateVisitFormDTO = CreateVisitFormDTO;
 
-export type VisitFormState = "NEW" | "IN_APPROVAL" | "SENT_TO_MAFILDB" | "PDF_GENERATED";
+export const VisitFormState = {
+  NEW: "NEW",
+  IN_APPROVAL: "IN_APPROVAL",
+  SENT_TO_MAFILDB: "SENT_TO_MAFILDB",
+  PDF_GENERATED: "PDF_GENERATED",
+} as const;
+
+export type VisitFormState = ObjectValuesUnion<typeof VisitFormState>;
 
 export type WaitingRoomTableVisitFormDTO = {
   id: string;

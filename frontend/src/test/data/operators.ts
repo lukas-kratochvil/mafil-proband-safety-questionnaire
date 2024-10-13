@@ -1,11 +1,11 @@
-import type { OperatorDTO } from "@app/util/server_API/dto";
+import { OperatorRole, type OperatorDTO } from "@app/util/server_API/dto";
 
 export const operatorMRTest: OperatorDTO = {
   id: "1",
   name: "Operator",
   surname: "MR",
   email: "operator.mr@mail.com",
-  role: "MR",
+  role: OperatorRole.MR,
   username: "123456",
 };
 
@@ -14,6 +14,6 @@ export const operatorMRHigPermTest: OperatorDTO = {
   name: "Operator",
   surname: "Special",
   email: "operator.special@mail.com",
-  role: "MR_HIGH_PERM",
+  role: OperatorRole.MR_HIGH_PERM,
   username: "987654",
 };
