@@ -4,9 +4,9 @@
 export type Wrapper<T> = T;
 
 /**
- * Converts an array of strings to the union of its strings.
+ * Converts an array to the union of its values.
  */
-export type StringArrayToUnion<T extends ReadonlyArray<string>> = T[number];
+export type ArrayToUnion<T extends ReadonlyArray<unknown>> = T[number];
 
 /**
  * Construct a type with the properties of `T` except for those in subtype `K` of type `T`.

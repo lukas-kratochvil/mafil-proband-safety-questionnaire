@@ -1,11 +1,11 @@
 import Joi from "joi";
-import type { StringArrayToUnion } from "@app/types";
+import type { ArrayToUnion } from "@app/types";
 
 const ALLOWED_NODE_ENVS = ["development", "production"] as const;
-type NodeEnv = StringArrayToUnion<typeof ALLOWED_NODE_ENVS>;
+type NodeEnv = ArrayToUnion<typeof ALLOWED_NODE_ENVS>;
 
 const ALLOWED_PDF_LANGUAGE_CODES = ["cs", "en"] as const;
-type PdfLanguageCode = StringArrayToUnion<typeof ALLOWED_PDF_LANGUAGE_CODES>;
+type PdfLanguageCode = ArrayToUnion<typeof ALLOWED_PDF_LANGUAGE_CODES>;
 
 export type EnvironmentVariables = {
   nodeEnv: NodeEnv;
