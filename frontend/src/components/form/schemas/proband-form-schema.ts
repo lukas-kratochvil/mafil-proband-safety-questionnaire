@@ -1,7 +1,6 @@
 import { endOfToday } from "date-fns";
 import { array, boolean, date, mixed, number, object, string } from "yup";
-import type { AnswerOption } from "@app/model/form";
-import { answerOptions } from "@app/model/form";
+import { AnswerOption } from "@app/model/form";
 import type { NativeLanguage } from "@app/model/language";
 import type { GenderDTO, HandednessDTO } from "@app/util/server_API/dto";
 import {
@@ -15,7 +14,7 @@ import "./yup-custom-methods";
 export const answersSchema = object({
   questionId: string().removeWhitespace().required("form.validation.required"),
   mustBeApproved: boolean().required("form.validation.required"),
-  answer: mixed<AnswerOption>().nullable().oneOf(Object.values(answerOptions)).required("form.validation.required"),
+  answer: mixed<AnswerOption>().nullable().oneOf(Object.values(AnswerOption)).required("form.validation.required"),
   comment: string().normalizeWhitespace().nullable(),
 });
 

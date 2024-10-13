@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@app/hooks/auth/auth";
-import { answerOptions, type FormPropType, type FormQac } from "@app/model/form";
+import { AnswerOption, type FormPropType, type FormQac } from "@app/model/form";
 import { FormRadioGroup } from "../inputs/FormRadioGroup";
 import { FormTextField } from "../inputs/FormTextField";
 import type { FormCardProps } from "./form-card";
@@ -56,7 +56,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestio
     return null;
   }
 
-  type AnswerOptionRadioLabel = keyof typeof answerOptions;
+  type AnswerOptionRadioLabel = keyof typeof AnswerOption;
 
   return (
     <Grid
@@ -90,7 +90,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestio
           name={`answers.${qac.index}.answer`}
           label={`Question: ${qac.questionId}`}
           defaultValue={qac.answer}
-          radios={Object.values(answerOptions).map((answer) => ({
+          radios={Object.values(AnswerOption).map((answer) => ({
             id: `${answer}-radio[${qac.questionId}]`,
             label: t(answer.toLowerCase() as AnswerOptionRadioLabel),
             value: answer,

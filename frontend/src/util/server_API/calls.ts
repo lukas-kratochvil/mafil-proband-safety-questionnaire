@@ -25,10 +25,9 @@ import type {
   UpdateVisitFormDTO,
   UpdateVisitFormStateInput,
   VisitFormAnswerIncludingQuestion,
-  WaitingRoomVisitFormIncludingQuestions} from "@app/util/server_API/dto";
-import {
-  VisitFormState
+  WaitingRoomVisitFormIncludingQuestions,
 } from "@app/util/server_API/dto";
+import { VisitFormState } from "@app/util/server_API/dto";
 import { createServerApiCallError, type GraphQlError } from "../error-handling/server-utils";
 import { fetchNativeLanguage, fetchProject } from "../mafildb_API/calls";
 import { isBase64PDFContent } from "../utils";

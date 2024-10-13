@@ -8,12 +8,12 @@ import type { Project } from "./project";
 // Form fields having this data type are validated as numbers
 type TextFieldNumberInput = string | number;
 
-export const answerOptions = {
+export const AnswerOption = {
   yes: "YES",
   no: "NO",
 } as const;
 
-export type AnswerOption = ObjectValuesUnion<typeof answerOptions>;
+export type AnswerOption = ObjectValuesUnion<typeof AnswerOption>;
 
 export type FormAnswer = {
   questionId: string;
