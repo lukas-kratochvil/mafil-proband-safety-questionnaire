@@ -5,7 +5,9 @@ import { authenticateOperator } from "@app/util/server_API/calls";
 import type { OperatorDTO } from "@app/util/server_API/dto";
 
 // This option will revoke the access and the refresh token to avoid accessing secured APIs using these tokens
-const revokeTokenTypes = ["access_token", "refresh_token"] satisfies Required<UserManagerSettings["revokeTokenTypes"]>;
+const revokeTokenTypes = ["access_token", "refresh_token"] as const satisfies Required<
+  UserManagerSettings["revokeTokenTypes"]
+>;
 
 // Using OIDC Authorization Code Flow
 // Using "Jednotné přihlášení MUNI" OIDC provider

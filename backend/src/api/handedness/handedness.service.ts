@@ -6,7 +6,7 @@ import { PrismaService } from "@app/prisma/prisma.service";
 import { CreateHandednessInput } from "./dto/create-handedness.input";
 import { UpdateHandednessInput } from "./dto/update-handedness.input";
 
-const handednessInclude = { translations: translationsSelect } satisfies Prisma.HandednessInclude;
+const handednessInclude = { translations: translationsSelect } as const satisfies Prisma.HandednessInclude;
 
 @Injectable()
 export class HandednessService {

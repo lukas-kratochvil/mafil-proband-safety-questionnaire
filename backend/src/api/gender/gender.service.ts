@@ -6,7 +6,7 @@ import { PrismaService } from "@app/prisma/prisma.service";
 import { CreateGenderInput } from "./dto/create-gender.input";
 import { UpdateGenderInput } from "./dto/update-gender.input";
 
-const genderInclude = { translations: translationsSelect } satisfies Prisma.GenderInclude;
+const genderInclude = { translations: translationsSelect } as const satisfies Prisma.GenderInclude;
 
 @Injectable()
 export class GenderService {

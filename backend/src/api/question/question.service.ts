@@ -10,7 +10,7 @@ import { UpdateQuestionInput } from "./dto/update-question.input";
 const questionInclude = {
   translations: translationsSelect,
   hiddenByGenders: true,
-} satisfies Prisma.QuestionInclude;
+} as const satisfies Prisma.QuestionInclude;
 
 @Injectable()
 export class QuestionService {

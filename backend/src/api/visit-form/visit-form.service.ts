@@ -19,7 +19,7 @@ const visitFormInclude = {
   handedness: {
     include: { translations: translationsSelect },
   },
-} satisfies Prisma.VisitFormInclude;
+} as const satisfies Prisma.VisitFormInclude;
 
 @Injectable()
 export class VisitFormService {
