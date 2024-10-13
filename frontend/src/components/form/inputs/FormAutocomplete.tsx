@@ -5,6 +5,13 @@ import { FormAutocompleteInputField } from "./FormAutocompleteInputField";
 import { FormInputFieldContainer } from "./FormInputFieldContainer";
 import type { FormAsyncAutocompleteProps } from "./input-props";
 
+type FormAutocompleteProps<T> = FormAsyncAutocompleteProps<T> & {
+  sortComparator?: (a: T, b: T) => number;
+  filterOptions?: (options: T[], state: FilterOptionsState<T>) => T[];
+  getOptionLabel: (option: T) => string;
+  isOptionEqualToValue: (option: T, value: T) => boolean;
+};
+
 const getOptions = <T,>(
   options: FormAutocompleteProps<T>["options"],
   sortComparator: FormAutocompleteProps<T>["sortComparator"]
@@ -13,13 +20,6 @@ const getOptions = <T,>(
     return [];
   }
   return sortComparator === undefined ? options : options.toSorted(sortComparator);
-};
-
-type FormAutocompleteProps<T> = FormAsyncAutocompleteProps<T> & {
-  sortComparator?: (a: T, b: T) => number;
-  filterOptions?: (options: T[], state: FilterOptionsState<T>) => T[];
-  getOptionLabel: (option: T) => string;
-  isOptionEqualToValue: (option: T, value: T) => boolean;
 };
 
 export const FormAutocomplete = <T,>({

@@ -12,7 +12,7 @@ export class VisitFormTasksService {
 
   constructor(private readonly prisma: PrismaService) {}
 
-  async #deleteVisitForms (visitFormState: VisitFormState, deleteLowerThanDate: string) {
+  async #deleteVisitForms(visitFormState: VisitFormState, deleteLowerThanDate: string) {
     const { count } = await this.prisma.visitForm.deleteMany({
       where: {
         AND: [
@@ -38,7 +38,7 @@ export class VisitFormTasksService {
         isSingle ? "was" : "were"
       } marked as '${visitFormState}' before ${deleteLowerThanDate}.`
     );
-  };
+  }
 
   @Cron(CronExpression.EVERY_DAY_AT_3AM)
   async deleteDeletedVisitForms() {
