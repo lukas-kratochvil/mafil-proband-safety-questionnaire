@@ -59,18 +59,20 @@ export const WaitingRoomForm = () => {
   useEffect(() => {
     if (visitForm) {
       setQacs(
-        visitForm.answersIncludingQuestions.map((answer, index) => ({
-          index,
-          questionId: answer.questionId,
-          answer: answer.answer,
-          comment: answer.comment,
-          mustBeApproved: answer.mustBeApproved,
-          partNumber: answer.partNumber,
-          order: answer.order,
-          hiddenByGenders: answer.hiddenByGenders,
-          translations: answer.translations,
-          updatedAt: answer.updatedAt,
-        }))
+        visitForm.answersIncludingQuestions.map(
+          (answer, index): FormQac => ({
+            index,
+            questionId: answer.questionId,
+            answer: answer.answer,
+            comment: answer.comment,
+            mustBeApproved: answer.mustBeApproved,
+            partNumber: answer.partNumber,
+            order: answer.order,
+            hiddenByGenders: answer.hiddenByGenders,
+            translations: answer.translations,
+            updatedAt: answer.updatedAt,
+          })
+        )
       );
       const defaultValues = loadFormDefaultValuesFromWaitingRoomVisitForm(visitForm);
       setInitialFormData(defaultValues);

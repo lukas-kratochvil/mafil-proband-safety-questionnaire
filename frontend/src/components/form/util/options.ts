@@ -13,10 +13,12 @@ export type AutocompleteOption<T> = {
  * @return options array
  */
 const createAutocompleteOptions = <T>(optionsObject: Record<string, T>, i18nPrefix: string): AutocompleteOption<T>[] =>
-  Object.values(optionsObject).map((value) => ({
-    value,
-    localizationKey: convertStringToLocalizationKey(`options.${i18nPrefix}.${value}`),
-  }));
+  Object.values(optionsObject).map(
+    (value): AutocompleteOption<T> => ({
+      value,
+      localizationKey: convertStringToLocalizationKey(`options.${i18nPrefix}.${value}`),
+    })
+  );
 
 /**
  * Get option object by its value.

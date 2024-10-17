@@ -5,6 +5,7 @@ import type { ValidatedOperatorFormData } from "@app/model/form";
 import type { Language, NativeLanguage } from "@app/model/language";
 import type { Project } from "@app/model/project";
 import type {
+  Answer,
   CreatedVisitData,
   DuplicatedPhantomVisit,
   DuplicatedProbandVisit,
@@ -19,6 +20,7 @@ import { isBase64PDFContent } from "../utils";
 import {
   MDB_ApprovalState,
   type MDB_AddPdfToVisitInput,
+  type MDB_AnswerDTO,
   type MDB_CreateSubjectInput,
   type MDB_CreateVisitInput,
   type MDB_PreferredLanguageCode,
@@ -62,12 +64,14 @@ const fetchLanguages = async (): Promise<Language[]> => {
     throw new Error(data.detail);
   }
 
-  return data.results.map((languageDTO) => ({
-    ...languageDTO,
-    nativeName: languageDTO.name,
-    nameCs: languageDTO.name_cs,
-    nameEn: languageDTO.name_en,
-  }));
+  return data.results.map(
+    (languageDTO): Language => ({
+      ...languageDTO,
+      nativeName: languageDTO.name,
+      nameCs: languageDTO.name_cs,
+      nameEn: languageDTO.name_en,
+    })
+  );
 };
 
 const fetchLanguage = async (code: string): Promise<Language> => {
@@ -104,7 +108,7 @@ export const fetchProjects = async (): Promise<Project[]> => {
     throw new Error(data.detail);
   }
 
-  return data.results.map((projectDTO) => ({ ...projectDTO }));
+  return data.results.map((projectDTO): Project => ({ ...projectDTO }));
 };
 
 export const fetchProject = async (uuid: string): Promise<Project> => {
@@ -134,7 +138,7 @@ export const fetchDevices = async (): Promise<Device[]> => {
     throw new Error(data.detail);
   }
 
-  return data.results.map((deviceDTO) => ({ ...deviceDTO }));
+  return data.results.map((deviceDTO): Device => ({ ...deviceDTO }));
 };
 
 const fetchDevice = async (id: number): Promise<Device> => {
@@ -218,11 +222,13 @@ const createVisit = async <
     height: visitFormData.heightCm,
     weight: visitFormData.weightKg,
     visual_correction_dioptre: visitFormData.visualCorrectionDioptre,
-    registration_answers: visitFormData.answers.map((answer) => ({
-      question_id: answer.questionId,
-      answer: answer.answer,
-      comment: answer.comment,
-    })),
+    registration_answers: visitFormData.answers.map(
+      (answer): MDB_AnswerDTO => ({
+        question_id: answer.questionId,
+        answer: answer.answer,
+        comment: answer.comment,
+      })
+    ),
     registration_finalize_username: finalizerUsername,
     registration_finalize_date: finalizedAt,
     registration_approve_username: approverUsername,
@@ -324,7 +330,7 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
     data.results
       // Check if 14 days bound is really satisfied ('newer_than' query param may not work)
       .filter((visit) => compareAsc(visit.created, newerThanDateBound) > 0)
-      .map(async (visit) => {
+      .map(async (visit): Promise<RecentVisitsTableVisit> => {
         let device: Device | null = null;
         let finalizer: OperatorDTO | null = null;
         let approver: OperatorDTO | null = null;
@@ -360,11 +366,13 @@ export const fetchRecentVisits = async (): Promise<RecentVisitsTableVisit[]> => 
           heightCm: visit.height,
           weightKg: visit.weight,
           visualCorrectionDioptre: visit.visual_correction_dioptre,
-          answers: visit.registration_answers.map((answer) => ({
-            questionId: answer.question_id,
-            answer: answer.answer,
-            comment: answer.comment,
-          })),
+          answers: visit.registration_answers.map(
+            (answer): Answer => ({
+              questionId: answer.question_id,
+              answer: answer.answer,
+              comment: answer.comment,
+            })
+          ),
           subject: {
             ...visit.subject,
             preferredLanguageCode: visit.subject.preferred_language,

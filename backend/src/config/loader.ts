@@ -2,7 +2,7 @@ import { readFileSync } from "fs";
 import { load as loadYaml } from "js-yaml";
 import { configSchema } from "./validation";
 
-const load = () => {
+const load = (): Record<string, unknown> => {
   const configYaml = loadYaml(readFileSync("config.yaml", "utf8")) as Record<string, unknown>;
   const config = {
     ...configYaml,

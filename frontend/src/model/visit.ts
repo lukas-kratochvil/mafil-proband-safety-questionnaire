@@ -11,7 +11,7 @@ import type {
 } from "./subject";
 import type { VisitPDF } from "./visitPdf";
 
-type Answer = {
+export type Answer = {
   questionId: MDB_AnswerDTO["question_id"];
   answer: MDB_AnswerDTO["answer"];
   comment: MDB_AnswerDTO["comment"];

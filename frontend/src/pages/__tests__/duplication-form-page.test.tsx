@@ -3,7 +3,13 @@ import type { Device } from "@app/model/device";
 import type { NativeLanguage } from "@app/model/language";
 import type { Project } from "@app/model/project";
 import type { DuplicatedPhantomVisit, DuplicatedProbandVisit } from "@app/model/visit";
-import type { GenderDTO, HandednessDTO, PdfDTO, QuestionDTO } from "@app/util/server_API/dto";
+import type {
+  GenderDTO,
+  HandednessDTO,
+  PdfDTO,
+  QuestionDTO,
+  VisitFormAnswerIncludingQuestion,
+} from "@app/util/server_API/dto";
 import type { DuplicationFormPageLocationState } from "@app/util/utils";
 import { devicesTest } from "@test/data/devices";
 import { gendersTest } from "@test/data/genders";
@@ -39,17 +45,19 @@ const probandVisit: DuplicatedProbandVisit = {
   weightKg: 75,
   handedness: handednessesTest[0]!,
   visualCorrectionDioptre: 0,
-  answersIncludingQuestions: questionsTest.map((question, index) => ({
-    questionId: question.id,
-    mustBeApproved: index % 2 === 0,
-    answer: index % 2 === 0 ? "YES" : "NO",
-    comment: index % 2 === 0 ? commentText : "",
-    order: question.order,
-    hiddenByGenders: question.hiddenByGenders,
-    partNumber: question.partNumber,
-    translations: question.translations,
-    updatedAt: question.updatedAt,
-  })),
+  answersIncludingQuestions: questionsTest.map(
+    (question, index): VisitFormAnswerIncludingQuestion => ({
+      questionId: question.id,
+      mustBeApproved: index % 2 === 0,
+      answer: index % 2 === 0 ? "YES" : "NO",
+      comment: index % 2 === 0 ? commentText : "",
+      order: question.order,
+      hiddenByGenders: question.hiddenByGenders,
+      partNumber: question.partNumber,
+      translations: question.translations,
+      updatedAt: question.updatedAt,
+    })
+  ),
 };
 
 const phantomVisit: DuplicatedPhantomVisit = {

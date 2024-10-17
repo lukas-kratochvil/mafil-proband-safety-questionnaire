@@ -60,12 +60,14 @@ export const getValidatedProbandFormData = (data: FormPropType): ValidatedProban
   handedness: data.handedness as HandednessDTO,
   visualCorrectionDioptre:
     typeof data.visualCorrectionDioptre === "string" ? +data.visualCorrectionDioptre : data.visualCorrectionDioptre,
-  answers: data.answers.map((answer) => ({
-    questionId: answer.questionId,
-    mustBeApproved: answer.mustBeApproved,
-    answer: answer.answer as AnswerOption,
-    comment: answer.comment,
-  })),
+  answers: data.answers.map(
+    (answer): ValidatedFormAnswer => ({
+      questionId: answer.questionId,
+      mustBeApproved: answer.mustBeApproved,
+      answer: answer.answer as AnswerOption,
+      comment: answer.comment,
+    })
+  ),
   email: data.email,
   phone: data.phone,
 });

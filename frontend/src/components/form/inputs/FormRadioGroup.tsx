@@ -3,7 +3,7 @@ import { Controller } from "react-hook-form";
 import { ErrorMessage } from "./ErrorMessage";
 import type { FormDefaultInputProps } from "./input-props";
 
-type RadioProps = {
+export type RadioProps = {
   id: string;
   label: string;
   value: string;

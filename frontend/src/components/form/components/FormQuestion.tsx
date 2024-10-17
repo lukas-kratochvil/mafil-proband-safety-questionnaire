@@ -4,7 +4,7 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@app/hooks/auth/auth";
 import { AnswerOption, type FormPropType, type FormQac } from "@app/model/form";
-import { FormRadioGroup } from "../inputs/FormRadioGroup";
+import { FormRadioGroup, type RadioProps } from "../inputs/FormRadioGroup";
 import { FormTextField } from "../inputs/FormTextField";
 import type { FormCardProps } from "./form-card";
 
@@ -90,11 +90,13 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestio
           name={`answers.${qac.index}.answer`}
           label={`Question: ${qac.questionId}`}
           defaultValue={qac.answer}
-          radios={Object.values(AnswerOption).map((answer) => ({
-            id: `${answer}-radio[${qac.questionId}]`,
-            label: t(answer.toLowerCase() as AnswerOptionRadioLabel),
-            value: answer,
-          }))}
+          radios={Object.values(AnswerOption).map(
+            (answer): RadioProps => ({
+              id: `${answer}-radio[${qac.questionId}]`,
+              label: t(answer.toLowerCase() as AnswerOptionRadioLabel),
+              value: answer,
+            })
+          )}
           disabled={disableInputs}
           sx={{ justifyContent: matchesUpSmBreakpoint ? "flex-end" : "flex-start" }}
         />

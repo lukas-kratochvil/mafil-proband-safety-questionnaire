@@ -11,6 +11,11 @@ import {
 } from "../util/options";
 import "./yup-custom-methods";
 
+/**
+ * Czech phone number prefix (same as `+420`)
+ */
+const CZECH_PHONE_NUMBER_CODE = "00420";
+
 export const answersSchema = object({
   questionId: string().removeWhitespace().required("form.validation.required"),
   mustBeApproved: boolean().required("form.validation.required"),
@@ -70,7 +75,6 @@ export const probandFormSchema = object().shape(
           .replace(/^\+/, "00"); // replace '+' at the beginning with the '00' prefix
 
         // if the phone number does not have any national phone number code prefix it will be automatically prefixed with the czech phone number code prefix '00420'
-        const CZECH_PHONE_NUMBER_CODE = "00420";
         return phoneNumber.length === 0 || /^(00)/.test(phoneNumber)
           ? phoneNumber
           : `${CZECH_PHONE_NUMBER_CODE}${phoneNumber}`;

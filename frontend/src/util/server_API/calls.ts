@@ -14,12 +14,15 @@ import type {
   GenderCode,
   GenderDTO,
   GeneratePdfInput,
+  GeneratePdfInputAnswer,
   HandednessCode,
   HandednessDTO,
   HTMLCardDTO,
+  OperatorAnswerDTO,
   OperatorAuthInput,
   OperatorDTO,
   PdfDTO,
+  ProbandAnswerDTO,
   QuestionDTO,
   SendVisitFormFromWaitingRoomForApprovalInput,
   UpdateVisitFormDTO,
@@ -196,7 +199,7 @@ export const fetchWaitingRoomTableVisitForms = async (): Promise<WaitingRoomTabl
     variables
   );
   return Promise.all(
-    data.visitForms.map(async (visitForm) => {
+    data.visitForms.map(async (visitForm): Promise<WaitingRoomTableVisitForm> => {
       const nativeLanguage = await fetchNativeLanguage(visitForm.nativeLanguageCode);
       return {
         ...visitForm,
@@ -235,7 +238,7 @@ export const fetchApprovalRoomTableVisitForms = async (): Promise<ApprovalRoomTa
     variables
   );
   return Promise.all(
-    data.visitForms.map(async (visitForm) => {
+    data.visitForms.map(async (visitForm): Promise<ApprovalRoomTableVisitForm> => {
       const project = await fetchProject(visitForm.additionalInfo.projectUuid);
       const nativeLanguage = await fetchNativeLanguage(visitForm.nativeLanguageCode);
       return {
@@ -285,10 +288,12 @@ export const createProbandVisitForm = async (visitFormData: ValidatedProbandForm
       handednessId: visitFormData.handedness.id,
       email: visitFormData.email,
       phone: visitFormData.phone,
-      answers: visitFormData.answers.map((answer) => ({
-        questionId: answer.questionId,
-        answer: answer.answer,
-      })),
+      answers: visitFormData.answers.map(
+        (answer): ProbandAnswerDTO => ({
+          questionId: answer.questionId,
+          answer: answer.answer,
+        })
+      ),
     },
   };
   const data = await serverApiCall<CreateVisitFormResponse>(mutations.CREATE_VISIT_FORM, variables);
@@ -322,11 +327,13 @@ export const createDuplicatedVisitFormForApproval = async (
         finalizedAt: new Date(),
       },
       probandLanguageCode: i18n.language as LanguageCode,
-      answers: visitFormData.answers.map((answer) => ({
-        questionId: answer.questionId,
-        answer: answer.answer,
-        comment: answer.comment,
-      })),
+      answers: visitFormData.answers.map(
+        (answer): OperatorAnswerDTO => ({
+          questionId: answer.questionId,
+          answer: answer.answer,
+          comment: answer.comment,
+        })
+      ),
     },
   };
   const data = await serverApiCall<CreateVisitFormResponse>(mutations.CREATE_VISIT_FORM, variables);
@@ -361,11 +368,13 @@ export const sendVisitFormForApproval = async (
         finalizedAt: new Date(),
         finalizerId,
       },
-      answers: visitFormData.answers?.map((answer) => ({
-        questionId: answer.questionId,
-        answer: answer.answer,
-        comment: answer.comment,
-      })),
+      answers: visitFormData.answers?.map(
+        (answer): OperatorAnswerDTO => ({
+          questionId: answer.questionId,
+          answer: answer.answer,
+          comment: answer.comment,
+        })
+      ),
     },
   };
   const data = await serverApiCall<UpdateVisitFormResponse>(mutations.UPDATE_VISIT_FORM, variables);
@@ -430,11 +439,13 @@ const generatePdf = async (
     handednessCode: visitFormData.handedness.code,
     email: visitFormData.email,
     phone: visitFormData.phone,
-    answers: visitFormData.answers.map((answer) => ({
-      questionId: answer.questionId,
-      answer: answer.answer,
-      comment: answer.comment,
-    })),
+    answers: visitFormData.answers.map(
+      (answer): GeneratePdfInputAnswer => ({
+        questionId: answer.questionId,
+        answer: answer.answer,
+        comment: answer.comment,
+      })
+    ),
   };
   const data = await serverApiCall<GeneratePdfResponse>(queries.GENERATE_PDF, variables);
 

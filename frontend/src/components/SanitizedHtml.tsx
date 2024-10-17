@@ -1,6 +1,6 @@
 import DOMPurify from "dompurify";
 
-const sanitizeHtml = (html: string) => {
+const sanitizeHtml = (html: string): string => {
   // Set target="_blank" in the <a> elements owning the 'target' attribute
   DOMPurify.addHook("afterSanitizeAttributes", (node) => {
     if (node.tagName === "A" && "target" in node) {

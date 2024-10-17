@@ -216,7 +216,7 @@ export class PDFService {
       }))
       // We need to firstly assign all the values and then filter the questions, otherwise the values will be incorrectly assigned to different questions
       .filter((question) => !question.hiddenByGenders.map((hbg) => hbg.genderCode).includes(gender.code))
-      .map((question) => {
+      .map((question): PDFQuestionAnswer => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { hiddenByGenders, ...rest } = question;
         return rest;

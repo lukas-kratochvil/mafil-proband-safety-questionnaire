@@ -66,12 +66,12 @@ export type QuestionDTO = Translations & {
   }[];
 };
 
-type ProbandAnswerDTO = {
+export type ProbandAnswerDTO = {
   questionId: string;
   answer: AnswerOption;
 };
 
-type OperatorAnswerDTO = ProbandAnswerDTO & {
+export type OperatorAnswerDTO = ProbandAnswerDTO & {
   comment: string;
 };
 
@@ -208,6 +208,12 @@ export type PdfDTO = {
   content: string; // Base64 encoded PDF content
 };
 
+export type GeneratePdfInputAnswer = {
+  questionId: string;
+  answer: AnswerOption;
+  comment: string | undefined;
+};
+
 export type GeneratePdfInput = {
   visitId: string;
   isPhantom: boolean;
@@ -231,9 +237,5 @@ export type GeneratePdfInput = {
   handednessCode: string;
   email: string;
   phone: string;
-  answers?: {
-    questionId: string;
-    answer: AnswerOption;
-    comment: string | undefined;
-  }[];
+  answers?: GeneratePdfInputAnswer[];
 };

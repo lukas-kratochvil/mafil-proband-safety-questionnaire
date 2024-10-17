@@ -46,18 +46,20 @@ export const ProbandDuplicationForm = () => {
   useEffect(() => {
     if (duplicatedVisit) {
       setQacs(
-        duplicatedVisit.answersIncludingQuestions.map((answer, index) => ({
-          index,
-          questionId: answer.questionId,
-          answer: answer.answer,
-          comment: answer.comment,
-          mustBeApproved: answer.mustBeApproved,
-          partNumber: answer.partNumber,
-          order: answer.order,
-          hiddenByGenders: answer.hiddenByGenders,
-          translations: answer.translations,
-          updatedAt: answer.updatedAt,
-        }))
+        duplicatedVisit.answersIncludingQuestions.map(
+          (answer, index): FormQac => ({
+            index,
+            questionId: answer.questionId,
+            answer: answer.answer,
+            comment: answer.comment,
+            mustBeApproved: answer.mustBeApproved,
+            partNumber: answer.partNumber,
+            order: answer.order,
+            hiddenByGenders: answer.hiddenByGenders,
+            translations: answer.translations,
+            updatedAt: answer.updatedAt,
+          })
+        )
       );
       const defaultValues = loadFormDefaultValuesVisitDuplication(duplicatedVisit);
       type DefaultValuesPropertyType = keyof typeof defaultValues;

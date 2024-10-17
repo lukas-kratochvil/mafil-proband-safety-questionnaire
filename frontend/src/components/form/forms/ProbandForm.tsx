@@ -33,18 +33,20 @@ export const ProbandForm = () => {
   useEffect(() => {
     if (questions && step === "examination") {
       setQacs(
-        questions.map((question, index) => ({
-          index,
-          questionId: question.id,
-          answer: null,
-          comment: "",
-          mustBeApproved: question.mustBeApproved,
-          partNumber: question.partNumber,
-          order: question.order,
-          hiddenByGenders: question.hiddenByGenders,
-          translations: question.translations,
-          updatedAt: question.updatedAt,
-        }))
+        questions.map(
+          (question, index): FormQac => ({
+            index,
+            questionId: question.id,
+            answer: null,
+            comment: "",
+            mustBeApproved: question.mustBeApproved,
+            partNumber: question.partNumber,
+            order: question.order,
+            hiddenByGenders: question.hiddenByGenders,
+            translations: question.translations,
+            updatedAt: question.updatedAt,
+          })
+        )
       );
     }
   }, [questions, step]);

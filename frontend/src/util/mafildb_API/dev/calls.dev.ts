@@ -4,6 +4,7 @@ import type { Language } from "@app/model/language";
 import type { Project } from "@app/model/project";
 import type { DuplicatedProbandVisitSubject, Subject } from "@app/model/subject";
 import type {
+  Answer,
   CreatedVisitData,
   DuplicatedPhantomVisit,
   DuplicatedProbandVisit,
@@ -72,7 +73,13 @@ export const createVisitDev = async (
     approver: approverUsername ? await fetchOperator(approverUsername) : null,
     approvalDate: approvedAt ?? null,
     disapprovalReason: "",
-    answers: visitFormData.answers.map((answer) => ({ ...answer })),
+    answers: visitFormData.answers.map(
+      (answer): Answer => ({
+        questionId: answer.questionId,
+        answer: answer.answer,
+        comment: answer.comment,
+      })
+    ),
   });
   return dummyVisits[dummyVisits.length - 1]!;
 };
@@ -91,7 +98,7 @@ export const fetchRecentVisitsDev = async (): Promise<RecentVisitsTableVisit[]> 
   return dummyVisits
     .map((dummyVisit) => {
       // eslint-disable-next-line no-param-reassign
-      dummyVisit.answers = currentQuestions.map((question) => {
+      dummyVisit.answers = currentQuestions.map((question): Answer => {
         const rand = Math.floor(Math.random() * 100) % 2 === 0;
         return {
           questionId: question.id,
@@ -101,14 +108,16 @@ export const fetchRecentVisitsDev = async (): Promise<RecentVisitsTableVisit[]> 
       });
       return dummyVisit;
     })
-    .map((dummyVisit) => ({
-      ...dummyVisit,
-      device: devicesTest[0]!,
-      subject: {
-        ...dummyVisit.subject,
-        nativeLanguage: nativeLanguagesTest[0]!.code,
-      },
-    }));
+    .map(
+      (dummyVisit): RecentVisitsTableVisit => ({
+        ...dummyVisit,
+        device: devicesTest[0]!,
+        subject: {
+          ...dummyVisit.subject,
+          nativeLanguage: nativeLanguagesTest[0]!.code,
+        },
+      })
+    );
 };
 
 export const fetchDuplicatedProbandVisitDev = async (visitUuid: string): Promise<DuplicatedProbandVisit | never> => {

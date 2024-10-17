@@ -29,7 +29,10 @@ const compareNativeLanguages = (a: NativeLanguage, b: NativeLanguage): number =>
   return b.priority ? 1 : a.nameEn.localeCompare(b.nameEn);
 };
 
-const filterNativeLanguages = (options: NativeLanguage[], state: FilterOptionsState<NativeLanguage>) => {
+const filterNativeLanguages = (
+  options: NativeLanguage[],
+  state: FilterOptionsState<NativeLanguage>
+): NativeLanguage[] => {
   const inputValue = state.inputValue.trim().toLowerCase();
   return options.filter((option) => {
     const valuesToBeMatched = [option.nativeName, option.nameCs, option.nameEn];

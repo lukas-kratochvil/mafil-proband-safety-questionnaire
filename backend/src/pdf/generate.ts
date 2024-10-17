@@ -83,7 +83,7 @@ type TitleValueRow = {
   isRowBold?: boolean;
 };
 
-const onNewPageAdded = (doc: PDFDoc, visitIdTitle: string, visitIdValue: string) => {
+const onNewPageAdded = (doc: PDFDoc, visitIdTitle: string, visitIdValue: string): void => {
   const docX = doc.x;
   const docY = doc.y;
 

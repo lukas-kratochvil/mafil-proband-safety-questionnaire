@@ -24,7 +24,7 @@ export class GraphQLConfigService implements GqlOptionsFactory {
       // passing original request and response objects into the GraphQL context
       context: ({ req, res }: { req: Request; res: Response }) => ({ req, res }),
       // error formatting inspired by: https://github.com/nestjs/graphql/issues/1053#issuecomment-786972617
-      formatError: (error: GraphQLFormattedError) => {
+      formatError: (error: GraphQLFormattedError): GraphQLFormattedError => {
         if (error.message !== VALIDATION_ERROR) {
           this.#logger.error(error);
           return error;
