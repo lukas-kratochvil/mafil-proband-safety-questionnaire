@@ -8,9 +8,9 @@ type ModifiableOperatorData = Pick<Operator, "name" | "surname" | "email">;
 @Injectable()
 // eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
 export class AuthService {
-  constructor(@Inject(AUTH_PRISMA_SERVICE) private readonly prisma: PrismaService) {}
-
   readonly #logger = new Logger(AuthService.name);
+
+  constructor(@Inject(AUTH_PRISMA_SERVICE) private readonly prisma: PrismaService) {}
 
   #getChangedOperatorData(
     operator: Operator,

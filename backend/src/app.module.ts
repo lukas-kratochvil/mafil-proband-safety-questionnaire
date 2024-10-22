@@ -2,7 +2,7 @@ import { Logger, MiddlewareConsumer, Module, NestModule, RequestMethod } from "@
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { APP_GUARD } from "@nestjs/core";
 import { ScheduleModule } from "@nestjs/schedule";
-import { seconds, ThrottlerModule } from "@nestjs/throttler";
+import { seconds, ThrottlerModule, type ThrottlerModuleOptions } from "@nestjs/throttler";
 import { GraphQLApiModule } from "./api/graphql-api.module";
 import loadConfig from "./config/loader";
 import { EnvironmentVariables } from "./config/validation";
@@ -19,7 +19,7 @@ import { ThrottlerGuard } from "./throttling/throttler.guard";
     ThrottlerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (config: ConfigService<EnvironmentVariables, true>) => [
+      useFactory: (config: ConfigService<EnvironmentVariables, true>): ThrottlerModuleOptions => [
         {
           ttl: seconds(config.get("throttle.ttl", { infer: true })),
           limit: config.get("throttle.limit", { infer: true }),
