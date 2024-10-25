@@ -43,7 +43,7 @@ export class AuthGuard extends GraphQLGuard {
     const gqlContext = gqlExContext.getContext();
     const request = gqlContext.req as Request;
 
-    // for auth endpoints check the OIDC access token in the HTTP Authorization header
+    // skip OIDC auth if explicitly requested
     const skipOidcAuth = this.reflector.getAllAndOverride<boolean>(SKIP_OIDC_AUTH_METADATA_KEY, [
       gqlExContext.getHandler(),
       gqlExContext.getClass(),

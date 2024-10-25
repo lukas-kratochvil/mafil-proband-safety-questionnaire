@@ -23,6 +23,9 @@ export const areUpdateCodesValid = (languages: Language[], translations: Transla
   return translations.map((translation) => translation.code).every((code) => languageCodes.includes(code));
 };
 
+/**
+ * Extracts the access token from the HTTP request `Authorization` header.
+ */
 export const extractAccessToken = (request: Request) => {
   const [type, accessToken] = request.headers.authorization?.split(" ") ?? [];
   return type === "Bearer" ? accessToken : undefined;
