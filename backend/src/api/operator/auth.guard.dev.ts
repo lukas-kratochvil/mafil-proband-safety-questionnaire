@@ -1,16 +1,14 @@
-import { CanActivate, ExecutionContext, Injectable, Logger } from "@nestjs/common";
-import { GqlContextType } from "@nestjs/graphql";
+import { ExecutionContext, Injectable } from "@nestjs/common";
+import { GraphQLGuard } from "../graphql.guard";
 
 @Injectable()
-export class AuthGuardDev implements CanActivate {
-  readonly #logger = new Logger(AuthGuardDev.name);
+// eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
+export class AuthGuardDev extends GraphQLGuard {
+  constructor() {
+    super(AuthGuardDev.name);
+  }
 
-  async canActivate(exContext: ExecutionContext) {
-    if (exContext.getType<GqlContextType>() !== "graphql") {
-      this.#logger.error(`Invalid execution context type '${exContext.getType()}'!`);
-      return false;
-    }
-
-    return true;
+  override async canActivate(exContext: ExecutionContext) {
+    return super.canActivate(exContext);
   }
 }
