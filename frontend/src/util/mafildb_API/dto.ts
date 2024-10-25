@@ -21,6 +21,8 @@ export type MDB_DeviceDTO = {
   name: string;
 };
 
+export type MDB_DeviceType = "MR";
+
 // phantom has preferred language 'null'
 export type MDB_PreferredLanguageCode = LanguageCode | null;
 export type MDB_GenderCode = "ns" | "m" | "f" | "o";
