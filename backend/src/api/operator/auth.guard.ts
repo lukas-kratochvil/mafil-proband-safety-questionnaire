@@ -8,6 +8,7 @@ import { EnvironmentVariables } from "@app/config/validation";
 import { AuthGuardDev } from "./auth.guard.dev";
 import type { AuthService } from "./auth.service";
 import { AUTH_SERVICE } from "./constants";
+import { extractAccessToken } from "../utils/utils";
 
 const SKIP_OIDC_AUTH_METADATA_KEY = "skipOidcAuth";
 /**
@@ -33,11 +34,6 @@ export class AuthGuard extends AuthGuardDev {
     });
   }
 
-  #extractAccessToken(request: Request) {
-    const [type, accessToken] = request.headers.authorization?.split(" ") ?? [];
-    return type === "Bearer" ? accessToken : undefined;
-  }
-
   override async canActivate(exContext: ExecutionContext) {
     if (!(await super.canActivate(exContext))) {
       return false;
@@ -57,7 +53,7 @@ export class AuthGuard extends AuthGuardDev {
       return true;
     }
 
-    const accessToken = this.#extractAccessToken(request);
+    const accessToken = extractAccessToken(request);
     if (accessToken === undefined) {
       this.logger.error(`Request from origin '${request.headers.origin}' does not contain OIDC access token!`);
       return false;
