@@ -8,8 +8,8 @@ import {
 } from "./utils";
 
 const AUTHENTICATE_OPERATOR = gql`
-  query AuthenticateOperator($name: String!, $surname: String!, $username: String!, $email: String!) {
-    authenticateOperator(name: $name, surname: $surname, username: $username, email: $email) {
+  query AuthenticateOperator {
+    authenticateOperator {
       ${OPERATOR_PROPS}
     }
   }

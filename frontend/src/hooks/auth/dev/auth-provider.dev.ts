@@ -1,12 +1,9 @@
 import { useState } from "react";
-import { getConfigDev } from "@app/config/config.dev";
 import { RoutingPath } from "@app/routing-paths";
 import { authenticateOperator } from "@app/util/server_API/calls";
-import type { OperatorAuthInput } from "@app/util/server_API/dto";
 import type { Auth } from "../auth";
 
 const SESSION_STORAGE_OPERATOR_KEY = "operator";
-const DEV_OPERATOR: OperatorAuthInput = { ...getConfigDev().operator };
 
 export const useAuthProviderDev = (): Auth => {
   const [operator, setOperator] = useState<Auth["operator"]>(() => {
@@ -17,7 +14,7 @@ export const useAuthProviderDev = (): Auth => {
   const logIn = async (): Promise<void> => window.location.assign(RoutingPath.OIDC_LOGIN);
 
   const logInCallback = async (): Promise<boolean> => {
-    const validOperator = await authenticateOperator(DEV_OPERATOR);
+    const validOperator = await authenticateOperator();
     window.sessionStorage.setItem(SESSION_STORAGE_OPERATOR_KEY, JSON.stringify(validOperator));
     setOperator(validOperator);
     return true;
