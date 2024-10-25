@@ -10,3 +10,10 @@ pdfOperatorLanguageCode:
 
 # Enable CORS for our web app URL
 webUrl:
+
+# Returned authenticated operator
+userContext:
+  username:
+  name:
+  surname:
+  email:

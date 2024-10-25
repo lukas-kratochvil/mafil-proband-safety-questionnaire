@@ -1,3 +1,4 @@
+import type { Request } from "express";
 import Joi from "joi";
 import type { ArrayToUnion } from "@app/types";
 
@@ -17,11 +18,14 @@ export type EnvironmentVariables = {
   };
   pdfOperatorLanguageCode: PdfLanguageCode;
   webUrl: string;
+  userContext: Required<Request["user"]>;
   oidc: {
     jpm: {
       clientId: string;
       clientSecret: string;
       introspectionEndpoint: string;
+      userInfoEndpoint: string;
+      allowedEdupersonEntitlements: string[];
     };
   };
 };
@@ -44,6 +48,15 @@ export const configSchema = Joi.object<EnvironmentVariables>({
   webUrl: Joi.string()
     .uri({ scheme: ["http", "https"] })
     .required(),
+  userContext: Joi.alternatives().conditional("nodeEnv", {
+    is: "development",
+    then: Joi.object({
+      username: Joi.string().trim().required(),
+      name: Joi.string().trim().required(),
+      surname: Joi.string().trim().required(),
+      email: Joi.string().trim().email().required(),
+    }).required(),
+  }),
   oidc: Joi.alternatives().conditional("nodeEnv", {
     is: "production",
     then: Joi.object({
@@ -53,6 +66,10 @@ export const configSchema = Joi.object<EnvironmentVariables>({
         introspectionEndpoint: Joi.string()
           .uri({ scheme: ["http", "https"] })
           .required(),
+        userInfoEndpoint: Joi.string()
+          .uri({ scheme: ["http", "https"] })
+          .required(),
+        allowedEdupersonEntitlements: Joi.array<string>().items(Joi.string().trim().required()).min(1).required(),
       }).required(),
     }).required(),
   }),

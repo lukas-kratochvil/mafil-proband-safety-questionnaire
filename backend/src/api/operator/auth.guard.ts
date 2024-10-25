@@ -5,7 +5,8 @@ import { GqlExecutionContext } from "@nestjs/graphql";
 import type { Request } from "express";
 import tokenIntrospect, { errors } from "token-introspection";
 import { EnvironmentVariables } from "@app/config/validation";
-import { AuthGuardDev } from "./auth.guard.dev";
+import { GraphQLGuard } from "../graphql.guard";
+import { extractAccessToken } from "../utils/utils";
 import type { AuthService } from "./auth.service";
 import { AUTH_SERVICE } from "./constants";
 
@@ -17,7 +18,7 @@ export const SkipOidcAuth = () => SetMetadata(SKIP_OIDC_AUTH_METADATA_KEY, true)
 
 @Injectable()
 // eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
-export class AuthGuard extends AuthGuardDev {
+export class AuthGuard extends GraphQLGuard {
   readonly #introspectToken: tokenIntrospect.IntrospectionFunction;
 
   constructor(
@@ -25,17 +26,12 @@ export class AuthGuard extends AuthGuardDev {
     private readonly reflector: Reflector,
     config: ConfigService<EnvironmentVariables, true>
   ) {
-    super();
+    super(AuthGuard.name);
     this.#introspectToken = tokenIntrospect({
       client_id: config.get("oidc.jpm.clientId", { infer: true }),
       client_secret: config.get("oidc.jpm.clientSecret", { infer: true }),
       endpoint: config.get("oidc.jpm.introspectionEndpoint", { infer: true }),
     });
-  }
-
-  #extractAccessToken(request: Request) {
-    const [type, accessToken] = request.headers.authorization?.split(" ") ?? [];
-    return type === "Bearer" ? accessToken : undefined;
   }
 
   override async canActivate(exContext: ExecutionContext) {
@@ -47,7 +43,7 @@ export class AuthGuard extends AuthGuardDev {
     const gqlContext = gqlExContext.getContext();
     const request = gqlContext.req as Request;
 
-    // for auth endpoints check the OIDC access token in the HTTP Authorization header
+    // skip OIDC auth if explicitly requested
     const skipOidcAuth = this.reflector.getAllAndOverride<boolean>(SKIP_OIDC_AUTH_METADATA_KEY, [
       gqlExContext.getHandler(),
       gqlExContext.getClass(),
@@ -57,7 +53,7 @@ export class AuthGuard extends AuthGuardDev {
       return true;
     }
 
-    const accessToken = this.#extractAccessToken(request);
+    const accessToken = extractAccessToken(request);
     if (accessToken === undefined) {
       this.logger.error(`Request from origin '${request.headers.origin}' does not contain OIDC access token!`);
       return false;

@@ -1,9 +1,11 @@
-import { Inject } from "@nestjs/common";
-import { Args, Query, Resolver } from "@nestjs/graphql";
+import { Inject, Logger, UnauthorizedException, UseGuards } from "@nestjs/common";
+import { Args, Context, Query, Resolver } from "@nestjs/graphql";
+import type { Request } from "express";
 import { UUID } from "@app/api/utils/scalars/uuid-scalar";
+import { AuthOperatorGuard } from "./auth-operator.guard";
+import { AuthOperatorGuardDev } from "./auth-operator.guard.dev";
 import type { AuthService } from "./auth.service";
 import { AUTH_SERVICE } from "./constants";
-import { AuthenticateOperatorArgs } from "./dto/authenticate-operator.args";
 import { CreateOperatorInput } from "./dto/create-operator.input";
 import { UpdateOperatorInput } from "./dto/update-operator.input";
 import { OperatorEntity } from "./entities/operator.entity";
@@ -11,14 +13,23 @@ import { OperatorService } from "./operator.service";
 
 @Resolver(() => OperatorEntity)
 export class OperatorResolver {
+  readonly #logger = new Logger(OperatorResolver.name);
+
   constructor(
     private readonly operatorService: OperatorService,
     @Inject(AUTH_SERVICE) private readonly authService: AuthService
   ) {}
 
+  @UseGuards(process.env["NODE_ENV"] === "production" ? AuthOperatorGuard : AuthOperatorGuardDev)
   @Query(() => OperatorEntity)
-  async authenticateOperator(@Args() authenticateOperatorArgs: AuthenticateOperatorArgs) {
-    return this.authService.authenticate(authenticateOperatorArgs.username, { ...authenticateOperatorArgs });
+  async authenticateOperator(@Context("req") request: Request) {
+    if (!request.user) {
+      this.#logger.error("User context not present in the authentication request!");
+      throw new UnauthorizedException();
+    }
+
+    const { username, ...userData } = request.user;
+    return this.authService.authenticate(username, userData);
   }
 
   // @Mutation(() => OperatorEntity)

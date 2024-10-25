@@ -1,9 +1,3 @@
 {
   "serverApiUrl": "",
-  "operator": {
-    "name": "",
-    "surname": "",
-    "username": "",
-    "email": ""
-  }
 }

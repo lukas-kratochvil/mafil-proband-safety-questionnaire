@@ -19,7 +19,6 @@ import type {
   HandednessDTO,
   HTMLCardDTO,
   OperatorAnswerDTO,
-  OperatorAuthInput,
   OperatorDTO,
   PdfDTO,
   ProbandAnswerDTO,
@@ -106,8 +105,8 @@ const serverApiCall = async <TData, TVariables = Record<string, unknown>>(
   return data.data;
 };
 
-export const authenticateOperator = async (loggingOperator: OperatorAuthInput): Promise<OperatorDTO> => {
-  const data = await serverApiCall<AuthenticateOperatorResponse>(queries.AUTHENTICATE_OPERATOR, loggingOperator);
+export const authenticateOperator = async (): Promise<OperatorDTO> => {
+  const data = await serverApiCall<AuthenticateOperatorResponse>(queries.AUTHENTICATE_OPERATOR);
   return data.authenticateOperator;
 };
 

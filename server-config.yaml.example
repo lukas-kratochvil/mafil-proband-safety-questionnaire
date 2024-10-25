@@ -18,3 +18,7 @@ oidc:
     clientId:
     clientSecret:
     introspectionEndpoint:
+    userInfoEndpoint:
+    # array of allowed 'eduperson_entitlement' values
+    allowedEdupersonEntitlements:
+      -

@@ -1,4 +1,5 @@
 import { Language } from "@prisma/client";
+import type { Request } from "express";
 import { TranslationInput } from "@app/api/utils/dto/create-translation.input";
 
 export const translationsSelect = {
@@ -20,4 +21,12 @@ export const areUpdateCodesValid = (languages: Language[], translations: Transla
 
   const languageCodes = languages.map((language) => language.code);
   return translations.map((translation) => translation.code).every((code) => languageCodes.includes(code));
+};
+
+/**
+ * Extracts the access token from the HTTP request `Authorization` header.
+ */
+export const extractAccessToken = (request: Request) => {
+  const [type, accessToken] = request.headers.authorization?.split(" ") ?? [];
+  return type === "Bearer" ? accessToken : undefined;
 };

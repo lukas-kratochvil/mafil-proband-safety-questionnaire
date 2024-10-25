@@ -1,10 +1,12 @@
 import { Test } from "@nestjs/testing";
 import { OperatorRole, type Operator } from "@prisma/client";
+import type { Request } from "express";
 import { DeepMockProxy, mockDeep } from "vitest-mock-extended";
 import { PrismaService } from "@app/prisma/prisma.service";
+import { AuthOperatorGuard } from "./auth-operator.guard";
+import { AuthOperatorGuardDev } from "./auth-operator.guard.dev";
 import { AuthService } from "./auth.service";
 import { AUTH_PRISMA_SERVICE, AUTH_SERVICE } from "./constants";
-import type { AuthenticateOperatorArgs } from "./dto/authenticate-operator.args";
 import type { CreateOperatorInput } from "./dto/create-operator.input";
 import type { UpdateOperatorInput } from "./dto/update-operator.input";
 import { OperatorResolver } from "./operator.resolver";
@@ -54,6 +56,8 @@ describe("OperatorResolver", () => {
       .useValue(mockDeep<OperatorService>())
       .overrideProvider(AUTH_SERVICE)
       .useValue(mockDeep<AuthService>())
+      .overrideGuard(process.env["NODE_ENV"] === "production" ? AuthOperatorGuard : AuthOperatorGuardDev)
+      .useValue({ canActivate: vi.fn().mockReturnValue(true) })
       .compile();
 
     operatorResolver = module.get<OperatorResolver>(OperatorResolver);
@@ -63,11 +67,18 @@ describe("OperatorResolver", () => {
 
   it("authenticate operator", () => {
     // ARRANGE
-    const authenticateOperatorArgs: AuthenticateOperatorArgs = { ...operator };
+    const userContext: Request["user"] = { ...operator };
+    const mockRequest = {
+      user: userContext,
+      headers: {},
+      get: vi.fn(),
+      header: vi.fn(),
+      accepts: vi.fn(),
+    } as unknown as Request;
     authService.authenticate.mockResolvedValueOnce(operator);
 
     // ACT
-    const createdOperator = operatorResolver.authenticateOperator(authenticateOperatorArgs);
+    const createdOperator = operatorResolver.authenticateOperator(mockRequest);
 
     // ASSERT
     expect(createdOperator).resolves.toEqual(operator);

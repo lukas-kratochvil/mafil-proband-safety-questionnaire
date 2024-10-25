@@ -1,6 +1,5 @@
 import { UserManager, type User, type UserManagerSettings } from "oidc-client-ts";
 import { getConfig } from "@app/config/config";
-import { LocalizedError } from "@app/util/error-handling/LocalizedError";
 import { authenticateOperator } from "@app/util/server_API/calls";
 import type { OperatorDTO } from "@app/util/server_API/dto";
 
@@ -52,25 +51,9 @@ export class AuthService {
   }
 
   public async completeSignIn(): Promise<OperatorDTO | null> {
-    const user = await this.#userManager.signinRedirectCallback();
-
-    // Check the presence of required OIDC claims
-    if (
-      user.profile.given_name === undefined
-      || user.profile.family_name === undefined
-      || user.profile.email === undefined
-      || user.profile.sub === undefined
-    ) {
-      throw new LocalizedError("missingOidcClaims");
-    }
-
-    // Check that the user is registered in our app and should have access to the authenticated part of the app
-    return authenticateOperator({
-      name: user.profile.given_name,
-      surname: user.profile.family_name,
-      email: user.profile.email,
-      username: user.profile.sub,
-    });
+    await this.#userManager.signinCallback();
+    // OIDC access token is added by the Axios request interceptor to the original server API request
+    return authenticateOperator();
   }
 
   public async signOut(): Promise<void> {
