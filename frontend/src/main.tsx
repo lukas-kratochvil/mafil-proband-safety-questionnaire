@@ -34,6 +34,7 @@ const renderApp = async () => {
       <BrowserRouter>
         <AuthProvider>
           <QueryClientProvider client={queryClient}>
+            {/* React Query Devtools are only included in bundles when process.env.NODE_ENV === 'development' */}
             <ReactQueryDevtools initialIsOpen={false} />
             <ThemeProvider theme={theme}>
               <CssBaseline enableColorScheme />

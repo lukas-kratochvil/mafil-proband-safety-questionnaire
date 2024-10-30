@@ -31,7 +31,7 @@ const OidcAuthCallbackPage = () => {
 
   return (
     <PageContainer center>
-      {/* TODO" create better waiting screen - some icon or gif or something */}
+      {/* TODO: create better waiting screen - some icon or gif or something */}
       <Typography>{t("oidcAuthCallbackPage.processing")}</Typography>
     </PageContainer>
   );
