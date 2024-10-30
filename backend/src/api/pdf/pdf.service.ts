@@ -264,7 +264,7 @@ export class PDFService {
     // TODO: delete - only for a development purpose to store generated PDF locally
     if (this.#isDevelopment) {
       const fileName = `${GENERATED_PDF_DIR_PATH}/${name}`;
-      fs.writeFile(fileName, Buffer.from(base64Content, "base64"), (err) =>
+      fs.writeFile(fileName, new Uint8Array(Buffer.from(base64Content, "base64")), (err) =>
         console.log(err ? err : `Development PDF '${fileName}' successfully created!`)
       );
     }
