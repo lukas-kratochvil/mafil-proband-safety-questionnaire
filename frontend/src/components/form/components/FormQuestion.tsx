@@ -38,7 +38,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestio
   useEffect(() => {
     if (selectedGender && qac.hiddenByGenders.map((hbg) => hbg.genderCode).includes(selectedGender.code)) {
       setHideQuestion(true);
-      setValue(`answers.${qac.index}.answer`, null);
+      setValue(`answers.${qac.index}.answer`, AnswerOption.no);
     } else {
       setValue(`answers.${qac.index}.answer`, questionAnswer);
       setHideQuestion(false);
