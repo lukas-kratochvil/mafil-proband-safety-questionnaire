@@ -2,7 +2,6 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import type { FormButtonsProps } from "@app/components/form/components/FormButtons";
 import { FormProbandContact } from "@app/components/form/components/FormProbandContact";
 import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo";
 import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo";
@@ -29,7 +28,7 @@ import { getBackButtonProps } from "@app/util/utils";
 import { FormDisapprovalReason } from "../components/FormDisapprovalReason";
 import { FormFinalizeDialog } from "../components/FormFinalizeDialog";
 import { getModifiedFieldsOnly, getValidatedOperatorFormData, isVisitFormForApproval } from "../util/utils";
-import { FormContainer } from "./FormContainer";
+import { FormContainer, type FormContainerButtonsProps } from "./FormContainer";
 
 export const WaitingRoomForm = () => {
   const { id } = useParams();
@@ -53,7 +52,7 @@ export const WaitingRoomForm = () => {
   const [isDisapproved, setIsDisapproved] = useState<boolean>(false);
   const [openFinalizeDialog, setOpenFinalizeDialog] = useState<boolean>(false);
   const [qacs, setQacs] = useState<FormQac[]>([]);
-  const [formButtons, setFormButtons] = useState<FormButtonsProps<ValidatedOperatorFormData>>();
+  const [formButtons, setFormButtons] = useState<FormContainerButtonsProps<ValidatedOperatorFormData>>();
 
   // Setting default values
   useEffect(() => {

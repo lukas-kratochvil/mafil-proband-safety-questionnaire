@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 import type { FormPropType, ValidatedProbandFormData } from "@app/model/form";
 import { RoutingPath } from "@app/routing-paths";
 import { createProbandVisitForm } from "@app/util/server_API/calls";
-import type { FormButtonsProps } from "../components/FormButtons";
 import { FormProbandContactCheckbox } from "../components/FormProbandContactCheckbox";
 import { FormProbandContactConsent } from "../components/FormProbandContactConsent";
 import { FormProbandContactRequest } from "../components/FormProbandContactRequest";
+import type { FormContainerButtonsProps } from "./FormContainer";
 
 type ProbandFormContactsProps = {
-  setFormButtons: Dispatch<SetStateAction<FormButtonsProps<ValidatedProbandFormData> | undefined>>;
+  setFormButtons: Dispatch<SetStateAction<FormContainerButtonsProps<ValidatedProbandFormData> | undefined>>;
 };
 
 export const ProbandFormContacts = ({ setFormButtons }: ProbandFormContactsProps) => {

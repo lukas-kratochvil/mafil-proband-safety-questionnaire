@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
-import type { FormButtonsProps } from "@app/components/form/components/FormButtons";
 import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo";
 import { FormProjectInfo } from "@app/components/form/components/FormProjectInfo";
 import { useAuth } from "@app/hooks/auth/auth";
@@ -11,12 +10,12 @@ import { generatePhantomPdf } from "@app/util/server_API/calls";
 import type { OperatorDTO } from "@app/util/server_API/dto";
 import { getBackButtonProps } from "@app/util/utils";
 import { getValidatedOperatorFormData } from "../util/utils";
-import { FormContainer } from "./FormContainer";
+import { FormContainer, type FormContainerButtonsProps } from "./FormContainer";
 
 export const getPhantomFormButtons = (
   navigate: NavigateFunction,
   operator: OperatorDTO
-): FormButtonsProps<ValidatedOperatorFormData> => ({
+): FormContainerButtonsProps<ValidatedOperatorFormData> => ({
   submitButtonProps: {
     titleLocalizationKey: "form.common.buttons.finalize",
     onClick: async (data) => {
@@ -32,7 +31,7 @@ export const getPhantomFormButtons = (
 export const PhantomForm = () => {
   const navigate = useNavigate();
   const { operator } = useAuth();
-  const [formButtons, setFormButtons] = useState<FormButtonsProps<ValidatedOperatorFormData>>();
+  const [formButtons, setFormButtons] = useState<FormContainerButtonsProps<ValidatedOperatorFormData>>();
 
   useEffect(() => {
     if (operator) {

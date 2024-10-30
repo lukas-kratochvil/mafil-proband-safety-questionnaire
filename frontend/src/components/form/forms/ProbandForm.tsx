@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { FormBeforeExamination } from "@app/components/form/components/FormBeforeExamination";
-import type { FormButtonsProps } from "@app/components/form/components/FormButtons";
 import { FormEntryInfo } from "@app/components/form/components/FormEntryInfo";
 import { FormExaminationConsent } from "@app/components/form/components/FormExaminationConsent";
 import { FormProbandInfo } from "@app/components/form/components/FormProbandInfo";
@@ -10,7 +9,7 @@ import { FormSafetyInfo } from "@app/components/form/components/FormSafetyInfo";
 import type { FormQac, ValidatedProbandFormData } from "@app/model/form";
 import { fetchCurrentQuestions } from "@app/util/server_API/calls";
 import { getValidatedProbandFormData } from "../util/utils";
-import { FormContainer } from "./FormContainer";
+import { FormContainer, type FormContainerButtonsProps } from "./FormContainer";
 import { ProbandFormContacts } from "./ProbandFormContacts";
 
 type ProbandFormStep = "examination" | "contacts";
@@ -18,7 +17,7 @@ type ProbandFormStep = "examination" | "contacts";
 export const ProbandForm = () => {
   const [step, setStep] = useState<ProbandFormStep>("examination");
   const [qacs, setQacs] = useState<FormQac[]>([]);
-  const [formButtons, setFormButtons] = useState<FormButtonsProps<ValidatedProbandFormData>>();
+  const [formButtons, setFormButtons] = useState<FormContainerButtonsProps<ValidatedProbandFormData>>();
 
   const {
     data: questions,

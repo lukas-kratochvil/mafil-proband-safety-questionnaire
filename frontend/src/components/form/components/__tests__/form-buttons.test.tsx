@@ -27,10 +27,7 @@ describe("form buttons", () => {
     // ACT
     render(
       <FormButtons
-        submitButtonProps={{
-          onClick: vi.fn(),
-          titleLocalizationKey,
-        }}
+        submitButtonProps={{ titleLocalizationKey }}
         buttonsProps={[]}
       />
     );
@@ -95,10 +92,7 @@ describe("form buttons", () => {
     // ACT
     render(
       <FormButtons
-        submitButtonProps={{
-          onClick: vi.fn(),
-          titleLocalizationKey: submitButtonTitle,
-        }}
+        submitButtonProps={{ titleLocalizationKey: submitButtonTitle }}
         buttonsProps={buttonsProps}
       />
     );

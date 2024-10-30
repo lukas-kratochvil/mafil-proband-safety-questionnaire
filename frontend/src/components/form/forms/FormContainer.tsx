@@ -5,13 +5,22 @@ import { useTranslation } from "react-i18next";
 import { FormButtons, type FormButtonsProps } from "@app/components/form/components/FormButtons";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import type { FormPropType } from "@app/model/form";
-import { handleErrorsWithToast } from "@app/util/utils";
+import { handleErrorsWithToast, type ButtonProps } from "@app/util/utils";
 import { FormSkeleton } from "./FormSkeleton";
+
+type FormSubmitButtonProps<TValidatedData extends object> = FormButtonsProps["submitButtonProps"] & {
+  onClick: (data: TValidatedData) => Promise<void>;
+};
+
+export type FormContainerButtonsProps<TValidatedData extends object> = {
+  submitButtonProps: FormSubmitButtonProps<TValidatedData> | undefined;
+  buttonsProps: ButtonProps[];
+};
 
 type FormContainerProps<TValidatedData extends object> = {
   isLoading: boolean;
   isError: boolean;
-  buttons: FormButtonsProps<TValidatedData> | undefined;
+  buttons: FormContainerButtonsProps<TValidatedData> | undefined;
   getFormData: (data: FormPropType) => TValidatedData;
 };
 
