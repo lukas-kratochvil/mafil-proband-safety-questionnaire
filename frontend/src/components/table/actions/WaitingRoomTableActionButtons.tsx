@@ -29,7 +29,7 @@ export const WaitingRoomTableActionButtons = ({
   visitFormId,
   refetchWaitingRoomTable,
 }: WaitingRoomTableActionButtonsProps) => {
-  const { t } = useTranslation("translation", { keyPrefix: "waitingRoomTablePage.actions" });
+  const { t } = useTranslation();
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
 
@@ -38,6 +38,7 @@ export const WaitingRoomTableActionButtons = ({
       await deleteVisitForm(visitFormId);
     } catch (error) {
       handleErrorsWithToast(error, t);
+      return;
     }
 
     await refetchWaitingRoomTable();
@@ -52,7 +53,7 @@ export const WaitingRoomTableActionButtons = ({
         component={Link}
         to={`${RoutingPath.WAITING_ROOM_FORM}/${visitFormId}`}
       >
-        {t("processButton")}
+        {t("waitingRoomTablePage.actions.processButton")}
       </Button>
       <IconButton
         onClick={() => setOpenDeleteDialog(true)}
@@ -70,13 +71,15 @@ export const WaitingRoomTableActionButtons = ({
         open={openDeleteDialog}
         fullScreen={matchesDownSmBreakpoint}
       >
-        <DialogTitle>{t("clearIconDialogTitle")}</DialogTitle>
+        <DialogTitle>{t("waitingRoomTablePage.actions.clearIconDialogTitle")}</DialogTitle>
         <DialogContent>
-          <Typography>{t("clearIconDialogContent")}</Typography>
+          <Typography>{t("waitingRoomTablePage.actions.clearIconDialogContent")}</Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onDelete}>{t("clearIconDialogDelete")}</Button>
-          <Button onClick={() => setOpenDeleteDialog(false)}>{t("clearIconDialogCancel")}</Button>
+          <Button onClick={onDelete}>{t("waitingRoomTablePage.actions.clearIconDialogDelete")}</Button>
+          <Button onClick={() => setOpenDeleteDialog(false)}>
+            {t("waitingRoomTablePage.actions.clearIconDialogCancel")}
+          </Button>
         </DialogActions>
       </Dialog>
     </TableActionButtonsContainer>

@@ -24,7 +24,7 @@ type FormFinalizeDialogProps = {
 // Warning dialog that the visit form has to be approved by an operator with higher permissions
 export const FormFinalizeDialog = ({ isOpen, setIsOpen, onContinue }: FormFinalizeDialogProps) => {
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
-  const { t } = useTranslation("translation", { keyPrefix: "form.finalizeDialog" });
+  const { t } = useTranslation();
   const { handleSubmit } = useFormContext<FormPropType>();
 
   const onValid = async (data: FormPropType) => {
@@ -42,13 +42,13 @@ export const FormFinalizeDialog = ({ isOpen, setIsOpen, onContinue }: FormFinali
       open={isOpen}
       fullScreen={matchesDownSmBreakpoint}
     >
-      <DialogTitle>{t("title")}</DialogTitle>
+      <DialogTitle>{t("form.finalizeDialog.title")}</DialogTitle>
       <DialogContent>
-        <Typography>{t("text")}</Typography>
+        <Typography>{t("form.finalizeDialog.text")}</Typography>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => handleSubmit(onValid)()}>{t("buttons.continue")}</Button>
-        <Button onClick={() => setIsOpen(false)}>{t("buttons.cancel")}</Button>
+        <Button onClick={() => handleSubmit(onValid)()}>{t("form.finalizeDialog.buttons.continue")}</Button>
+        <Button onClick={() => setIsOpen(false)}>{t("form.finalizeDialog.buttons.cancel")}</Button>
       </DialogActions>
     </Dialog>
   );
