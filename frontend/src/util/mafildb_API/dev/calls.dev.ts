@@ -1,5 +1,5 @@
 import type { Device } from "@app/model/device";
-import type { ValidatedOperatorFormData } from "@app/model/form";
+import { AnswerOption, type ValidatedOperatorFormData } from "@app/model/form";
 import type { Language } from "@app/model/language";
 import type { Project } from "@app/model/project";
 import type { DuplicatedProbandVisitSubject, Subject } from "@app/model/subject";
@@ -102,7 +102,7 @@ export const fetchRecentVisitsDev = async (): Promise<RecentVisitsTableVisit[]> 
         const rand = Math.floor(Math.random() * 100) % 2 === 0;
         return {
           questionId: question.id,
-          answer: rand ? "YES" : "NO",
+          answer: rand ? AnswerOption.yes : AnswerOption.no,
           comment: rand ? "Comment" : "",
         };
       });

@@ -1,3 +1,4 @@
+import { AnswerOption } from "@app/model/form";
 import type { DuplicatedPhantomVisit, DuplicatedProbandVisit } from "@app/model/visit";
 import type {
   ApprovalRoomVisitFormIncludingQuestionsDTO,
@@ -25,7 +26,7 @@ import { getAutocompleteOption, visualCorrectionOptions } from "../options";
 const answerIncludingQuestion: VisitFormAnswerIncludingQuestion = {
   questionId: "1",
   updatedAt: new Date(),
-  answer: "NO",
+  answer: AnswerOption.no,
   comment: "",
   partNumber: 1,
   mustBeApproved: false,

@@ -1,12 +1,12 @@
 import { updatedDiff } from "deep-object-diff";
 import type { Auth } from "@app/hooks/auth/auth";
 import type { Device } from "@app/model/device";
-import type {
+import {
   AnswerOption,
-  FormPropType,
-  ValidatedFormAnswer,
-  ValidatedOperatorFormData,
-  ValidatedProbandFormData,
+  type FormPropType,
+  type ValidatedFormAnswer,
+  type ValidatedOperatorFormData,
+  type ValidatedProbandFormData,
 } from "@app/model/form";
 import type { NativeLanguage } from "@app/model/language";
 import type { Project } from "@app/model/project";
@@ -89,4 +89,4 @@ export const getValidatedOperatorFormData = (data: FormPropType): ValidatedOpera
 export const isVisitFormForApproval = (operator: Auth["operator"], data: ValidatedOperatorFormData) =>
   operator === undefined
   || (operator.role !== OperatorRole.MR_HIGH_PERM
-    && data.answers.some((answer) => answer.mustBeApproved && answer.answer === "YES"));
+    && data.answers.some((answer) => answer.mustBeApproved && answer.answer === AnswerOption.yes));

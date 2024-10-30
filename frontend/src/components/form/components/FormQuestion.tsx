@@ -47,7 +47,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestio
 
   // Reset comment if the current answer is 'NO'
   useEffect(() => {
-    if (questionAnswer !== "YES") {
+    if (questionAnswer !== AnswerOption.yes) {
       setValue(`answers.${qac.index}.comment`, "");
     }
   }, [qac.index, questionAnswer, setValue]);
@@ -101,7 +101,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestio
           sx={{ justifyContent: matchesUpSmBreakpoint ? "flex-end" : "flex-start" }}
         />
       </Grid>
-      {operator && questionAnswer === "YES" && (
+      {operator && questionAnswer === AnswerOption.yes && (
         <Grid
           item
           xs={1}
@@ -113,7 +113,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestio
             isSmall
             isMultiline
             hasAutocomplete
-            disabled={disableComment || (questionAnswer !== "YES" && disableInputs)}
+            disabled={disableComment || (questionAnswer !== AnswerOption.yes && disableInputs)}
           />
         </Grid>
       )}

@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import type { Device } from "@app/model/device";
+import { AnswerOption } from "@app/model/form";
 import type { NativeLanguage } from "@app/model/language";
 import type { Project } from "@app/model/project";
 import type { DuplicatedPhantomVisit, DuplicatedProbandVisit } from "@app/model/visit";
@@ -49,7 +50,7 @@ const probandVisit: DuplicatedProbandVisit = {
     (question, index): VisitFormAnswerIncludingQuestion => ({
       questionId: question.id,
       mustBeApproved: index % 2 === 0,
-      answer: index % 2 === 0 ? "YES" : "NO",
+      answer: index % 2 === 0 ? AnswerOption.yes : AnswerOption.no,
       comment: index % 2 === 0 ? commentText : "",
       order: question.order,
       hiddenByGenders: question.hiddenByGenders,
