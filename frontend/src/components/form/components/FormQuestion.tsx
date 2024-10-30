@@ -30,20 +30,20 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestio
   useEffect(() => {
     setValue(`answers.${qac.index}.questionId`, qac.questionId);
     setValue(`answers.${qac.index}.mustBeApproved`, qac.mustBeApproved);
-    setValue(`answers.${qac.index}.answer`, qac.answer);
+    setValue(`answers.${qac.index}.answer`, questionAnswer);
     setValue(`answers.${qac.index}.comment`, qac.comment);
-  }, [qac, setValue]);
+  }, [qac, questionAnswer, setValue]);
 
   // Hide question when specified genders are selected
   useEffect(() => {
     if (selectedGender && qac.hiddenByGenders.map((hbg) => hbg.genderCode).includes(selectedGender.code)) {
       setHideQuestion(true);
-      setValue(`answers.${qac.index}.answer`, "NO");
+      setValue(`answers.${qac.index}.answer`, null);
     } else {
-      setValue(`answers.${qac.index}.answer`, qac.answer);
+      setValue(`answers.${qac.index}.answer`, questionAnswer);
       setHideQuestion(false);
     }
-  }, [qac, selectedGender, setValue]);
+  }, [qac, questionAnswer, selectedGender, setValue]);
 
   // Reset comment if the current answer is 'NO'
   useEffect(() => {
@@ -89,7 +89,7 @@ export const FormQuestion = ({ qac, disableInputs, disableComment }: FormQuestio
         <FormRadioGroup
           name={`answers.${qac.index}.answer`}
           label={`Question: ${qac.questionId}`}
-          defaultValue={qac.answer}
+          defaultValue={questionAnswer}
           radios={Object.values(AnswerOption).map(
             (answer): RadioProps => ({
               id: `${answer}-radio[${qac.questionId}]`,
