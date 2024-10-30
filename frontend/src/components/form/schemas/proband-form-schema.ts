@@ -5,9 +5,9 @@ import type { NativeLanguage } from "@app/model/language";
 import type { GenderDTO, HandednessDTO } from "@app/util/server_API/dto";
 import {
   getAutocompleteOption,
+  VisualCorrection,
   visualCorrectionOptions,
   type AutocompleteOption,
-  type VisualCorrection,
 } from "../util/options";
 import "./yup-custom-methods";
 
@@ -57,7 +57,7 @@ export const probandFormSchema = object().shape(
       .transform((_value, originalValue) => Number(String(originalValue).replace(/,/, ".")))
       .typeError("form.validation.notValid")
       .when("visualCorrection", {
-        is: getAutocompleteOption(visualCorrectionOptions, "yes"),
+        is: getAutocompleteOption(visualCorrectionOptions, VisualCorrection.yes),
         then: (schema) =>
           schema.typeError("form.validation.notValid").notOneOf([0], "form.validation.visualCorrectionDioptreNotZero"),
       })

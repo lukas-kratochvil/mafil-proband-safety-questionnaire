@@ -18,7 +18,7 @@ import {
   loadFormDefaultValuesVisitDuplication,
   loadPhantomFormDefaultValues,
 } from "../loaders";
-import { getAutocompleteOption, visualCorrectionOptions } from "../options";
+import { getAutocompleteOption, VisualCorrection, visualCorrectionOptions } from "../options";
 
 //----------------------------------------------------------------------
 // Test data
@@ -147,7 +147,9 @@ describe("form loaders", () => {
     expect(phantomFormDefaultValues.heightCm).toBe("");
     expect(phantomFormDefaultValues.weightKg).toBe("");
     expect(phantomFormDefaultValues.handedness).toBeNull(); // is set to 'Undetermined' in the FormProbandInfo component
-    expect(phantomFormDefaultValues.visualCorrection).toEqual(getAutocompleteOption(visualCorrectionOptions, "no"));
+    expect(phantomFormDefaultValues.visualCorrection).toEqual(
+      getAutocompleteOption(visualCorrectionOptions, VisualCorrection.no)
+    );
     expect(phantomFormDefaultValues.visualCorrectionDioptre).toEqual(0);
     expect(phantomFormDefaultValues.email).toBe("");
     expect(phantomFormDefaultValues.phone).toBe("");
@@ -171,7 +173,9 @@ describe("form loaders", () => {
     expect(loadedFormValues.heightCm).toEqual(fetchedVisit.heightCm);
     expect(loadedFormValues.weightKg).toEqual(fetchedVisit.weightKg);
     expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.handedness.id);
-    expect(loadedFormValues.visualCorrection?.value).toEqual(fetchedVisit.visualCorrectionDioptre === 0 ? "no" : "yes");
+    expect(loadedFormValues.visualCorrection?.value).toEqual(
+      fetchedVisit.visualCorrectionDioptre === 0 ? VisualCorrection.no : VisualCorrection.yes
+    );
     expect(loadedFormValues.visualCorrectionDioptre).toEqual(fetchedVisit.visualCorrectionDioptre);
     expect(loadedFormValues.email).toEqual(fetchedVisit.email);
     expect(loadedFormValues.phone).toEqual(fetchedVisit.phone);
@@ -202,7 +206,9 @@ describe("form loaders", () => {
     expect(loadedFormValues.heightCm).toEqual(fetchedVisit.heightCm);
     expect(loadedFormValues.weightKg).toEqual(fetchedVisit.weightKg);
     expect(loadedFormValues.handedness?.id).toEqual(fetchedVisit.handedness.id);
-    expect(loadedFormValues.visualCorrection?.value).toEqual(fetchedVisit.visualCorrectionDioptre === 0 ? "no" : "yes");
+    expect(loadedFormValues.visualCorrection?.value).toEqual(
+      fetchedVisit.visualCorrectionDioptre === 0 ? VisualCorrection.no : VisualCorrection.yes
+    );
     expect(loadedFormValues.visualCorrectionDioptre).toEqual(fetchedVisit.visualCorrectionDioptre);
     expect(loadedFormValues.email).toEqual(fetchedVisit.email);
     expect(loadedFormValues.phone).toEqual(fetchedVisit.phone);
@@ -231,7 +237,7 @@ describe("form loaders", () => {
     expect(formDefaultValuesVisitDuplication.weightKg).toEqual(duplicatedProbandVisit.weightKg);
     expect(formDefaultValuesVisitDuplication.handedness?.id).toEqual(duplicatedProbandVisit.handedness.id);
     expect(formDefaultValuesVisitDuplication.visualCorrection?.value).toEqual(
-      duplicatedProbandVisit.visualCorrectionDioptre === 0 ? "no" : "yes"
+      duplicatedProbandVisit.visualCorrectionDioptre === 0 ? VisualCorrection.no : VisualCorrection.yes
     );
     expect(formDefaultValuesVisitDuplication.visualCorrectionDioptre).toEqual(
       duplicatedProbandVisit.visualCorrectionDioptre
@@ -265,7 +271,7 @@ describe("form loaders", () => {
     expect(formDefaultValuesVisitDuplication.weightKg).toEqual(duplicatedPhantomVisit.weightKg);
     expect(formDefaultValuesVisitDuplication.handedness?.id).toEqual(duplicatedPhantomVisit.handedness.id);
     expect(formDefaultValuesVisitDuplication.visualCorrection?.value).toEqual(
-      duplicatedPhantomVisit.visualCorrectionDioptre === 0 ? "no" : "yes"
+      duplicatedPhantomVisit.visualCorrectionDioptre === 0 ? VisualCorrection.no : VisualCorrection.yes
     );
     expect(formDefaultValuesVisitDuplication.visualCorrectionDioptre).toEqual(
       duplicatedPhantomVisit.visualCorrectionDioptre

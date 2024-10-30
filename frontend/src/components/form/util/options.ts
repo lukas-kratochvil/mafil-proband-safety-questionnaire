@@ -33,11 +33,11 @@ export const getAutocompleteOption = <T>(options: AutocompleteOption<T>[], value
 /**
  * Visual correction options
  */
-const visualCorrectionOptionsObject = {
+export const VisualCorrection = {
   yes: "yes",
   no: "no",
 } as const;
 
-export type VisualCorrection = ObjectValuesUnion<typeof visualCorrectionOptionsObject>;
+export type VisualCorrection = ObjectValuesUnion<typeof VisualCorrection>;
 
-export const visualCorrectionOptions = createAutocompleteOptions(visualCorrectionOptionsObject, "visualCorrection");
+export const visualCorrectionOptions = createAutocompleteOptions(VisualCorrection, "visualCorrection");

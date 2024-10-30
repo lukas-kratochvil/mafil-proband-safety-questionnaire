@@ -14,7 +14,7 @@ import { FormAutocomplete } from "../inputs/FormAutocomplete";
 import { FormAutocompleteOptions } from "../inputs/FormAutocompleteOptions";
 import { FormDatePicker } from "../inputs/FormDatePicker";
 import { FormTextField } from "../inputs/FormTextField";
-import { visualCorrectionOptions } from "../util/options";
+import { VisualCorrection, visualCorrectionOptions } from "../util/options";
 import { CzechSlovakPersonalId, getPersonalIdPart } from "../util/personal-id";
 import { FormCardContainer } from "./FormCardContainer";
 import type { PhantomFormCardProps } from "./form-card";
@@ -170,7 +170,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
     const visualCorrectionDioptreValue = getValues("visualCorrectionDioptre");
 
     // If we don't check the visual correction dioptre value, resetField() causes infinite re-renders
-    if (+visualCorrectionDioptreValue !== 0 && visualCorrectionOption?.value !== "yes") {
+    if (+visualCorrectionDioptreValue !== 0 && visualCorrectionOption?.value !== VisualCorrection.yes) {
       resetField("visualCorrectionDioptre");
     }
   }, [getValues, resetField, visualCorrectionOption]);
@@ -324,7 +324,7 @@ export const FormProbandInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
           <FormTextField
             name="visualCorrectionDioptre"
             label={t("visualCorrectionDioptre")}
-            disabled={disableInputs || visualCorrectionOption?.value !== "yes"}
+            disabled={disableInputs || visualCorrectionOption?.value !== VisualCorrection.yes}
             endAdornmentLabel={
               <>
                 <Typography sx={{ marginRight: "0.75rem" }}>D</Typography>

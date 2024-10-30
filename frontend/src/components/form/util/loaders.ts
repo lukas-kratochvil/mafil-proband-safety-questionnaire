@@ -5,7 +5,7 @@ import type {
   VisitFormAnswerIncludingQuestion,
   WaitingRoomVisitFormIncludingQuestions,
 } from "@app/util/server_API/dto";
-import { getAutocompleteOption, visualCorrectionOptions } from "./options";
+import { getAutocompleteOption, VisualCorrection, visualCorrectionOptions } from "./options";
 
 // Autocomplete component default value must be one of the options provided or null
 export const loadEmptyDefaultValues = (): FormPropType => ({
@@ -34,7 +34,7 @@ export const loadPhantomFormDefaultValues = (): FormPropType => ({
   ...loadEmptyDefaultValues(),
   measuredAt: new Date(),
   birthdate: new Date(),
-  visualCorrection: getAutocompleteOption(visualCorrectionOptions, "no"),
+  visualCorrection: getAutocompleteOption(visualCorrectionOptions, VisualCorrection.no),
   // gender is set to 'Other' in the FormProbandInfo component
   // native language is set to 'Other' in the FormProbandInfo component
   // handedness is set to 'Undetermined' in the FormProbandInfo component
@@ -77,7 +77,7 @@ export const loadFormDefaultValuesFromWaitingRoomVisitForm = (
   weightKg: visitForm.weightKg,
   visualCorrection: getAutocompleteOption(
     visualCorrectionOptions,
-    visitForm.visualCorrectionDioptre === 0 ? "no" : "yes"
+    visitForm.visualCorrectionDioptre === 0 ? VisualCorrection.no : VisualCorrection.yes
   ),
   visualCorrectionDioptre: visitForm.visualCorrectionDioptre,
   handedness: visitForm.handedness,
@@ -127,6 +127,9 @@ export const loadFormDefaultValuesVisitDuplication = (
   handedness: visit.handedness,
   email: visit.subject.email,
   phone: visit.subject.phone,
-  visualCorrection: getAutocompleteOption(visualCorrectionOptions, visit.visualCorrectionDioptre === 0 ? "no" : "yes"),
+  visualCorrection: getAutocompleteOption(
+    visualCorrectionOptions,
+    visit.visualCorrectionDioptre === 0 ? VisualCorrection.no : VisualCorrection.yes
+  ),
   answers: loadAnswers(visit.answersIncludingQuestions),
 });
