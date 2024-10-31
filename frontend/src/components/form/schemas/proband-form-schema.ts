@@ -3,6 +3,7 @@ import { array, boolean, date, mixed, number, object, string } from "yup";
 import { AnswerOption } from "@app/model/form";
 import type { NativeLanguage } from "@app/model/language";
 import type { GenderDTO, HandednessDTO } from "@app/util/server_API/dto";
+import "@app/yup/custom-methods";
 import {
   getAutocompleteOption,
   VisualCorrection,
