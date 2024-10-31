@@ -1,6 +1,6 @@
 import { Test } from "@nestjs/testing";
 import { OperatorRole, type Operator } from "@prisma/client";
-import type { Request } from "express";
+import type { Request, UserContext } from "express";
 import { DeepMockProxy, mockDeep } from "vitest-mock-extended";
 import { PrismaService } from "@app/prisma/prisma.service";
 import { AuthOperatorGuard } from "./auth-operator.guard";
@@ -67,7 +67,7 @@ describe("OperatorResolver", () => {
 
   it("authenticate operator", () => {
     // ARRANGE
-    const userContext: Request["user"] = { ...operator };
+    const userContext: UserContext = { ...operator };
     const mockRequest = {
       user: userContext,
       headers: {},
