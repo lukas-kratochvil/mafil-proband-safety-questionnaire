@@ -8,3 +8,6 @@ declare module "i18next" {
     resources: Resources;
   }
 }
+
+// ensures this file is a module (must contain `import` or `export`) and not a global-scoped script
+export {};

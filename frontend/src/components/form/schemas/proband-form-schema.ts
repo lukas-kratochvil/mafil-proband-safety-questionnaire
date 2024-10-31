@@ -9,7 +9,6 @@ import {
   visualCorrectionOptions,
   type AutocompleteOption,
 } from "../util/options";
-import "./yup-custom-methods";
 
 /**
  * Czech phone number prefix (same as `+420`)
