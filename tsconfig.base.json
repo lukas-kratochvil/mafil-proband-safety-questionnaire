@@ -3,7 +3,7 @@
     "outDir": "${configDir}/dist",
 
     /* Strictness */
-    "strict": true,
+    "strict": true, // enables a set of strict type checking options that catch more errors and generally promote better code quality
     "allowUnusedLabels": false, // raises compiler errors about unused labels (label ~ attempt to write an object literal)
     "allowUnreachableCode": false,
     "noFallthroughCasesInSwitch": true,
@@ -15,12 +15,12 @@
     "noUnusedParameters": true,
 
     /* Other options */
-    "skipLibCheck": true, // compiler won't throw compile-time errors on third-party libraries code
-    "isolatedModules": true,
+    "skipLibCheck": true, // compiler won't throw compile-time errors on third-party libraries code (But!! It also skips checking our custom `.d.ts` files)
+    "isolatedModules": true, // ensures that each file can be independently transpiled without relying on information from other files (different transpilers from `tsc` like `swc`, `esbuild` etc. don't have enough context to correctly transpile everything)
     "allowJs": true, // allows using JS files inside the project
     "checkJs": true, // works in tandem with 'allowJs' option - type-checks JS files
     "resolveJsonModule": true, // allows importing JSON files as modules
-    "moduleDetection": "force", // every file in a repo is treated as a module instead of as a script
+    "moduleDetection": "force", // every `.ts` file in a repo is treated as a module instead of as a script (`.d.ts` files are always set to `auto`)
     "removeComments": true,
   },
 }

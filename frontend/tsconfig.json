@@ -6,7 +6,7 @@
     /* If transpiling with TypeScript (tsc) */
     "module": "ESNext",
     "moduleResolution": "Node", // don't set 'moduleResolution' to 'Bundler' as it is intended for compilation with bundlers
-    "noEmit": true,
+    "noEmit": true, // tells TypeScript not to emit any JavaScript files when transpiling your TypeScript code, because Vite does the job for us
     /* Type checking */
     // TODO: 'verbatimModuleSyntax' set to 'true' does collide with ESLint - ESLint will crash
     // "verbatimModuleSyntax": true, // ensures the right usage of ES module syntax (related to the 'module' setting)
