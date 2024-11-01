@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -10,7 +11,12 @@ import { loadFormDefaultValuesVisitDuplication } from "@app/components/form/util
 import { useAuth } from "@app/hooks/auth/auth";
 import type { FormPropType, FormQac, ValidatedOperatorFormData } from "@app/model/form";
 import { RoutingPath } from "@app/routing-paths";
-import { addPdfToVisit, createFinalizedVisit, fetchDuplicatedProbandVisit } from "@app/util/mafildb_API/calls";
+import {
+  addPdfToVisit,
+  createFinalizedVisit,
+  fetchDuplicatedProbandVisit,
+  logAction,
+} from "@app/util/mafildb_API/calls";
 import { MDB_ApprovalState } from "@app/util/mafildb_API/dto";
 import { createDuplicatedVisitFormForApproval, generateProbandPdf } from "@app/util/server_API/calls";
 import { getBackButtonProps } from "@app/util/utils";
@@ -188,6 +194,13 @@ export const ProbandDuplicationForm = () => {
   const createVisitFormInApprovalRoom = async (data: ValidatedOperatorFormData) => {
     if (operator) {
       await createDuplicatedVisitFormForApproval(data, operator.id);
+      void logAction(
+        "info",
+        "Duplicated visit sent for an approval",
+        `Proband: ${data.name} ${data.surname}, project: ${data.project}, device: ${data.device}, measuredAt: ${format(data.measuredAt, "d.M.y")}`,
+        operator.username
+        // TODO: pair with the original visit
+      );
       setOpenFinalizeDialog(false);
       navigate(RoutingPath.RECENT_VISITS);
     }

@@ -2,6 +2,17 @@ import type { LanguageCode } from "@app/i18n/i18n";
 import type { AnswerOption } from "@app/model/form";
 import type { ObjectValuesUnion, StrictOmit } from "@app/types";
 
+export type MDB_LogType = "info" | "notice" | "warning" | "error" | "security";
+
+export type MDB_CreateLogInput = {
+  application: "reg";
+  type: MDB_LogType;
+  action: string;
+  message: string;
+  user: string | null;
+  // TODO: how to pair visit with the log?
+};
+
 export type MDB_LanguageDTO = {
   code: string;
   name: string;

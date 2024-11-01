@@ -2,9 +2,11 @@ import { Button } from "@mui/material";
 import { compareAsc } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@app/hooks/auth/auth";
 import type { RecentVisitsTableVisit } from "@app/model/visit";
 import { RoutingPath } from "@app/routing-paths";
 import { LocalizedError } from "@app/util/error-handling/LocalizedError";
+import { logAction } from "@app/util/mafildb_API/calls";
 import { fetchCurrentQuestions } from "@app/util/server_API/calls";
 import type { QuestionDTO } from "@app/util/server_API/dto";
 import { handleErrorsWithToast, type DuplicationFormPageLocationState } from "@app/util/utils";
@@ -27,6 +29,7 @@ type RecentVisitsTableActionButtonsProps = {
 export const RecentVisitsTableActionButtons = ({ visit }: RecentVisitsTableActionButtonsProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { operator } = useAuth();
 
   const onDuplicate = async () => {
     try {
@@ -44,6 +47,13 @@ export const RecentVisitsTableActionButtons = ({ visit }: RecentVisitsTableActio
               question.id !== visitQuestionIds[i] || compareAsc(question.updatedAt, visit.finalizationDate) === 1
           )
         ) {
+          void logAction(
+            "error",
+            "Visit duplication",
+            "Cannot duplicate the visit due to different safety questions!",
+            operator?.username
+            // TODO: pair with the visit
+          );
           throw new LocalizedError("cannotDuplicateVisitDueToDifferentSafetyQuestions");
         }
       }

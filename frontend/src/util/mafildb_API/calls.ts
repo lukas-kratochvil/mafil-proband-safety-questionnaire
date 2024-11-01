@@ -29,10 +29,13 @@ import {
   type MDB_VisitDTO,
   type MDB_VisitFileDTO,
   type MDB_VisitFileType,
+  type MDB_CreateLogInput,
+  type MDB_LogType,
 } from "./dto";
 import {
   MDB_RESPONSE_ERROR_ATTR,
   type MDB_AddPdfToVisitResponse,
+  type MDB_CreateLogResponse,
   type MDB_CreateSubjectResponse,
   type MDB_CreateVisitResponse,
   type MDB_GetDeviceResponse,
@@ -53,6 +56,21 @@ import {
   transformMDBGenderCode,
   transformMDBHandednessCode,
 } from "./transformers";
+
+export const logAction = async (type: MDB_LogType, action: string, message: string, operatorUsername?: string) => {
+  if (import.meta.env.DEV) {
+    return;
+  }
+
+  const logData: MDB_CreateLogInput = {
+    application: "reg",
+    type,
+    action,
+    message,
+    user: operatorUsername ?? null,
+  };
+  void mafildbApi.post<MDB_CreateLogResponse>("logs", logData);
+};
 
 const fetchLanguages = async (): Promise<Language[]> => {
   if (import.meta.env.DEV) {

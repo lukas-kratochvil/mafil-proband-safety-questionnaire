@@ -1,4 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -15,7 +16,7 @@ import type {
   ValidatedOperatorModifiedFormData,
 } from "@app/model/form";
 import { RoutingPath } from "@app/routing-paths";
-import { addPdfToVisit, createFinalizedVisit } from "@app/util/mafildb_API/calls";
+import { addPdfToVisit, createFinalizedVisit, logAction } from "@app/util/mafildb_API/calls";
 import { MDB_ApprovalState } from "@app/util/mafildb_API/dto";
 import {
   fetchWaitingRoomVisitForm,
@@ -206,6 +207,12 @@ export const WaitingRoomForm = () => {
         disapprovalReason: data.disapprovalReason,
       };
       await sendVisitFormForApproval(visitForm.id, modifiedFields, operator.id);
+      void logAction(
+        "info",
+        "Visit form sent for an approval",
+        `Proband: ${data.name} ${data.surname}, project: ${data.project}, device: ${data.device}, measuredAt: ${format(data.measuredAt, "d.M.y")}`,
+        operator.username
+      );
       void queryClient.invalidateQueries({ queryKey: ["waitingRoomVisitForms"], exact: true });
       setOpenFinalizeDialog(false);
       navigate(RoutingPath.WAITING_ROOM);

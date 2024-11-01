@@ -31,7 +31,7 @@ import type {
 } from "@app/util/server_API/dto";
 import { VisitFormState } from "@app/util/server_API/dto";
 import { createServerApiCallError, type GraphQlError } from "../error-handling/server-utils";
-import { fetchNativeLanguage, fetchProject } from "../mafildb_API/calls";
+import { fetchNativeLanguage, fetchProject, logAction } from "../mafildb_API/calls";
 import { isBase64PDFContent } from "../utils";
 import * as mutations from "./graphql/mutations";
 import * as queries from "./graphql/queries";
@@ -415,6 +415,7 @@ const generatePdf = async (
   probandLanguageCode?: LanguageCode,
   approverUsername?: string
 ): Promise<PdfDTO> => {
+  void logAction("info", "Generating PDF", "", approverUsername ?? finalizerUsername /* TODO: pair with the visit */);
   const variables: GeneratePdfInput = {
     isPhantom,
     visitId,
@@ -449,6 +450,13 @@ const generatePdf = async (
   const data = await serverApiCall<GeneratePdfResponse>(queries.GENERATE_PDF, variables);
 
   if (!isBase64PDFContent(data.generatePDF.content)) {
+    void logAction(
+      "error",
+      "Generating PDF",
+      "Generated PDF has malformed content!",
+      approverUsername ?? finalizerUsername
+      // TODO: pair with the visit
+    );
     throw new Error("Generated PDF has malformed content!");
   }
 

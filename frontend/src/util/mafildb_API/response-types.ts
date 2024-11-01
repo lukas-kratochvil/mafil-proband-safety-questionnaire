@@ -26,6 +26,8 @@ type MDB_GetManySuccessResponse<T> = {
 type MDB_GetResponse<T> = T | MDB_ErrorResponse;
 type MDB_GetResponseComplex<T> = MDB_GetManySuccessResponse<T> | MDB_ErrorResponse;
 
+export type MDB_CreateLogResponse = MDB_GetResponse<void>;
+
 export type MDB_GetLanguagesResponse = MDB_GetResponseComplex<MDB_LanguageDTO>;
 
 export type MDB_GetLanguageResponse = MDB_GetResponse<MDB_LanguageDTO>;
