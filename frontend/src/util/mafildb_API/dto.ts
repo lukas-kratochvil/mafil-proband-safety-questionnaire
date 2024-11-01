@@ -122,12 +122,10 @@ export type MDB_UpdateVisitSignatureStateInput = Pick<MDB_VisitDTO, "registratio
 
 export type MDB_VisitFileType = "reg_form";
 
-type MDB_VisitFileMimeType = "application/pdf";
-
 export type MDB_AddPdfToVisitInput = {
   name: string; // also contains extension, for example: my_doc.pdf
   file_type: MDB_VisitFileType;
-  mime_type: MDB_VisitFileMimeType;
+  mime_type: "application/pdf";
   content: string; // Base64 encoded PDF content
 };
 
