@@ -12,6 +12,7 @@ describe("form buttons", () => {
       <FormButtons
         submitButtonProps={undefined}
         buttonsProps={[]}
+        setShowLoadingScreen={vi.fn()}
       />
     );
     const buttons = screen.queryAllByRole("button");
@@ -29,6 +30,7 @@ describe("form buttons", () => {
       <FormButtons
         submitButtonProps={{ titleLocalizationKey }}
         buttonsProps={[]}
+        setShowLoadingScreen={vi.fn()}
       />
     );
     const buttons = screen.getAllByRole("button");
@@ -59,6 +61,7 @@ describe("form buttons", () => {
       <FormButtons
         submitButtonProps={undefined}
         buttonsProps={buttonsProps}
+        setShowLoadingScreen={vi.fn()}
       />
     );
     const buttons = screen.getAllByRole("button");
@@ -94,6 +97,7 @@ describe("form buttons", () => {
       <FormButtons
         submitButtonProps={{ titleLocalizationKey: submitButtonTitle }}
         buttonsProps={buttonsProps}
+        setShowLoadingScreen={vi.fn()}
       />
     );
     const buttons = screen.getAllByRole("button");
