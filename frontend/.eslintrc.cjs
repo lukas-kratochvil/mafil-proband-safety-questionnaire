@@ -40,6 +40,6 @@ module.exports = {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks-addons/no-unused-deps": "warn",
     "@typescript-eslint/no-non-null-assertion": "off", // using non-null-assertion only in dev and test files
-    '@typescript-eslint/consistent-type-imports': 'error',
+    "@typescript-eslint/consistent-type-imports": "error",
   },
 };
