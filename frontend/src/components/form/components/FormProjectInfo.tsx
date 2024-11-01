@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import { useQueries } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ColoredInfoStripe } from "@app/components/informative/ColoredInfoStripe";
@@ -12,7 +12,8 @@ import { FormCardContainer } from "./FormCardContainer";
 import type { PhantomFormCardProps } from "./form-card";
 
 export const FormProjectInfo = ({ isPhantom, disableInputs }: PhantomFormCardProps) => {
-  const { t } = useTranslation("translation", { keyPrefix: "form.projectInfo" });
+  const { i18n, t } = useTranslation("translation", { keyPrefix: "form.projectInfo" });
+  const collator = useMemo(() => new Intl.Collator(i18n.language), [i18n.language]);
   const { getValues, setValue } = useFormContext<FormPropType>();
 
   const [projects, devices] = useQueries({
@@ -69,6 +70,7 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
             options={projects.data}
             isLoading={projects.isLoading}
             disabled={disableInputs}
+            sortComparator={(a, b) => collator.compare(a.acronym, b.acronym)}
             getOptionLabel={(project) => `${project.acronym.trim()} - ${project.name.trim()}`}
             isOptionEqualToValue={(option, value) => option.uuid === value.uuid}
           />
@@ -85,6 +87,7 @@ export const FormProjectInfo = ({ isPhantom, disableInputs }: PhantomFormCardPro
             options={devices.data}
             isLoading={devices.isLoading}
             disabled={disableInputs}
+            sortComparator={(a, b) => collator.compare(a.name, b.name)}
             getOptionLabel={(device) => device.name}
             isOptionEqualToValue={(option, value) => option.id === value.id}
           />
