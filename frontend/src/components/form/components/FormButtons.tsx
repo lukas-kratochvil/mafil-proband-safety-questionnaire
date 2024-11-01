@@ -8,9 +8,10 @@ import { handleErrorsWithToast, type ButtonProps } from "@app/util/utils";
 export type FormButtonsProps = {
   submitButtonProps: StrictOmit<ButtonProps, "onClick" | "urlPath"> | undefined;
   buttonsProps: ButtonProps[];
+  setShowLoadingScreen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const FormButtons = ({ submitButtonProps, buttonsProps }: FormButtonsProps) => {
+export const FormButtons = ({ submitButtonProps, buttonsProps, setShowLoadingScreen }: FormButtonsProps) => {
   const { t } = useTranslation();
   const matchesDownSmBreakpoint = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
@@ -41,9 +42,12 @@ export const FormButtons = ({ submitButtonProps, buttonsProps }: FormButtonsProp
             ? {
                 onClick: async () => {
                   try {
+                    setShowLoadingScreen(true);
                     await buttonProps.onClick();
                   } catch (error) {
                     handleErrorsWithToast(error, t);
+                  } finally {
+                    setShowLoadingScreen(false);
                   }
                 },
               }

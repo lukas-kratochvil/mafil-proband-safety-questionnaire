@@ -1,10 +1,11 @@
 import { Stack, useMediaQuery, type Theme } from "@mui/material";
-import type { PropsWithChildren } from "react";
+import { useState, type PropsWithChildren } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormButtons, type FormButtonsProps } from "@app/components/form/components/FormButtons";
 import { ErrorAlert } from "@app/components/informative/ErrorAlert";
 import type { FormPropType } from "@app/model/form";
+import { LoadingOverlay } from "@app/overlays/LoadingOverlay";
 import { handleErrorsWithToast, type ButtonProps } from "@app/util/utils";
 import { FormSkeleton } from "./FormSkeleton";
 
@@ -35,13 +36,18 @@ export const FormContainer = <TValidatedData extends object>({
   const { t } = useTranslation();
   const { handleSubmit } = useFormContext<FormPropType>();
 
+  const [showLoadingScreen, setShowLoadingScreen] = useState(false);
+
   const onValid = async (data: FormPropType) => {
+    setShowLoadingScreen(true);
     const validatedFormData = getFormData(data);
 
     try {
       await buttons?.submitButtonProps?.onClick(validatedFormData);
     } catch (error) {
       handleErrorsWithToast(error, t);
+    } finally {
+      setShowLoadingScreen(false);
     }
   };
 
@@ -63,8 +69,14 @@ export const FormContainer = <TValidatedData extends object>({
         alignItems="stretch"
       >
         {children}
-        {buttons && <FormButtons {...buttons} />}
+        {buttons && (
+          <FormButtons
+            {...buttons}
+            setShowLoadingScreen={setShowLoadingScreen}
+          />
+        )}
       </Stack>
+      <LoadingOverlay isOpen={showLoadingScreen} />
     </form>
   );
 };
