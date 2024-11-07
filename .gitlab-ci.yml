@@ -1,0 +1,116 @@
+stages:
+  - build
+  - docker
+
+#-----------------------------------------------------------------------------------------------------------------------
+# Backend
+#-----------------------------------------------------------------------------------------------------------------------
+build-backend:
+  stage: build
+  image: node:20
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "devel" || $CI_COMMIT_BRANCH == "main"'
+      changes:
+        - '.gitlab-ci.yml'
+        - 'package.json'
+        - 'tsconfig.base.json'
+        - '.eslintrc.js'
+        - 'backend/**/*'
+    - when: manual
+  before_script:
+    - npm install -g pnpm
+  script:
+    - pnpm install --frozen-lockfile    # Install common repo dependencies
+    - cd backend
+    - pnpm install --frozen-lockfile    # Install backend dependencies
+    - pnpm exec prisma generate         # Generate Prisma types
+    - pnpm lint                         # Lint the code
+    - pnpm build                        # Build the backend
+    - pnpm test                         # Run the tests
+  artifacts:
+    paths:
+      - backend/dist                    # Include build artifacts if needed
+    expire_in: 1 day
+
+create-backend-docker-image:
+  stage: docker
+  image: docker:latest
+  services:
+    - docker:dind
+  needs:
+    - build-backend
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "devel" || $CI_COMMIT_BRANCH == "main"'
+      changes:
+        - 'backend/**/*'
+  variables:
+    DOCKER_REGISTRY: "ghcr.io"
+    DOCKER_IMAGE_NAME: "$CI_PROJECT_NAMESPACE/mafil-psq-server"
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$DOCKER_REGISTRY"
+  script:
+    - |
+      # Extract metadata (tags, labels) for Docker
+      TAGS=$(echo "latest devel $(date +'%Y-%m-%d %H:%M:%S')" | tr ' ' ',')
+      LABELS="org.opencontainers.image.title=MAFIL - Proband Safety Questionnaire - server"
+      docker build -t "$DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$CI_COMMIT_REF_NAME" -f backend/Dockerfile .
+      docker tag "$DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$CI_COMMIT_REF_NAME" "$DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$TAGS"
+      docker push "$DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$CI_COMMIT_REF_NAME"
+      docker push "$DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$TAGS"
+  after_script:
+    - docker logout
+
+#-----------------------------------------------------------------------------------------------------------------------
+# Frontend
+#-----------------------------------------------------------------------------------------------------------------------
+build-frontend:
+  stage: build
+  image: node:20
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "devel" || $CI_COMMIT_BRANCH == "main"'
+      changes:
+        - '.gitlab-ci.yml'
+        - 'package.json'
+        - 'tsconfig.base.json'
+        - '.eslintrc.js'
+        - 'frontend/**/*'
+    - when: manual
+  before_script:
+    - npm install -g pnpm
+  script:
+    - pnpm install --frozen-lockfile    # Install common repo dependencies
+    - cd frontend
+    - pnpm install --frozen-lockfile    # Install frontend dependencies
+    - pnpm lint                         # Lint the code
+    - pnpm build                        # Build the frontend
+    - pnpm test                         # Run the tests
+  artifacts:
+    paths:
+      - frontend/dist                   # Include build artifacts if needed
+    expire_in: 1 day
+
+create-frontend-docker-image:
+  stage: docker
+  image: docker:latest
+  services:
+    - docker:dind
+  needs:
+    - build-frontend
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "devel" || $CI_COMMIT_BRANCH == "main"'
+      changes:
+        - 'frontend/**/*'
+  variables:
+    DOCKER_REGISTRY: "ghcr.io"
+    DOCKER_IMAGE_NAME: "$CI_PROJECT_NAMESPACE/mafil-psq-web"
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$DOCKER_REGISTRY"
+  script:
+    - docker build -t "$DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$CI_COMMIT_REF_NAME" -f frontend/Dockerfile .
+    - docker push "$DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$CI_COMMIT_REF_NAME"
+  tags:
+    - latest
+    - "$CI_COMMIT_REF_NAME"
+    - "$CI_COMMIT_SHORT_SHA"
+  after_script:
+    - docker logout
