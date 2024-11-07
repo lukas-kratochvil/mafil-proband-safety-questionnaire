@@ -2,10 +2,14 @@ stages:
   - build
   - docker
 
+variables:
+  SERVER_IMAGE_NAME: "mafil-reg-server"
+  WEB_IMAGE_NAME: "mafil-reg-web"
+
 #-----------------------------------------------------------------------------------------------------------------------
 # Backend
 #-----------------------------------------------------------------------------------------------------------------------
-build-backend:
+backend-build:
   stage: build
   image: node:20
   rules:
@@ -16,7 +20,6 @@ build-backend:
         - 'tsconfig.base.json'
         - '.eslintrc.js'
         - 'backend/**/*'
-    - when: manual
   before_script:
     - npm install -g pnpm
   script:
@@ -32,38 +35,43 @@ build-backend:
       - backend/dist                    # Include build artifacts if needed
     expire_in: 1 day
 
-create-backend-docker-image:
+backend-create-devel-docker-image:
   stage: docker
-  image: docker:latest
-  services:
-    - docker:dind
+  image:
+    name: gcr.io/kaniko-project/executor:v1.23.2-debug
+    entrypoint: [""]
   needs:
-    - build-backend
+    - backend-build
   rules:
-    - if: '$CI_COMMIT_BRANCH == "devel" || $CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_COMMIT_BRANCH == "devel"'
       changes:
+        - '.gitlab-ci.yml'
+        - 'package.json'
+        - 'tsconfig.base.json'
         - 'backend/**/*'
-  variables:
-    DOCKER_REGISTRY: "ghcr.io"
-    DOCKER_IMAGE_NAME: "$CI_PROJECT_NAMESPACE/mafil-psq-server"
-  before_script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$DOCKER_REGISTRY"
   script:
-    - |
-      # Extract metadata (tags, labels) for Docker
-      TAGS=$(echo "latest devel $(date +'%Y-%m-%d %H:%M:%S')" | tr ' ' ',')
-      LABELS="org.opencontainers.image.title=MAFIL - Proband Safety Questionnaire - server"
-      docker build -t "$DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$CI_COMMIT_REF_NAME" -f backend/Dockerfile .
-      docker tag "$DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$CI_COMMIT_REF_NAME" "$DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$TAGS"
-      docker push "$DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$CI_COMMIT_REF_NAME"
-      docker push "$DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$TAGS"
-  after_script:
-    - docker logout
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "${CI_PROJECT_DIR}/backend/Dockerfile"
+      --build-arg "COMMIT_HASH=${CI_COMMIT_SHORT_SHA}"
+      --build-arg "COMMIT_DATE=${CI_COMMIT_TIMESTAMP}"
+      --destination "${CI_REGISTRY_IMAGE}/${SERVER_IMAGE_NAME}:${CI_COMMIT_BRANCH}"
+
+backend-create-latest-docker-image:
+  stage: docker
+  needs:
+    - backend-create-devel-docker-image
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  script:
+    - docker pull "${CI_REGISTRY_IMAGE}/${SERVER_IMAGE_NAME}:devel"
+    - docker tag "${CI_REGISTRY_IMAGE}/${SERVER_IMAGE_NAME}:devel" "${CI_REGISTRY_IMAGE}/${SERVER_IMAGE_NAME}:latest"
+    - docker push "${CI_REGISTRY_IMAGE}/${SERVER_IMAGE_NAME}:latest"
 
 #-----------------------------------------------------------------------------------------------------------------------
 # Frontend
 #-----------------------------------------------------------------------------------------------------------------------
-build-frontend:
+frontend-build:
   stage: build
   image: node:20
   rules:
@@ -74,7 +82,6 @@ build-frontend:
         - 'tsconfig.base.json'
         - '.eslintrc.js'
         - 'frontend/**/*'
-    - when: manual
   before_script:
     - npm install -g pnpm
   script:
@@ -89,28 +96,35 @@ build-frontend:
       - frontend/dist                   # Include build artifacts if needed
     expire_in: 1 day
 
-create-frontend-docker-image:
+frontend-create-devel-docker-image:
   stage: docker
-  image: docker:latest
-  services:
-    - docker:dind
+  image:
+    name: gcr.io/kaniko-project/executor:v1.23.2-debug
+    entrypoint: [""]
   needs:
-    - build-frontend
+    - frontend-build
   rules:
-    - if: '$CI_COMMIT_BRANCH == "devel" || $CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_COMMIT_BRANCH == "devel"'
       changes:
+        - '.gitlab-ci.yml'
+        - 'package.json'
+        - 'tsconfig.base.json'
         - 'frontend/**/*'
-  variables:
-    DOCKER_REGISTRY: "ghcr.io"
-    DOCKER_IMAGE_NAME: "$CI_PROJECT_NAMESPACE/mafil-psq-web"
-  before_script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$DOCKER_REGISTRY"
   script:
-    - docker build -t "$DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$CI_COMMIT_REF_NAME" -f frontend/Dockerfile .
-    - docker push "$DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$CI_COMMIT_REF_NAME"
-  tags:
-    - latest
-    - "$CI_COMMIT_REF_NAME"
-    - "$CI_COMMIT_SHORT_SHA"
-  after_script:
-    - docker logout
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "${CI_PROJECT_DIR}/frontend/Dockerfile"
+      --build-arg "COMMIT_HASH=${CI_COMMIT_SHORT_SHA}"
+      --build-arg "COMMIT_DATE=${CI_COMMIT_TIMESTAMP}"
+      --destination "${CI_REGISTRY_IMAGE}/${WEB_IMAGE_NAME}:${CI_COMMIT_BRANCH}"
+
+frontend-create-latest-docker-image:
+  stage: docker
+  needs:
+    - frontend-create-devel-docker-image
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  script:
+    - docker pull "${CI_REGISTRY_IMAGE}/${WEB_IMAGE_NAME}:devel"
+    - docker tag "${CI_REGISTRY_IMAGE}/${WEB_IMAGE_NAME}:devel" "${CI_REGISTRY_IMAGE}/${WEB_IMAGE_NAME}:latest"
+    - docker push "${CI_REGISTRY_IMAGE}/${WEB_IMAGE_NAME}:latest"
